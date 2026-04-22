@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perilaku Konsumen Digital — Materi Lengkap</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f5f0e8;
+    --cream: #ede8da;
+    --accent: #c8392b;
+    --accent2: #1a5276;
+    --gold: #c9962d;
+    --muted: #7a7060;
+    --light-line: #d9d2c2;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.02) 40px,
+      rgba(255,255,255,0.02) 41px
+    );
+  }
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .header-tag::before { content: '▶'; font-size: 0.6rem; }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .header-sub {
+    color: #aaa;
+    font-size: 0.95rem;
+    max-width: 600px;
+    font-weight: 300;
+  }
+  .header-meta {
+    margin-top: 2rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #666;
+  }
+  .meta-value {
+    font-size: 0.85rem;
+    color: var(--paper);
+    font-weight: 500;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--cream);
+    border-bottom: 1px solid var(--light-line);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    overflow-x: auto;
+  }
+  .nav-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    padding: 0 2rem;
+  }
+  nav a {
+    display: block;
+    padding: 0.85rem 1rem;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  nav a:hover { color: var(--ink); border-bottom-color: var(--accent); }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    margin-bottom: 5rem;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .section.visible { opacity: 1; transform: translateY(0); }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--light-line);
+  }
+  .section-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--light-line);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .section-title-wrap {}
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 2rem 0 0.8rem;
+    color: var(--ink);
+  }
+
+  p { margin-bottom: 1rem; color: #2a2520; }
+
+  /* ── DEFINITION BOX ── */
+  .def-box {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+  .def-box::before {
+    content: '"';
+    position: absolute;
+    top: -0.5rem;
+    left: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 6rem;
+    color: var(--gold);
+    line-height: 1;
+    opacity: 0.4;
+  }
+  .def-box p {
+    color: var(--paper);
+    font-size: 1.05rem;
+    font-weight: 400;
+    position: relative;
+    z-index: 1;
+  }
+  .def-box cite {
+    display: block;
+    margin-top: 0.8rem;
+    font-style: normal;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: #aaa;
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── ANALOGY BOX ── */
+  .analogy {
+    border-left: 4px solid var(--gold);
+    background: #faf7f0;
+    padding: 1.5rem 1.5rem 1.5rem 2rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+  .analogy-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .analogy-label::before { content: '💡'; }
+  .analogy p { color: #3a3020; margin: 0; }
+
+  /* ── CASE STUDY ── */
+  .case-study {
+    background: var(--cream);
+    border: 1px solid var(--light-line);
+    padding: 2rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+  .case-study::before {
+    content: 'STUDI KASUS';
+    position: absolute;
+    top: -0.6rem;
+    left: 1.5rem;
+    background: var(--accent);
+    color: white;
+    padding: 0.1rem 0.7rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+  }
+  .case-study h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--accent2);
+  }
+  .case-study p { color: #2a2520; }
+
+  /* ── EXAMPLE BOX ── */
+  .example {
+    border: 1px dashed var(--accent);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    background: rgba(200, 57, 43, 0.03);
+  }
+  .example-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .example-label::before { content: '→'; }
+  .example p { margin: 0; color: #2a2520; }
+
+  /* ── FRAMEWORK / STAGES ── */
+  .stages {
+    display: grid;
+    gap: 1px;
+    background: var(--light-line);
+    margin: 2rem 0;
+    border: 1px solid var(--light-line);
+  }
+  .stage {
+    background: var(--paper);
+    padding: 1.2rem 1.5rem;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+  .stage-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stage-content h4 {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+  }
+  .stage-content p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ── FACTORS GRID ── */
+  .factors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--light-line);
+    margin: 2rem 0;
+    border: 1px solid var(--light-line);
+  }
+  .factor-card {
+    background: var(--paper);
+    padding: 1.5rem;
+  }
+  .factor-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .factor-card h4 {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+  }
+  .factor-card p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.88rem;
+  }
+  .compare-table th {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.8rem 1rem;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+  .compare-table td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--light-line);
+    vertical-align: top;
+  }
+  .compare-table tr:nth-child(even) td { background: var(--cream); }
+  .compare-table tr:hover td { background: #ede8d8; }
+
+  /* ── HIGHLIGHT STAT ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--light-line);
+    margin: 2rem 0;
+    border: 1px solid var(--light-line);
+  }
+  .stat-item {
+    background: var(--paper);
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    display: block;
+  }
+
+  /* ── FUNNEL ── */
+  .funnel {
+    margin: 2rem 0;
+  }
+  .funnel-step {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3px;
+  }
+  .funnel-bar {
+    height: 44px;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    color: var(--paper);
+    font-size: 0.82rem;
+    font-weight: 500;
+    transition: background 0.2s;
+    position: relative;
+  }
+  .funnel-bar::after {
+    content: '';
+    position: absolute;
+    right: -16px;
+    top: 0;
+    border-left: 16px solid var(--ink);
+    border-top: 22px solid transparent;
+    border-bottom: 22px solid transparent;
+    z-index: 1;
+  }
+  .funnel-pct {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    min-width: 3rem;
+    margin-left: 1.5rem;
+  }
+
+  /* ── JOURNEY MAP ── */
+  .journey {
+    display: flex;
+    gap: 0;
+    margin: 2rem 0;
+    overflow-x: auto;
+    border: 1px solid var(--light-line);
+  }
+  .journey-step {
+    flex: 1;
+    min-width: 120px;
+    padding: 1.2rem 1rem;
+    border-right: 1px solid var(--light-line);
+    background: var(--paper);
+    transition: background 0.2s;
+  }
+  .journey-step:last-child { border-right: none; }
+  .journey-step:hover { background: var(--cream); }
+  .journey-step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+  .journey-step h4 {
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .journey-step p {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    margin: 2.5rem 0;
+    padding: 1.5rem 0;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--ink);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ── MODEL BOX ── */
+  .model-box {
+    background: var(--accent2);
+    color: white;
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+  .model-box h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #a8d4f0;
+  }
+  .model-box p { color: #d0e8f5; font-size: 0.9rem; }
+  .model-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .model-step {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .model-step::before {
+    content: attr(data-n);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+  }
+
+  /* ── SEPARATOR ── */
+  .sep {
+    border: none;
+    border-top: 1px solid var(--light-line);
+    margin: 3rem 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: #666;
+    text-align: center;
+    padding: 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 600px) {
+    main { padding: 2rem 1rem 4rem; }
+    .stages { grid-template-columns: 1fr; }
+    .journey { flex-direction: column; }
+    .journey-step { border-right: none; border-bottom: 1px solid var(--light-line); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-tag">Materi Pembelajaran — Manajemen Pemasaran Digital</div>
+    <h1>Perilaku Konsumen<br>di <em>Era Digital</em></h1>
+    <p class="header-sub">Pemahaman komprehensif tentang bagaimana konsumen berpikir, memutuskan, dan bertindak dalam ekosistem digital — dilengkapi studi kasus, analogi, dan contoh nyata.</p>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Sumber Utama</span>
+        <span class="meta-value">Wardhana (2024) — Consumer Behavior in the Digital Era 4.0</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Topik</span>
+        <span class="meta-value">12 Dimensi Perilaku Konsumen</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#pengantar">Pengantar</a>
+    <a href="#persepsi">Persepsi</a>
+    <a href="#sikap">Sikap</a>
+    <a href="#motivasi">Motivasi</a>
+    <a href="#preferensi">Preferensi</a>
+    <a href="#minat">Minat Beli</a>
+    <a href="#keputusan">Keputusan</a>
+    <a href="#kepuasan">Kepuasan</a>
+    <a href="#loyalitas">Loyalitas</a>
+    <a href="#kepercayaan">Kepercayaan</a>
+    <a href="#keterlibatan">Keterlibatan</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 1. PENGANTAR -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="pengantar">
+  <div class="section-header">
+    <div class="section-number">01</div>
+    <div class="section-title-wrap">
+      <div class="section-tag">Fondasi</div>
+      <h2>Pengantar Perilaku Konsumen Digital</h2>
+    </div>
+  </div>
+
+  <p>Di era digital, konsumen bukan lagi penerima pasif informasi dari brand. Mereka kini aktif mencari, membandingkan, berbagi, bahkan memengaruhi konsumen lain. Memahami perilaku mereka menjadi fondasi strategi pemasaran modern yang efektif.</p>
+
+  <div class="def-box">
+    <p>Perilaku konsumen adalah interaksi dinamis antara pengaruh, kesadaran, perilaku, dan lingkungan — yang menghasilkan pertukaran aspek kehidupan berupa keputusan memilih, membeli, menggunakan, dan membuang produk atau layanan.</p>
+    <cite>— Hoyer, MacInnis & Pieters (2023); Solomon (2020)</cite>
+  </div>
+
+  <div class="analogy">
+    <div class="analogy-label">Analogi</div>
+    <p><strong>Bayangkan pasar tradisional vs. mal modern.</strong> Di pasar tradisional, penjual meneriaki pembeli, menawarkan langsung. Di mal digital, konsumen yang jalan-jalan sendiri — membaca ulasan, membandingkan harga di 3 tab browser berbeda, melihat unboxing di YouTube, lalu memutuskan membeli saat tengah malam. Pemasar tidak lagi "menarik" konsumen; konsumen yang "menarik diri" menuju produk atas dasar pertimbangan mereka sendiri.</p>
+  </div>
+
+  <h3>Perubahan Perilaku di Era Digital 4.0</h3>
+
+  <div class="stats-row">
+    <div class="stat-item">
+      <span class="stat-num">73%</span>
+      <span class="stat-label">konsumen membaca ulasan online sebelum membeli</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">4.7×</span>
+      <span class="stat-label">lebih besar kemungkinan beli setelah menonton video produk</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">54%</span>
+      <span class="stat-label">pembelian dimulai dari pencarian di smartphone</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">87%</span>
+      <span class="stat-label">konsumen memulai perjalanan belanja secara digital</span>
+    </div>
+  </div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Dimensi</th>
+        <th>Konsumen Konvensional</th>
+        <th>Konsumen Digital</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Informasi</strong></td>
+        <td>Pasif — menerima iklan TV/cetak</td>
+        <td>Aktif — Google, YouTube, TikTok, forum</td>
+      </tr>
+      <tr>
+        <td><strong>Perbandingan</strong></td>
+        <td>Terbatas toko sekitar</td>
+        <td>Global — Shopee, Tokopedia, Amazon sekaligus</td>
+      </tr>
+      <tr>
+        <td><strong>Waktu beli</strong></td>
+        <td>Jam toko buka</td>
+        <td>24 jam, 7 hari seminggu</td>
+      </tr>
+      <tr>
+        <td><strong>Pengaruh sosial</strong></td>
+        <td>Mulut ke mulut lokal</td>
+        <td>Influencer, review online, viral content</td>
+      </tr>
+      <tr>
+        <td><strong>Loyalitas</strong></td>
+        <td>Berbasis kebiasaan tempat</td>
+        <td>Berbasis pengalaman & personalisasi</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<hr class="sep">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 2. PERSEPSI -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="persepsi">
+  <div class="section-header">
+    <div class="section-number">02</div>
+    <div class="section-title-wrap">
+      <div class="section-tag">Psikologi Konsumen</div>
+      <h2>Persepsi Konsumen</h2>
+    </div>
+  </div>
+
+  <p>Persepsi adalah proses di mana konsumen memilih, mengorganisasi, dan menginterpretasikan rangsangan (stimulus) menjadi gambaran yang bermakna. Dalam konteks digital, stimulus tersebut bisa berupa desain website, kecepatan loading, foto produk, atau kata-kata dalam deskripsi.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">Analogi</div>
+    <p><strong>Persepsi seperti filter Instagram.</strong> Dua orang melihat foto produk yang sama, namun satu melihatnya "premium dan terpercaya" sementara yang lain melihat "mahal dan tidak terjangkau" — tergantung filter pengalaman, nilai, dan ekspektasi masing-masing. Produk yang sama bisa dipersepsikan berbeda-beda.</p>
+  </div>
+
+  <h3>Tiga Tahap Pembentukan Persepsi</h3>
+  <div class="stages">
+    <div class="stage">
+      <div class="stage-num">1</div>
+      <div class="stage-content">
+        <h4>Eksposur (Exposure)</h4>
+        <p>Konsumen terpapar stimulus — iklan banner, notifikasi push, postingan di feed media sosial. Exposure bisa disengaja (aktif mencari) atau tidak disengaja (ads otomatis muncul).</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">2</div>
+      <div class="stage-content">
+        <h4>Perhatian (Attention)</h4>
+        <p>Dari ribuan stimulus digital per hari, konsumen hanya memperhatikan segelintir. Desain visual, relevansii, dan nilai personal menentukan mana yang "menarik perhatian".</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">3</div>
+      <div class="stage-content">
+        <h4>Interpretasi (Interpretation)</h4>
+        <p>Konsumen memberi makna pada stimulus berdasarkan pengalaman, pengetahuan, dan emosi. Inilah tahap kritis yang menentukan kesan terhadap produk atau brand.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study">
+    <h4>🛍️ Studi Kasus: Tokopedia vs. Shopee — Persepsi Visual & Harga</h4>
+    <p>Penelitian menunjukkan konsumen Indonesia mempersepsikan Shopee sebagai platform dengan <strong>harga lebih murah</strong> meski secara aktual harga di kedua platform seringkali setara. Mengapa? Karena Shopee lebih agresif menampilkan <em>diskon, flash sale countdown timer, dan promo gamification</em> yang secara visual menciptakan persepsi nilai tinggi. Warna merah khas Shopee pun diasosiasikan dengan urgensi dan penghematan. Ini bukan manipulasi — ini manajemen persepsi yang cerdas.</p>
+  </div>
+
+  <div class="example">
+    <div class="example-label">Contoh Nyata</div>
+    <p><strong>Halo Effect di E-commerce:</strong> Produk dengan foto yang lebih profesional (latar putih bersih, pencahayaan baik) mendapat rating kepercayaan lebih tinggi meski konten produknya identik. Konsumen mempersepsikan kualitas foto sebagai proxy kualitas produk — sebuah distorsi persepsi yang dimanfaatkan seller cerdas.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 3. SIKAP -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="sikap">
+  <div class="section-header">
+    <div class="section-number">03</div>
+    <div class="section-title-wrap">
+      <div class="section-tag">Psikologi Konsumen</div>
+      <h2>Sikap Konsumen</h2>
+    </div>
+  </div>
+
+  <p>Sikap konsumen adalah kecenderungan evaluatif yang bersifat konsisten terhadap suatu objek (produk, merek, layanan). Sikap terbentuk dari tiga komponen yang saling berinteraksi.</p>
+
+  <div class="factors-grid">
+    <div class="factor-card">
+      <div class="factor-icon">🧠</div>
+      <h4>Kognitif (Think)</h4>
+      <p>Apa yang <em>diketahui</em> dan <em>dipercaya</em> konsumen tentang produk. "Samsung Galaxy memiliki kamera 200MP" — fakta yang tersimpan di benak konsumen.</p>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon">❤️</div>
+      <h4>Afektif (Feel)</h4>
+      <p>Emosi dan perasaan terhadap produk. "Saya merasa bangga memakai Apple" — evaluasi emosional yang sering lebih kuat dari fakta.</p>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon">🤝</div>
+      <h4>Konatif (Act)</h4>
+      <p>Kecenderungan untuk bertindak. "Saya akan merekomendasikan merek ini kepada teman" — niat perilaku yang lahir dari dua komponen sebelumnya.</p>
+    </div>
+  </div>
+
+  <div class="analogy">
+    <div class="analogy-label">Analogi</div>
+    <p><strong>Sikap seperti segitiga api.</strong> Komponen kognitif, afektif, dan konatif adalah tiga sisi segitiga yang saling memperkuat. Kalau satu sisi lemah, sikap keseluruhan goyah. Brand yang hanya menarik secara kognitif (fitur bagus) tapi gagal secara afektif (tidak ada koneksi emosional) akan mudah ditinggalkan saat ada pesaing dengan fitur serupa.</p>
+  </div>
+
+  <div class="case-study">
+    <h4>📱 Studi Kasus: Gojek dan Perubahan Sikap Konsumen</h4>
+    <p>Awal 2015, banyak konsumen bersikap negatif terhadap aplikasi ojek online — <strong>kognitif:</strong> "ini tidak aman", <strong>afektif:</strong> "saya tidak percaya pengemudi asing". Gojek mengubah sikap ini melalui strategi sistematis:</p>
+    <p><strong>Mengubah kognitif:</strong> edukasi tentang verifikasi driver, asuransi, dan GPS tracking. <strong>Mengubah afektif:</strong> kampanye emosional "Driver Gojek adalah pahlawan keluarga". <strong>Mengubah konatif:</strong> voucher pertama gratis untuk mendorong trial. Hasilnya? Dalam 5 tahun Gojek menjadi super-app dengan >190 juta pengguna.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 4. MOTIVASI -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="motivasi">
+  <div class="section-header">
+    <div class="section-number">04</div>
+    <div class="section-title-wrap">
+      <div class="section-tag">Pendorong Perilaku</div>
+      <h2>Motivasi Konsumen</h2>
+    </div>
+  </div>
+
+  <p>Motivasi adalah kekuatan pendorong internal yang menggerakkan konsumen untuk berperilaku guna memenuhi kebutuhan atau keinginan tertentu. Dalam konteks digital, motivasi ini semakin kompleks karena diperkuat oleh lingkungan digital yang terus merangsang.</p>
+
+  <div class="pull-quote">
+    <p>"Konsumen tidak membeli produk. Mereka membeli solusi atas masalah, atau tiket menuju versi diri mereka yang lebih baik."</p>
+  </div>
+
+  <h3>Teori Maslow dalam Konteks Digital</h3>
+
+  <div class="stages">
+    <div class="stage" style="background: #fff5f5;">
+      <div class="stage-num" style="color: #c8392b;">5</div>
+      <div class="stage-content">
+        <h4>Aktualisasi Diri — Self-expression & Status Digital</h4>
+        <p>Beli iPhone terbaru bukan sekadar telepon, tapi pernyataan identitas. Post foto produk premium di Instagram sebagai aktualisasi gaya hidup.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">4</div>
+      <div class="stage-content">
+        <h4>Penghargaan — Rating, Review & Pengakuan</h4>
+        <p>Konsumen menulis ulasan bintang 5 bukan hanya membantu orang lain, tapi juga mendapat pengakuan sebagai "Top Reviewer" — ego digital yang terpenuhi.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">3</div>
+      <div class="stage-content">
+        <h4>Sosial — Komunitas & Belonging Online</h4>
+        <p>Bergabung grup Facebook pecinta kopi bukan hanya berbagi info, tapi memenuhi kebutuhan akan belonging dan koneksi sosial.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">2</div>
+      <div class="stage-content">
+        <h4>Keamanan — Proteksi Data & Jaminan Transaksi</h4>
+        <p>Konsumen memilih platform dengan logo "100% Dijamin" atau "SSL Secured" karena kebutuhan rasa aman dalam transaksi digital.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">1</div>
+      <div class="stage-content">
+        <h4>Fisiologis — Kemudahan Akses Kebutuhan Dasar</h4>
+        <p>Platform seperti GoMart/Alfagift memenuhi kebutuhan paling dasar — makanan dan produk rumah tangga — dengan kemudahan digital.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study">
+    <h4>🎮 Studi Kasus: Gamifikasi Shopee — Motivasi Hedonik vs. Utilitarian</h4>
+    <p>Shopee Coins, Shopee Games, dan Shopee Lucky Prize memanfaatkan dua jenis motivasi secara bersamaan:</p>
+    <p><strong>Motivasi Utilitarian:</strong> "Saya main game untuk dapat voucher diskon" — logis dan fungsional. <strong>Motivasi Hedonik:</strong> "Saya main karena seru dan menarik" — emosional dan experiential. Kombinasi keduanya membuat konsumen menghabiskan rata-rata 25 menit lebih lama di aplikasi dibanding yang tidak menggunakan fitur gamifikasi.</p>
+  </div>
+
+  <div class="example">
+    <div class="example-label">Contoh Nyata</div>
+    <p><strong>FOMO (Fear of Missing Out) sebagai Motivator:</strong> Flash sale "hanya 2 jam lagi" di Tokopedia menciptakan motivasi pembelian berbasis ketakutan kehilangan kesempatan. Ini bukan manipulasi murni — ini mengaktifkan motivasi yang sudah ada dalam diri konsumen, yaitu kebutuhan akan kontrol dan tidak mau rugi (loss aversion).</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 5. PREFERENSI -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="preferensi">
+  <div class="section-header">
+    <div class="section-number">05</div>
+    <div class="section-title-wrap">
+      <div class="section-tag">Pilihan Konsumen</div>
+      <h2>Preferensi Konsumen</h2>
+    </div>
+  </div>
+
+  <p>Preferensi adalah tingkat keinginan atau kesukaan konsumen terhadap satu pilihan dibanding alternatif lain. Di era digital, preferensi terbentuk dari kombinasi data historis, rekomendasi algoritma, dan nilai personal yang semakin eksplisit.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">Analogi</div>
+    <p><strong>Preferensi seperti playlist Spotify.</strong> Semakin banyak Anda mendengarkan, algoritma semakin tahu selera Anda. Netflix, TikTok, dan Amazon bekerja dengan prinsip serupa — membangun model preferensi Anda dari setiap klik, scroll, dan durasi tontonan. Perusahaan yang memahami preferensi dapat memprediksi apa yang Anda inginkan sebelum Anda sendiri sadar menginginkannya.</p>
+  </div>
+
+  <h3>Faktor Pembentuk Preferensi Digital</h3>
+
+  <div class="factors-grid">
+    <div class="factor-card">
+      <div class="factor-icon">📊</div>
+      <h4>Riwayat Pembelian</h4>
+      <p>Algoritma rekomendasi menggunakan data beli sebelumnya untuk memprediksi preferensi berikutnya.</p>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon">⭐</div>
+      <h4>Rating & Review</h4>
+      <p>Ulasan pengguna lain menjadi referensi utama — lebih dipercaya dari iklan brand itu sendiri.</p>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon">👥</div>
+      <h4>Pengaruh Sosial</h4>
+      <p>Apa yang dibeli teman, influencer yang diikuti, atau trending di media sosial sangat mempengaruhi preferensi.</p>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon">💰</div>
+      <h4>Harga & Nilai</h4>
+      <p>Bukan harga terendah, tapi persepsi nilai terbaik (value for money) yang mendominasi preferensi digital.</p>
+    </div>
+  </div>
+
+  <div class="case-study">
+    <h4>🎵 Studi Kasus: Preferensi Konten TikTok — Algoritma Membentuk Selera</h4>
+    <p>Pengguna TikTok baru tidak perlu mendaftar preferensi. Dalam 15 menit pertama, algoritma For You Page (FYP) sudah mulai memetakan selera — berdasarkan video yang di-pause, di-replay, di-share, atau di-skip. Setelah 1-2 jam, FYP sudah sangat personal. Implikasinya bagi brand: <strong>konten yang relevan dan engaging lebih penting dari iklan yang besar</strong>, karena algoritma akan mendistribusikan konten ke orang yang tepat secara organik.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 6. MINAT BELI -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="minat">
+  <div class="section-header">
+    <div class="section-number">06</div>
+    <div class="section-title-wrap">
+      <div class="section-tag">Niat Konsumen</div>
+      <h2>Minat Beli Konsumen</h2>
+    </div>
+  </div>
+
+  <p>Minat beli (<em>purchase intention</em>) adalah kecenderungan konsumen untuk merencanakan atau bersedia membeli produk tertentu di masa mendatang. Ini adalah jembatan antara sikap positif dan tindakan pembelian nyata.</p>
+
+  <div class="def-box">
+    <p>Minat beli dapat diartikan sebagai: "Saya akan sepenuhnya mempertimbangkan membeli produk ini" — pernyataan probabilistik, bukan komitmen pasti, yang sangat dipengaruhi lingkungan digital.</p>
+    <cite>— Peter & Olson (2013); Mathur (1999)</cite>
+  </div>
+
+  <h3>Model AIDA dalam Konteks Digital</h3>
+  <div class="model-box">
+    <h4>AIDA — Dari Kesadaran ke Tindakan</h4>
+    <p>Model AIDA menggambarkan perjalanan konsumen dari tidak tahu hingga membeli.</p>
+    <div class="model-steps">
+      <div class="model-step" data-n="A">Attention — Iklan, viral content, SEO menarik perhatian</div>
+      <div class="model-step" data-n="I">Interest — Deskripsi produk, review, demo video membangun minat</div>
+      <div class="model-step" data-n="D">Desire — Testimoni, social proof, promo membangun hasrat</div>
+      <div class="model-step" data-n="A">Action — CTA, kemudahan checkout, trust signal mendorong beli</div>
+    </div>
+  </div>
+
+  <h3>Digital Customer Journey — Minat ke Pembelian</h3>
+  <div class="journey">
+    <div class="journey-step">
+      <div class="journey-step-num">01</div>
+      <h4>Awareness</h4>
+      <p>Lihat iklan di Instagram atau video TikTok</p>
+    </div>
+    <div class="journey-step">
+      <div class="journey-step-num">02</div>
+      <h4>Research</h4>
+      <p>Google review, baca ulasan di Tokopedia</p>
+    </div>
+    <div class="journey-step">
+      <div class="journey-step-num">03</div>
+      <h4>Compare</h4>
+      <p>Bandingkan harga di 3 marketplace sekaligus</p>
+    </div>
+    <div class="journey-step">
+      <div class="journey-step-num">04</div>
+      <h4>Intent</h4>
+      <p>Masukkan ke keranjang, simpan wishlist</p>
+    </div>
+    <div class="journey-step">
+      <div class="journey-step-num">05</div>
+      <h4>Purchase</h4>
+      <p>Checkout saat ada flash sale atau voucher</p>
+    </div>
+    <div class="journey-step">
+      <div class="journey-step-num">06</div>
+      <h4>Share</h4>
+      <p>Review, unboxing, rekomendasikan ke teman</p>
+    </div>
+  </div>
+
+  <div class="case-study">
+    <h4>🧴 Studi Kasus: Scarlett Whitening — Dari Minat ke Loyalitas via TikTok</h4>
+    <p>Scarlett berhasil membangun minat beli generasi Z melalui strategi berlapis: <strong>(1)</strong> Awareness melalui endorsement influencer TikTok secara masif, <strong>(2)</strong> Interest melalui konten before-after yang autentik, <strong>(3)</strong> Desire melalui review konsumen organik yang mendominasi pencarian, <strong>(4)</strong> Action melalui harga terjangkau dan mudah dibeli di berbagai platform. Dalam 3 tahun, Scarlett menjadi brand lokal dengan omzet ratusan miliar — didorong murni oleh digital word-of-mouth.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 7. KEPUTUSAN PEMBELIAN -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="keputusan">
+  <div class="section-header">
+    <div class="section-number">07</div>
+    <div class="section-title-wrap">
+      <div class="section-tag">Inti Perilaku Konsumen</div>
+      <h2>Proses & Keputusan Pembelian</h2>
+    </div>
+  </div>
+
+  <p>Keputusan pembelian melibatkan serangkaian pilihan yang dibuat konsumen sebelum bertransaksi. Di era digital, proses ini bisa berlangsung dalam hitungan menit (impulse buy) hingga berminggu-minggu (high-involvement purchase).</p>
+
+  <h3>Lima Tahap Proses Keputusan Pembelian</h3>
+
+  <div class="funnel">
+    <div class="funnel-step">
+      <div class="funnel-bar" style="width: 100%;">1. Pengenalan Masalah / Kebutuhan</div>
+      <span class="funnel-pct">100%</span>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-bar" style="width: 85%;">2. Pencarian Informasi</div>
+      <span class="funnel-pct">85%</span>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-bar" style="width: 65%;">3. Evaluasi Alternatif</div>
+      <span class="funnel-pct">65%</span>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-bar" style="width: 45%; background: var(--accent);">4. Keputusan Pembelian</div>
+      <span class="funnel-pct">45%</span>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-bar" style="width: 30%; background: var(--accent2);">5. Evaluasi Pasca Pembelian</div>
+      <span class="funnel-pct">30%</span>
+    </div>
+  </div>
+
+  <div class="analogy">
+    <div class="analogy-label">Analogi</div>
+    <p><strong>Proses keputusan seperti trial di pengadilan.</strong> Ada bukti (informasi produk), ada saksi (ulasan pengguna), ada pengacara pembela (brand marketing), ada pengacara penuntut (pesaing dan negatif review), dan ada hakim (konsumen sendiri) yang memutuskan berdasarkan semua input. Brand yang mengerti proses ini menyiapkan "bukti" di setiap tahap persidangan.</p>
+  </div>
+
+  <div class="case-study">
+    <h4>💻 Studi Kasus: Pembelian Laptop Mahasiswa — Proses Lengkap 5 Tahap</h4>
+    <p><strong>Tahap 1 — Masalah:</strong> Laptop lama mahasiswa rusak menjelang UAS. Kebutuhan mendesak muncul. <br><br><strong>Tahap 2 — Pencarian:</strong> Google "laptop terbaik untuk kuliah 2024", YouTube review, tanya di grup WhatsApp angkatan, cek Tokopedia dan Shopee.<br><br><strong>Tahap 3 — Evaluasi:</strong> Buat perbandingan mental: ASUS vs. Acer vs. Lenovo. Pertimbangan: harga, RAM, baterai, garansi, review. <br><br><strong>Tahap 4 — Keputusan:</strong> Pilih Acer Aspire karena ulasan terbaik di harga yang ada. Beli saat ada cashback 10% di Shopee Pay.<br><br><strong>Tahap 5 — Evaluasi pasca:</strong> Puas dengan performa, tulis ulasan bintang 5, rekomendasikan ke teman sekelas.</p>
+  </div>
+
+  <h3>Faktor yang Mempengaruhi Keputusan di Era Digital</h3>
+
+  <div class="factors-grid">
+    <div class="factor-card">
+      <div class="factor-icon">⚡</div>
+      <h4>Kemudahan Checkout</h4>
+      <p>1-click purchase, dompet digital, dan COD menghapus hambatan keputusan terakhir.</p>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon">🔐</div>
+      <h4>Kepercayaan Platform</h4>
+      <p>Badge "Terpercaya", garansi uang kembali, dan reputasi marketplace menjadi faktor pemutus.</p>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon">📣</div>
+      <h4>Social Proof</h4>
+      <p>"1.247 orang melihat produk ini" atau "Sold 10.000+" menciptakan validasi sosial yang kuat.</p>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon">⏰</div>
+      <h4>Urgensi & Kelangkaan</h4>
+      <p>"Stok tersisa 3" atau "Berakhir 02:34:11" mengaktifkan fear of missing out yang mendorong keputusan cepat.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 8. KEPUASAN PELANGGAN -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="kepuasan">
+  <div class="section-header">
+    <div class="section-number">08</div>
+    <div class="section-title-wrap">
+      <div class="section-tag">Pasca Pembelian</div>
+      <h2>Kepuasan Pelanggan</h2>
+    </div>
+  </div>
+
+  <p>Kepuasan pelanggan adalah perasaan positif yang muncul ketika pengalaman aktual memenuhi atau melampaui ekspektasi. Di era digital, kepuasan bukan hanya tentang produk — tapi tentang <em>seluruh pengalaman</em> dari iklan pertama hingga after-sales service.</p>
+
+  <div class="def-box">
+    <p>Kepuasan = Persepsi Kinerja Aktual − Ekspektasi Sebelumnya<br><br>
+    Jika Kinerja > Ekspektasi → Sangat Puas (Delight)<br>
+    Jika Kinerja = Ekspektasi → Puas (Satisficed)<br>
+    Jika Kinerja < Ekspektasi → Tidak Puas (Dissatisfied)</p>
+    <cite>— Oliver (1997); Anderson, Fornell & Lehmann (1994)</cite>
+  </div>
+
+  <div class="analogy">
+    <div class="analogy-label">Analogi</div>
+    <p><strong>Kepuasan seperti tiket pesawat.</strong> Jika Anda memesan kelas ekonomi dan ternyata kursi lega, makanan enak, pramugari ramah — Anda <em>sangat</em> puas. Tapi jika Anda memesan bisnis class dan dapat layanan biasa saja — Anda kecewa, meski secara objektif layanannya lebih baik. Ekspektasilah yang menentukan kepuasan, bukan kualitas mutlak. Inilah mengapa manajemen ekspektasi penting dalam komunikasi pemasaran digital.</p>
+  </div>
+
+  <h3>Dimensi Kepuasan di Platform Digital</h3>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Dimensi</th>
+        <th>Indikator Digital</th>
+        <th>Contoh</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Kualitas Produk</strong></td>
+        <td>Sesuai deskripsi, foto jujur, fungsi baik</td>
+        <td>"Produk persis seperti gambar, tidak mengecewakan"</td>
+      </tr>
+      <tr>
+        <td><strong>Kecepatan</strong></td>
+        <td>Loading cepat, pengiriman tepat waktu, respon CS cepat</td>
+        <td>"Pesan jam 9 pagi, sampai jam 2 siang — luar biasa!"</td>
+      </tr>
+      <tr>
+        <td><strong>Kemudahan</strong></td>
+        <td>UX intuitif, navigasi mudah, checkout simpel</td>
+        <td>"Beli cuma 3 klik, tidak ribet sama sekali"</td>
+      </tr>
+      <tr>
+        <td><strong>Keamanan</strong></td>
+        <td>Data terlindungi, transaksi aman, garansi jelas</td>
+        <td>"Tenang belanja karena ada perlindungan pembeli"</td>
+      </tr>
+      <tr>
+        <td><strong>Layanan Purna Jual</strong></td>
+        <td>CS responsif, proses retur mudah, komplain tertangani</td>
+        <td>"Return sangat mudah, tidak ada pertanyaan berlebihan"</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="case-study">
+    <h4>⭐ Studi Kasus: Amazon Prime — Melampaui Ekspektasi Secara Konsisten</h4>
+    <p>Amazon Prime mendapat NPS (Net Promoter Score) tertinggi bukan karena harga murah, tapi karena secara konsisten <strong>melampaui ekspektasi</strong>: estimasi pengiriman "3-5 hari" tapi sampai dalam 1 hari, proses return tanpa pertanyaan, dan rekomendasi yang terasa benar-benar personal. Strategi ini menciptakan efek "wah" berulang yang membangun kepuasan menjadi loyalitas mendalam. Pelajaran: <em>underpromise, overdeliver</em> adalah rumus kepuasan digital.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 9. LOYALITAS -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="loyalitas">
+  <div class="section-header">
+    <div class="section-number">09</div>
+    <div class="section-title-wrap">
+      <div class="section-tag">Retensi Pelanggan</div>
+      <h2>Loyalitas Pelanggan</h2>
+    </div>
+  </div>
+
+  <p>Loyalitas pelanggan adalah komitmen kuat untuk membeli kembali atau berlangganan di masa depan — bahkan ketika ada tekanan kompetitif, promosi pesaing, atau perubahan situasi. Ini adalah "Holy Grail" pemasaran digital.</p>
+
+  <div class="stats-row">
+    <div class="stat-item">
+      <span class="stat-num">5×</span>
+      <span class="stat-label">lebih mahal biaya akuisisi pelanggan baru vs. retensi pelanggan lama</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">67%</span>
+      <span class="stat-label">lebih besar pengeluaran pelanggan loyal dibanding pelanggan baru</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">5%</span>
+      <span class="stat-label">peningkatan retensi = 25–95% peningkatan profit (Reichheld)</span>
+    </div>
+  </div>
+
+  <div class="analogy">
+    <div class="analogy-label">Analogi</div>
+    <p><strong>Loyalitas seperti hubungan pertemanan jangka panjang.</strong> Anda tidak berpindah teman setiap minggu karena ada yang lebih lucu atau lebih kaya. Ada ikatan emosional, kepercayaan, dan sejarah bersama yang menciptakan "switching cost" psikologis. Brand yang berhasil membangun loyalitas menciptakan hubungan serupa — pelanggan tidak pergi bukan karena tidak ada pilihan, tapi karena tidak <em>ingin</em> pergi.</p>
+  </div>
+
+  <h3>Tingkatan Loyalitas Pelanggan Digital</h3>
+
+  <div class="stages">
+    <div class="stage" style="background: #fff8f0;">
+      <div class="stage-num" style="color: var(--gold);">4</div>
+      <div class="stage-content">
+        <h4>Brand Advocate — Advokat Merek</h4>
+        <p>Aktif merekomendasikan, menulis ulasan, dan membela brand secara sukarela. Ini aset pemasaran paling berharga. Contoh: pengguna Apple yang aktif memposting konten iPhone.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">3</div>
+      <div class="stage-content">
+        <h4>Committed Loyalty — Loyal Komitmen</h4>
+        <p>Membeli berulang dan menolak tawaran pesaing. Contoh: pelanggan Starbucks yang selalu pesan via app meski warung kopi lebih dekat.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">2</div>
+      <div class="stage-content">
+        <h4>Behavioral Loyalty — Loyal Kebiasaan</h4>
+        <p>Membeli berulang tapi mudah beralih jika ada promosi menarik. Loyal karena inertia, bukan cinta sejati.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">1</div>
+      <div class="stage-content">
+        <h4>No Loyalty — Transaksional</h4>
+        <p>Membeli berdasarkan harga terbaik hari ini. Tidak ada ikatan emosional. "Price switcher" murni.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study">
+    <h4>☕ Studi Kasus: Kopi Kenangan Rewards — Program Loyalitas Digital</h4>
+    <p>Kopi Kenangan membangun loyalitas melalui aplikasi rewards yang cerdas: <strong>Poin akumulatif</strong> untuk setiap pembelian, <strong>personal birthday reward</strong>, <strong>notifikasi proaktif</strong> saat konsumen belum beli dalam X hari, dan <strong>gamifikasi level</strong> (Silver, Gold, Platinum). Hasilnya: repeat purchase rate mencapai 60%+, jauh di atas rata-rata industri F&B. Kuncinya adalah program loyalty yang terasa <em>personal</em>, bukan sekadar diskon generik.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 10. KEPERCAYAAN -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="kepercayaan">
+  <div class="section-header">
+    <div class="section-number">10</div>
+    <div class="section-title-wrap">
+      <div class="section-tag">Fondasi Hubungan</div>
+      <h2>Kepercayaan Pelanggan</h2>
+    </div>
+  </div>
+
+  <p>Kepercayaan adalah fondasi dari semua transaksi digital. Tanpa kepercayaan, tidak ada transaksi. Di dunia digital di mana pembeli dan penjual tidak bertatap muka, kepercayaan bahkan lebih kritis dari di dunia fisik.</p>
+
+  <div class="pull-quote">
+    <p>"Trust is the currency of the digital economy. You can have the best product in the world, but without trust, no one will hand you their credit card number."</p>
+  </div>
+
+  <h3>Tiga Pilar Kepercayaan Digital (Model Mayer, Davis & Schoorman)</h3>
+
+  <div class="factors-grid">
+    <div class="factor-card">
+      <div class="factor-icon">🎯</div>
+      <h4>Kemampuan (Ability)</h4>
+      <p>Konsumen percaya brand <em>mampu</em> memenuhi janjinya. "Shopee Express selalu tepat waktu." Dibangun melalui konsistensi performa.</p>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon">🤲</div>
+      <h4>Kebajikan (Benevolence)</h4>
+      <p>Konsumen percaya brand peduli pada kepentingan mereka. "Tokopedia pasti bantu kalau ada masalah." Dibangun melalui layanan pelanggan yang empati.</p>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon">⚖️</div>
+      <h4>Integritas (Integrity)</h4>
+      <p>Konsumen percaya brand jujur dan transparan. "Mereka tidak menyembunyikan biaya tersembunyi." Dibangun melalui komunikasi yang jujur.</p>
+    </div>
+  </div>
+
+  <div class="case-study">
+    <h4>🔒 Studi Kasus: Krisis Kepercayaan Tokopedia (2020) & Pemulihan</h4>
+    <p>Pada 2020, Tokopedia mengalami kebocoran data 91 juta pengguna — krisis kepercayaan besar. Strategi pemulihan kepercayaan yang dilakukan:</p>
+    <p><strong>(1) Transparansi cepat:</strong> Mengakui insiden dalam 24 jam, <strong>(2) Tindakan konkret:</strong> Reset password massal, verifikasi 2 langkah wajib, <strong>(3) Kompensasi:</strong> Voucher dan perlindungan ekstra, <strong>(4) Komunikasi berkelanjutan:</strong> Update keamanan rutin. Hasilnya? Meski sempat turun, kepercayaan kembali pulih karena respons cepat dan transparan. Pelajaran: <em>cara menangani krisis lebih penting dari krisis itu sendiri</em> dalam membangun kepercayaan jangka panjang.</p>
+  </div>
+
+  <div class="example">
+    <div class="example-label">Contoh Nyata — Sinyal Kepercayaan Digital</div>
+    <p><strong>Trust signal</strong> yang efektif di e-commerce: Badge "Official Store", jumlah transaksi ("10K+ terjual"), rating rata-rata (4.8/5.0), respons rate tinggi ("Respon dalam 1 menit"), sertifikasi keamanan SSL, kebijakan return yang jelas, dan foto produk yang jujur (tidak over-edit). Setiap elemen ini mengirimkan sinyal "aman bertransaksi di sini" kepada konsumen.</p>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 11. KETERLIBATAN PELANGGAN -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="keterlibatan">
+  <div class="section-header">
+    <div class="section-number">11</div>
+    <div class="section-title-wrap">
+      <div class="section-tag">Hubungan Pelanggan Modern</div>
+      <h2>Keterlibatan Pelanggan (Customer Engagement)</h2>
+    </div>
+  </div>
+
+  <p>Customer engagement adalah intensitas partisipasi dan keterhubungan pelanggan dengan brand — melampaui sekadar transaksi. Ini mencakup interaksi di media sosial, komunitas, konten, dan co-creation. Konsumen yang terlibat adalah aset pemasaran paling kuat.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">Analogi</div>
+    <p><strong>Engagement seperti perbedaan antara penonton dan pemain.</strong> Pelanggan yang hanya membeli adalah penonton — mereka menikmati pertandingan tapi tidak terlibat langsung. Pelanggan yang engaged adalah pemain — mereka ikut menentukan arah, berkontribusi, dan merasa memiliki. Brand yang memiliki banyak "pemain" punya pasukan pemasaran organik yang tak ternilai.</p>
+  </div>
+
+  <h3>Empat Dimensi Customer Engagement Digital</h3>
+
+  <div class="factors-grid">
+    <div class="factor-card">
+      <div class="factor-icon">💬</div>
+      <h4>Kognitif</h4>
+      <p>Konsumen aktif memikirkan dan memperhatikan brand. Membaca konten blog, menonton video edukatif, mengikuti webinar brand.</p>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon">😍</div>
+      <h4>Emosional</h4>
+      <p>Merasakan koneksi emosional dengan brand. Bangga memakai produk, tersentuh oleh kampanye, merasa menjadi bagian dari komunitas.</p>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon">🛠️</div>
+      <h4>Perilaku</h4>
+      <p>Tindakan nyata di luar pembelian: like, share, komentar, review, referral, mengikuti kontes, co-create konten.</p>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon">🌐</div>
+      <h4>Sosial</h4>
+      <p>Mengadvokasi brand kepada orang lain, membangun komunitas, memengaruhi jaringan sosial untuk mengenal brand.</p>
+    </div>
+  </div>
+
+  <div class="case-study">
+    <h4>🎮 Studi Kasus: Duolingo — Engagement Maestro</h4>
+    <p>Duolingo adalah contoh terbaik customer engagement digital. Strategi mereka mencakup: <strong>Gamifikasi harian</strong> (streak, XP, leaderboard), <strong>Persona brand yang unik</strong> (burung hantu Duo yang "mengancam" pengguna dengan humor), <strong>UGC (User Generated Content)</strong> berupa meme yang disebarkan jutaan pengguna secara organik, dan <strong>komunitas aktif</strong> di Discord dan Reddit. Hasilnya: 500+ juta pengguna dengan DAU yang luar biasa tinggi. Padahal mereka menjual produk yang secara nature "susah" — belajar bahasa. Engagement-lah yang membuat hal sulit terasa menyenangkan.</p>
+  </div>
+
+  <h3>Strategi Meningkatkan Digital Customer Engagement</h3>
+
+  <div class="stages">
+    <div class="stage">
+      <div class="stage-num">1</div>
+      <div class="stage-content">
+        <h4>Personalisasi Konten</h4>
+        <p>Kirimkan konten yang relevan berdasarkan perilaku, preferensi, dan tahap perjalanan pelanggan. Email berisi nama dan produk yang pernah dilihat selalu lebih efektif dari blast generic.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">2</div>
+      <div class="stage-content">
+        <h4>Komunitas Digital</h4>
+        <p>Bangun ruang di mana pelanggan bisa berbagi, berinteraksi sesama pengguna, dan merasa memiliki. Forum, grup Facebook, atau Discord brand menciptakan belonging yang kuat.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">3</div>
+      <div class="stage-content">
+        <h4>Co-creation & UGC</h4>
+        <p>Libatkan pelanggan dalam penciptaan produk, desain, atau konten. Review, unboxing, "foto produk saya" adalah bentuk engagement yang sekaligus menjadi konten pemasaran organik.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">4</div>
+      <div class="stage-content">
+        <h4>Respons Real-time</h4>
+        <p>Balas komentar, DM, dan ulasan dengan cepat dan personal. Responsivitas adalah tanda penghargaan kepada konsumen yang telah meluangkan waktu untuk berinteraksi.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-label">Contoh Nyata — Siklus Engagement</div>
+    <p><strong>Skintific Indonesia</strong> membangun engagement melalui: (1) Edukasi skincare gratis via TikTok Live, (2) "Skintific Squad" — komunitas ambassador pelanggan nyata, (3) Challenge #SkintificChallenge yang menghasilkan ribuan UGC, (4) Respon personal di setiap komentar. Brand baru yang dalam 2 tahun menjadi top 3 skincare di TikTok Shop — murni berkat engagement, bukan iklan besar.</p>
+  </div>
+
+  <hr class="sep">
+
+  <!-- RINGKASAN AKHIR -->
+  <div style="background: var(--ink); color: var(--paper); padding: 2.5rem; margin-top: 3rem;">
+    <div style="font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;">Ringkasan — Kerangka Integratif</div>
+    <h2 style="font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--paper); margin-bottom: 1.5rem;">12 Dimensi Perilaku Konsumen Digital: Sebuah Kerangka Utuh</h2>
+    <p style="color: #bbb; margin-bottom: 1.5rem; font-size: 0.95rem;">Dua belas dimensi yang dibahas saling terhubung dalam sebuah sistem yang dinamis. <strong style="color: white;">Persepsi</strong> membentuk <strong style="color: white;">sikap</strong>, sikap mempengaruhi <strong style="color: white;">motivasi</strong>, motivasi menentukan <strong style="color: white;">preferensi</strong>, preferensi memunculkan <strong style="color: white;">minat beli</strong>, minat mendorong <strong style="color: white;">keputusan pembelian</strong>, keputusan menghasilkan <strong style="color: white;">kepuasan</strong>, kepuasan membangun <strong style="color: white;">kepercayaan</strong> dan <strong style="color: white;">loyalitas</strong>, yang semuanya ditopang dan diperkuat oleh <strong style="color: white;">keterlibatan</strong> pelanggan yang aktif.</p>
+    <p style="color: #888; font-size: 0.85rem; font-style: italic;">Di era digital 4.0, pemasar yang unggul adalah mereka yang memahami seluruh sistem ini — bukan hanya mengoptimalkan satu dimensi, tapi mengorkestrasi semuanya secara harmonis untuk menciptakan pengalaman konsumen yang luar biasa dari ujung ke ujung.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>Materi Pembelajaran Digital Consumer Behavior &nbsp;·&nbsp; Berbasis: Wardhana, A. (2024). Consumer Behavior in The Digital Era 4.0 — Edisi Indonesia. Eureka Media Aksara.</p>
+</footer>
+
+<script>
+  // Intersection Observer untuk animasi section
+  const sections = document.querySelectorAll('.section');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Aktifkan nav link berdasarkan scroll
+  const navLinks = document.querySelectorAll('nav a');
+  const sectionEls = document.querySelectorAll('section[id]');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sectionEls.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--ink)' : '';
+      a.style.borderBottomColor = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+    });
+  });
+</script>
+</body>
+</html>
