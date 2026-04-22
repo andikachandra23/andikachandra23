@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Andika Chandra P. — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #f9f9f7;
+      --surface:  #ffffff;
+      --border:   #e8e8e4;
+      --text:     #1a1a1a;
+      --muted:    #6b7280;
+      --accent:   #2563eb;
+      --accent2:  #0ea5e9;
+      --tag-bg:   #eff6ff;
+      --tag-text: #1d4ed8;
+      --radius:   12px;
+      --shadow:   0 2px 16px rgba(0,0,0,.06);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(249,249,247,.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 960px; margin: auto;
+      padding: 0 24px;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700; font-size: 15px;
+      color: var(--text); text-decoration: none;
+      letter-spacing: -.3px;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted);
+      font-size: 13.5px; font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 960px; margin: auto; padding: 0 24px; }
+
+    section { padding: 72px 0; }
+    section + section { border-top: 1px solid var(--border); }
+
+    /* ── HERO ── */
+    #hero {
+      padding: 96px 0 80px;
+      display: flex; align-items: flex-start;
+      gap: 48px;
+    }
+    .hero-avatar {
+      flex-shrink: 0;
+      width: 108px; height: 108px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #bfdbfe, #93c5fd);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 36px; font-weight: 700;
+      color: #1d4ed8;
+      letter-spacing: -1px;
+    }
+    .hero-text { flex: 1; }
+    .hero-label {
+      display: inline-block;
+      font-size: 11.5px; font-weight: 600;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
+    }
+    .hero-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800; line-height: 1.15;
+      letter-spacing: -.6px;
+      color: var(--text);
+    }
+    .hero-degree {
+      font-size: 13.5px; color: var(--muted);
+      font-weight: 500; margin-top: 4px;
+    }
+    .hero-bio {
+      margin-top: 18px;
+      font-size: 15px; color: #374151;
+      max-width: 560px; line-height: 1.75;
+    }
+    .hero-pills {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 20px;
+    }
+    .pill {
+      background: var(--tag-bg); color: var(--tag-text);
+      font-size: 12px; font-weight: 600;
+      padding: 4px 12px; border-radius: 99px;
+      border: 1px solid #bfdbfe;
+    }
+    .hero-contact {
+      display: flex; gap: 16px; margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 20px; border-radius: 8px;
+      font-size: 13.5px; font-weight: 600;
+      text-decoration: none; transition: all .2s;
+      cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+      box-shadow: 0 2px 8px rgba(37,99,235,.25);
+    }
+    .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── SECTION HEADER ── */
+    .section-header { margin-bottom: 36px; }
+    .section-tag {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1.4px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 6px;
+    }
+    .section-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 700; letter-spacing: -.4px;
+      color: var(--text);
+    }
+    .section-desc {
+      margin-top: 8px; color: var(--muted);
+      font-size: 14px; max-width: 520px;
+    }
+
+    /* ── CARDS GRID ── */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: box-shadow .25s, transform .25s;
+    }
+    .card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+
+    .card-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--tag-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; margin-bottom: 14px;
+    }
+    .card-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14.5px; font-weight: 700;
+      color: var(--text); margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .card-meta {
+      font-size: 12px; font-weight: 600;
+      color: var(--accent); margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 13.5px; color: var(--muted);
+      line-height: 1.65;
+    }
+    .card-tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-top: 14px;
+    }
+    .tag {
+      font-size: 11.5px; font-weight: 500;
+      padding: 2px 9px; border-radius: 6px;
+      background: var(--tag-bg); color: var(--tag-text);
+    }
+    .tag-gray {
+      background: #f3f4f6; color: #6b7280;
+    }
+
+    /* status badge */
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 600;
+      padding: 2px 8px; border-radius: 99px;
+      margin-bottom: 10px;
+    }
+    .badge-green { background: #dcfce7; color: #15803d; }
+    .badge-yellow { background: #fef9c3; color: #a16207; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+    /* ── RESEARCH LIST ── */
+    .research-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      margin-bottom: 14px;
+      display: flex; gap: 18px; align-items: flex-start;
+      transition: box-shadow .25s, transform .25s;
+    }
+    .research-item:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+    .research-year {
+      flex-shrink: 0;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px; font-weight: 700;
+      color: var(--accent);
+      padding-top: 2px; width: 42px;
+    }
+    .research-body { flex: 1; }
+    .research-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px; font-weight: 700;
+      color: var(--text); margin-bottom: 4px;
+      line-height: 1.4;
+    }
+    .research-venue {
+      font-size: 12.5px; color: var(--muted); margin-bottom: 8px;
+    }
+
+    /* ── COURSES ── */
+    .course-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      transition: box-shadow .25s, transform .25s;
+    }
+    .course-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+    .course-code {
+      font-size: 11px; font-weight: 700;
+      color: var(--accent); letter-spacing: .8px;
+      text-transform: uppercase; margin-bottom: 6px;
+    }
+    .course-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px; font-weight: 700;
+      color: var(--text); margin-bottom: 6px;
+    }
+    .course-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .course-meta {
+      display: flex; align-items: center; gap: 12px;
+      margin-top: 12px; font-size: 12px; color: var(--muted);
+    }
+    .course-meta span { display: flex; align-items: center; gap: 4px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 0;
+      text-align: center;
+      font-size: 13px; color: var(--muted);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      #hero { flex-direction: column; gap: 24px; padding: 56px 0 48px; }
+      .hero-avatar { width: 80px; height: 80px; font-size: 26px; }
+      .nav-links { display: none; }
+    }
+
+    /* ── FADE-IN ANIMATION ── */
+    .fade-up {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════ NAV ════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">ACP.</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#research">Penelitian</a></li>
+      <li><a href="#service">Pengabdian</a></li>
+      <li><a href="#courses">Courses</a></li>
+      <li><a href="#contact">Kontak</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ════════════════ HERO ════════════════ -->
+<div class="container">
+  <section id="hero">
+    <div class="hero-avatar">AC</div>
+    <div class="hero-text">
+      <span class="hero-label">Dosen &amp; Researcher</span>
+      <h1 class="hero-name">Andika Chandra P.</h1>
+      <p class="hero-degree">S.Kom., M.T.I &nbsp;·&nbsp; Teknologi Informasi</p>
+      <p class="hero-bio">
+        Pengajar dan peneliti di bidang Teknologi Informasi. Berfokus pada
+        pengembangan sistem cerdas, rekayasa perangkat lunak, dan
+        pemanfaatan teknologi untuk pendidikan dan masyarakat.
+      </p>
+      <div class="hero-pills">
+        <span class="pill">Machine Learning</span>
+        <span class="pill">Web Development</span>
+        <span class="pill">Database Systems</span>
+        <span class="pill">Software Engineering</span>
+      </div>
+      <div class="hero-contact">
+        <a href="mailto:andika@university.ac.id" class="btn btn-primary">
+          ✉ Email Saya
+        </a>
+        <a href="#projects" class="btn btn-outline">Lihat Portfolio →</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════ PROJECTS ════════════════ -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Portfolio</div>
+      <h2 class="section-title">Projects</h2>
+      <p class="section-desc">Kumpulan proyek pengembangan dan riset terapan di bidang teknologi informasi.</p>
+    </div>
+    <div class="grid-2">
+
+      <div class="card fade-up">
+        <div class="card-icon">🤖</div>
+        <span class="badge badge-green"><span class="badge-dot"></span>Selesai</span>
+        <div class="card-title">Sistem Rekomendasi Konten Adaptif untuk E-Learning</div>
+        <div class="card-meta">2024</div>
+        <div class="card-desc">Platform pembelajaran online yang dilengkapi engine rekomendasi berbasis collaborative filtering untuk menyesuaikan materi dengan profil belajar mahasiswa.</div>
+        <div class="card-tags">
+          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">scikit-learn</span><span class="tag">PostgreSQL</span>
+        </div>
+      </div>
+
+      <div class="card fade-up">
+        <div class="card-icon">📊</div>
+        <span class="badge badge-blue"><span class="badge-dot"></span>Aktif</span>
+        <div class="card-title">Dashboard Monitoring Akademik Berbasis Data</div>
+        <div class="card-meta">2024</div>
+        <div class="card-desc">Sistem visualisasi data terintegrasi untuk memantau performa akademik mahasiswa secara real-time, terkoneksi dengan sistem informasi kampus.</div>
+        <div class="card-tags">
+          <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Chart.js</span><span class="tag">MySQL</span>
+        </div>
+      </div>
+
+      <div class="card fade-up">
+        <div class="card-icon">🏥</div>
+        <span class="badge badge-green"><span class="badge-dot"></span>Selesai</span>
+        <div class="card-title">Aplikasi Manajemen Rekam Medis Puskesmas</div>
+        <div class="card-meta">2023</div>
+        <div class="card-desc">Sistem informasi rekam medis untuk puskesmas daerah dengan fitur antrian digital, riwayat pasien, dan laporan statistik kesehatan bulanan.</div>
+        <div class="card-tags">
+          <span class="tag">Laravel</span><span class="tag">Vue.js</span><span class="tag">MySQL</span>
+        </div>
+      </div>
+
+      <div class="card fade-up">
+        <div class="card-icon">🌐</div>
+        <span class="badge badge-yellow"><span class="badge-dot"></span>Ongoing</span>
+        <div class="card-title">Portal Desa Digital — Digitalisasi Layanan Publik</div>
+        <div class="card-meta">2023 – Sekarang</div>
+        <div class="card-desc">Pengembangan portal layanan publik desa yang memungkinkan warga mengurus administrasi secara online, terintegrasi dengan sistem pemerintah daerah.</div>
+        <div class="card-tags">
+          <span class="tag">Next.js</span><span class="tag">REST API</span><span class="tag">Docker</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ PENELITIAN ════════════════ -->
+<section id="research">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Akademik</div>
+      <h2 class="section-title">Penelitian</h2>
+      <p class="section-desc">Publikasi ilmiah dan riset yang telah dipresentasikan atau diterbitkan.</p>
+    </div>
+
+    <div class="research-item fade-up">
+      <div class="research-year">2024</div>
+      <div class="research-body">
+        <div class="research-title">Implementasi Algoritma Hybrid Filtering pada Sistem Rekomendasi E-Learning Adaptif</div>
+        <div class="research-venue">Jurnal Ilmu Komputer dan Sistem Informasi (JIKSI) · Vol. 12, No. 2</div>
+        <div class="card-tags">
+          <span class="tag">Rekomendasi Sistem</span><span class="tag">Machine Learning</span><span class="tag">E-Learning</span>
+          <span class="tag tag-gray">SINTA 2</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="research-item fade-up">
+      <div class="research-year">2024</div>
+      <div class="research-body">
+        <div class="research-title">Analisis Performa Algoritma Klasifikasi untuk Deteksi Dini Risiko Dropout Mahasiswa</div>
+        <div class="research-venue">Seminar Nasional Teknologi Informasi (SNTI) 2024 · Prosiding</div>
+        <div class="card-tags">
+          <span class="tag">Data Mining</span><span class="tag">Educational Data Mining</span><span class="tag">Decision Tree</span>
+          <span class="tag tag-gray">Prosiding</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="research-item fade-up">
+      <div class="research-year">2023</div>
+      <div class="research-body">
+        <div class="research-title">Pengembangan Model Arsitektur Microservices untuk Aplikasi Pemerintahan Berbasis Cloud</div>
+        <div class="research-venue">Jurnal Teknologi dan Sistem Informasi (JTSI) · Vol. 9, No. 1</div>
+        <div class="card-tags">
+          <span class="tag">Microservices</span><span class="tag">Cloud Computing</span><span class="tag">e-Government</span>
+          <span class="tag tag-gray">SINTA 3</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="research-item fade-up">
+      <div class="research-year">2022</div>
+      <div class="research-body">
+        <div class="research-title">Rancang Bangun Sistem Informasi Geografis Pemetaan Potensi UMKM Kota Menggunakan Web GIS</div>
+        <div class="research-venue">Journal of Information Systems and Informatics (JISI) · Vol. 4, No. 2</div>
+        <div class="card-tags">
+          <span class="tag">GIS</span><span class="tag">Web GIS</span><span class="tag">UMKM</span>
+          <span class="tag tag-gray">SINTA 3</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════ PENGABDIAN ════════════════ -->
+<section id="service">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Tri Dharma</div>
+      <h2 class="section-title">Pengabdian kepada Masyarakat</h2>
+      <p class="section-desc">Kegiatan pengabdian dan transfer ilmu pengetahuan untuk masyarakat.</p>
+    </div>
+    <div class="grid-2">
+
+      <div class="card fade-up">
+        <div class="card-icon">🏫</div>
+        <span class="badge badge-green"><span class="badge-dot"></span>Selesai</span>
+        <div class="card-title">Pelatihan Literasi Digital untuk Guru SD/SMP di Kecamatan Ungaran</div>
+        <div class="card-meta">2024 · Hibah Pengabdian DRTPM</div>
+        <div class="card-desc">Pelatihan penggunaan teknologi pendidikan dan media pembelajaran digital bagi guru tingkat dasar dan menengah di wilayah Ungaran Barat.</div>
+        <div class="card-tags">
+          <span class="tag">Literasi Digital</span><span class="tag">Pendidikan</span>
+        </div>
+      </div>
+
+      <div class="card fade-up">
+        <div class="card-icon">🛒</div>
+        <span class="badge badge-green"><span class="badge-dot"></span>Selesai</span>
+        <div class="card-title">Pendampingan Digitalisasi UMKM melalui Platform Marketplace Lokal</div>
+        <div class="card-meta">2023 · Program Pengabdian Mandiri</div>
+        <div class="card-desc">Membimbing pelaku UMKM dalam memanfaatkan platform digital untuk pemasaran produk, pengelolaan stok, dan pembukuan sederhana berbasis aplikasi.</div>
+        <div class="card-tags">
+          <span class="tag">UMKM</span><span class="tag">E-Commerce</span>
+        </div>
+      </div>
+
+      <div class="card fade-up">
+        <div class="card-icon">💻</div>
+        <span class="badge badge-yellow"><span class="badge-dot"></span>Berlangsung</span>
+        <div class="card-title">Workshop Pemrograman Web Dasar untuk Siswa SMK di Semarang</div>
+        <div class="card-meta">2024 – Sekarang · Kolaborasi Industri</div>
+        <div class="card-desc">Seri workshop pengembangan web (HTML, CSS, JavaScript) yang diselenggarakan bersama industri teknologi lokal untuk meningkatkan kompetensi siswa SMK.</div>
+        <div class="card-tags">
+          <span class="tag">Web Dev</span><span class="tag">Vokasi</span>
+        </div>
+      </div>
+
+      <div class="card fade-up">
+        <div class="card-icon">🗺️</div>
+        <span class="badge badge-green"><span class="badge-dot"></span>Selesai</span>
+        <div class="card-title">Pembuatan Sistem Informasi Profil Desa Berbasis Website untuk Desa Gedanganak</div>
+        <div class="card-meta">2022 · KKN Tematik</div>
+        <div class="card-desc">Membangun website profil desa yang menampilkan potensi, struktur perangkat desa, berita, dan layanan informasi publik bagi warga Desa Gedanganak.</div>
+        <div class="card-tags">
+          <span class="tag">Desa Digital</span><span class="tag">KKN</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ COURSES ════════════════ -->
+<section id="courses">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Pengajaran</div>
+      <h2 class="section-title">Mata Kuliah yang Diampu</h2>
+      <p class="section-desc">Daftar mata kuliah aktif yang diajarkan di program studi Teknologi Informasi.</p>
+    </div>
+    <div class="grid-3">
+
+      <div class="course-card fade-up">
+        <div class="course-code">TI-301</div>
+        <div class="course-name">Pemrograman Web</div>
+        <div class="course-desc">Pengembangan aplikasi web modern menggunakan HTML, CSS, JavaScript, dan framework backend.</div>
+        <div class="course-meta">
+          <span>📚 3 SKS</span>
+          <span>🎓 Semester 5</span>
+        </div>
+      </div>
+
+      <div class="course-card fade-up">
+        <div class="course-code">TI-401</div>
+        <div class="course-name">Basis Data Lanjut</div>
+        <div class="course-desc">Perancangan database relasional dan NoSQL, optimasi query, serta integrasi dengan aplikasi.</div>
+        <div class="course-meta">
+          <span>📚 3 SKS</span>
+          <span>🎓 Semester 5</span>
+        </div>
+      </div>
+
+      <div class="course-card fade-up">
+        <div class="course-code">TI-502</div>
+        <div class="course-name">Machine Learning</div>
+        <div class="course-desc">Konsep dan implementasi algoritma pembelajaran mesin untuk klasifikasi, regresi, dan clustering.</div>
+        <div class="course-meta">
+          <span>📚 3 SKS</span>
+          <span>🎓 Semester 7</span>
+        </div>
+      </div>
+
+      <div class="course-card fade-up">
+        <div class="course-code">TI-203</div>
+        <div class="course-name">Rekayasa Perangkat Lunak</div>
+        <div class="course-desc">Metodologi SDLC, perancangan sistem, UML, pola desain, dan manajemen proyek perangkat lunak.</div>
+        <div class="course-meta">
+          <span>📚 3 SKS</span>
+          <span>🎓 Semester 4</span>
+        </div>
+      </div>
+
+      <div class="course-card fade-up">
+        <div class="course-code">TI-601</div>
+        <div class="course-name">Keamanan Sistem Informasi</div>
+        <div class="course-desc">Prinsip keamanan siber, kriptografi, manajemen risiko, dan keamanan jaringan enterprise.</div>
+        <div class="course-meta">
+          <span>📚 2 SKS</span>
+          <span>🎓 Semester 7</span>
+        </div>
+      </div>
+
+      <div class="course-card fade-up">
+        <div class="course-code">TI-102</div>
+        <div class="course-name">Algoritma & Pemrograman</div>
+        <div class="course-desc">Logika pemrograman dasar, struktur data, dan penyelesaian masalah menggunakan Python.</div>
+        <div class="course-meta">
+          <span>📚 4 SKS</span>
+          <span>🎓 Semester 2</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ CONTACT ════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Hubungi</div>
+      <h2 class="section-title">Kontak</h2>
+      <p class="section-desc">Silakan menghubungi untuk keperluan akademik, kolaborasi riset, atau pertanyaan lainnya.</p>
+    </div>
+    <div class="grid-2" style="max-width:560px;">
+
+      <div class="card fade-up" style="padding:20px;">
+        <div style="font-size:20px;margin-bottom:10px;">✉️</div>
+        <div class="card-title" style="font-size:13px;margin-bottom:4px;">Email</div>
+        <a href="mailto:andika@university.ac.id" style="font-size:13.5px;color:var(--accent);text-decoration:none;">andika@university.ac.id</a>
+      </div>
+
+      <div class="card fade-up" style="padding:20px;">
+        <div style="font-size:20px;margin-bottom:10px;">🔗</div>
+        <div class="card-title" style="font-size:13px;margin-bottom:4px;">LinkedIn</div>
+        <a href="https://linkedin.com/in/andikachandrap" target="_blank" style="font-size:13.5px;color:var(--accent);text-decoration:none;">linkedin.com/in/andikachandrap</a>
+      </div>
+
+      <div class="card fade-up" style="padding:20px;">
+        <div style="font-size:20px;margin-bottom:10px;">🐙</div>
+        <div class="card-title" style="font-size:13px;margin-bottom:4px;">GitHub</div>
+        <a href="https://github.com/andikachandrap" target="_blank" style="font-size:13.5px;color:var(--accent);text-decoration:none;">github.com/andikachandrap</a>
+      </div>
+
+      <div class="card fade-up" style="padding:20px;">
+        <div style="font-size:20px;margin-bottom:10px;">📍</div>
+        <div class="card-title" style="font-size:13px;margin-bottom:4px;">Lokasi</div>
+        <span style="font-size:13.5px;color:var(--muted);">Ungaran, Jawa Tengah</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer>
+  <div class="container">
+    <p>© 2025 <strong>Andika Chandra P., S.Kom., M.T.I</strong> &nbsp;·&nbsp; Dibuat dengan ❤️ &nbsp;·&nbsp; <a href="https://github.com/andikachandrap">GitHub Pages</a></p>
+  </div>
+</footer>
+
+<script>
+  // Scroll fade-in observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
