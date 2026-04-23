@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daftar Mata Kuliah — Pengajar</title>
+  <title>Materi — Model dan Desain Bisnis Digital</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -12,19 +12,19 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #f7f6f3;
-      --surface:   #ffffff;
-      --border:    #e8e5de;
-      --text-main: #1a1917;
-      --text-sub:  #6b6760;
-      --text-muted:#a09d97;
-      --accent:    #2a6049;
-      --accent-lt: #d6ede4;
-      --tag-bd:    #c8d8e0;
-      --tag-bg:    #eef4f7;
-      --tag-txt:   #2d5a72;
-      --radius:    14px;
-      --gap:       28px;
+      --bg:          #f7f6f3;
+      --surface:     #ffffff;
+      --border:      #e8e5de;
+      --text-main:   #1a1917;
+      --text-sub:    #6b6760;
+      --text-muted:  #a09d97;
+      --accent:      #2a6049;
+      --accent-lt:   #d6ede4;
+      --accent-dark: #1e4535;
+      --warn:        #b45309;
+      --warn-lt:     #fef3c7;
+      --radius:      14px;
+      --card-radius: 12px;
     }
 
     html { scroll-behavior: smooth; }
@@ -34,59 +34,53 @@
       background: var(--bg);
       color: var(--text-main);
       min-height: 100vh;
-      padding: 0 0 80px;
+      padding-bottom: 80px;
     }
 
     /* ── HEADER ── */
     header {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
-      padding: 48px 0 40px;
+      padding: 44px 0 36px;
     }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 32px; }
 
-    .container {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 32px;
+    .breadcrumb {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb svg { opacity: .5; }
 
-    .header-eyebrow {
-      font-family: 'Inter', sans-serif;
+    .eyebrow {
       font-size: 11px;
       font-weight: 600;
       letter-spacing: .12em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
-    .header-title {
+    h1 {
       font-family: 'Poppins', sans-serif;
-      font-size: clamp(28px, 4vw, 40px);
+      font-size: clamp(24px, 3.5vw, 36px);
       font-weight: 700;
-      line-height: 1.15;
+      line-height: 1.2;
       color: var(--text-main);
     }
-
-    .header-title span {
-      color: var(--accent);
-    }
-
-    .header-sub {
-      margin-top: 12px;
-      font-size: 14.5px;
-      color: var(--text-sub);
-      line-height: 1.6;
-      max-width: 520px;
-    }
+    h1 span { color: var(--accent); }
 
     .header-meta {
       display: flex;
-      gap: 24px;
-      margin-top: 28px;
       flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
     }
-
     .meta-chip {
       display: flex;
       align-items: center;
@@ -94,7 +88,6 @@
       font-size: 13px;
       color: var(--text-sub);
     }
-
     .meta-chip .dot {
       width: 7px; height: 7px;
       border-radius: 50%;
@@ -102,124 +95,95 @@
       flex-shrink: 0;
     }
 
-    /* ── TIMELINE WRAPPER ── */
-    .timeline {
-      margin-top: 48px;
+    /* ── LEGEND ── */
+    .legend {
       display: flex;
-      flex-direction: column;
-      gap: 0;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 32px 0 8px;
     }
-
-    /* ── SEMESTER BLOCK ── */
-    .sem-block {
-      display: grid;
-      grid-template-columns: 96px 1fr;
-      gap: 0 32px;
-      position: relative;
-      animation: fadeUp .45s ease both;
-    }
-
-    .sem-block:nth-child(1)  { animation-delay: .05s; }
-    .sem-block:nth-child(2)  { animation-delay: .10s; }
-    .sem-block:nth-child(3)  { animation-delay: .15s; }
-    .sem-block:nth-child(4)  { animation-delay: .20s; }
-    .sem-block:nth-child(5)  { animation-delay: .25s; }
-    .sem-block:nth-child(6)  { animation-delay: .30s; }
-    .sem-block:nth-child(7)  { animation-delay: .35s; }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* left column — sem label + line */
-    .sem-label-col {
+    .legend-item {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      padding-top: 6px;
+      gap: 7px;
+      font-size: 12.5px;
+      color: var(--text-sub);
     }
-
-    .sem-badge {
-      width: 48px; height: 48px;
-      border-radius: 50%;
-      background: var(--accent);
-      color: #fff;
-      font-family: 'Poppins', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      line-height: 1.1;
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 3px;
       flex-shrink: 0;
-      box-shadow: 0 2px 12px rgba(42,96,73,.22);
-      transition: transform .2s;
     }
+    .ld-yt  { background: #ef4444; }
+    .ld-web { background: #3b82f6; }
+    .ld-dl  { background: #f59e0b; }
 
-    .sem-badge .sm { font-size: 9px; font-weight: 400; opacity: .85; }
-
-    .sem-block:hover .sem-badge { transform: scale(1.07); }
-
-    .sem-badge.empty {
-      background: var(--border);
-      color: var(--text-muted);
-      box-shadow: none;
+    /* ── TOPIC GROUP HEADER ── */
+    .topic-group {
+      margin-top: 40px;
     }
-
-    .timeline-line {
-      flex: 1;
-      width: 2px;
-      background: var(--border);
-      margin: 8px 0;
-    }
-
-    .sem-block:last-child .timeline-line { display: none; }
-
-    /* right column — cards */
-    .sem-content {
-      padding-bottom: 36px;
-    }
-
-    .sem-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-      padding-top: 8px;
-    }
-
-    /* empty state */
-    .empty-note {
+    .topic-group-label {
       display: flex;
       align-items: center;
-      gap: 10px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 22px;
-      font-size: 13.5px;
-      color: var(--text-muted);
-      font-style: italic;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .topic-group-label .tg-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .topic-group-label .tg-badge {
+      font-family: 'Poppins', sans-serif;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--accent);
+      color: var(--accent);
+      white-space: nowrap;
     }
 
-    /* ── COURSE CARD ── */
+    /* ── PERTEMUAN CARD ── */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px 24px;
+      border-radius: var(--card-radius);
       margin-bottom: 12px;
-      transition: box-shadow .2s, border-color .2s, transform .2s;
-      position: relative;
       overflow: hidden;
+      transition: box-shadow .2s, border-color .2s;
+      animation: fadeUp .4s ease both;
+    }
+    .card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,.07);
+      border-color: #d5d1ca;
     }
 
-    .card::before {
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(14px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* stagger per card */
+    .card:nth-child(1)  { animation-delay:.04s }
+    .card:nth-child(2)  { animation-delay:.08s }
+    .card:nth-child(3)  { animation-delay:.12s }
+    .card:nth-child(4)  { animation-delay:.16s }
+    .card:nth-child(5)  { animation-delay:.20s }
+
+    /* ── CARD HEADER (clickable) ── */
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 22px;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+    }
+    .card-header::after {
       content: '';
       position: absolute;
       left: 0; top: 0; bottom: 0;
@@ -229,60 +193,169 @@
       opacity: 0;
       transition: opacity .2s;
     }
+    .card.open .card-header::after,
+    .card-header:hover::after { opacity: 1; }
 
-    .card:hover {
-      box-shadow: 0 6px 28px rgba(0,0,0,.07);
-      border-color: #d0ccc5;
-      transform: translateY(-2px);
-    }
-
-    .card:hover::before { opacity: 1; }
-
-    .card-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 8px;
-    }
-
-    .card-name {
+    .pertemuan-num {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: var(--accent-lt);
+      color: var(--accent-dark);
       font-family: 'Poppins', sans-serif;
-      font-size: 15.5px;
-      font-weight: 600;
-      color: var(--text-main);
-      line-height: 1.3;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .card.open .pertemuan-num {
+      background: var(--accent);
+      color: #fff;
     }
 
-    .prodi-tag {
-      flex-shrink: 0;
+    .card-title-wrap { flex: 1; min-width: 0; }
+    .card-label {
       font-size: 11px;
       font-weight: 500;
-      padding: 3px 10px;
-      border-radius: 20px;
-      background: var(--tag-bg);
-      border: 1px solid var(--tag-bd);
-      color: var(--tag-txt);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .card-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .prodi-tag.ti {
-      background: #f3eefb;
-      border-color: #d4c5f0;
-      color: #5a3b8a;
+    .card-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
     }
 
-    .card-desc {
-      font-size: 13.5px;
-      color: var(--text-sub);
-      line-height: 1.65;
+    /* resource indicator dots */
+    .res-dots { display: flex; gap: 4px; }
+    .res-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      opacity: .25;
+      transition: opacity .2s;
+    }
+    .res-dot.active { opacity: 1; }
+    .rd-yt  { background: #ef4444; }
+    .rd-web { background: #3b82f6; }
+    .rd-dl  { background: #f59e0b; }
+
+    /* chevron */
+    .chevron {
+      color: var(--text-muted);
+      transition: transform .25s;
+      flex-shrink: 0;
+    }
+    .card.open .chevron { transform: rotate(180deg); }
+
+    /* ── CARD BODY ── */
+    .card-body {
+      display: none;
+      border-top: 1px solid var(--border);
+      background: #fafaf8;
+      padding: 22px 22px 24px;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .card.open .card-body { display: flex; }
+
+    /* ── RESOURCE SECTION ── */
+    .res-section { display: flex; flex-direction: column; gap: 8px; }
+
+    .res-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    /* YouTube embed */
+    .yt-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #000;
+    }
+    .yt-wrapper iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* placeholder when no content yet */
+    .placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      padding: 22px;
+      border: 1.5px dashed var(--border);
+      border-radius: 10px;
+      color: var(--text-muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    .placeholder svg { opacity: .4; }
+
+    /* link buttons */
+    .link-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      text-decoration: none;
+      transition: opacity .15s, transform .15s;
+      cursor: pointer;
+    }
+    .link-btn:hover { opacity: .85; transform: translateY(-1px); }
+
+    .btn-web {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+    .btn-dl {
+      background: #fffbeb;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+    .btn-empty {
+      background: var(--bg);
+      color: var(--text-muted);
+      border: 1.5px dashed var(--border);
+      font-style: italic;
     }
 
     /* ── FOOTER ── */
     footer {
       margin-top: 60px;
       border-top: 1px solid var(--border);
-      padding-top: 28px;
+      padding-top: 24px;
       font-size: 12.5px;
       color: var(--text-muted);
       text-align: center;
@@ -290,231 +363,791 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
-      .container { padding: 0 18px; }
-
-      .sem-block {
-        grid-template-columns: 56px 1fr;
-        gap: 0 18px;
-      }
-
-      .sem-badge { width: 38px; height: 38px; font-size: 11px; }
-      .sm { display: none; }
-
-      .card { padding: 16px 18px; }
-      .card-name { font-size: 14px; }
-      .card-top { flex-direction: column; gap: 6px; }
+      .container { padding: 0 16px; }
+      .card-header { padding: 14px 16px; }
+      .card-body { padding: 16px; }
+      .card-title { font-size: 14px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="container">
-      <p class="header-eyebrow">Profil Pengajaran</p>
-      <h1 class="header-title">Daftar <span>Mata Kuliah</span><br>yang Saya Ampu</h1>
-      <p class="header-sub">
-        Rangkuman seluruh mata kuliah yang diajarkan lintas semester, mencakup
-        program studi Bisnis Digital &amp; Kewirausahaan serta Teknik Informatika.
-      </p>
-      <div class="header-meta">
-        <div class="meta-chip"><span class="dot"></span> 10 Mata Kuliah</div>
-        <div class="meta-chip"><span class="dot"></span> 2 Program Studi</div>
-        <div class="meta-chip"><span class="dot"></span> Semester 1 – 7</div>
+<header>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="#">Mata Kuliah</a>
+      <svg width="12" height="12" viewBox="0 0 12 12"><path d="M4.5 2.5l3 3.5-3 3.5" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+      <span>Model dan Desain Bisnis Digital</span>
+    </div>
+    <p class="eyebrow">Semester 4 · Bisnis Digital</p>
+    <h1>Materi <span>Model dan Desain</span><br>Bisnis Digital</h1>
+    <div class="header-meta">
+      <div class="meta-chip"><span class="dot"></span>14 Pertemuan</div>
+      <div class="meta-chip"><span class="dot"></span>4 Topik Utama</div>
+      <div class="meta-chip"><span class="dot"></span>Video · Materi · Unduhan</div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item"><span class="legend-dot ld-yt"></span> Video YouTube</div>
+    <div class="legend-item"><span class="legend-dot ld-web"></span> Link Materi</div>
+    <div class="legend-item"><span class="legend-dot ld-dl"></span> Link Unduhan</div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TOPIK 1 — Pengantar
+  ══════════════════════════════════════ -->
+  <div class="topic-group">
+    <div class="topic-group-label">
+      <div class="tg-line"></div>
+      <div class="tg-badge">Pengantar</div>
+      <div class="tg-line"></div>
+    </div>
+
+    <!-- Pertemuan 1 -->
+    <div class="card" id="card-1">
+      <div class="card-header" onclick="toggleCard('card-1')">
+        <div class="pertemuan-num">01</div>
+        <div class="card-title-wrap">
+          <div class="card-label">Pertemuan 1</div>
+          <div class="card-title">Pengantar Model Bisnis Digital</div>
+        </div>
+        <div class="card-right">
+          <div class="res-dots">
+            <span class="res-dot rd-yt" id="dot-1-yt"></span>
+            <span class="res-dot rd-web" id="dot-1-web"></span>
+            <span class="res-dot rd-dl" id="dot-1-dl"></span>
+          </div>
+          <svg class="chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <!-- YouTube -->
+        <div class="res-section">
+          <div class="res-label">📺 Video Materi</div>
+          <div class="yt-wrapper">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/izvMJmBuEtw?si=TQs-83bCR8Gs6i3C" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+            <!--
+          <div class="placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+            Belum ada video. Ganti komentar di HTML dengan tag iframe YouTube.
+          </div>
+          <div class="yt-wrapper">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+          </div>
+          -->
+        </div>
+        <!-- Link Web -->
+        <div class="res-section">
+          <div class="res-label">🔗 Link Materi</div>
+          <div class="link-row">
+            <!-- Ganti href dengan URL materi -->
+            <a href="#" class="link-btn btn-empty">Belum ada link materi</a>
+          </div>
+        </div>
+        <!-- Download -->
+        <div class="res-section">
+          <div class="res-label">📥 Unduhan</div>
+          <div class="link-row">
+            <!-- Ganti href dengan link Google Drive -->
+            <a href="#" class="link-btn btn-empty">Belum ada file unduhan</a>
+          </div>
+        </div>
       </div>
     </div>
-  </header>
-
-  <!-- TIMELINE -->
-  <div class="container">
-    <div class="timeline">
-
-      <!-- ─ Semester 1 ─ -->
-      <div class="sem-block">
-        <div class="sem-label-col">
-          <div class="sem-badge"><span class="sm">Sem</span>1</div>
-          <div class="timeline-line"></div>
-        </div>
-        <div class="sem-content">
-          <p class="sem-title">Semester 1</p>
-          <div class="card">
-            <div class="card-top">
-              <span class="card-name">Pengantar Teknologi Informasi</span>
-              <span class="prodi-tag">Bisnis Digital</span>
-            </div>
-            <p class="card-desc">
-              Mata kuliah ini memberikan landasan konseptual dan praktis tentang teknologi informasi modern, meliputi perangkat keras, perangkat lunak, jaringan komputer, keamanan data, serta pemanfaatan TI dalam konteks bisnis dan kewirausahaan digital.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- ─ Semester 2 ─ -->
-      <div class="sem-block">
-        <div class="sem-label-col">
-          <div class="sem-badge empty"><span class="sm">Sem</span>2</div>
-          <div class="timeline-line"></div>
-        </div>
-        <div class="sem-content">
-          <p class="sem-title">Semester 2</p>
-          <div class="empty-note">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#a09d97" stroke-width="1.4"/><path d="M8 5v4M8 10.5v.5" stroke="#a09d97" stroke-width="1.4" stroke-linecap="round"/></svg>
-            Tidak ada jadwal pengajaran pada semester ini.
-          </div>
-        </div>
-      </div>
-
-      <!-- ─ Semester 3 ─ -->
-      <div class="sem-block">
-        <div class="sem-label-col">
-          <div class="sem-badge">3</div>
-          <div class="timeline-line"></div>
-        </div>
-        <div class="sem-content">
-          <p class="sem-title">Semester 3</p>
-          <div class="card">
-            <div class="card-top">
-              <span class="card-name">Ekonomi Digital Baru</span>
-              <span class="prodi-tag">Bisnis Digital</span>
-            </div>
-            <p class="card-desc">
-              Mengkaji transformasi ekonomi yang dipicu oleh teknologi digital, platform bisnis, e-commerce, ekonomi berbagi (sharing economy), serta kebijakan dan regulasi yang membentuk ekosistem ekonomi digital masa kini dan masa depan.
-            </p>
-          </div>
-          <div class="card">
-            <div class="card-top">
-              <span class="card-name">Interaksi Manusia dan Komputer</span>
-              <span class="prodi-tag">Bisnis Digital</span>
-            </div>
-            <p class="card-desc">
-              Mempelajari prinsip-prinsip desain antarmuka yang berpusat pada pengguna (user-centered design), evaluasi usabilitas, prototipe interaktif, serta bagaimana manusia berinteraksi dengan sistem komputer secara efektif dan intuitif.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- ─ Semester 4 ─ -->
-      <div class="sem-block">
-        <div class="sem-label-col">
-          <div class="sem-badge">4</div>
-          <div class="timeline-line"></div>
-        </div>
-        <div class="sem-content">
-          <p class="sem-title">Semester 4</p>
-          <div class="card">
-            <div class="card-top">
-              <span class="card-name">Model dan Desain Bisnis Digital</span>
-              <span class="prodi-tag">Bisnis Digital</span>
-            </div>
-            <p class="card-desc">
-              Membahas berbagai model bisnis digital seperti freemium, subscription, marketplace, dan platform. Mahasiswa belajar merancang, menganalisis, dan mengevaluasi model bisnis menggunakan Business Model Canvas dan pendekatan lean startup.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- ─ Semester 5 ─ -->
-      <div class="sem-block">
-        <div class="sem-label-col">
-          <div class="sem-badge">5</div>
-          <div class="timeline-line"></div>
-        </div>
-        <div class="sem-content">
-          <p class="sem-title">Semester 5</p>
-          <div class="card">
-            <div class="card-top">
-              <span class="card-name">Analisis Bisnis Digital</span>
-              <span class="prodi-tag">Bisnis Digital</span>
-            </div>
-            <p class="card-desc">
-              Memberikan kerangka dan alat analitik untuk mengevaluasi kinerja bisnis digital, menginterpretasikan data operasional, serta mengambil keputusan strategis berbasis data dalam lingkungan bisnis yang dinamis.
-            </p>
-          </div>
-          <div class="card">
-            <div class="card-top">
-              <span class="card-name">Social Media Analysis</span>
-              <span class="prodi-tag">Bisnis Digital</span>
-            </div>
-            <p class="card-desc">
-              Membekali mahasiswa dengan teknik pengumpulan, pengolahan, dan interpretasi data media sosial untuk keperluan branding, riset pasar, analisis sentimen, serta pengembangan strategi konten digital yang tepat sasaran.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- ─ Semester 6 ─ -->
-      <div class="sem-block">
-        <div class="sem-label-col">
-          <div class="sem-badge">6</div>
-          <div class="timeline-line"></div>
-        </div>
-        <div class="sem-content">
-          <p class="sem-title">Semester 6</p>
-          <div class="card">
-            <div class="card-top">
-              <span class="card-name">Digital Consumer Behaviour</span>
-              <span class="prodi-tag">Bisnis Digital</span>
-            </div>
-            <p class="card-desc">
-              Menganalisis pola perilaku konsumen di era digital, meliputi proses pengambilan keputusan pembelian online, pengaruh ulasan dan media sosial, personalisasi pengalaman, serta strategi untuk membangun loyalitas pelanggan digital.
-            </p>
-          </div>
-          <div class="card">
-            <div class="card-top">
-              <span class="card-name">Data Warehouse dan Business Intelligence</span>
-              <span class="prodi-tag">Bisnis Digital</span>
-            </div>
-            <p class="card-desc">
-              Memperkenalkan arsitektur data warehouse, ETL (Extract, Transform, Load), OLAP, dan alat BI untuk mengolah data besar menjadi informasi bisnis yang bernilai, mendukung pelaporan dan pengambilan keputusan eksekutif.
-            </p>
-          </div>
-          <div class="card">
-            <div class="card-top">
-              <span class="card-name">Manajemen Proyek SI</span>
-              <span class="prodi-tag ti">Teknik Informatika</span>
-            </div>
-            <p class="card-desc">
-              Membahas metodologi manajemen proyek sistem informasi meliputi perencanaan, penjadwalan, estimasi biaya, manajemen risiko, serta penggunaan alat seperti Gantt Chart dan PMBOK untuk memimpin proyek TI secara terstruktur.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- ─ Semester 7 ─ -->
-      <div class="sem-block">
-        <div class="sem-label-col">
-          <div class="sem-badge">7</div>
-          <div class="timeline-line"></div>
-        </div>
-        <div class="sem-content">
-          <p class="sem-title">Semester 7</p>
-          <div class="card">
-            <div class="card-top">
-              <span class="card-name">Technopreneur</span>
-              <span class="prodi-tag ti">Teknik Informatika</span>
-            </div>
-            <p class="card-desc">
-              Mengintegrasikan kompetensi teknis dengan jiwa kewirausahaan; mahasiswa diarahkan untuk mengidentifikasi peluang, mengembangkan solusi berbasis teknologi, melakukan validasi pasar, dan membangun startup berbasis produk digital.
-            </p>
-          </div>
-          <div class="card">
-            <div class="card-top">
-              <span class="card-name">Technopreneurship</span>
-              <span class="prodi-tag">Bisnis Digital</span>
-            </div>
-            <p class="card-desc">
-              Membekali mahasiswa dengan pemahaman mendalam tentang ekosistem startup teknologi, termasuk pendanaan, pitching investor, growth hacking, serta strategi scale-up bisnis digital dari tahap ideasi hingga komersialisasi produk.
-            </p>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /timeline -->
-
-    <footer>
-      <p>© 2025 · Daftar Mata Kuliah Pengajar &nbsp;·&nbsp; Bisnis Digital &amp; Teknik Informatika</p>
-    </footer>
   </div>
+
+  <!-- ══════════════════════════════════════
+       TOPIK 2 — Lean Canvas (P2–P5)
+  ══════════════════════════════════════ -->
+  <div class="topic-group">
+    <div class="topic-group-label">
+      <div class="tg-line"></div>
+      <div class="tg-badge">Lean Canvas</div>
+      <div class="tg-line"></div>
+    </div>
+
+    <!-- Pertemuan 2 -->
+    <div class="card" id="card-2">
+      <div class="card-header" onclick="toggleCard('card-2')">
+        <div class="pertemuan-num">02</div>
+        <div class="card-title-wrap">
+          <div class="card-label">Pertemuan 2</div>
+          <div class="card-title">Lean Canvas — Pengantar & Overview</div>
+        </div>
+        <div class="card-right">
+          <div class="res-dots">
+            <span class="res-dot rd-yt" id="dot-2-yt"></span>
+            <span class="res-dot rd-web" id="dot-2-web"></span>
+            <span class="res-dot rd-dl" id="dot-2-dl"></span>
+          </div>
+          <svg class="chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="res-section">
+          <div class="res-label">📺 Video Materi</div>
+          <div class="placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+            Belum ada video.
+          </div>
+          <!--
+          <div class="yt-wrapper">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+          </div>
+          -->
+        </div>
+        <div class="res-section">
+          <div class="res-label">🔗 Link Materi</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada link materi</a>
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">📥 Unduhan</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada file unduhan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pertemuan 3 -->
+    <div class="card" id="card-3">
+      <div class="card-header" onclick="toggleCard('card-3')">
+        <div class="pertemuan-num">03</div>
+        <div class="card-title-wrap">
+          <div class="card-label">Pertemuan 3</div>
+          <div class="card-title">Lean Canvas — Problem & Customer Segment</div>
+        </div>
+        <div class="card-right">
+          <div class="res-dots">
+            <span class="res-dot rd-yt" id="dot-3-yt"></span>
+            <span class="res-dot rd-web" id="dot-3-web"></span>
+            <span class="res-dot rd-dl" id="dot-3-dl"></span>
+          </div>
+          <svg class="chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="res-section">
+          <div class="res-label">📺 Video Materi</div>
+          <div class="placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+            Belum ada video.
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">🔗 Link Materi</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada link materi</a>
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">📥 Unduhan</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada file unduhan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pertemuan 4 -->
+    <div class="card" id="card-4">
+      <div class="card-header" onclick="toggleCard('card-4')">
+        <div class="pertemuan-num">04</div>
+        <div class="card-title-wrap">
+          <div class="card-label">Pertemuan 4</div>
+          <div class="card-title">Lean Canvas — Solution & Revenue Streams</div>
+        </div>
+        <div class="card-right">
+          <div class="res-dots">
+            <span class="res-dot rd-yt" id="dot-4-yt"></span>
+            <span class="res-dot rd-web" id="dot-4-web"></span>
+            <span class="res-dot rd-dl" id="dot-4-dl"></span>
+          </div>
+          <svg class="chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="res-section">
+          <div class="res-label">📺 Video Materi</div>
+          <div class="placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+            Belum ada video.
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">🔗 Link Materi</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada link materi</a>
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">📥 Unduhan</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada file unduhan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pertemuan 5 -->
+    <div class="card" id="card-5">
+      <div class="card-header" onclick="toggleCard('card-5')">
+        <div class="pertemuan-num">05</div>
+        <div class="card-title-wrap">
+          <div class="card-label">Pertemuan 5</div>
+          <div class="card-title">Lean Canvas — Studi Kasus & Presentasi</div>
+        </div>
+        <div class="card-right">
+          <div class="res-dots">
+            <span class="res-dot rd-yt" id="dot-5-yt"></span>
+            <span class="res-dot rd-web" id="dot-5-web"></span>
+            <span class="res-dot rd-dl" id="dot-5-dl"></span>
+          </div>
+          <svg class="chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="res-section">
+          <div class="res-label">📺 Video Materi</div>
+          <div class="placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+            Belum ada video.
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">🔗 Link Materi</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada link materi</a>
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">📥 Unduhan</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada file unduhan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TOPIK 3 — Design Thinking (P6–P9)
+  ══════════════════════════════════════ -->
+  <div class="topic-group">
+    <div class="topic-group-label">
+      <div class="tg-line"></div>
+      <div class="tg-badge">Design Thinking</div>
+      <div class="tg-line"></div>
+    </div>
+
+    <!-- Pertemuan 6 -->
+    <div class="card" id="card-6">
+      <div class="card-header" onclick="toggleCard('card-6')">
+        <div class="pertemuan-num">06</div>
+        <div class="card-title-wrap">
+          <div class="card-label">Pertemuan 6</div>
+          <div class="card-title">Design Thinking — Pengantar & Empathize</div>
+        </div>
+        <div class="card-right">
+          <div class="res-dots">
+            <span class="res-dot rd-yt" id="dot-6-yt"></span>
+            <span class="res-dot rd-web" id="dot-6-web"></span>
+            <span class="res-dot rd-dl" id="dot-6-dl"></span>
+          </div>
+          <svg class="chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="res-section">
+          <div class="res-label">📺 Video Materi</div>
+          <div class="placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+            Belum ada video.
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">🔗 Link Materi</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada link materi</a>
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">📥 Unduhan</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada file unduhan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pertemuan 7 -->
+    <div class="card" id="card-7">
+      <div class="card-header" onclick="toggleCard('card-7')">
+        <div class="pertemuan-num">07</div>
+        <div class="card-title-wrap">
+          <div class="card-label">Pertemuan 7</div>
+          <div class="card-title">Design Thinking — Define & Ideate</div>
+        </div>
+        <div class="card-right">
+          <div class="res-dots">
+            <span class="res-dot rd-yt" id="dot-7-yt"></span>
+            <span class="res-dot rd-web" id="dot-7-web"></span>
+            <span class="res-dot rd-dl" id="dot-7-dl"></span>
+          </div>
+          <svg class="chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="res-section">
+          <div class="res-label">📺 Video Materi</div>
+          <div class="placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+            Belum ada video.
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">🔗 Link Materi</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada link materi</a>
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">📥 Unduhan</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada file unduhan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pertemuan 8 -->
+    <div class="card" id="card-8">
+      <div class="card-header" onclick="toggleCard('card-8')">
+        <div class="pertemuan-num">08</div>
+        <div class="card-title-wrap">
+          <div class="card-label">Pertemuan 8</div>
+          <div class="card-title">Design Thinking — Prototype</div>
+        </div>
+        <div class="card-right">
+          <div class="res-dots">
+            <span class="res-dot rd-yt" id="dot-8-yt"></span>
+            <span class="res-dot rd-web" id="dot-8-web"></span>
+            <span class="res-dot rd-dl" id="dot-8-dl"></span>
+          </div>
+          <svg class="chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="res-section">
+          <div class="res-label">📺 Video Materi</div>
+          <div class="placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+            Belum ada video.
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">🔗 Link Materi</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada link materi</a>
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">📥 Unduhan</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada file unduhan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pertemuan 9 -->
+    <div class="card" id="card-9">
+      <div class="card-header" onclick="toggleCard('card-9')">
+        <div class="pertemuan-num">09</div>
+        <div class="card-title-wrap">
+          <div class="card-label">Pertemuan 9</div>
+          <div class="card-title">Design Thinking — Test & Iterasi</div>
+        </div>
+        <div class="card-right">
+          <div class="res-dots">
+            <span class="res-dot rd-yt" id="dot-9-yt"></span>
+            <span class="res-dot rd-web" id="dot-9-web"></span>
+            <span class="res-dot rd-dl" id="dot-9-dl"></span>
+          </div>
+          <svg class="chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="res-section">
+          <div class="res-label">📺 Video Materi</div>
+          <div class="placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+            Belum ada video.
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">🔗 Link Materi</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada link materi</a>
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">📥 Unduhan</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada file unduhan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TOPIK 4 — Unique Value Proposition (P10–P14)
+  ══════════════════════════════════════ -->
+  <div class="topic-group">
+    <div class="topic-group-label">
+      <div class="tg-line"></div>
+      <div class="tg-badge">Unique Value Proposition</div>
+      <div class="tg-line"></div>
+    </div>
+
+    <!-- Pertemuan 10 -->
+    <div class="card" id="card-10">
+      <div class="card-header" onclick="toggleCard('card-10')">
+        <div class="pertemuan-num">10</div>
+        <div class="card-title-wrap">
+          <div class="card-label">Pertemuan 10</div>
+          <div class="card-title">UVP — Konsep dan Definisi</div>
+        </div>
+        <div class="card-right">
+          <div class="res-dots">
+            <span class="res-dot rd-yt" id="dot-10-yt"></span>
+            <span class="res-dot rd-web" id="dot-10-web"></span>
+            <span class="res-dot rd-dl" id="dot-10-dl"></span>
+          </div>
+          <svg class="chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="res-section">
+          <div class="res-label">📺 Video Materi</div>
+          <div class="placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+            Belum ada video.
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">🔗 Link Materi</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada link materi</a>
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">📥 Unduhan</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada file unduhan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pertemuan 11 -->
+    <div class="card" id="card-11">
+      <div class="card-header" onclick="toggleCard('card-11')">
+        <div class="pertemuan-num">11</div>
+        <div class="card-title-wrap">
+          <div class="card-label">Pertemuan 11</div>
+          <div class="card-title">UVP — Value Proposition Canvas</div>
+        </div>
+        <div class="card-right">
+          <div class="res-dots">
+            <span class="res-dot rd-yt" id="dot-11-yt"></span>
+            <span class="res-dot rd-web" id="dot-11-web"></span>
+            <span class="res-dot rd-dl" id="dot-11-dl"></span>
+          </div>
+          <svg class="chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="res-section">
+          <div class="res-label">📺 Video Materi</div>
+          <div class="placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+            Belum ada video.
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">🔗 Link Materi</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada link materi</a>
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">📥 Unduhan</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada file unduhan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pertemuan 12 -->
+    <div class="card" id="card-12">
+      <div class="card-header" onclick="toggleCard('card-12')">
+        <div class="pertemuan-num">12</div>
+        <div class="card-title-wrap">
+          <div class="card-label">Pertemuan 12</div>
+          <div class="card-title">UVP — Merancang Pesan & Positioning</div>
+        </div>
+        <div class="card-right">
+          <div class="res-dots">
+            <span class="res-dot rd-yt" id="dot-12-yt"></span>
+            <span class="res-dot rd-web" id="dot-12-web"></span>
+            <span class="res-dot rd-dl" id="dot-12-dl"></span>
+          </div>
+          <svg class="chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="res-section">
+          <div class="res-label">📺 Video Materi</div>
+          <div class="placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+            Belum ada video.
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">🔗 Link Materi</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada link materi</a>
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">📥 Unduhan</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada file unduhan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pertemuan 13 -->
+    <div class="card" id="card-13">
+      <div class="card-header" onclick="toggleCard('card-13')">
+        <div class="pertemuan-num">13</div>
+        <div class="card-title-wrap">
+          <div class="card-label">Pertemuan 13</div>
+          <div class="card-title">UVP — Studi Kasus Produk Digital</div>
+        </div>
+        <div class="card-right">
+          <div class="res-dots">
+            <span class="res-dot rd-yt" id="dot-13-yt"></span>
+            <span class="res-dot rd-web" id="dot-13-web"></span>
+            <span class="res-dot rd-dl" id="dot-13-dl"></span>
+          </div>
+          <svg class="chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="res-section">
+          <div class="res-label">📺 Video Materi</div>
+          <div class="placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+            Belum ada video.
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">🔗 Link Materi</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada link materi</a>
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">📥 Unduhan</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada file unduhan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pertemuan 14 -->
+    <div class="card" id="card-14">
+      <div class="card-header" onclick="toggleCard('card-14')">
+        <div class="pertemuan-num">14</div>
+        <div class="card-title-wrap">
+          <div class="card-label">Pertemuan 14</div>
+          <div class="card-title">UVP — Review & Presentasi Akhir</div>
+        </div>
+        <div class="card-right">
+          <div class="res-dots">
+            <span class="res-dot rd-yt" id="dot-14-yt"></span>
+            <span class="res-dot rd-web" id="dot-14-web"></span>
+            <span class="res-dot rd-dl" id="dot-14-dl"></span>
+          </div>
+          <svg class="chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="res-section">
+          <div class="res-label">📺 Video Materi</div>
+          <div class="placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+            Belum ada video.
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">🔗 Link Materi</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada link materi</a>
+          </div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">📥 Unduhan</div>
+          <div class="link-row">
+            <a href="#" class="link-btn btn-empty">Belum ada file unduhan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /topic-group -->
+
+  <footer>
+    <p>© 2025 · Materi Mata Kuliah Model dan Desain Bisnis Digital &nbsp;·&nbsp; Semester 4 · Bisnis Digital</p>
+  </footer>
+
+</div><!-- /container -->
+
+<script>
+  function toggleCard(id) {
+    const card = document.getElementById(id);
+    card.classList.toggle('open');
+  }
+
+  /*
+  ══════════════════════════════════════════════════════════════
+  CARA MENGISI MATERI — edit fungsi initResources() di bawah ini
+  ══════════════════════════════════════════════════════════════
+
+  Format data tiap pertemuan:
+  {
+    yt:  'VIDEO_ID_YOUTUBE',        // isi ID video YouTube, kosongkan ('') jika belum ada
+    web: { label:'Nama Link', url:'https://...' },  // kosongkan null jika belum ada
+    dl:  { label:'Nama File', url:'https://...' }   // kosongkan null jika belum ada
+  }
+
+  Contoh Pertemuan 1 yang sudah terisi:
+  1: {
+    yt:  'dQw4w9WgXcQ',
+    web: { label:'Slide Materi', url:'https://docs.google.com/...' },
+    dl:  { label:'Unduh PDF', url:'https://drive.google.com/...' }
+  }
+  */
+
+  const resources = {
+    1:  { yt: '', web: null, dl: null },
+    2:  { yt: '', web: null, dl: null },
+    3:  { yt: '', web: null, dl: null },
+    4:  { yt: '', web: null, dl: null },
+    5:  { yt: '', web: null, dl: null },
+    6:  { yt: '', web: null, dl: null },
+    7:  { yt: '', web: null, dl: null },
+    8:  { yt: '', web: null, dl: null },
+    9:  { yt: '', web: null, dl: null },
+    10: { yt: '', web: null, dl: null },
+    11: { yt: '', web: null, dl: null },
+    12: { yt: '', web: null, dl: null },
+    13: { yt: '', web: null, dl: null },
+    14: { yt: '', web: null, dl: null },
+  };
+
+  function initResources() {
+    for (const [num, res] of Object.entries(resources)) {
+      const card = document.getElementById('card-' + num);
+      if (!card) continue;
+      const body = card.querySelector('.card-body');
+      const sections = body.querySelectorAll('.res-section');
+
+      // ── YouTube ──
+      const ytSection = sections[0];
+      if (res.yt) {
+        ytSection.innerHTML = `
+          <div class="res-label">📺 Video Materi</div>
+          <div class="yt-wrapper">
+            <iframe src="https://www.youtube.com/embed/${res.yt}" allowfullscreen loading="lazy"></iframe>
+          </div>`;
+        document.getElementById('dot-' + num + '-yt').classList.add('active');
+      }
+
+      // ── Link Web ──
+      const webSection = sections[1];
+      if (res.web) {
+        webSection.innerHTML = `
+          <div class="res-label">🔗 Link Materi</div>
+          <div class="link-row">
+            <a href="${res.web.url}" target="_blank" rel="noopener" class="link-btn btn-web">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3H3a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M9 2h5v5M14 2L8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              ${res.web.label}
+            </a>
+          </div>`;
+        document.getElementById('dot-' + num + '-web').classList.add('active');
+      }
+
+      // ── Download ──
+      const dlSection = sections[2];
+      if (res.dl) {
+        dlSection.innerHTML = `
+          <div class="res-label">📥 Unduhan</div>
+          <div class="link-row">
+            <a href="${res.dl.url}" target="_blank" rel="noopener" class="link-btn btn-dl">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              ${res.dl.label}
+            </a>
+          </div>`;
+        document.getElementById('dot-' + num + '-dl').classList.add('active');
+      }
+    }
+  }
+
+  initResources();
+</script>
 
 </body>
 </html>
