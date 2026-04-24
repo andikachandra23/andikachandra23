@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Storytelling – Materi Interaktif</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0f1e;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #1e2d45;
+    --accent: #3b82f6;
+    --accent2: #06b6d4;
+    --accent3: #f59e0b;
+    --accent4: #10b981;
+    --accent5: #ef4444;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+    --card-bg: #131c2e;
+    --highlight: #1d3a6b;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+  /* NAVBAR */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    background: rgba(10,15,30,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800; font-size: 1.1rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  .nav-links { display: flex; gap: 0.25rem; }
+  .nav-links a {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 0.78rem; font-weight: 500;
+    padding: 0.4rem 0.75rem; border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); background: var(--surface2); }
+  .nav-links a.active { color: var(--accent); background: rgba(59,130,246,0.1); }
+
+  /* PROGRESS BAR */
+  #progress-bar {
+    position: fixed; top: 60px; left: 0; width: 0%; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    z-index: 999; transition: width 0.1s;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 80px 2rem 4rem;
+    position: relative; overflow: hidden;
+    text-align: center;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 50%, rgba(59,130,246,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 30%, rgba(6,182,212,0.1) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 50% 80%, rgba(245,158,11,0.06) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: linear-gradient(rgba(59,130,246,0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(59,130,246,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 70% 70% at center, black 30%, transparent 80%);
+  }
+  .hero-tag {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent2); background: rgba(6,182,212,0.1);
+    border: 1px solid rgba(6,182,212,0.2);
+    padding: 0.35rem 1rem; border-radius: 100px;
+    margin-bottom: 1.5rem; position: relative; z-index: 1;
+    animation: fadeDown 0.8s ease forwards;
+  }
+  .hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900; font-size: clamp(2.5rem, 7vw, 5rem);
+    line-height: 1.05; letter-spacing: -2px;
+    position: relative; z-index: 1;
+    animation: fadeDown 0.8s 0.1s ease both;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text-muted);
+    max-width: 600px; margin: 1.5rem auto 0;
+    position: relative; z-index: 1;
+    animation: fadeDown 0.8s 0.2s ease both;
+  }
+  .hero-stats {
+    display: flex; gap: 2rem; justify-content: center;
+    margin-top: 3rem; position: relative; z-index: 1;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num {
+    font-family: 'Poppins', sans-serif; font-weight: 800;
+    font-size: 2rem; line-height: 1;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-stat .label { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.25rem; }
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: var(--text-dim); font-size: 0.7rem; letter-spacing: 0.1em;
+    animation: bounce 2s infinite;
+    z-index: 1;
+  }
+  .scroll-hint .arrow { font-size: 1.2rem; }
+
+  /* SECTION LAYOUT */
+  .section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-header { margin-bottom: 3rem; }
+  .section-tag {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.75rem; display: block;
+  }
+  .section-title {
+    font-family: 'Poppins', sans-serif; font-weight: 800;
+    font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: -1px; line-height: 1.1;
+  }
+  .section-sub { color: var(--text-muted); margin-top: 0.75rem; font-size: 1rem; max-width: 600px; }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0 auto;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 1.75rem;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(59,130,246,0.03) 0%, transparent 50%);
+    border-radius: inherit; pointer-events: none;
+  }
+  .card:hover { border-color: rgba(59,130,246,0.3); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+
+  /* VENN DIAGRAM */
+  .venn-wrap {
+    display: flex; align-items: center; justify-content: center;
+    padding: 3rem 1rem; position: relative;
+  }
+  .venn-svg { max-width: 480px; width: 100%; filter: drop-shadow(0 0 30px rgba(59,130,246,0.15)); }
+
+  /* FORMULA BAR */
+  .formula {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem 1.75rem;
+    display: flex; align-items: center; gap: 1rem;
+    font-family: 'Poppins', sans-serif;
+    flex-wrap: wrap;
+  }
+  .formula-part {
+    padding: 0.4rem 1rem; border-radius: 8px;
+    font-weight: 700; font-size: 0.95rem;
+  }
+  .formula-op { color: var(--text-muted); font-size: 1.5rem; font-weight: 300; }
+
+  /* ANALOGY BOX */
+  .analogy-box {
+    background: linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(245,158,11,0.02) 100%);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-left: 4px solid var(--accent3);
+    border-radius: 12px; padding: 1.5rem;
+    position: relative;
+  }
+  .analogy-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .analogy-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent3); margin-bottom: 0.5rem;
+  }
+
+  /* EXAMPLE BOX */
+  .example-box {
+    background: linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(16,185,129,0.02) 100%);
+    border: 1px solid rgba(16,185,129,0.2);
+    border-left: 4px solid var(--accent4);
+    border-radius: 12px; padding: 1.5rem;
+  }
+  .example-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent4); margin-bottom: 0.75rem;
+  }
+
+  /* CASE STUDY */
+  .case-box {
+    background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(59,130,246,0.02) 100%);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 16px; padding: 2rem;
+  }
+  .case-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+
+  /* QUIZ */
+  .quiz-container {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 2rem;
+  }
+  .quiz-q { font-weight: 600; font-size: 1.05rem; margin-bottom: 1.25rem; }
+  .quiz-q .q-num {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white; font-size: 0.75rem; font-weight: 700;
+    padding: 0.2rem 0.6rem; border-radius: 100px; margin-right: 0.5rem;
+  }
+  .quiz-options { display: grid; gap: 0.6rem; }
+  .quiz-opt {
+    padding: 0.85rem 1.1rem;
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 10px; cursor: pointer;
+    font-size: 0.9rem; transition: all 0.2s;
+    display: flex; align-items: center; gap: 0.75rem;
+    font-family: 'Inter', sans-serif;
+  }
+  .quiz-opt:hover { border-color: var(--accent); background: var(--highlight); }
+  .quiz-opt.correct { border-color: var(--accent4); background: rgba(16,185,129,0.1); color: var(--accent4); }
+  .quiz-opt.wrong { border-color: var(--accent5); background: rgba(239,68,68,0.1); color: var(--accent5); }
+  .quiz-opt.disabled { pointer-events: none; opacity: 0.5; }
+  .quiz-opt.correct.disabled, .quiz-opt.wrong.disabled { opacity: 1; }
+  .quiz-feedback {
+    margin-top: 1rem; padding: 1rem 1.25rem;
+    border-radius: 10px; font-size: 0.9rem; display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); color: #6ee7b7; }
+  .quiz-feedback.wrong-fb { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); color: #fca5a5; }
+  .quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+  .quiz-progress { font-size: 0.8rem; color: var(--text-dim); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.65rem 1.25rem; border-radius: 8px;
+    font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; border: none; transition: all 0.2s;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-ghost { background: var(--surface2); color: var(--text-muted); border: 1px solid var(--border); }
+  .btn-ghost:hover { color: var(--text); border-color: var(--accent); }
+
+  /* SCORE */
+  .score-display {
+    text-align: center; padding: 2rem;
+    background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(6,182,212,0.05));
+    border-radius: 16px; border: 1px solid rgba(59,130,246,0.2);
+  }
+  .score-num {
+    font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 4rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  /* COMPARISON TABLE */
+  .comparison-table { width: 100%; border-collapse: collapse; }
+  .comparison-table th {
+    background: var(--surface2);
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--text-muted); padding: 0.9rem 1rem; text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .comparison-table td {
+    padding: 0.85rem 1rem; font-size: 0.88rem;
+    border-bottom: 1px solid rgba(30,45,69,0.5);
+    vertical-align: top;
+  }
+  .comparison-table tr:hover td { background: var(--surface2); }
+  .comparison-table .tag-data { color: var(--accent); }
+  .comparison-table .tag-story { color: var(--accent2); }
+
+  /* STEP FLOW */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step-item {
+    display: flex; gap: 1.5rem; padding: 1.5rem 0;
+    position: relative;
+  }
+  .step-item:not(:last-child)::after {
+    content: ''; position: absolute;
+    left: 19px; top: calc(3rem + 4px); bottom: 0;
+    width: 2px; background: var(--border);
+  }
+  .step-num {
+    flex-shrink: 0; width: 40px; height: 40px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 0.9rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white; position: relative; z-index: 1;
+  }
+  .step-content h4 { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 0.35rem; }
+  .step-content p { color: var(--text-muted); font-size: 0.88rem; }
+
+  /* CHART DEMO */
+  .chart-demo {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem;
+  }
+  .chart-title { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 1rem; }
+  .bar-chart { display: flex; flex-direction: column; gap: 0.6rem; }
+  .bar-row { display: flex; align-items: center; gap: 0.75rem; }
+  .bar-label { font-size: 0.78rem; color: var(--text-muted); width: 80px; flex-shrink: 0; text-align: right; }
+  .bar-track { flex: 1; background: var(--surface2); border-radius: 100px; height: 22px; overflow: hidden; }
+  .bar-fill {
+    height: 100%; border-radius: 100px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 0.5rem;
+    font-size: 0.7rem; font-weight: 700; color: white;
+  }
+  .bar-fill.bad { background: linear-gradient(90deg, #64748b, #475569); }
+  .bar-fill.highlight { background: linear-gradient(90deg, var(--accent3), #f97316); }
+
+  /* ACCORDION */
+  .accordion { display: flex; flex-direction: column; gap: 0.5rem; }
+  .acc-item { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .acc-header {
+    padding: 1rem 1.25rem;
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; background: var(--card-bg);
+    font-weight: 600; font-size: 0.92rem;
+    transition: background 0.2s;
+  }
+  .acc-header:hover { background: var(--surface2); }
+  .acc-icon { font-size: 1.2rem; transition: transform 0.3s; color: var(--text-muted); }
+  .acc-item.open .acc-icon { transform: rotate(45deg); color: var(--accent); }
+  .acc-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    background: var(--surface);
+  }
+  .acc-body-inner { padding: 1.25rem; font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+
+  /* PILLARS */
+  .pillar-card {
+    padding: 2rem; border-radius: 16px; text-align: center;
+    border: 1px solid var(--border); background: var(--card-bg);
+    transition: all 0.3s; cursor: default;
+  }
+  .pillar-card:hover { transform: translateY(-6px); }
+  .pillar-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .pillar-card h3 {
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  .pillar-card p { font-size: 0.85rem; color: var(--text-muted); }
+  .pillar-data { border-color: rgba(59,130,246,0.3); }
+  .pillar-data:hover { box-shadow: 0 20px 60px rgba(59,130,246,0.15); border-color: var(--accent); }
+  .pillar-visual { border-color: rgba(6,182,212,0.3); }
+  .pillar-visual:hover { box-shadow: 0 20px 60px rgba(6,182,212,0.15); border-color: var(--accent2); }
+  .pillar-narrative { border-color: rgba(245,158,11,0.3); }
+  .pillar-narrative:hover { box-shadow: 0 20px 60px rgba(245,158,11,0.15); border-color: var(--accent3); }
+
+  /* CASE STUDY INTERACTIVE */
+  .scenario-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 0.5rem 1rem; border-radius: 8px;
+    font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    border: 1px solid var(--border); background: var(--card-bg);
+    color: var(--text-muted); transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* BADGE */
+  .badge {
+    display: inline-block; padding: 0.2rem 0.65rem;
+    border-radius: 100px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em;
+  }
+  .badge-blue { background: rgba(59,130,246,0.15); color: #93c5fd; }
+  .badge-cyan { background: rgba(6,182,212,0.15); color: #67e8f9; }
+  .badge-amber { background: rgba(245,158,11,0.15); color: #fcd34d; }
+  .badge-green { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+  .badge-red { background: rgba(239,68,68,0.15); color: #fca5a5; }
+
+  /* HIGHLIGHT TEXT */
+  .hl { color: var(--accent2); font-weight: 600; }
+  .hl-a { color: var(--accent3); font-weight: 600; }
+  .hl-g { color: var(--accent4); font-weight: 600; }
+
+  h2 { font-family: 'Poppins', sans-serif; }
+  h3 { font-family: 'Poppins', sans-serif; font-weight: 700; }
+  p { line-height: 1.75; }
+
+  /* TABLE WRAPPER */
+  .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+
+  /* KEYFRAMES */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-8px); }
+  }
+
+  /* FADE IN ON SCROLL */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero-stats { gap: 1rem; flex-wrap: wrap; }
+    .section { padding: 3rem 1.25rem; }
+    .comparison-table { font-size: 0.8rem; }
+  }
+
+  /* INFO CARDS with icon */
+  .info-card {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.25rem; background: var(--card-bg);
+    border: 1px solid var(--border); border-radius: 12px;
+    transition: all 0.2s;
+  }
+  .info-card:hover { border-color: rgba(59,130,246,0.3); }
+  .info-card-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .info-card h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .info-card p { font-size: 0.82rem; color: var(--text-muted); }
+
+  /* INTERACTIVE NARRATIVE BUILDER */
+  .narrative-builder {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 2rem;
+  }
+  .narrative-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  .ctrl-group label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem; letter-spacing: 0.05em; text-transform: uppercase; }
+  .ctrl-group select {
+    width: 100%; padding: 0.65rem 0.9rem;
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-family: 'Inter', sans-serif;
+    font-size: 0.85rem; cursor: pointer; outline: none;
+    transition: border-color 0.2s;
+  }
+  .ctrl-group select:focus { border-color: var(--accent); }
+  .narrative-output {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem;
+    font-size: 0.9rem; line-height: 1.8; min-height: 120px;
+    color: var(--text-muted);
+  }
+  .narrative-output .story-text { color: var(--text); }
+  .narrative-output .story-insight {
+    margin-top: 0.75rem; padding: 0.75rem 1rem;
+    background: rgba(59,130,246,0.08); border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0; color: var(--text-muted); font-size: 0.85rem;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 3rem 2rem;
+    color: var(--text-dim); font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+  footer span { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo">📊 DataStory</div>
+  <div class="nav-links">
+    <a href="#pengenalan" class="active">Pengenalan</a>
+    <a href="#pilar">3 Pilar</a>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#visualisasi">Visualisasi</a>
+    <a href="#kasus">Studi Kasus</a>
+    <a href="#latihan">Latihan</a>
+  </div>
+</nav>
+<div id="progress-bar"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-tag">Materi Interaktif · Data Storytelling</div>
+  <h1>Ubah Data Menjadi<br><span class="grad">Cerita yang Menggerakkan</span></h1>
+  <p class="hero-sub">Kuasai seni mengkomunikasikan data dengan narasi yang kuat, visualisasi yang tepat, dan pesan yang menginspirasi tindakan.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">3</div><div class="label">Pilar Utama</div></div>
+    <div class="hero-stat"><div class="num">10</div><div class="label">Best Practice</div></div>
+    <div class="hero-stat"><div class="num">15+</div><div class="label">Jenis Chart</div></div>
+    <div class="hero-stat"><div class="num">6</div><div class="label">Soal Latihan</div></div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll ke bawah</span>
+    <span class="arrow">↓</span>
+  </div>
+</section>
+
+<!-- SECTION 1: PENGENALAN -->
+<section class="section reveal" id="pengenalan">
+  <div class="section-header">
+    <span class="section-tag">01 · Pengenalan</span>
+    <h2 class="section-title">Apa itu Data Storytelling?</h2>
+    <p class="section-sub">Sebuah metodologi untuk mengkomunikasikan informasi kepada audiens tertentu dengan narasi yang menarik dan bermakna.</p>
+  </div>
+
+  <!-- Formula -->
+  <div class="formula reveal">
+    <div class="formula-part" style="background:rgba(59,130,246,0.15);color:#93c5fd;">📊 Data</div>
+    <div class="formula-op">+</div>
+    <div class="formula-part" style="background:rgba(6,182,212,0.15);color:#67e8f9;">🎨 Visualisasi</div>
+    <div class="formula-op">+</div>
+    <div class="formula-part" style="background:rgba(245,158,11,0.15);color:#fcd34d;">📖 Narasi</div>
+    <div class="formula-op">=</div>
+    <div class="formula-part" style="background:linear-gradient(135deg,rgba(59,130,246,0.2),rgba(6,182,212,0.2));color:white;font-size:1rem;">✨ Data Story</div>
+  </div>
+
+  <br>
+
+  <!-- Analogy -->
+  <div class="analogy-box reveal">
+    <div class="analogy-icon">🎬</div>
+    <div class="analogy-label">Analogi untuk Memudahkan</div>
+    <p><strong>Bayangkan data seperti bahan mentah di dapur.</strong> Anda punya tepung, telur, gula, mentega — semuanya bernilai. Tapi tanpa resep (narasi), tanpa cara penyajian yang menarik (visualisasi), tamunya tidak akan tahu apa yang sedang dimakan. <strong>Data Storytelling adalah resep + penyajian</strong> yang mengubah bahan mentah menjadi hidangan yang menggugah selera dan membuat tamu mau mencobanya.</p>
+  </div>
+
+  <br>
+
+  <!-- Why DS -->
+  <h3 style="margin-bottom:1.25rem;">Mengapa Data Storytelling Penting?</h3>
+  <div class="grid-3 reveal">
+    <div class="info-card">
+      <div class="info-card-icon" style="background:rgba(59,130,246,0.1);">🧠</div>
+      <div>
+        <h4>Otak Kita Wired untuk Cerita</h4>
+        <p>Neurosains membuktikan informasi dalam format cerita 22× lebih mudah diingat daripada angka telanjang.</p>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon" style="background:rgba(6,182,212,0.1);">🎯</div>
+      <div>
+        <h4>Mendorong Tindakan Nyata</h4>
+        <p>Data menunjukkan <em>apa</em> yang terjadi, tapi cerita menjelaskan <em>mengapa</em> — dan menggerakkan keputusan.</p>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon" style="background:rgba(245,158,11,0.1);">🌐</div>
+      <div>
+        <h4>Menjangkau Semua Audiens</h4>
+        <p>Eksekutif, analis, atau staf operasional — cerita yang baik menembus semua level tanpa perlu expertise teknis.</p>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- Data vs Story comparison -->
+  <h3 style="margin-bottom:1rem;">Data vs. Cerita: Apa Bedanya?</h3>
+  <div class="table-wrap reveal">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Aspek</th>
+          <th>📊 Data Saja</th>
+          <th>📖 Data + Cerita</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Contoh</strong></td>
+          <td class="tag-data">"Penjualan Q3: Rp 4,2 Miliar. Target: Rp 5 Miliar. Gap: -Rp 800 Juta."</td>
+          <td class="tag-story">"Penjualan Q3 kita Rp 800 Juta di bawah target — tapi ini bukan kegagalan. Ini sinyal. Selama kampanye Ramadan, retensi pelanggan lama naik 23%, sedangkan akuisisi pelanggan baru turun 40%. Artinya: kita jago menjaga yang ada, tapi butuh strategi baru untuk menarik yang baru."</td>
+        </tr>
+        <tr>
+          <td><strong>Reaksi Audiens</strong></td>
+          <td class="tag-data">Bingung, tidak tahu harus berbuat apa</td>
+          <td class="tag-story">Paham konteks, termotivasi untuk bertindak</td>
+        </tr>
+        <tr>
+          <td><strong>Informasi yang dibawa</strong></td>
+          <td class="tag-data">Apa yang terjadi (What)</td>
+          <td class="tag-story">Apa + Mengapa + Apa selanjutnya (What + Why + So What)</td>
+        </tr>
+        <tr>
+          <td><strong>Daya ingat</strong></td>
+          <td class="tag-data">Rendah — terlupakan dalam jam</td>
+          <td class="tag-story">Tinggi — tertanam dalam memori jangka panjang</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 2: 3 PILAR -->
+<section class="section reveal" id="pilar">
+  <div class="section-header">
+    <span class="section-tag">02 · Fondasi</span>
+    <h2 class="section-title">3 Pilar Data Storytelling</h2>
+    <p class="section-sub">Setiap cerita data yang efektif berdiri di atas tiga pilar yang saling menopang.</p>
+  </div>
+
+  <!-- Venn Diagram SVG -->
+  <div class="venn-wrap reveal">
+    <svg class="venn-svg" viewBox="0 0 480 320" xmlns="http://www.w3.org/2000/svg">
+      <!-- Data circle -->
+      <circle cx="190" cy="150" r="110" fill="rgba(59,130,246,0.12)" stroke="rgba(59,130,246,0.4)" stroke-width="1.5"/>
+      <!-- Visual circle -->
+      <circle cx="290" cy="150" r="110" fill="rgba(6,182,212,0.12)" stroke="rgba(6,182,212,0.4)" stroke-width="1.5"/>
+      <!-- Narrative circle -->
+      <circle cx="240" cy="230" r="110" fill="rgba(245,158,11,0.12)" stroke="rgba(245,158,11,0.4)" stroke-width="1.5"/>
+      <!-- Center label -->
+      <text x="240" y="188" text-anchor="middle" fill="white" font-family="Poppins" font-weight="800" font-size="11">Data</text>
+      <text x="240" y="201" text-anchor="middle" fill="white" font-family="Poppins" font-weight="800" font-size="11">Storytelling</text>
+      <!-- Data label -->
+      <text x="150" y="95" text-anchor="middle" fill="#93c5fd" font-family="Poppins" font-weight="700" font-size="13">📊 Data</text>
+      <!-- Visual label -->
+      <text x="330" y="95" text-anchor="middle" fill="#67e8f9" font-family="Poppins" font-weight="700" font-size="13">🎨 Visuals</text>
+      <!-- Narrative label -->
+      <text x="240" y="300" text-anchor="middle" fill="#fcd34d" font-family="Poppins" font-weight="700" font-size="13">📖 Narasi</text>
+    </svg>
+  </div>
+
+  <div class="grid-3 reveal">
+    <div class="pillar-card pillar-data">
+      <div class="pillar-icon">📊</div>
+      <h3 style="color:#93c5fd;">Data</h3>
+      <p>Fondasi faktual yang akurat, relevan, dan bersih. Tanpa data yang solid, cerita apapun hanya fiksi belaka. Data yang baik menjawab: <em>Apa yang sebenarnya terjadi?</em></p>
+    </div>
+    <div class="pillar-card pillar-visual">
+      <div class="pillar-icon">🎨</div>
+      <h3 style="color:#67e8f9;">Visualisasi Efektif</h3>
+      <p>Chart dan grafik yang tepat untuk jenis data yang tepat. Visualisasi yang baik membuat pola tersembunyi menjadi langsung terlihat — tanpa perlu interpretasi panjang.</p>
+    </div>
+    <div class="pillar-card pillar-narrative">
+      <div class="pillar-icon">📖</div>
+      <h3 style="color:#fcd34d;">Narasi</h3>
+      <p>Konteks, insight, dan ajakan bertindak. Narasi menghubungkan titik-titik data, menjelaskan relevansinya bagi audiens, dan mengarahkan mereka ke tindakan yang tepat.</p>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- Deep dive each pillar -->
+  <h3 style="margin-bottom:1rem;">Detail Setiap Pilar</h3>
+  <div class="accordion reveal">
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>📊 Pilar 1: Data yang Kuat</span>
+        <span class="acc-icon">+</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <p><strong>Data yang baik memiliki 5 karakteristik (5A):</strong></p>
+          <br>
+          <p>🎯 <strong>Akurat</strong> — Bersumber dari sumber yang dapat dipercaya dan telah diverifikasi</p>
+          <p>📌 <strong>Aktual</strong> — Up-to-date dan relevan dengan konteks waktu saat ini</p>
+          <p>🔍 <strong>Andal</strong> — Konsisten ketika diukur berulang kali (reliable & consistent)</p>
+          <p>🎪 <strong>Applicable</strong> — Relevan dengan pertanyaan bisnis yang ingin dijawab</p>
+          <p>🧹 <strong>Akses Mudah</strong> — Bersih dari noise, duplikat, dan missing value yang tidak tertangani</p>
+          <br>
+          <p><strong>Contoh Kasus:</strong> Sebuah tim marketing mengklaim "Engagement naik 200%". Ternyata mereka menghitung views, bukan clicks atau conversions. Data ada, tapi tidak relevan dengan tujuan bisnis. Ini contoh data yang tidak "Applicable".</p>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>🎨 Pilar 2: Visualisasi yang Tepat</span>
+        <span class="acc-icon">+</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <p>Memilih chart yang salah seperti menggunakan peta untuk menjelaskan resep masakan — secara teknis ada informasinya, tapi tidak membantu sama sekali.</p>
+          <br>
+          <p><strong>Panduan Cepat:</strong></p>
+          <p>• Ingin bandingkan kategori? → <strong>Bar Chart</strong></p>
+          <p>• Ingin tunjukkan tren waktu? → <strong>Line Chart</strong></p>
+          <p>• Ingin tunjukkan proporsi? → <strong>Pie Chart</strong> (max 5 slice!)</p>
+          <p>• Ingin tunjukkan distribusi? → <strong>Histogram atau Box Plot</strong></p>
+          <p>• Ingin tunjukkan korelasi? → <strong>Scatter Plot</strong></p>
+          <p>• Ingin tunjukkan komposisi berlapis? → <strong>Stacked Bar / Area Chart</strong></p>
+          <br>
+          <p><strong>Prinsip Utama:</strong> Visualisasi yang baik bisa "dibaca" dalam 5 detik tanpa perlu penjelasan panjang.</p>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>📖 Pilar 3: Narasi yang Menggerakkan</span>
+        <span class="acc-icon">+</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <p>Narasi bukan sekadar teks pelengkap grafik. Narasi adalah jiwa dari data storytelling. Gunakan struktur <strong>3W</strong>:</p>
+          <br>
+          <p>❓ <strong>What</strong> — Apa yang ditunjukkan data ini?</p>
+          <p>💡 <strong>Why it matters</strong> — Mengapa ini penting bagi audiens Anda?</p>
+          <p>🎯 <strong>What's next</strong> — Apa yang harus dilakukan berdasarkan insight ini?</p>
+          <br>
+          <p><strong>Contoh:</strong></p>
+          <p>❌ Buruk: "Churn rate bulan ini 8,3%"</p>
+          <p>✅ Baik: "Churn rate naik ke 8,3% — tertinggi dalam 12 bulan (What). Ini setara kehilangan Rp 2,1M MRR jika dibiarkan (Why it matters). Tim Customer Success perlu melakukan proactive outreach ke 500 pelanggan berisiko tinggi minggu ini (What's next)."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 3: DASHBOARD -->
+<section class="section reveal" id="dashboard">
+  <div class="section-header">
+    <span class="section-tag">03 · Dashboard</span>
+    <h2 class="section-title">Anatomi & Tipe Dashboard</h2>
+    <p class="section-sub">Dashboard adalah tampilan visual informasi terpenting yang dapat dipantau sekilas pada satu layar.</p>
+  </div>
+
+  <!-- 3 Types -->
+  <div class="grid-3 reveal">
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <div style="margin-bottom:0.75rem;"><span class="badge badge-blue">Strategic</span></div>
+      <h3 style="margin-bottom:0.5rem;">Dashboard Strategis</h3>
+      <p style="font-size:0.85rem;color:var(--text-muted);">Untuk decision makers & senior management. Snapshot harian/mingguan/bulanan, KPI tingkat tinggi, fokus pada peluang bisnis.</p>
+      <br>
+      <p style="font-size:0.8rem;"><strong>Rekomendasi chart:</strong> Bar Chart, Spark Line, Bullet Chart, Heat Grid</p>
+      <p style="font-size:0.8rem;margin-top:0.3rem;"><strong>Max sections:</strong> 6–7</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2);">
+      <div style="margin-bottom:0.75rem;"><span class="badge badge-cyan">Analytical</span></div>
+      <h3 style="margin-bottom:0.5rem;">Dashboard Analitik</h3>
+      <p style="font-size:0.85rem;color:var(--text-muted);">Untuk mid-management & tim perencanaan. Data kompleks dengan perbandingan kaya, analisis historis, drill-down capabilities.</p>
+      <br>
+      <p style="font-size:0.8rem;"><strong>Rekomendasi chart:</strong> Trend Line, Time Series, Scatter Plot, Heat Map</p>
+      <p style="font-size:0.8rem;margin-top:0.3rem;"><strong>Max sections:</strong> 6–7</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent3);">
+      <div style="margin-bottom:0.75rem;"><span class="badge badge-amber">Operational</span></div>
+      <h3 style="margin-bottom:0.5rem;">Dashboard Operasional</h3>
+      <p style="font-size:0.85rem;color:var(--text-muted);">Untuk operational workers. Real-time atau near real-time, monitoring aktivitas yang terus berubah, snapshot harian.</p>
+      <br>
+      <p style="font-size:0.8rem;"><strong>Rekomendasi chart:</strong> Heat Grid, Deviation Graph, Threshold Arrows</p>
+      <p style="font-size:0.8rem;margin-top:0.3rem;"><strong>Max sections:</strong> 3–4</p>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- Top 10 Best Practices -->
+  <h3 style="margin-bottom:1.25rem;">Top 10 Dashboard Design Best Practices</h3>
+  <div class="steps reveal">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Jangan Melewati Batas Layar</h4>
+        <p>Semua informasi kritis harus terlihat tanpa scroll. Jika pengguna harus scroll untuk menemukan data penting, mereka akan melewatkannya.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Hirarki Informasi yang Jelas</h4>
+        <p>Summary/KPI utama di sudut kiri atas. Kelompokkan informasi terkait. Highlight informasi paling penting.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Sorot Informasi Penting Secara Efektif</h4>
+        <p>Tidak semua data sama pentingnya. Mata pengguna harus langsung tertuju pada insight terkritis. Gunakan warna, ukuran, dan posisi secara strategis.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Hindari Detail Berlebihan</h4>
+        <p>Gunakan "$3,8M" bukan "$3.848.305,93". Presisi berlebihan justru memperlambat pemahaman. Dashboard bukan laporan keuangan.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h4>Gunakan Visualisasi yang Tepat</h4>
+        <p>Jangan overuse chart yang kompleks. Pilih chart yang paling mudah dibaca untuk tujuan yang ada. Pie chart dengan 15 slice adalah musuh pemahaman.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <h4>Jangan Oversizing Visualisasi</h4>
+        <p>Memperbesar chart untuk mengisi ruang kosong bukan ide yang baik. Ruang putih (white space) adalah teman, bukan musuh.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">7</div>
+      <div class="step-content">
+        <h4>Hindari Non-Data Ink</h4>
+        <p>Tidak ada background gelap pada grafik, tidak ada warna neon mencolok, tidak ada border pada legend yang tidak perlu. Setiap piksel harus punya fungsi.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">8</div>
+      <div class="step-content">
+        <h4>Font yang Konsisten</h4>
+        <p>Terlalu banyak jenis font membuat tampilan tidak profesional. Stick dengan 1–2 font. Jangan mix 5 font family berbeda dalam satu dashboard.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">9</div>
+      <div class="step-content">
+        <h4>Gunakan Grid dengan Benar</h4>
+        <p>Header berbeda dari body. Atribut rata kiri, nilai numerik rata kanan. Total harus clearly visible. Hapus background color dan gridline yang tidak perlu.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">10</div>
+      <div class="step-content">
+        <h4>Penggunaan Warna yang Tepat</h4>
+        <p>Hijau = positif/baik. Merah = negatif/buruk. Hindari kombinasi merah-hijau untuk accessibility (color blindness). Jangan gunakan warna threshold pada grafik biasa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 4: VISUALISASI -->
+<section class="section reveal" id="visualisasi">
+  <div class="section-header">
+    <span class="section-tag">04 · Chart Selection</span>
+    <h2 class="section-title">Memilih Visualisasi yang Tepat</h2>
+    <p class="section-sub">Chart yang salah bisa menyesatkan audiens. Panduan ini membantu Anda memilih dengan tepat — lengkap dengan contoh visualisasi data nyata.</p>
+  </div>
+
+  <!-- Chart selector by purpose -->
+  <div class="scenario-tabs reveal">
+    <button class="tab-btn active" onclick="switchTab('comparison')">🆚 Perbandingan</button>
+    <button class="tab-btn" onclick="switchTab('trend')">📈 Tren Waktu</button>
+    <button class="tab-btn" onclick="switchTab('composition')">🥧 Komposisi</button>
+    <button class="tab-btn" onclick="switchTab('distribution')">📊 Distribusi</button>
+    <button class="tab-btn" onclick="switchTab('relationship')">🔗 Relasi</button>
+  </div>
+
+  <div id="tab-comparison" class="tab-panel active">
+    <div class="grid-2">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:1rem;">
+          <h3>Bar Chart</h3><span class="badge badge-green">Paling sering dipakai</span>
+        </div>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.25rem;">Ideal untuk membandingkan nilai antar kategori. Gunakan horizontal bar saat label kategori panjang.</p>
+        <div class="chart-demo">
+          <div class="chart-title">Penjualan per Produk — Q3 2024 (Rp Juta)</div>
+          <div class="bar-chart">
+            <div class="bar-row"><span class="bar-label">Produk A</span><div class="bar-track"><div class="bar-fill" style="width:85%">850</div></div></div>
+            <div class="bar-row"><span class="bar-label">Produk B</span><div class="bar-track"><div class="bar-fill highlight" style="width:100%">1.200</div></div></div>
+            <div class="bar-row"><span class="bar-label">Produk C</span><div class="bar-track"><div class="bar-fill" style="width:55%">620</div></div></div>
+            <div class="bar-row"><span class="bar-label">Produk D</span><div class="bar-track"><div class="bar-fill" style="width:38%">430</div></div></div>
+            <div class="bar-row"><span class="bar-label">Produk E</span><div class="bar-track"><div class="bar-fill bad" style="width:22%">250</div></div></div>
+          </div>
+        </div>
+        <div class="example-box" style="margin-top:1rem;">
+          <div class="example-label">💡 Insight Narasi</div>
+          <p style="font-size:0.83rem;">Produk B mendominasi dengan Rp 1,2M, hampir 3× Produk E. Tim produk perlu menginvestigasi apakah Produk E layak dilanjutkan atau perlu direvitalisasi.</p>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:1rem;">Best Practices Bar Chart</h3>
+        <div style="display:flex;flex-direction:column;gap:0.65rem;">
+          <div class="info-card">
+            <div class="info-card-icon" style="background:rgba(16,185,129,0.1);">✅</div>
+            <div><h4>Mulai Y-axis dari 0</h4><p>Memulai dari angka lain membuat perbedaan kecil terlihat dramatis — menyesatkan!</p></div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon" style="background:rgba(16,185,129,0.1);">✅</div>
+            <div><h4>Label horizontal</h4><p>Hindari label diagonal/vertikal. Sulit dibaca dan tidak profesional.</p></div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon" style="background:rgba(16,185,129,0.1);">✅</div>
+            <div><h4>Warna konsisten</h4><p>Satu warna untuk semua bar. Gunakan aksen untuk highlight data point penting.</p></div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon" style="background:rgba(239,68,68,0.1);">❌</div>
+            <div><h4>Jangan overlap bar</h4><p>Spacing antar bar harus sekitar setengah lebar bar.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-trend" class="tab-panel reveal">
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:0.5rem;">Line Chart</h3>
+        <span class="badge badge-blue" style="margin-bottom:1rem;display:inline-block;">Untuk data time-series</span>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Gunakan line chart untuk menunjukkan tren, pola musiman, atau perubahan nilai dari waktu ke waktu. Ideal saat interval waktu konsisten.</p>
+        <div class="example-box">
+          <div class="example-label">Contoh Kasus Nyata</div>
+          <p style="font-size:0.83rem;"><strong>Konteks:</strong> Tim produk ingin meyakinkan manajemen untuk investasi di fitur baru.<br><br>
+          <strong>Narasi:</strong> "Grafik ini menunjukkan Daily Active Users selama 6 bulan. Perhatikan penurunan konsisten dimulai bulan Oktober — tepat saat kompetitor meluncurkan fitur X. Jika tren ini berlanjut, kita akan kehilangan 30% pengguna aktif pada Q2 tahun depan. Investasi fitur baru ini adalah jawaban untuk membalik tren."</p>
+        </div>
+        <div class="analogy-box" style="margin-top:1rem;">
+          <div class="analogy-label">💡 Tips</div>
+          <p style="font-size:0.83rem;">Gunakan solid lines, bukan dashed. Tambahkan pointer/dots di data point penting. Jangan smoothen line — bisa menyesatkan.</p>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:1rem;">Kapan Pakai Apa?</h3>
+        <div class="table-wrap">
+          <table class="comparison-table">
+            <thead><tr><th>Situasi</th><th>Pilihan Chart</th></tr></thead>
+            <tbody>
+              <tr><td>Tren 1 metric, banyak waktu</td><td><span class="hl">Line Chart</span></td></tr>
+              <tr><td>Tren + bandingkan kategori</td><td><span class="hl">Multi-line Chart</span></td></tr>
+              <tr><td>Tren + volume (area)</td><td><span class="hl">Area Chart</span></td></tr>
+              <tr><td>Tren dalam tabel/dashboard padat</td><td><span class="hl">Sparkline</span></td></tr>
+              <tr><td>Naik turun kumulatif</td><td><span class="hl">Waterfall Chart</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-composition" class="tab-panel reveal">
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:1rem;">Pie Chart — Gunakan dengan Bijak</h3>
+        <div class="analogy-box">
+          <div class="analogy-icon">⚠️</div>
+          <div class="analogy-label">Peringatan Penting</div>
+          <p style="font-size:0.83rem;">Pie chart adalah salah satu chart yang paling sering disalahgunakan. Otak manusia sangat buruk dalam membandingkan sudut dan area. Jika bisa, gunakan <strong>Stacked Bar Chart</strong> sebagai gantinya — jauh lebih mudah dibaca.</p>
+        </div>
+        <br>
+        <h4 style="margin-bottom:0.5rem;">Kapan Pie Chart Boleh Dipakai:</h4>
+        <p style="font-size:0.83rem;color:var(--text-muted);">✅ Maksimal 5 kategori<br>✅ Ada satu segmen yang jauh dominan (>60%)<br>✅ Audiens awam dan tujuannya sederhana<br>✅ Data harus benar-benar add up ke 100%</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:1rem;">Alternatif yang Lebih Baik</h3>
+        <div style="display:flex;flex-direction:column;gap:0.75rem;">
+          <div class="info-card">
+            <div class="info-card-icon" style="background:rgba(59,130,246,0.1);">📊</div>
+            <div><h4>Stacked Bar Chart</h4><p>Lebih mudah dibandingkan, terutama untuk multiple time period.</p></div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon" style="background:rgba(6,182,212,0.1);">🔲</div>
+            <div><h4>Treemap</h4><p>Cocok untuk menampilkan hirarki dan proporsi dalam dataset besar.</p></div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon" style="background:rgba(245,158,11,0.1);">📋</div>
+            <div><h4>Tabel dengan %</h4><p>Kadang angka eksak lebih informatif daripada chart apapun.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-distribution" class="tab-panel reveal">
+    <div class="card">
+      <h3 style="margin-bottom:1rem;">Chart untuk Distribusi Data</h3>
+      <div class="grid-2">
+        <div>
+          <h4 style="color:var(--accent2);margin-bottom:0.5rem;">Histogram</h4>
+          <p style="font-size:0.83rem;color:var(--text-muted);margin-bottom:0.75rem;">Menampilkan frekuensi data dalam interval/bin tertentu. Ideal untuk melihat sebaran nilai, apakah normal, skewed, atau bimodal.</p>
+          <div class="example-box">
+            <div class="example-label">Contoh Penggunaan</div>
+            <p style="font-size:0.82rem;">HR ingin memahami distribusi gaji karyawan → Histogram memperlihatkan apakah distribusi merata atau ada gap yang mencolok di rentang tertentu.</p>
+          </div>
+        </div>
+        <div>
+          <h4 style="color:var(--accent2);margin-bottom:0.5rem;">Box Plot</h4>
+          <p style="font-size:0.83rem;color:var(--text-muted);margin-bottom:0.75rem;">Menampilkan distribusi berdasarkan quartile: minimum, Q1, median, Q3, maksimum. Sangat baik untuk membandingkan distribusi antar kelompok.</p>
+          <div class="analogy-box">
+            <div class="analogy-label">Analogi Box Plot</div>
+            <p style="font-size:0.82rem;">Bayangkan tinggi badan seluruh pemain basket: box plot menunjukkan "kebanyakan" ada di mana, siapa yang sangat pendek (outlier bawah), dan siapa yang sangat tinggi (outlier atas).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-relationship" class="tab-panel reveal">
+    <div class="card">
+      <h3 style="margin-bottom:1rem;">Scatter Plot — Menemukan Korelasi</h3>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.25rem;">Scatter plot menampilkan hubungan antara dua variabel. Membantu mengidentifikasi apakah ada korelasi positif, negatif, atau tidak ada korelasi sama sekali.</p>
+      <div class="grid-2">
+        <div class="example-box">
+          <div class="example-label">Contoh Kasus Nyata</div>
+          <p style="font-size:0.83rem;"><strong>Pertanyaan bisnis:</strong> "Apakah semakin banyak iklan yang kita belanjakan, semakin tinggi penjualan?"<br><br>
+          Scatter plot dengan X = Belanja Iklan, Y = Penjualan akan segera mengungkap apakah ada korelasi positif, atau justru ada titik jenuh di mana tambahan belanja iklan tidak meningkatkan penjualan secara signifikan.</p>
+        </div>
+        <div>
+          <h4 style="margin-bottom:0.75rem;">Jenis Korelasi:</h4>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            <div class="info-card"><div class="info-card-icon" style="background:rgba(16,185,129,0.1);">↗️</div><div><h4 style="color:#6ee7b7;">Korelasi Positif</h4><p>Keduanya naik bersama. Contoh: Suhu panas → penjualan es krim naik.</p></div></div>
+            <div class="info-card"><div class="info-card-icon" style="background:rgba(239,68,68,0.1);">↘️</div><div><h4 style="color:#fca5a5;">Korelasi Negatif</h4><p>Satu naik, satu turun. Contoh: Harga produk naik → volume penjualan turun.</p></div></div>
+            <div class="info-card"><div class="info-card-icon" style="background:rgba(100,116,139,0.1);">↔️</div><div><h4>Tidak Ada Korelasi</h4><p>Titik tersebar acak. Variabel tidak berhubungan satu sama lain.</p></div></div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="analogy-box">
+        <div class="analogy-icon">⚠️</div>
+        <div class="analogy-label">Hati-hati: Korelasi ≠ Kausalitas</div>
+        <p style="font-size:0.83rem;">Di musim panas, es krim terjual banyak dan kasus tenggelam juga meningkat. Apakah makan es krim menyebabkan tenggelam? Tentu tidak — keduanya dipengaruhi oleh variabel ketiga: <strong>cuaca panas</strong>. Selalu pertanyakan apakah korelasi yang ditemukan benar-benar sebab-akibat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 5: STUDI KASUS -->
+<section class="section reveal" id="kasus">
+  <div class="section-header">
+    <span class="section-tag">05 · Studi Kasus</span>
+    <h2 class="section-title">Latihan Studi Kasus</h2>
+    <p class="section-sub">Terapkan pengetahuan Anda dengan menganalisis skenario nyata bisnis berikut ini.</p>
+  </div>
+
+  <div class="scenario-tabs reveal">
+    <button class="tab-btn active" onclick="switchTab2('kasus1')">📱 E-Commerce</button>
+    <button class="tab-btn" onclick="switchTab2('kasus2')">🏥 Healthcare</button>
+    <button class="tab-btn" onclick="switchTab2('kasus3')">🏭 Manufacturing</button>
+  </div>
+
+  <!-- Case 1 -->
+  <div id="tab-kasus1" class="tab-panel active">
+    <div class="case-box reveal">
+      <div class="case-label">📱 Studi Kasus 1 · E-Commerce Platform</div>
+      <h3 style="margin-bottom:0.75rem;">Skenario: Penurunan Konversi</h3>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1.5rem;">Anda adalah Data Analyst di sebuah platform e-commerce. CEO meminta laporan mengapa conversion rate turun dari 3,2% ke 1,8% dalam 30 hari terakhir.</p>
+      
+      <div class="grid-2">
+        <div>
+          <h4 style="color:var(--accent);margin-bottom:0.75rem;">📊 Data yang Tersedia:</h4>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.85rem;">
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">🔢 Total pengunjung: stabil di 150.000/hari</div>
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">🛒 Add-to-cart rate: turun dari 12% ke 8%</div>
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">💳 Checkout rate: stabil di 75%</div>
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">📱 Mobile traffic: naik dari 45% ke 68%</div>
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">⚡ Load time mobile: naik dari 2,1s ke 6,8s</div>
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">🚀 Deploy baru dilakukan 31 hari lalu</div>
+          </div>
+        </div>
+        <div>
+          <h4 style="color:var(--accent4);margin-bottom:0.75rem;">✅ Solusi Narasi yang Baik:</h4>
+          <div class="example-box">
+            <p style="font-size:0.82rem;line-height:1.8;">
+            <strong>What:</strong> Conversion rate turun 44% dalam 30 hari — titik penurunan utama ada di tahap add-to-cart, bukan checkout.<br><br>
+            <strong>Why:</strong> Deploy 31 hari lalu menyebabkan load time mobile melonjak 3,2× lebih lambat. Di saat yang sama, mobile traffic meningkat 51%. Kombinasi ini = pengalaman mobile yang buruk untuk mayoritas pengunjung.<br><br>
+            <strong>What's Next:</strong> Rollback atau hotfix pada mobile performance adalah prioritas utama. Estimasi recovery conversion rate: 72–80% dalam 7 hari jika load time kembali ke bawah 3 detik.
+            </p>
+          </div>
+          <br>
+          <h4 style="margin-bottom:0.5rem;">Chart yang Tepat:</h4>
+          <p style="font-size:0.83rem;color:var(--text-muted);">📈 Line chart (tren conversion rate vs. load time) + 📊 Bar chart (funnel: visit → add-to-cart → checkout → purchase) + 🗺️ segmentasi mobile vs. desktop</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Case 2 -->
+  <div id="tab-kasus2" class="tab-panel">
+    <div class="case-box reveal">
+      <div class="case-label">🏥 Studi Kasus 2 · Healthcare Analytics</div>
+      <h3 style="margin-bottom:0.75rem;">Skenario: Efisiensi Rumah Sakit</h3>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1.5rem;">Direktur RS meminta analisis mengapa average length of stay (ALOS) pasien meningkat dan bagaimana dampaknya pada revenue.</p>
+      
+      <div class="grid-2">
+        <div>
+          <h4 style="color:var(--accent);margin-bottom:0.75rem;">📊 Data yang Tersedia:</h4>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.85rem;">
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">🛏️ ALOS: 4,2 hari → 6,1 hari (+45%)</div>
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">🩺 Bed occupancy rate: 78% → 94%</div>
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">❌ Pasien ditolak karena penuh: +230%</div>
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">👨‍⚕️ Dokter spesialis: berkurang 2 orang (resign)</div>
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">📋 Discharge planning delay: naik 3,1 hari</div>
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">💰 Revenue per bed: turun 18%</div>
+          </div>
+        </div>
+        <div>
+          <h4 style="color:var(--accent4);margin-bottom:0.75rem;">✅ Insight yang Perlu Dikomunikasikan:</h4>
+          <div class="example-box">
+            <p style="font-size:0.82rem;line-height:1.8;">
+            <strong>Root cause teridentifikasi:</strong> Bukan masalah medis — tapi masalah operasional. Discharge planning yang terlambat (naik 3,1 hari) adalah driver utama ALOS yang panjang.<br><br>
+            <strong>Dampak finansial:</strong> 1 bed yang harusnya bisa menampung 2,4 pasien/minggu sekarang hanya 1,7. Dengan 100 beds, kehilangan kapasitas 70 pasien/minggu × rata-rata Rp 4,5 juta = <strong>Rp 315 juta/minggu hilang</strong>.<br><br>
+            <strong>Rekomendasi:</strong> Rekrut discharge coordinator dedicated, digitalisasi proses discharge planning, target ALOS kembali ke 4,5 hari dalam 60 hari.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Case 3 -->
+  <div id="tab-kasus3" class="tab-panel">
+    <div class="case-box reveal">
+      <div class="case-label">🏭 Studi Kasus 3 · Manufacturing Quality Control</div>
+      <h3 style="margin-bottom:0.75rem;">Skenario: Lonjakan Defect Rate</h3>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1.5rem;">Quality Manager perlu melaporkan kepada direksi tentang lonjakan defect rate yang menyebabkan klaim garansi membengkak.</p>
+      
+      <div class="grid-2">
+        <div>
+          <h4 style="color:var(--accent);margin-bottom:0.75rem;">📊 Data yang Tersedia:</h4>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.85rem;">
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">🔧 Defect rate: 0,8% → 3,2% (target: <1%)</div>
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">🏗️ Line yang bermasalah: Line B & C (90% defect)</div>
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">📅 Mulai terjadi: 3 minggu lalu (shift malam)</div>
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">🔄 Supplier bahan baku berubah: 4 minggu lalu</div>
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">👷 Operator baru: 8 orang (3 minggu lalu)</div>
+            <div style="padding:0.6rem;background:var(--surface2);border-radius:8px;">💸 Klaim garansi: +Rp 850 juta bulan ini</div>
+          </div>
+        </div>
+        <div>
+          <h4 style="color:var(--accent4);margin-bottom:0.75rem;">✅ Cara Menyajikannya:</h4>
+          <div class="example-box">
+            <p style="font-size:0.82rem;line-height:1.8;">
+            <strong>Tidak cukup hanya bilang "defect naik".</strong> Audiens butuh tahu di mana masalahnya, mengapa, dan apa yang harus dilakukan.<br><br>
+            <strong>Visualisasi yang tepat:</strong><br>
+            • Control Chart (tren defect rate) — tunjukkan kapan mulai menyimpang<br>
+            • Pareto Chart — 80% defect dari Line B & C<br>
+            • Heat Map — defect terbanyak di shift malam<br><br>
+            <strong>Hipotesis data-driven:</strong> Kombinasi operator baru (belum terlatih penuh) + bahan baku baru = kualitas menurun. Tindakan: audit supplier + accelerated training untuk 8 operator baru.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 6: INTERACTIVE NARRATIVE BUILDER -->
+<section class="section reveal">
+  <div class="section-header">
+    <span class="section-tag">Bonus · Tools</span>
+    <h2 class="section-title">Narrative Builder Interaktif</h2>
+    <p class="section-sub">Pilih konteks dan tipe data Anda — dapatkan contoh template narasi yang bisa langsung diadaptasi.</p>
+  </div>
+
+  <div class="narrative-builder reveal">
+    <div class="narrative-controls">
+      <div class="ctrl-group">
+        <label>Tipe Metrik</label>
+        <select id="metric-type" onchange="buildNarrative()">
+          <option value="">-- Pilih --</option>
+          <option value="revenue">Pendapatan / Revenue</option>
+          <option value="churn">Customer Churn</option>
+          <option value="conversion">Conversion Rate</option>
+          <option value="nps">Net Promoter Score</option>
+          <option value="defect">Defect / Error Rate</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>Arah Perubahan</label>
+        <select id="direction" onchange="buildNarrative()">
+          <option value="">-- Pilih --</option>
+          <option value="up-good">Naik (Positif)</option>
+          <option value="up-bad">Naik (Negatif)</option>
+          <option value="down-good">Turun (Positif)</option>
+          <option value="down-bad">Turun (Negatif)</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>Target Audiens</label>
+        <select id="audience" onchange="buildNarrative()">
+          <option value="">-- Pilih --</option>
+          <option value="ceo">CEO / Board</option>
+          <option value="manager">Manager</option>
+          <option value="ops">Tim Operasional</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>Magnitudo Perubahan</label>
+        <select id="magnitude" onchange="buildNarrative()">
+          <option value="">-- Pilih --</option>
+          <option value="small">Kecil (1–10%)</option>
+          <option value="medium">Sedang (10–30%)</option>
+          <option value="large">Besar (>30%)</option>
+        </select>
+      </div>
+    </div>
+    <div class="narrative-output" id="narrative-output">
+      <span style="color:var(--text-dim);">← Pilih opsi di atas untuk menghasilkan template narasi...</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 7: QUIZ -->
+<section class="section reveal" id="latihan">
+  <div class="section-header">
+    <span class="section-tag">06 · Latihan</span>
+    <h2 class="section-title">Uji Pemahaman Anda</h2>
+    <p class="section-sub">6 soal pilihan ganda untuk menguji penguasaan konsep Data Storytelling.</p>
+  </div>
+
+  <div class="quiz-container reveal" id="quiz-box">
+    <!-- Questions rendered by JS -->
+  </div>
+</section>
+
+<footer>
+  <p>Dibuat dengan ❤️ untuk pembelajaran Data Storytelling · Berdasarkan materi <span>InfoCepts Guide</span> & <span>Storytelling with Data</span></p>
+</footer>
+
+<script>
+// ========== PROGRESS BAR ==========
+window.addEventListener('scroll', () => {
+  const doc = document.documentElement;
+  const pct = (doc.scrollTop || document.body.scrollTop) / (doc.scrollHeight - doc.clientHeight) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+
+  // Nav active state
+  const sections = ['pengenalan','pilar','dashboard','visualisasi','kasus','latihan'];
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const link = document.querySelector(`a[href="#${id}"]`);
+    if (!link) return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= 100 && rect.bottom >= 100) {
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      link.classList.add('active');
+    }
+  });
+});
+
+// ========== REVEAL ON SCROLL ==========
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Animate bars on visible
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.querySelectorAll('.bar-fill').forEach(b => {
+        const w = b.style.width;
+        b.style.width = '0%';
+        setTimeout(() => b.style.width = w, 100);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.chart-demo').forEach(el => barObserver.observe(el));
+
+// ========== ACCORDION ==========
+function toggleAcc(header) {
+  const item = header.parentElement;
+  const body = header.nextElementSibling;
+  const isOpen = item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.acc-item').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.acc-body').style.maxHeight = '0';
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+  }
+}
+
+// ========== TABS (Chart Section) ==========
+function switchTab(id) {
+  document.querySelectorAll('#visualisasi .tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#visualisasi .tab-panel').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+// ========== TABS (Case Study) ==========
+function switchTab2(id) {
+  const section = document.getElementById('kasus');
+  section.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  section.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+// ========== NARRATIVE BUILDER ==========
+const narrativeTemplates = {
+  'revenue-up-good-ceo-large': {
+    text: 'Revenue bulan ini mencapai [X], melonjak lebih dari 30% dibanding periode yang sama tahun lalu — hasil terbaik dalam sejarah perusahaan.',
+    insight: 'Ini adalah momen untuk memperkuat posisi: reinvestasikan momentum ini ke dalam akuisisi pelanggan baru dan ekspansi produk sebelum kompetitor bereaksi.'
+  },
+  'revenue-down-bad-ceo-large': {
+    text: 'Revenue Q ini turun signifikan (>30%) dan merupakan sinyal merah yang perlu tindakan segera di level strategis.',
+    insight: 'Prioritas utama: identifikasi segmen mana yang paling terdampak dan apa yang bisa dikendalikan dalam 30 hari ke depan. Jangan tunggu data Q berikutnya.'
+  },
+  'churn-up-bad-manager-medium': {
+    text: 'Customer churn naik 10–30% dibanding bulan lalu. Segmen yang paling terdampak perlu diidentifikasi segera.',
+    insight: 'Jalankan exit survey pada pelanggan yang baru churn. Fokus tim Customer Success pada akun berisiko tinggi sebelum akhir minggu ini.'
+  },
+  'conversion-down-bad-ops-small': {
+    text: 'Conversion rate turun tipis (1–10%) namun secara konsisten dalam 2 minggu terakhir — ini adalah tanda awal yang perlu dicegah.',
+    insight: 'Periksa funnel step per step: apakah ada friction baru di halaman product detail atau checkout? A/B test kecil bisa membantu isolasi masalah dengan cepat.'
+  },
+  'nps-up-good-manager-medium': {
+    text: 'Net Promoter Score naik 10–30% poin — pelanggan semakin merekomendasikan kita ke orang lain.',
+    insight: 'Identifikasi fitur atau touchpoint spesifik yang berkontribusi. Amplifikasi yang bekerja dan dokumentasikan sebagai best practice untuk tim.'
+  },
+  'defect-down-good-ops-large': {
+    text: 'Defect rate berhasil ditekan lebih dari 30% — hasil program quality improvement mulai terlihat nyata di lapangan.',
+    insight: 'Dokumentasikan perubahan proses yang paling berkontribusi. Replikasi di line produksi lain dan jadwalkan review bulanan untuk mempertahankan capaian ini.'
+  },
+};
+
+function buildNarrative() {
+  const metric = document.getElementById('metric-type').value;
+  const dir = document.getElementById('direction').value;
+  const aud = document.getElementById('audience').value;
+  const mag = document.getElementById('magnitude').value;
+  const out = document.getElementById('narrative-output');
+
+  if (!metric || !dir || !aud || !mag) {
+    out.innerHTML = '<span style="color:var(--text-dim);">← Lengkapi semua pilihan untuk melihat template narasi...</span>';
+    return;
+  }
+
+  const key = `${metric}-${dir}-${aud}-${mag}`;
+  const tpl = narrativeTemplates[key];
+
+  if (tpl) {
+    out.innerHTML = `<div class="story-text">💬 <strong>Template Narasi:</strong><br><br>"${tpl.text}"</div>
+    <div class="story-insight">🎯 <strong>Insight / Call to Action:</strong><br>"${tpl.insight}"</div>`;
+  } else {
+    out.innerHTML = `<div class="story-text">💬 <strong>Template Narasi:</strong><br><br>
+    "[Nama metrik] ${dir.includes('up') ? 'mengalami kenaikan' : 'mengalami penurunan'} ${mag === 'small' ? 'sebesar 1–10%' : mag === 'medium' ? 'sebesar 10–30%' : 'lebih dari 30%'} 
+    dibanding periode sebelumnya. ${dir.includes('good') ? 'Ini merupakan perkembangan positif yang perlu diperkuat.' : 'Ini membutuhkan perhatian dan tindakan segera.'}"
+    </div>
+    <div class="story-insight">🎯 <strong>Catatan untuk ${aud === 'ceo' ? 'CEO / Board' : aud === 'manager' ? 'Manager' : 'Tim Operasional'}:</strong><br>
+    ${aud === 'ceo' ? 'Fokus pada implikasi strategis dan keputusan besar yang perlu diambil.' : aud === 'manager' ? 'Identifikasi root cause dan rancang action plan yang terukur dalam 2–4 minggu.' : 'Tentukan tindakan operasional konkret yang bisa dimulai hari ini atau minggu ini.'}
+    </div>`;
+  }
+}
+
+// ========== QUIZ ==========
+const questions = [
+  {
+    q: 'Sebuah laporan menyatakan "Penjualan bulan ini Rp 4,2 Miliar". Ini adalah contoh...',
+    options: ['Data Storytelling yang baik', 'Data tanpa narasi', 'Visualisasi yang efektif', 'Narasi yang kuat'],
+    answer: 1,
+    explanation: 'Benar! Angka tunggal tanpa konteks, tren, atau insight adalah contoh "data saja" — bukan data storytelling. Storytelling membutuhkan konteks, "mengapa", dan rekomendasi tindakan.'
+  },
+  {
+    q: 'Anda ingin menampilkan tren penjualan selama 12 bulan. Chart apa yang paling tepat?',
+    options: ['Pie Chart', 'Bar Chart', 'Line Chart', 'Scatter Plot'],
+    answer: 2,
+    explanation: 'Line Chart adalah pilihan terbaik untuk data time-series (data berdasarkan urutan waktu). Ia menampilkan tren, pola musiman, dan perubahan dengan sangat jelas.'
+  },
+  {
+    q: 'Dalam dashboard, Y-axis pada bar chart harus dimulai dari berapa?',
+    options: ['Dari nilai minimum data', 'Dari 0 (nol)', 'Dari rata-rata nilai', 'Bisa dari mana saja'],
+    answer: 1,
+    explanation: 'Y-axis harus selalu dimulai dari 0! Memulai dari nilai lain membuat perbedaan kecil terlihat dramatis dan menyesatkan audiens — ini adalah salah satu manipulasi visual yang paling umum.'
+  },
+  {
+    q: 'Narasi data yang baik menggunakan struktur "3W". "W" ketiga adalah...',
+    options: ['When (Kapan)', 'What\'s Next (Tindak Lanjut)', 'Where (Di mana)', 'Who (Siapa)'],
+    answer: 1,
+    explanation: 'Struktur 3W adalah: What (apa yang terjadi) → Why it matters (mengapa penting) → What\'s Next (apa yang harus dilakukan). "What\'s Next" adalah elemen terpenting yang menggerakkan audiens ke tindakan.'
+  },
+  {
+    q: 'Pie chart sebaiknya digunakan dengan maksimal berapa kategori?',
+    options: ['10 kategori', '7 kategori', '5 kategori', 'Tidak ada batasan'],
+    answer: 2,
+    explanation: 'Pie chart sebaiknya maksimal 5 kategori. Lebih dari itu, otak manusia kesulitan membandingkan sudut dan area yang kecil. Untuk >5 kategori, gunakan Bar Chart atau grouped table.'
+  },
+  {
+    q: 'Pernyataan mana yang SALAH tentang korelasi dalam data storytelling?',
+    options: [
+      'Korelasi positif berarti dua variabel bergerak searah',
+      'Scatter plot digunakan untuk menampilkan korelasi',
+      'Korelasi selalu berarti satu variabel menyebabkan yang lain',
+      'Korelasi bisa positif, negatif, atau tidak ada'
+    ],
+    answer: 2,
+    explanation: 'Salah kaprah paling berbahaya: Korelasi ≠ Kausalitas! Dua variabel yang bergerak bersama tidak berarti salah satunya menyebabkan yang lain. Selalu cari variabel ketiga yang mungkin menjelaskan keduanya.'
+  }
+];
+
+let currentQ = 0, score = 0, answered = [];
+
+function renderQuiz() {
+  const box = document.getElementById('quiz-box');
+  if (currentQ >= questions.length) {
+    const pct = Math.round(score / questions.length * 100);
+    let msg = pct === 100 ? '🏆 Sempurna! Anda menguasai Data Storytelling!' :
+              pct >= 80 ? '🎯 Luar biasa! Pemahaman Anda sangat kuat.' :
+              pct >= 60 ? '💡 Bagus! Masih ada beberapa konsep yang perlu diperdalam.' :
+              '📚 Terus belajar! Ulangi materi dan coba lagi.';
+    box.innerHTML = `
+      <div class="score-display">
+        <div style="font-size:0.8rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;">Skor Akhir</div>
+        <div class="score-num">${score}/${questions.length}</div>
+        <div style="font-size:1rem;color:var(--text-muted);margin:0.5rem 0;">${pct}% Benar</div>
+        <div style="margin:1rem 0;padding:1rem;background:var(--surface2);border-radius:10px;font-size:0.9rem;">${msg}</div>
+        <button class="btn btn-primary" onclick="resetQuiz()">🔄 Ulangi Kuis</button>
+      </div>`;
+    return;
+  }
+
+  const q = questions[currentQ];
+  const isAnswered = answered[currentQ] !== undefined;
+
+  box.innerHTML = `
+    <div class="quiz-q"><span class="q-num">${currentQ + 1}/${questions.length}</span>${q.q}</div>
+    <div class="quiz-options">
+      ${q.options.map((opt, i) => {
+        let cls = 'quiz-opt';
+        if (isAnswered) {
+          cls += ' disabled';
+          if (i === q.answer) cls += ' correct';
+          else if (i === answered[currentQ] && answered[currentQ] !== q.answer) cls += ' wrong';
+        }
+        return `<div class="${cls}" onclick="answerQ(${i})">
+          <span style="width:24px;height:24px;border-radius:50%;background:var(--surface2);display:inline-flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">${String.fromCharCode(65+i)}</span>
+          ${opt}
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="quiz-feedback ${isAnswered ? 'show ' + (answered[currentQ] === q.answer ? 'correct-fb' : 'wrong-fb') : ''}">
+      ${isAnswered ? (answered[currentQ] === q.answer ? '✅ ' : '❌ ') + q.explanation : ''}
+    </div>
+    <div class="quiz-nav">
+      <div class="quiz-progress">
+        ${[...Array(questions.length)].map((_,i) => `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;background:${i === currentQ ? 'var(--accent)' : answered[i] !== undefined ? (answered[i] === questions[i].answer ? 'var(--accent4)' : 'var(--accent5)') : 'var(--border)'}"></span>`).join('')}
+      </div>
+      ${isAnswered ? `<button class="btn btn-primary" onclick="nextQ()">${currentQ < questions.length - 1 ? 'Lanjut →' : 'Lihat Skor'}</button>` : '<div></div>'}
+    </div>`;
+}
+
+function answerQ(idx) {
+  if (answered[currentQ] !== undefined) return;
+  answered[currentQ] = idx;
+  if (idx === questions[currentQ].answer) score++;
+  renderQuiz();
+}
+
+function nextQ() {
+  currentQ++;
+  renderQuiz();
+}
+
+function resetQuiz() {
+  currentQ = 0; score = 0; answered = [];
+  renderQuiz();
+}
+
+renderQuiz();
+</script>
+</body>
+</html>
