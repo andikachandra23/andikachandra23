@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lean Startup untuk UMKM — Materi Interaktif</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F5F0;
+    --white: #FFFFFF;
+    --ink: #1A1A1A;
+    --ink-light: #555555;
+    --ink-muted: #999999;
+    --accent: #E8522A;
+    --accent-light: #FDE8E1;
+    --green: #2A7A4F;
+    --green-light: #E1F3EA;
+    --yellow: #F5C518;
+    --yellow-light: #FEF8E1;
+    --blue: #2A4A8A;
+    --blue-light: #E1E9FB;
+    --border: #E5E0D8;
+    --card: #FFFFFF;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  /* NAVIGATION */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(247,245,240,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 60px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-pill {
+    white-space: nowrap;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--ink-light);
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .nav-pill:hover, .nav-pill.active {
+    background: var(--accent);
+    color: white;
+  }
+  .nav-brand {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--ink);
+    margin-right: 16px;
+    white-space: nowrap;
+  }
+  .nav-brand span { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 40px 60px;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--ink-light);
+    max-width: 560px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+  .stat-num {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    color: var(--ink);
+  }
+  .stat-label {
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+
+  /* SECTION */
+  section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--ink-muted);
+    margin-bottom: 12px;
+  }
+  .section-label::before {
+    content: '';
+    width: 20px;
+    height: 2px;
+    background: var(--accent);
+    display: block;
+  }
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: clamp(24px, 3vw, 38px);
+    color: var(--ink);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .section-desc {
+    font-size: 16px;
+    color: var(--ink-light);
+    margin-bottom: 48px;
+    max-width: 640px;
+    line-height: 1.7;
+  }
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 40px;
+    max-width: 1020px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 28px;
+    border: 1px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  .card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .card p {
+    font-size: 14px;
+    color: var(--ink-light);
+    line-height: 1.65;
+  }
+  .card .tag {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* DEFINITION BLOCK */
+  .def-block {
+    background: var(--ink);
+    color: white;
+    border-radius: var(--radius);
+    padding: 32px 36px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .def-block::before {
+    content: '"';
+    position: absolute;
+    right: 24px;
+    top: -20px;
+    font-size: 120px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    color: rgba(255,255,255,0.05);
+    line-height: 1;
+  }
+  .def-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--yellow);
+    margin-bottom: 10px;
+  }
+  .def-block h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    margin-bottom: 12px;
+    color: white;
+  }
+  .def-block p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.75);
+  }
+
+  /* ANALOGY BOX */
+  .analogy-box {
+    background: var(--yellow-light);
+    border: 1.5px solid var(--yellow);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin: 32px 0;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .analogy-box .emoji { font-size: 36px; flex-shrink: 0; }
+  .analogy-box h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .analogy-box p { font-size: 14px; color: var(--ink-light); line-height: 1.65; }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .highlight-box p { font-size: 15px; color: var(--ink); line-height: 1.65; }
+  .highlight-box strong { color: var(--accent); }
+
+  /* BML LOOP VISUAL */
+  .bml-loop {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .bml-step {
+    padding: 32px 24px;
+    text-align: center;
+    position: relative;
+  }
+  .bml-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: var(--ink-muted);
+    z-index: 2;
+  }
+  .bml-step:nth-child(1) { background: #FFF8F6; }
+  .bml-step:nth-child(2) { background: #F6FAF8; }
+  .bml-step:nth-child(3) { background: #F6F8FF; }
+  .bml-num {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 14px;
+  }
+  .bml-step h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .bml-step p { font-size: 13px; color: var(--ink-light); line-height: 1.6; }
+  .bml-step ul { list-style: none; text-align: left; margin-top: 12px; }
+  .bml-step ul li {
+    font-size: 13px; color: var(--ink-light);
+    padding: 3px 0;
+    padding-left: 16px;
+    position: relative;
+  }
+  .bml-step ul li::before { content: '·'; position: absolute; left: 4px; font-weight: 900; }
+
+  /* CASE STUDY */
+  .case-study {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .case-header {
+    padding: 24px 32px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .case-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .case-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .case-subtitle { font-size: 13px; color: var(--ink-muted); margin-top: 2px; }
+  .case-body { padding: 24px 32px; }
+  .case-body p { font-size: 15px; color: var(--ink-light); line-height: 1.7; margin-bottom: 12px; }
+  .case-body p:last-child { margin-bottom: 0; }
+
+  /* TIMELINE */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 20px 0;
+    position: relative;
+    padding-left: 32px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline-item {
+    position: relative;
+    padding: 0 0 24px 28px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -21px;
+    top: 5px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    z-index: 1;
+  }
+  .timeline-item.success::before { background: var(--green); }
+  .timeline-item.fail::before { background: var(--ink-muted); }
+  .timeline-label {
+    font-weight: 700;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 4px;
+  }
+  .timeline-desc { font-size: 13px; color: var(--ink-light); line-height: 1.6; }
+  .timeline-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .badge-success { background: var(--green-light); color: var(--green); }
+  .badge-fail { background: #F0F0F0; color: var(--ink-muted); }
+  .badge-pmf { background: var(--accent-light); color: var(--accent); }
+
+  /* METRICS COMPARISON */
+  .metrics-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .metric-col {
+    padding: 24px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+  }
+  .metric-col.vanity { border-color: #E0E0E0; background: #FAFAFA; }
+  .metric-col.actionable { border-color: var(--green); background: var(--green-light); }
+  .metric-col-label {
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 14px;
+  }
+  .metric-col.vanity .metric-col-label { color: var(--ink-muted); }
+  .metric-col.actionable .metric-col-label { color: var(--green); }
+  .metric-col h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700; font-size: 15px;
+    margin-bottom: 10px;
+  }
+  .metric-col ul { list-style: none; }
+  .metric-col ul li {
+    font-size: 13px; color: var(--ink-light);
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding-left: 20px;
+    position: relative;
+  }
+  .metric-col ul li::before { position: absolute; left: 0; }
+  .metric-col.vanity ul li::before { content: '✗'; color: #CCC; }
+  .metric-col.actionable ul li::before { content: '✓'; color: var(--green); }
+
+  /* PIVOT CARD */
+  .decision-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .decision-card {
+    border-radius: var(--radius-sm);
+    padding: 24px 20px;
+    border: 1.5px solid var(--border);
+    transition: all 0.2s;
+  }
+  .decision-card:hover { transform: translateY(-2px); }
+  .decision-num {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 36px;
+    line-height: 1;
+    margin-bottom: 8px;
+    opacity: 0.15;
+  }
+  .decision-card h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  .decision-card p { font-size: 13px; color: var(--ink-light); line-height: 1.6; }
+
+  /* QUIZ */
+  .quiz-container {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .quiz-header {
+    background: var(--ink);
+    color: white;
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .quiz-header h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+  }
+  .quiz-progress-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+  }
+  .quiz-body { padding: 32px; }
+  .question-block { display: none; }
+  .question-block.active { display: block; }
+  .question-num {
+    font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--accent); margin-bottom: 12px;
+  }
+  .question-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--ink);
+    margin-bottom: 24px;
+    line-height: 1.4;
+  }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn {
+    text-align: left;
+    padding: 14px 20px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    transition: all 0.15s;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+  .option-btn .opt-letter {
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    min-width: 20px;
+    color: var(--ink-muted);
+  }
+  .option-btn.correct { border-color: var(--green); background: var(--green-light); }
+  .option-btn.incorrect { border-color: #E0E0E0; background: #F5F5F5; color: #AAA; }
+  .option-btn.wrong-pick { border-color: var(--accent); background: var(--accent-light); }
+  .quiz-feedback {
+    margin-top: 20px;
+    padding: 16px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    display: none;
+    line-height: 1.6;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: var(--green-light); color: var(--green); border: 1px solid var(--green); }
+  .quiz-feedback.incorrect-fb { background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent); }
+  .quiz-nav {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .btn {
+    padding: 12px 24px;
+    border-radius: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+  }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: #C93F18; }
+  .btn-secondary { background: var(--bg); color: var(--ink); border: 1.5px solid var(--border); }
+  .btn-secondary:hover { border-color: var(--ink); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .score-screen {
+    text-align: center;
+    padding: 48px 32px;
+    display: none;
+  }
+  .score-screen.show { display: block; }
+  .score-big {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 80px;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .score-msg {
+    font-size: 18px; color: var(--ink-light);
+    margin: 16px 0 32px;
+  }
+  .quiz-progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 12px;
+  }
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+
+  /* ALGO STEPS */
+  .algo-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .algo-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 18px 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+  }
+  .algo-step:hover { border-color: var(--accent); }
+  .algo-step-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .algo-step-text h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700; font-size: 15px;
+    margin-bottom: 4px;
+  }
+  .algo-step-text p { font-size: 13px; color: var(--ink-light); line-height: 1.55; }
+
+  /* UMKM EXAMPLES */
+  .umkm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+  }
+  .umkm-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0;
+    overflow: hidden;
+  }
+  .umkm-card-top {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .umkm-emoji { font-size: 28px; }
+  .umkm-label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .umkm-type { font-size: 12px; color: var(--ink-muted); }
+  .umkm-card-body { padding: 20px 24px; }
+  .umkm-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .umkm-item {
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid transparent;
+  }
+  .umkm-item.hypothesis { border-color: var(--blue); background: var(--blue-light); }
+  .umkm-item.mvp { border-color: var(--accent); background: var(--accent-light); }
+  .umkm-item.metric { border-color: var(--green); background: var(--green-light); }
+  .umkm-item-tag {
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .hypothesis .umkm-item-tag { color: var(--blue); }
+  .mvp .umkm-item-tag { color: var(--accent); }
+  .metric .umkm-item-tag { color: var(--green); }
+  .umkm-item p { font-size: 13px; color: var(--ink); line-height: 1.5; }
+
+  /* TIPS BOX */
+  .tips-box {
+    background: var(--ink);
+    border-radius: var(--radius);
+    padding: 40px;
+    color: white;
+    margin-top: 48px;
+  }
+  .tips-box h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    margin-bottom: 24px;
+  }
+  .tips-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .tip-item {
+    padding: 16px;
+    background: rgba(255,255,255,0.05);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .tip-item .tip-icon { font-size: 22px; margin-bottom: 10px; }
+  .tip-item h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: white;
+  }
+  .tip-item p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 32px 40px;
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+  footer strong { color: var(--ink); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    section, .hero { padding: 48px 20px; }
+    hr.divider { margin: 0 20px; }
+    .bml-loop { grid-template-columns: 1fr; }
+    .bml-step:not(:last-child)::after { display: none; }
+    .metrics-compare { grid-template-columns: 1fr; }
+    .decision-grid { grid-template-columns: 1fr; }
+    .quiz-body { padding: 20px; }
+    .quiz-header { padding: 20px; }
+    .case-body, .case-header { padding: 20px; }
+    .tips-box { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">Lean<span>Start</span></span>
+    <a class="nav-pill active" href="#konsep">📚 Konsep Dasar</a>
+    <a class="nav-pill" href="#bml">🔄 BML Loop</a>
+    <a class="nav-pill" href="#metrics">📊 Metrics</a>
+    <a class="nav-pill" href="#studi-kasus">💡 Studi Kasus</a>
+    <a class="nav-pill" href="#umkm">🏪 Contoh UMKM</a>
+    <a class="nav-pill" href="#kuis">✏️ Kuis</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">📖 Materi Interaktif · UMKM & Produk Fisik</div>
+  <h1>Lean Startup<br>untuk <em>Bisnis Nyata</em></h1>
+  <p class="hero-sub">Bukan cuma buat startup teknologi. Metode ini bisa kamu pakai untuk warung, produk makanan, fashion, kerajinan, dan bisnis fisik lainnya — dengan modal minim, risiko lebih kecil.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">50%</span>
+      <span class="stat-label">startup gagal di tahun pertama</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">43%</span>
+      <span class="stat-label">berhasil karena timing doang</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">5</span>
+      <span class="stat-label">konsep kunci yang harus dikuasai</span>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 1: KONSEP DASAR -->
+<hr class="divider">
+<section id="konsep">
+  <div class="section-label">Section 01</div>
+  <h2 class="section-title">Apa itu Lean Startup?</h2>
+  <p class="section-desc">Prinsip menjalankan bisnis dengan memangkas risiko melalui uji coba setiap asumsi, sebelum kamu keluarkan uang besar.</p>
+
+  <div class="def-block">
+    <div class="def-label">Definisi Utama</div>
+    <h3>Lean Startup</h3>
+    <p>Metode bisnis yang fokus pada validasi ide secepat mungkin dengan biaya seminim mungkin. Setiap keputusan besar dianggap sebagai hipotesis yang harus dibuktikan oleh pasar — bukan asumsi yang langsung dieksekusi dengan modal penuh.</p>
+  </div>
+
+  <div class="analogy-box">
+    <div class="emoji">🍜</div>
+    <div>
+      <h4>Analogi: Warung Mie Baru</h4>
+      <p>Bayangkan kamu mau buka warung mie. Pendekatan lama: sewa tempat, renovasi, beli peralatan lengkap, hire karyawan, baru buka — habis puluhan juta sebelum ada satu pelanggan pun. Pendekatan Lean: jual dulu mie buatan sendiri ke tetangga atau lewat pesan antar. Kalau laku dan ada yang repeat order, baru pikir soal tempat dan peralatan. Risiko jauh lebih kecil.</p>
+    </div>
+  </div>
+
+  <div class="card-grid" style="margin-bottom:24px">
+    <div class="card">
+      <div class="card-icon" style="background:#FDE8E1">⚡</div>
+      <h3>Minimum Viable Product (MVP)</h3>
+      <p>Versi paling sederhana dari produkmu yang sudah layak dijual. Tujuannya bukan sempurna, tapi untuk membuktikan apakah orang mau beli. Segala yang berlebihan dari MVP adalah <em>waste</em>.</p>
+      <span class="tag" style="background:var(--accent-light);color:var(--accent)">Konsep #1</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:#E1F3EA">🎯</div>
+      <h3>Product Market Fit (PMF)</h3>
+      <p>Kondisi ketika produkmu begitu pas dengan kebutuhan pasar, sehingga orang yang butuh akan <em>mencarinya sendiri</em> tanpa perlu terlalu banyak promosi.</p>
+      <span class="tag" style="background:var(--green-light);color:var(--green)">Konsep #2</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:#E1E9FB">🔄</div>
+      <h3>Loop (Siklus)</h3>
+      <p>Satu putaran dari munculnya ide → produk → pengukuran → pelajaran → ide baru. Semakin pendek loopnya, semakin cepat kamu belajar dan beradaptasi.</p>
+      <span class="tag" style="background:var(--blue-light);color:var(--blue)">Konsep #3</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:#FEF8E1">🔬</div>
+      <h3>Hipotesis</h3>
+      <p>Dugaan yang ingin kamu buktikan. Contoh: "Orang di komplek ini butuh laundry kiloan dengan pickup gratis." Hipotesis ini harus diuji, bukan langsung dipercaya.</p>
+      <span class="tag" style="background:var(--yellow-light);color:#B8860B">Konsep #4</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:#F3E8FF">📏</div>
+      <h3>Metrics (Pengukuran)</h3>
+      <p>Standar yang kamu tentukan untuk menilai apakah hipotesis terbukti. Harus punya hubungan sebab-akibat yang jelas — bukan sekadar angka yang kelihatan bagus.</p>
+      <span class="tag" style="background:#F3E8FF;color:#7C3AED">Konsep #5</span>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>Kenapa market research konvensional sering gagal?</strong> Karena hasilnya bias — orang menjawab apa yang terdengar benar, bukan apa yang benar-benar mereka lakukan. Coca-Cola pernah ganti formula berdasarkan FGD yang hasilnya positif, tapi ternyata tidak ada yang beli. Instagram saat FGD dijawab "tidak perlu ada medsos baru." Lean startup memvalidasi dengan produk nyata, bukan pertanyaan.</p>
+  </div>
+</section>
+
+<!-- SECTION 2: BML LOOP -->
+<hr class="divider">
+<section id="bml">
+  <div class="section-label">Section 02</div>
+  <h2 class="section-title">The BML Loop</h2>
+  <p class="section-desc">Build → Measure → Learn. Ini adalah jantung dari lean startup. Ulangi terus sampai MVP-mu jadi PMF.</p>
+
+  <div class="bml-loop">
+    <div class="bml-step">
+      <div class="bml-num" style="background:var(--accent-light)">🔨</div>
+      <h3 style="color:var(--accent)">Build</h3>
+      <p>Buat MVP berdasarkan hipotesis. Hilangkan semua yang tidak relevan dengan hipotesis — itu hanya pemborosan.</p>
+      <ul>
+        <li>Tentukan hipotesis dulu</li>
+        <li>Buat versi paling sederhana</li>
+        <li>Jangan tunggu sempurna</li>
+        <li>Siapkan A/B test jika perlu</li>
+      </ul>
+    </div>
+    <div class="bml-step">
+      <div class="bml-num" style="background:var(--green-light)">📊</div>
+      <h3 style="color:var(--green)">Measure</h3>
+      <p>Luncurkan dan kumpulkan data. Tentukan metrics <em>sebelum</em> launch agar evaluasi tidak bias dan tidak memakan waktu lama.</p>
+      <ul>
+        <li>Tentukan metrics di awal</li>
+        <li>Set deadline pengujian</li>
+        <li>Gunakan marketing untuk tarik data</li>
+        <li>Catat sebab-akibat dengan jelas</li>
+      </ul>
+    </div>
+    <div class="bml-step">
+      <div class="bml-num" style="background:var(--blue-light)">🧠</div>
+      <h3 style="color:var(--blue)">Learn</h3>
+      <p>Rapat keputusan: apakah kita pivot, persevere, atau scale up? Fase ini menentukan arah loop berikutnya.</p>
+      <ul>
+        <li>Analisis data secara jujur</li>
+        <li>Pilih: Pivot / Persevere / Scale</li>
+        <li>Stop produk yang tidak laku</li>
+        <li>Mulai hipotesis baru</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="decision-grid">
+    <div class="decision-card" style="border-color:var(--accent-light)">
+      <div class="decision-num" style="color:var(--accent)">01</div>
+      <h4 style="color:var(--accent)">🔀 Pivot</h4>
+      <p>Ganti MVP, hipotesis, atau model bisnis. Hentikan produksi yang lama, mulai yang baru. Dilakukan ketika data menunjukkan arah yang berbeda dari hipotesis awal.</p>
+    </div>
+    <div class="decision-card" style="border-color:var(--border)">
+      <div class="decision-num" style="color:var(--ink-muted)">02</div>
+      <h4>⏸ Persevere</h4>
+      <p>Ulangi tes hipotesis yang sama. Hindari sebisa mungkin — ini memperlambat proses belajar. Hanya dilakukan jika ada alasan kuat bahwa eksekusi yang kurang, bukan hipotesisnya.</p>
+    </div>
+    <div class="decision-card" style="border-color:var(--green-light)">
+      <div class="decision-num" style="color:var(--green)">03</div>
+      <h4 style="color:var(--green)">🚀 Scale Up</h4>
+      <p>Kembangkan MVP yang berhasil. Tambah fitur, buka channel distribusi baru, atau tingkatkan produksi. Dilakukan ketika PMF sudah tercapai.</p>
+    </div>
+  </div>
+
+  <div class="algo-steps" style="margin-top:32px">
+    <div class="section-label">Algoritma Lean Startup</div>
+    <div class="algo-step">
+      <div class="algo-step-num">1</div>
+      <div class="algo-step-text">
+        <h4>Buat Hipotesis Formal</h4>
+        <p>Tulis dugaanmu dalam kalimat yang bisa diuji. Contoh: "Ibu rumah tangga di perumahan kami butuh frozen food berprotein tinggi dengan harga di bawah Rp30.000."</p>
+      </div>
+    </div>
+    <div class="algo-step">
+      <div class="algo-step-num">2</div>
+      <div class="algo-step-text">
+        <h4>Buat MVP untuk Validasi</h4>
+        <p>Buat versi paling sederhana yang bisa menjawab hipotesis. Jika perlu, lakukan A/B testing dengan hipotesis alternatif atau anti-hipotesis.</p>
+      </div>
+    </div>
+    <div class="algo-step">
+      <div class="algo-step-num">3</div>
+      <div class="algo-step-text">
+        <h4>Tentukan Metrics & Deadline</h4>
+        <p>Sebelum launch, sepakati: apa yang diukur dan kapan batasnya. Contoh: "Dalam 2 minggu, minimal 20 dari 100 orang yang ditawari melakukan pembelian."</p>
+      </div>
+    </div>
+    <div class="algo-step">
+      <div class="algo-step-num">4</div>
+      <div class="algo-step-text">
+        <h4>Launch & Marketing</h4>
+        <p>Luncurkan MVP dengan penuh keyakinan. Marketing bukan hanya untuk penjualan — ini adalah alat untuk mengumpulkan data. Tanpa marketing, tidak ada data.</p>
+      </div>
+    </div>
+    <div class="algo-step">
+      <div class="algo-step-num">5</div>
+      <div class="algo-step-text">
+        <h4>Decision Meeting (Learning Phase)</h4>
+        <p>Kumpulkan tim, analisis data, dan putuskan: pivot, persevere, atau scale up. Ini bukan rapat gosip — ini rapat yang menentukan nasib produk.</p>
+      </div>
+    </div>
+    <div class="algo-step">
+      <div class="algo-step-num">6</div>
+      <div class="algo-step-text">
+        <h4>Ulangi Sampai Jadi PMF</h4>
+        <p>Terus jalankan loop sampai produkmu laku, profitable, punya model bisnis yang jelas, dan bisa dikembangkan. Itulah PMF.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: METRICS -->
+<hr class="divider">
+<section id="metrics">
+  <div class="section-label">Section 03</div>
+  <h2 class="section-title">Vanity vs Actionable Metrics</h2>
+  <p class="section-desc">Memilih metrics yang salah membuat evaluasi jadi bertele-tele dan tidak produktif. Knowing what to measure is as important as the measurement itself.</p>
+
+  <div class="metrics-compare">
+    <div class="metric-col vanity">
+      <div class="metric-col-label">❌ Vanity Metrics</div>
+      <h4>Kelihatan Bagus, Tapi Tidak Bisa Dipakai</h4>
+      <ul>
+        <li>Followers Instagram naik 5.000</li>
+        <li>Postingan di-like 2.000 orang</li>
+        <li>Produk terjual 100 pcs bulan lalu</li>
+        <li>Revenue bulan ini Rp 50 juta</li>
+        <li>Website dikunjungi 10.000 orang</li>
+      </ul>
+      <div style="margin-top:16px;padding:12px;background:white;border-radius:8px;font-size:13px;color:var(--ink-muted)">
+        Masalahnya: kita tidak tahu <em>kenapa</em> angka-angka ini tercapai, dan <em>apa</em> yang harus dilakukan untuk mengulanginya.
+      </div>
+    </div>
+    <div class="metric-col actionable">
+      <div class="metric-col-label">✅ Actionable Metrics</div>
+      <h4>Ada Sebab-Akibat yang Jelas</h4>
+      <ul>
+        <li>Dari 100 orang yang ditawari, 20 beli</li>
+        <li>3 dari 10 pembeli repeat order dalam seminggu</li>
+        <li>Konversi dari DM ke pembelian = 15%</li>
+        <li>Budget iklan Rp 500rb → penjualan Rp 7,5 juta</li>
+        <li>50% pembeli referral dari pelanggan lama</li>
+      </ul>
+      <div style="margin-top:16px;padding:12px;background:rgba(255,255,255,0.6);border-radius:8px;font-size:13px;color:var(--green)">
+        Dengan ini, kamu tahu persis apa yang harus dilakukan untuk mencapai target bulan depan.
+      </div>
+    </div>
+  </div>
+
+  <div class="analogy-box">
+    <div class="emoji">🍰</div>
+    <div>
+      <h4>Analogi: Toko Kue Rumahan</h4>
+      <p>Vanity metric: "Kue saya terjual 50 loyang bulan ini." — Kamu tidak tahu kenapa.<br><br>
+      Actionable metric: "Dari 30 orang yang mencoba sample brownies di bazar, 18 langsung pesan ulang dalam seminggu — artinya conversion rate 60%. Kalau mau dapat 100 pesanan, perlu approach 170 orang dengan sample."<br><br>
+      Sekarang kamu punya <strong>rencana yang jelas</strong>, bukan sekadar angka yang kelihatan bagus.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: STUDI KASUS -->
+<hr class="divider">
+<section id="studi-kasus">
+  <div class="section-label">Section 04</div>
+  <h2 class="section-title">Studi Kasus Nyata</h2>
+  <p class="section-desc">Dari pengalaman HMNS Perfumery dan NAH Project — brand fashion lokal yang menggunakan lean startup sejak 2017.</p>
+
+  <div class="case-study" style="margin-bottom:24px">
+    <div class="case-header">
+      <div class="case-icon" style="background:#F0EDE8">👟</div>
+      <div>
+        <div class="case-title">NAH Project — Sepatu Kulit Lokal</div>
+        <div class="case-subtitle">PMF tercapai di MVP ke-4 · Loop 1 bulan per siklus · 4 iterasi</div>
+      </div>
+    </div>
+    <div class="case-body">
+      <p>Dimulai dengan hipotesis: <em>"Orang yang beli sepatu kulit Rp800.000 pasti mau beli yang sama dengan harga Rp300.000."</em> Bukan dari riset pasar berbulan-bulan — dari pengamatan sederhana di lingkungan kerja.</p>
+      <div class="timeline">
+        <div class="timeline-item fail">
+          <div class="timeline-label">SN-01 — Sepatu Kulit (Coklat, Hitam, Hitam-Putih) <span class="timeline-badge badge-fail">Belum PMF</span></div>
+          <div class="timeline-desc">Yang paling laku adalah hitam-putih. Tapi karena tidak ada metrics di awal, tidak bisa disimpulkan kenapa. Evaluasi molor 1 bulan karena semua orang berbeda pendapat tentang penyebabnya.</div>
+        </div>
+        <div class="timeline-item fail">
+          <div class="timeline-label">SN-02 — Variasi Corak Berbeda <span class="timeline-badge badge-fail">Belum PMF</span></div>
+          <div class="timeline-desc">Dengan metrics yang sudah disiapkan di awal: hitam-putih menang lagi. Learning: audiens kita lebih muda, dan mungkin tidak mau sepatu kulit.</div>
+        </div>
+        <div class="timeline-item fail">
+          <div class="timeline-label">SN-03 — Sepatu Berwarna Berani <span class="timeline-badge badge-fail">Gagal Total</span></div>
+          <div class="timeline-desc">Flop. Warnanya terlalu mencolok. Learning baru: audiens butuh kesederhanaan — "simplicity", bukan kemewahan maupun eksentrik.</div>
+        </div>
+        <div class="timeline-item success">
+          <div class="timeline-label">SN-04 — Sneakers (Terinspirasi Nike AF1) <span class="timeline-badge badge-pmf">PMF ✓</span></div>
+          <div class="timeline-desc">Hipotesis: "Audiens kita butuh sneakers, bukan leather shoes." Terbukti. NAH Project lahir sebagai brand sneakers, bukan leather shoes seperti rencana awal. PMF dicapai di bulan ke-4.</div>
+        </div>
+      </div>
+      <div class="highlight-box">
+        <p><strong>Pelajaran kunci:</strong> Mereka tidak kekeuh dengan rencana awal (sepatu kulit). Setiap gagal memberikan data, dan data itu dipakai untuk arah berikutnya — bukan untuk mempertahankan ego.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study">
+    <div class="case-header">
+      <div class="case-icon" style="background:#F5F0FB">🧴</div>
+      <div>
+        <div class="case-title">HMNS Perfumery — Parfum Lokal Terjangkau</div>
+        <div class="case-subtitle">PMF di MVP ke-5 · Loop 1–3 bulan · 2 hipotesis utama</div>
+      </div>
+    </div>
+    <div class="case-body">
+      <p>Hipotesis awal: <em>"Ada celah di pasar parfum — antara yang murah di minimarket dan yang mahal dari brand Eropa. Cowok yang paling butuh ini karena segmen wanita sudah ada Body Shop dan Victoria's Secret."</em></p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-label">MVP Alpha, Beta, Delta — Diluncurkan Bersamaan</div>
+          <div class="timeline-desc">Dijual tanpa packaging mewah, botol biasa — karena packaging tidak menjawab hipotesis "wangi mana yang lebih disukai." Semua itu waste yang justru mempersulit evaluasi.</div>
+        </div>
+        <div class="timeline-item success">
+          <div class="timeline-label">Alpha — PMF di segmen maskulin <span class="timeline-badge badge-pmf">PMF ✓</span></div>
+          <div class="timeline-desc">Langsung jadi PMF. Sekarang tinggal urusan distribusi, skalabilitas, dan profitabilitas — tidak masuk dalam product development cycle lagi.</div>
+        </div>
+        <div class="timeline-item fail">
+          <div class="timeline-label">Delta — Dipersevere di Loop Ke-2, Hasilnya Sama</div>
+          <div class="timeline-desc">Tidak ada perubahan signifikan. Tapi data mengungkap sesuatu menarik: 30% pembeli parfum "cowok" adalah perempuan.</div>
+        </div>
+        <div class="timeline-item success">
+          <div class="timeline-label">HMNS Orgasm — Produk Feminin yang Pivot dari Data <span class="timeline-badge badge-pmf">PMF ✓</span></div>
+          <div class="timeline-desc">Founder awalnya tidak rela pivot ke segmen feminin karena merasa tidak maskulin. Tapi data berbicara. Hasilnya? Terjual 50–100 pcs per hari tanpa perlu marketing aktif. Multiple award.</div>
+        </div>
+      </div>
+      <div class="highlight-box">
+        <p><strong>Pelajaran kunci:</strong> Menjadi selfless founder — mau mengikuti kemauan pasar, bukan ego sendiri. Data dari MVP Delta yang "gagal" justru membuka peluang besar yang tidak terpikirkan sebelumnya.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: CONTOH UMKM -->
+<hr class="divider">
+<section id="umkm">
+  <div class="section-label">Section 05</div>
+  <h2 class="section-title">Lean Startup untuk UMKM</h2>
+  <p class="section-desc">Begini cara mengaplikasikan metode ini ke bisnis fisik yang mungkin sedang kamu jalankan atau rencanakan.</p>
+
+  <div class="umkm-grid">
+    <div class="umkm-card">
+      <div class="umkm-card-top">
+        <div class="umkm-emoji">🍱</div>
+        <div>
+          <div class="umkm-label">Catering / Makanan Rumahan</div>
+          <div class="umkm-type">Produk FnB · Home industry</div>
+        </div>
+      </div>
+      <div class="umkm-card-body">
+        <div class="umkm-row">
+          <div class="umkm-item hypothesis">
+            <div class="umkm-item-tag">Hipotesis</div>
+            <p>Karyawan kantoran di sekitar ruko kami butuh makan siang sehat dengan harga di bawah Rp 30.000 yang bisa dipesan H-1.</p>
+          </div>
+          <div class="umkm-item mvp">
+            <div class="umkm-item-tag">MVP</div>
+            <p>Masak 20 porsi nasi kotak menu harian, tawarkan lewat grup WhatsApp kantor sekitar. Kemasan: dos lipat sederhana + stiker nama.</p>
+          </div>
+          <div class="umkm-item metric">
+            <div class="umkm-item-tag">Actionable Metric</div>
+            <p>Dalam 3 minggu: minimal 12 dari 20 porsi habis per hari, dan 40% memesan lagi di minggu kedua tanpa diingatkan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="umkm-card">
+      <div class="umkm-card-top">
+        <div class="umkm-emoji">🧴</div>
+        <div>
+          <div class="umkm-label">Produk Skincare Lokal</div>
+          <div class="umkm-type">Produk fisik · Beauty</div>
+        </div>
+      </div>
+      <div class="umkm-card-body">
+        <div class="umkm-row">
+          <div class="umkm-item hypothesis">
+            <div class="umkm-item-tag">Hipotesis</div>
+            <p>Perempuan usia 20–30 di kota kecil butuh skincare lokal dengan bahan alami yang harganya separuh dari brand Korea.</p>
+          </div>
+          <div class="umkm-item mvp">
+            <div class="umkm-item-tag">MVP</div>
+            <p>Produksi 50 pcs moisturizer saja (satu varian). Kemasan botol kaca sederhana + label print sendiri. Jual via Instagram + titip di toko terdekat.</p>
+          </div>
+          <div class="umkm-item metric">
+            <div class="umkm-item-tag">Actionable Metric</div>
+            <p>Dalam 1 bulan: 50 pcs habis. Dari pembelinya, minimal 30% minta repurchase tanpa diingatkan di bulan berikutnya.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="umkm-card">
+      <div class="umkm-card-top">
+        <div class="umkm-emoji">👗</div>
+        <div>
+          <div class="umkm-label">Fashion Lokal / Konveksi</div>
+          <div class="umkm-type">Produk fisik · Fashion</div>
+        </div>
+      </div>
+      <div class="umkm-card-body">
+        <div class="umkm-row">
+          <div class="umkm-item hypothesis">
+            <div class="umkm-item-tag">Hipotesis</div>
+            <p>Perempuan pekerja usia 25–35 butuh baju formal yang nyaman dipakai seharian, bisa dicuci mesin, harga di bawah Rp 200.000.</p>
+          </div>
+          <div class="umkm-item mvp">
+            <div class="umkm-item-tag">MVP</div>
+            <p>Buat 30 pcs blus dalam 2 warna netral (hitam & putih). Foto produk sendiri, jual pre-order via Instagram. Tidak perlu toko dulu.</p>
+          </div>
+          <div class="umkm-item metric">
+            <div class="umkm-item-tag">Actionable Metric</div>
+            <p>Dari 200 orang yang melihat postingan: 50 kirim DM, 20 beli, 5 orang tag temannya. Conversion DM ke beli minimal 40%.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="umkm-card">
+      <div class="umkm-card-top">
+        <div class="umkm-emoji">🧺</div>
+        <div>
+          <div class="umkm-label">Laundry Kiloan</div>
+          <div class="umkm-type">Jasa fisik · Kebutuhan sehari-hari</div>
+        </div>
+      </div>
+      <div class="umkm-card-body">
+        <div class="umkm-row">
+          <div class="umkm-item hypothesis">
+            <div class="umkm-item-tag">Hipotesis</div>
+            <p>Penghuni kost di sekitar kampus butuh laundry kiloan dengan antar-jemput gratis dan selesai dalam 24 jam.</p>
+          </div>
+          <div class="umkm-item mvp">
+            <div class="umkm-item-tag">MVP</div>
+            <p>Terima laundry dari 10 kost terdekat, kerjakan sendiri di rumah, antar-jemput sendiri. Tidak perlu buka toko dulu — validasi demand dulu.</p>
+          </div>
+          <div class="umkm-item metric">
+            <div class="umkm-item-tag">Actionable Metric</div>
+            <p>Dalam 2 minggu: 7 dari 10 pelanggan pertama pakai ulang tanpa diingatkan. Minimal 3 referral dari pelanggan awal.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tips-box">
+    <h3>💡 Tips Praktis untuk UMKM</h3>
+    <div class="tips-list">
+      <div class="tip-item">
+        <div class="tip-icon">🛒</div>
+        <h4>Gunakan Pre-order sebagai MVP</h4>
+        <p>Jual dulu sebelum produksi. Kalau ada yang beli, hipotesismu valid. Ini juga bantu cash flow karena modal masuk sebelum produksi.</p>
+      </div>
+      <div class="tip-item">
+        <div class="tip-icon">📱</div>
+        <h4>WhatsApp & Instagram sebagai Lab</h4>
+        <p>Tawarkan produk ke grup WA atau stories Instagram sebelum investasi marketing. Reaksi organik adalah data paling jujur yang kamu punya.</p>
+      </div>
+      <div class="tip-item">
+        <div class="tip-icon">⏰</div>
+        <h4>Tentukan Deadline Loop</h4>
+        <p>Tentukan: "Dalam 1 bulan ini, aku akan uji hipotesis ini." Tanpa deadline, loop tidak berakhir dan kamu tidak pernah ambil keputusan.</p>
+      </div>
+      <div class="tip-item">
+        <div class="tip-icon">🎯</div>
+        <h4>Fokus 1 Variabel per Loop</h4>
+        <p>Jangan ganti rasa, kemasan, dan harga sekaligus. Kamu tidak akan tahu mana yang menyebabkan hasilnya. Ubah satu hal per siklus.</p>
+      </div>
+      <div class="tip-item">
+        <div class="tip-icon">🔁</div>
+        <h4>Repeat Order = Sinyal PMF</h4>
+        <p>Kalau pembeli pertama mau beli lagi tanpa kamu minta atau ingatkan, itu sinyal kuat bahwa produkmu mulai fit dengan pasar.</p>
+      </div>
+      <div class="tip-item">
+        <div class="tip-icon">📉</div>
+        <h4>Gagal = Data, Bukan Bencana</h4>
+        <p>Produk yang tidak laku tetap memberikan pelajaran. Yang penting: kamu tahu KENAPA tidak laku, bukan cuma "tidak laku."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: KUIS -->
+<hr class="divider">
+<section id="kuis">
+  <div class="section-label">Section 06</div>
+  <h2 class="section-title">Uji Pemahamanmu</h2>
+  <p class="section-desc">10 pertanyaan untuk mengecek seberapa dalam kamu memahami lean startup — semuanya berkonteks bisnis fisik dan UMKM.</p>
+
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <div>
+        <h2>Kuis Lean Startup</h2>
+        <div class="quiz-progress-label" id="progress-label">Pertanyaan 1 dari 10</div>
+        <div class="quiz-progress-bar">
+          <div class="quiz-progress-fill" id="progress-fill" style="width:10%"></div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:28px;font-family:'Poppins',sans-serif;font-weight:800;" id="score-display">0</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.5)">skor sementara</div>
+      </div>
+    </div>
+
+    <div class="quiz-body" id="quiz-body">
+      <!-- Q1 -->
+      <div class="question-block active" data-q="0">
+        <div class="question-num">Pertanyaan 1</div>
+        <div class="question-text">Kamu mau buka usaha jual kerupuk ikan homemade. Mana yang merupakan MVP yang tepat?</div>
+        <div class="options">
+          <button class="option-btn" onclick="selectAnswer(0,0,'wrong')">
+            <span class="opt-letter">A</span>
+            <span>Beli mesin produksi, sewa tempat, buat 500 bungkus, lalu jual di toko offline</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(0,1,'correct')">
+            <span class="opt-letter">B</span>
+            <span>Buat 30 bungkus dengan kemasan sederhana, tawarkan ke grup WA tetangga dan teman kantor</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(0,2,'wrong')">
+            <span class="opt-letter">C</span>
+            <span>Lakukan survei ke 200 orang tentang apakah mereka suka kerupuk ikan</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(0,3,'wrong')">
+            <span class="opt-letter">D</span>
+            <span>Buat branding profesional terlebih dahulu, lalu produksi</span>
+          </button>
+        </div>
+        <div class="quiz-feedback" id="fb-0"></div>
+        <div class="quiz-nav">
+          <span></span>
+          <button class="btn btn-primary" onclick="nextQuestion()" id="next-0" disabled>Pertanyaan Berikutnya →</button>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block" data-q="1">
+        <div class="question-num">Pertanyaan 2</div>
+        <div class="question-text">Warung kopi barumu mendapat 200 pengunjung di bulan pertama. Ini termasuk jenis metrics apa?</div>
+        <div class="options">
+          <button class="option-btn" onclick="selectAnswer(1,0,'correct')">
+            <span class="opt-letter">A</span>
+            <span>Vanity metrics, karena kita tidak tahu kenapa mereka datang dan apakah akan kembali</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(1,1,'wrong')">
+            <span class="opt-letter">B</span>
+            <span>Actionable metrics, karena angka 200 sudah cukup jelas untuk dianalisis</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(1,2,'wrong')">
+            <span class="opt-letter">C</span>
+            <span>Actionable metrics, karena bisa dijadikan target bulan depan menjadi 400 pengunjung</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(1,3,'wrong')">
+            <span class="opt-letter">D</span>
+            <span>Bukan termasuk metrics apapun, tidak relevan untuk evaluasi</span>
+          </button>
+        </div>
+        <div class="quiz-feedback" id="fb-1"></div>
+        <div class="quiz-nav">
+          <span></span>
+          <button class="btn btn-primary" onclick="nextQuestion()" id="next-1" disabled>Pertanyaan Berikutnya →</button>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block" data-q="2">
+        <div class="question-num">Pertanyaan 3</div>
+        <div class="question-text">Kamu jual tiga varian sambal botolan: sambal ikan, sambal matah, dan sambal bajak. Setelah 1 bulan, sambal matah paling laris. Apa langkah lean startup yang tepat selanjutnya?</div>
+        <div class="options">
+          <button class="option-btn" onclick="selectAnswer(2,0,'wrong')">
+            <span class="opt-letter">A</span>
+            <span>Lanjutkan menjual ketiga varian karena semuanya ada yang beli</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(2,1,'wrong')">
+            <span class="opt-letter">B</span>
+            <span>Stop semua varian dan mulai dari nol dengan produk baru</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(2,2,'correct')">
+            <span class="opt-letter">C</span>
+            <span>Scale up sambal matah, pivot dari varian yang tidak laku, buat hipotesis baru tentang kenapa matah yang menang</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(2,3,'wrong')">
+            <span class="opt-letter">D</span>
+            <span>Turunkan harga semua varian agar penjualannya merata</span>
+          </button>
+        </div>
+        <div class="quiz-feedback" id="fb-2"></div>
+        <div class="quiz-nav">
+          <span></span>
+          <button class="btn btn-primary" onclick="nextQuestion()" id="next-2" disabled>Pertanyaan Berikutnya →</button>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-block" data-q="3">
+        <div class="question-num">Pertanyaan 4</div>
+        <div class="question-text">Apa yang dimaksud dengan Product Market Fit (PMF)?</div>
+        <div class="options">
+          <button class="option-btn" onclick="selectAnswer(3,0,'wrong')">
+            <span class="opt-letter">A</span>
+            <span>Produk yang sudah viral di media sosial</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(3,1,'wrong')">
+            <span class="opt-letter">B</span>
+            <span>Produk yang sudah mendapatkan investor</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(3,2,'correct')">
+            <span class="opt-letter">C</span>
+            <span>Produk yang begitu cocok dengan pasar sehingga orang yang butuh akan mencarinya sendiri</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(3,3,'wrong')">
+            <span class="opt-letter">D</span>
+            <span>Produk yang sudah diproduksi dalam jumlah besar dan biaya rendah</span>
+          </button>
+        </div>
+        <div class="quiz-feedback" id="fb-3"></div>
+        <div class="quiz-nav">
+          <span></span>
+          <button class="btn btn-primary" onclick="nextQuestion()" id="next-3" disabled>Pertanyaan Berikutnya →</button>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question-block" data-q="4">
+        <div class="question-num">Pertanyaan 5</div>
+        <div class="question-text">Kamu punya hipotesis: "Ibu rumah tangga di perumahan X butuh jasa titip belanja online." Mana metrics yang ACTIONABLE untuk menguji ini?</div>
+        <div class="options">
+          <button class="option-btn" onclick="selectAnswer(4,0,'wrong')">
+            <span class="opt-letter">A</span>
+            <span>Mendapat 500 like di postingan promosi Instagram dalam seminggu</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(4,1,'correct')">
+            <span class="opt-letter">B</span>
+            <span>Dari 20 ibu rumah tangga yang ditawari, 8 memakai jasa ini, dan 5 repeat order di minggu kedua</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(4,2,'wrong')">
+            <span class="opt-letter">C</span>
+            <span>Pendapatan bulan pertama mencapai Rp 3 juta</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(4,3,'wrong')">
+            <span class="opt-letter">D</span>
+            <span>Mendapat testimoni positif dari 10 pelanggan</span>
+          </button>
+        </div>
+        <div class="quiz-feedback" id="fb-4"></div>
+        <div class="quiz-nav">
+          <span></span>
+          <button class="btn btn-primary" onclick="nextQuestion()" id="next-4" disabled>Pertanyaan Berikutnya →</button>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question-block" data-q="5">
+        <div class="question-num">Pertanyaan 6</div>
+        <div class="question-text">Produk tasmu sudah 3 loop tidak ada yang beli walaupun sudah ganti desain. Rekan bisnismu bilang "persevere saja, mungkin marketingnya kurang." Apa pendapat lean startup tentang ini?</div>
+        <div class="options">
+          <button class="option-btn" onclick="selectAnswer(5,0,'wrong')">
+            <span class="opt-letter">A</span>
+            <span>Setuju, coba marketing lebih besar dulu sebelum memutuskan</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(5,1,'correct')">
+            <span class="opt-letter">B</span>
+            <span>Persevere bisa jadi kontraproduktif — lebih baik pivot ke hipotesis atau produk yang berbeda berdasarkan data yang ada</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(5,2,'wrong')">
+            <span class="opt-letter">C</span>
+            <span>Tutup bisnis karena 3 loop gagal adalah tanda tidak ada potensi</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(5,3,'wrong')">
+            <span class="opt-letter">D</span>
+            <span>Cari investor dulu agar ada modal tambahan untuk persevere</span>
+          </button>
+        </div>
+        <div class="quiz-feedback" id="fb-5"></div>
+        <div class="quiz-nav">
+          <span></span>
+          <button class="btn btn-primary" onclick="nextQuestion()" id="next-5" disabled>Pertanyaan Berikutnya →</button>
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="question-block" data-q="6">
+        <div class="question-num">Pertanyaan 7</div>
+        <div class="question-text">Kamu mau uji coba dua rasa baru onde-onde: pandan dan coklat. Mana pendekatan yang paling lean?</div>
+        <div class="options">
+          <button class="option-btn" onclick="selectAnswer(6,0,'wrong')">
+            <span class="opt-letter">A</span>
+            <span>Produksi 200 buah masing-masing, jual di toko selama sebulan, lihat mana yang habis duluan</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(6,1,'wrong')">
+            <span class="opt-letter">B</span>
+            <span>Tanya pendapat keluarga dan teman mana yang lebih enak, baru produksi massal</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(6,2,'correct')">
+            <span class="opt-letter">C</span>
+            <span>Buat 20 buah masing-masing, tawarkan sebagai sample ke pelanggan tetap, catat berapa yang pesan ulang tiap rasa dalam 1 minggu</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(6,3,'wrong')">
+            <span class="opt-letter">D</span>
+            <span>Lakukan FGD dengan 10 orang untuk menentukan rasa yang paling disukai sebelum produksi</span>
+          </button>
+        </div>
+        <div class="quiz-feedback" id="fb-6"></div>
+        <div class="quiz-nav">
+          <span></span>
+          <button class="btn btn-primary" onclick="nextQuestion()" id="next-6" disabled>Pertanyaan Berikutnya →</button>
+        </div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="question-block" data-q="7">
+        <div class="question-num">Pertanyaan 8</div>
+        <div class="question-text">Apa yang membuat market research konvensional rentan bias?</div>
+        <div class="options">
+          <button class="option-btn" onclick="selectAnswer(7,0,'wrong')">
+            <span class="opt-letter">A</span>
+            <span>Karena terlalu mahal dan memakan waktu lama</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(7,1,'wrong')">
+            <span class="opt-letter">B</span>
+            <span>Karena hanya bisa dilakukan oleh perusahaan besar</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(7,2,'correct')">
+            <span class="opt-letter">C</span>
+            <span>Orang menjawab apa yang terdengar benar atau yang diharapkan pewawancara, bukan perilaku nyata mereka ketika produk ada di depan mereka</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(7,3,'wrong')">
+            <span class="opt-letter">D</span>
+            <span>Karena hasilnya tidak bisa diukur secara kuantitatif</span>
+          </button>
+        </div>
+        <div class="quiz-feedback" id="fb-7"></div>
+        <div class="quiz-nav">
+          <span></span>
+          <button class="btn btn-primary" onclick="nextQuestion()" id="next-7" disabled>Pertanyaan Berikutnya →</button>
+        </div>
+      </div>
+
+      <!-- Q9 -->
+      <div class="question-block" data-q="8">
+        <div class="question-num">Pertanyaan 9</div>
+        <div class="question-text">Kamu baru launch baju batik modern. Dalam 1 bulan, 80% stok habis. Tapi kamu tidak tahu dari mana pembeli datang dan kenapa mereka beli. Apa yang seharusnya kamu lakukan SEBELUM launch berikutnya?</div>
+        <div class="options">
+          <button class="option-btn" onclick="selectAnswer(8,0,'wrong')">
+            <span class="opt-letter">A</span>
+            <span>Langsung produksi lebih banyak karena sudah terbukti laku</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(8,1,'wrong')">
+            <span class="opt-letter">B</span>
+            <span>Tambah varian produk selagi momentum masih ada</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(8,2,'correct')">
+            <span class="opt-letter">C</span>
+            <span>Tentukan hipotesis dan actionable metrics terlebih dahulu — siapa pembelinya, channel mana yang efektif, kenapa mereka beli — agar batch berikutnya bisa lebih terarah</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(8,3,'wrong')">
+            <span class="opt-letter">D</span>
+            <span>Minta testimoni pelanggan untuk diposting di sosmed sebagai social proof</span>
+          </button>
+        </div>
+        <div class="quiz-feedback" id="fb-8"></div>
+        <div class="quiz-nav">
+          <span></span>
+          <button class="btn btn-primary" onclick="nextQuestion()" id="next-8" disabled>Pertanyaan Berikutnya →</button>
+        </div>
+      </div>
+
+      <!-- Q10 -->
+      <div class="question-block" data-q="9">
+        <div class="question-num">Pertanyaan 10</div>
+        <div class="question-text">Kamu punya produk brownies yang laku, tapi data menunjukkan 60% pembelinya adalah laki-laki usia 20–30 — padahal kamu menyasar ibu rumah tangga. Apa langkah lean startup yang tepat?</div>
+        <div class="options">
+          <button class="option-btn" onclick="selectAnswer(9,0,'wrong')">
+            <span class="opt-letter">A</span>
+            <span>Tetap fokus ke ibu rumah tangga karena itu target awal yang sudah direncanakan</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(9,1,'wrong')">
+            <span class="opt-letter">B</span>
+            <span>Stop produksi karena produk tidak sesuai hipotesis awal</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(9,2,'correct')">
+            <span class="opt-letter">C</span>
+            <span>Pivot — jadikan laki-laki usia 20–30 sebagai target baru, buat hipotesis mengapa mereka beli, dan sesuaikan marketing ke segmen tersebut</span>
+          </button>
+          <button class="option-btn" onclick="selectAnswer(9,3,'wrong')">
+            <span class="opt-letter">D</span>
+            <span>Buat dua lini produk sekaligus — satu untuk ibu rumah tangga, satu untuk pria muda</span>
+          </button>
+        </div>
+        <div class="quiz-feedback" id="fb-9"></div>
+        <div class="quiz-nav">
+          <span></span>
+          <button class="btn btn-primary" onclick="finishQuiz()" id="next-9" disabled>Lihat Hasil →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCORE SCREEN -->
+    <div class="score-screen" id="score-screen">
+      <div id="score-emoji" style="font-size:56px;margin-bottom:16px">🎉</div>
+      <div class="score-big" id="final-score">0/10</div>
+      <div class="score-msg" id="score-message">Menghitung skor...</div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="restartQuiz()">🔁 Ulangi Kuis</button>
+        <button class="btn btn-secondary" onclick="scrollToTop()">⬆ Baca Materi Lagi</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Dibuat dari materi <strong>The Intelligent Entrepreneur by DNVB Indonesia</strong> · Featuring Rizky Arief Dwi Prakoso, Founder & CEO HMNS Perfumery
+</footer>
+
+<script>
+  const answers = {
+    0: 1, 1: 0, 2: 2, 3: 2, 4: 1,
+    5: 1, 6: 2, 7: 2, 8: 2, 9: 2
+  };
+  const feedbacks = {
+    0: {
+      correct: "✅ Benar! MVP adalah versi paling sederhana yang layak dijual. Dengan 30 bungkus ke grup WA, kamu bisa validasi apakah orang mau beli tanpa modal besar.",
+      wrong: "❌ Kurang tepat. MVP bukan versi sempurna atau yang sudah melalui survei panjang. MVP adalah produk minimal yang langsung dihadapkan ke pasar nyata untuk mendapat reaksi nyata."
+    },
+    1: {
+      correct: "✅ Benar! 200 pengunjung adalah vanity metrics. Kita tidak tahu kenapa mereka datang, apakah karena lokasi strategis, rekomendasi, atau promosi — sehingga tidak bisa direplikasi.",
+      wrong: "❌ Kurang tepat. Angka pengunjung tanpa konteks sebab-akibat adalah vanity metrics. Yang actionable: 'Dari 200 pengunjung, 60 datang karena promo Instagram, dan 40 darinya repeat visit.'"
+    },
+    2: {
+      correct: "✅ Benar! Ini contoh klasik keputusan lean: scale up yang berhasil, pivot yang tidak laku, dan teruskan belajar dari data. Jangan pertahankan produk yang tidak laku hanya karena sudah terlanjur dibuat.",
+      wrong: "❌ Kurang tepat. Lean startup mendorong kamu untuk berani scale up yang berhasil dan pivot dari yang tidak — bukan merata-ratakannya atau memulai dari nol."
+    },
+    3: {
+      correct: "✅ Benar! PMF bukan soal viral atau investor. Ini tentang kesesuaian produk dengan kebutuhan pasar — sedemikian rupa sehingga orang yang butuh akan mencarinya sendiri.",
+      wrong: "❌ Kurang tepat. PMF artinya produk sudah sangat cocok dengan pasar. Tandanya: orang yang butuh akan mencarinya sendiri, bukan karena dipush oleh marketing."
+    },
+    4: {
+      correct: "✅ Benar! Actionable metrics punya hubungan sebab-akibat yang jelas. '8 dari 20 yang ditawari memakai jasa, 5 repeat order' memberikan data untuk membuat keputusan konkret.",
+      wrong: "❌ Kurang tepat. Like, revenue total, atau testimoni adalah vanity metrics. Yang actionable: ada angka yang menunjukkan sebab-akibat yang bisa kamu replikasi."
+    },
+    5: {
+      correct: "✅ Benar! Persevere tanpa data baru bisa menjadi kontraproduktif. Tiga loop tanpa hasil adalah sinyal kuat untuk pivot — cari hipotesis atau produk yang berbeda.",
+      wrong: "❌ Kurang tepat. Lean startup sangat kritis terhadap persevere yang tidak berdasar data. Jika 3 loop sudah cukup untuk menyimpulkan hipotesis salah, pivot adalah pilihan yang lebih cerdas."
+    },
+    6: {
+      correct: "✅ Benar! Sample ke pelanggan tetap dengan mengamati repeat order adalah cara paling lean. Kamu validasi dengan biaya kecil dan mendapat data nyata — bukan opini di FGD.",
+      wrong: "❌ Kurang tepat. Produksi massal atau FGD sebelum ada data pasar adalah pendekatan konvensional yang mahal dan rentan bias. Yang lean: validasi dulu dengan sedikit produk."
+    },
+    7: {
+      correct: "✅ Benar! Ini inti masalah market research — response bias dan social desirability bias. Orang bilang mereka akan beli, tapi ketika produknya ada, perilaku mereka berbeda.",
+      wrong: "❌ Kurang tepat. Masalah utama market research bukan biaya atau aksesibilitasnya, tapi karena hasilnya rentan bias — orang menjawab apa yang terdengar benar, bukan apa yang akan mereka lakukan."
+    },
+    8: {
+      correct: "✅ Benar! Produk laku tapi tidak tahu kenapa = vanity metrics. Sebelum scale up, kamu perlu actionable metrics: siapa pembelinya, kenapa beli, dari channel mana — agar bisa direplikasi.",
+      wrong: "❌ Kurang tepat. Lean startup tidak hanya soal 'apakah laku', tapi 'kenapa laku dan bagaimana mengulanginya.' Tanpa ini, scale up bisa jadi gambling."
+    },
+    9: {
+      correct: "✅ Benar! Ini adalah 'selfless founder' mindset yang jadi inti lean startup. Kamu harus mau mengikuti kemauan pasar, bukan kekeuh dengan rencana awal. Data menunjukkan peluang baru — ambil.",
+      wrong: "❌ Kurang tepat. Lean startup mendorong pivot berdasarkan data. Jika pasar menunjukkan segmen yang berbeda, itu adalah peluang baru yang harus dikejar — bukan diabaikan."
+    }
+  };
+
+  let currentQ = 0;
+  let score = 0;
+  let answered = new Array(10).fill(false);
+
+  function selectAnswer(q, idx, type) {
+    if (answered[q]) return;
+    answered[q] = true;
+
+    const block = document.querySelectorAll('.question-block')[q];
+    const btns = block.querySelectorAll('.option-btn');
+    const correct = answers[q];
+
+    btns.forEach((btn, i) => {
+      btn.disabled = true;
+      if (i === correct) btn.classList.add('correct');
+      else if (i === idx && idx !== correct) btn.classList.add('wrong-pick');
+      else btn.classList.add('incorrect');
+    });
+
+    const fb = document.getElementById('fb-' + q);
+    const isCorrect = (idx === correct);
+    if (isCorrect) {
+      score++;
+      document.getElementById('score-display').textContent = score;
+      fb.textContent = feedbacks[q].correct;
+      fb.className = 'quiz-feedback show correct-fb';
+    } else {
+      fb.textContent = feedbacks[q].wrong;
+      fb.className = 'quiz-feedback show incorrect-fb';
+    }
+
+    const nextBtn = document.getElementById('next-' + q);
+    if (nextBtn) nextBtn.disabled = false;
+  }
+
+  function nextQuestion() {
+    const blocks = document.querySelectorAll('.question-block');
+    blocks[currentQ].classList.remove('active');
+    currentQ++;
+    blocks[currentQ].classList.add('active');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const label = document.getElementById('progress-label');
+    const fill = document.getElementById('progress-fill');
+    label.textContent = `Pertanyaan ${currentQ + 1} dari 10`;
+    fill.style.width = ((currentQ + 1) / 10 * 100) + '%';
+  }
+
+  function finishQuiz() {
+    document.getElementById('quiz-body').style.display = 'none';
+    const ss = document.getElementById('score-screen');
+    ss.classList.add('show');
+    document.getElementById('final-score').textContent = score + '/10';
+
+    let emoji, msg;
+    if (score === 10) { emoji = '🏆'; msg = 'Sempurna! Kamu benar-benar paham lean startup. Sekarang saatnya praktek!'; }
+    else if (score >= 8) { emoji = '🎉'; msg = 'Luar biasa! Kamu sudah siap menerapkan lean startup ke bisnismu.'; }
+    else if (score >= 6) { emoji = '👍'; msg = 'Bagus! Baca ulang beberapa bagian materi dan kamu pasti bisa lebih baik.'; }
+    else if (score >= 4) { emoji = '📖'; msg = 'Masih ada ruang untuk berkembang. Baca ulang materi terutama bagian BML Loop dan Metrics.'; }
+    else { emoji = '💪'; msg = 'Jangan menyerah! Baca ulang dari awal dan coba lagi. Setiap gagal adalah data.'; }
+
+    document.getElementById('score-emoji').textContent = emoji;
+    document.getElementById('score-message').textContent = msg;
+  }
+
+  function restartQuiz() {
+    currentQ = 0; score = 0;
+    answered = new Array(10).fill(false);
+    document.getElementById('score-display').textContent = '0';
+    document.getElementById('quiz-body').style.display = 'block';
+    document.getElementById('score-screen').classList.remove('show');
+
+    document.querySelectorAll('.question-block').forEach((b, i) => {
+      b.classList.toggle('active', i === 0);
+      b.querySelectorAll('.option-btn').forEach(btn => {
+        btn.disabled = false;
+        btn.className = 'option-btn';
+      });
+      const fb = document.getElementById('fb-' + i);
+      if (fb) fb.className = 'quiz-feedback';
+      const nb = document.getElementById('next-' + i);
+      if (nb) nb.disabled = true;
+    });
+    updateProgress();
+  }
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Nav active on scroll
+  const sections = document.querySelectorAll('section');
+  const navPills = document.querySelectorAll('.nav-pill');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navPills.forEach(p => {
+      p.classList.toggle('active', p.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>
