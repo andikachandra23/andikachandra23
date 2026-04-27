@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soal UTS Data Storytelling 2025/2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --white: #ffffff;
+    --off-white: #f8f9fa;
+    --light-gray: #f1f3f5;
+    --border: #e5e8eb;
+    --text-primary: #1a1d21;
+    --text-secondary: #4a5568;
+    --text-muted: #8a9bb0;
+    --accent: #1a56db;
+    --accent-light: #ebf1ff;
+    --accent-soft: #dbeafe;
+    --danger: #e53e3e;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f2f5;
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  /* NAV TABS */
+  .page-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .page-header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .page-header p {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .tab-nav {
+    display: flex;
+    gap: 6px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 6px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .tab-btn {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: transparent;
+    color: var(--text-secondary);
+    transition: all 0.18s ease;
+    white-space: nowrap;
+  }
+
+  .tab-btn:hover {
+    background: var(--light-gray);
+    color: var(--text-primary);
+  }
+
+  .tab-btn.active {
+    background: var(--accent);
+    color: var(--white);
+    box-shadow: 0 2px 8px rgba(26,86,219,0.25);
+  }
+
+  /* EXAM SHEET */
+  .exam-sheet {
+    display: none;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  .exam-sheet.active { display: block; }
+
+  /* HEADER */
+  .sheet-header {
+    padding: 28px 36px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .univ-logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--accent);
+    border: 2px solid var(--accent-soft);
+  }
+
+  .univ-info { flex: 1; text-align: center; }
+
+  .univ-info .univ-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+
+  .univ-info .univ-sub {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-top: 2px;
+  }
+
+  .sheet-badge {
+    padding: 6px 14px;
+    background: var(--accent-light);
+    border: 1px solid var(--accent-soft);
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* META INFO */
+  .sheet-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .meta-row {
+    display: contents;
+  }
+
+  .meta-cell {
+    padding: 8px 36px;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+  }
+
+  .meta-cell:nth-child(odd) { border-right: 1px solid var(--border); }
+  .meta-cell:last-child, .meta-cell:nth-last-child(2) { border-bottom: none; }
+
+  .meta-label {
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+  }
+
+  /* STUDENT BADGE */
+  .student-banner {
+    padding: 14px 36px;
+    background: var(--off-white);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .student-label {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .student-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .student-note {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* CONTENT */
+  .sheet-body { padding: 28px 36px; }
+
+  .context-section {
+    margin-bottom: 24px;
+  }
+
+  .context-section p {
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+  }
+
+  .context-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .context-title::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 16px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 16px;
+    padding-left: 4px;
+  }
+
+  .bullets li {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+  }
+
+  .bullets li::before {
+    content: '•';
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* TABLES */
+  .table-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    margin-top: 18px;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin-bottom: 6px;
+  }
+
+  .data-table th {
+    background: var(--off-white);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 11.5px;
+    color: var(--text-primary);
+    padding: 9px 12px;
+    text-align: left;
+    border: 1px solid var(--border);
+  }
+
+  .data-table td {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 12.5px;
+  }
+
+  .data-table tr:hover td { background: var(--off-white); }
+
+  /* DIVIDER */
+  .section-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+
+  /* QUESTIONS */
+  .questions-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .questions-title span {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: var(--light-gray);
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  .question-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .question-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .q-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-family: 'Poppins', sans-serif;
+    font-size: 11.5px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid var(--accent-soft);
+  }
+
+  .q-text {
+    font-size: 13.5px;
+    color: var(--text-primary);
+    line-height: 1.65;
+    padding-top: 3px;
+  }
+
+  /* FOOTER */
+  .sheet-footer {
+    padding: 16px 36px;
+    background: var(--off-white);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-note {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .footer-sig {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: white; padding: 0; }
+    .tab-nav, .page-header { display: none; }
+    .exam-sheet { display: block !important; box-shadow: none; border: none; margin-bottom: 0; }
+    .exam-sheet:not(:last-child) { page-break-after: always; }
+  }
+
+  @media (max-width: 600px) {
+    .sheet-header { flex-direction: column; text-align: center; padding: 20px; }
+    .sheet-meta { grid-template-columns: 1fr; }
+    .meta-cell:nth-child(odd) { border-right: none; }
+    .meta-cell:nth-last-child(2) { border-bottom: 1px solid var(--border); }
+    .meta-cell { padding: 8px 20px; }
+    .sheet-body { padding: 20px; }
+    .sheet-footer { flex-direction: column; gap: 6px; text-align: center; }
+    .student-banner { padding: 12px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrapper">
+  <div class="page-header">
+    <h1>Soal UTS — Data Storytelling</h1>
+    <p>Tahun Akademik 2025/2026 &nbsp;·&nbsp; 6 Versi Soal Individual</p>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab(0)">Arul</button>
+    <button class="tab-btn" onclick="showTab(1)">Ardi</button>
+    <button class="tab-btn" onclick="showTab(2)">Nadia</button>
+    <button class="tab-btn" onclick="showTab(3)">Nada</button>
+    <button class="tab-btn" onclick="showTab(4)">Ewanda</button>
+    <button class="tab-btn" onclick="showTab(5)">Syafiq</button>
+  </div>
+
+  <!-- ============================
+       VERSI 1: ARUL — Restoran
+  ============================= -->
+  <div class="exam-sheet active" id="sheet-0">
+    <div class="sheet-header">
+      <div class="univ-logo">UBS</div>
+      <div class="univ-info">
+        <div class="univ-name">UNIVERSITAS BHAMADA SLAWI<br>FAKULTAS EKONOMI DAN BISNIS — PRODI BISNIS DIGITAL</div>
+        <div class="univ-sub">Ujian Tengah Semester Genap &nbsp;|&nbsp; Tahun Akademik 2025/2026</div>
+      </div>
+      <div class="sheet-badge">Versi A<br>Arul</div>
+    </div>
+
+    <div class="sheet-meta">
+      <div class="meta-cell"><span class="meta-label">Mata Kuliah</span> Data Storytelling</div>
+      <div class="meta-cell"><span class="meta-label">Hari/Tanggal</span> Senin, 27 April 2026</div>
+      <div class="meta-cell"><span class="meta-label">Waktu</span> 90 menit</div>
+      <div class="meta-cell"><span class="meta-label">Sifat</span> Open Book</div>
+      <div class="meta-cell"><span class="meta-label">Kelas</span> Reguler</div>
+      <div class="meta-cell"><span class="meta-label">Dosen</span> Andika Chandra P, S.Kom, M.T.I</div>
+    </div>
+
+    <div class="student-banner">
+      <span class="student-label">Untuk Mahasiswa:</span>
+      <span class="student-name">Arul</span>
+      <span class="student-note">Kerjakan secara mandiri · Jawaban berbasis data</span>
+    </div>
+
+    <div class="sheet-body">
+      <div class="context-section">
+        <p>Sebuah <strong>restoran kafe urban</strong> yang berlokasi di pusat kota mengalami kondisi berikut:</p>
+        <ul class="bullets">
+          <li>Jumlah pengunjung terus meningkat setiap bulan</li>
+          <li>Pendapatan harian tidak mengalami pertumbuhan signifikan</li>
+          <li>Rating dan ulasan pelanggan di platform digital menurun</li>
+        </ul>
+        <p>Manajemen ingin memahami: <em>"Apa yang sebenarnya terjadi dan bagaimana data dapat menceritakan kisah di balik angka-angka ini?"</em></p>
+      </div>
+
+      <div class="table-label">Data Bulanan Operasional Restoran</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Bulan</th>
+            <th>Pengunjung</th>
+            <th>Pesanan</th>
+            <th>Conversion Rate (%)</th>
+            <th>Waktu Layanan (menit)</th>
+            <th>Rating (1–5)</th>
+            <th>Menu Habis (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Jan</td><td>800</td><td>640</td><td>80</td><td>12</td><td>4,6</td><td>4</td></tr>
+          <tr><td>Feb</td><td>950</td><td>720</td><td>76</td><td>14</td><td>4,4</td><td>7</td></tr>
+          <tr><td>Mar</td><td>1.100</td><td>770</td><td>70</td><td>17</td><td>4,1</td><td>11</td></tr>
+          <tr><td>Apr</td><td>1.300</td><td>780</td><td>60</td><td>21</td><td>3,8</td><td>16</td></tr>
+          <tr><td>Mei</td><td>1.500</td><td>750</td><td>50</td><td>26</td><td>3,5</td><td>22</td></tr>
+          <tr><td>Jun</td><td>1.700</td><td>680</td><td>40</td><td>30</td><td>3,2</td><td>28</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-label">Data Kategori Menu</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Kategori</th><th>Pengunjung Lihat</th><th>Yang Memesan</th><th>Conversion (%)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Makanan Berat</td><td>900</td><td>540</td><td>60</td></tr>
+          <tr><td>Minuman Kopi</td><td>700</td><td>490</td><td>70</td></tr>
+          <tr><td>Dessert</td><td>400</td><td>100</td><td>25</td></tr>
+          <tr><td>Menu Sehat</td><td>300</td><td>45</td><td>15</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-label">Data Jam Kunjungan</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Jam</th><th>Pengunjung</th><th>Waktu Layanan (menit)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>08–10</td><td>150</td><td>10</td></tr>
+          <tr><td>10–12</td><td>280</td><td>14</td></tr>
+          <tr><td>12–14</td><td>550</td><td>28</td></tr>
+          <tr><td>14–16</td><td>400</td><td>22</td></tr>
+          <tr><td>18–21</td><td>320</td><td>18</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-divider"></div>
+
+      <div class="questions-title">Pertanyaan <span>10 soal</span></div>
+      <div class="question-list">
+        <div class="question-item"><div class="q-num">1</div><div class="q-text">Apa tren utama dari pengunjung, jumlah pesanan, dan conversion rate selama 6 bulan?</div></div>
+        <div class="question-item"><div class="q-num">2</div><div class="q-text">Apakah peningkatan jumlah pengunjung berdampak positif pada pendapatan restoran? Jelaskan!</div></div>
+        <div class="question-item"><div class="q-num">3</div><div class="q-text">Identifikasi 3 variabel yang paling mempengaruhi penurunan conversion rate!</div></div>
+        <div class="question-item"><div class="q-num">4</div><div class="q-text">Urutkan ketiga variabel tersebut berdasarkan tingkat dampaknya terhadap bisnis!</div></div>
+        <div class="question-item"><div class="q-num">5</div><div class="q-text">Jelaskan alasan urutan tersebut dengan mengacu pada data yang tersedia, bukan opini!</div></div>
+        <div class="question-item"><div class="q-num">6</div><div class="q-text">Apa hubungan antara waktu layanan, rating pelanggan, dan persentase menu habis?</div></div>
+        <div class="question-item"><div class="q-num">7</div><div class="q-text">Susun narasi data menggunakan kerangka 3C (Context, Conflict, Conclusion) berdasarkan data di atas!</div></div>
+        <div class="question-item"><div class="q-num">8</div><div class="q-text">Tentukan jenis visualisasi yang paling tepat untuk menampilkan tren operasional bulanan ini!</div></div>
+        <div class="question-item"><div class="q-num">9</div><div class="q-text">Sebagai manajer restoran, apa masalah utama yang harus segera ditangani berdasarkan data?</div></div>
+        <div class="question-item"><div class="q-num">10</div><div class="q-text">Apa 3 tindakan prioritas yang harus dilakukan manajemen dalam 30 hari ke depan?</div></div>
+      </div>
+    </div>
+
+    <div class="sheet-footer">
+      <span class="footer-note">Kerjakan dengan jujur · Jawaban harus berbasis data</span>
+      <span class="footer-sig">Andika Chandra P, S.Kom, M.T.I</span>
+    </div>
+  </div>
+
+  <!-- ============================
+       VERSI 2: ARDI — Klinik Kesehatan
+  ============================= -->
+  <div class="exam-sheet" id="sheet-1">
+    <div class="sheet-header">
+      <div class="univ-logo">UBS</div>
+      <div class="univ-info">
+        <div class="univ-name">UNIVERSITAS BHAMADA SLAWI<br>FAKULTAS EKONOMI DAN BISNIS — PRODI BISNIS DIGITAL</div>
+        <div class="univ-sub">Ujian Tengah Semester Genap &nbsp;|&nbsp; Tahun Akademik 2025/2026</div>
+      </div>
+      <div class="sheet-badge">Versi B<br>Ardi</div>
+    </div>
+
+    <div class="sheet-meta">
+      <div class="meta-cell"><span class="meta-label">Mata Kuliah</span> Data Storytelling</div>
+      <div class="meta-cell"><span class="meta-label">Hari/Tanggal</span> Senin, 27 April 2026</div>
+      <div class="meta-cell"><span class="meta-label">Waktu</span> 90 menit</div>
+      <div class="meta-cell"><span class="meta-label">Sifat</span> Open Book</div>
+      <div class="meta-cell"><span class="meta-label">Kelas</span> Reguler</div>
+      <div class="meta-cell"><span class="meta-label">Dosen</span> Andika Chandra P, S.Kom, M.T.I</div>
+    </div>
+
+    <div class="student-banner">
+      <span class="student-label">Untuk Mahasiswa:</span>
+      <span class="student-name">Ardi</span>
+      <span class="student-note">Kerjakan secara mandiri · Jawaban berbasis data</span>
+    </div>
+
+    <div class="sheet-body">
+      <div class="context-section">
+        <p>Sebuah <strong>klinik kesehatan swasta</strong> di kawasan perumahan mengalami kondisi berikut:</p>
+        <ul class="bullets">
+          <li>Jumlah pasien yang datang mendaftar terus meningkat tiap bulan</li>
+          <li>Jumlah pasien yang benar-benar tertangani dokter tidak meningkat</li>
+          <li>Skor kepuasan pasien pada survei bulanan terus menurun</li>
+        </ul>
+        <p>Manajemen klinik ingin memahami: <em>"Apa yang sebenarnya terjadi dan bagaimana data dapat menceritakan kisah di balik angka-angka ini?"</em></p>
+      </div>
+
+      <div class="table-label">Data Bulanan Operasional Klinik</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Bulan</th>
+            <th>Pendaftar</th>
+            <th>Tertangani</th>
+            <th>Conversion Rate (%)</th>
+            <th>Waktu Tunggu (menit)</th>
+            <th>Kepuasan (1–5)</th>
+            <th>Obat Kosong (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Jan</td><td>500</td><td>450</td><td>90</td><td>10</td><td>4,7</td><td>3</td></tr>
+          <tr><td>Feb</td><td>620</td><td>527</td><td>85</td><td>13</td><td>4,5</td><td>5</td></tr>
+          <tr><td>Mar</td><td>750</td><td>563</td><td>75</td><td>18</td><td>4,2</td><td>9</td></tr>
+          <tr><td>Apr</td><td>900</td><td>585</td><td>65</td><td>24</td><td>3,9</td><td>14</td></tr>
+          <tr><td>Mei</td><td>1.050</td><td>578</td><td>55</td><td>30</td><td>3,5</td><td>20</td></tr>
+          <tr><td>Jun</td><td>1.200</td><td>540</td><td>45</td><td>38</td><td>3,1</td><td>27</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-label">Data Jenis Layanan</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Layanan</th><th>Pendaftar</th><th>Tertangani</th><th>Conversion (%)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Konsultasi Umum</td><td>600</td><td>480</td><td>80</td></tr>
+          <tr><td>Pemeriksaan Gigi</td><td>300</td><td>180</td><td>60</td></tr>
+          <tr><td>Laboratorium</td><td>200</td><td>80</td><td>40</td></tr>
+          <tr><td>Vaksinasi</td><td>100</td><td>20</td><td>20</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-label">Data Jam Kunjungan</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Jam</th><th>Pendaftar</th><th>Waktu Tunggu (menit)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>07–09</td><td>220</td><td>8</td></tr>
+          <tr><td>09–11</td><td>400</td><td>20</td></tr>
+          <tr><td>11–13</td><td>350</td><td>35</td></tr>
+          <tr><td>13–15</td><td>180</td><td>22</td></tr>
+          <tr><td>15–17</td><td>50</td><td>12</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-divider"></div>
+
+      <div class="questions-title">Pertanyaan <span>10 soal</span></div>
+      <div class="question-list">
+        <div class="question-item"><div class="q-num">1</div><div class="q-text">Apa tren utama dari jumlah pendaftar, pasien tertangani, dan conversion rate selama 6 bulan?</div></div>
+        <div class="question-item"><div class="q-num">2</div><div class="q-text">Apakah peningkatan jumlah pendaftar berdampak positif pada kapasitas layanan klinik? Jelaskan!</div></div>
+        <div class="question-item"><div class="q-num">3</div><div class="q-text">Identifikasi 3 variabel yang paling mempengaruhi penurunan conversion rate layanan!</div></div>
+        <div class="question-item"><div class="q-num">4</div><div class="q-text">Urutkan ketiga variabel tersebut berdasarkan tingkat dampaknya terhadap kinerja klinik!</div></div>
+        <div class="question-item"><div class="q-num">5</div><div class="q-text">Jelaskan alasan urutan tersebut dengan mengacu pada data yang tersedia, bukan opini!</div></div>
+        <div class="question-item"><div class="q-num">6</div><div class="q-text">Apa hubungan antara waktu tunggu, kepuasan pasien, dan persentase obat kosong?</div></div>
+        <div class="question-item"><div class="q-num">7</div><div class="q-text">Susun narasi data menggunakan kerangka 3C (Context, Conflict, Conclusion) berdasarkan data di atas!</div></div>
+        <div class="question-item"><div class="q-num">8</div><div class="q-text">Tentukan jenis visualisasi yang paling tepat untuk menampilkan tren operasional bulanan klinik ini!</div></div>
+        <div class="question-item"><div class="q-num">9</div><div class="q-text">Sebagai manajer klinik, apa masalah utama yang harus segera ditangani berdasarkan data?</div></div>
+        <div class="question-item"><div class="q-num">10</div><div class="q-text">Apa 3 tindakan prioritas yang harus dilakukan manajemen dalam 30 hari ke depan?</div></div>
+      </div>
+    </div>
+
+    <div class="sheet-footer">
+      <span class="footer-note">Kerjakan dengan jujur · Jawaban harus berbasis data</span>
+      <span class="footer-sig">Andika Chandra P, S.Kom, M.T.I</span>
+    </div>
+  </div>
+
+  <!-- ============================
+       VERSI 3: NADIA — Toko Online / E-commerce
+  ============================= -->
+  <div class="exam-sheet" id="sheet-2">
+    <div class="sheet-header">
+      <div class="univ-logo">UBS</div>
+      <div class="univ-info">
+        <div class="univ-name">UNIVERSITAS BHAMADA SLAWI<br>FAKULTAS EKONOMI DAN BISNIS — PRODI BISNIS DIGITAL</div>
+        <div class="univ-sub">Ujian Tengah Semester Genap &nbsp;|&nbsp; Tahun Akademik 2025/2026</div>
+      </div>
+      <div class="sheet-badge">Versi C<br>Nadia</div>
+    </div>
+
+    <div class="sheet-meta">
+      <div class="meta-cell"><span class="meta-label">Mata Kuliah</span> Data Storytelling</div>
+      <div class="meta-cell"><span class="meta-label">Hari/Tanggal</span> Senin, 27 April 2026</div>
+      <div class="meta-cell"><span class="meta-label">Waktu</span> 90 menit</div>
+      <div class="meta-cell"><span class="meta-label">Sifat</span> Open Book</div>
+      <div class="meta-cell"><span class="meta-label">Kelas</span> Reguler</div>
+      <div class="meta-cell"><span class="meta-label">Dosen</span> Andika Chandra P, S.Kom, M.T.I</div>
+    </div>
+
+    <div class="student-banner">
+      <span class="student-label">Untuk Mahasiswa:</span>
+      <span class="student-name">Nadia</span>
+      <span class="student-note">Kerjakan secara mandiri · Jawaban berbasis data</span>
+    </div>
+
+    <div class="sheet-body">
+      <div class="context-section">
+        <p>Sebuah <strong>toko fashion online</strong> berbasis media sosial mengalami kondisi berikut:</p>
+        <ul class="bullets">
+          <li>Jumlah pengunjung halaman (page views) terus meningkat setiap bulan</li>
+          <li>Jumlah transaksi pembelian stagnan bahkan cenderung turun</li>
+          <li>Ulasan bintang produk dan skor kepuasan pelanggan menurun</li>
+        </ul>
+        <p>Pemilik toko ingin memahami: <em>"Apa yang sebenarnya terjadi dan bagaimana data dapat menceritakan kisah di balik angka-angka ini?"</em></p>
+      </div>
+
+      <div class="table-label">Data Bulanan Toko Fashion Online</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Bulan</th>
+            <th>Pengunjung</th>
+            <th>Transaksi</th>
+            <th>Conversion Rate (%)</th>
+            <th>Waktu Proses Pesanan (jam)</th>
+            <th>Rating (1–5)</th>
+            <th>Produk Kehabisan (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Jan</td><td>2.000</td><td>500</td><td>25</td><td>6</td><td>4,8</td><td>5</td></tr>
+          <tr><td>Feb</td><td>2.400</td><td>552</td><td>23</td><td>8</td><td>4,5</td><td>8</td></tr>
+          <tr><td>Mar</td><td>2.900</td><td>580</td><td>20</td><td>12</td><td>4,2</td><td>13</td></tr>
+          <tr><td>Apr</td><td>3.500</td><td>560</td><td>16</td><td>18</td><td>3,9</td><td>19</td></tr>
+          <tr><td>Mei</td><td>4.100</td><td>533</td><td>13</td><td>24</td><td>3,5</td><td>25</td></tr>
+          <tr><td>Jun</td><td>4.800</td><td>480</td><td>10</td><td>32</td><td>3,1</td><td>32</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-label">Data Kategori Produk</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Kategori</th><th>Pengunjung</th><th>Transaksi</th><th>Conversion (%)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Pakaian Wanita</td><td>2.000</td><td>600</td><td>30</td></tr>
+          <tr><td>Pakaian Pria</td><td>1.200</td><td>240</td><td>20</td></tr>
+          <tr><td>Aksesoris</td><td>900</td><td>90</td><td>10</td></tr>
+          <tr><td>Sepatu</td><td>700</td><td>42</td><td>6</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-label">Data Waktu Kunjungan (per sesi harian)</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Waktu</th><th>Pengunjung</th><th>Waktu Proses Pesanan (jam)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>06–09</td><td>300</td><td>5</td></tr>
+          <tr><td>09–12</td><td>700</td><td>9</td></tr>
+          <tr><td>12–15</td><td>1.100</td><td>20</td></tr>
+          <tr><td>15–18</td><td>900</td><td>15</td></tr>
+          <tr><td>18–22</td><td>1.800</td><td>30</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-divider"></div>
+
+      <div class="questions-title">Pertanyaan <span>10 soal</span></div>
+      <div class="question-list">
+        <div class="question-item"><div class="q-num">1</div><div class="q-text">Apa tren utama dari pengunjung, transaksi, dan conversion rate selama 6 bulan?</div></div>
+        <div class="question-item"><div class="q-num">2</div><div class="q-text">Apakah peningkatan jumlah pengunjung berbanding lurus dengan peningkatan penjualan? Jelaskan!</div></div>
+        <div class="question-item"><div class="q-num">3</div><div class="q-text">Identifikasi 3 variabel yang paling mempengaruhi penurunan conversion rate toko online ini!</div></div>
+        <div class="question-item"><div class="q-num">4</div><div class="q-text">Urutkan ketiga variabel tersebut berdasarkan tingkat dampaknya terhadap performa toko!</div></div>
+        <div class="question-item"><div class="q-num">5</div><div class="q-text">Jelaskan alasan urutan tersebut dengan mengacu pada data yang tersedia, bukan opini!</div></div>
+        <div class="question-item"><div class="q-num">6</div><div class="q-text">Apa hubungan antara waktu proses pesanan, rating pelanggan, dan persentase produk kehabisan stok?</div></div>
+        <div class="question-item"><div class="q-num">7</div><div class="q-text">Susun narasi data menggunakan kerangka 3C (Context, Conflict, Conclusion) berdasarkan data di atas!</div></div>
+        <div class="question-item"><div class="q-num">8</div><div class="q-text">Tentukan jenis visualisasi yang paling tepat untuk menampilkan tren performa toko online ini!</div></div>
+        <div class="question-item"><div class="q-num">9</div><div class="q-text">Sebagai pemilik toko online, apa masalah utama yang harus segera ditangani berdasarkan data?</div></div>
+        <div class="question-item"><div class="q-num">10</div><div class="q-text">Apa 3 tindakan prioritas yang harus dilakukan dalam 30 hari ke depan?</div></div>
+      </div>
+    </div>
+
+    <div class="sheet-footer">
+      <span class="footer-note">Kerjakan dengan jujur · Jawaban harus berbasis data</span>
+      <span class="footer-sig">Andika Chandra P, S.Kom, M.T.I</span>
+    </div>
+  </div>
+
+  <!-- ============================
+       VERSI 4: NADA — Gym / Pusat Kebugaran
+  ============================= -->
+  <div class="exam-sheet" id="sheet-3">
+    <div class="sheet-header">
+      <div class="univ-logo">UBS</div>
+      <div class="univ-info">
+        <div class="univ-name">UNIVERSITAS BHAMADA SLAWI<br>FAKULTAS EKONOMI DAN BISNIS — PRODI BISNIS DIGITAL</div>
+        <div class="univ-sub">Ujian Tengah Semester Genap &nbsp;|&nbsp; Tahun Akademik 2025/2026</div>
+      </div>
+      <div class="sheet-badge">Versi D<br>Nada</div>
+    </div>
+
+    <div class="sheet-meta">
+      <div class="meta-cell"><span class="meta-label">Mata Kuliah</span> Data Storytelling</div>
+      <div class="meta-cell"><span class="meta-label">Hari/Tanggal</span> Senin, 27 April 2026</div>
+      <div class="meta-cell"><span class="meta-label">Waktu</span> 90 menit</div>
+      <div class="meta-cell"><span class="meta-label">Sifat</span> Open Book</div>
+      <div class="meta-cell"><span class="meta-label">Kelas</span> Reguler</div>
+      <div class="meta-cell"><span class="meta-label">Dosen</span> Andika Chandra P, S.Kom, M.T.I</div>
+    </div>
+
+    <div class="student-banner">
+      <span class="student-label">Untuk Mahasiswa:</span>
+      <span class="student-name">Nada</span>
+      <span class="student-note">Kerjakan secara mandiri · Jawaban berbasis data</span>
+    </div>
+
+    <div class="sheet-body">
+      <div class="context-section">
+        <p>Sebuah <strong>pusat kebugaran (gym)</strong> modern di kota mengalami kondisi berikut:</p>
+        <ul class="bullets">
+          <li>Jumlah pendaftar/calon member baru terus bertambah setiap bulan</li>
+          <li>Jumlah member aktif yang melakukan renewal tidak meningkat</li>
+          <li>Tingkat kepuasan member dan skor NPS (Net Promoter Score) menurun</li>
+        </ul>
+        <p>Manajemen gym ingin memahami: <em>"Apa yang sebenarnya terjadi dan bagaimana data dapat menceritakan kisah di balik angka-angka ini?"</em></p>
+      </div>
+
+      <div class="table-label">Data Bulanan Operasional Gym</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Bulan</th>
+            <th>Calon Member</th>
+            <th>Member Aktif</th>
+            <th>Conversion Rate (%)</th>
+            <th>Waktu Tunggu Alat (menit)</th>
+            <th>Kepuasan (1–5)</th>
+            <th>Alat Rusak (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Jan</td><td>200</td><td>160</td><td>80</td><td>5</td><td>4,7</td><td>4</td></tr>
+          <tr><td>Feb</td><td>260</td><td>195</td><td>75</td><td>8</td><td>4,5</td><td>6</td></tr>
+          <tr><td>Mar</td><td>330</td><td>215</td><td>65</td><td>13</td><td>4,2</td><td>10</td></tr>
+          <tr><td>Apr</td><td>410</td><td>221</td><td>54</td><td>20</td><td>3,8</td><td>16</td></tr>
+          <tr><td>Mei</td><td>500</td><td>215</td><td>43</td><td>28</td><td>3,4</td><td>22</td></tr>
+          <tr><td>Jun</td><td>600</td><td>192</td><td>32</td><td>36</td><td>3,0</td><td>30</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-label">Data Jenis Kelas/Fasilitas</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Fasilitas</th><th>Pengguna</th><th>Member Reguler</th><th>Retention (%)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Area Beban Bebas</td><td>300</td><td>210</td><td>70</td></tr>
+          <tr><td>Kelas Yoga</td><td>180</td><td>126</td><td>70</td></tr>
+          <tr><td>Treadmill/Kardio</td><td>250</td><td>125</td><td>50</td></tr>
+          <tr><td>Kolam Renang</td><td>70</td><td>14</td><td>20</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-label">Data Jam Penggunaan Gym</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Jam</th><th>Pengguna</th><th>Waktu Tunggu Alat (menit)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>05–07</td><td>80</td><td>4</td></tr>
+          <tr><td>07–09</td><td>200</td><td>15</td></tr>
+          <tr><td>12–14</td><td>150</td><td>20</td></tr>
+          <tr><td>17–19</td><td>350</td><td>38</td></tr>
+          <tr><td>19–21</td><td>220</td><td>22</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-divider"></div>
+
+      <div class="questions-title">Pertanyaan <span>10 soal</span></div>
+      <div class="question-list">
+        <div class="question-item"><div class="q-num">1</div><div class="q-text">Apa tren utama dari calon member, member aktif, dan conversion rate selama 6 bulan?</div></div>
+        <div class="question-item"><div class="q-num">2</div><div class="q-text">Apakah peningkatan calon member berdampak positif pada jumlah member aktif gym? Jelaskan!</div></div>
+        <div class="question-item"><div class="q-num">3</div><div class="q-text">Identifikasi 3 variabel yang paling mempengaruhi penurunan conversion dan retensi member!</div></div>
+        <div class="question-item"><div class="q-num">4</div><div class="q-text">Urutkan ketiga variabel tersebut berdasarkan tingkat dampaknya terhadap bisnis gym!</div></div>
+        <div class="question-item"><div class="q-num">5</div><div class="q-text">Jelaskan alasan urutan tersebut dengan mengacu pada data yang tersedia, bukan opini!</div></div>
+        <div class="question-item"><div class="q-num">6</div><div class="q-text">Apa hubungan antara waktu tunggu alat, kepuasan member, dan persentase alat rusak?</div></div>
+        <div class="question-item"><div class="q-num">7</div><div class="q-text">Susun narasi data menggunakan kerangka 3C (Context, Conflict, Conclusion) berdasarkan data di atas!</div></div>
+        <div class="question-item"><div class="q-num">8</div><div class="q-text">Tentukan jenis visualisasi yang paling tepat untuk menampilkan tren performa gym ini!</div></div>
+        <div class="question-item"><div class="q-num">9</div><div class="q-text">Sebagai manajer gym, apa masalah utama yang harus segera ditangani berdasarkan data?</div></div>
+        <div class="question-item"><div class="q-num">10</div><div class="q-text">Apa 3 tindakan prioritas yang harus dilakukan manajemen dalam 30 hari ke depan?</div></div>
+      </div>
+    </div>
+
+    <div class="sheet-footer">
+      <span class="footer-note">Kerjakan dengan jujur · Jawaban harus berbasis data</span>
+      <span class="footer-sig">Andika Chandra P, S.Kom, M.T.I</span>
+    </div>
+  </div>
+
+  <!-- ============================
+       VERSI 5: EWANDA — Hotel / Penginapan
+  ============================= -->
+  <div class="exam-sheet" id="sheet-4">
+    <div class="sheet-header">
+      <div class="univ-logo">UBS</div>
+      <div class="univ-info">
+        <div class="univ-name">UNIVERSITAS BHAMADA SLAWI<br>FAKULTAS EKONOMI DAN BISNIS — PRODI BISNIS DIGITAL</div>
+        <div class="univ-sub">Ujian Tengah Semester Genap &nbsp;|&nbsp; Tahun Akademik 2025/2026</div>
+      </div>
+      <div class="sheet-badge">Versi E<br>Ewanda</div>
+    </div>
+
+    <div class="sheet-meta">
+      <div class="meta-cell"><span class="meta-label">Mata Kuliah</span> Data Storytelling</div>
+      <div class="meta-cell"><span class="meta-label">Hari/Tanggal</span> Senin, 27 April 2026</div>
+      <div class="meta-cell"><span class="meta-label">Waktu</span> 90 menit</div>
+      <div class="meta-cell"><span class="meta-label">Sifat</span> Open Book</div>
+      <div class="meta-cell"><span class="meta-label">Kelas</span> Reguler</div>
+      <div class="meta-cell"><span class="meta-label">Dosen</span> Andika Chandra P, S.Kom, M.T.I</div>
+    </div>
+
+    <div class="student-banner">
+      <span class="student-label">Untuk Mahasiswa:</span>
+      <span class="student-name">Ewanda</span>
+      <span class="student-note">Kerjakan secara mandiri · Jawaban berbasis data</span>
+    </div>
+
+    <div class="sheet-body">
+      <div class="context-section">
+        <p>Sebuah <strong>hotel bintang tiga</strong> di kawasan wisata mengalami kondisi berikut:</p>
+        <ul class="bullets">
+          <li>Jumlah calon tamu yang melakukan pencarian dan inquiry kamar terus meningkat</li>
+          <li>Jumlah booking terkonfirmasi tidak meningkat secara proporsional</li>
+          <li>Skor review di platform OTA (Online Travel Agent) terus menurun</li>
+        </ul>
+        <p>Manajemen hotel ingin memahami: <em>"Apa yang sebenarnya terjadi dan bagaimana data dapat menceritakan kisah di balik angka-angka ini?"</em></p>
+      </div>
+
+      <div class="table-label">Data Bulanan Operasional Hotel</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Bulan</th>
+            <th>Inquiry</th>
+            <th>Booking</th>
+            <th>Conversion Rate (%)</th>
+            <th>Waktu Check-in (menit)</th>
+            <th>Rating (1–5)</th>
+            <th>Kamar Tak Siap (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Jan</td><td>400</td><td>280</td><td>70</td><td>8</td><td>4,6</td><td>3</td></tr>
+          <tr><td>Feb</td><td>520</td><td>338</td><td>65</td><td>11</td><td>4,4</td><td>6</td></tr>
+          <tr><td>Mar</td><td>680</td><td>394</td><td>58</td><td>16</td><td>4,1</td><td>10</td></tr>
+          <tr><td>Apr</td><td>850</td><td>408</td><td>48</td><td>23</td><td>3,8</td><td>15</td></tr>
+          <tr><td>Mei</td><td>1.050</td><td>399</td><td>38</td><td>30</td><td>3,4</td><td>21</td></tr>
+          <tr><td>Jun</td><td>1.300</td><td>364</td><td>28</td><td>40</td><td>3,0</td><td>28</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-label">Data Tipe Kamar</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Tipe Kamar</th><th>Inquiry</th><th>Booking</th><th>Conversion (%)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Superior</td><td>500</td><td>300</td><td>60</td></tr>
+          <tr><td>Deluxe</td><td>400</td><td>200</td><td>50</td></tr>
+          <tr><td>Suite</td><td>250</td><td>75</td><td>30</td></tr>
+          <tr><td>Family Room</td><td>150</td><td>18</td><td>12</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-label">Data Waktu Check-in Tamu</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Jam</th><th>Tamu Check-in</th><th>Waktu Proses (menit)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>08–10</td><td>40</td><td>7</td></tr>
+          <tr><td>10–12</td><td>90</td><td>14</td></tr>
+          <tr><td>12–14</td><td>200</td><td>35</td></tr>
+          <tr><td>14–16</td><td>300</td><td>45</td></tr>
+          <tr><td>16–20</td><td>170</td><td>20</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-divider"></div>
+
+      <div class="questions-title">Pertanyaan <span>10 soal</span></div>
+      <div class="question-list">
+        <div class="question-item"><div class="q-num">1</div><div class="q-text">Apa tren utama dari jumlah inquiry, booking, dan conversion rate selama 6 bulan?</div></div>
+        <div class="question-item"><div class="q-num">2</div><div class="q-text">Apakah peningkatan inquiry berdampak positif pada jumlah tamu yang menginap? Jelaskan!</div></div>
+        <div class="question-item"><div class="q-num">3</div><div class="q-text">Identifikasi 3 variabel yang paling mempengaruhi penurunan conversion rate hotel ini!</div></div>
+        <div class="question-item"><div class="q-num">4</div><div class="q-text">Urutkan ketiga variabel tersebut berdasarkan tingkat dampaknya terhadap bisnis hotel!</div></div>
+        <div class="question-item"><div class="q-num">5</div><div class="q-text">Jelaskan alasan urutan tersebut dengan mengacu pada data yang tersedia, bukan opini!</div></div>
+        <div class="question-item"><div class="q-num">6</div><div class="q-text">Apa hubungan antara waktu check-in, rating tamu, dan persentase kamar yang tidak siap?</div></div>
+        <div class="question-item"><div class="q-num">7</div><div class="q-text">Susun narasi data menggunakan kerangka 3C (Context, Conflict, Conclusion) berdasarkan data di atas!</div></div>
+        <div class="question-item"><div class="q-num">8</div><div class="q-text">Tentukan jenis visualisasi yang paling tepat untuk menampilkan tren performa hotel ini!</div></div>
+        <div class="question-item"><div class="q-num">9</div><div class="q-text">Sebagai manajer hotel, apa masalah utama yang harus segera ditangani berdasarkan data?</div></div>
+        <div class="question-item"><div class="q-num">10</div><div class="q-text">Apa 3 tindakan prioritas yang harus dilakukan manajemen dalam 30 hari ke depan?</div></div>
+      </div>
+    </div>
+
+    <div class="sheet-footer">
+      <span class="footer-note">Kerjakan dengan jujur · Jawaban harus berbasis data</span>
+      <span class="footer-sig">Andika Chandra P, S.Kom, M.T.I</span>
+    </div>
+  </div>
+
+  <!-- ============================
+       VERSI 6: SYAFIQ — Perpustakaan / Coworking Space
+  ============================= -->
+  <div class="exam-sheet" id="sheet-5">
+    <div class="sheet-header">
+      <div class="univ-logo">UBS</div>
+      <div class="univ-info">
+        <div class="univ-name">UNIVERSITAS BHAMADA SLAWI<br>FAKULTAS EKONOMI DAN BISNIS — PRODI BISNIS DIGITAL</div>
+        <div class="univ-sub">Ujian Tengah Semester Genap &nbsp;|&nbsp; Tahun Akademik 2025/2026</div>
+      </div>
+      <div class="sheet-badge">Versi F<br>Syafiq</div>
+    </div>
+
+    <div class="sheet-meta">
+      <div class="meta-cell"><span class="meta-label">Mata Kuliah</span> Data Storytelling</div>
+      <div class="meta-cell"><span class="meta-label">Hari/Tanggal</span> Senin, 27 April 2026</div>
+      <div class="meta-cell"><span class="meta-label">Waktu</span> 90 menit</div>
+      <div class="meta-cell"><span class="meta-label">Sifat</span> Open Book</div>
+      <div class="meta-cell"><span class="meta-label">Kelas</span> Reguler</div>
+      <div class="meta-cell"><span class="meta-label">Dosen</span> Andika Chandra P, S.Kom, M.T.I</div>
+    </div>
+
+    <div class="student-banner">
+      <span class="student-label">Untuk Mahasiswa:</span>
+      <span class="student-name">Syafiq</span>
+      <span class="student-note">Kerjakan secara mandiri · Jawaban berbasis data</span>
+    </div>
+
+    <div class="sheet-body">
+      <div class="context-section">
+        <p>Sebuah <strong>coworking space</strong> yang menyediakan ruang kerja bersama di pusat kota mengalami kondisi berikut:</p>
+        <ul class="bullets">
+          <li>Jumlah pengunjung harian yang datang untuk mencoba fasilitas terus meningkat</li>
+          <li>Jumlah membership berbayar yang terdaftar tidak bertumbuh secara signifikan</li>
+          <li>Skor kepuasan pengguna berlangganan dan review di Google Maps terus menurun</li>
+        </ul>
+        <p>Pemilik coworking space ingin memahami: <em>"Apa yang sebenarnya terjadi dan bagaimana data dapat menceritakan kisah di balik angka-angka ini?"</em></p>
+      </div>
+
+      <div class="table-label">Data Bulanan Operasional Coworking Space</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Bulan</th>
+            <th>Pengunjung</th>
+            <th>Member Baru</th>
+            <th>Conversion Rate (%)</th>
+            <th>Waktu Tunggu Kursi (menit)</th>
+            <th>Kepuasan (1–5)</th>
+            <th>Fasilitas Gangguan (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Jan</td><td>300</td><td>90</td><td>30</td><td>6</td><td>4,6</td><td>4</td></tr>
+          <tr><td>Feb</td><td>380</td><td>106</td><td>28</td><td>9</td><td>4,4</td><td>7</td></tr>
+          <tr><td>Mar</td><td>470</td><td>113</td><td>24</td><td>14</td><td>4,1</td><td>12</td></tr>
+          <tr><td>Apr</td><td>580</td><td>116</td><td>20</td><td>21</td><td>3,7</td><td>18</td></tr>
+          <tr><td>Mei</td><td>700</td><td>112</td><td>16</td><td>30</td><td>3,3</td><td>24</td></tr>
+          <tr><td>Jun</td><td>850</td><td>102</td><td>12</td><td>40</td><td>2,9</td><td>32</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-label">Data Jenis Paket Membership</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Paket</th><th>Pengunjung Tertarik</th><th>Yang Mendaftar</th><th>Conversion (%)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Harian (Day Pass)</td><td>400</td><td>200</td><td>50</td></tr>
+          <tr><td>Bulanan Reguler</td><td>250</td><td>100</td><td>40</td></tr>
+          <tr><td>Bulanan Premium</td><td>150</td><td>30</td><td>20</td></tr>
+          <tr><td>Tahunan</td><td>50</td><td>5</td><td>10</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-label">Data Jam Keramaian Coworking Space</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Jam</th><th>Pengunjung</th><th>Waktu Tunggu Kursi (menit)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>07–09</td><td>60</td><td>4</td></tr>
+          <tr><td>09–12</td><td>200</td><td>18</td></tr>
+          <tr><td>12–14</td><td>180</td><td>30</td></tr>
+          <tr><td>14–17</td><td>280</td><td>42</td></tr>
+          <tr><td>17–21</td><td>130</td><td>15</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-divider"></div>
+
+      <div class="questions-title">Pertanyaan <span>10 soal</span></div>
+      <div class="question-list">
+        <div class="question-item"><div class="q-num">1</div><div class="q-text">Apa tren utama dari jumlah pengunjung, member baru, dan conversion rate selama 6 bulan?</div></div>
+        <div class="question-item"><div class="q-num">2</div><div class="q-text">Apakah peningkatan pengunjung berbanding lurus dengan pertumbuhan membership? Jelaskan!</div></div>
+        <div class="question-item"><div class="q-num">3</div><div class="q-text">Identifikasi 3 variabel yang paling mempengaruhi penurunan conversion rate di coworking space ini!</div></div>
+        <div class="question-item"><div class="q-num">4</div><div class="q-text">Urutkan ketiga variabel tersebut berdasarkan tingkat dampaknya terhadap bisnis!</div></div>
+        <div class="question-item"><div class="q-num">5</div><div class="q-text">Jelaskan alasan urutan tersebut dengan mengacu pada data yang tersedia, bukan opini!</div></div>
+        <div class="question-item"><div class="q-num">6</div><div class="q-text">Apa hubungan antara waktu tunggu kursi, kepuasan pengguna, dan persentase gangguan fasilitas?</div></div>
+        <div class="question-item"><div class="q-num">7</div><div class="q-text">Susun narasi data menggunakan kerangka 3C (Context, Conflict, Conclusion) berdasarkan data di atas!</div></div>
+        <div class="question-item"><div class="q-num">8</div><div class="q-text">Tentukan jenis visualisasi yang paling tepat untuk menampilkan tren performa coworking space ini!</div></div>
+        <div class="question-item"><div class="q-num">9</div><div class="q-text">Sebagai pengelola coworking space, apa masalah utama yang harus segera ditangani berdasarkan data?</div></div>
+        <div class="question-item"><div class="q-num">10</div><div class="q-text">Apa 3 tindakan prioritas yang harus dilakukan dalam 30 hari ke depan?</div></div>
+      </div>
+    </div>
+
+    <div class="sheet-footer">
+      <span class="footer-note">Kerjakan dengan jujur · Jawaban harus berbasis data</span>
+      <span class="footer-sig">Andika Chandra P, S.Kom, M.T.I</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function showTab(index) {
+    document.querySelectorAll('.exam-sheet').forEach((s, i) => {
+      s.classList.toggle('active', i === index);
+    });
+    document.querySelectorAll('.tab-btn').forEach((b, i) => {
+      b.classList.toggle('active', i === index);
+    });
+  }
+</script>
+</body>
+</html>
