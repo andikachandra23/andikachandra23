@@ -291,11 +291,42 @@
     margin-top: 18px;
   }
 
+  .table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 6px;
+  }
+
+  /* subtle scroll hint on mobile */
+  .table-scroll::after {
+    content: '';
+    display: none;
+  }
+
+  @media (max-width: 600px) {
+    .table-scroll {
+      position: relative;
+    }
+    .table-scroll::after {
+      display: block;
+      content: '← geser →';
+      text-align: center;
+      font-size: 10px;
+      color: var(--text-muted);
+      padding: 4px 0 2px;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.03em;
+    }
+  }
+
   .data-table {
     width: 100%;
+    min-width: 480px;
     border-collapse: collapse;
     font-size: 12.5px;
-    margin-bottom: 6px;
   }
 
   .data-table th {
@@ -306,16 +337,24 @@
     color: var(--text-primary);
     padding: 9px 12px;
     text-align: left;
-    border: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    white-space: nowrap;
   }
+
+  .data-table th:last-child { border-right: none; }
 
   .data-table td {
     padding: 8px 12px;
-    border: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
     color: var(--text-secondary);
     font-size: 12.5px;
+    white-space: nowrap;
   }
 
+  .data-table td:last-child { border-right: none; }
+  .data-table tr:last-child td { border-bottom: none; }
   .data-table tr:hover td { background: var(--off-white); }
 
   /* DIVIDER */
@@ -412,15 +451,47 @@
     .exam-sheet:not(:last-child) { page-break-after: always; }
   }
 
-  @media (max-width: 600px) {
-    .sheet-header { flex-direction: column; text-align: center; padding: 20px; }
+  @media (max-width: 640px) {
+    body { padding: 16px 12px; }
+
+    .page-header h1 { font-size: 17px; }
+    .page-header p { font-size: 12px; }
+    .page-header { margin-bottom: 20px; }
+
+    .tab-nav { padding: 5px; gap: 4px; margin-bottom: 16px; border-radius: 10px; }
+    .tab-btn { font-size: 12px; padding: 7px 13px; border-radius: 7px; }
+
+    .sheet-header { flex-direction: column; align-items: center; text-align: center; padding: 18px 16px 14px; gap: 12px; }
+    .univ-logo { width: 48px; height: 48px; font-size: 12px; }
+    .univ-info .univ-name { font-size: 12px; }
+    .univ-info .univ-sub { font-size: 11px; }
+    .sheet-badge { font-size: 10.5px; padding: 5px 12px; }
+
     .sheet-meta { grid-template-columns: 1fr; }
+    .meta-cell { padding: 7px 16px; font-size: 12px; }
     .meta-cell:nth-child(odd) { border-right: none; }
     .meta-cell:nth-last-child(2) { border-bottom: 1px solid var(--border); }
-    .meta-cell { padding: 8px 20px; }
-    .sheet-body { padding: 20px; }
-    .sheet-footer { flex-direction: column; gap: 6px; text-align: center; }
-    .student-banner { padding: 12px 20px; }
+
+    .student-banner { padding: 10px 16px; flex-wrap: wrap; gap: 4px; }
+    .student-name { font-size: 13px; }
+    .student-note { width: 100%; margin-left: 0; font-size: 10.5px; }
+
+    .sheet-body { padding: 16px; }
+    .context-section p { font-size: 13px; }
+    .bullets li { font-size: 13px; }
+    .table-label { font-size: 11.5px; margin-top: 14px; }
+
+    .data-table th { font-size: 11px; padding: 8px 10px; }
+    .data-table td { font-size: 11.5px; padding: 7px 10px; }
+
+    .section-divider { margin: 18px 0; }
+    .questions-title { font-size: 13px; }
+    .q-text { font-size: 13px; }
+    .q-num { width: 24px; height: 24px; font-size: 11px; }
+
+    .sheet-footer { flex-direction: column; gap: 4px; text-align: center; padding: 12px 16px; }
+    .footer-note { font-size: 11px; }
+    .footer-sig { font-size: 11.5px; }
   }
 </style>
 </head>
@@ -1124,6 +1195,16 @@
       b.classList.toggle('active', i === index);
     });
   }
+
+  // Wrap all tables in scroll containers for mobile
+  document.querySelectorAll('.data-table').forEach(function(table) {
+    if (!table.parentElement.classList.contains('table-scroll')) {
+      var wrapper = document.createElement('div');
+      wrapper.className = 'table-scroll';
+      table.parentNode.insertBefore(wrapper, table);
+      wrapper.appendChild(table);
+    }
+  });
 </script>
 </body>
 </html>
