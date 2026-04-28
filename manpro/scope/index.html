@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Scope Management — Materi TI Semester 6</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1917;
+    --ink2: #4a4844;
+    --ink3: #8a8784;
+    --paper: #faf9f6;
+    --paper2: #f0ede6;
+    --paper3: #e8e3d8;
+    --accent: #c84b2f;
+    --accent2: #e8723f;
+    --blue: #2563a8;
+    --blue-bg: #e8f0fb;
+    --green: #2d7a4f;
+    --green-bg: #e4f5ec;
+    --amber: #9a5c10;
+    --amber-bg: #fdf3e3;
+    --red: #b82c2c;
+    --red-bg: #fdeaea;
+    --border: rgba(26,25,23,0.12);
+    --r: 10px;
+    --r-lg: 16px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.65;
+    font-size: 15px;
+  }
+
+  /* ── HEADER ── */
+  .page-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.18;
+  }
+  .page-header::after {
+    content: '';
+    position: absolute; bottom: -80px; left: 30%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: var(--accent2);
+    opacity: 0.1;
+  }
+  .header-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+  .header-tag {
+    display: inline-block;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    border: 1px solid rgba(232,114,63,0.4);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+  .page-header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .page-header h1 span { color: var(--accent2); }
+  .header-sub {
+    font-size: 15px;
+    color: rgba(250,249,246,0.65);
+    max-width: 540px;
+    line-height: 1.6;
+  }
+  .header-meta {
+    display: flex; gap: 2rem; margin-top: 1.75rem; flex-wrap: wrap;
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 2px; }
+  .meta-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(250,249,246,0.4); }
+  .meta-val { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; color: rgba(250,249,246,0.85); }
+
+  /* ── NAV ── */
+  .sticky-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,249,246,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 860px; margin: 0 auto;
+    display: flex; gap: 0; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    flex-shrink: 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 14px 18px;
+    border: none;
+    background: none;
+    color: var(--ink3);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+    white-space: nowrap;
+  }
+  .nav-btn:hover { color: var(--ink); }
+  .nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ── MAIN LAYOUT ── */
+  .main { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+  .section { display: none; animation: fadeIn .25s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  /* ── TYPOGRAPHY ── */
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
+    line-height: 1.2;
+  }
+  .section-desc {
+    font-size: 14px;
+    color: var(--ink3);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  h3 { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.9rem; color: var(--ink2); }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--ink); font-weight: 500; }
+
+  /* ── CARDS ── */
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .mini-card {
+    background: var(--paper2);
+    border-radius: var(--r);
+    padding: 1.1rem 1.25rem;
+    border: 1px solid var(--border);
+  }
+  .mini-card .mc-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink3);
+    margin-bottom: 6px;
+  }
+  .mini-card .mc-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .mini-card p { font-size: 13px; color: var(--ink3); margin-top: 4px; margin-bottom: 0; }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: var(--r);
+    padding: 1.1rem 1.35rem;
+    margin: 1.25rem 0;
+    border-left: 3px solid;
+  }
+  .callout .callout-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 6px;
+  }
+  .callout p, .callout li { font-size: 14px; line-height: 1.65; }
+  .callout ul { padding-left: 1.1rem; }
+  .callout li { margin-bottom: 4px; }
+  .callout-analogi { background: var(--green-bg); border-color: var(--green); }
+  .callout-analogi .callout-label { color: var(--green); }
+  .callout-analogi p { color: #1e5c38; }
+  .callout-kasus { background: var(--amber-bg); border-color: var(--amber); }
+  .callout-kasus .callout-label { color: var(--amber); }
+  .callout-kasus p, .callout-kasus li { color: #7a4a0c; }
+  .callout-warning { background: var(--red-bg); border-color: var(--red); }
+  .callout-warning .callout-label { color: var(--red); }
+  .callout-warning p { color: #922020; }
+  .callout-info { background: var(--blue-bg); border-color: var(--blue); }
+  .callout-info .callout-label { color: var(--blue); }
+  .callout-info p { color: #1a4a8a; }
+
+  /* ── PROCESS STEPPER ── */
+  .stepper { margin: 1.5rem 0; }
+  .step-list { display: flex; flex-direction: column; gap: 0; }
+  .step-item {
+    display: flex; gap: 1rem; cursor: pointer;
+    padding: 1rem 1.25rem;
+    border-radius: var(--r);
+    border: 1px solid transparent;
+    transition: all .18s;
+    position: relative;
+  }
+  .step-item:hover { background: var(--paper2); border-color: var(--border); }
+  .step-item.open { background: #fff; border-color: var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .step-num {
+    flex-shrink: 0;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--paper3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink3);
+    transition: all .2s;
+    margin-top: 2px;
+  }
+  .step-item.open .step-num { background: var(--accent); color: #fff; }
+  .step-body { flex: 1; }
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 2px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .step-title .arrow { font-size: 12px; color: var(--ink3); transition: transform .2s; }
+  .step-item.open .step-title .arrow { transform: rotate(90deg); }
+  .step-subtitle { font-size: 12px; color: var(--ink3); }
+  .step-detail {
+    display: none;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.75rem;
+  }
+  .step-item.open .step-detail { display: block; }
+  .step-detail p { font-size: 14px; margin-bottom: 0.6rem; }
+  .step-detail .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 0.8rem; }
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .tag-in { background: var(--green-bg); color: var(--green); }
+  .tag-out { background: var(--blue-bg); color: var(--blue); }
+  .tag-tool { background: var(--amber-bg); color: var(--amber); }
+
+  /* ── WBS TREE ── */
+  .wbs-tree { font-size: 13px; line-height: 1.5; margin: 1rem 0; }
+  .wbs-l1 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--accent); padding: 8px 14px; background: #fff5f2; border-radius: 8px; border: 1px solid rgba(200,75,47,0.2); display: inline-block; margin-bottom: 8px; }
+  .wbs-branch { padding-left: 1.5rem; border-left: 2px solid var(--paper3); margin-bottom: 4px; }
+  .wbs-l2 { font-weight: 500; color: var(--ink); padding: 5px 0 5px 12px; }
+  .wbs-l3 { color: var(--ink3); font-size: 12px; padding: 3px 0 3px 24px; }
+  .wbs-l3::before { content: '─ '; color: var(--paper3); }
+
+  /* ── TABS ── */
+  .tab-header { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .tab-pill {
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--ink3);
+    cursor: pointer;
+    transition: all .15s;
+    font-weight: 500;
+  }
+  .tab-pill:hover { border-color: var(--accent); color: var(--accent); }
+  .tab-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn .2s ease; }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .compare-table th {
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+  }
+  .compare-table th:first-child { border-radius: 8px 0 0 0; }
+  .compare-table th:last-child { border-radius: 0 8px 0 0; }
+  .compare-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--ink2);
+    line-height: 1.55;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:nth-child(even) td { background: var(--paper2); }
+  .compare-table .col-head { font-weight: 500; color: var(--ink); }
+  .check { color: var(--green); font-weight: 600; }
+  .cross { color: var(--red); font-weight: 600; }
+
+  /* ── SCOPE CREEP METER ── */
+  .creep-scenario {
+    background: var(--paper2);
+    border-radius: var(--r);
+    padding: 1.1rem 1.35rem;
+    margin-bottom: 0.8rem;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .creep-scenario:hover { border-color: var(--accent); }
+  .creep-scenario.revealed { border-color: var(--accent); background: #fff; }
+  .creep-q { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 0; }
+  .creep-choices { display: flex; gap: 8px; margin-top: 10px; }
+  .creep-choice {
+    flex: 1; font-size: 12px; padding: 7px 10px;
+    border-radius: 8px; border: 1px solid var(--border);
+    background: #fff; cursor: pointer; color: var(--ink2);
+    transition: all .15s; text-align: center;
+  }
+  .creep-choice:hover { border-color: var(--accent); color: var(--accent); }
+  .creep-choice.correct { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 500; }
+  .creep-choice.wrong { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+  .creep-reveal { display: none; margin-top: 10px; font-size: 13px; padding: 8px 12px; background: var(--blue-bg); border-radius: 8px; color: #1a4a8a; line-height: 1.55; }
+  .creep-scenario.revealed .creep-reveal { display: block; }
+
+  /* ── QUIZ ── */
+  .quiz-wrap { display: flex; flex-direction: column; gap: 1.5rem; }
+  .quiz-item {}
+  .q-text { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 0.75rem; line-height: 1.55; }
+  .q-num { font-family: 'Syne', sans-serif; font-size: 12px; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+  .q-opts { display: flex; flex-direction: column; gap: 6px; }
+  .q-opt {
+    text-align: left; font-size: 13px; padding: 10px 14px;
+    border-radius: var(--r); border: 1px solid var(--border);
+    background: #fff; cursor: pointer; color: var(--ink2);
+    transition: all .15s; line-height: 1.5;
+  }
+  .q-opt:hover:not([disabled]) { border-color: var(--accent); color: var(--ink); }
+  .q-opt.correct { background: var(--green-bg); border-color: var(--green); color: #1e5c38; font-weight: 500; }
+  .q-opt.wrong { background: var(--red-bg); border-color: var(--red); color: #922020; }
+  .q-fb { font-size: 13px; margin-top: 8px; padding: 8px 14px; border-radius: 8px; display: none; line-height: 1.6; }
+  .q-fb.show { display: block; }
+  .q-fb.ok { background: var(--green-bg); color: #1e5c38; }
+  .q-fb.no { background: var(--red-bg); color: #922020; }
+  .score-wrap { background: var(--paper2); border-radius: var(--r); padding: 1.25rem; margin-top: 1.5rem; text-align: center; display: none; }
+  .score-wrap.show { display: block; }
+  .score-big { font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800; color: var(--accent); }
+  .score-label { font-size: 14px; color: var(--ink3); }
+  .progress-bar { height: 6px; background: var(--paper3); border-radius: 3px; margin: 1rem 0 0.3rem; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width .5s ease; }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 2rem; margin: 1rem 0; }
+  .timeline::before { content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--paper3); }
+  .tl-item { position: relative; margin-bottom: 1.5rem; }
+  .tl-dot { position: absolute; left: -1.75rem; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 2px solid var(--paper); }
+  .tl-head { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .tl-body { font-size: 13px; color: var(--ink2); line-height: 1.6; }
+  .tl-tag { display: inline-block; font-size: 10px; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; background: var(--paper3); color: var(--ink3); margin-bottom: 4px; letter-spacing: 0.06em; }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight {
+    display: flex; gap: 1rem;
+    background: var(--ink); color: var(--paper);
+    border-radius: var(--r-lg); padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .highlight-icon { font-size: 2rem; flex-shrink: 0; }
+  .highlight h3 { color: #fff; margin-bottom: 4px; font-size: 1rem; }
+  .highlight p { color: rgba(250,249,246,0.7); font-size: 13px; margin-bottom: 0; }
+
+  /* ── TWO-COL ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── FOOTER ── */
+  footer { text-align: center; padding: 2rem; font-size: 12px; color: var(--ink3); border-top: 1px solid var(--border); margin-top: 2rem; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="page-header">
+  <div class="header-inner">
+    <div class="header-tag">Manajemen Proyek TI · Semester 6</div>
+    <h1>Project <span>Scope</span><br>Management</h1>
+    <p class="header-sub">Materi lengkap berbasis PMBOK 5th Edition & HBR Project Management Handbook — disajikan dengan analogi, contoh nyata, dan studi kasus untuk mahasiswa Teknik Informatika.</p>
+    <div class="header-meta">
+      <div class="meta-item"><span class="meta-label">Proses</span><span class="meta-val">6 Proses PMBOK</span></div>
+      <div class="meta-item"><span class="meta-label">Knowledge Area</span><span class="meta-val">Area 5</span></div>
+      <div class="meta-item"><span class="meta-label">Referensi</span><span class="meta-val">PMBOK 5th Ed + HBR</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="goTo('pengantar',this)">01 · Pengantar</button>
+    <button class="nav-btn" onclick="goTo('proses',this)">02 · 6 Proses</button>
+    <button class="nav-btn" onclick="goTo('wbs',this)">03 · WBS</button>
+    <button class="nav-btn" onclick="goTo('scope-creep',this)">04 · Scope Creep</button>
+    <button class="nav-btn" onclick="goTo('studikasus',this)">05 · Studi Kasus</button>
+    <button class="nav-btn" onclick="goTo('quiz',this)">06 · Kuis</button>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ═══════════════════════════════════════════════
+     01. PENGANTAR
+     ═══════════════════════════════════════════════ -->
+<section class="section active" id="pengantar">
+  <p class="section-title">Apa itu Scope Management?</p>
+  <p class="section-desc">Fondasi dari setiap proyek TI yang berhasil — memastikan tim mengerjakan semua yang perlu dikerjakan, dan tidak lebih dari itu.</p>
+
+  <div class="card">
+    <h3>Definisi Resmi (PMBOK)</h3>
+    <p>Project Scope Management mencakup proses-proses yang diperlukan untuk memastikan proyek mencakup <strong>semua pekerjaan yang dibutuhkan</strong> — dan <em>hanya</em> pekerjaan itu — agar proyek berhasil diselesaikan.</p>
+    <p>Intinya ada dua hal: mendefinisikan <strong>apa yang masuk</strong> dalam proyek, dan <strong>mengendalikan</strong> agar tidak ada yang berubah tanpa persetujuan formal.</p>
+  </div>
+
+  <div class="callout callout-analogi">
+    <div class="callout-label">🎯 Analogi 1 — Memesan Paket Makanan Online</div>
+    <p>Kamu pesan paket nasi goreng ayam seharga Rp 35.000 di GoFood. Itu adalah <strong>scope-mu</strong>. Kamu tidak berhak minta tambah es teh gratis, atau minta dimasak dengan wajan baru, karena itu di luar kesepakatan. Kalau mau tambah, ada harganya sendiri. Scope Management persis seperti ini: menetapkan apa yang dibeli, dan memastikan tidak ada yang ditambah diam-diam.</p>
+  </div>
+
+  <div class="callout callout-analogi">
+    <div class="callout-label">🏗️ Analogi 2 — Kontraktor Membangun Rumah</div>
+    <p>Kontraktor bangun rumah sesuai denah arsitektur. Kalau di tengah jalan pemilik minta tambah kolam renang, kontraktor <em>tidak langsung mengiyakan</em>. Mereka akan bilang: <em>"Boleh, tapi kita perlu revisi kontrak, tambah budget Rp 80 juta, dan perpanjang waktu 3 minggu."</em> Itu proses <strong>change control</strong>. Tanpa ini, kontraktor bisa merugi karena mengerjakan pekerjaan di luar yang dibayar.</p>
+  </div>
+
+  <hr class="divider">
+
+  <h3 style="margin-bottom:1rem;">Dua Jenis Scope yang Wajib Dibedakan</h3>
+  <div class="two-col">
+    <div class="card" style="margin-bottom:0; border-left: 3px solid var(--accent);">
+      <div class="tag tag-in" style="margin-bottom:8px;">Product Scope</div>
+      <p style="font-size:14px;">Fitur dan fungsi yang harus dimiliki produk/sistem akhir.</p>
+      <p style="font-size:13px; color:var(--ink3);">Contoh: Aplikasi presensi harus bisa login, rekam kehadiran, dan ekspor laporan.</p>
+    </div>
+    <div class="card" style="margin-bottom:0; border-left: 3px solid var(--blue);">
+      <div class="tag tag-out" style="margin-bottom:8px;">Project Scope</div>
+      <p style="font-size:14px;">Seluruh pekerjaan yang harus dilakukan untuk menghasilkan produk tersebut.</p>
+      <p style="font-size:13px; color:var(--ink3);">Contoh: Analisis, desain UI, coding, testing, deploy, pelatihan pengguna.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-info" style="margin-top:1.5rem;">
+    <div class="callout-label">💡 Mengapa Kritis untuk Mahasiswa TI?</div>
+    <p>Riset PMI menunjukkan bahwa <strong>52% proyek software mengalami scope creep</strong>. Bukan karena kurang skill coding — tapi karena scope tidak didefinisikan dengan jelas di awal. Memahami Scope Management adalah investasi karir yang langsung terasa saat kamu magang atau kerja.</p>
+  </div>
+
+  <div class="card-grid" style="margin-top:1.5rem;">
+    <div class="mini-card">
+      <div class="mc-label">Dampak tanpa Scope Mgmt</div>
+      <div class="mc-val">52%</div>
+      <p>proyek mengalami scope creep</p>
+    </div>
+    <div class="mini-card">
+      <div class="mc-label">Proyek gagal karena</div>
+      <div class="mc-val">2×</div>
+      <p>lebih sering akibat scope buruk vs masalah teknis</p>
+    </div>
+    <div class="mini-card">
+      <div class="mc-label">Proses PMBOK Area 5</div>
+      <div class="mc-val">6</div>
+      <p>proses dari Planning hingga Monitoring</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     02. 6 PROSES
+     ═══════════════════════════════════════════════ -->
+<section class="section" id="proses">
+  <p class="section-title">6 Proses Scope Management</p>
+  <p class="section-desc">Klik setiap proses untuk melihat penjelasan lengkap, input, tools & techniques, output, dan contoh konteks TI.</p>
+
+  <div class="stepper">
+    <div class="step-list">
+
+      <div class="step-item" onclick="toggleStep(this)">
+        <div class="step-num">5.1</div>
+        <div class="step-body">
+          <div class="step-title">Plan Scope Management <span class="arrow">›</span></div>
+          <div class="step-subtitle">Membuat rencana pengelolaan scope</div>
+          <div class="step-detail">
+            <p><strong>Tujuan:</strong> Menghasilkan Scope Management Plan — dokumen panduan bagaimana scope akan didefinisikan, divalidasi, dan dikontrol sepanjang proyek.</p>
+            <p><strong>Analoginya:</strong> Seperti membuat SOP sebelum masak. Sebelum mulai masak, kamu tulis dulu: siapa yang beli bahan, siapa yang masak, dan bagaimana kalau resep berubah di tengah jalan.</p>
+            <p><strong>Contoh TI:</strong> Sebelum membangun Sistem Informasi Akademik, PM menulis: "Perubahan scope harus diajukan melalui form CR-001, disetujui oleh dosen pembimbing dan perwakilan jurusan, dan didokumentasikan dalam change log."</p>
+            <div class="tag-row">
+              <span class="tag tag-in">Output: Scope Management Plan</span>
+              <span class="tag tag-in">Output: Requirements Management Plan</span>
+              <span class="tag tag-tool">Tool: Expert Judgment</span>
+              <span class="tag tag-tool">Tool: Meetings</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item" onclick="toggleStep(this)">
+        <div class="step-num">5.2</div>
+        <div class="step-body">
+          <div class="step-title">Collect Requirements <span class="arrow">›</span></div>
+          <div class="step-subtitle">Mengumpulkan kebutuhan dari semua stakeholder</div>
+          <div class="step-detail">
+            <p><strong>Tujuan:</strong> Mendokumentasikan kebutuhan dan ekspektasi stakeholder secara lengkap, jelas, dan terukur untuk dijadikan dasar scope proyek.</p>
+            <p><strong>Analoginya:</strong> Seperti tukang jahit yang mengukur badan sebelum potong kain. Kalau ukurannya salah dari awal, bajunya tidak akan pas meski dijahit dengan sempurna.</p>
+            <p><strong>Contoh TI:</strong> Tim wawancara mahasiswa, dosen, dan staf untuk sistem portal akademik. Hasilnya: 47 kebutuhan fungsional (login SSO, KRS online, nilai real-time) dan 12 non-fungsional (respon &lt;2 detik, uptime 99.5%).</p>
+            <div class="tag-row">
+              <span class="tag tag-tool">Tool: Wawancara</span>
+              <span class="tag tag-tool">Tool: Focus Group</span>
+              <span class="tag tag-tool">Tool: Prototyping</span>
+              <span class="tag tag-tool">Tool: User Stories (Agile)</span>
+              <span class="tag tag-in">Output: Requirements Documentation</span>
+              <span class="tag tag-in">Output: Requirements Traceability Matrix</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item" onclick="toggleStep(this)">
+        <div class="step-num">5.3</div>
+        <div class="step-body">
+          <div class="step-title">Define Scope <span class="arrow">›</span></div>
+          <div class="step-subtitle">Menghasilkan deskripsi scope yang detail dan lengkap</div>
+          <div class="step-detail">
+            <p><strong>Tujuan:</strong> Membuat Project Scope Statement — dokumen yang secara eksplisit menyatakan apa yang ADA dan APA YANG TIDAK ADA dalam proyek.</p>
+            <p><strong>Kenapa eksklusi penting?</strong> Kalau tidak ditulis apa yang di luar scope, stakeholder bisa saja berasumsi "harusnya ada dong fitur itu". Eksklusi yang dituliskan menjadi pelindung tim dari permintaan yang tidak wajar.</p>
+            <p><strong>Contoh TI — Aplikasi E-Commerce UKM:</strong></p>
+            <p><span class="check">✓ Dalam scope:</span> Catalog produk, keranjang belanja, pembayaran via transfer bank manual, manajemen stok dasar.</p>
+            <p><span class="cross">✗ Di luar scope:</span> Integrasi payment gateway otomatis (fase 2), aplikasi mobile, live chat support, sistem affiliate marketing.</p>
+            <div class="tag-row">
+              <span class="tag tag-tool">Tool: Product Analysis</span>
+              <span class="tag tag-tool">Tool: Alternatives Analysis</span>
+              <span class="tag tag-in">Output: Project Scope Statement</span>
+              <span class="tag tag-in">Output: Project Documents Updates</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item" onclick="toggleStep(this)">
+        <div class="step-num">5.4</div>
+        <div class="step-body">
+          <div class="step-title">Create WBS <span class="arrow">›</span></div>
+          <div class="step-subtitle">Memecah pekerjaan menjadi komponen yang terkelola</div>
+          <div class="step-detail">
+            <p><strong>Tujuan:</strong> Mendekomposisi seluruh project scope menjadi work packages yang lebih kecil, spesifik, dan dapat diestimasi biaya & waktunya.</p>
+            <p><strong>Analoginya:</strong> WBS itu seperti daftar belanja super detail. Bukan hanya "belanja makan malam" — tapi "500g daging sapi, 3 bawang merah, 2 siung bawang putih, 1 batang serai." Setiap item jelas, bisa dibeli, bisa dicek ketersediaannya.</p>
+            <p><strong>Scope Baseline</strong> = WBS + WBS Dictionary + Project Scope Statement. Ini jadi acuan resmi proyek yang hanya bisa diubah lewat change control.</p>
+            <div class="tag-row">
+              <span class="tag tag-tool">Tool: Decomposition</span>
+              <span class="tag tag-tool">Tool: Expert Judgment</span>
+              <span class="tag tag-in">Output: WBS</span>
+              <span class="tag tag-in">Output: WBS Dictionary</span>
+              <span class="tag tag-in">Output: Scope Baseline</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item" onclick="toggleStep(this)">
+        <div class="step-num">5.5</div>
+        <div class="step-body">
+          <div class="step-title">Validate Scope <span class="arrow">›</span></div>
+          <div class="step-subtitle">Mendapat penerimaan formal dari stakeholder</div>
+          <div class="step-detail">
+            <p><strong>Tujuan:</strong> Mendapat persetujuan formal (sign-off) dari stakeholder atas deliverables yang sudah selesai dikerjakan.</p>
+            <p><strong>Bedakan dari Quality Control!</strong> QC memastikan deliverable sudah <em>benar secara teknis</em> (dilakukan tim internal). Validate Scope memastikan deliverable sudah <em>diterima oleh customer/stakeholder</em> (dilakukan bersama stakeholder). QC dulu, baru Validate Scope.</p>
+            <p><strong>Contoh TI:</strong> Modul Login selesai dikoding dan lulus testing (QC). Tim kemudian demo ke Kepala IT dan meminta tanda tangan Acceptance Form. Setelah signed-off, modul dianggap selesai dan tim lanjut ke modul berikutnya.</p>
+            <div class="tag-row">
+              <span class="tag tag-tool">Tool: Inspection (demo, review)</span>
+              <span class="tag tag-tool">Tool: Group Decision Techniques</span>
+              <span class="tag tag-in">Output: Accepted Deliverables</span>
+              <span class="tag tag-in">Output: Change Requests</span>
+              <span class="tag tag-in">Output: Work Performance Info</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item" onclick="toggleStep(this)">
+        <div class="step-num">5.6</div>
+        <div class="step-body">
+          <div class="step-title">Control Scope <span class="arrow">›</span></div>
+          <div class="step-subtitle">Memantau status dan mengelola perubahan scope</div>
+          <div class="step-detail">
+            <p><strong>Tujuan:</strong> Memantau status scope proyek dan mengelola setiap perubahan melalui Integrated Change Control — mencegah scope creep.</p>
+            <p><strong>Cara kerjanya:</strong> Setiap ada usulan perubahan (dari stakeholder maupun tim), harus diproses sebagai Change Request. CCB (Change Control Board) mengevaluasi dampak ke biaya, waktu, dan risiko, lalu memutuskan approve atau reject.</p>
+            <p><strong>Contoh TI:</strong> Di minggu ke-6, Product Owner minta tambah fitur "dark mode". PM tidak langsung bilang ya atau tidak — tapi submit CR-007, evaluasi dampak (+4 hari, +Rp 3 juta, risiko rendah), laporkan ke CCB. CCB approve dengan syarat dikerjakan setelah fitur inti selesai.</p>
+            <div class="tag-row">
+              <span class="tag tag-tool">Tool: Variance Analysis</span>
+              <span class="tag tag-tool">Tool: Trend Analysis</span>
+              <span class="tag tag-in">Output: Work Performance Info</span>
+              <span class="tag tag-in">Output: Change Requests</span>
+              <span class="tag tag-in">Output: Scope Baseline Updates</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="callout callout-info">
+    <div class="callout-label">📌 Urutan Proses & Kelompok Proses</div>
+    <p>5.1–5.4 masuk ke <strong>Planning Process Group</strong>. Proses 5.5 Validate Scope dan 5.6 Control Scope masuk ke <strong>Monitoring & Controlling Process Group</strong> — artinya keduanya berjalan terus-menerus selama proyek berlangsung, bukan hanya sekali.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     03. WBS
+     ═══════════════════════════════════════════════ -->
+<section class="section" id="wbs">
+  <p class="section-title">Work Breakdown Structure</p>
+  <p class="section-desc">Teknik dekomposisi pekerjaan yang paling fundamental dalam manajemen proyek — dipahami dengan analogi dan contoh nyata.</p>
+
+  <div class="card">
+    <h3>Definisi & Prinsip Utama</h3>
+    <p>WBS adalah dekomposisi hierarkis dari <strong>seluruh pekerjaan</strong> yang harus dilakukan tim proyek untuk mencapai tujuan dan menghasilkan deliverable yang dibutuhkan.</p>
+    <p>Prinsip <strong>100%</strong>: WBS harus mencakup 100% dari scope proyek. Setiap level menjumlahkan 100% pekerjaan dari level di atasnya. <em>Pekerjaan yang tidak ada di WBS, tidak boleh dikerjakan.</em></p>
+  </div>
+
+  <div class="callout callout-analogi">
+    <div class="callout-label">🧩 Analogi — Puzzle Raksasa</div>
+    <p>WBS ibarat memecah satu puzzle besar jadi kelompok-kelompok kecil. "Buat sistem informasi" terlalu besar untuk langsung dikerjakan. Tapi kalau dipecah: modul login, modul data mahasiswa, modul nilai — masing-masing bisa dibagi lagi jadi task-task kecil yang bisa dikerjakan satu orang dalam satu sprint. Begitu semua puzzle kecil selesai, puzzle besarnya otomatis jadi.</p>
+  </div>
+
+  <div class="tab-header">
+    <button class="tab-pill active" onclick="switchTab('wbs-tab','t1',this)">Contoh: Sistem Akademik</button>
+    <button class="tab-pill" onclick="switchTab('wbs-tab','t2',this)">Contoh: Aplikasi Mobile</button>
+    <button class="tab-pill" onclick="switchTab('wbs-tab','t3',this)">Aturan & Tips</button>
+  </div>
+
+  <div id="wbs-tab-t1" class="tab-content active">
+    <div class="card">
+      <h3>WBS: Portal Akademik Universitas</h3>
+      <div class="wbs-tree">
+        <div class="wbs-l1">Portal Akademik Universitas</div>
+        <div class="wbs-branch">
+          <div class="wbs-l2">1.0 Manajemen Proyek</div>
+          <div class="wbs-l3">1.1 Perencanaan & dokumentasi</div>
+          <div class="wbs-l3">1.2 Monitoring & pelaporan</div>
+          <div class="wbs-l3">1.3 Rapat koordinasi tim</div>
+        </div>
+        <div class="wbs-branch">
+          <div class="wbs-l2">2.0 Analisis & Desain</div>
+          <div class="wbs-l3">2.1 Analisis kebutuhan stakeholder</div>
+          <div class="wbs-l3">2.2 Desain arsitektur sistem</div>
+          <div class="wbs-l3">2.3 Desain UI/UX & prototyping</div>
+          <div class="wbs-l3">2.4 Desain database</div>
+        </div>
+        <div class="wbs-branch">
+          <div class="wbs-l2">3.0 Pengembangan</div>
+          <div class="wbs-l3">3.1 Modul Autentikasi (SSO)</div>
+          <div class="wbs-l3">3.2 Modul KRS Online</div>
+          <div class="wbs-l3">3.3 Modul Nilai & Transkrip</div>
+          <div class="wbs-l3">3.4 Modul Keuangan Mahasiswa</div>
+          <div class="wbs-l3">3.5 Dashboard Administrator</div>
+        </div>
+        <div class="wbs-branch">
+          <div class="wbs-l2">4.0 Pengujian</div>
+          <div class="wbs-l3">4.1 Unit & integration testing</div>
+          <div class="wbs-l3">4.2 Performance testing</div>
+          <div class="wbs-l3">4.3 User Acceptance Testing (UAT)</div>
+        </div>
+        <div class="wbs-branch">
+          <div class="wbs-l2">5.0 Deployment & Training</div>
+          <div class="wbs-l3">5.1 Konfigurasi server produksi</div>
+          <div class="wbs-l3">5.2 Migrasi data lama</div>
+          <div class="wbs-l3">5.3 Pelatihan pengguna (dosen & staf)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="wbs-tab-t2" class="tab-content">
+    <div class="card">
+      <h3>WBS: Aplikasi Mobile Banking UKM</h3>
+      <div class="wbs-tree">
+        <div class="wbs-l1">Aplikasi Mobile Banking</div>
+        <div class="wbs-branch">
+          <div class="wbs-l2">1.0 Inisiasi & Perencanaan</div>
+          <div class="wbs-l3">1.1 Studi kelayakan teknis & bisnis</div>
+          <div class="wbs-l3">1.2 Pembuatan scope statement</div>
+          <div class="wbs-l3">1.3 Penyusunan jadwal & anggaran</div>
+        </div>
+        <div class="wbs-branch">
+          <div class="wbs-l2">2.0 Desain</div>
+          <div class="wbs-l3">2.1 User flow & wireframe</div>
+          <div class="wbs-l3">2.2 UI design (Figma)</div>
+          <div class="wbs-l3">2.3 API design & dokumentasi</div>
+        </div>
+        <div class="wbs-branch">
+          <div class="wbs-l2">3.0 Backend Development</div>
+          <div class="wbs-l3">3.1 Autentikasi & otorisasi</div>
+          <div class="wbs-l3">3.2 API manajemen akun</div>
+          <div class="wbs-l3">3.3 API transfer & pembayaran</div>
+          <div class="wbs-l3">3.4 API riwayat transaksi</div>
+          <div class="wbs-l3">3.5 Integrasi core banking</div>
+        </div>
+        <div class="wbs-branch">
+          <div class="wbs-l2">4.0 Mobile Development</div>
+          <div class="wbs-l3">4.1 Screen login & onboarding</div>
+          <div class="wbs-l3">4.2 Screen dashboard & saldo</div>
+          <div class="wbs-l3">4.3 Screen transfer</div>
+          <div class="wbs-l3">4.4 Screen riwayat & notifikasi</div>
+        </div>
+        <div class="wbs-branch">
+          <div class="wbs-l2">5.0 QA & Release</div>
+          <div class="wbs-l3">5.1 Security testing (penetration test)</div>
+          <div class="wbs-l3">5.2 UAT bersama nasabah pilot</div>
+          <div class="wbs-l3">5.3 Rilis ke App Store & Play Store</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="wbs-tab-t3" class="tab-content">
+    <div class="card">
+      <h3>Aturan Penting dalam Membuat WBS</h3>
+      <div class="callout callout-info" style="margin-top:0.5rem;">
+        <div class="callout-label">Aturan 8/80</div>
+        <p>Work package (level terbawah WBS) idealnya berdurasi <strong>minimum 8 jam dan maksimum 80 jam</strong> kerja. Terlalu kecil = micromanagement. Terlalu besar = susah dikontrol.</p>
+      </div>
+      <div class="callout callout-info" style="margin-top:0.5rem;">
+        <div class="callout-label">WBS bukan Gantt Chart</div>
+        <p>WBS tidak menunjukkan urutan waktu atau siapa yang mengerjakan. Itu tugasnya jadwal proyek. WBS hanya mendefinisikan <em>apa</em> yang harus dikerjakan.</p>
+      </div>
+      <div class="callout callout-analogi" style="margin-top:0.5rem;">
+        <div class="callout-label">WBS Dictionary</div>
+        <p>Setiap work package di WBS punya kamus (WBS Dictionary) yang menjelaskan: deskripsi pekerjaan, kriteria penerimaan, asumsi, siapa yang bertanggung jawab, dan estimasi biaya/waktu. Tanpa ini, WBS bisa ambigu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     04. SCOPE CREEP
+     ═══════════════════════════════════════════════ -->
+<section class="section" id="scope-creep">
+  <p class="section-title">Scope Creep & Cara Mengendalikannya</p>
+  <p class="section-desc">Musuh nomor satu proyek software — pahami penyebab, dampak, dan cara mencegahnya.</p>
+
+  <div class="callout callout-warning">
+    <div class="callout-label">⚠️ Definisi Scope Creep</div>
+    <p>Scope creep adalah penambahan fitur, fungsi, atau persyaratan baru ke dalam proyek <strong>tanpa melalui proses change control yang resmi</strong>. Biasanya terjadi perlahan-lahan — satu permintaan kecil, lalu satu lagi, hingga proyek jauh melampaui scope awal.</p>
+  </div>
+
+  <div class="callout callout-analogi">
+    <div class="callout-label">🚗 Analogi — Bengkel Mobil</div>
+    <p>Kamu bawa mobil ke bengkel untuk ganti oli seharga Rp 150.000. Mekaniknya lalu bilang: <em>"Sekalian aja saya cek rem, gratis kok."</em> Lalu: <em>"Wah kampasnya tipis, saya ganti ya sekalian."</em> Lalu: <em>"Air aki mau saya isi juga."</em> Tanpa sadar, kamu sudah di kasir dan tagihannya Rp 750.000. Tidak ada yang kamu setujui secara formal — semuanya terjadi diam-diam. Itu scope creep di dunia bengkel.</p>
+  </div>
+
+  <div class="highlight">
+    <div class="highlight-icon">🆚</div>
+    <div>
+      <h3>Scope Creep vs. Gold Plating</h3>
+      <p>Scope creep datang dari <strong>stakeholder</strong> yang minta tambahan tanpa proses resmi. Gold plating datang dari <strong>tim developer</strong> sendiri yang menambahkan fitur "bonus" tanpa diminta — niatnya baik, tapi tetap berbahaya karena menghabiskan waktu dan bisa menimbulkan bug tak terduga.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h3 style="margin-bottom:0.5rem;">Kenali Skenario — Scope Creep atau Bukan?</h3>
+  <p style="font-size:13px; color:var(--ink3); margin-bottom:1.25rem;">Klik pilihan untuk melihat jawaban dan penjelasannya.</p>
+
+  <div class="creep-scenario" id="sc1">
+    <div class="creep-q">Stakeholder meminta fitur "notifikasi email" yang tidak ada di requirements awal, dan langsung dikerjakan developer tanpa ada change request.</div>
+    <div class="creep-choices">
+      <button class="creep-choice" onclick="answerCreep('sc1','a','scope-creep')">Scope Creep</button>
+      <button class="creep-choice" onclick="answerCreep('sc1','b','gold-plating')">Gold Plating</button>
+      <button class="creep-choice" onclick="answerCreep('sc1','c','normal')">Proses Normal</button>
+    </div>
+    <div class="creep-reveal"><strong>✅ Scope Creep.</strong> Permintaan datang dari stakeholder dan dikerjakan tanpa proses change control formal. Seharusnya diajukan sebagai change request, dievaluasi dampaknya, lalu diputuskan oleh CCB.</div>
+  </div>
+
+  <div class="creep-scenario" id="sc2">
+    <div class="creep-q">Developer menambah animasi loading yang halus saat aplikasi di-launch, karena menurut dia itu meningkatkan UX tanpa ada yang meminta.</div>
+    <div class="creep-choices">
+      <button class="creep-choice" onclick="answerCreep('sc2','a','scope-creep')">Scope Creep</button>
+      <button class="creep-choice" onclick="answerCreep('sc2','b','gold-plating')">Gold Plating</button>
+      <button class="creep-choice" onclick="answerCreep('sc2','c','normal')">Proses Normal</button>
+    </div>
+    <div class="creep-reveal"><strong>✅ Gold Plating.</strong> Inisiatif dari tim internal, bukan permintaan stakeholder. Meski niatnya baik, ini tetap riskan — menambah waktu, bisa menimbulkan bug, dan menggeser fokus dari deliverable utama.</div>
+  </div>
+
+  <div class="creep-scenario" id="sc3">
+    <div class="creep-q">Di tengah proyek, klien meminta fitur baru. PM mengajukan change request, CCB mengevaluasi (+1 minggu, +Rp 8 juta), klien setuju, dan scope baseline direvisi.</div>
+    <div class="creep-choices">
+      <button class="creep-choice" onclick="answerCreep('sc3','a','scope-creep')">Scope Creep</button>
+      <button class="creep-choice" onclick="answerCreep('sc3','b','gold-plating')">Gold Plating</button>
+      <button class="creep-choice" onclick="answerCreep('sc3','c','normal')">Proses Normal</button>
+    </div>
+    <div class="creep-reveal"><strong>✅ Proses Normal.</strong> Ini adalah cara yang benar! Perubahan dikelola melalui change control yang formal — ada evaluasi dampak, persetujuan, dan pembaruan baseline. Perubahan scope tidak selalu buruk selama diproses dengan benar.</div>
+  </div>
+
+  <hr class="divider">
+
+  <h3 style="margin-bottom:1rem;">Strategi Mencegah Scope Creep</h3>
+  <div class="tab-header">
+    <button class="tab-pill active" onclick="switchTab('sc-strat','s1',this)">📄 Dokumentasi</button>
+    <button class="tab-pill" onclick="switchTab('sc-strat','s2',this)">⚙️ Proses</button>
+    <button class="tab-pill" onclick="switchTab('sc-strat','s3',this)">🗣️ Komunikasi</button>
+  </div>
+  <div id="sc-strat-s1" class="tab-content active">
+    <div class="card" style="margin-bottom:0;">
+      <ul style="font-size:14px; color:var(--ink2); padding-left:1.2rem; line-height:2;">
+        <li>Buat <strong>Project Scope Statement</strong> yang lengkap, termasuk eksklusi eksplisit</li>
+        <li>Dokumentasikan semua requirements dengan acceptance criteria yang terukur</li>
+        <li>Gunakan <strong>Requirements Traceability Matrix (RTM)</strong> untuk melacak setiap requirement ke deliverable</li>
+        <li>Simpan semua keputusan dan persetujuan dalam bentuk tertulis</li>
+      </ul>
+    </div>
+  </div>
+  <div id="sc-strat-s2" class="tab-content">
+    <div class="card" style="margin-bottom:0;">
+      <ul style="font-size:14px; color:var(--ink2); padding-left:1.2rem; line-height:2;">
+        <li>Terapkan <strong>Change Control Board (CCB)</strong> formal untuk setiap perubahan scope</li>
+        <li>Buat formulir change request standar yang mencakup: deskripsi perubahan, justifikasi, dan dampak estimasi</li>
+        <li>Lakukan <strong>scope review</strong> di setiap akhir sprint atau milestone</li>
+        <li>Tidak ada pekerjaan baru yang dimulai tanpa CR yang sudah disetujui</li>
+      </ul>
+    </div>
+  </div>
+  <div id="sc-strat-s3" class="tab-content">
+    <div class="card" style="margin-bottom:0;">
+      <ul style="font-size:14px; color:var(--ink2); padding-left:1.2rem; line-height:2;">
+        <li>Edukasi stakeholder: <em>"tambahan kecil"</em> tetap butuh proses formal</li>
+        <li>Tunjukkan dampak nyata perubahan: <em>"Fitur ini butuh +2 minggu dan +Rp 15 juta"</em></li>
+        <li>Jangan bilang "ya" langsung — selalu minta waktu untuk evaluasi</li>
+        <li>Rayakan keberhasilan menolak permintaan di luar scope sebagai bentuk profesionalisme, bukan negativitas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     05. STUDI KASUS
+     ═══════════════════════════════════════════════ -->
+<section class="section" id="studikasus">
+  <p class="section-title">Studi Kasus Terintegrasi</p>
+  <p class="section-desc">Ikuti perjalanan proyek nyata dari awal hingga selesai — semua 6 proses Scope Management diterapkan secara berurutan.</p>
+
+  <div class="card">
+    <h3>🎓 Proyek: Sistem Informasi Perpustakaan Digital</h3>
+    <p><strong>Klien:</strong> Universitas Nusantara Jaya, Semarang<br>
+    <strong>Tim:</strong> 1 PM, 2 Backend Dev, 1 Frontend Dev, 1 QA<br>
+    <strong>Durasi:</strong> 4 bulan · <strong>Budget:</strong> Rp 350.000.000</p>
+  </div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-tag">Proses 5.1 + 5.2</div>
+      <div class="tl-head">Minggu 1–2: Plan & Collect</div>
+      <div class="tl-body">
+        <p>PM membuat Scope Management Plan: setiap perubahan scope harus melalui form CR, disetujui oleh Kepala Perpustakaan + Wakil Rektor, dan didokumentasikan. Review scope dilakukan setiap 2 minggu.</p>
+        <p>Tim melakukan wawancara dengan 12 pustakawan, 30 mahasiswa, dan 5 dosen. Hasilnya: 34 requirements fungsional (pencarian buku, peminjaman digital, notifikasi email jatuh tempo) dan 8 non-fungsional (halaman tampil &lt;1.5 detik, mobile-responsive).</p>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-tag">Proses 5.3 + 5.4</div>
+      <div class="tl-head">Minggu 2–3: Define & WBS</div>
+      <div class="tl-body">
+        <p><strong>Project Scope Statement menetapkan:</strong></p>
+        <p>✅ <em>Dalam scope:</em> Portal web mahasiswa, sistem manajemen koleksi buku, peminjaman & pengembalian digital, laporan statistik bulanan.<br>
+        ❌ <em>Di luar scope:</em> Aplikasi mobile, integrasi antar kampus, pembelian e-book online (semua masuk rencana fase 2).</p>
+        <p>WBS dibuat dengan 5 level-2: Manajemen Proyek, Analisis & Desain, Pengembangan (4 modul), Testing, dan Deployment & Training.</p>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-tag">Tantangan Nyata</div>
+      <div class="tl-head">Bulan ke-2: Permintaan Perubahan Pertama</div>
+      <div class="tl-body">
+        <p>Kepala IT kampus tiba-tiba meminta tambahan fitur <strong>integrasi Single Sign-On (SSO)</strong> dengan portal akademik. Tanpa ini, mahasiswa harus login dua kali.</p>
+        <p>PM tidak langsung mengiyakan. Beliau mengajukan <strong>CR-001</strong> secara formal. Evaluasi tim: +3 minggu, +Rp 28.000.000, risiko: medium (ketergantungan API pihak ketiga). Setelah presentasi ke CCB, perubahan <strong>disetujui</strong> dengan revisi timeline dan budget. Scope baseline diperbarui.</p>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-tag">Tantangan Nyata</div>
+      <div class="tl-head">Bulan ke-3: Permintaan yang Ditolak</div>
+      <div class="tl-body">
+        <p>Seorang dosen meminta tambahan fitur <strong>rekomendasi buku berbasis AI</strong>. Ide menarik, tapi tim mengevaluasi: +8 minggu, +Rp 75.000.000, butuh data training yang belum tersedia.</p>
+        <p>CCB memutuskan <strong>menolak</strong> permintaan ini untuk proyek berjalan. Fitur dimasukkan ke backlog untuk fase 3. Dosen diberi penjelasan transparan dan menerima keputusan tersebut karena proses sudah jelas dan terdokumentasi.</p>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-tag">Proses 5.5 + 5.6</div>
+      <div class="tl-head">Bulan ke-4: Validate & Control</div>
+      <div class="tl-body">
+        <p>Setiap modul diselesaikan dengan siklus: QC internal → demo ke Kepala Perpustakaan → sign-off. Modul Pencarian lulus di sprint ke-4 dengan 2 revisi minor. Modul Peminjaman lulus di sprint ke-7 tanpa revisi.</p>
+        <p><strong>Hasil akhir:</strong> Proyek selesai dalam 4,5 bulan (0,5 bulan molor akibat SSO yang sudah masuk CR dan disetujui). Budget final Rp 378.000.000. Semua stakeholder puas karena ekspektasi dikelola dengan baik sejak awal.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="callout callout-kasus">
+    <div class="callout-label">📋 Pelajaran Kunci dari Studi Kasus Ini</div>
+    <ul>
+      <li>Perubahan scope tidak selalu buruk — yang penting diproses dengan benar (SSO disetujui karena ada nilai bisnis yang jelas)</li>
+      <li>Menolak permintaan perubahan bukan berarti tidak kooperatif — itu adalah manajemen risiko yang profesional</li>
+      <li>Dokumentasi yang baik melindungi semua pihak: tim tidak bisa disalahkan mengerjakan hal di luar kontrak, klien tahu persis apa yang akan diterima</li>
+      <li>Scope Management adalah tentang kepercayaan — stakeholder percaya bahwa tim akan menepati janji scope yang sudah disepakati</li>
+    </ul>
+  </div>
+
+  <hr class="divider">
+
+  <div class="callout callout-analogi">
+    <div class="callout-label">🎬 Analogi Penutup — Sutradara Film</div>
+    <p>Scope Management itu seperti sutradara yang pegang skenario. Skenario sudah disepakati dengan produser (klien). Kalau aktor tiba-tiba mau improvisasi adegan baru, sutradara boleh bilang: <em>"Ide bagus, tapi kita butuh revisi skenario, tambah hari syuting, dan persetujuan produser dulu."</em> Film yang berhasil bukan yang paling banyak improvisasi — tapi yang paling disiplin menjalankan visi yang sudah disepakati, sambil tetap terbuka pada perubahan yang benar-benar bernilai.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     06. KUIS
+     ═══════════════════════════════════════════════ -->
+<section class="section" id="quiz">
+  <p class="section-title">Kuis Pemahaman</p>
+  <p class="section-desc">Uji pemahaman kamu tentang Project Scope Management. Jawab semua soal, lalu lihat skor dan penjelasannya.</p>
+
+  <div class="progress-bar"><div class="progress-fill" id="qprog" style="width:0%"></div></div>
+  <p style="font-size:12px; color:var(--ink3); margin-bottom:1.5rem;" id="q-status">0 dari 7 soal terjawab</p>
+
+  <div class="quiz-wrap" id="quiz-wrap">
+
+    <div class="quiz-item" id="qi-1">
+      <div class="q-num">Soal 1</div>
+      <div class="q-text">Developer menambahkan fitur dark mode ke aplikasi tanpa ada permintaan dari klien, karena menurutnya itu akan membuat aplikasi lebih keren. Ini disebut...</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="pickOpt(this,'qi-1','a')">a. Scope creep</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-1','b')">b. Gold plating</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-1','c')">c. Change request yang valid</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-1','d')">d. Validate Scope</button>
+      </div>
+      <div class="q-fb" id="qfb-1"></div>
+    </div>
+
+    <div class="quiz-item" id="qi-2">
+      <div class="q-num">Soal 2</div>
+      <div class="q-text">Proses PMBOK mana yang menghasilkan Work Breakdown Structure (WBS) sebagai output utama?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="pickOpt(this,'qi-2','a')">a. 5.2 Collect Requirements</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-2','b')">b. 5.3 Define Scope</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-2','c')">c. 5.4 Create WBS</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-2','d')">d. 5.1 Plan Scope Management</button>
+      </div>
+      <div class="q-fb" id="qfb-2"></div>
+    </div>
+
+    <div class="quiz-item" id="qi-3">
+      <div class="q-num">Soal 3</div>
+      <div class="q-text">Apa perbedaan utama antara proses Validate Scope (5.5) dan Control Quality (8.3)?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="pickOpt(this,'qi-3','a')">a. Validate Scope dilakukan lebih awal dari Control Quality</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-3','b')">b. Validate Scope mendapat penerimaan formal dari customer; Control Quality memastikan deliverable sudah sesuai standar teknis</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-3','c')">c. Control Quality dilakukan oleh stakeholder, Validate Scope oleh tim internal</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-3','d')">d. Keduanya adalah proses yang sama, hanya berbeda nama</button>
+      </div>
+      <div class="q-fb" id="qfb-3"></div>
+    </div>
+
+    <div class="quiz-item" id="qi-4">
+      <div class="q-num">Soal 4</div>
+      <div class="q-text">Dokumen yang secara eksplisit menyatakan apa yang TIDAK termasuk dalam proyek disebut...</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="pickOpt(this,'qi-4','a')">a. WBS Dictionary</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-4','b')">b. Requirements Traceability Matrix</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-4','c')">c. Project Scope Statement</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-4','d')">d. Project Charter</button>
+      </div>
+      <div class="q-fb" id="qfb-4"></div>
+    </div>
+
+    <div class="quiz-item" id="qi-5">
+      <div class="q-num">Soal 5</div>
+      <div class="q-text">Apa yang dimaksud dengan "Scope Baseline" dalam PMBOK?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="pickOpt(this,'qi-5','a')">a. Hanya WBS saja</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-5','b')">b. Project Scope Statement + WBS + WBS Dictionary</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-5','c')">c. Requirements Documentation + WBS</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-5','d')">d. Project Charter + Scope Management Plan</button>
+      </div>
+      <div class="q-fb" id="qfb-5"></div>
+    </div>
+
+    <div class="quiz-item" id="qi-6">
+      <div class="q-num">Soal 6</div>
+      <div class="q-text">Tim sedang membangun sistem e-learning. Klien meminta fitur "forum diskusi antar kampus" yang tidak ada di scope awal. PM yang baik akan...</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="pickOpt(this,'qi-6','a')">a. Langsung menolak karena di luar scope</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-6','b')">b. Langsung mengerjakan karena klien adalah raja</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-6','c')">c. Mengajukan change request, mengevaluasi dampak, dan mempresentasikan ke CCB untuk keputusan</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-6','d')">d. Menunda sampai proyek selesai</button>
+      </div>
+      <div class="q-fb" id="qfb-6"></div>
+    </div>
+
+    <div class="quiz-item" id="qi-7">
+      <div class="q-num">Soal 7</div>
+      <div class="q-text">Manakah pernyataan yang SALAH tentang WBS?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="pickOpt(this,'qi-7','a')">a. WBS harus mencakup 100% dari scope proyek</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-7','b')">b. WBS menunjukkan urutan pengerjaan dan jadwal waktu tiap pekerjaan</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-7','c')">c. Work package adalah elemen terbawah dalam WBS</button>
+        <button class="q-opt" onclick="pickOpt(this,'qi-7','d')">d. WBS Dictionary menjelaskan detail setiap work package</button>
+      </div>
+      <div class="q-fb" id="qfb-7"></div>
+    </div>
+
+  </div>
+
+  <div class="score-wrap" id="score-wrap">
+    <div class="score-big" id="score-num">0/7</div>
+    <div class="score-label" id="score-msg"></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Materi ini disusun berdasarkan PMBOK® Guide 5th Edition (PMI, 2013) dan HBR Project Management Handbook. Untuk penggunaan akademik mahasiswa Teknik Informatika.
+</footer>
+
+<script>
+  // ── NAV ──
+  function goTo(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── STEPPER ──
+  function toggleStep(el) {
+    const wasOpen = el.classList.contains('open');
+    document.querySelectorAll('.step-item').forEach(s => s.classList.remove('open'));
+    if (!wasOpen) el.classList.add('open');
+  }
+
+  // ── TABS ──
+  function switchTab(group, id, btn) {
+    document.querySelectorAll('[id^="' + group + '-"]').forEach(p => p.classList.remove('active'));
+    document.getElementById(group + '-' + id).classList.add('active');
+    btn.closest('.tab-header').querySelectorAll('.tab-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // ── SCOPE CREEP SCENARIOS ──
+  const creepAnswers = { sc1: 'scope-creep', sc2: 'gold-plating', sc3: 'normal' };
+  function answerCreep(scId, btnId, answer) {
+    const sc = document.getElementById(scId);
+    if (sc.classList.contains('revealed')) return;
+    const correct = creepAnswers[scId] === answer;
+    event.target.classList.add(correct ? 'correct' : 'wrong');
+    sc.querySelectorAll('.creep-choice').forEach(b => b.disabled = true);
+    sc.classList.add('revealed');
+  }
+
+  // ── QUIZ ──
+  const qAnswers = { 'qi-1': 'b', 'qi-2': 'c', 'qi-3': 'b', 'qi-4': 'c', 'qi-5': 'b', 'qi-6': 'c', 'qi-7': 'b' };
+  const qFeedback = {
+    'qi-1': {
+      ok: '✅ Benar! Gold plating adalah ketika tim menambah fitur sendiri tanpa diminta. Scope creep datang dari stakeholder/klien.',
+      no: '❌ Kurang tepat. Ini adalah gold plating — inisiatif dari tim internal tanpa permintaan klien. Scope creep terjadi ketika stakeholder yang meminta perubahan tanpa proses resmi.'
+    },
+    'qi-2': {
+      ok: '✅ Benar! Proses 5.4 Create WBS adalah yang menghasilkan WBS, WBS Dictionary, dan Scope Baseline.',
+      no: '❌ Kurang tepat. WBS dihasilkan oleh proses 5.4 Create WBS. Define Scope (5.3) menghasilkan Project Scope Statement.'
+    },
+    'qi-3': {
+      ok: '✅ Benar! Control Quality (QC) memastikan deliverable benar secara teknis (dilakukan tim). Validate Scope memastikan customer/stakeholder menerima deliverable tersebut. Urutan yang benar: QC dulu, baru Validate Scope.',
+      no: '❌ Kurang tepat. Control Quality dilakukan tim internal untuk memastikan kualitas teknis. Validate Scope melibatkan customer untuk mendapat penerimaan formal (acceptance/sign-off).'
+    },
+    'qi-4': {
+      ok: '✅ Benar! Project Scope Statement mendefinisikan scope proyek secara detail, termasuk deliverables, asumsi, constraints, dan yang paling penting: eksklusi eksplisit.',
+      no: '❌ Kurang tepat. Project Scope Statement adalah dokumen yang menyatakan apa yang dalam scope dan apa yang di luar scope (eksklusi).'
+    },
+    'qi-5': {
+      ok: '✅ Benar! Scope Baseline terdiri dari tiga komponen: Project Scope Statement + WBS + WBS Dictionary. Ini adalah acuan resmi yang hanya bisa diubah melalui change control.',
+      no: '❌ Kurang tepat. Scope Baseline = Project Scope Statement + WBS + WBS Dictionary. Bukan hanya WBS saja.'
+    },
+    'qi-6': {
+      ok: '✅ Benar! Inilah praktik terbaik. Langsung menolak tanpa evaluasi adalah kurang profesional. Langsung mengerjakan tanpa proses adalah scope creep. Prosedur yang benar adalah melalui change request dan CCB.',
+      no: '❌ Kurang tepat. PM yang baik tidak langsung menolak maupun langsung mengerjakan. Langkah yang tepat adalah mengajukan change request, evaluasi dampak (biaya, waktu, risiko), lalu bawa ke CCB untuk keputusan bersama.'
+    },
+    'qi-7': {
+      ok: '✅ Benar! WBS TIDAK menunjukkan urutan waktu atau jadwal. Itu adalah fungsi dari Gantt chart / project schedule. WBS hanya mendefinisikan "apa" yang harus dikerjakan, bukan "kapan" atau "dalam urutan apa".',
+      no: '❌ Kurang tepat. Pernyataan yang salah adalah bahwa WBS menunjukkan urutan waktu. WBS tidak punya komponen waktu — itu tugas schedule/Gantt chart.'
+    }
+  };
+
+  let qScores = {};
+  function pickOpt(btn, qId, opt) {
+    if (qScores.hasOwnProperty(qId)) return;
+    const opts = btn.closest('.q-opts').querySelectorAll('.q-opt');
+    opts.forEach(b => b.disabled = true);
+    const correct = qAnswers[qId] === opt;
+    btn.classList.add(correct ? 'correct' : 'wrong');
+    if (!correct) {
+      opts.forEach(b => {
+        const btnOpt = b.getAttribute('onclick').match(/'([a-d])'\)$/)?.[1];
+        if (btnOpt === qAnswers[qId]) b.classList.add('correct');
+      });
+    }
+    const fb = document.getElementById('qfb-' + qId.replace('qi-',''));
+    fb.textContent = correct ? qFeedback[qId].ok : qFeedback[qId].no;
+    fb.className = 'q-fb show ' + (correct ? 'ok' : 'no');
+    qScores[qId] = correct ? 1 : 0;
+    updateQuizProgress();
+  }
+
+  function updateQuizProgress() {
+    const total = Object.keys(qAnswers).length;
+    const answered = Object.keys(qScores).length;
+    const correct = Object.values(qScores).reduce((a,b) => a+b, 0);
+    const pct = Math.round(answered / total * 100);
+    document.getElementById('qprog').style.width = pct + '%';
+    document.getElementById('q-status').textContent = answered + ' dari ' + total + ' soal terjawab';
+    if (answered === total) {
+      const sw = document.getElementById('score-wrap');
+      sw.classList.add('show');
+      document.getElementById('score-num').textContent = correct + '/' + total;
+      const msgs = ['Terus belajar, kamu pasti bisa! 💪', 'Lumayan! Ulangi bagian yang salah ya.', 'Bagus! Tinggal sedikit lagi sempurna.', 'Hampir sempurna! Kamu sudah paham konsepnya.', 'Luar biasa! Kamu siap menghadapi ujian Scope Management! 🎉'];
+      document.getElementById('score-msg').textContent = msgs[Math.min(Math.floor(correct / total * 4), 4)];
+      sw.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+</script>
+</body>
+</html>

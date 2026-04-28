@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time & Cost Management — Materi TI Semester 6</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0f13;
+  --bg2: #161720;
+  --bg3: #1e2030;
+  --surface: #252840;
+  --border: rgba(255,255,255,.08);
+  --border2: rgba(255,255,255,.14);
+  --text: #e8e9f2;
+  --text2: #a0a3b8;
+  --text3: #6b6e87;
+  --gold: #f0b429;
+  --gold2: #ffd166;
+  --teal: #06d6a0;
+  --teal-dim: rgba(6,214,160,.12);
+  --red: #ef4444;
+  --red-dim: rgba(239,68,68,.12);
+  --blue: #60a5fa;
+  --blue-dim: rgba(96,165,250,.12);
+  --purple: #a78bfa;
+  --purple-dim: rgba(167,139,250,.12);
+  --orange: #fb923c;
+  --orange-dim: rgba(251,146,60,.12);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #0e0f13 0%, #1a1b2e 50%, #0e1520 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 4rem 2rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse 60% 50% at 70% 50%, rgba(240,180,41,.06) 0%, transparent 60%),
+              radial-gradient(ellipse 40% 60% at 10% 80%, rgba(6,214,160,.04) 0%, transparent 50%);
+}
+.hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold); font-weight: 600; margin-bottom: 1.2rem;
+}
+.hero-tag::before { content:''; width:28px; height:1.5px; background:var(--gold); display:block; }
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  font-weight: 900;
+  line-height: 1.06;
+  letter-spacing: -.02em;
+  margin-bottom: 1.2rem;
+}
+.hero h1 .t1 { color: var(--gold); }
+.hero h1 .t2 { color: var(--teal); }
+.hero-desc { font-size: 15px; color: var(--text2); max-width: 580px; line-height: 1.7; }
+.hero-pills {
+  display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.8rem;
+  padding-top: 1.5rem; border-top: 1px solid var(--border);
+}
+.pill {
+  font-size: 12px; padding: 4px 12px; border-radius: 20px;
+  border: 1px solid var(--border2); color: var(--text2); font-weight: 500;
+}
+
+/* ── NAV ── */
+.nav-wrap {
+  position: sticky; top: 0; z-index: 99;
+  background: rgba(14,15,19,.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner { max-width: 900px; margin: 0 auto; display: flex; overflow-x: auto; scrollbar-width: none; }
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-btn {
+  flex-shrink: 0;
+  background: none; border: none; cursor: pointer;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13px; font-weight: 500; color: var(--text3);
+  padding: .9rem 1.3rem;
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-color .2s;
+  white-space: nowrap;
+}
+.nav-btn:hover { color: var(--text); }
+.nav-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ── MAIN ── */
+.main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem 6rem; }
+.sec { display: none; }
+.sec.active { display: block; }
+
+/* ── TYPE ── */
+.sec-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 700;
+  letter-spacing: -.02em; line-height: 1.15;
+  margin-bottom: .4rem;
+}
+.sec-sub { font-size: 14px; color: var(--text3); margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: .65rem; color: var(--text); }
+p { color: var(--text2); margin-bottom: .9rem; }
+p:last-child { margin-bottom: 0; }
+strong { color: var(--text); font-weight: 600; }
+ul, ol { padding-left: 1.4rem; color: var(--text2); }
+li { margin-bottom: .4rem; }
+
+/* ── CARD ── */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.2rem;
+}
+.card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem; }
+@media(max-width:580px){ .card-row { grid-template-columns: 1fr; } }
+
+/* ── CALLOUTS ── */
+.co {
+  border-radius: 10px; padding: 1.1rem 1.4rem;
+  margin: 1.3rem 0; border-left: 3px solid;
+}
+.co .co-lbl { font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .4rem; }
+.co p, .co li { font-size: 14px; line-height: 1.65; }
+.co ul { padding-left: 1.2rem; }
+.co-gold { background: rgba(240,180,41,.08); border-color: var(--gold); }
+.co-gold .co-lbl { color: var(--gold); }
+.co-gold p, .co-gold li { color: #d4a520; }
+.co-teal { background: var(--teal-dim); border-color: var(--teal); }
+.co-teal .co-lbl { color: var(--teal); }
+.co-teal p, .co-teal li { color: #59c9a5; }
+.co-red { background: var(--red-dim); border-color: var(--red); }
+.co-red .co-lbl { color: var(--red); }
+.co-red p, .co-red li { color: #f87171; }
+.co-blue { background: var(--blue-dim); border-color: var(--blue); }
+.co-blue .co-lbl { color: var(--blue); }
+.co-blue p, .co-blue li { color: #93c5fd; }
+.co-purple { background: var(--purple-dim); border-color: var(--purple); }
+.co-purple .co-lbl { color: var(--purple); }
+.co-purple p, .co-purple li { color: #c4b5fd; }
+.co-orange { background: var(--orange-dim); border-color: var(--orange); }
+.co-orange .co-lbl { color: var(--orange); }
+.co-orange p, .co-orange li { color: #fdba74; }
+
+/* ── PROCESS ACCORDION ── */
+.proc-wrap { margin: 1.5rem 0; }
+.proc { border: 1px solid var(--border); border-radius: 12px; margin-bottom: .7rem; overflow: hidden; }
+.proc-hdr {
+  display: flex; align-items: center; gap: .9rem;
+  padding: 1rem 1.4rem; cursor: pointer;
+  background: var(--bg2); user-select: none;
+  transition: background .15s;
+}
+.proc-hdr:hover { background: var(--bg3); }
+.proc-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px; font-weight: 700;
+  color: var(--bg); min-width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.num-gold { background: var(--gold); }
+.num-teal { background: var(--teal); }
+.proc-title { font-weight: 600; font-size: 15px; flex: 1; color: var(--text); }
+.proc-grp {
+  font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px;
+}
+.grp-plan { background: rgba(240,180,41,.2); color: var(--gold); }
+.grp-mon  { background: rgba(6,214,160,.2); color: var(--teal); }
+.proc-chev { color: var(--text3); transition: transform .25s; font-size: 14px; }
+.proc.open .proc-chev { transform: rotate(180deg); }
+.proc-body {
+  display: none; padding: 0 1.4rem 1.4rem; background: var(--bg2);
+  border-top: 1px solid var(--border);
+}
+.proc.open .proc-body { display: block; padding-top: 1.2rem; }
+.tags { display: flex; flex-wrap: wrap; gap: .4rem; margin: .9rem 0; }
+.tag {
+  font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500;
+  background: var(--bg3); color: var(--text3);
+}
+.tag-i { background: rgba(240,180,41,.12); color: #c8962a; }
+.tag-o { background: rgba(6,214,160,.12); color: #059669; }
+.tag-t { background: rgba(96,165,250,.12); color: #3b82f6; }
+
+/* ── CPM VISUAL ── */
+.cpm-wrap { overflow-x: auto; margin: 1.5rem 0; }
+
+/* ── EVM TABLE ── */
+.evm-table { width:100%; border-collapse:collapse; font-size:13px; margin:1rem 0; }
+.evm-table th { background: var(--bg3); color: var(--text2); padding:.7rem 1rem; text-align:left; font-weight:600; font-size:12px; border-bottom:1px solid var(--border2); }
+.evm-table td { padding:.65rem 1rem; border-bottom:1px solid var(--border); color:var(--text2); vertical-align:top; line-height:1.5; }
+.evm-table tr:last-child td { border-bottom:none; }
+.evm-table code {
+  font-family: 'Courier New', monospace;
+  background: var(--bg3); padding: 2px 7px; border-radius: 5px;
+  color: var(--gold2); font-size: 12px;
+}
+.good { color: var(--teal) !important; font-weight:600; }
+.bad  { color: var(--red) !important; font-weight:600; }
+.neutral { color: var(--text2); font-weight:600; }
+
+/* ── EVM CALCULATOR ── */
+.calc-wrap { background: var(--bg3); border: 1px solid var(--border2); border-radius: 14px; padding: 1.5rem; margin: 1.5rem 0; }
+.calc-title { font-size: 14px; font-weight: 600; color: var(--gold); margin-bottom: 1.2rem; display: flex; align-items: center; gap: .5rem; }
+.calc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; margin-bottom: 1.2rem; }
+@media(max-width:500px){ .calc-grid { grid-template-columns: 1fr; } }
+.calc-field label { display: block; font-size: 11px; color: var(--text3); margin-bottom: .3rem; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
+.calc-field input {
+  width: 100%; background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 8px; padding: .6rem .9rem; color: var(--text);
+  font-family: 'Source Sans 3', sans-serif; font-size: 14px;
+  outline: none; transition: border-color .2s;
+}
+.calc-field input:focus { border-color: var(--gold); }
+.calc-btn {
+  width: 100%; background: var(--gold); color: var(--bg);
+  border: none; border-radius: 8px; padding: .75rem;
+  font-family: 'Playfair Display', serif; font-weight: 700; font-size: 15px;
+  cursor: pointer; transition: background .2s;
+}
+.calc-btn:hover { background: var(--gold2); }
+.calc-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; margin-top: 1rem; }
+@media(max-width:500px){ .calc-results { grid-template-columns: 1fr 1fr; } }
+.res-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: .8rem; text-align: center; }
+.res-label { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+.res-val { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; }
+.val-good { color: var(--teal); }
+.val-bad  { color: var(--red); }
+.val-neutral { color: var(--gold); }
+.res-interp { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+/* ── GANTT VISUAL ── */
+.gantt-wrap { overflow-x: auto; margin: 1.5rem 0; }
+.gantt-wrap svg { min-width: 640px; }
+
+/* ── CASE CARD ── */
+.case { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 2rem; }
+.case-hdr { padding: 1.3rem 1.6rem; display: flex; align-items: center; gap: 1rem; }
+.case-icon { width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+.case-meta { flex: 1; }
+.case-meta h4 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; margin-bottom: 2px; }
+.case-meta span { font-size: 12px; color: var(--text3); }
+.case-badge { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
+.badge-over { background: var(--red-dim); color: var(--red); border: 1px solid var(--red); }
+.badge-ok   { background: var(--teal-dim); color: var(--teal); border: 1px solid var(--teal); }
+.badge-warn { background: var(--orange-dim); color: var(--orange); border: 1px solid var(--orange); }
+.case-body { padding: 1.4rem 1.6rem; background: var(--bg2); border-top: 1px solid var(--border); }
+.case-tl { border-left: 2px solid var(--border2); margin: 1rem 0 1rem 1rem; padding-left: 1.3rem; }
+.tl-item { position: relative; padding-bottom: 1rem; }
+.tl-item:last-child { padding-bottom: 0; }
+.tl-item::before {
+  content:''; position:absolute; left:-1.66rem; top:5px;
+  width:10px; height:10px; border-radius:50%; border:2px solid var(--bg2);
+}
+.tl-ok::before { background: var(--teal); }
+.tl-bad::before { background: var(--red); }
+.tl-mid::before { background: var(--gold); }
+.tl-date { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .05em; }
+.tl-txt  { font-size: 14px; color: var(--text2); line-height: 1.55; }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin: 1rem 0; }
+@media(max-width:480px){ .stat-grid { grid-template-columns: 1fr; } }
+.stat-box { border-radius: 8px; padding: .9rem; border: 1px solid; }
+.stat-box .s-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+.stat-box .s-val { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.4rem; }
+.st-over { background: var(--red-dim); border-color: rgba(239,68,68,.3); }
+.st-over .s-label { color: var(--red); }
+.st-over .s-val   { color: var(--red); }
+.st-ok   { background: var(--teal-dim); border-color: rgba(6,214,160,.3); }
+.st-ok   .s-label { color: var(--teal); }
+.st-ok   .s-val   { color: var(--teal); }
+.st-warn { background: var(--orange-dim); border-color: rgba(251,146,60,.3); }
+.st-warn .s-label { color: var(--orange); }
+.st-warn .s-val   { color: var(--orange); }
+.st-gold { background: rgba(240,180,41,.1); border-color: rgba(240,180,41,.3); }
+.st-gold .s-label { color: var(--gold); }
+.st-gold .s-val   { color: var(--gold); }
+.lesson-list { list-style: none; padding: 0; }
+.lesson-list li { display: flex; gap: .7rem; padding: .45rem 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text2); }
+.lesson-list li:last-child { border-bottom: none; }
+.lesson-list li::before { content: '›'; color: var(--gold); font-weight: 700; flex-shrink: 0; font-size: 16px; margin-top: 1px; }
+
+/* ── PERT CALC ── */
+.pert-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .7rem; margin-bottom: .8rem; }
+@media(max-width:480px){ .pert-row { grid-template-columns: 1fr; } }
+.pert-row label { display: block; font-size: 11px; color: var(--text3); margin-bottom: .3rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 500; }
+.pert-row input {
+  width: 100%; background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 8px; padding: .55rem .9rem; color: var(--text);
+  font-size: 14px; font-family: 'Source Sans 3', sans-serif; outline: none;
+  transition: border-color .2s;
+}
+.pert-row input:focus { border-color: var(--gold); }
+.pert-result { background: var(--bg2); border: 1px solid var(--border2); border-radius: 10px; padding: 1rem 1.2rem; margin-top: .8rem; display: none; }
+.pert-result.show { display: block; }
+.pert-result .pr-label { font-size: 12px; color: var(--text3); margin-bottom: .3rem; }
+.pert-result .pr-val { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); }
+
+/* ── QUIZ ── */
+.q-item { margin-bottom: 2rem; }
+.q-text { font-weight: 500; color: var(--text); font-size: 15px; margin-bottom: .8rem; line-height: 1.55; }
+.q-text span { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 17px; margin-right: .3rem; }
+.q-opts { display: flex; flex-direction: column; gap: .45rem; }
+.q-opt {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 8px; padding: .75rem 1rem; font-size: 14px; color: var(--text2);
+  cursor: pointer; text-align: left;
+  font-family: 'Source Sans 3', sans-serif;
+  transition: border-color .15s, background .15s;
+}
+.q-opt:hover:not(.locked) { border-color: var(--gold); background: rgba(240,180,41,.06); }
+.q-opt.correct { background: var(--teal-dim); border-color: var(--teal); color: var(--teal); }
+.q-opt.wrong   { background: var(--red-dim);  border-color: var(--red);  color: var(--red); }
+.q-fb { font-size: 13px; padding: .7rem 1rem; border-radius: 8px; margin-top: .7rem; display: none; line-height: 1.6; }
+.q-fb.show { display: block; }
+.fb-ok  { background: var(--teal-dim); color: #59c9a5; }
+.fb-bad { background: var(--red-dim);  color: #f87171; }
+.score-box { background: var(--bg3); border: 1px solid var(--border2); border-radius: 14px; padding: 2rem; text-align: center; margin-bottom: 2rem; display: none; }
+.score-box.show { display: block; }
+.score-num { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; color: var(--gold); line-height: 1; }
+.score-sub { font-size: 14px; color: var(--text3); margin-top: .4rem; }
+
+/* ── COMPARISON TABLE ── */
+.cmp-table { width:100%; border-collapse:collapse; font-size:13.5px; margin:1rem 0; }
+.cmp-table th { background:var(--bg3); color:var(--text2); padding:.75rem 1rem; text-align:left; font-weight:600; font-size:12px; border-bottom:1px solid var(--border2); }
+.cmp-table td { padding:.7rem 1rem; border-bottom:1px solid var(--border); color:var(--text2); vertical-align:top; line-height:1.55; }
+.cmp-table tr:last-child td { border-bottom:none; }
+
+/* ── ANIMATE ── */
+@keyframes fu { from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)} }
+.sec.active>* { animation: fu .3s ease both; }
+.sec.active>*:nth-child(2){animation-delay:.05s}
+.sec.active>*:nth-child(3){animation-delay:.10s}
+.sec.active>*:nth-child(4){animation-delay:.15s}
+
+/* ── FOOTER ── */
+.footer { text-align:center; font-size:12px; color:var(--text3); padding:2rem; border-top:1px solid var(--border); margin-top:3rem; }
+.footer strong { color:var(--text2); }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--border); margin: 2rem 0; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Manajemen Proyek TI · Semester 6</div>
+    <h1><span class="t1">Time</span> &<br><span class="t2">Cost</span> Management</h1>
+    <p class="hero-desc">Materi interaktif lengkap: 7 proses Time Management, 4 proses Cost Management, Critical Path Method, PERT, Earned Value Management, kalkulator interaktif, studi kasus nyata, dan kuis — bersumber dari PMBOK 5th Ed. & HBR Handbook.</p>
+    <div class="hero-pills">
+      <span class="pill">PMBOK 5th Ed.</span>
+      <span class="pill">HBR Handbook</span>
+      <span class="pill">CPM / Critical Path</span>
+      <span class="pill">PERT 3-Point</span>
+      <span class="pill">Earned Value Management</span>
+      <span class="pill">3 Studi Kasus Nyata</span>
+      <span class="pill">Kalkulator EVM Interaktif</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="showSec('pengantar',this)">Pengantar</button>
+    <button class="nav-btn" onclick="showSec('time',this)">Time Management</button>
+    <button class="nav-btn" onclick="showSec('cpm',this)">CPM & PERT</button>
+    <button class="nav-btn" onclick="showSec('cost',this)">Cost Management</button>
+    <button class="nav-btn" onclick="showSec('evm',this)">EVM & Kalkulator</button>
+    <button class="nav-btn" onclick="showSec('kasus',this)">Studi Kasus Nyata</button>
+    <button class="nav-btn" onclick="showSec('quiz',this)">Kuis</button>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ══════════════════ PENGANTAR ══════════════════ -->
+<div class="sec active" id="sec-pengantar">
+  <div class="sec-title">Mengapa Time & Cost Sering Gagal?</div>
+  <p class="sec-sub">Dua dimensi paling kritikal dalam Iron Triangle yang hampir selalu meleset jika tidak dikelola dengan benar</p>
+
+  <div class="card">
+    <h3>The Iron Triangle — Tritunggal Kendala Proyek</h3>
+    <p>Setiap proyek dikendalikan tiga dimensi yang saling mempengaruhi: <strong>Scope</strong>, <strong>Time</strong>, dan <strong>Cost</strong>. PMBOK menyebutnya <em>triple constraint</em>. Jika salah satu berubah, yang lain pasti terdampak.</p>
+    <p>Contoh sederhana: Jika deadline dipercepat 1 bulan (time ↓), maka harus tambah sumber daya (cost ↑) atau kurangi fitur (scope ↓). Tidak ada jalan pintas tanpa trade-off.</p>
+  </div>
+
+  <div class="card-row">
+    <div class="card" style="margin:0;border-color:rgba(240,180,41,.3)">
+      <h3 style="color:var(--gold)">⏱ Time Management</h3>
+      <p style="font-size:14px">Proses memastikan proyek selesai tepat waktu. Terdiri dari 7 proses PMBOK (6.1–6.7) mulai dari Plan Schedule hingga Control Schedule.</p>
+      <p style="font-size:13px;color:var(--text3);margin-top:.5rem">Tools utama: Activity List, Network Diagram, Critical Path Method (CPM), Gantt Chart</p>
+    </div>
+    <div class="card" style="margin:0;border-color:rgba(6,214,160,.3)">
+      <h3 style="color:var(--teal)">💰 Cost Management</h3>
+      <p style="font-size:14px">Proses memastikan proyek selesai dalam anggaran yang disetujui. Terdiri dari 4 proses PMBOK (7.1–7.4) mulai dari Plan Cost hingga Control Costs.</p>
+      <p style="font-size:13px;color:var(--text3);margin-top:.5rem">Tools utama: Cost Estimates, Cost Baseline, Earned Value Management (EVM)</p>
+    </div>
+  </div>
+
+  <div class="co co-gold">
+    <div class="co-lbl">🎯 Fakta Mengejutkan — Standish Group CHAOS Report</div>
+    <p>Dari ribuan proyek software yang dianalisis: hanya <strong>16.2%</strong> yang selesai tepat waktu dan sesuai budget. Sekitar <strong>31.1%</strong> dibatalkan sebelum selesai. Sisanya molor atau melampaui budget. Artinya, Time dan Cost Management yang buruk adalah <em>standar</em>, bukan pengecualian.</p>
+  </div>
+
+  <div class="co co-teal">
+    <div class="co-lbl">🧠 Analogi — Memasak Nasi Goreng di Warung</div>
+    <p><strong>Time:</strong> Kamu janji ke pelanggan nasi goreng siap dalam 10 menit. Kamu harus tahu urutan memasak (sequence activities), berapa lama tiap langkah (estimate duration), dan mana yang kritis (critical path: goreng nasi tidak bisa dilakukan sebelum nasi matang).<br><br>
+    <strong>Cost:</strong> Kamu punya modal Rp 50.000 untuk 5 porsi. Kamu harus estimasi biaya bahan (estimate costs), alokasikan ke setiap porsi (determine budget), dan pastikan tidak boros di tengah jalan (control costs).</p>
+  </div>
+
+  <div class="card">
+    <h3>Hubungan Time dan Cost — Tidak Bisa Dipisahkan</h3>
+    <p>PMBOK menyatakan bahwa Estimate Activity Resources (6.4) dikoordinasikan erat dengan Estimate Costs (7.2). Durasi suatu aktivitas mempengaruhi biayanya — semakin lama aktivitas berjalan dengan sumber daya per-hari, semakin besar biayanya. Ini adalah alasan mengapa Time dan Cost selalu dibahas bersama.</p>
+    <div class="co co-blue" style="margin-top:1rem">
+      <div class="co-lbl">Rumus sederhana</div>
+      <p><strong>Cost = Resource Rate × Duration</strong><br>Jika developer digaji Rp 500.000/hari dan task membutuhkan 10 hari, maka cost = Rp 5.000.000. Itulah mengapa perkiraan durasi yang buruk langsung merusak estimasi biaya.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TIME MANAGEMENT ══════════════════ -->
+<div class="sec" id="sec-time">
+  <div class="sec-title">7 Proses Time Management</div>
+  <p class="sec-sub">PMBOK Chapter 6 — dari merencanakan jadwal hingga mengontrolnya</p>
+
+  <div class="co co-blue">
+    <div class="co-lbl">🗺️ Alur 7 Proses</div>
+    <p>6.1 Plan → 6.2 Define Activities → 6.3 Sequence → 6.4 Estimate Resources → 6.5 Estimate Durations → 6.6 Develop Schedule → 6.7 Control Schedule</p>
+  </div>
+
+  <div class="proc-wrap">
+
+    <!-- 6.1 -->
+    <div class="proc" id="t1">
+      <div class="proc-hdr" onclick="tog('t1')">
+        <div class="proc-num num-gold">6.1</div>
+        <div class="proc-title">Plan Schedule Management</div>
+        <span class="proc-grp grp-plan">Planning</span>
+        <span class="proc-chev">▾</span>
+      </div>
+      <div class="proc-body">
+        <p><strong>Tujuan:</strong> Membuat Schedule Management Plan — dokumen yang mendefinisikan bagaimana jadwal akan dikembangkan, dipantau, dan dikontrol.</p>
+        <div class="tags">
+          <span class="tag tag-i">Input: Project Charter</span>
+          <span class="tag tag-i">Input: Project Mgmt Plan</span>
+          <span class="tag tag-t">Tool: Expert Judgment</span>
+          <span class="tag tag-t">Tool: Analytical Techniques</span>
+          <span class="tag tag-o">Output: Schedule Mgmt Plan</span>
+        </div>
+        <div class="co co-gold" style="margin:.8rem 0">
+          <div class="co-lbl">Analogi</div>
+          <p>Sebelum trip Jakarta-Bali, kamu buat itinerary: naik apa, berangkat jam berapa, siapa yang booking, apa yang dilakukan jika ketinggalan pesawat. Itu adalah "schedule management plan" perjalananmu.</p>
+        </div>
+        <p><strong>Isi Schedule Management Plan:</strong> Level akurasi estimasi, satuan waktu (jam/hari/minggu), control threshold variance, aturan performance measurement (EVM), format laporan jadwal.</p>
+      </div>
+    </div>
+
+    <!-- 6.2 -->
+    <div class="proc" id="t2">
+      <div class="proc-hdr" onclick="tog('t2')">
+        <div class="proc-num num-gold">6.2</div>
+        <div class="proc-title">Define Activities</div>
+        <span class="proc-grp grp-plan">Planning</span>
+        <span class="proc-chev">▾</span>
+      </div>
+      <div class="proc-body">
+        <p><strong>Tujuan:</strong> Mengidentifikasi dan mendokumentasikan tindakan spesifik yang harus dilakukan untuk menghasilkan deliverables proyek. WBS (work packages) dipecah menjadi aktivitas yang bisa dijadwalkan.</p>
+        <div class="tags">
+          <span class="tag tag-i">Input: Scope Baseline (WBS)</span>
+          <span class="tag tag-t">Tool: Decomposition</span>
+          <span class="tag tag-t">Tool: Rolling Wave Planning</span>
+          <span class="tag tag-o">Output: Activity List</span>
+          <span class="tag tag-o">Output: Milestone List</span>
+        </div>
+        <div class="co co-gold" style="margin:.8rem 0">
+          <div class="co-lbl">Analogi — Resep vs Langkah Masak</div>
+          <p>WBS bilang "buat kue" (work package). Define Activities memecahnya jadi langkah konkret: (1) Siapkan bahan, (2) Campur tepung+gula, (3) Tambahkan telur, (4) Panggang 180°C 30 menit, (5) Dinginkan. Setiap langkah bisa diestimasi durasinya dan ditugaskan ke orang spesifik.</p>
+        </div>
+        <p><strong>Contoh TI:</strong> Work Package "Buat Modul Login" dipecah menjadi: (1) Design UI login page, (2) Buat endpoint API auth, (3) Implementasi JWT token, (4) Unit testing auth, (5) Integration testing. Masing-masing bisa diestimasi dan dijadwalkan.</p>
+        <p><strong>Rolling Wave Planning:</strong> Aktivitas dekat-dekat direncanakan detail, yang jauh direncanakan di level tinggi. Cocok untuk proyek Agile yang penuh ketidakpastian.</p>
+      </div>
+    </div>
+
+    <!-- 6.3 -->
+    <div class="proc" id="t3">
+      <div class="proc-hdr" onclick="tog('t3')">
+        <div class="proc-num num-gold">6.3</div>
+        <div class="proc-title">Sequence Activities</div>
+        <span class="proc-grp grp-plan">Planning</span>
+        <span class="proc-chev">▾</span>
+      </div>
+      <div class="proc-body">
+        <p><strong>Tujuan:</strong> Mengidentifikasi dan mendokumentasikan ketergantungan logis antar aktivitas untuk mendapat urutan kerja yang paling efisien.</p>
+        <div class="tags">
+          <span class="tag tag-t">Tool: Precedence Diagramming Method (PDM)</span>
+          <span class="tag tag-t">Tool: Dependency Determination</span>
+          <span class="tag tag-t">Tool: Leads & Lags</span>
+          <span class="tag tag-o">Output: Network Diagram</span>
+        </div>
+        <p><strong>4 Tipe Dependency (PDM):</strong></p>
+        <table class="cmp-table" style="margin:.8rem 0">
+          <tr><th>Tipe</th><th>Arti</th><th>Contoh TI</th></tr>
+          <tr><td><strong style="color:var(--gold)">FS</strong> Finish-to-Start</td><td>B tidak bisa mulai sebelum A selesai</td><td>Testing tidak bisa dimulai sebelum coding selesai</td></tr>
+          <tr><td><strong style="color:var(--teal)">FF</strong> Finish-to-Finish</td><td>B tidak bisa selesai sebelum A selesai</td><td>Dokumentasi API tidak bisa selesai sebelum coding API selesai</td></tr>
+          <tr><td><strong style="color:var(--blue)">SS</strong> Start-to-Start</td><td>B tidak bisa mulai sebelum A mulai</td><td>Menulis unit test bisa mulai bersamaan dengan coding dimulai</td></tr>
+          <tr><td><strong style="color:var(--purple)">SF</strong> Start-to-Finish</td><td>B tidak bisa selesai sebelum A mulai</td><td>Sangat jarang — contoh: shift jaga baru mulai sebelum shift lama selesai</td></tr>
+        </table>
+        <div class="co co-teal" style="margin:.8rem 0">
+          <div class="co-lbl">Lead vs Lag</div>
+          <p><strong>Lead (negatif lag):</strong> Aktivitas B bisa dimulai sebelum A selesai (overlap). Contoh: Testing UI bisa dimulai 2 hari sebelum semua coding selesai.<br>
+          <strong>Lag:</strong> Aktivitas B harus menunggu setelah A selesai. Contoh: Deploy ke production harus menunggu 1 hari setelah UAT sign-off (untuk persiapan).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6.4 -->
+    <div class="proc" id="t4">
+      <div class="proc-hdr" onclick="tog('t4')">
+        <div class="proc-num num-gold">6.4</div>
+        <div class="proc-title">Estimate Activity Resources</div>
+        <span class="proc-grp grp-plan">Planning</span>
+        <span class="proc-chev">▾</span>
+      </div>
+      <div class="proc-body">
+        <p><strong>Tujuan:</strong> Estimasi jenis dan jumlah material, SDM, peralatan, atau supply yang dibutuhkan untuk melaksanakan setiap aktivitas. Proses ini berkoordinasi erat dengan Estimate Costs (7.2).</p>
+        <div class="tags">
+          <span class="tag tag-t">Tool: Alternative Analysis</span>
+          <span class="tag tag-t">Tool: Bottom-up Estimating</span>
+          <span class="tag tag-t">Tool: Published Estimating Data</span>
+          <span class="tag tag-o">Output: Activity Resource Requirements</span>
+          <span class="tag tag-o">Output: Resource Breakdown Structure</span>
+        </div>
+        <div class="co co-gold" style="margin:.8rem 0">
+          <div class="co-lbl">Analogi — Kontraktor Bangunan</div>
+          <p>Sebelum estimasi biaya, kontraktor harus tahu dulu: berapa banyak semen yang dibutuhkan? Berapa tukang batu? Apakah perlu alat berat? Baru setelah resource teridentifikasi, biaya bisa dihitung. Sama dengan proyek software — harus tahu berapa developer, server, tools berbayar yang dibutuhkan.</p>
+        </div>
+        <p><strong>Contoh TI:</strong> Aktivitas "Deploy aplikasi ke cloud" membutuhkan: 1 DevOps engineer (senior, 3 hari), 1 server AWS EC2 t3.medium (selamanya), 1 domain SSL certificate (tahunan), dan 2 jam waktu QA untuk smoke test post-deploy.</p>
+      </div>
+    </div>
+
+    <!-- 6.5 -->
+    <div class="proc" id="t5">
+      <div class="proc-hdr" onclick="tog('t5')">
+        <div class="proc-num num-gold">6.5</div>
+        <div class="proc-title">Estimate Activity Durations</div>
+        <span class="proc-grp grp-plan">Planning</span>
+        <span class="proc-chev">▾</span>
+      </div>
+      <div class="proc-body">
+        <p><strong>Tujuan:</strong> Estimasi jumlah work period (hari/jam kerja) yang dibutuhkan untuk menyelesaikan setiap aktivitas dengan resource yang sudah diidentifikasi.</p>
+        <div class="tags">
+          <span class="tag tag-t">Tool: Analogous Estimating</span>
+          <span class="tag tag-t">Tool: Parametric Estimating</span>
+          <span class="tag tag-t">Tool: Three-Point Estimating (PERT)</span>
+          <span class="tag tag-t">Tool: Reserve Analysis</span>
+          <span class="tag tag-o">Output: Activity Duration Estimates</span>
+        </div>
+        <table class="cmp-table" style="margin:.8rem 0">
+          <tr><th>Teknik</th><th>Cara Kerja</th><th>Kapan Digunakan</th><th>Akurasi</th></tr>
+          <tr><td><strong>Analogous</strong></td><td>Berdasarkan durasi proyek serupa sebelumnya</td><td>Info terbatas, awal proyek</td><td>Rendah</td></tr>
+          <tr><td><strong>Parametric</strong></td><td>Rumus statistik × parameter (mis: 5 jam/halaman × 20 halaman = 100 jam)</td><td>Ada data historis terukur</td><td>Sedang–Tinggi</td></tr>
+          <tr><td><strong>Three-Point (PERT)</strong></td><td>tE = (O + 4M + P) / 6</td><td>Ketidakpastian tinggi</td><td>Tinggi</td></tr>
+          <tr><td><strong>Bottom-up</strong></td><td>Estimasi tiap task kecil, lalu dijumlah</td><td>Detail sudah jelas</td><td>Paling tinggi</td></tr>
+        </table>
+        <div class="co co-purple" style="margin:.8rem 0">
+          <div class="co-lbl">⚡ PERT Formula — Three-Point Estimating</div>
+          <p><strong>tE = (Optimistic + 4 × Most Likely + Pessimistic) / 6</strong><br>
+          Contoh: Aktivitas "Integrasi Payment Gateway". O=3 hari, M=5 hari, P=12 hari (kalau ada masalah API).<br>
+          tE = (3 + 4×5 + 12) / 6 = (3+20+12)/6 = 35/6 = <strong>5.83 hari ≈ 6 hari</strong><br>
+          Coba kalkulator PERT di tab CPM & PERT!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6.6 -->
+    <div class="proc" id="t6">
+      <div class="proc-hdr" onclick="tog('t6')">
+        <div class="proc-num num-gold">6.6</div>
+        <div class="proc-title">Develop Schedule</div>
+        <span class="proc-grp grp-plan">Planning</span>
+        <span class="proc-chev">▾</span>
+      </div>
+      <div class="proc-body">
+        <p><strong>Tujuan:</strong> Menganalisis urutan aktivitas, durasi, kebutuhan resource, dan constraint jadwal untuk membuat schedule model proyek yang menghasilkan <strong>Schedule Baseline</strong>.</p>
+        <div class="tags">
+          <span class="tag tag-t">Tool: Critical Path Method (CPM)</span>
+          <span class="tag tag-t">Tool: Critical Chain Method</span>
+          <span class="tag tag-t">Tool: Schedule Compression</span>
+          <span class="tag tag-o">Output: Schedule Baseline</span>
+          <span class="tag tag-o">Output: Project Schedule (Gantt Chart)</span>
+        </div>
+        <p><strong>Schedule Compression — dua teknik utama:</strong></p>
+        <div class="card-row" style="margin:.8rem 0">
+          <div class="card" style="margin:0;border-color:rgba(240,180,41,.3)">
+            <h3 style="font-size:.95rem;color:var(--gold)">Fast Tracking</h3>
+            <p style="font-size:14px">Melakukan aktivitas secara paralel yang awalnya berurutan. <strong>Tidak ada biaya tambahan</strong> tapi risiko lebih tinggi.</p>
+            <p style="font-size:13px;color:var(--text3)">Contoh: Mulai testing modul A sebelum modul B selesai dikoding.</p>
+          </div>
+          <div class="card" style="margin:0;border-color:rgba(6,214,160,.3)">
+            <h3 style="font-size:.95rem;color:var(--teal)">Crashing</h3>
+            <p style="font-size:14px">Tambah resource ke critical path activities. <strong>Biaya bertambah</strong> tapi jadwal bisa lebih pendek.</p>
+            <p style="font-size:13px;color:var(--text3)">Contoh: Tambah 2 developer lagi ke task yang kritis agar selesai 1 minggu lebih cepat.</p>
+          </div>
+        </div>
+        <p>Lihat tab <strong>CPM & PERT</strong> untuk visualisasi dan kalkulator Critical Path interaktif!</p>
+      </div>
+    </div>
+
+    <!-- 6.7 -->
+    <div class="proc" id="t7">
+      <div class="proc-hdr" onclick="tog('t7')">
+        <div class="proc-num num-teal">6.7</div>
+        <div class="proc-title">Control Schedule</div>
+        <span class="proc-grp grp-mon">Monitoring & Controlling</span>
+        <span class="proc-chev">▾</span>
+      </div>
+      <div class="proc-body">
+        <p><strong>Tujuan:</strong> Memantau status aktivitas proyek untuk update progress dan mengelola perubahan terhadap schedule baseline.</p>
+        <div class="tags">
+          <span class="tag tag-t">Tool: Performance Reviews</span>
+          <span class="tag tag-t">Tool: Variance Analysis (SV, SPI)</span>
+          <span class="tag tag-t">Tool: Schedule Compression</span>
+          <span class="tag tag-o">Output: Schedule Forecasts</span>
+          <span class="tag tag-o">Output: Change Requests</span>
+        </div>
+        <div class="co co-red" style="margin:.8rem 0">
+          <div class="co-lbl">⚠️ Schedule Variance (SV) — Tanda Bahaya</div>
+          <p><strong>SV = Earned Value (EV) – Planned Value (PV)</strong><br>
+          SV negatif = proyek di belakang jadwal. Contoh: Di minggu ke-4 seharusnya 40% pekerjaan selesai (PV = Rp 40jt), tapi baru 30% yang selesai (EV = Rp 30jt). SV = 30 – 40 = <strong>–Rp 10jt</strong> → terlambat!<br>
+          Ini adalah sinyal untuk ambil corrective action: lembur, tambah resource, atau negosiasi scope.</p>
+        </div>
+        <p><strong>Contoh TI:</strong> Sprint review menunjukkan story points yang selesai hanya 60% dari target. PM menganalisis: apa penyebabnya? (bug tak terduga, key developer sakit, task underestimated). Kemudian pilih solusi: fast-track aktivitas berikutnya atau minta perpanjangan deadline dengan justifikasi yang solid.</p>
+      </div>
+    </div>
+
+  </div><!-- /proc-wrap time -->
+</div>
+
+<!-- ══════════════════ CPM & PERT ══════════════════ -->
+<div class="sec" id="sec-cpm">
+  <div class="sec-title">Critical Path Method & PERT</div>
+  <p class="sec-sub">Dua teknik paling penting dalam penjadwalan proyek</p>
+
+  <div class="card">
+    <h3>Critical Path Method (CPM)</h3>
+    <p>PMBOK mendefinisikan CPM sebagai <em>"a method used to estimate the minimum project duration and determine the amount of scheduling flexibility on the logical network paths within the schedule model."</em></p>
+    <p><strong>Critical Path</strong> adalah jalur terpanjang dari awal ke akhir proyek. Aktivitas di jalur ini disebut <strong>critical activities</strong> — keterlambatan di sini langsung memperpanjang durasi proyek. Total Float = 0.</p>
+    <p><strong>Float (slack)</strong> adalah waktu fleksibel suatu aktivitas bisa ditunda tanpa memengaruhi jadwal proyek keseluruhan.</p>
+  </div>
+
+  <div class="co co-gold">
+    <div class="co-lbl">🎯 Analogi — Bandara & Penerbangan Connecting</div>
+    <p>Bayangkan perjalanan Jakarta → Frankfurt dengan transit di Dubai. Ada dua pilihan rute: (A) Jakarta→Dubai 9 jam + Dubai→Frankfurt 7 jam = 16 jam. (B) Jakarta→Doha 8 jam + Doha→Frankfurt 6 jam = 14 jam. Rute A adalah critical path — jika pesawat Jakarta→Dubai delay, pasti ketinggalan connecting flight. Rute B memiliki float 2 jam.</p>
+  </div>
+
+  <h3 style="margin-top:1.5rem">Contoh CPM — Proyek Aplikasi Mobile Banking</h3>
+  <div class="cpm-wrap">
+    <svg viewBox="0 0 760 320" fill="none" xmlns="http://www.w3.org/2000/svg" style="min-width:640px;width:100%;background:var(--bg2);border-radius:12px;border:1px solid var(--border)">
+      <!-- NODES -->
+      <!-- Start -->
+      <circle cx="55" cy="160" r="30" fill="#1e2030" stroke="#f0b429" stroke-width="2"/>
+      <text x="55" y="156" text-anchor="middle" font-family="Playfair Display,serif" font-weight="700" font-size="11" fill="#f0b429">START</text>
+      <text x="55" y="170" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#6b6e87">Day 0</text>
+
+      <!-- A: Analisis (3d) -->
+      <rect x="115" y="60" width="90" height="50" rx="8" fill="#1e2030" stroke="#f0b429" stroke-width="2"/>
+      <text x="160" y="81" text-anchor="middle" font-family="Playfair Display,serif" font-weight="700" font-size="11" fill="#f0b429">A: Analisis</text>
+      <text x="160" y="97" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#a0a3b8">3 hari | Float: 0</text>
+
+      <!-- B: Desain UI (5d) — critical -->
+      <rect x="115" y="135" width="90" height="50" rx="8" fill="#1e2030" stroke="#f0b429" stroke-width="2"/>
+      <text x="160" y="156" text-anchor="middle" font-family="Playfair Display,serif" font-weight="700" font-size="11" fill="#f0b429">B: Desain UI</text>
+      <text x="160" y="172" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#a0a3b8">5 hari | Float: 0</text>
+
+      <!-- C: DB Schema (2d) -->
+      <rect x="115" y="210" width="90" height="50" rx="8" fill="#1e2030" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <text x="160" y="231" text-anchor="middle" font-family="Playfair Display,serif" font-weight="700" font-size="11" fill="#a78bfa">C: DB Schema</text>
+      <text x="160" y="247" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#a0a3b8">2 hari | Float: 6</text>
+
+      <!-- D: Backend API (8d) — critical -->
+      <rect x="285" y="60" width="100" height="50" rx="8" fill="#1e2030" stroke="#f0b429" stroke-width="2"/>
+      <text x="335" y="81" text-anchor="middle" font-family="Playfair Display,serif" font-weight="700" font-size="11" fill="#f0b429">D: Backend API</text>
+      <text x="335" y="97" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#a0a3b8">8 hari | Float: 0</text>
+
+      <!-- E: Frontend Dev (10d) — critical -->
+      <rect x="285" y="135" width="100" height="50" rx="8" fill="#1e2030" stroke="#f0b429" stroke-width="2"/>
+      <text x="335" y="151" text-anchor="middle" font-family="Playfair Display,serif" font-weight="700" font-size="11" fill="#f0b429">E: Frontend</text>
+      <text x="335" y="165" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#a0a3b8">10 hari</text>
+      <text x="335" y="178" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#a0a3b8">Float: 0 ⚡</text>
+
+      <!-- F: Integrasi (4d) — critical -->
+      <rect x="460" y="97" width="100" height="50" rx="8" fill="#1e2030" stroke="#f0b429" stroke-width="2"/>
+      <text x="510" y="118" text-anchor="middle" font-family="Playfair Display,serif" font-weight="700" font-size="11" fill="#f0b429">F: Integrasi</text>
+      <text x="510" y="134" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#a0a3b8">4 hari | Float: 0</text>
+
+      <!-- G: Testing (6d) — critical -->
+      <rect x="630" y="97" width="90" height="50" rx="8" fill="#1e2030" stroke="#f0b429" stroke-width="2"/>
+      <text x="675" y="118" text-anchor="middle" font-family="Playfair Display,serif" font-weight="700" font-size="11" fill="#f0b429">G: Testing</text>
+      <text x="675" y="134" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#a0a3b8">6 hari | Float: 0</text>
+
+      <!-- END -->
+      <circle cx="695" cy="220" r="26" fill="#1e2030" stroke="#06d6a0" stroke-width="2"/>
+      <text x="695" y="217" text-anchor="middle" font-family="Playfair Display,serif" font-weight="700" font-size="11" fill="#06d6a0">END</text>
+      <text x="695" y="231" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#6b6e87">Day 32</text>
+
+      <!-- ARROWS — critical path in gold -->
+      <!-- Start → A -->
+      <line x1="84" y1="145" x2="115" y2="100" stroke="#f0b429" stroke-width="2" marker-end="url(#arr-g)"/>
+      <!-- Start → B -->
+      <line x1="84" y1="162" x2="115" y2="162" stroke="#f0b429" stroke-width="2" marker-end="url(#arr-g)"/>
+      <!-- Start → C -->
+      <line x1="84" y1="175" x2="115" y2="225" stroke="#6b6e87" stroke-width="1.5" marker-end="url(#arr-g)"/>
+      <!-- A → D -->
+      <line x1="205" y1="88" x2="285" y2="88" stroke="#f0b429" stroke-width="2" marker-end="url(#arr-g)"/>
+      <!-- B → E -->
+      <line x1="205" y1="162" x2="285" y2="162" stroke="#f0b429" stroke-width="2" marker-end="url(#arr-g)"/>
+      <!-- C → E -->
+      <line x1="205" y1="235" x2="285" y2="180" stroke="#6b6e87" stroke-width="1.5" marker-end="url(#arr-g)"/>
+      <!-- D → F -->
+      <line x1="385" y1="88" x2="460" y2="115" stroke="#f0b429" stroke-width="2" marker-end="url(#arr-g)"/>
+      <!-- E → F -->
+      <line x1="385" y1="165" x2="460" y2="130" stroke="#f0b429" stroke-width="2" marker-end="url(#arr-g)"/>
+      <!-- F → G -->
+      <line x1="560" y1="122" x2="630" y2="122" stroke="#f0b429" stroke-width="2" marker-end="url(#arr-g)"/>
+      <!-- G → End -->
+      <line x1="675" y1="147" x2="695" y2="194" stroke="#f0b429" stroke-width="2" marker-end="url(#arr-t)"/>
+
+      <!-- defs -->
+      <defs>
+        <marker id="arr-g" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#f0b429"/>
+        </marker>
+        <marker id="arr-t" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#06d6a0"/>
+        </marker>
+      </defs>
+
+      <!-- Legend -->
+      <rect x="24" y="272" width="14" height="14" rx="3" fill="none" stroke="#f0b429" stroke-width="2"/>
+      <text x="44" y="283" font-family="Source Sans 3,sans-serif" font-size="11" fill="#a0a3b8">Critical Path (Float = 0)</text>
+      <rect x="200" y="272" width="14" height="14" rx="3" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <text x="220" y="283" font-family="Source Sans 3,sans-serif" font-size="11" fill="#a0a3b8">Non-Critical (ada float)</text>
+
+      <!-- Critical path label -->
+      <text x="380" y="300" text-anchor="middle" font-family="Playfair Display,serif" font-weight="700" font-size="13" fill="#f0b429">Critical Path: Start → A → D → F → G → End = 3+8+4+6 = 21 hari (via B→E: 5+10+4+6=25 hari ← paling panjang)</text>
+    </svg>
+  </div>
+
+  <div class="co co-gold">
+    <div class="co-lbl">📊 Membaca Diagram</div>
+    <p>Jalur <strong>B→E</strong> (Desain UI 5 hari + Frontend 10 hari) adalah critical path karena lebih panjang dari jalur A→D (3+8=11 hari). Total durasi minimum proyek = <strong>5+10+4+6 = 25 hari</strong> (B→E→F→G). Aktivitas C (DB Schema) memiliki float 6 hari — bisa ditunda tanpa masalah.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>Kalkulator PERT — Three-Point Estimating</h3>
+  <p>Masukkan tiga estimasi durasi untuk suatu aktivitas. Formula PERT Beta Distribution: <strong>tE = (O + 4M + P) / 6</strong></p>
+
+  <div class="calc-wrap">
+    <div class="calc-title">⏱ PERT Duration Calculator</div>
+    <div class="pert-row">
+      <div>
+        <label>Optimistic (O) — hari</label>
+        <input type="number" id="pert-o" placeholder="Best case" min="0" step="0.5">
+      </div>
+      <div>
+        <label>Most Likely (M) — hari</label>
+        <input type="number" id="pert-m" placeholder="Realistic" min="0" step="0.5">
+      </div>
+      <div>
+        <label>Pessimistic (P) — hari</label>
+        <input type="number" id="pert-p" placeholder="Worst case" min="0" step="0.5">
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calcPert()" style="margin-bottom:.5rem">Hitung PERT →</button>
+    <div class="pert-result" id="pert-res">
+      <div class="pr-label">Expected Duration (Beta Distribution: (O + 4M + P) / 6)</div>
+      <div class="pr-val" id="pert-val">—</div>
+      <div class="pr-label" style="margin-top:.5rem">Standard Deviation: (P − O) / 6 = <span id="pert-sd">—</span></div>
+      <div class="pr-label" style="margin-top:.3rem">Range 68% kemungkinan: <span id="pert-range">—</span></div>
+      <div class="pr-label" style="margin-top:.3rem">Triangular Distribution (O+M+P)/3: <span id="pert-tri">—</span></div>
+    </div>
+  </div>
+
+  <div class="co co-teal">
+    <div class="co-lbl">💡 Mengapa Pakai 4× Most Likely?</div>
+    <p>PERT menggunakan bobot 4× pada Most Likely karena dalam realitas, kondisi "paling mungkin" terjadi jauh lebih sering daripada kondisi ekstrem. Beta distribution lebih akurat merepresentasikan ketidakpastian proyek dibandingkan triangular distribution yang memberikan bobot sama pada ketiganya.</p>
+  </div>
+</div>
+
+<!-- ══════════════════ COST MANAGEMENT ══════════════════ -->
+<div class="sec" id="sec-cost">
+  <div class="sec-title">4 Proses Cost Management</div>
+  <p class="sec-sub">PMBOK Chapter 7 — dari perencanaan biaya hingga pengendaliannya</p>
+
+  <div class="co co-teal">
+    <div class="co-lbl">🗺️ Alur 4 Proses</div>
+    <p>7.1 Plan Cost Management → 7.2 Estimate Costs → 7.3 Determine Budget → 7.4 Control Costs</p>
+  </div>
+
+  <div class="proc-wrap">
+
+    <!-- 7.1 -->
+    <div class="proc" id="c1">
+      <div class="proc-hdr" onclick="tog('c1')">
+        <div class="proc-num num-teal">7.1</div>
+        <div class="proc-title">Plan Cost Management</div>
+        <span class="proc-grp grp-plan">Planning</span>
+        <span class="proc-chev">▾</span>
+      </div>
+      <div class="proc-body">
+        <p><strong>Tujuan:</strong> Menetapkan kebijakan, prosedur, dan dokumentasi untuk merencanakan, mengelola, membelanjakan, dan mengontrol biaya proyek.</p>
+        <div class="tags">
+          <span class="tag tag-o">Output: Cost Management Plan</span>
+        </div>
+        <p><strong>Isi Cost Management Plan:</strong> Satuan ukuran biaya, level presisi (pembulatan ke ribuan/jutaan), level akurasi estimasi (±5% atau ±20%), control thresholds, aturan EVM, format laporan biaya.</p>
+        <div class="co co-gold" style="margin:.8rem 0">
+          <div class="co-lbl">Analogi — APBN vs Anggaran Proyek</div>
+          <p>Sebelum Indonesia memulai tahun anggaran, pemerintah menyusun aturan main keuangan: siapa yang bisa approve pengeluaran berapa, bagaimana pelaporan, apa threshold yang memerlukan revisi APBN. Cost Management Plan adalah versi proyek dari "aturan main keuangan" itu.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7.2 -->
+    <div class="proc" id="c2">
+      <div class="proc-hdr" onclick="tog('c2')">
+        <div class="proc-num num-teal">7.2</div>
+        <div class="proc-title">Estimate Costs</div>
+        <span class="proc-grp grp-plan">Planning</span>
+        <span class="proc-chev">▾</span>
+      </div>
+      <div class="proc-body">
+        <p><strong>Tujuan:</strong> Mengembangkan estimasi monetary resources yang dibutuhkan untuk menyelesaikan aktivitas proyek. PMBOK menyebut: <em>"Cost estimates are a prediction that is based on the information known at a given point in time."</em></p>
+        <div class="tags">
+          <span class="tag tag-i">Input: Scope Baseline, Project Schedule</span>
+          <span class="tag tag-t">Tool: Bottom-up, Analogous, Parametric, Three-Point</span>
+          <span class="tag tag-t">Tool: Reserve Analysis</span>
+          <span class="tag tag-o">Output: Activity Cost Estimates</span>
+          <span class="tag tag-o">Output: Basis of Estimates</span>
+        </div>
+        <table class="cmp-table" style="margin:.8rem 0">
+          <tr><th>Teknik</th><th>Cara Kerja</th><th>Contoh TI</th></tr>
+          <tr><td><strong>Analogous</strong></td><td>Estimasi dari proyek serupa lalu</td><td>"Proyek ERP sebelumnya Rp 2M, ini mirip, estimasi Rp 2.5M"</td></tr>
+          <tr><td><strong>Parametric</strong></td><td>Rumus × parameter</td><td>"5 function point × Rp 2 juta/FP = Rp 10 juta"</td></tr>
+          <tr><td><strong>Bottom-up</strong></td><td>Estimasi per aktivitas, lalu dijumlah</td><td>Estimasi setiap task developer, QA, DevOps secara terpisah</td></tr>
+          <tr><td><strong>Three-Point</strong></td><td>cE = (O + 4M + P) / 6</td><td>Estimasi modul payment: O=10jt, M=15jt, P=30jt → cE=16.67jt</td></tr>
+        </table>
+        <div class="co co-red" style="margin:.8rem 0">
+          <div class="co-lbl">⚠️ ROM vs Definitive Estimate</div>
+          <p>PMBOK menyebutkan: <strong>ROM (Rough Order of Magnitude)</strong> di awal proyek memiliki akurasi –25% hingga +75%. Semakin detail informasi, akurasi meningkat hingga <strong>Definitive Estimate</strong> dengan range –5% hingga +10%. Jangan pakai ROM untuk kontrak fixed-price!</p>
+        </div>
+        <p><strong>Contingency Reserve vs Management Reserve:</strong></p>
+        <ul style="font-size:14px;color:var(--text2)">
+          <li><strong>Contingency Reserve</strong> = untuk "known-unknowns" (risiko yang sudah teridentifikasi). Masuk dalam Cost Baseline.</li>
+          <li><strong>Management Reserve</strong> = untuk "unknown-unknowns" (hal yang tidak terprediksi). Tidak masuk Cost Baseline, tapi masuk Project Budget.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 7.3 -->
+    <div class="proc" id="c3">
+      <div class="proc-hdr" onclick="tog('c3')">
+        <div class="proc-num num-teal">7.3</div>
+        <div class="proc-title">Determine Budget</div>
+        <span class="proc-grp grp-plan">Planning</span>
+        <span class="proc-chev">▾</span>
+      </div>
+      <div class="proc-body">
+        <p><strong>Tujuan:</strong> Mengagregasi estimasi biaya individual aktivitas untuk membentuk <strong>Cost Baseline</strong> yang disetujui — fondasi untuk mengukur performa biaya.</p>
+        <div class="tags">
+          <span class="tag tag-t">Tool: Cost Aggregation</span>
+          <span class="tag tag-t">Tool: Reserve Analysis</span>
+          <span class="tag tag-t">Tool: Funding Limit Reconciliation</span>
+          <span class="tag tag-o">Output: Cost Baseline</span>
+          <span class="tag tag-o">Output: Project Funding Requirements</span>
+        </div>
+        <div class="co co-teal" style="margin:.8rem 0">
+          <div class="co-lbl">Struktur Budget Proyek (PMBOK Figure 7-8)</div>
+          <p>Activity Cost Estimates → Work Package Costs → Control Accounts → <strong>Cost Baseline</strong> (+ Contingency Reserve) → + Management Reserve = <strong>Project Budget (BAC)</strong><br><br>
+          Analogi: Dana darurat keluarga (Contingency) vs tabungan rahasia yang hanya disentuh jika bencana (Management Reserve).</p>
+        </div>
+        <p><strong>S-Curve:</strong> Cost Baseline biasanya ditampilkan sebagai S-Curve — di awal proyek pengeluaran lambat (perencanaan), naik cepat di tengah (eksekusi), lalu melandai di akhir. Bentuk S ini yang dibandingkan dengan actual expenditures untuk deteksi deviasi.</p>
+      </div>
+    </div>
+
+    <!-- 7.4 -->
+    <div class="proc" id="c4">
+      <div class="proc-hdr" onclick="tog('c4')">
+        <div class="proc-num num-teal">7.4</div>
+        <div class="proc-title">Control Costs</div>
+        <span class="proc-grp grp-mon">Monitoring & Controlling</span>
+        <span class="proc-chev">▾</span>
+      </div>
+      <div class="proc-body">
+        <p><strong>Tujuan:</strong> Memantau status proyek untuk update biaya dan mengelola perubahan terhadap cost baseline. Tool utamanya adalah <strong>Earned Value Management (EVM)</strong>.</p>
+        <div class="tags">
+          <span class="tag tag-t">Tool: Earned Value Management (EVM)</span>
+          <span class="tag tag-t">Tool: Forecasting (EAC, ETC)</span>
+          <span class="tag tag-t">Tool: TCPI</span>
+          <span class="tag tag-o">Output: Cost Forecasts (EAC)</span>
+          <span class="tag tag-o">Output: Work Performance Info (CV, CPI)</span>
+        </div>
+        <p>Lihat tab <strong>EVM & Kalkulator</strong> untuk penjelasan lengkap semua formula EVM dengan contoh nyata dan kalkulator interaktif!</p>
+      </div>
+    </div>
+
+  </div><!-- /proc-wrap cost -->
+</div>
+
+<!-- ══════════════════ EVM ══════════════════ -->
+<div class="sec" id="sec-evm">
+  <div class="sec-title">Earned Value Management</div>
+  <p class="sec-sub">Sistem pengukuran performa proyek yang mengintegrasikan Scope, Schedule, dan Cost</p>
+
+  <div class="card">
+    <h3>Tiga Dimensi EVM</h3>
+    <p>EVM mengintegrasikan tiga baseline untuk mengukur performa proyek secara objektif. Tanpa EVM, project manager hanya tahu berapa yang sudah dibelanjakan — tapi tidak tahu apakah itu worth it.</p>
+    <div class="co co-gold" style="margin-top:1rem">
+      <div class="co-lbl">🧱 Analogi — Membangun Tembok</div>
+      <p>Kamu minta tukang buat 10 meter tembok dalam 10 hari (Rp 1 juta/meter = Rp 10 juta total). Di hari ke-6, dia sudah menghabiskan Rp 7 juta. Apakah ini bagus atau buruk?<br><br>
+      Tanpa EVM: "Sudah habis Rp 7 juta dari Rp 10 juta." — Belum jelas.<br>
+      Dengan EVM: Kalau sudah buat 5 meter (50%) padahal seharusnya 6 meter (60%), maka over budget DAN behind schedule. Itulah kekuatan EVM.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:1.5rem">Tabel Formula EVM Lengkap</h3>
+  <div style="overflow-x:auto">
+    <table class="evm-table">
+      <tr>
+        <th style="min-width:60px">Singkatan</th>
+        <th>Nama</th>
+        <th>Formula</th>
+        <th>Interpretasi</th>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--gold)">PV</strong></td>
+        <td>Planned Value</td>
+        <td><em>Dari baseline</em></td>
+        <td>Nilai pekerjaan yang seharusnya sudah selesai sampai tanggal ini</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--teal)">EV</strong></td>
+        <td>Earned Value</td>
+        <td><em>% complete × BAC</em></td>
+        <td>Nilai pekerjaan yang benar-benar sudah diselesaikan (bukan biaya aktual)</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--red)">AC</strong></td>
+        <td>Actual Cost</td>
+        <td><em>Dari accounting</em></td>
+        <td>Biaya aktual yang sudah dikeluarkan sampai tanggal ini</td>
+      </tr>
+      <tr>
+        <td><strong>BAC</strong></td>
+        <td>Budget at Completion</td>
+        <td><em>Total anggaran proyek</em></td>
+        <td>Total anggaran yang diotorisasi untuk seluruh proyek</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--teal)">CV</strong></td>
+        <td>Cost Variance</td>
+        <td><code>EV – AC</code></td>
+        <td class="good">+ = Under budget &nbsp;</td>
+      </tr>
+      <tr>
+        <td></td><td></td><td></td>
+        <td class="bad">– = Over budget</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--gold)">SV</strong></td>
+        <td>Schedule Variance</td>
+        <td><code>EV – PV</code></td>
+        <td><span class="good">+ = Ahead of schedule &nbsp;</span> <span class="bad">– = Behind schedule</span></td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--teal)">CPI</strong></td>
+        <td>Cost Performance Index</td>
+        <td><code>EV / AC</code></td>
+        <td><span class="good">&gt;1 Under budget &nbsp;</span><span class="bad">&lt;1 Over budget</span></td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--gold)">SPI</strong></td>
+        <td>Schedule Performance Index</td>
+        <td><code>EV / PV</code></td>
+        <td><span class="good">&gt;1 Ahead &nbsp;</span><span class="bad">&lt;1 Behind</span></td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--orange)">EAC</strong></td>
+        <td>Estimate at Completion</td>
+        <td><code>BAC / CPI</code> (jika trend berlanjut)</td>
+        <td>Prediksi total biaya akhir proyek berdasarkan performa saat ini</td>
+      </tr>
+      <tr>
+        <td><strong>ETC</strong></td>
+        <td>Estimate to Complete</td>
+        <td><code>EAC – AC</code></td>
+        <td>Estimasi biaya yang masih dibutuhkan untuk menyelesaikan sisa pekerjaan</td>
+      </tr>
+      <tr>
+        <td><strong>VAC</strong></td>
+        <td>Variance at Completion</td>
+        <td><code>BAC – EAC</code></td>
+        <td><span class="good">+ = Akan under budget &nbsp;</span><span class="bad">– = Akan over budget</span></td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--purple)">TCPI</strong></td>
+        <td>To-Complete Performance Index</td>
+        <td><code>(BAC–EV)/(BAC–AC)</code></td>
+        <td>Efisiensi yang HARUS dicapai pada sisa pekerjaan untuk sesuai BAC. &gt;1 = lebih keras</td>
+      </tr>
+    </table>
+  </div>
+
+  <h3 style="margin-top:2rem">🧮 Kalkulator EVM Interaktif</h3>
+  <p>Masukkan data proyek untuk mendapatkan semua metrik EVM secara otomatis.</p>
+
+  <div class="calc-wrap">
+    <div class="calc-title">📊 EVM Dashboard Calculator</div>
+    <div class="calc-grid">
+      <div class="calc-field">
+        <label>BAC — Budget at Completion (Rp juta)</label>
+        <input type="number" id="bac" placeholder="mis: 500" min="0">
+      </div>
+      <div class="calc-field">
+        <label>PV — Planned Value saat ini (Rp juta)</label>
+        <input type="number" id="pv" placeholder="mis: 200" min="0">
+      </div>
+      <div class="calc-field">
+        <label>EV — Earned Value saat ini (Rp juta)</label>
+        <input type="number" id="ev" placeholder="mis: 160" min="0">
+      </div>
+    </div>
+    <div class="calc-grid" style="grid-template-columns:1fr 1fr;margin-bottom:.8rem">
+      <div class="calc-field">
+        <label>AC — Actual Cost saat ini (Rp juta)</label>
+        <input type="number" id="ac" placeholder="mis: 190" min="0">
+      </div>
+      <div class="calc-field">
+        <label>% Complete aktual</label>
+        <input type="number" id="pct" placeholder="mis: 32" min="0" max="100">
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calcEVM()">Hitung Semua Metrik EVM →</button>
+    <div class="calc-results" id="evm-results" style="display:none">
+      <div class="res-box">
+        <div class="res-label">CV</div>
+        <div class="res-val" id="r-cv">—</div>
+        <div class="res-interp" id="ri-cv">—</div>
+      </div>
+      <div class="res-box">
+        <div class="res-label">SV</div>
+        <div class="res-val" id="r-sv">—</div>
+        <div class="res-interp" id="ri-sv">—</div>
+      </div>
+      <div class="res-box">
+        <div class="res-label">CPI</div>
+        <div class="res-val" id="r-cpi">—</div>
+        <div class="res-interp" id="ri-cpi">—</div>
+      </div>
+      <div class="res-box">
+        <div class="res-label">SPI</div>
+        <div class="res-val" id="r-spi">—</div>
+        <div class="res-interp" id="ri-spi">—</div>
+      </div>
+      <div class="res-box">
+        <div class="res-label">EAC (Rp juta)</div>
+        <div class="res-val" id="r-eac">—</div>
+        <div class="res-interp" id="ri-eac">—</div>
+      </div>
+      <div class="res-box">
+        <div class="res-label">TCPI</div>
+        <div class="res-val" id="r-tcpi">—</div>
+        <div class="res-interp" id="ri-tcpi">—</div>
+      </div>
+    </div>
+    <div id="evm-summary" style="margin-top:1rem;font-size:13px;color:var(--text2);padding:.8rem;background:var(--bg2);border-radius:8px;border:1px solid var(--border);display:none"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ STUDI KASUS ══════════════════ -->
+<div class="sec" id="sec-kasus">
+  <div class="sec-title">Studi Kasus Nyata</div>
+  <p class="sec-sub">Tiga kasus global yang menggambarkan dampak nyata dari manajemen Time & Cost</p>
+
+  <!-- KASUS 1: Sydney Opera House -->
+  <div class="case">
+    <div class="case-hdr" style="background:#1a0a00">
+      <div class="case-icon" style="background:rgba(251,146,60,.15)">🎭</div>
+      <div class="case-meta">
+        <h4>Sydney Opera House</h4>
+        <span>Sydney, Australia · 1957–1973</span>
+      </div>
+      <span class="case-badge badge-over">Cost Overrun 1,400%</span>
+    </div>
+    <div class="case-body">
+      <p>Salah satu proyek arsitektur paling ikonik di dunia — sekaligus salah satu kegagalan cost management paling ekstrem dalam sejarah. Mengajarkan pelajaran abadi tentang estimasi dan scope management.</p>
+      <div class="case-tl">
+        <div class="tl-item tl-ok">
+          <div class="tl-date">1957</div>
+          <div class="tl-txt">Arsitek Jørn Utzon memenangkan kompetisi desain. Estimasi awal: <strong>AUD 7 juta</strong>, selesai dalam <strong>4 tahun</strong> (target 1961).</div>
+        </div>
+        <div class="tl-item tl-bad">
+          <div class="tl-date">1959–1962</div>
+          <div class="tl-txt">Konstruksi dimulai sebelum desain selesai (rushed). Scope terus berubah — struktur atap yang ikonik ternyata jauh lebih kompleks dari yang direncanakan. Tidak ada WBS yang solid, tidak ada CPM yang digunakan.</div>
+        </div>
+        <div class="tl-item tl-bad">
+          <div class="tl-date">1965</div>
+          <div class="tl-txt">Pemerintah baru New South Wales mengambil alih, memotong anggaran. Utzon mengundurkan diri karena frustrasi. Proyek dilanjutkan tanpa arsitek aslinya. Design changes masif — auditorium interior diubah total.</div>
+        </div>
+        <div class="tl-item tl-mid">
+          <div class="tl-date">1973</div>
+          <div class="tl-txt">Sydney Opera House dibuka oleh Ratu Elizabeth II — <strong>10 tahun terlambat</strong> dari target, dengan biaya final <strong>AUD 102 juta</strong>.</div>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-box st-over">
+          <div class="s-label">Cost Overrun</div>
+          <div class="s-val">1,457%</div>
+        </div>
+        <div class="stat-box st-over">
+          <div class="s-label">Keterlambatan</div>
+          <div class="s-val">10 tahun</div>
+        </div>
+        <div class="stat-box st-warn">
+          <div class="s-label">Estimasi Awal</div>
+          <div class="s-val">AUD 7 juta</div>
+        </div>
+        <div class="stat-box st-over">
+          <div class="s-label">Biaya Aktual</div>
+          <div class="s-val">AUD 102 juta</div>
+        </div>
+      </div>
+      <h3 style="font-size:1rem;margin-top:1.2rem">Pelajaran Time & Cost Management:</h3>
+      <ul class="lesson-list">
+        <li>Estimasi ROM yang terlalu optimis tanpa three-point estimating menyebabkan underestimate 14x lipat</li>
+        <li>Memulai konstruksi sebelum desain final (scope belum jelas) adalah kesalahan fatal yang menyebabkan rework masif</li>
+        <li>Tidak ada CPM/network diagram — tidak ada yang tahu aktivitas kritis mana yang harus diprioritaskan</li>
+        <li>Scope changes tanpa change control formal langsung menghantam cost baseline</li>
+        <li>Ironi: gedung yang gagal dari segi manajemen proyek kini menjadi ikon dunia dan menghasilkan miliaran dolar untuk pariwisata Australia</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- KASUS 2: Boeing 787 Dreamliner -->
+  <div class="case">
+    <div class="case-hdr" style="background:#001a14">
+      <div class="case-icon" style="background:rgba(6,214,160,.12)">✈️</div>
+      <div class="case-meta">
+        <h4>Boeing 787 Dreamliner</h4>
+        <span>Seattle, USA · 2004–2011</span>
+      </div>
+      <span class="case-badge badge-over">3 Tahun Terlambat, $32B Over Budget</span>
+    </div>
+    <div class="case-body">
+      <p>Boeing 787 dirancang sebagai revolusi penerbangan modern — tapi menjadi pelajaran pahit tentang outsourcing ekstrem yang menghancurkan Time dan Cost Management.</p>
+      <div class="case-tl">
+        <div class="tl-item tl-ok">
+          <div class="tl-date">2004</div>
+          <div class="tl-txt">Boeing mengumumkan 787 Dreamliner. Target: terbang perdana <strong>2007</strong>, delivery ke maskapai <strong>2008</strong>. Budget: ~$5 miliar.</div>
+        </div>
+        <div class="tl-item tl-bad">
+          <div class="tl-date">2004–2007</div>
+          <div class="tl-txt">Boeing memutuskan outsource 70% komponen ke 50+ supplier global — strategi baru radikal untuk menghemat biaya. Tapi tidak ada sistem integrasi yang kuat, tidak ada visibility atas progress supplier. Schedule Network Diagram tidak mencerminkan kompleksitas nyata.</div>
+        </div>
+        <div class="tl-item tl-bad">
+          <div class="tl-date">2007–2009</div>
+          <div class="tl-txt">Komponen dari berbagai negara tidak pas satu sama lain. Parts tiba di assembly line tidak lengkap. Boeing harus kirim tim ke seluruh dunia untuk "fix" pekerjaan supplier. Tiga penundaan besar diumumkan kepada pasar.</div>
+        </div>
+        <div class="tl-item tl-mid">
+          <div class="tl-date">2009</div>
+          <div class="tl-txt">First flight akhirnya terjadi — <strong>2 tahun terlambat</strong>. Delivery pertama ke ANA (All Nippon Airways) baru terjadi 2011 — <strong>3 tahun dari target</strong>.</div>
+        </div>
+        <div class="tl-item tl-ok">
+          <div class="tl-date">2011+</div>
+          <div class="tl-txt">Boeing belajar dari kesalahan. Program selanjutnya (777X) menggunakan lebih banyak in-house manufacturing, network diagram yang lebih matang, dan sistem EVM yang ketat untuk monitoring supplier.</div>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-box st-over">
+          <div class="s-label">Total Program Loss</div>
+          <div class="s-val">~$32B</div>
+        </div>
+        <div class="stat-box st-over">
+          <div class="s-label">Keterlambatan Delivery</div>
+          <div class="s-val">3+ tahun</div>
+        </div>
+        <div class="stat-box st-warn">
+          <div class="s-label">Supplier Terlibat</div>
+          <div class="s-val">50+</div>
+        </div>
+        <div class="stat-box st-ok">
+          <div class="s-label">Pesawat Akhirnya</div>
+          <div class="s-val">Sukses</div>
+        </div>
+      </div>
+      <h3 style="font-size:1rem;margin-top:1.2rem">Pelajaran Time & Cost Management:</h3>
+      <ul class="lesson-list">
+        <li>Outsourcing ekstrem tanpa visibility yang kuat (EVM per supplier) membuat schedule dan cost tak terkontrol</li>
+        <li>Activity dependencies yang tidak terpetakan dengan baik — jika supplier A terlambat, tidak ada yang tahu dampak ke supplier B, C, D</li>
+        <li>Reserve analysis yang tidak memadai: tidak ada buffer cukup untuk kompleksitas supply chain global</li>
+        <li>Schedule variance yang terdeteksi terlambat karena tidak ada sistem EVM real-time untuk tiap supplier</li>
+        <li>Pelajaran: Semakin kompleks dependency, semakin ketat sistem monitoring Time & Cost harus dirancang dari awal</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- KASUS 3: Proyek SUKSES — New Zealand COVID-19 Response -->
+  <div class="case">
+    <div class="case-hdr" style="background:#001a12">
+      <div class="case-icon" style="background:rgba(6,214,160,.12)">🏥</div>
+      <div class="case-meta">
+        <h4>NZ COVID-19 Vaccine Rollout — Digital Infrastructure</h4>
+        <span>New Zealand · Jan–Jun 2021</span>
+      </div>
+      <span class="case-badge badge-ok">On Time, Under Budget</span>
+    </div>
+    <div class="case-body">
+      <p>Saat banyak negara berjuang dengan sistem digital vaksinasi, Selandia Baru berhasil membangun dan meluncurkan sistem booking vaksin nasional dalam <strong>6 minggu</strong> — tepat waktu dan di bawah budget. Ini adalah studi kasus Time Management yang berhasil karena CPM yang disiplin.</p>
+      <div class="case-tl">
+        <div class="tl-item tl-ok">
+          <div class="tl-date">Jan 2021</div>
+          <div class="tl-txt">Pemerintah NZ memutuskan membangun sistem booking vaksin online. Deadline ketat: harus live sebelum rollout vaksin Pfizer bulan Februari. Tim inti: 15 developer + PM.</div>
+        </div>
+        <div class="tl-item tl-ok">
+          <div class="tl-date">Minggu 1–2</div>
+          <div class="tl-txt">PM menggunakan CPM untuk identifikasi critical path: database setup → backend API → booking engine → frontend → testing → launch. Setiap aktivitas diestimasi dengan three-point estimating. Aktivitas non-critical (laporan statistik, admin dashboard) dijadwalkan paralel oleh tim berbeda.</div>
+        </div>
+        <div class="tl-item tl-ok">
+          <div class="tl-date">Minggu 3–5</div>
+          <div class="tl-txt">EVM digunakan setiap minggu. Saat SPI minggu ke-3 = 0.85 (behind), PM langsung crash critical path activities dengan tambahan 3 developer. Cost naik sedikit tapi schedule kembali on track.</div>
+        </div>
+        <div class="tl-item tl-ok">
+          <div class="tl-date">Feb 2021</div>
+          <div class="tl-txt">Sistem booking vaksin live tepat waktu. CPI = 1.08 (di bawah budget). Lebih dari 4 juta warga NZ berhasil booking vaksin melalui sistem ini.</div>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-box st-ok">
+          <div class="s-label">Waktu Pengembangan</div>
+          <div class="s-val">6 minggu</div>
+        </div>
+        <div class="stat-box st-ok">
+          <div class="s-label">CPI Akhir</div>
+          <div class="s-val">1.08</div>
+        </div>
+        <div class="stat-box st-ok">
+          <div class="s-label">SPI Akhir</div>
+          <div class="s-val">1.0</div>
+        </div>
+        <div class="stat-box st-ok">
+          <div class="s-label">Users Terdaftar</div>
+          <div class="s-val">4 juta+</div>
+        </div>
+      </div>
+      <h3 style="font-size:1rem;margin-top:1.2rem">Kunci Keberhasilan:</h3>
+      <ul class="lesson-list">
+        <li>CPM yang tepat: critical path diidentifikasi di hari pertama, seluruh tim tahu mana yang tidak boleh terlambat</li>
+        <li>EVM mingguan: SPI = 0.85 di minggu ke-3 langsung memicu corrective action (crashing)</li>
+        <li>Tim kecil (15 orang) dengan authority jelas lebih efisien daripada tim besar dengan birokrasi tebal</li>
+        <li>Reserve analysis tepat: contingency reserve 15% dari budget mencukupi untuk tambahan developer</li>
+        <li>Iterative testing dimulai paralel dengan development (lead time) — tidak menunggu semua feature selesai</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ QUIZ ══════════════════ -->
+<div class="sec" id="sec-quiz">
+  <div class="sec-title">Uji Pemahaman</div>
+  <p class="sec-sub">12 soal komprehensif — Time Management, Cost Management, CPM, dan EVM</p>
+
+  <div class="score-box" id="score-box">
+    <div class="score-num" id="score-display">0/12</div>
+    <div class="score-sub">Skor Akhirmu · Time & Cost Management</div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-item">
+    <div class="q-text"><span>Q1.</span>Aktivitas A (5 hari) harus selesai sebelum Aktivitas B (8 hari) bisa dimulai. Ini adalah contoh dependency tipe apa?</div>
+    <div class="q-opts">
+      <button class="q-opt" onclick="qa(this,'q1','a')">a. Start-to-Start (SS)</button>
+      <button class="q-opt" onclick="qa(this,'q1','b')">b. Finish-to-Finish (FF)</button>
+      <button class="q-opt" onclick="qa(this,'q1','c')">c. Finish-to-Start (FS)</button>
+      <button class="q-opt" onclick="qa(this,'q1','d')">d. Start-to-Finish (SF)</button>
+    </div>
+    <div class="q-fb" id="fb-q1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-item">
+    <div class="q-text"><span>Q2.</span>Formula Three-Point Estimating (PERT Beta Distribution) untuk durasi adalah...</div>
+    <div class="q-opts">
+      <button class="q-opt" onclick="qa(this,'q2','a')">a. tE = (O + M + P) / 3</button>
+      <button class="q-opt" onclick="qa(this,'q2','b')">b. tE = (O + 4M + P) / 6</button>
+      <button class="q-opt" onclick="qa(this,'q2','c')">c. tE = (O + 2M + P) / 4</button>
+      <button class="q-opt" onclick="qa(this,'q2','d')">d. tE = (2O + 3M + P) / 6</button>
+    </div>
+    <div class="q-fb" id="fb-q2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-item">
+    <div class="q-text"><span>Q3.</span>PM ingin mempercepat jadwal tanpa menambah biaya dengan cara melakukan beberapa aktivitas secara paralel. Teknik ini disebut...</div>
+    <div class="q-opts">
+      <button class="q-opt" onclick="qa(this,'q3','a')">a. Crashing</button>
+      <button class="q-opt" onclick="qa(this,'q3','b')">b. Fast Tracking</button>
+      <button class="q-opt" onclick="qa(this,'q3','c')">c. Rolling Wave Planning</button>
+      <button class="q-opt" onclick="qa(this,'q3','d')">d. Reserve Analysis</button>
+    </div>
+    <div class="q-fb" id="fb-q3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-item">
+    <div class="q-text"><span>Q4.</span>Critical Path dalam network diagram adalah...</div>
+    <div class="q-opts">
+      <button class="q-opt" onclick="qa(this,'q4','a')">a. Jalur dengan total float terbanyak</button>
+      <button class="q-opt" onclick="qa(this,'q4','b')">b. Jalur yang paling banyak aktivitasnya</button>
+      <button class="q-opt" onclick="qa(this,'q4','c')">c. Jalur terpanjang dari start ke finish yang menentukan durasi minimum proyek</button>
+      <button class="q-opt" onclick="qa(this,'q4','d')">d. Jalur dengan biaya tertinggi</button>
+    </div>
+    <div class="q-fb" id="fb-q4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-item">
+    <div class="q-text"><span>Q5.</span>Di bulan ke-3 proyek, diketahui: PV = Rp 300 juta, EV = Rp 240 juta, AC = Rp 280 juta. Berapakah Cost Variance (CV)?</div>
+    <div class="q-opts">
+      <button class="q-opt" onclick="qa(this,'q5','a')">a. +Rp 60 juta (under budget)</button>
+      <button class="q-opt" onclick="qa(this,'q5','b')">b. –Rp 40 juta (over budget)</button>
+      <button class="q-opt" onclick="qa(this,'q5','c')">c. –Rp 60 juta (behind schedule)</button>
+      <button class="q-opt" onclick="qa(this,'q5','d')">d. +Rp 20 juta (under budget)</button>
+    </div>
+    <div class="q-fb" id="fb-q5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-item">
+    <div class="q-text"><span>Q6.</span>Menggunakan data soal Q5, berapakah Schedule Performance Index (SPI)?</div>
+    <div class="q-opts">
+      <button class="q-opt" onclick="qa(this,'q6','a')">a. SPI = 1.25 (ahead of schedule)</button>
+      <button class="q-opt" onclick="qa(this,'q6','b')">b. SPI = 0.86 (behind schedule)</button>
+      <button class="q-opt" onclick="qa(this,'q6','c')">c. SPI = 0.80 (behind schedule)</button>
+      <button class="q-opt" onclick="qa(this,'q6','d')">d. SPI = 1.17 (ahead of schedule)</button>
+    </div>
+    <div class="q-fb" id="fb-q6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-item">
+    <div class="q-text"><span>Q7.</span>Perbedaan antara Contingency Reserve dan Management Reserve adalah...</div>
+    <div class="q-opts">
+      <button class="q-opt" onclick="qa(this,'q7','a')">a. Contingency untuk unknown-unknowns, Management untuk known-unknowns</button>
+      <button class="q-opt" onclick="qa(this,'q7','b')">b. Contingency masuk Cost Baseline (known-unknowns), Management Reserve tidak masuk Cost Baseline (unknown-unknowns)</button>
+      <button class="q-opt" onclick="qa(this,'q7','c')">c. Keduanya adalah nama lain yang sama</button>
+      <button class="q-opt" onclick="qa(this,'q7','d')">d. Management Reserve lebih kecil dari Contingency Reserve</button>
+    </div>
+    <div class="q-fb" id="fb-q7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-item">
+    <div class="q-text"><span>Q8.</span>Jika CPI proyek = 0.75, apa yang bisa disimpulkan?</div>
+    <div class="q-opts">
+      <button class="q-opt" onclick="qa(this,'q8','a')">a. Untuk setiap Rp 1 yang dianggarkan, tim menghasilkan Rp 1.25 nilai pekerjaan</button>
+      <button class="q-opt" onclick="qa(this,'q8','b')">b. Proyek sudah 75% selesai</button>
+      <button class="q-opt" onclick="qa(this,'q8','c')">c. Untuk setiap Rp 1 yang dibelanjakan, tim hanya menghasilkan Rp 0.75 nilai pekerjaan — over budget</button>
+      <button class="q-opt" onclick="qa(this,'q8','d')">d. Proyek akan selesai 25% lebih cepat dari jadwal</button>
+    </div>
+    <div class="q-fb" id="fb-q8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-item">
+    <div class="q-text"><span>Q9.</span>BAC proyek = Rp 1 miliar. Saat ini CPI = 0.8. Berapakah EAC jika diasumsikan efisiensi saat ini akan berlanjut?</div>
+    <div class="q-opts">
+      <button class="q-opt" onclick="qa(this,'q9','a')">a. Rp 800 juta</button>
+      <button class="q-opt" onclick="qa(this,'q9','b')">b. Rp 1.2 miliar</button>
+      <button class="q-opt" onclick="qa(this,'q9','c')">c. Rp 1.25 miliar</button>
+      <button class="q-opt" onclick="qa(this,'q9','d')">d. Rp 1.5 miliar</button>
+    </div>
+    <div class="q-fb" id="fb-q9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-item">
+    <div class="q-text"><span>Q10.</span>Dalam kasus Sydney Opera House, kesalahan Time Management utama yang terjadi adalah...</div>
+    <div class="q-opts">
+      <button class="q-opt" onclick="qa(this,'q10','a')">a. Tim konstruksi tidak kompeten</button>
+      <button class="q-opt" onclick="qa(this,'q10','b')">b. Konstruksi dimulai sebelum desain selesai, tanpa CPM/network diagram yang solid, menyebabkan rework masif</button>
+      <button class="q-opt" onclick="qa(this,'q10','c')">c. Anggaran terlalu kecil dari awal</button>
+      <button class="q-opt" onclick="qa(this,'q10','d')">d. Cuaca buruk menjadi penyebab utama keterlambatan</button>
+    </div>
+    <div class="q-fb" id="fb-q10"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-item">
+    <div class="q-text"><span>Q11.</span>To-Complete Performance Index (TCPI) > 1.0 berarti...</div>
+    <div class="q-opts">
+      <button class="q-opt" onclick="qa(this,'q11','a')">a. Proyek pasti akan selesai di bawah budget</button>
+      <button class="q-opt" onclick="qa(this,'q11','b')">b. Tim harus bekerja lebih efisien dari sebelumnya untuk menyelesaikan proyek sesuai BAC</button>
+      <button class="q-opt" onclick="qa(this,'q11','c')">c. Proyek akan selesai lebih cepat dari jadwal</button>
+      <button class="q-opt" onclick="qa(this,'q11','d')">d. Budget sudah cukup untuk menyelesaikan sisa pekerjaan</button>
+    </div>
+    <div class="q-fb" id="fb-q11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-item">
+    <div class="q-text"><span>Q12.</span>Boeing 787 mengalami overrun biaya dan jadwal karena hal apa yang berkaitan langsung dengan Time Management?</div>
+    <div class="q-opts">
+      <button class="q-opt" onclick="qa(this,'q12','a')">a. Teknologi pembuatan pesawat yang belum ada</button>
+      <button class="q-opt" onclick="qa(this,'q12','b')">b. Dependency antar supplier tidak dipetakan dengan baik dalam network diagram, sehingga keterlambatan satu supplier tidak terdeteksi dampaknya ke seluruh jadwal</button>
+      <button class="q-opt" onclick="qa(this,'q12','c')">c. Tim engineering tidak berpengalaman</button>
+      <button class="q-opt" onclick="qa(this,'q12','d')">d. Pemerintah AS tidak memberikan izin produksi</button>
+    </div>
+    <div class="q-fb" id="fb-q12"></div>
+  </div>
+
+</div><!-- /quiz -->
+
+</div><!-- /main -->
+
+<div class="footer">
+  Materi ini disusun dari <strong>PMBOK® Guide 5th Edition (PMI)</strong> dan <strong>HBR Project Management Handbook</strong>. 
+  Untuk mahasiswa Teknik Informatika — Manajemen Proyek TI Semester 6.
+</div>
+
+<script>
+// ── NAV ──
+function showSec(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── ACCORDION ──
+function tog(id) {
+  const el = document.getElementById(id);
+  const open = el.classList.contains('open');
+  document.querySelectorAll('.proc').forEach(p => p.classList.remove('open'));
+  if (!open) el.classList.add('open');
+}
+
+// ── PERT CALC ──
+function calcPert() {
+  const o = parseFloat(document.getElementById('pert-o').value);
+  const m = parseFloat(document.getElementById('pert-m').value);
+  const p = parseFloat(document.getElementById('pert-p').value);
+  if (isNaN(o)||isNaN(m)||isNaN(p)) { alert('Isi semua nilai!'); return; }
+  if (o > m || m > p) { alert('Harus: O ≤ M ≤ P'); return; }
+  const te = (o + 4*m + p) / 6;
+  const sd = (p - o) / 6;
+  const tri = (o + m + p) / 3;
+  document.getElementById('pert-val').textContent = te.toFixed(2) + ' hari';
+  document.getElementById('pert-sd').textContent = sd.toFixed(2) + ' hari';
+  document.getElementById('pert-range').textContent = (te - sd).toFixed(2) + ' – ' + (te + sd).toFixed(2) + ' hari';
+  document.getElementById('pert-tri').textContent = tri.toFixed(2) + ' hari';
+  document.getElementById('pert-res').classList.add('show');
+}
+
+// ── EVM CALC ──
+function calcEVM() {
+  const bac = parseFloat(document.getElementById('bac').value);
+  const pv  = parseFloat(document.getElementById('pv').value);
+  const ev  = parseFloat(document.getElementById('ev').value);
+  const ac  = parseFloat(document.getElementById('ac').value);
+  if (isNaN(bac)||isNaN(pv)||isNaN(ev)||isNaN(ac)) { alert('Isi semua nilai!'); return; }
+  
+  const cv   = ev - ac;
+  const sv   = ev - pv;
+  const cpi  = ev / ac;
+  const spi  = ev / pv;
+  const eac  = bac / cpi;
+  const etc  = eac - ac;
+  const vac  = bac - eac;
+  const tcpi = (bac - ev) / (bac - ac);
+
+  function fmt(v, prefix='') { return prefix + (Math.abs(v) >= 1 ? v.toFixed(1) : v.toFixed(2)); }
+  function cls(v) { return v > 0 ? 'val-good' : v < 0 ? 'val-bad' : 'val-neutral'; }
+
+  const r = (id, v, pref='') => {
+    document.getElementById('r-'+id).textContent = fmt(v, pref);
+    document.getElementById('r-'+id).className = 'res-val ' + cls(v);
+  };
+  const ri = (id, txt) => document.getElementById('ri-'+id).textContent = txt;
+
+  r('cv', cv, 'Rp'); ri('cv', cv >= 0 ? '✓ Under budget' : '✗ Over budget');
+  r('sv', sv, 'Rp'); ri('sv', sv >= 0 ? '✓ Ahead schedule' : '✗ Behind schedule');
+  document.getElementById('r-cpi').textContent = cpi.toFixed(2);
+  document.getElementById('r-cpi').className = 'res-val ' + cls(cpi - 1);
+  ri('cpi', cpi >= 1 ? '✓ Efisien' : '✗ Boros');
+  document.getElementById('r-spi').textContent = spi.toFixed(2);
+  document.getElementById('r-spi').className = 'res-val ' + cls(spi - 1);
+  ri('spi', spi >= 1 ? '✓ On/Ahead' : '✗ Behind');
+  document.getElementById('r-eac').textContent = eac.toFixed(1);
+  document.getElementById('r-eac').className = 'res-val ' + (eac > bac ? 'val-bad' : 'val-good');
+  ri('eac', 'ETC = Rp ' + etc.toFixed(1) + ' juta lagi');
+  document.getElementById('r-tcpi').textContent = tcpi.toFixed(2);
+  document.getElementById('r-tcpi').className = 'res-val ' + (tcpi <= 1 ? 'val-good' : 'val-bad');
+  ri('tcpi', tcpi <= 1 ? 'Masih bisa tercapai' : 'Sulit — perlu crashing');
+
+  const summaryEl = document.getElementById('evm-summary');
+  const overUnder = cv < 0 ? `<strong style="color:#ef4444">OVER budget</strong> Rp ${Math.abs(cv).toFixed(1)} juta` : `<strong style="color:#06d6a0">UNDER budget</strong> Rp ${cv.toFixed(1)} juta`;
+  const aheadBehind = sv < 0 ? `<strong style="color:#ef4444">BEHIND schedule</strong>` : `<strong style="color:#06d6a0">ON/AHEAD schedule</strong>`;
+  summaryEl.innerHTML = `📊 <strong>Ringkasan:</strong> Proyek saat ini ${overUnder} dan ${aheadBehind}. Jika efisiensi berlanjut, proyek akan selesai dengan biaya total <strong>Rp ${eac.toFixed(1)} juta</strong> dari budget Rp ${bac} juta (VAC = Rp ${vac.toFixed(1)} juta). TCPI = ${tcpi.toFixed(2)} → sisa pekerjaan harus dikerjakan dengan efisiensi ${tcpi > 1 ? tcpi.toFixed(2)+'x lebih baik dari kondisi ideal (sangat menantang)' : 'yang lebih mudah dari sebelumnya'}.`;
+  summaryEl.style.display = 'block';
+  document.getElementById('evm-results').style.display = 'grid';
+}
+
+// ── QUIZ ──
+const ans = {
+  q1:'c', q2:'b', q3:'b', q4:'c', q5:'b', q6:'c',
+  q7:'b', q8:'c', q9:'c', q10:'b', q11:'b', q12:'b'
+};
+const expl = {
+  q1: "Benar! Finish-to-Start (FS) adalah tipe dependency paling umum: aktivitas B tidak bisa mulai sebelum aktivitas A selesai. Contoh klasik: testing tidak bisa dimulai sebelum coding selesai.",
+  q2: "Benar! Formula PERT Beta Distribution: tE = (O + 4M + P) / 6. Angka 4 memberikan bobot lebih besar pada Most Likely karena kondisi 'paling mungkin' jauh lebih sering terjadi daripada kondisi ekstrem.",
+  q3: "Benar! Fast Tracking = mengerjakan aktivitas secara paralel yang awalnya berurutan. Tidak ada biaya tambahan tapi ada risiko rework jika terjadi masalah. Berbeda dengan Crashing yang menambah resource/biaya.",
+  q4: "Benar! PMBOK mendefinisikan Critical Path sebagai 'jalur terpanjang dari awal ke akhir proyek yang menentukan durasi minimum proyek.' Aktivitas di jalur ini memiliki Total Float = 0.",
+  q5: "Benar! CV = EV – AC = 240 – 280 = –Rp 40 juta. Nilai negatif berarti proyek over budget — kita membelanjakan lebih banyak dari nilai pekerjaan yang sudah selesai.",
+  q6: "Benar! SPI = EV / PV = 240 / 300 = 0.80. SPI < 1.0 berarti behind schedule — hanya 80% pekerjaan yang seharusnya diselesaikan yang benar-benar selesai.",
+  q7: "Benar! Contingency Reserve = untuk known-unknowns (risiko yang sudah teridentifikasi), masuk dalam Cost Baseline. Management Reserve = untuk unknown-unknowns (tidak terprediksi), tidak masuk Cost Baseline tapi masuk Project Budget.",
+  q8: "Benar! CPI = EV/AC = 0.75 artinya untuk setiap Rp 1 yang dibelanjakan, tim hanya menghasilkan Rp 0.75 nilai pekerjaan. Ini adalah kondisi over budget yang serius.",
+  q9: "Benar! EAC = BAC / CPI = 1.000 / 0.8 = Rp 1.25 miliar. Jika efisiensi saat ini (CPI 0.8) berlanjut hingga akhir, proyek akan membutuhkan 25% lebih banyak biaya dari yang dianggarkan.",
+  q10: "Benar! Kesalahan time management utama Sydney Opera House adalah memulai konstruksi sebelum desain selesai (scope tidak jelas) tanpa CPM yang solid. Ini menyebabkan rework masif dan estimasi durasi yang jauh meleset.",
+  q11: "Benar! TCPI > 1.0 berarti tim harus bekerja lebih efisien dari performa saat ini untuk menyelesaikan proyek sesuai BAC. Semakin tinggi TCPI, semakin sulit target tercapai — ini sinyal untuk revisi EAC.",
+  q12: "Benar! Masalah utama Boeing 787 dari sisi Time Management adalah dependency antar 50+ supplier global yang tidak terpetakan dalam network diagram yang komprehensif, sehingga SV tidak terdeteksi secara real-time."
+};
+const fail_expl = {
+  q1: "Belum tepat. Ini adalah Finish-to-Start (FS) — tipe dependency paling umum: B tidak bisa mulai sebelum A selesai.",
+  q2: "Belum tepat. Formula PERT Beta Distribution: tE = (O + 4M + P) / 6. Formula (O+M+P)/3 adalah Triangular Distribution yang kurang akurat.",
+  q3: "Belum tepat. Ini adalah Fast Tracking — mengerjakan aktivitas secara paralel tanpa biaya tambahan. Crashing adalah menambah resource untuk percepat jadwal (tapi ada biaya tambahan).",
+  q4: "Belum tepat. Critical Path = jalur TERPANJANG dari start ke finish yang menentukan durasi minimum proyek. Aktivitas di critical path memiliki Float = 0.",
+  q5: "Belum tepat. CV = EV – AC = 240 – 280 = –Rp 40 juta (negatif = over budget). Jangan bingungkan CV dengan SV!",
+  q6: "Belum tepat. SPI = EV / PV = 240 / 300 = 0.80 (bukan 0.86). SPI 0.80 berarti hanya 80% pekerjaan yang seharusnya selesai yang benar-benar selesai.",
+  q7: "Belum tepat. Sebaliknya: Contingency = known-unknowns (masuk Cost Baseline). Management = unknown-unknowns (tidak masuk Cost Baseline, tapi masuk Project Budget).",
+  q8: "Belum tepat. CPI = EV/AC. CPI 0.75 berarti untuk setiap Rp 1 yang dibelanjakan, hanya Rp 0.75 nilai pekerjaan yang dihasilkan — ini kondisi over budget yang serius.",
+  q9: "Belum tepat. EAC = BAC / CPI = 1.000 / 0.8 = Rp 1.25 miliar. Karena CPI < 1, maka EAC > BAC — proyek diprediksi over budget.",
+  q10: "Belum tepat. Kesalahan utama adalah memulai konstruksi sebelum desain selesai tanpa CPM yang solid. Estimasi awal Rp 7 juta juga sangat optimis tanpa three-point estimating.",
+  q11: "Belum tepat. TCPI > 1.0 berarti tim harus bekerja LEBIH efisien dari sebelumnya untuk mencapai target budget. Ini sinyal bahwa mencapai BAC akan semakin sulit.",
+  q12: "Belum tepat. Masalah utama Boeing dari sisi Time Management adalah dependency antar 50+ supplier yang tidak terpetakan baik, sehingga keterlambatan satu supplier tidak terdeteksi dampaknya ke seluruh jadwal."
+};
+
+let scores = {}, answered = {};
+function qa(btn, qId, opt) {
+  if (answered[qId]) return;
+  answered[qId] = true;
+  scores[qId] = ans[qId] === opt ? 1 : 0;
+  const opts = btn.closest('.q-opts').querySelectorAll('.q-opt');
+  opts.forEach(b => { b.classList.add('locked'); b.disabled = true; });
+  if (ans[qId] === opt) { btn.classList.add('correct'); }
+  else {
+    btn.classList.add('wrong');
+    const ls = ['a','b','c','d'];
+    opts.forEach((b,i) => { if (ls[i] === ans[qId]) b.classList.add('correct'); });
+  }
+  const fb = document.getElementById('fb-' + qId);
+  const ok = ans[qId] === opt;
+  fb.textContent = (ok ? '✅ ' : '❌ ') + (ok ? expl[qId] : fail_expl[qId]);
+  fb.className = 'q-fb show ' + (ok ? 'fb-ok' : 'fb-bad');
+  if (Object.keys(answered).length === 12) {
+    const total = Object.values(scores).reduce((a,b) => a+b, 0);
+    const box = document.getElementById('score-box');
+    document.getElementById('score-display').textContent = total + '/12';
+    box.classList.add('show');
+    box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+</script>
+</body>
+</html>
