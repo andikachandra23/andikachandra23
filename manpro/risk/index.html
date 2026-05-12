@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Risk Management — Materi Interaktif PMBOK</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0d;
+    --paper: #faf7f2;
+    --cream: #f0ebe0;
+    --danger: #c0392b;
+    --danger-light: #fdecea;
+    --amber: #d97706;
+    --amber-light: #fef3c7;
+    --safe: #166534;
+    --safe-light: #dcfce7;
+    --steel: #1e3a5f;
+    --steel-light: #dbeafe;
+    --accent: #8b1a1a;
+    --muted: #6b6055;
+    --border: #ddd5c8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: var(--steel);
+    color: white;
+    padding: 70px 40px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg, transparent, transparent 40px,
+      rgba(255,255,255,.03) 40px, rgba(255,255,255,.03) 80px
+    );
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: #f59e0b; }
+  .hero p {
+    font-size: 1.1rem;
+    opacity: .8;
+    max-width: 600px;
+    margin: 0 auto 30px;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #f59e0b;
+  }
+  .hero-stat .lbl { font-size: .75rem; opacity: .7; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ─── NAV ─── */
+  .sticky-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--ink);
+    padding: 0 24px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .sticky-nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    background: none; border: none;
+    color: rgba(255,255,255,.55);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 14px 16px;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all .2s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: #f59e0b;
+    border-bottom-color: #f59e0b;
+  }
+
+  /* ─── SECTIONS ─── */
+  .section { display: none; }
+  .section.active { display: block; animation: fadeIn .35s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 48px 24px; }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--steel);
+  }
+  .section-subtitle {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    transition: box-shadow .2s;
+  }
+  .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); }
+  .card-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  /* ─── DEFINITION BOX ─── */
+  .def-box {
+    background: var(--steel);
+    color: white;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .def-box::after {
+    content: '❝';
+    position: absolute; right: 24px; top: 12px;
+    font-size: 80px; opacity: .1;
+    font-family: serif;
+  }
+  .def-box .label {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    opacity: .6; margin-bottom: 10px;
+  }
+  .def-box p { font-size: 1.05rem; line-height: 1.8; }
+  .def-box strong { color: #f59e0b; }
+
+  /* ─── ANALOGY ─── */
+  .analogy {
+    background: #fffbeb;
+    border: 1px solid #f59e0b;
+    border-left: 4px solid #f59e0b;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .analogy .analogy-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--amber);
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* ─── PROCESS STEPS ─── */
+  .steps { display: grid; gap: 0; }
+  .step {
+    display: flex; gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px dashed var(--border);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--steel);
+    color: white;
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: transform .2s;
+  }
+  .step:hover .step-num { transform: scale(1.1); }
+  .step-content { flex: 1; }
+  .step-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .step-desc { color: var(--muted); font-size: .9rem; }
+  .step-detail {
+    display: none;
+    margin-top: 14px;
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 16px;
+    font-size: .9rem;
+  }
+  .step-detail.open { display: block; animation: fadeIn .25s ease; }
+  .step-tag {
+    display: inline-block;
+    background: var(--steel-light);
+    color: var(--steel);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+
+  /* ─── MATRIX ─── */
+  .matrix-wrap { overflow-x: auto; margin: 20px 0; }
+  .matrix {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 420px;
+    font-size: .88rem;
+  }
+  .matrix th, .matrix td {
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    text-align: center;
+  }
+  .matrix th { background: var(--steel); color: white; font-weight: 600; }
+  .matrix .row-header { background: var(--cream); font-weight: 600; text-align: left; }
+  .m-low { background: #dcfce7; color: #166534; font-weight: 600; }
+  .m-med { background: #fef3c7; color: #92400e; font-weight: 600; }
+  .m-high { background: #fee2e2; color: #991b1b; font-weight: 600; }
+  .m-crit { background: #7f1d1d; color: white; font-weight: 700; }
+
+  /* ─── STRATEGIES ─── */
+  .strategies-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .strategy-card {
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid;
+  }
+  .strategy-card .s-icon { font-size: 28px; margin-bottom: 10px; }
+  .strategy-card .s-title { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+  .strategy-card .s-desc { font-size: .85rem; line-height: 1.6; }
+  .s-avoid { background: #fef2f2; border-color: #fca5a5; }
+  .s-transfer { background: #eff6ff; border-color: #93c5fd; }
+  .s-mitigate { background: #f0fdf4; border-color: #86efac; }
+  .s-accept { background: #fafafa; border-color: #d1d5db; }
+  .s-exploit { background: #fefce8; border-color: #fde047; }
+  .s-share { background: #fdf4ff; border-color: #d8b4fe; }
+  .s-enhance { background: #ecfdf5; border-color: #6ee7b7; }
+
+  /* ─── CASE STUDY ─── */
+  .case-nav { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .case-btn {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 8px 18px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .88rem;
+    font-weight: 500;
+    transition: all .2s;
+  }
+  .case-btn.active, .case-btn:hover {
+    background: var(--steel);
+    color: white;
+    border-color: var(--steel);
+  }
+  .case-panel { display: none; }
+  .case-panel.active { display: block; animation: fadeIn .3s ease; }
+  .case-header {
+    background: linear-gradient(135deg, var(--steel) 0%, #2d5f8a 100%);
+    color: white; border-radius: 12px 12px 0 0;
+    padding: 24px 28px;
+  }
+  .case-header .c-tag {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    opacity: .6; margin-bottom: 8px;
+  }
+  .case-header h3 { font-family: 'Fraunces', serif; font-size: 1.4rem; }
+  .case-body {
+    border: 1px solid var(--border); border-top: none;
+    border-radius: 0 0 12px 12px;
+    padding: 24px 28px;
+    background: white;
+  }
+  .case-section { margin-bottom: 20px; }
+  .case-section h4 {
+    font-size: .8rem; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .risk-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: .9rem;
+  }
+  .risk-item.hi { background: #fef2f2; border-left: 3px solid #ef4444; }
+  .risk-item.md { background: #fefce8; border-left: 3px solid #eab308; }
+  .risk-item.lo { background: #f0fdf4; border-left: 3px solid #22c55e; }
+
+  /* ─── QUIZ ─── */
+  .quiz-progress {
+    display: flex; gap: 6px; margin-bottom: 28px;
+  }
+  .q-dot {
+    flex: 1; height: 4px; border-radius: 2px;
+    background: var(--border);
+    transition: background .3s;
+  }
+  .q-dot.done { background: #22c55e; }
+  .q-dot.current { background: var(--steel); }
+
+  .question-box { min-height: 280px; }
+  .q-num {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .q-text {
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem; font-weight: 600;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .options { display: grid; gap: 10px; }
+  .opt-btn {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 10px; padding: 14px 18px;
+    text-align: left; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    transition: all .2s;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .opt-btn:hover:not(:disabled) {
+    border-color: var(--steel);
+    background: var(--steel-light);
+  }
+  .opt-btn.correct { background: #dcfce7; border-color: #22c55e; color: #166534; }
+  .opt-btn.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+  .opt-letter {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--cream); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .8rem; font-weight: 700;
+    flex-shrink: 0;
+    transition: all .2s;
+  }
+  .opt-btn.correct .opt-letter { background: #22c55e; color: white; border-color: #22c55e; }
+  .opt-btn.wrong .opt-letter { background: #ef4444; color: white; border-color: #ef4444; }
+
+  .feedback {
+    display: none;
+    margin-top: 16px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: .9rem;
+    line-height: 1.6;
+  }
+  .feedback.show { display: block; animation: fadeIn .2s ease; }
+  .feedback.correct { background: #dcfce7; border: 1px solid #86efac; color: #166534; }
+  .feedback.wrong { background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; }
+
+  .quiz-controls {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 24px;
+  }
+  .btn-primary {
+    background: var(--steel); color: white;
+    border: none; border-radius: 8px;
+    padding: 12px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem; font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-primary:hover { background: #264f7a; }
+  .btn-primary:disabled { opacity: .4; cursor: not-allowed; }
+
+  .score-screen {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .score-screen.show { display: block; animation: fadeIn .4s ease; }
+  .score-circle {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: var(--steel);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    margin: 0 auto 24px;
+    color: white;
+  }
+  .score-circle .big-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2.5rem; font-weight: 900;
+    color: #f59e0b;
+  }
+  .score-circle .sub { font-size: .75rem; opacity: .7; }
+  .score-msg { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; }
+  .score-detail { color: var(--muted); margin-bottom: 28px; }
+  .retry-btn {
+    background: none; border: 2px solid var(--steel);
+    border-radius: 8px; padding: 12px 28px;
+    color: var(--steel); font-family: 'DM Sans', sans-serif;
+    font-size: .95rem; font-weight: 600;
+    cursor: pointer; transition: all .2s;
+    margin-right: 10px;
+  }
+  .retry-btn:hover { background: var(--steel); color: white; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 600px) {
+    .hero { padding: 50px 20px 40px; }
+    .hero-stats { gap: 24px; }
+    .container { padding: 32px 16px; }
+  }
+
+  /* ─── TOOLTIP / GLOSSARY HIGHLIGHT ─── */
+  .term {
+    border-bottom: 1px dashed var(--amber);
+    cursor: help;
+    color: var(--steel);
+    font-weight: 500;
+  }
+
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
+  .info-tile {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 18px;
+    border-left: 3px solid var(--steel);
+  }
+  .info-tile .t-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 6px; }
+  .info-tile .t-val { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 600; }
+
+  ul.styled { padding-left: 20px; }
+  ul.styled li { margin-bottom: 6px; }
+  ul.styled li::marker { color: var(--steel); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">📚 PMBOK 5th Edition · Chapter 11</div>
+  <h1>Project <span>Risk</span> Management</h1>
+  <p>Materi interaktif lengkap untuk memahami bagaimana mengidentifikasi, menganalisis, dan merespons risiko proyek secara profesional.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">6</div><div class="lbl">Proses Utama</div></div>
+    <div class="hero-stat"><div class="num">4</div><div class="lbl">Strategi Respons</div></div>
+    <div class="hero-stat"><div class="num">3</div><div class="lbl">Studi Kasus</div></div>
+    <div class="hero-stat"><div class="num">15</div><div class="lbl">Soal Kuis</div></div>
+  </div>
+</div>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav" id="mainNav">
+  <button class="nav-btn active" onclick="showSection('definisi', this)">🏠 Definisi</button>
+  <button class="nav-btn" onclick="showSection('proses', this)">⚙️ 6 Proses</button>
+  <button class="nav-btn" onclick="showSection('analisis', this)">📊 Analisis</button>
+  <button class="nav-btn" onclick="showSection('strategi', this)">🛡️ Strategi</button>
+  <button class="nav-btn" onclick="showSection('kasusstudy', this)">📋 Studi Kasus</button>
+  <button class="nav-btn" onclick="showSection('kuis', this)">✏️ Kuis</button>
+</nav>
+
+<!-- ════════════════════════════ DEFINISI ════════════════════════════ -->
+<div class="section active" id="definisi">
+<div class="container">
+  <div class="section-title">Apa itu Risk Management?</div>
+  <div class="section-subtitle">Fondasi konseptual & terminologi kunci dalam manajemen risiko proyek</div>
+
+  <div class="def-box">
+    <div class="label">Definisi PMBOK 5th Ed. — Chapter 11</div>
+    <p><strong>Project Risk Management</strong> mencakup proses-proses untuk melakukan perencanaan manajemen risiko, identifikasi, analisis, perencanaan respons, dan pengendalian risiko pada suatu proyek. Tujuannya adalah untuk <strong>meningkatkan probabilitas dan dampak kejadian positif</strong>, serta menurunkan probabilitas dan dampak kejadian negatif dalam proyek.</p>
+  </div>
+
+  <div class="analogy">
+    <div class="analogy-label">💡 Analogi — Mudah Dipahami</div>
+    <p>Bayangkan Anda akan <strong>mendaki Gunung Semeru</strong>. Sebelum berangkat, Anda mempersiapkan diri:</p>
+    <ul class="styled" style="margin-top:10px">
+      <li>Mengidentifikasi bahaya: hujan lebat, jalur licin, kelelahan</li>
+      <li>Menilai seberapa mungkin terjadi dan seberapa bahaya dampaknya</li>
+      <li>Merespons: bawa jas hujan, pilih sepatu anti-slip, bawa teman</li>
+      <li>Memantau kondisi cuaca sepanjang pendakian</li>
+    </ul>
+    <p style="margin-top:10px">Itulah esensi <strong>Risk Management dalam proyek</strong> — antisipasi sebelum masalah muncul.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><div class="card-icon" style="background:#fee2e2">⚡</div>Apa itu Risiko?</div>
+    <p>Risiko adalah <strong>kejadian atau kondisi yang tidak pasti</strong> yang, jika terjadi, berdampak positif atau negatif terhadap satu atau lebih tujuan proyek seperti ruang lingkup, jadwal, biaya, atau kualitas.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px;">
+      <div style="background:#fef2f2; border-radius:8px; padding:14px;">
+        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#ef4444; margin-bottom:6px;">🔴 Risiko Negatif (Threat)</div>
+        <p style="font-size:.88rem;">Dampak buruk yang harus dihindari, dikurangi, atau ditransfer. Contoh: keterlambatan vendor, kenaikan harga material.</p>
+      </div>
+      <div style="background:#f0fdf4; border-radius:8px; padding:14px;">
+        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#22c55e; margin-bottom:6px;">🟢 Risiko Positif (Opportunity)</div>
+        <p style="font-size:.88rem;">Peluang yang dapat dimanfaatkan untuk keuntungan proyek. Contoh: teknologi baru yang mempercepat pengembangan.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><div class="card-icon" style="background:#dbeafe">📐</div>Komponen Utama Risiko</div>
+    <div class="info-grid">
+      <div class="info-tile">
+        <div class="t-label">Probability</div>
+        <div class="t-val">Kemungkinan Terjadi</div>
+        <p style="font-size:.82rem; color:var(--muted); margin-top:4px;">Seberapa besar peluang risiko ini akan terjadi? (0–100%)</p>
+      </div>
+      <div class="info-tile">
+        <div class="t-label">Impact</div>
+        <div class="t-val">Dampak / Pengaruh</div>
+        <p style="font-size:.82rem; color:var(--muted); margin-top:4px;">Seberapa besar pengaruhnya pada tujuan proyek?</p>
+      </div>
+      <div class="info-tile">
+        <div class="t-label">Risk Score</div>
+        <div class="t-val">P × I</div>
+        <p style="font-size:.82rem; color:var(--muted); margin-top:4px;">Probability dikali Impact = skor prioritas risiko</p>
+      </div>
+      <div class="info-tile">
+        <div class="t-label">Risk Owner</div>
+        <div class="t-val">Penanggung Jawab</div>
+        <p style="font-size:.82rem; color:var(--muted); margin-top:4px;">Siapa yang bertanggung jawab memantau & merespons?</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><div class="card-icon" style="background:#dcfce7">📝</div>Dokumen Kunci: Risk Register</div>
+    <p>Risk Register adalah dokumen sentral manajemen risiko yang berisi:</p>
+    <ul class="styled" style="margin-top:12px">
+      <li><strong>Daftar risiko</strong> yang teridentifikasi</li>
+      <li><strong>Akar penyebab</strong> potensial</li>
+      <li><strong>Penilaian probabilitas & dampak</strong> (kualitatif & kuantitatif)</li>
+      <li><strong>Rencana respons</strong> dan tindakan kontigensi</li>
+      <li><strong>Pemilik risiko</strong> dan status saat ini</li>
+      <li><strong>Risiko residual & sekunder</strong> setelah respons diterapkan</li>
+    </ul>
+  </div>
+
+  <div class="analogy">
+    <div class="analogy-label">💡 Analogi Risk Register</div>
+    <p>Risk Register itu seperti <strong>buku catatan dokter UGD</strong> — setiap pasien (risiko) dicatat kondisinya, tingkat kegawatan, dokter yang menangani, dan tindakan yang sudah/akan dilakukan. Tanpa catatan ini, penanganan akan kacau dan tidak terkoordinasi.</p>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════ 6 PROSES ════════════════════════════ -->
+<div class="section" id="proses">
+<div class="container">
+  <div class="section-title">6 Proses Risk Management</div>
+  <div class="section-subtitle">Klik setiap proses untuk melihat detail input, tools & techniques, serta output — sesuai PMBOK 5th Ed.</div>
+
+  <div class="card">
+    <div class="steps" id="processSteps">
+
+      <div class="step" onclick="toggleStep(this, 0)">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Plan Risk Management</div>
+          <div class="step-desc">Merencanakan bagaimana aktivitas manajemen risiko akan dilaksanakan dalam proyek</div>
+          <div class="step-detail">
+            <div style="margin-bottom:12px">
+              <span class="step-tag">📥 Input</span> Project Management Plan, Project Charter, Stakeholder Register, Enterprise Environmental Factors, Organizational Process Assets
+            </div>
+            <div style="margin-bottom:12px">
+              <span class="step-tag">🛠️ Tools</span> Analytical techniques, Expert judgment, Meetings
+            </div>
+            <div style="margin-bottom:16px">
+              <span class="step-tag">📤 Output</span> <strong>Risk Management Plan</strong>
+            </div>
+            <div class="analogy" style="margin:0">
+              <div class="analogy-label">💡 Analogi</div>
+              Seperti menyiapkan <strong>SOP tanggap bencana</strong> sebelum bencana terjadi. Anda mendefinisikan siapa yang bertanggung jawab, bagaimana skala prioritas, dan tools apa yang dipakai.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" onclick="toggleStep(this, 1)">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Identify Risks</div>
+          <div class="step-desc">Menentukan risiko-risiko mana yang dapat mempengaruhi proyek dan mendokumentasikan karakteristiknya</div>
+          <div class="step-detail">
+            <div style="margin-bottom:12px">
+              <span class="step-tag">📥 Input</span> Risk Management Plan, Cost/Schedule/Quality/HR Management Plans, Scope Baseline, Activity Cost/Duration Estimates, Stakeholder Register
+            </div>
+            <div style="margin-bottom:12px">
+              <span class="step-tag">🛠️ Tools</span> Documentation reviews, Information gathering techniques (Brainstorming, Delphi, Interviews, Root cause analysis), Checklist analysis, Assumptions analysis, Diagramming techniques, SWOT analysis, Expert judgment
+            </div>
+            <div style="margin-bottom:16px">
+              <span class="step-tag">📤 Output</span> <strong>Risk Register (awal)</strong>
+            </div>
+            <div class="analogy" style="margin:0">
+              <div class="analogy-label">💡 Analogi</div>
+              Seperti <strong>detektif menyusun daftar tersangka</strong>. Semakin banyak informasi dikumpulkan dari berbagai sumber (wawancara, dokumen historis, observasi), semakin lengkap daftar risiko yang bisa diidentifikasi.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" onclick="toggleStep(this, 2)">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Perform Qualitative Risk Analysis</div>
+          <div class="step-desc">Memprioritaskan risiko berdasarkan probabilitas dan dampak secara kualitatif (tanpa angka pasti)</div>
+          <div class="step-detail">
+            <div style="margin-bottom:12px">
+              <span class="step-tag">📥 Input</span> Risk Management Plan, Scope Baseline, Risk Register, Enterprise Environmental Factors, Organizational Process Assets
+            </div>
+            <div style="margin-bottom:12px">
+              <span class="step-tag">🛠️ Tools</span> Risk probability and impact assessment, Probability and impact matrix, Risk data quality assessment, Risk categorization, Risk urgency assessment, Expert judgment
+            </div>
+            <div style="margin-bottom:16px">
+              <span class="step-tag">📤 Output</span> <strong>Risk Register Updates</strong> (prioritas, kategori, urgensi)
+            </div>
+            <div class="analogy" style="margin:0">
+              <div class="analogy-label">💡 Analogi</div>
+              Seperti <strong>triase pasien di UGD</strong>. Dokter menilai cepat: mana yang kritis (merah), serius (kuning), dan ringan (hijau) — tanpa perlu semua pemeriksaan laboratorium dulu.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" onclick="toggleStep(this, 3)">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Perform Quantitative Risk Analysis</div>
+          <div class="step-desc">Menganalisis risiko secara numerik untuk menilai efek gabungan pada tujuan proyek</div>
+          <div class="step-detail">
+            <div style="margin-bottom:12px">
+              <span class="step-tag">📥 Input</span> Risk Management Plan, Cost/Schedule Management Plan, Risk Register, Enterprise Environmental Factors, Organizational Process Assets
+            </div>
+            <div style="margin-bottom:12px">
+              <span class="step-tag">🛠️ Tools</span> Data gathering & representation (Interviews, Probability distributions), Quantitative risk analysis and modeling (Monte Carlo simulation, Decision tree analysis, Sensitivity analysis — Tornado diagram), Expert judgment
+            </div>
+            <div style="margin-bottom:16px">
+              <span class="step-tag">📤 Output</span> <strong>Risk Register Updates</strong> (probabilistic analysis, contingency reserves)
+            </div>
+            <div class="analogy" style="margin:0">
+              <div class="analogy-label">💡 Analogi</div>
+              Seperti <strong>aktuaris asuransi</strong> yang menghitung dengan tepat: "Jika ada 1000 pengemudi, berapa yang akan kecelakaan, dan berapa biaya klaim rata-ratanya?" — bukan sekadar "ada kemungkinan kecelakaan".
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" onclick="toggleStep(this, 4)">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Plan Risk Responses</div>
+          <div class="step-desc">Mengembangkan pilihan dan tindakan untuk meningkatkan peluang dan mengurangi ancaman</div>
+          <div class="step-detail">
+            <div style="margin-bottom:12px">
+              <span class="step-tag">📥 Input</span> Risk Management Plan, Risk Register
+            </div>
+            <div style="margin-bottom:12px">
+              <span class="step-tag">🛠️ Tools</span>
+              <br>• <strong>Negative risks:</strong> Avoid, Transfer, Mitigate, Accept
+              <br>• <strong>Positive risks:</strong> Exploit, Share, Enhance, Accept
+              <br>• Contingent response strategies, Expert judgment
+            </div>
+            <div style="margin-bottom:16px">
+              <span class="step-tag">📤 Output</span> <strong>Risk Register Updates, Project Management Plan Updates, Project Document Updates</strong>
+            </div>
+            <div class="analogy" style="margin:0">
+              <div class="analogy-label">💡 Analogi</div>
+              Seperti <strong>strategi pertahanan tim sepak bola</strong>: ada yang dijaga ketat (avoid), ada yang dialihkan ke kiper (transfer), ada yang ditekan agar tidak berbahaya (mitigate), ada juga yang diterima risikonya karena tidak bisa dihindari (accept).
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" onclick="toggleStep(this, 5)">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-title">Control Risks</div>
+          <div class="step-desc">Mengimplementasikan rencana respons, memantau risiko teridentifikasi, dan mengidentifikasi risiko baru</div>
+          <div class="step-detail">
+            <div style="margin-bottom:12px">
+              <span class="step-tag">📥 Input</span> Project Management Plan, Risk Register, Work Performance Data, Work Performance Reports
+            </div>
+            <div style="margin-bottom:12px">
+              <span class="step-tag">🛠️ Tools</span> Risk reassessment, Risk audits, Variance and trend analysis, Technical performance measurement, Reserve analysis, Meetings (status)
+            </div>
+            <div style="margin-bottom:16px">
+              <span class="step-tag">📤 Output</span> <strong>Work Performance Information, Change Requests, Risk Register Updates, Project Management Plan Updates, Organizational Process Assets Updates</strong>
+            </div>
+            <div class="analogy" style="margin:0">
+              <div class="analogy-label">💡 Analogi</div>
+              Seperti <strong>pilot yang memantau instrumen pesawat</strong> sepanjang penerbangan — bukan hanya saat take-off. Jika ada turbulensi baru atau kondisi cuaca berubah, pilot merespons secara real-time dan mencatatnya di logbook.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════ ANALISIS ════════════════════════════ -->
+<div class="section" id="analisis">
+<div class="container">
+  <div class="section-title">Analisis Risiko</div>
+  <div class="section-subtitle">Memahami Probability & Impact Matrix dan perbedaan analisis kualitatif vs kuantitatif</div>
+
+  <div class="card">
+    <div class="card-title">📊 Probability & Impact Matrix</div>
+    <p style="margin-bottom:16px;">Matrix ini digunakan dalam <strong>Qualitative Risk Analysis</strong> untuk menentukan rating setiap risiko berdasarkan kemungkinan terjadi dan dampaknya.</p>
+    <div class="matrix-wrap">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th>Probabilitas ↕ / Dampak →</th>
+            <th>Sangat Rendah (0.05)</th>
+            <th>Rendah (0.10)</th>
+            <th>Sedang (0.20)</th>
+            <th>Tinggi (0.40)</th>
+            <th>Sangat Tinggi (0.80)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-header">Sangat Tinggi (0.90)</td>
+            <td class="m-med">0.045</td>
+            <td class="m-med">0.090</td>
+            <td class="m-high">0.180</td>
+            <td class="m-high">0.360</td>
+            <td class="m-crit">0.720</td>
+          </tr>
+          <tr>
+            <td class="row-header">Tinggi (0.70)</td>
+            <td class="m-med">0.035</td>
+            <td class="m-med">0.070</td>
+            <td class="m-high">0.140</td>
+            <td class="m-high">0.280</td>
+            <td class="m-crit">0.560</td>
+          </tr>
+          <tr>
+            <td class="row-header">Sedang (0.50)</td>
+            <td class="m-low">0.025</td>
+            <td class="m-med">0.050</td>
+            <td class="m-med">0.100</td>
+            <td class="m-high">0.200</td>
+            <td class="m-high">0.400</td>
+          </tr>
+          <tr>
+            <td class="row-header">Rendah (0.30)</td>
+            <td class="m-low">0.015</td>
+            <td class="m-low">0.030</td>
+            <td class="m-med">0.060</td>
+            <td class="m-med">0.120</td>
+            <td class="m-high">0.240</td>
+          </tr>
+          <tr>
+            <td class="row-header">Sangat Rendah (0.10)</td>
+            <td class="m-low">0.005</td>
+            <td class="m-low">0.010</td>
+            <td class="m-low">0.020</td>
+            <td class="m-med">0.040</td>
+            <td class="m-med">0.080</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="display:flex; gap:12px; margin-top:14px; flex-wrap:wrap;">
+      <span style="display:flex;align-items:center;gap:6px;font-size:.82rem;"><span style="width:14px;height:14px;background:#dcfce7;border:1px solid #86efac;border-radius:2px;display:inline-block"></span>Rendah</span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:.82rem;"><span style="width:14px;height:14px;background:#fef3c7;border:1px solid #fde047;border-radius:2px;display:inline-block"></span>Sedang</span>
+      <span style="display:flex;align-items:center;gap=6px;font-size:.82rem;"><span style="width:14px;height:14px;background:#fee2e2;border:1px solid #fca5a5;border-radius:2px;display:inline-block;margin-left:12px"></span>Tinggi</span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:.82rem;"><span style="width:14px;height:14px;background:#7f1d1d;border-radius:2px;display:inline-block"></span>Kritis</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚖️ Kualitatif vs Kuantitatif</div>
+    <div style="overflow-x:auto;">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th>Aspek</th>
+            <th>Analisis Kualitatif</th>
+            <th>Analisis Kuantitatif</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-header">Tujuan</td>
+            <td>Prioritisasi & screening risiko</td>
+            <td>Menghitung dampak numerik pada proyek</td>
+          </tr>
+          <tr>
+            <td class="row-header">Metode</td>
+            <td>Skala ordinal (Tinggi/Sedang/Rendah)</td>
+            <td>Monte Carlo, Decision Tree, EMV</td>
+          </tr>
+          <tr>
+            <td class="row-header">Waktu</td>
+            <td>Lebih cepat</td>
+            <td>Lebih lama & kompleks</td>
+          </tr>
+          <tr>
+            <td class="row-header">Data</td>
+            <td>Expert judgment & opini</td>
+            <td>Data historis & distribusi probabilitas</td>
+          </tr>
+          <tr>
+            <td class="row-header">Output</td>
+            <td>Risk ranking & priority list</td>
+            <td>Contingency reserve amount, P-schedule</td>
+          </tr>
+          <tr>
+            <td class="row-header">Wajib?</td>
+            <td>✅ Selalu dilakukan</td>
+            <td>❌ Tidak selalu (hanya proyek besar/kompleks)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🎲 Expected Monetary Value (EMV)</div>
+    <p style="margin-bottom:16px;">EMV adalah teknik dalam analisis kuantitatif yang menghitung nilai ekspektasi dari suatu risiko.</p>
+    <div style="background:var(--cream); border-radius:8px; padding:20px; font-family:monospace; font-size:.95rem; line-height:2; margin-bottom:16px;">
+      EMV = Probability (%) × Impact (Rp)<br>
+      <br>
+      Contoh:<br>
+      • Risiko delay vendor: 30% × (-Rp 50 juta) = <strong style="color:#ef4444">-Rp 15 juta</strong><br>
+      • Peluang early delivery: 20% × (+Rp 30 juta) = <strong style="color:#22c55e">+Rp 6 juta</strong><br>
+      <br>
+      Total EMV = -Rp 15 jt + Rp 6 jt = <strong>-Rp 9 juta</strong>
+    </div>
+    <div class="analogy" style="margin:0">
+      <div class="analogy-label">💡 Analogi</div>
+      Seperti <strong>menghitung ekspektasi untung-rugi judi koin</strong>. Kalau menang dapat Rp10.000, kalah bayar Rp8.000, peluang 50-50: EMV = (50%×10.000) + (50%×-8.000) = +Rp1.000 → worth it.
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════ STRATEGI ════════════════════════════ -->
+<div class="section" id="strategi">
+<div class="container">
+  <div class="section-title">Strategi Respons Risiko</div>
+  <div class="section-subtitle">PMBOK mendefinisikan strategi berbeda untuk risiko negatif (ancaman) dan risiko positif (peluang)</div>
+
+  <div class="card" style="background:linear-gradient(135deg,#fef2f2,#fff)">
+    <div class="card-title" style="color:#991b1b">🔴 Strategi untuk Risiko Negatif (Threats)</div>
+    <div class="strategies-grid">
+      <div class="strategy-card s-avoid">
+        <div class="s-icon">🚫</div>
+        <div class="s-title">Avoid (Hindari)</div>
+        <div class="s-desc">Mengubah project plan untuk menghilangkan ancaman atau melindungi tujuan proyek dari dampaknya.<br><br><em>Contoh: Mengubah vendor yang berisiko tinggi; Menyederhanakan scope yang kompleks.</em></div>
+      </div>
+      <div class="strategy-card s-transfer">
+        <div class="s-icon">🔀</div>
+        <div class="s-title">Transfer (Alihkan)</div>
+        <div class="s-desc">Memindahkan dampak negatif risiko ke pihak ketiga (bukan menghilangkannya).<br><br><em>Contoh: Asuransi proyek; Fixed-price contract; Warranty clause.</em></div>
+      </div>
+      <div class="strategy-card s-mitigate">
+        <div class="s-icon">⬇️</div>
+        <div class="s-title">Mitigate (Kurangi)</div>
+        <div class="s-desc">Mengurangi probabilitas dan/atau dampak risiko ke threshold yang dapat diterima.<br><br><em>Contoh: Testing lebih awal; Pilih teknologi yang sudah terbukti; Tambah resource.</em></div>
+      </div>
+      <div class="strategy-card s-accept">
+        <div class="s-icon">✋</div>
+        <div class="s-title">Accept (Terima)</div>
+        <div class="s-desc">Tidak mengubah project plan. Bisa aktif (siapkan contingency) atau pasif (catat saja).<br><br><em>Contoh: Contingency reserve; Management reserve; Hanya dicatat di risk register.</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="background:linear-gradient(135deg,#f0fdf4,#fff); margin-top: 20px">
+    <div class="card-title" style="color:#166534">🟢 Strategi untuk Risiko Positif (Opportunities)</div>
+    <div class="strategies-grid">
+      <div class="strategy-card s-exploit">
+        <div class="s-icon">🎯</div>
+        <div class="s-title">Exploit (Manfaatkan)</div>
+        <div class="s-desc">Memastikan peluang pasti terjadi dengan menghilangkan ketidakpastian.<br><br><em>Contoh: Tambah sumber daya terbaik agar fitur unggulan selesai lebih cepat.</em></div>
+      </div>
+      <div class="strategy-card s-share">
+        <div class="s-icon">🤝</div>
+        <div class="s-title">Share (Bagikan)</div>
+        <div class="s-desc">Berbagi kepemilikan peluang dengan pihak ketiga yang lebih mampu memanfaatkannya.<br><br><em>Contoh: Joint venture; Kemitraan strategis; Tim gabungan.</em></div>
+      </div>
+      <div class="strategy-card s-enhance">
+        <div class="s-icon">📈</div>
+        <div class="s-title">Enhance (Perkuat)</div>
+        <div class="s-desc">Meningkatkan probabilitas dan/atau dampak positif dari peluang.<br><br><em>Contoh: Investasi lebih awal di teknologi yang menjanjikan; Tambah anggaran R&D.</em></div>
+      </div>
+      <div class="strategy-card s-accept">
+        <div class="s-icon">✋</div>
+        <div class="s-title">Accept (Terima)</div>
+        <div class="s-desc">Siap memanfaatkan peluang jika muncul, tapi tidak aktif mengejarnya.<br><br><em>Contoh: Catat di risk register; Siapkan contingency plan jika peluang datang.</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="analogy" style="margin-top:20px">
+    <div class="analogy-label">💡 Analogi 4 Strategi Negatif</div>
+    <p>Bayangkan Anda takut <strong>hujan lebat saat piknik</strong>:</p>
+    <ul class="styled" style="margin-top:10px">
+      <li><strong>Avoid:</strong> Pindah tanggal piknik ke musim kemarau — risikonya hilang sama sekali.</li>
+      <li><strong>Transfer:</strong> Sewa aula indoor — kalau hujan, pihak venue yang rugi, bukan Anda.</li>
+      <li><strong>Mitigate:</strong> Bawa tenda & jas hujan — hujan tetap mungkin, tapi dampaknya berkurang.</li>
+      <li><strong>Accept (aktif):</strong> Siapkan rencana B: "Kalau hujan, kita pindah ke rumah teman".</li>
+      <li><strong>Accept (pasif):</strong> "Ah, nanti liat aja deh" — tidak ada tindakan spesifik.</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════ STUDI KASUS ════════════════════════════ -->
+<div class="section" id="kasusstudy">
+<div class="container">
+  <div class="section-title">Studi Kasus</div>
+  <div class="section-subtitle">Penerapan Risk Management dalam skenario proyek nyata</div>
+
+  <div class="case-nav">
+    <button class="case-btn active" onclick="showCase('case1', this)">🏗️ Proyek Konstruksi</button>
+    <button class="case-btn" onclick="showCase('case2', this)">💻 Pengembangan Sistem IT</button>
+    <button class="case-btn" onclick="showCase('case3', this)">🎓 Event Akademik</button>
+  </div>
+
+  <!-- CASE 1 -->
+  <div class="case-panel active" id="case1">
+    <div class="case-header">
+      <div class="c-tag">🏗️ Studi Kasus 1</div>
+      <h3>Pembangunan Gedung Kuliah 10 Lantai — Universitas Nusantara</h3>
+      <p style="opacity:.75; font-size:.9rem; margin-top:6px;">Anggaran: Rp 45 Miliar | Durasi: 24 bulan | Tim: 150 orang</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section">
+        <h4>📍 Latar Belakang</h4>
+        <p>Universitas Nusantara membangun gedung kuliah baru di kawasan rawan banjir di Semarang. Proyek harus selesai tepat waktu karena tahun ajaran baru dimulai 2 bulan setelah target selesai.</p>
+      </div>
+      <div class="case-section">
+        <h4>⚠️ Risiko Teridentifikasi</h4>
+        <div class="risk-item hi">🔴 <div><strong>Banjir musiman</strong> (P: Tinggi, I: Sangat Tinggi) — Lokasi di area langganan banjir saat hujan deras. Bisa menghentikan konstruksi 2-4 minggu.</div></div>
+        <div class="risk-item hi">🔴 <div><strong>Kenaikan harga material beton</strong> (P: Sedang, I: Tinggi) — Fluktuasi harga pasir & besi bisa menambah biaya 15%.</div></div>
+        <div class="risk-item md">🟡 <div><strong>Keterlambatan perizinan</strong> (P: Sedang, I: Sedang) — IMB dan izin lingkungan bisa tertunda 1-2 bulan jika dokumen tidak lengkap.</div></div>
+        <div class="risk-item lo">🟢 <div><strong>Teknologi bekisting modern</strong> (P: Sedang, I: Sedang) — Jika digunakan, dapat mempercepat pengecoran 20%.</div></div>
+      </div>
+      <div class="case-section">
+        <h4>🛡️ Rencana Respons</h4>
+        <div style="background:var(--cream); border-radius:8px; padding:16px;">
+          <p>• <strong>Banjir (Mitigate):</strong> Jadwalkan pekerjaan struktur utama di musim kemarau (April–Oktober). Pasang pompa air otomatis di sekitar lokasi. Tambahkan buffer 3 minggu di schedule.</p>
+          <p style="margin-top:8px">• <strong>Kenaikan harga (Transfer):</strong> Kontrak fixed-price dengan supplier material utama, dikunci harga untuk 12 bulan pertama.</p>
+          <p style="margin-top:8px">• <strong>Perizinan (Avoid):</strong> Siapkan semua dokumen 3 bulan sebelum konstruksi. Rekrut konsultan perizinan berpengalaman.</p>
+          <p style="margin-top:8px">• <strong>Teknologi bekisting (Exploit):</strong> Alokasikan anggaran untuk sewa teknologi bekisting modern dari awal untuk memastikan manfaatnya terealisasi.</p>
+        </div>
+      </div>
+      <div class="analogy">
+        <div class="analogy-label">💡 Pelajaran Kunci</div>
+        Risk Management bukan tentang menghilangkan semua risiko — itu mustahil. Tujuannya adalah <strong>membuat keputusan yang tepat dan terencana</strong> sehingga tim tidak panik saat masalah muncul.
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE 2 -->
+  <div class="case-panel" id="case2">
+    <div class="case-header">
+      <div class="c-tag">💻 Studi Kasus 2</div>
+      <h3>Implementasi Sistem ERP Rumah Sakit Besar</h3>
+      <p style="opacity:.75; font-size:.9rem; margin-top:6px;">Anggaran: Rp 8 Miliar | Durasi: 18 bulan | Pengguna: 2.500 staf</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section">
+        <h4>📍 Latar Belakang</h4>
+        <p>RS Budi Mulia mengganti sistem legacy-nya yang berumur 15 tahun dengan ERP terintegrasi (keuangan, SDM, logistik, rekam medis). Kegagalan sistem bisa mengancam keselamatan pasien.</p>
+      </div>
+      <div class="case-section">
+        <h4>⚠️ Risiko Teridentifikasi</h4>
+        <div class="risk-item hi">🔴 <div><strong>Resistansi pengguna</strong> (P: Sangat Tinggi, I: Tinggi) — Staf medis dan non-medis terbiasa dengan sistem lama, kemungkinan besar menolak perubahan.</div></div>
+        <div class="risk-item hi">🔴 <div><strong>Migrasi data gagal</strong> (P: Sedang, I: Sangat Tinggi) — Data pasien 15 tahun bisa rusak atau tidak kompatibel saat dipindahkan ke sistem baru.</div></div>
+        <div class="risk-item md">🟡 <div><strong>Vendor ERP tidak memenuhi SLA</strong> (P: Rendah, I: Tinggi) — Vendor bisa gagal deliver fitur kritis tepat waktu.</div></div>
+        <div class="risk-item lo">🟢 <div><strong>Peluang integrasi AI</strong> (P: Sedang, I: Tinggi) — Platform ERP baru mendukung add-on AI untuk prediksi kebutuhan obat.</div></div>
+      </div>
+      <div class="case-section">
+        <h4>🛡️ Rencana Respons</h4>
+        <div style="background:var(--cream); border-radius:8px; padding:16px;">
+          <p>• <strong>Resistansi (Mitigate):</strong> Program change management 6 bulan: workshops, super-user dari setiap departemen, feedback loop bulanan. Go-live bertahap per departemen.</p>
+          <p style="margin-top:8px">• <strong>Migrasi data (Avoid/Mitigate):</strong> Lakukan 3x dry-run migrasi di environment staging. Pertahankan sistem lama paralel selama 3 bulan pasca go-live.</p>
+          <p style="margin-top:8px">• <strong>Vendor (Transfer):</strong> Kontrak dengan penalty clause: denda 0.5%/hari keterlambatan. Escrow source code. SLA 99.5% uptime.</p>
+          <p style="margin-top:8px">• <strong>AI Integration (Enhance):</strong> Alokasikan 5% anggaran untuk R&D AI integration di fase 2 proyek.</p>
+        </div>
+      </div>
+      <div class="analogy">
+        <div class="analogy-label">💡 Pelajaran Kunci</div>
+        Dalam proyek IT, <strong>risiko manusia (people risk)</strong> seringkali jauh lebih berbahaya dari risiko teknis. Sehebat apapun sistemnya, jika pengguna tidak mau pakai, proyek gagal.
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE 3 -->
+  <div class="case-panel" id="case3">
+    <div class="case-header">
+      <div class="c-tag">🎓 Studi Kasus 3</div>
+      <h3>Penyelenggaraan Konferensi Internasional ICT — 3.000 Peserta</h3>
+      <p style="opacity:.75; font-size:.9rem; margin-top:6px;">Anggaran: Rp 2,5 Miliar | Durasi Persiapan: 8 bulan | Peserta: 3.000 dari 25 negara</p>
+    </div>
+    <div class="case-body">
+      <div class="case-section">
+        <h4>📍 Latar Belakang</h4>
+        <p>Asosiasi ICT Indonesia menyelenggarakan konferensi internasional perdana. Reputasi asosiasi dan potensi tuan rumah konferensi berikutnya bergantung pada keberhasilan acara ini.</p>
+      </div>
+      <div class="case-section">
+        <h4>⚠️ Risiko Teridentifikasi</h4>
+        <div class="risk-item hi">🔴 <div><strong>Pembicara utama membatalkan diri</strong> (P: Sedang, I: Sangat Tinggi) — Keynote speaker dari Google bisa tiba-tiba cancel 2 minggu sebelum acara.</div></div>
+        <div class="risk-item md">🟡 <div><strong>Gangguan teknis AV & internet</strong> (P: Sedang, I: Sedang) — Koneksi internet drop atau sistem presentasi bermasalah saat sesi berlangsung.</div></div>
+        <div class="risk-item md">🟡 <div><strong>Peserta jauh di bawah target</strong> (P: Rendah, I: Tinggi) — Jika pendaftar hanya 60% dari target, biaya tidak tertutup.</div></div>
+        <div class="risk-item lo">🟢 <div><strong>Media coverage viral</strong> (P: Rendah, I: Sangat Tinggi) — Jika acara meledak di media sosial, sponsorship dan peserta tahun depan meningkat drastis.</div></div>
+      </div>
+      <div class="case-section">
+        <h4>🛡️ Rencana Respons</h4>
+        <div style="background:var(--cream); border-radius:8px; padding:16px;">
+          <p>• <strong>Pembicara cancel (Mitigate + Accept aktif):</strong> Kontrak 3 backup speakers. Siapkan sesi panel diskusi sebagai pengganti. Tetap bayar full fee untuk pembicara utama jika tidak hadir.</p>
+          <p style="margin-top:8px">• <strong>Gangguan teknis (Mitigate):</strong> Sewa 2 vendor AV (primary + backup). Test 2 hari sebelum acara. Tim IT on-site 24 jam. Koneksi internet dari 2 ISP berbeda.</p>
+          <p style="margin-top:8px">• <strong>Peserta rendah (Transfer):</strong> Kontrak venue dengan cancellation clause — jika peserta <1.500, bisa scale-down ruangan tanpa penalti besar.</p>
+          <p style="margin-top:8px">• <strong>Viral coverage (Exploit):</strong> Kontrak social media influencer ICT Indonesia; siapkan photo spot dan press kit premium; live streaming ke YouTube.</p>
+        </div>
+      </div>
+      <div class="analogy">
+        <div class="analogy-label">💡 Pelajaran Kunci</div>
+        Untuk proyek event, <strong>selalu punya Plan B yang sudah dipersiapkan matang</strong>, bukan yang baru dicari saat krisis terjadi. Contingency plan yang baik adalah yang sudah di-rehearse.
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════════════ KUIS ════════════════════════════ -->
+<div class="section" id="kuis">
+<div class="container">
+  <div class="section-title">Kuis Pemahaman</div>
+  <div class="section-subtitle">Uji pengetahuan Anda tentang Risk Management — 15 soal pilihan ganda berbobot</div>
+
+  <div class="card">
+    <div class="quiz-progress" id="quizProgress"></div>
+    <div class="question-box" id="questionBox"></div>
+    <div id="feedbackBox" class="feedback"></div>
+    <div class="quiz-controls">
+      <div id="scoreTracker" style="font-size:.88rem; color:var(--muted);"></div>
+      <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Lanjut →</button>
+    </div>
+  </div>
+
+  <div class="score-screen" id="scoreScreen">
+    <div class="score-circle">
+      <div class="big-num" id="finalScore">0</div>
+      <div class="sub">dari 15</div>
+    </div>
+    <div class="score-msg" id="scoreMsg"></div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <button class="retry-btn" onclick="restartQuiz()">🔄 Ulangi Kuis</button>
+    <button class="btn-primary" onclick="showSection('definisi', document.querySelector('.nav-btn'))">📚 Kembali ke Materi</button>
+  </div>
+</div>
+</div>
+
+<script>
+// ─── NAVIGATION ───
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  if(id === 'kuis') initQuiz();
+}
+
+// ─── PROCESS STEPS ───
+function toggleStep(el, idx) {
+  const detail = el.querySelector('.step-detail');
+  const isOpen = detail.classList.contains('open');
+  document.querySelectorAll('.step-detail').forEach(d => d.classList.remove('open'));
+  if(!isOpen) detail.classList.add('open');
+}
+
+// ─── CASE STUDY ───
+function showCase(id, btn) {
+  document.querySelectorAll('.case-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.case-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ─── QUIZ ───
+const questions = [
+  {
+    q: "Menurut PMBOK 5th Edition, apa tujuan utama dari Project Risk Management?",
+    opts: [
+      "Menghilangkan semua risiko dalam proyek",
+      "Meningkatkan probabilitas kejadian positif dan menurunkan probabilitas kejadian negatif",
+      "Membuat laporan risiko untuk atasan",
+      "Mengidentifikasi penyebab keterlambatan jadwal"
+    ],
+    ans: 1,
+    exp: "PMBOK mendefinisikan tujuan Risk Management adalah untuk meningkatkan probabilitas dan dampak kejadian positif, serta menurunkan probabilitas dan dampak kejadian negatif dalam proyek."
+  },
+  {
+    q: "Sebuah perusahaan konstruksi membeli asuransi proyek untuk melindungi dari kerusakan akibat bencana alam. Strategi respons risiko apa yang digunakan?",
+    opts: ["Avoid", "Mitigate", "Transfer", "Accept"],
+    ans: 2,
+    exp: "Membeli asuransi adalah contoh klasik dari Transfer — dampak finansial risiko dipindahkan ke pihak ketiga (perusahaan asuransi), bukan dihilangkan."
+  },
+  {
+    q: "Proses manajemen risiko mana yang menghasilkan Risk Register pertama kali?",
+    opts: ["Plan Risk Management", "Identify Risks", "Perform Qualitative Risk Analysis", "Plan Risk Responses"],
+    ans: 1,
+    exp: "Risk Register pertama kali dibuat sebagai output dari proses Identify Risks. Proses-proses berikutnya akan terus memperbarui isi Risk Register."
+  },
+  {
+    q: "Tim proyek memutuskan untuk mengubah scope proyek agar teknologi berisiko tinggi tidak perlu digunakan lagi. Strategi ini disebut?",
+    opts: ["Mitigate", "Transfer", "Accept", "Avoid"],
+    ans: 3,
+    exp: "Mengubah scope atau project plan untuk menghilangkan risiko sepenuhnya disebut Avoid — risikonya dieliminasi, bukan sekadar dikurangi."
+  },
+  {
+    q: "Dalam Probability & Impact Matrix, risiko dengan probabilitas TINGGI dan dampak SANGAT TINGGI termasuk kategori apa?",
+    opts: ["Low Risk", "Medium Risk", "High Risk", "Critical Risk"],
+    ans: 3,
+    exp: "Kombinasi probabilitas tinggi dan dampak sangat tinggi menghasilkan skor risiko tertinggi, masuk kategori Critical Risk yang harus segera mendapat perhatian dan respons."
+  },
+  {
+    q: "Apa perbedaan utama antara Qualitative dan Quantitative Risk Analysis?",
+    opts: [
+      "Qualitative menggunakan angka, Quantitative menggunakan kata-kata",
+      "Qualitative untuk prioritisasi menggunakan skala deskriptif, Quantitative untuk analisis numerik dampak",
+      "Qualitative lebih mahal dan kompleks dari Quantitative",
+      "Qualitative hanya untuk risiko positif, Quantitative hanya untuk risiko negatif"
+    ],
+    ans: 1,
+    exp: "Qualitative Risk Analysis menggunakan skala deskriptif (Tinggi/Sedang/Rendah) untuk prioritisasi cepat. Quantitative Risk Analysis menggunakan angka dan model statistik (Monte Carlo, Decision Tree) untuk menghitung dampak numerik."
+  },
+  {
+    q: "Seorang PM menemukan peluang bahwa penyelesaian modul A lebih awal bisa menghemat Rp 200 juta. PM mengalokasikan tim terbaik untuk memastikan peluang ini pasti terjadi. Strategi apa ini?",
+    opts: ["Enhance", "Exploit", "Share", "Accept"],
+    ans: 1,
+    exp: "Exploit adalah strategi untuk risiko positif yang memastikan peluang pasti terjadi dengan menghilangkan ketidakpastiannya — dalam hal ini dengan menempatkan tim terbaik untuk memastikan hasilnya."
+  },
+  {
+    q: "Expected Monetary Value (EMV) dihitung dengan formula:",
+    opts: [
+      "Biaya Proyek × Probabilitas Gagal",
+      "Dampak (Rp) ÷ Probabilitas",
+      "Probabilitas × Dampak (Rp)",
+      "(Biaya Risiko + Biaya Respons) × 2"
+    ],
+    ans: 2,
+    exp: "EMV = Probability × Impact. Hasilnya bisa negatif (ancaman) atau positif (peluang) dan digunakan untuk menghitung contingency reserve yang dibutuhkan."
+  },
+  {
+    q: "Proses Control Risks bertanggung jawab untuk hal-hal berikut, KECUALI:",
+    opts: [
+      "Mengimplementasikan rencana respons risiko",
+      "Mengidentifikasi risiko baru yang muncul selama proyek",
+      "Membuat Risk Management Plan pertama kali",
+      "Melakukan risk reassessment berkala"
+    ],
+    ans: 2,
+    exp: "Risk Management Plan dibuat pada proses Plan Risk Management, bukan Control Risks. Control Risks fokus pada pemantauan, implementasi respons, dan identifikasi risiko baru yang muncul selama eksekusi."
+  },
+  {
+    q: "Vendor software penting proyek Anda tiba-tiba bangkrut. Ini adalah contoh risiko yang sebelumnya dikategorikan sebagai:",
+    opts: [
+      "Known unknown — risiko yang sudah diidentifikasi sebelumnya",
+      "Unknown unknown — risiko yang tidak bisa diperkirakan sebelumnya",
+      "Residual risk — sisa risiko setelah respons diterapkan",
+      "Secondary risk — risiko baru akibat respons risiko lain"
+    ],
+    ans: 0,
+    exp: "Kebangkrutan vendor adalah contoh risiko yang seharusnya bisa diidentifikasi (known unknown) — PM yang baik seharusnya mengevaluasi kesehatan finansial vendor sebagai bagian dari Identify Risks."
+  },
+  {
+    q: "Tim proyek menerapkan strategi mitigasi untuk risiko tertentu. Namun setelah mitigasi, masih ada probabilitas kecil risiko tetap terjadi. Risiko yang tersisa ini disebut?",
+    opts: ["Secondary Risk", "Residual Risk", "Contingency Risk", "Transfer Risk"],
+    ans: 1,
+    exp: "Residual Risk adalah risiko yang masih tersisa setelah strategi respons diterapkan. Ini harus tetap dipantau dan dicatat dalam Risk Register."
+  },
+  {
+    q: "Manakah yang BUKAN termasuk teknik dalam Identify Risks?",
+    opts: [
+      "Brainstorming",
+      "Delphi Technique",
+      "Monte Carlo Simulation",
+      "SWOT Analysis"
+    ],
+    ans: 2,
+    exp: "Monte Carlo Simulation adalah teknik dalam Quantitative Risk Analysis, bukan Identify Risks. Brainstorming, Delphi, dan SWOT Analysis digunakan untuk mengidentifikasi risiko."
+  },
+  {
+    q: "Dalam konteks Risk Management, apa fungsi utama dari Contingency Reserve?",
+    opts: [
+      "Dana cadangan untuk menangani risiko yang sudah diidentifikasi",
+      "Dana cadangan untuk ketidakpastian yang tidak dapat diperkirakan sama sekali",
+      "Biaya asuransi proyek yang dialokasikan di muka",
+      "Bonus tim proyek jika selesai lebih awal"
+    ],
+    ans: 0,
+    exp: "Contingency Reserve adalah dana cadangan untuk menangani risiko yang sudah diidentifikasi (known unknowns). Sedangkan Management Reserve diperuntukkan bagi ketidakpastian yang tidak bisa diperkirakan (unknown unknowns)."
+  },
+  {
+    q: "Sebuah tim proyek memutuskan untuk tidak mengambil tindakan apapun terhadap risiko tertentu karena biaya penanganannya lebih mahal dari dampak risiko itu sendiri. Ini adalah strategi:",
+    opts: ["Avoid", "Mitigate", "Transfer", "Accept (Passive)"],
+    ans: 3,
+    exp: "Accept secara pasif berarti tim sadar akan risiko tetapi memilih tidak melakukan tindakan khusus, biasanya karena cost-benefit analysis menunjukkan respons aktif tidak worth it."
+  },
+  {
+    q: "Risk Register pertama kali dibuat sebagai output proses Identify Risks, lalu terus diperbarui di proses-proses berikutnya. Dalam proses Control Risks, apa tambahan informasi terpenting yang dimasukkan ke Risk Register?",
+    opts: [
+      "Daftar risiko baru yang muncul dan hasil reassessment risiko yang ada",
+      "Anggaran contingency reserve yang disetujui manajemen",
+      "Nama vendor yang dipilih untuk mitigasi risiko",
+      "Jadwal revisi Project Management Plan"
+    ],
+    ans: 0,
+    exp: "Control Risks memperbarui Risk Register terutama dengan: risiko baru yang muncul selama eksekusi, hasil risk reassessment dan risk audits, serta status closing untuk risiko yang sudah tidak relevan."
+  }
+];
+
+let current = 0, score = 0, answered = false;
+
+function initQuiz() {
+  current = 0; score = 0; answered = false;
+  document.getElementById('scoreScreen').classList.remove('show');
+  document.getElementById('questionBox').style.display = 'block';
+  document.getElementById('feedbackBox').className = 'feedback';
+  document.getElementById('feedbackBox').style.display = 'none';
+  document.getElementById('nextBtn').style.display = 'inline-block';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[current];
+  const letters = ['A','B','C','D'];
+  const progress = document.getElementById('quizProgress');
+  progress.innerHTML = questions.map((_,i) => `<div class="q-dot ${i<current?'done':i===current?'current':''}"></div>`).join('');
+
+  document.getElementById('scoreTracker').textContent = `Soal ${current+1} dari ${questions.length}`;
+  document.getElementById('nextBtn').disabled = true;
+  answered = false;
+
+  const feedEl = document.getElementById('feedbackBox');
+  feedEl.className = 'feedback';
+
+  document.getElementById('questionBox').innerHTML = `
+    <div class="q-num">Soal ${current+1} / ${questions.length}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="options">
+      ${q.opts.map((o,i) => `
+        <button class="opt-btn" onclick="selectAnswer(${i})">
+          <span class="opt-letter">${letters[i]}</span>
+          ${o}
+        </button>
+      `).join('')}
+    </div>
+  `;
+}
+
+function selectAnswer(idx) {
+  if(answered) return;
+  answered = true;
+  const q = questions[current];
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach((b,i) => {
+    b.disabled = true;
+    if(i === q.ans) b.classList.add('correct');
+    else if(i === idx && i !== q.ans) b.classList.add('wrong');
+  });
+  if(idx === q.ans) score++;
+
+  const fb = document.getElementById('feedbackBox');
+  fb.className = `feedback show ${idx === q.ans ? 'correct' : 'wrong'}`;
+  fb.innerHTML = idx === q.ans
+    ? `✅ <strong>Tepat!</strong> ${q.exp}`
+    : `❌ <strong>Belum tepat.</strong> Jawaban yang benar: <strong>${['A','B','C','D'][q.ans]}</strong>. ${q.exp}`;
+  fb.style.display = 'block';
+
+  document.getElementById('nextBtn').disabled = false;
+  document.getElementById('nextBtn').textContent = current < questions.length-1 ? 'Lanjut →' : 'Lihat Hasil';
+}
+
+function nextQuestion() {
+  current++;
+  if(current >= questions.length) {
+    showResult();
+    return;
+  }
+  const feedEl = document.getElementById('feedbackBox');
+  feedEl.className = 'feedback';
+  feedEl.style.display = 'none';
+  renderQuestion();
+}
+
+function showResult() {
+  document.getElementById('questionBox').style.display = 'none';
+  document.getElementById('feedbackBox').style.display = 'none';
+  document.getElementById('nextBtn').style.display = 'none';
+  document.getElementById('quizProgress').innerHTML = questions.map(() => `<div class="q-dot done"></div>`).join('');
+
+  const ss = document.getElementById('scoreScreen');
+  ss.classList.add('show');
+  document.getElementById('finalScore').textContent = score;
+
+  let msg, detail;
+  const pct = (score/questions.length)*100;
+  if(pct >= 87) { msg = "🏆 Luar Biasa!"; detail = "Pemahaman Anda tentang Risk Management sudah sangat solid. Siap menghadapi ujian!"; }
+  else if(pct >= 70) { msg = "🎯 Bagus Sekali!"; detail = "Anda memahami konsep-konsep utama dengan baik. Review beberapa topik yang terlewat untuk mempertajam pemahaman."; }
+  else if(pct >= 50) { msg = "📚 Terus Belajar!"; detail = "Ada beberapa konsep yang perlu diperdalam. Coba baca ulang bagian 6 Proses dan Strategi Respons Risiko."; }
+  else { msg = "💪 Jangan Menyerah!"; detail = "Risk Management adalah topik yang memerlukan latihan. Baca ulang seluruh materi dan coba lagi!"; }
+
+  document.getElementById('scoreMsg').textContent = msg;
+  document.getElementById('scoreDetail').textContent = detail;
+  document.getElementById('scoreTracker').textContent = '';
+}
+
+function restartQuiz() {
+  initQuiz();
+}
+
+// Init on first load
+document.addEventListener('DOMContentLoaded', () => {
+  initQuiz();
+});
+</script>
+</body>
+</html>
