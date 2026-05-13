@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Thinking — Studi Kasus Puskesmas</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal-900: #0a2e26;
+    --teal-800: #0d3d32;
+    --teal-600: #0f6e56;
+    --teal-400: #1d9e75;
+    --teal-200: #5dcaa5;
+    --teal-100: #9fe1cb;
+    --teal-50:  #e1f5ee;
+    --amber-400: #ef9f27;
+    --amber-200: #fac775;
+    --coral-400: #d85a30;
+    --purple-400: #7f77dd;
+    --white: #f8faf9;
+    --text: #0a2e26;
+    --muted: #4a7066;
+    --border: rgba(15,110,86,0.15);
+    --card: #ffffff;
+    --bg: #f0faf5;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--teal-800);
+    color: var(--white);
+    padding: 3.5rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 90% 50%, rgba(29,158,117,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(239,159,39,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--teal-200);
+    border: 1px solid rgba(93,202,165,0.3);
+    border-radius: 100px;
+    padding: 0.3rem 0.9rem;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+    position: relative;
+  }
+  .hero h1 span { color: var(--teal-200); }
+  .hero p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(248,250,249,0.7);
+    max-width: 560px;
+    position: relative;
+  }
+  .hero-meta {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .hero-chip {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.8rem;
+    color: rgba(248,250,249,0.6);
+  }
+  .hero-chip .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--teal-200);
+    flex-shrink: 0;
+  }
+
+  /* ── PROGRESS NAV ── */
+  .phase-nav {
+    background: var(--teal-900);
+    padding: 0 1rem;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(29,158,117,0.2);
+  }
+  .phase-nav::-webkit-scrollbar { display: none; }
+  .phase-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 1.1rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    color: rgba(248,250,249,0.45);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .phase-btn:hover { color: var(--teal-100); }
+  .phase-btn.active {
+    color: var(--teal-200);
+    border-bottom-color: var(--teal-200);
+  }
+  .phase-num {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(29,158,117,0.2);
+    color: var(--teal-200);
+    font-size: 0.6rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.25s;
+  }
+  .phase-btn.active .phase-num {
+    background: var(--teal-400);
+    color: #fff;
+  }
+  .phase-btn.done .phase-num {
+    background: var(--teal-600);
+    color: #fff;
+  }
+  .phase-btn.done { color: rgba(248,250,249,0.6); }
+
+  /* ── MAIN LAYOUT ── */
+  .main { max-width: 800px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+  /* ── PHASE SECTIONS ── */
+  .phase-section { display: none; animation: fadeIn 0.4s ease; }
+  .phase-section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--card);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+  }
+  .phase-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .phase-icon.teal   { background: var(--teal-50); }
+  .phase-icon.amber  { background: #faeeda; }
+  .phase-icon.purple { background: #eeedfe; }
+  .phase-icon.coral  { background: #faece7; }
+  .phase-icon.blue   { background: #e6f1fb; }
+
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .section-header p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .phase-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-400);
+    margin-bottom: 0.35rem;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+  .card h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    color: var(--text);
+  }
+  .card p, .card li {
+    font-size: 0.875rem;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+  .card ul { padding-left: 1.2rem; }
+  .card li { margin-bottom: 0.3rem; }
+
+  /* ── QUOTE CARD ── */
+  .quote-card {
+    background: var(--teal-50);
+    border-left: 3px solid var(--teal-400);
+    border-radius: 0 12px 12px 0;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+  .quote-card p {
+    font-size: 0.88rem;
+    font-style: italic;
+    color: var(--teal-800);
+    line-height: 1.6;
+    margin-bottom: 0.35rem;
+  }
+  .quote-card span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--teal-600);
+  }
+
+  /* ── EMPATHY MAP ── */
+  .empathy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .empathy-cell {
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid transparent;
+  }
+  .empathy-cell.think  { background: #eeedfe; border-color: rgba(127,119,221,0.2); }
+  .empathy-cell.feel   { background: #faece7; border-color: rgba(216,90,48,0.2); }
+  .empathy-cell.do     { background: #faeeda; border-color: rgba(239,159,39,0.2); }
+  .empathy-cell.hear   { background: var(--teal-50); border-color: rgba(29,158,117,0.2); }
+  .empathy-cell h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .empathy-cell.think h4 { color: var(--purple-400); }
+  .empathy-cell.feel  h4 { color: var(--coral-400); }
+  .empathy-cell.do    h4 { color: #ba7517; }
+  .empathy-cell.hear  h4 { color: var(--teal-600); }
+  .empathy-cell ul { padding-left: 0; list-style: none; }
+  .empathy-cell li {
+    font-size: 0.8rem;
+    line-height: 1.55;
+    color: var(--text);
+    padding: 0.2rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .empathy-cell li:last-child { border-bottom: none; }
+
+  /* ── INTERACTIVE: PROBLEM STATEMENT ── */
+  .hmw-builder {
+    background: var(--teal-800);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .hmw-builder h3 {
+    color: var(--white);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  .hmw-formula {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .hmw-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--teal-200);
+    padding: 0.3rem 0.7rem;
+    border-radius: 100px;
+    border: 1px solid rgba(93,202,165,0.3);
+    white-space: nowrap;
+  }
+  .hmw-select {
+    background: rgba(255,255,255,0.08);
+    color: var(--white);
+    border: 1px solid rgba(93,202,165,0.25);
+    border-radius: 8px;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.8rem;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    flex: 1;
+    min-width: 140px;
+  }
+  .hmw-select option { background: var(--teal-800); color: var(--white); }
+  .hmw-output {
+    background: rgba(29,158,117,0.15);
+    border: 1px solid rgba(29,158,117,0.3);
+    border-radius: 10px;
+    padding: 1rem;
+    font-size: 0.85rem;
+    color: var(--teal-100);
+    line-height: 1.7;
+    min-height: 60px;
+    transition: all 0.3s;
+  }
+  .hmw-output em { color: var(--amber-200); font-style: normal; font-weight: 600; }
+
+  /* ── IDEATION VOTING ── */
+  .idea-list { display: flex; flex-direction: column; gap: 0.8rem; }
+  .idea-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.9rem 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .idea-item:hover { border-color: var(--teal-200); }
+  .idea-info { flex: 1; }
+  .idea-info h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .idea-info p  { font-size: 0.78rem; color: var(--muted); }
+  .vote-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Sora', sans-serif;
+    flex-shrink: 0;
+  }
+  .vote-btn:hover { border-color: var(--teal-400); background: var(--teal-50); }
+  .vote-btn.voted {
+    background: var(--teal-50);
+    border-color: var(--teal-400);
+  }
+  .vote-btn .arrow { font-size: 1rem; line-height: 1; }
+  .vote-btn .count { font-size: 0.75rem; font-weight: 600; color: var(--teal-600); }
+  .votes-left {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+  }
+  .votes-left strong { color: var(--teal-600); }
+  .idea-rank {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    background: var(--teal-50);
+    color: var(--teal-600);
+  }
+  .idea-rank.top { background: var(--teal-400); color: #fff; }
+
+  /* ── PROTOTYPE STEPPER ── */
+  .proto-stepper { margin-bottom: 1.25rem; }
+  .proto-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .proto-tab {
+    padding: 0.45rem 1rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--muted);
+  }
+  .proto-tab.active {
+    background: var(--teal-400);
+    border-color: var(--teal-400);
+    color: #fff;
+  }
+  .proto-content { display: none; }
+  .proto-content.active { display: block; animation: fadeIn 0.3s ease; }
+
+  .assumption-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .assumption-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.8rem;
+    border-radius: 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    font-size: 0.83rem;
+    line-height: 1.55;
+    color: var(--text);
+  }
+  .assumption-icon {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .assumption-icon.q  { background: #eeedfe; color: var(--purple-400); }
+  .assumption-icon.ok { background: var(--teal-50); color: var(--teal-600); }
+
+  /* ── TEST RESULTS ── */
+  .test-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .test-card {
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid transparent;
+  }
+  .test-card.critical { background: #fcebeb; border-color: rgba(226,75,74,0.2); }
+  .test-card.medium   { background: #faeeda; border-color: rgba(239,159,39,0.2); }
+  .test-card.positive { background: var(--teal-50); border-color: rgba(29,158,117,0.2); }
+  .test-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 100px;
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .test-card.critical .test-badge { background: #f7c1c1; color: #a32d2d; }
+  .test-card.medium   .test-badge { background: #fac775; color: #633806; }
+  .test-card.positive .test-badge { background: var(--teal-100); color: var(--teal-800); }
+  .test-card h4 { font-size: 0.83rem; font-weight: 600; margin-bottom: 0.35rem; }
+  .test-card p  { font-size: 0.78rem; line-height: 1.55; color: var(--muted); }
+  .test-card.critical h4 { color: #a32d2d; }
+  .test-card.medium   h4 { color: #633806; }
+  .test-card.positive h4 { color: var(--teal-800); }
+
+  /* ── QUIZ ── */
+  .quiz-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .quiz-q {
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.6rem; }
+  .quiz-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.85rem;
+    color: var(--text);
+    background: var(--bg);
+  }
+  .quiz-option:hover:not(.answered) { border-color: var(--teal-400); background: var(--teal-50); }
+  .quiz-option.correct { border-color: var(--teal-400); background: var(--teal-50); color: var(--teal-800); }
+  .quiz-option.wrong   { border-color: #e24b4a; background: #fcebeb; color: #a32d2d; }
+  .quiz-option .opt-icon {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem;
+    flex-shrink: 0;
+  }
+  .quiz-feedback {
+    margin-top: 0.8rem;
+    padding: 0.8rem;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; animation: fadeIn 0.3s ease; }
+  .quiz-feedback.ok { background: var(--teal-50); color: var(--teal-800); border: 1px solid rgba(29,158,117,0.2); }
+  .quiz-feedback.no { background: #fcebeb; color: #a32d2d; border: 1px solid rgba(226,75,74,0.2); }
+
+  /* ── SUMMARY / FINAL ── */
+  .milestone-list { display: flex; flex-direction: column; gap: 0; }
+  .milestone {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    position: relative;
+  }
+  .milestone:last-child { padding-bottom: 0; }
+  .milestone-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .milestone-dot {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--teal-400);
+    background: var(--teal-50);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem;
+    color: var(--teal-600);
+    font-weight: 700;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .milestone-connector {
+    width: 1px;
+    flex: 1;
+    background: var(--teal-100);
+    margin: 4px 0;
+    min-height: 20px;
+  }
+  .milestone:last-child .milestone-connector { display: none; }
+  .milestone-body { padding-top: 2px; }
+  .milestone-body h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .milestone-body p  { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+  .milestone-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.6rem;
+    border-radius: 100px;
+    background: var(--teal-50);
+    color: var(--teal-600);
+    margin-bottom: 0.4rem;
+  }
+
+  /* ── NAVIGATION BUTTONS ── */
+  .nav-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .btn {
+    padding: 0.6rem 1.4rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Sora', sans-serif;
+    transition: all 0.2s;
+    border: none;
+  }
+  .btn-outline {
+    background: none;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+  }
+  .btn-outline:hover { border-color: var(--teal-400); color: var(--teal-600); }
+  .btn-primary {
+    background: var(--teal-400);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--teal-600); }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar-wrap {
+    background: rgba(255,255,255,0.08);
+    height: 3px;
+    border-radius: 100px;
+    margin: 0 1rem;
+    overflow: hidden;
+    flex: 1;
+    max-width: 160px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--teal-200);
+    border-radius: 100px;
+    transition: width 0.4s ease;
+  }
+
+  /* ── STATS ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 1.25rem;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--teal-600);
+    line-height: 1.1;
+    margin-bottom: 0.25rem;
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* responsive */
+  @media (max-width: 500px) {
+    .empathy-grid { grid-template-columns: 1fr; }
+    .test-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Materi Interaktif · Design Thinking</div>
+  <h1>Memecahkan Masalah<br><span>Antrean Puskesmas</span></h1>
+  <p>Studi kasus nyata dari Puskesmas Tembalang, Semarang. Pelajari bagaimana Design Thinking menemukan solusi yang tepat sasaran — bukan sekadar membuat aplikasi.</p>
+  <div class="hero-meta">
+    <div class="hero-chip"><span class="dot"></span>5 Fase Interaktif</div>
+    <div class="hero-chip"><span class="dot"></span>Kuis Pemahaman</div>
+    <div class="hero-chip"><span class="dot"></span>Simulasi Ideasi</div>
+  </div>
+</div>
+
+<!-- PHASE NAV -->
+<nav class="phase-nav" id="phaseNav">
+  <button class="phase-btn active" onclick="goTo(0)">
+    <span class="phase-num">1</span> Empathize
+  </button>
+  <button class="phase-btn" onclick="goTo(1)">
+    <span class="phase-num">2</span> Define
+  </button>
+  <button class="phase-btn" onclick="goTo(2)">
+    <span class="phase-num">3</span> Ideate
+  </button>
+  <button class="phase-btn" onclick="goTo(3)">
+    <span class="phase-num">4</span> Prototype
+  </button>
+  <button class="phase-btn" onclick="goTo(4)">
+    <span class="phase-num">5</span> Test
+  </button>
+  <button class="phase-btn" onclick="goTo(5)">
+    <span class="phase-num">6</span> Rangkuman
+  </button>
+  <div style="flex:1;display:flex;align-items:center;justify-content:flex-end;padding-right:0.5rem;">
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill" style="width:16.6%"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- ══ PHASE 1: EMPATHIZE ══ -->
+  <section class="phase-section active" id="phase0">
+    <div class="section-header">
+      <div class="phase-icon teal">👂</div>
+      <div>
+        <div class="phase-label">Fase 1</div>
+        <h2>Empathize — Memahami Pengguna</h2>
+        <p>Sebelum mencari solusi, tim harus benar-benar memahami siapa yang terdampak dan apa yang mereka rasakan. Fase ini adalah fondasi segalanya.</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">20</div><div class="stat-label">Responden diwawancara mendalam</div></div>
+      <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Kelompok pengguna berbeda</div></div>
+      <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Hari observasi lapangan</div></div>
+    </div>
+
+    <div class="card">
+      <h3>Apa yang didengar tim di lapangan?</h3>
+      <div class="quote-card">
+        <p>"Saya datang jam 5 pagi tapi tetap dapat nomor antrian 40-an. Baru dipanggil jam 10."</p>
+        <span>— Pasien lansia, 67 tahun</span>
+      </div>
+      <div class="quote-card">
+        <p>"Saya tidak bisa izin kerja hanya untuk antre 4 jam. Akhirnya saya tidak jadi berobat."</p>
+        <span>— Pasien usia produktif, 32 tahun</span>
+      </div>
+      <div class="quote-card">
+        <p>"Kami kewalahan karena semua pasien datang sekaligus di pagi hari. Tidak ada yang bisa kami lakukan."</p>
+        <span>— Staf loket Puskesmas</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Empathy Map — sudut pandang pasien usia produktif</h3>
+      <div class="empathy-grid">
+        <div class="empathy-cell think">
+          <h4>Think</h4>
+          <ul>
+            <li>"Kenapa tidak bisa daftar dari rumah?"</li>
+            <li>"Buang waktu setengah hari kerja"</li>
+            <li>"Lebih baik ke klinik swasta saja"</li>
+          </ul>
+        </div>
+        <div class="empathy-cell feel">
+          <h4>Feel</h4>
+          <ul>
+            <li>Frustrasi dan tidak dihargai waktunya</li>
+            <li>Cemas kondisi makin memburuk</li>
+            <li>Tidak berdaya mengubah situasi</li>
+          </ul>
+        </div>
+        <div class="empathy-cell do">
+          <h4>Do</h4>
+          <ul>
+            <li>Datang subuh-subuh demi nomor awal</li>
+            <li>Memilih tidak berobat sama sekali</li>
+            <li>Pergi ke klinik swasta yang mahal</li>
+          </ul>
+        </div>
+        <div class="empathy-cell hear">
+          <h4>Hear</h4>
+          <ul>
+            <li>"Puskesmas selalu penuh, mending swasta"</li>
+            <li>"Antriannya tidak jelas dan tidak pasti"</li>
+            <li>"Sistem mereka memang sudah begitu"</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ 1 -->
+    <div class="quiz-card">
+      <div class="quiz-q">Mengapa tim Design Thinking mewawancara pasien di warung kopi dan kos — bukan di ruang rapat Puskesmas?</div>
+      <div class="quiz-options" id="q1">
+        <div class="quiz-option" onclick="answer(this,'q1','wrong')">
+          <span class="opt-icon">A</span> Karena warung kopi lebih nyaman untuk tim peneliti
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q1','correct')">
+          <span class="opt-icon">B</span> Agar responden lebih jujur dan nyaman berbicara di luar konteks formal
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q1','wrong')">
+          <span class="opt-icon">C</span> Karena ruang rapat Puskesmas tidak tersedia
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q1','wrong')">
+          <span class="opt-icon">D</span> Untuk menghemat biaya penelitian
+        </div>
+      </div>
+      <div class="quiz-feedback ok" id="q1-ok">Tepat! Lingkungan yang familiar dan tidak formal membuat narasumber lebih terbuka untuk berbagi pengalaman dan perasaan yang sebenarnya — termasuk keluhan yang mungkin mereka segan ungkapkan di depan staf Puskesmas.</div>
+      <div class="quiz-feedback no" id="q1-no">Bukan itu alasannya. Dalam Design Thinking, lingkungan wawancara sangat mempengaruhi kualitas data. Suasana informal membuat orang lebih jujur dan terbuka.</div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn btn-outline" disabled>← Sebelumnya</button>
+      <button class="btn btn-primary" onclick="goTo(1)">Define → </button>
+    </div>
+  </section>
+
+  <!-- ══ PHASE 2: DEFINE ══ -->
+  <section class="phase-section" id="phase1">
+    <div class="section-header">
+      <div class="phase-icon blue">🎯</div>
+      <div>
+        <div class="phase-label">Fase 2</div>
+        <h2>Define — Rumuskan Masalah yang Tepat</h2>
+        <p>Data dari fase Empathize diolah menjadi Problem Statement yang tajam. Fase ini menentukan apakah solusi kita akan menyentuh akar masalah atau hanya gejala.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Dari gejala ke akar masalah</h3>
+      <p style="margin-bottom:1rem;">Tim melakukan <em>affinity mapping</em> — mengelompokkan ratusan kutipan wawancara ke dalam tema besar. Hasilnya mengejutkan:</p>
+      <div class="assumption-list">
+        <div class="assumption-item">
+          <div class="assumption-icon q">!</div>
+          <div><strong>Asumsi awal (salah):</strong> Pasien malas datang ke Puskesmas karena kualitas layanan jelek</div>
+        </div>
+        <div class="assumption-item">
+          <div class="assumption-icon ok">✓</div>
+          <div><strong>Temuan nyata:</strong> Pasien sebenarnya mau datang — tapi tidak sanggup meluangkan waktu 3–4 jam untuk antrean yang tidak dapat diprediksi</div>
+        </div>
+        <div class="assumption-item">
+          <div class="assumption-icon ok">✓</div>
+          <div><strong>Temuan nyata:</strong> Masalah utama bukan mutu layanan medis, melainkan sistem manajemen kedatangan pasien yang tidak memberikan kepastian waktu</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INTERACTIVE: HMW BUILDER -->
+    <div class="hmw-builder">
+      <h3>Coba Bangun Problem Statement-mu Sendiri</h3>
+      <p style="font-size:0.82rem;color:rgba(248,250,249,0.6);margin-bottom:1rem;">Pilih kombinasi berikut dan lihat bagaimana rumusan masalah terbentuk menggunakan format "How Might We"</p>
+      <div class="hmw-formula">
+        <span class="hmw-label">Bagaimana kita bisa membantu</span>
+        <select class="hmw-select" id="hmw-user" onchange="buildHMW()">
+          <option value="pasien_produktif">warga usia kerja</option>
+          <option value="lansia">pasien lansia</option>
+          <option value="staf">staf Puskesmas</option>
+        </select>
+        <span class="hmw-label">agar</span>
+        <select class="hmw-select" id="hmw-need" onchange="buildHMW()">
+          <option value="waktu">mendapatkan layanan tanpa kehilangan waktu kerja</option>
+          <option value="fisik">tidak harus berdiri antre lama</option>
+          <option value="merata">beban kerja tersebar merata sepanjang hari</option>
+        </select>
+      </div>
+      <div class="hmw-output" id="hmw-output">Pilih kombinasi di atas untuk melihat problem statement terbentuk...</div>
+    </div>
+
+    <div class="card">
+      <h3>Problem Statement yang dipilih tim</h3>
+      <p style="margin-bottom:0.8rem;">Dari ketiga PS yang dirumuskan, tim memilih fokus pada <strong>pasien usia produktif</strong> karena:</p>
+      <ul>
+        <li>Kelompok terbesar yang tidak terlayani (data menunjukkan 60% kunjungan hilang dari segmen ini)</li>
+        <li>Dampaknya paling luas terhadap angka kunjungan Puskesmas</li>
+        <li>Paling memungkinkan untuk diatasi dengan solusi teknologi berbasis smartphone</li>
+      </ul>
+    </div>
+
+    <!-- QUIZ 2 -->
+    <div class="quiz-card">
+      <div class="quiz-q">Tim memilih "pasien usia produktif" sebagai fokus — bukan "pasien lansia" yang terlihat paling menderita antrean panjang. Apa alasan yang paling tepat?</div>
+      <div class="quiz-options" id="q2">
+        <div class="quiz-option" onclick="answer(this,'q2','wrong')">
+          <span class="opt-icon">A</span> Lansia dianggap tidak bisa menggunakan teknologi
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q2','wrong')">
+          <span class="opt-icon">B</span> Keluhan pasien usia produktif lebih keras dan vokal
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q2','correct')">
+          <span class="opt-icon">C</span> Kelompok ini memiliki dampak terluas (volume terbesar yang tidak terlayani) dan solusinya paling memungkinkan
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q2','wrong')">
+          <span class="opt-icon">D</span> Puskesmas hanya ingin melayani pasien yang membayar lebih
+        </div>
+      </div>
+      <div class="quiz-feedback ok" id="q2-ok">Benar! Design Thinking memilih fokus berdasarkan dampak terluas dan kelayakan solusi — bukan berdasarkan siapa yang paling "kasihan". Keputusan ini berbasis data, bukan intuisi semata.</div>
+      <div class="quiz-feedback no" id="q2-no">Bukan itu. Pilihan fokus dalam Design Thinking didasarkan pada data: kelompok mana yang volume dampaknya paling besar dan solusinya paling feasible untuk diimplementasikan.</div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn btn-outline" onclick="goTo(0)">← Empathize</button>
+      <button class="btn btn-primary" onclick="goTo(2)">Ideate →</button>
+    </div>
+  </section>
+
+  <!-- ══ PHASE 3: IDEATE ══ -->
+  <section class="phase-section" id="phase2">
+    <div class="section-header">
+      <div class="phase-icon purple">💡</div>
+      <div>
+        <div class="phase-label">Fase 3</div>
+        <h2>Ideate — Bangkitkan Ide Sebanyak Mungkin</h2>
+        <p>Tidak ada penilaian di fase ini — semua ide ditampung dulu. Setelah terkumpul, tim memilih ide terbaik menggunakan Dot Voting.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Aturan sesi brainstorm (Crazy 8s)</h3>
+      <ul>
+        <li>Setiap anggota menggambar 8 ide dalam 8 menit — tidak boleh menilai ide orang lain</li>
+        <li>Kuantitas lebih penting dari kualitas di tahap ini</li>
+        <li>Ide yang terdengar gila pun diterima — bisa jadi inspirasi untuk ide yang realistis</li>
+        <li>Setelah semua ide terkumpul, barulah dimulai sesi Dot Voting</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Simulasi Dot Voting — berikan suaramu!</h3>
+      <p style="font-size:0.83rem;color:var(--muted);margin-bottom:0.75rem;">Kamu punya 5 suara. Pilih ide yang menurutmu paling menjawab masalah pasien usia produktif.</p>
+      <div class="votes-left" id="votesLeft">Sisa suara: <strong id="voteCount">5</strong></div>
+      <div class="idea-list" id="ideaList">
+        <div class="idea-item">
+          <div class="idea-rank" id="rank0">—</div>
+          <div class="idea-info">
+            <h4>Aplikasi antrean online dengan slot waktu</h4>
+            <p>Pasien pilih sendiri jam kedatangan dari HP, antrean tersebar merata sepanjang hari</p>
+          </div>
+          <button class="vote-btn" id="vbtn0" onclick="vote(0)"><span class="arrow">▲</span><span class="count" id="vc0">0</span></button>
+        </div>
+        <div class="idea-item">
+          <div class="idea-rank" id="rank1">—</div>
+          <div class="idea-info">
+            <h4>Layanan telemedicine untuk konsultasi ringan</h4>
+            <p>Pasien konsultasi via video call tanpa harus datang ke Puskesmas</p>
+          </div>
+          <button class="vote-btn" id="vbtn1" onclick="vote(1)"><span class="arrow">▲</span><span class="count" id="vc1">0</span></button>
+        </div>
+        <div class="idea-item">
+          <div class="idea-rank" id="rank2">—</div>
+          <div class="idea-info">
+            <h4>Kios digital di Puskesmas</h4>
+            <p>Pasien ambil nomor antrean via layar sentuh ketika tiba, tanpa perlu antre di loket</p>
+          </div>
+          <button class="vote-btn" id="vbtn2" onclick="vote(2)"><span class="arrow">▲</span><span class="count" id="vc2">0</span></button>
+        </div>
+        <div class="idea-item">
+          <div class="idea-rank" id="rank3">—</div>
+          <div class="idea-info">
+            <h4>Notifikasi WhatsApp giliran antrean</h4>
+            <p>Pesan otomatis dikirim ketika giliran hampir tiba, pasien bisa menunggu di rumah</p>
+          </div>
+          <button class="vote-btn" id="vbtn3" onclick="vote(3)"><span class="arrow">▲</span><span class="count" id="vc3">0</span></button>
+        </div>
+        <div class="idea-item">
+          <div class="idea-rank" id="rank4">—</div>
+          <div class="idea-info">
+            <h4>Jadwal khusus lansia (pagi awal)</h4>
+            <p>Prioritas jam 07.00–08.00 untuk lansia tanpa perlu sistem digital</p>
+          </div>
+          <button class="vote-btn" id="vbtn4" onclick="vote(4)"><span class="arrow">▲</span><span class="count" id="vc4">0</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ 3 -->
+    <div class="quiz-card">
+      <div class="quiz-q">Mengapa ide "kios digital di Puskesmas" mendapat lebih sedikit suara dibanding "aplikasi antrean online", padahal keduanya sama-sama digital?</div>
+      <div class="quiz-options" id="q3">
+        <div class="quiz-option" onclick="answer(this,'q3','wrong')">
+          <span class="opt-icon">A</span> Kios digital terlalu mahal untuk dibeli
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q3','correct')">
+          <span class="opt-icon">B</span> Kios tidak menyelesaikan masalah utama — pasien tetap harus datang dulu untuk ambil nomor, tidak menghemat waktu
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q3','wrong')">
+          <span class="opt-icon">C</span> Puskesmas tidak memiliki koneksi listrik yang cukup
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q3','wrong')">
+          <span class="opt-icon">D</span> Pasien tidak terbiasa menggunakan layar sentuh
+        </div>
+      </div>
+      <div class="quiz-feedback ok" id="q3-ok">Tepat! Kios digital hanya memindahkan antrean dari antrean kertas ke antrean layar sentuh — pasien tetap harus datang lebih awal. Tidak menyentuh akar masalah: pasien tidak bisa mengatur waktu kedatangan mereka.</div>
+      <div class="quiz-feedback no" id="q3-no">Bukan itu. Masalahnya lebih konseptual: kios digital tidak mengubah pola kedatangan pasien. Pasien tetap harus hadir secara fisik di pagi hari untuk ambil nomor, sehingga masalah penumpukan di pagi hari tidak terpecahkan.</div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn btn-outline" onclick="goTo(1)">← Define</button>
+      <button class="btn btn-primary" onclick="goTo(3)">Prototype →</button>
+    </div>
+  </section>
+
+  <!-- ══ PHASE 4: PROTOTYPE ══ -->
+  <section class="phase-section" id="phase3">
+    <div class="section-header">
+      <div class="phase-icon amber">🛠</div>
+      <div>
+        <div class="phase-label">Fase 4</div>
+        <h2>Prototype — Bangun untuk Belajar</h2>
+        <p>Prinsip utama: buat semurah dan secepat mungkin. Prototipe bukan produk akhir — ia adalah alat untuk menguji asumsi.</p>
+      </div>
+    </div>
+
+    <div class="proto-stepper">
+      <div class="proto-tabs">
+        <div class="proto-tab active" onclick="showProto('a',this)">A · Prototipe Kertas</div>
+        <div class="proto-tab" onclick="showProto('b',this)">B · Clickable Mockup</div>
+        <div class="proto-tab" onclick="showProto('c',this)">Asumsi yang Diuji</div>
+      </div>
+
+      <div class="proto-content active" id="proto-a">
+        <div class="card">
+          <h3>Prototipe A — Paper Prototype (1 hari)</h3>
+          <p style="margin-bottom:0.8rem;">Desainer menggambar alur aplikasi di atas kertas dan karton. Tidak ada kode, tidak ada layar — hanya sketsa tangan yang bisa diubah dalam hitungan menit.</p>
+          <p style="margin-bottom:0.8rem;"><strong>Alur yang digambar:</strong></p>
+          <div class="milestone-list">
+            <div class="milestone">
+              <div class="milestone-line"><div class="milestone-dot">1</div><div class="milestone-connector"></div></div>
+              <div class="milestone-body"><div class="milestone-tag">Halaman Awal</div><h4>Beranda pilih layanan</h4><p>Pasien pilih jenis poli: Umum, KIA, Gigi, dll.</p></div>
+            </div>
+            <div class="milestone">
+              <div class="milestone-line"><div class="milestone-dot">2</div><div class="milestone-connector"></div></div>
+              <div class="milestone-body"><div class="milestone-tag">Pilih Waktu</div><h4>Kalender + slot jam tersedia</h4><p>Slot 30 menit ditampilkan; yang sudah penuh digreyed-out.</p></div>
+            </div>
+            <div class="milestone">
+              <div class="milestone-line"><div class="milestone-dot">3</div><div class="milestone-connector"></div></div>
+              <div class="milestone-body"><div class="milestone-tag">Konfirmasi</div><h4>Ringkasan pendaftaran</h4><p>Nama, tanggal, jam, dan poli — tombol "Daftar" dan "Batalkan".</p></div>
+            </div>
+            <div class="milestone">
+              <div class="milestone-line"><div class="milestone-dot">4</div></div>
+              <div class="milestone-body"><div class="milestone-tag">Tiket Digital</div><h4>QR Code sebagai bukti daftar</h4><p>Ditunjukkan ke petugas saat tiba di Puskesmas.</p></div>
+            </div>
+          </div>
+          <p style="margin-top:1rem;font-size:0.82rem;color:var(--muted);">Kenapa kertas lebih baik dari kode di tahap ini? Perubahan desain yang di layar membutuhkan 2 jam, di kertas hanya 2 menit. Iterasi menjadi jauh lebih cepat dan murah.</p>
+        </div>
+      </div>
+
+      <div class="proto-content" id="proto-b">
+        <div class="card">
+          <h3>Prototipe B — Clickable Mockup di Figma (2 hari)</h3>
+          <p style="margin-bottom:0.8rem;">Setelah revisi dari uji kertas, tim membuat prototipe interaktif di Figma. Tidak ada back-end — semua data bersifat statis. Fokus pada 3 alur kritis:</p>
+          <div class="assumption-list">
+            <div class="assumption-item">
+              <div class="assumption-icon ok">1</div>
+              <strong>Mendaftar antrean baru</strong> — dari beranda sampai QR Code keluar
+            </div>
+            <div class="assumption-item">
+              <div class="assumption-icon ok">2</div>
+              <strong>Melihat status antrean</strong> — posisi saat ini, estimasi waktu tunggu
+            </div>
+            <div class="assumption-item">
+              <div class="assumption-icon ok">3</div>
+              <strong>Reschedule atau batalkan</strong> — ubah slot waktu tanpa kehilangan posisi sepenuhnya
+            </div>
+          </div>
+          <p style="margin-top:1rem;font-size:0.82rem;color:var(--muted);">Yang sengaja <em>tidak</em> dibuat di fase ini: sistem notifikasi real-time, integrasi database pasien, laporan untuk staf. Semua itu ada di prototipe berikutnya — setelah asumsi dasar terbukti valid.</p>
+        </div>
+      </div>
+
+      <div class="proto-content" id="proto-c">
+        <div class="card">
+          <h3>Asumsi yang ingin diuji dari prototipe ini</h3>
+          <div class="assumption-list">
+            <div class="assumption-item">
+              <div class="assumption-icon q">?</div>
+              Apakah pengguna mengerti cara memilih slot waktu yang tersedia?
+            </div>
+            <div class="assumption-item">
+              <div class="assumption-icon q">?</div>
+              Apakah istilah "Poli Umum", "Poli KIA", "Poli Gigi" dipahami tanpa penjelasan?
+            </div>
+            <div class="assumption-item">
+              <div class="assumption-icon q">?</div>
+              Apakah pengguna tahu apa yang harus dilakukan setelah mendapat QR Code?
+            </div>
+            <div class="assumption-item">
+              <div class="assumption-icon q">?</div>
+              Apakah pengguna bisa menemukan fitur reschedule tanpa diberi petunjuk?
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ 4 -->
+    <div class="quiz-card">
+      <div class="quiz-q">Tim membangun paper prototype terlebih dahulu sebelum membuat mockup digital. Apa prinsip Design Thinking di balik keputusan ini?</div>
+      <div class="quiz-options" id="q4">
+        <div class="quiz-option" onclick="answer(this,'q4','wrong')">
+          <span class="opt-icon">A</span> Karena tim tidak memiliki laptop yang cukup
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q4','wrong')">
+          <span class="opt-icon">B</span> Prototipe kertas lebih mudah dipresentasikan ke klien
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q4','correct')">
+          <span class="opt-icon">C</span> "Fail fast, learn fast" — iterasi pada kertas jauh lebih murah dan cepat daripada iterasi pada kode
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q4','wrong')">
+          <span class="opt-icon">D</span> Karena desainer tidak bisa menggunakan Figma
+        </div>
+      </div>
+      <div class="quiz-feedback ok" id="q4-ok">Benar! Prinsip "fail fast" dalam Design Thinking mendorong tim untuk menguji ide seawal dan semurah mungkin. Kesalahan yang ditemukan di tahap kertas jauh lebih murah diperbaiki dibanding kesalahan yang baru ketahuan setelah aplikasi selesai dikode.</div>
+      <div class="quiz-feedback no" id="q4-no">Bukan itu. Alasannya adalah prinsip "fail fast, learn fast" — semakin awal kesalahan ditemukan, semakin murah biaya perbaikannya. Kertas memungkinkan iterasi dalam hitungan menit.</div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn btn-outline" onclick="goTo(2)">← Ideate</button>
+      <button class="btn btn-primary" onclick="goTo(4)">Test →</button>
+    </div>
+  </section>
+
+  <!-- ══ PHASE 5: TEST ══ -->
+  <section class="phase-section" id="phase4">
+    <div class="section-header">
+      <div class="phase-icon coral">🧪</div>
+      <div>
+        <div class="phase-label">Fase 5</div>
+        <h2>Test — Uji, Amati, Iterasi</h2>
+        <p>Pengujian bukan tahap akhir — ini adalah kesempatan untuk belajar lebih banyak tentang pengguna dan memperbaiki solusi sebelum terlambat.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Skenario pengujian yang diberikan ke responden</h3>
+      <div class="quote-card">
+        <p>"Anda ingin periksa ke dokter umum besok pagi. Coba daftarkan diri Anda menggunakan aplikasi ini — tanpa saya bantu, lakukan semua yang biasanya Anda lakukan."</p>
+        <span>— Instruksi ke 8 responden usability testing</span>
+      </div>
+      <p style="font-size:0.83rem;color:var(--muted);">Tim mengamati, mencatat, dan tidak boleh membantu responden — meski terlihat kesulitan. Tujuannya: menemukan di mana pengguna nyata akan tersangkut, bukan di mana tim mengira mereka akan tersangkut.</p>
+    </div>
+
+    <div class="card">
+      <h3>Temuan dari sesi usability testing (8 responden)</h3>
+      <div class="test-grid">
+        <div class="test-card critical">
+          <span class="test-badge">Kritis</span>
+          <h4>6/8 lansia gagal pilih slot waktu</h4>
+          <p>Tombol terlalu kecil. Kontras teks kurang. Angka jam tidak terbaca dengan baik.</p>
+        </div>
+        <div class="test-card medium">
+          <span class="test-badge">Sedang</span>
+          <h4>4/8 tidak paham "Poli KIA"</h4>
+          <p>Mereka mengira itu layanan berbayar khusus, bukan poli ibu dan anak biasa.</p>
+        </div>
+        <div class="test-card medium">
+          <span class="test-badge">Sedang</span>
+          <h4>3/8 tidak sadar ada tombol reschedule</h4>
+          <p>Tombol tersembunyi di bawah halaman konfirmasi, tidak terlihat tanpa scroll.</p>
+        </div>
+        <div class="test-card positive">
+          <span class="test-badge">Positif</span>
+          <h4>8/8 suka tiket QR Code digital</h4>
+          <p>"Tidak perlu cetak, cukup tunjukkan HP ke petugas. Lebih praktis!"</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Respons tim terhadap temuan — iterasi berlanjut</h3>
+      <div class="assumption-list">
+        <div class="assumption-item"><div class="assumption-icon ok">✓</div><div>Tombol slot waktu diperbesar ke ukuran minimum 48×48px, font jam dibesarkan ke 18px</div></div>
+        <div class="assumption-item"><div class="assumption-icon ok">✓</div><div>Nama poli ditambah deskripsi singkat: "Poli KIA — Ibu, bayi, dan anak balita (gratis)"</div></div>
+        <div class="assumption-item"><div class="assumption-icon ok">✓</div><div>Tombol reschedule dipindah ke halaman utama profil pasien, selalu terlihat</div></div>
+        <div class="assumption-item"><div class="assumption-icon ok">✓</div><div>Fitur QR Code dipertahankan dan diperluas: bisa disimpan ke galeri foto</div></div>
+      </div>
+      <p style="margin-top:1rem;font-size:0.82rem;color:var(--muted);">Setelah revisi, putaran pengujian kedua dilakukan dengan 5 responden baru. Hanya 1 dari 5 yang mengalami kebingungan minor — jauh lebih baik dari sebelumnya.</p>
+    </div>
+
+    <!-- QUIZ 5 -->
+    <div class="quiz-card">
+      <div class="quiz-q">Selama sesi usability testing, fasilitator melihat responden kesulitan menemukan tombol reschedule — tapi fasilitator tidak boleh membantu. Mengapa aturan "tidak boleh membantu" ini sangat penting?</div>
+      <div class="quiz-options" id="q5">
+        <div class="quiz-option" onclick="answer(this,'q5','wrong')">
+          <span class="opt-icon">A</span> Agar sesi lebih cepat selesai
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q5','wrong')">
+          <span class="opt-icon">B</span> Karena fasilitator belum tahu letak tombolnya
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q5','correct')">
+          <span class="opt-icon">C</span> Karena di dunia nyata tidak ada fasilitator yang mendampingi — jika pengguna kesulitan, itu adalah data berharga yang harus ditemukan, bukan disembunyikan
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q5','wrong')">
+          <span class="opt-icon">D</span> Untuk menunjukkan bahwa desainnya sudah bagus
+        </div>
+      </div>
+      <div class="quiz-feedback ok" id="q5-ok">Tepat! Jika fasilitator membantu, data yang dikumpulkan tidak valid — kita hanya tahu bahwa pengguna bisa menyelesaikan tugas "dengan bantuan". Tapi kenyataannya, tidak ada yang akan memandu pengguna di dunia nyata. Kesulitan yang diobservasi adalah temuan terpenting.</div>
+      <div class="quiz-feedback no" id="q5-no">Bukan itu. Aturan ini ada karena tujuan pengujian adalah menemukan di mana pengguna benar-benar tersangkut tanpa bantuan — karena di dunia nyata, pengguna memang tidak akan mendapat bantuan dari tim desain.</div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn btn-outline" onclick="goTo(3)">← Prototype</button>
+      <button class="btn btn-primary" onclick="goTo(5)">Rangkuman →</button>
+    </div>
+  </section>
+
+  <!-- ══ PHASE 6: SUMMARY ══ -->
+  <section class="phase-section" id="phase5">
+    <div class="section-header">
+      <div class="phase-icon teal">🏁</div>
+      <div>
+        <div class="phase-label">Rangkuman</div>
+        <h2>SiAntrean — Produk Akhir yang Lolos Validasi</h2>
+        <p>Setelah tiga putaran iterasi, tim menetapkan spesifikasi akhir berdasarkan data nyata dari pengguna — bukan asumsi tim.</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Fase Design Thinking yang dilalui</div></div>
+      <div class="stat-card"><div class="stat-num">3×</div><div class="stat-label">Putaran iterasi prototipe</div></div>
+      <div class="stat-card"><div class="stat-num">~35%</div><div class="stat-label">Target konsentrasi pasien pagi (dari 70%)</div></div>
+    </div>
+
+    <div class="card">
+      <h3>Fitur inti yang lolos validasi pengguna</h3>
+      <div class="milestone-list">
+        <div class="milestone">
+          <div class="milestone-line"><div class="milestone-dot">✓</div><div class="milestone-connector"></div></div>
+          <div class="milestone-body"><div class="milestone-tag">Fitur Utama</div><h4>Slot waktu per 30 menit</h4><p>Pasien memilih jam kedatangan, bukan nomor urut. Ini mengubah sistem dari "siapa cepat dia dapat" menjadi "semua punya kepastian waktu".</p></div>
+        </div>
+        <div class="milestone">
+          <div class="milestone-line"><div class="milestone-dot">✓</div><div class="milestone-connector"></div></div>
+          <div class="milestone-body"><div class="milestone-tag">Tiket Digital</div><h4>QR Code sebagai pengganti kertas</h4><p>Ditunjukkan ke petugas saat tiba. Bisa disimpan ke galeri foto jika sinyal buruk.</p></div>
+        </div>
+        <div class="milestone">
+          <div class="milestone-line"><div class="milestone-dot">✓</div><div class="milestone-connector"></div></div>
+          <div class="milestone-body"><div class="milestone-tag">Notifikasi</div><h4>Pengingat H-1 dan H-30 menit</h4><p>Via SMS dan WhatsApp. Pasien tidak perlu terus membuka aplikasi untuk cek giliran.</p></div>
+        </div>
+        <div class="milestone">
+          <div class="milestone-line"><div class="milestone-dot">✓</div><div class="milestone-connector"></div></div>
+          <div class="milestone-body"><div class="milestone-tag">Aksesibilitas</div><h4>Mode tampilan besar untuk lansia</h4><p>Font minimum 18px, tombol minimum 48px, kontras tinggi — berdasarkan temuan usability testing.</p></div>
+        </div>
+        <div class="milestone">
+          <div class="milestone-line"><div class="milestone-dot">→</div></div>
+          <div class="milestone-body"><div class="milestone-tag">Ditunda</div><h4>Telemedicine & rekam medis digital</h4><p>Butuh izin regulasi tambahan dan infrastruktur yang belum tersedia. Dijadwalkan ke versi berikutnya setelah evaluasi 6 bulan.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--teal-800);border-color:rgba(29,158,117,0.3);">
+      <h3 style="color:var(--white);">Insight terpenting dari studi kasus ini</h3>
+      <p style="color:rgba(248,250,249,0.75);margin-bottom:0.8rem;">Design Thinking mencegah tim membuat "aplikasi antrean biasa" yang hanya memindahkan antrean dari fisik ke digital. Tanpa fase Empathize yang kuat, solusinya mungkin hanya: <em style="color:var(--amber-200);">nomor antrean digital yang masih mengharuskan pasien datang pukul 5 pagi.</em></p>
+      <p style="color:rgba(248,250,249,0.75);">Dengan memulai dari empati, tim menemukan bahwa masalah sesungguhnya bukan soal "antrean panjang" — melainkan soal <em style="color:var(--teal-200);">ketidakmampuan pasien mengatur waktu kedatangan mereka sendiri.</em></p>
+    </div>
+
+    <!-- FINAL QUIZ -->
+    <div class="quiz-card">
+      <div class="quiz-q">Jika kamu hanya boleh memilih SATU pelajaran terpenting dari seluruh studi kasus ini untuk dibawa ke project berikutnya, mana yang paling tepat?</div>
+      <div class="quiz-options" id="q6">
+        <div class="quiz-option" onclick="answer(this,'q6','wrong')">
+          <span class="opt-icon">A</span> Selalu buat aplikasi mobile sebagai solusi pertama masalah layanan publik
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q6','wrong')">
+          <span class="opt-icon">B</span> Teknologi canggih selalu lebih baik dari solusi sederhana
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q6','correct')">
+          <span class="opt-icon">C</span> Solusi terbaik lahir dari pemahaman mendalam tentang pengguna — bukan dari asumsi tim atau tren teknologi
+        </div>
+        <div class="quiz-option" onclick="answer(this,'q6','wrong')">
+          <span class="opt-icon">D</span> Selalu kerjakan semua 5 fase Design Thinking dalam urutan yang kaku dan tidak boleh diulang
+        </div>
+      </div>
+      <div class="quiz-feedback ok" id="q6-ok">Sempurna! Inilah inti dari Design Thinking: solusi yang tepat selalu berakar dari pemahaman yang dalam tentang siapa yang kamu layani — bukan dari teknologi apa yang sedang tren atau apa yang tim anggap benar tanpa validasi.</div>
+      <div class="quiz-feedback no" id="q6-no">Coba lagi. Inti Design Thinking bukan tentang teknologi atau urutan langkah yang kaku — melainkan tentang memahami pengguna secara mendalam sebagai fondasi dari setiap keputusan desain.</div>
+    </div>
+
+    <div class="card" style="text-align:center;padding:2rem;">
+      <div style="font-size:2rem;margin-bottom:0.75rem;">🎓</div>
+      <h3 style="margin-bottom:0.5rem;">Materi selesai!</h3>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem;">Kamu telah mempelajari semua 5 fase Design Thinking melalui studi kasus nyata Puskesmas Tembalang, Semarang.</p>
+      <button class="btn btn-primary" onclick="goTo(0)" style="border-radius:12px;padding:0.75rem 2rem;">Mulai dari awal lagi</button>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn btn-outline" onclick="goTo(4)">← Test</button>
+      <button class="btn btn-primary" onclick="goTo(0)">Mulai ulang</button>
+    </div>
+  </section>
+
+</div><!-- /main -->
+
+<script>
+  let currentPhase = 0;
+  const totalPhases = 6;
+
+  function goTo(idx) {
+    document.querySelectorAll('.phase-section').forEach((s,i) => {
+      s.classList.toggle('active', i === idx);
+    });
+    const btns = document.querySelectorAll('.phase-btn');
+    btns.forEach((b,i) => {
+      b.classList.toggle('active', i === idx);
+      b.classList.toggle('done', i < idx);
+    });
+    const fill = ((idx + 1) / totalPhases * 100).toFixed(1);
+    document.getElementById('progressFill').style.width = fill + '%';
+    currentPhase = idx;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function answer(el, qid, result) {
+    const container = document.getElementById(qid);
+    if (container.classList.contains('answered')) return;
+    container.classList.add('answered');
+    container.querySelectorAll('.quiz-option').forEach(o => o.style.pointerEvents = 'none');
+    el.classList.add(result);
+    el.querySelector('.opt-icon').textContent = result === 'correct' ? '✓' : '✗';
+    const fb = document.getElementById(qid + (result === 'correct' ? '-ok' : '-no'));
+    fb.classList.add('show');
+  }
+
+  // HMW Builder
+  const hmwData = {
+    pasien_produktif: {
+      waktu: 'Bagaimana kita bisa membantu <em>warga usia kerja</em> agar <em>mendapatkan layanan Puskesmas tanpa harus kehilangan waktu kerja mereka</em>, mengingat mereka tidak sanggup meluangkan 3–4 jam di pagi hari?',
+      fisik: 'Bagaimana kita bisa membantu <em>warga usia kerja</em> agar <em>tidak harus berdiri antre lama di Puskesmas</em>, mengingat mereka memiliki keterbatasan waktu yang sangat ketat?',
+      merata: 'Bagaimana kita bisa membantu <em>warga usia kerja</em> agar <em>beban kunjungannya tersebar merata sepanjang hari</em>, mengingat seluruh pasien saat ini terkonsentrasi di jam 07.00–09.00?'
+    },
+    lansia: {
+      waktu: 'Bagaimana kita bisa membantu <em>pasien lansia</em> agar <em>tidak perlu datang sebelum subuh demi mendapat nomor awal</em>, mengingat kondisi fisik mereka yang terbatas?',
+      fisik: 'Bagaimana kita bisa membantu <em>pasien lansia</em> agar <em>tidak perlu berdiri antre berjam-jam</em>, mengingat mereka rentan kelelahan dan kondisi kesehatan yang sudah menurun?',
+      merata: 'Bagaimana kita bisa membantu <em>pasien lansia</em> agar <em>mendapat slot waktu yang nyaman tanpa harus bersaing dengan pasien lain</em>, mengingat mereka paling terdampak oleh sistem antrean yang ada saat ini?'
+    },
+    staf: {
+      waktu: 'Bagaimana kita bisa membantu <em>staf Puskesmas</em> agar <em>tidak kewalahan di jam sibuk pagi hari</em>, mengingat seluruh pasien datang sekaligus tanpa bisa diprediksi?',
+      fisik: 'Bagaimana kita bisa membantu <em>staf Puskesmas</em> agar <em>lebih efektif melayani pasien</em>, mengingat tekanan fisik dan mental yang sangat tinggi di jam-jam puncak?',
+      merata: 'Bagaimana kita bisa membantu <em>staf Puskesmas</em> agar <em>beban kerja tersebar merata sepanjang hari operasional</em>, mengingat sistem antrean saat ini tidak memberikan prediktabilitas?'
+    }
+  };
+
+  function buildHMW() {
+    const user = document.getElementById('hmw-user').value;
+    const need = document.getElementById('hmw-need').value;
+    document.getElementById('hmw-output').innerHTML = hmwData[user][need];
+  }
+  buildHMW();
+
+  // Voting system
+  let votes = [0,0,0,0,0];
+  let userVotes = [0,0,0,0,0];
+  let totalVotes = 5;
+
+  function vote(idx) {
+    if (userVotes[idx] > 0) {
+      userVotes[idx]--;
+      votes[idx]--;
+      totalVotes++;
+      document.getElementById('vbtn' + idx).classList.remove('voted');
+    } else if (totalVotes > 0) {
+      userVotes[idx]++;
+      votes[idx]++;
+      totalVotes--;
+      document.getElementById('vbtn' + idx).classList.add('voted');
+    }
+    document.getElementById('voteCount').textContent = totalVotes;
+    document.querySelectorAll('[id^="vc"]').forEach((el,i) => {
+      el.textContent = votes[i];
+    });
+    updateRanks();
+  }
+
+  function updateRanks() {
+    const sorted = [...votes].map((v,i) => ({v,i})).sort((a,b) => b.v - a.v);
+    for (let i = 0; i < 5; i++) {
+      const rankEl = document.getElementById('rank' + i);
+      const rank = sorted.findIndex(s => s.i === i) + 1;
+      rankEl.textContent = votes[i] > 0 ? rank : '—';
+      rankEl.classList.toggle('top', rank === 1 && votes[i] > 0);
+    }
+  }
+
+  // Prototype tabs
+  function showProto(key, btn) {
+    document.querySelectorAll('.proto-content').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.proto-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('proto-' + key).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
