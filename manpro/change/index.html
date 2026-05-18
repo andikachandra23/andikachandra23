@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manajemen Perubahan — Materi Interaktif</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0f14;
+  --surface: #16181f;
+  --surface2: #1e2130;
+  --border: rgba(255,255,255,0.07);
+  --accent: #f5a623;
+  --accent2: #e8665a;
+  --accent3: #5bc8af;
+  --accent4: #7c9ff5;
+  --text: #e8e9ef;
+  --muted: #7a7f9a;
+  --white: #ffffff;
+  --radius: 16px;
+  --slide-w: 1000px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ─── LAYOUT ─────────────────────────────────────── */
+#app { width: 100vw; height: 100vh; display: flex; flex-direction: column; }
+
+#topbar {
+  height: 52px; min-height: 52px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+}
+
+#topbar .course-tag {
+  font-size: 11px; font-weight: 700; letter-spacing: 2px;
+  color: var(--accent); text-transform: uppercase;
+  background: rgba(245,166,35,0.12); padding: 4px 12px; border-radius: 20px;
+  border: 1px solid rgba(245,166,35,0.25);
+}
+
+#topbar .title-bar { font-size: 14px; color: var(--muted); }
+#topbar .title-bar span { color: var(--text); font-weight: 500; }
+
+#slide-counter {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px; color: var(--muted);
+}
+#slide-counter em { color: var(--accent); font-style: normal; }
+
+/* ─── PROGRESS ───────────────────────────────────── */
+#progress-bar {
+  height: 3px; background: var(--border);
+  position: relative;
+}
+#progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width 0.4s cubic-bezier(.4,0,.2,1);
+}
+
+/* ─── SLIDES CONTAINER ───────────────────────────── */
+#slides-wrap {
+  flex: 1; overflow: hidden; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.slide {
+  position: absolute; inset: 0;
+  display: none; align-items: center; justify-content: center;
+  padding: 24px;
+  opacity: 0; transform: translateX(60px);
+  transition: opacity .45s cubic-bezier(.4,0,.2,1), transform .45s cubic-bezier(.4,0,.2,1);
+}
+.slide.active {
+  display: flex;
+  opacity: 1; transform: translateX(0);
+}
+.slide.exit-left {
+  display: flex;
+  opacity: 0; transform: translateX(-60px);
+}
+
+.slide-inner {
+  width: 100%; max-width: var(--slide-w);
+  max-height: calc(100vh - 130px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.slide-inner::-webkit-scrollbar { width: 4px; }
+.slide-inner::-webkit-scrollbar-track { background: transparent; }
+.slide-inner::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* ─── NAVIGATION ─────────────────────────────────── */
+#nav {
+  height: 64px; min-height: 64px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+}
+
+#nav button {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
+  padding: 10px 24px; border-radius: 10px; border: none; cursor: pointer;
+  transition: all .2s;
+}
+
+#btn-prev {
+  background: var(--surface2); color: var(--muted);
+  border: 1px solid var(--border);
+}
+#btn-prev:hover:not(:disabled) { color: var(--text); border-color: rgba(255,255,255,0.15); }
+#btn-prev:disabled { opacity: 0.3; cursor: not-allowed; }
+
+#btn-next {
+  background: var(--accent); color: #1a0f00;
+}
+#btn-next:hover { background: #ffc152; transform: translateY(-1px); }
+
+/* Dot navigation */
+#dots { display: flex; gap: 6px; align-items: center; margin: 0 16px; }
+.dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--border); cursor: pointer; transition: all .2s;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.dot.active { background: var(--accent); width: 18px; border-radius: 3px; }
+.dot:hover { background: var(--muted); }
+
+/* ─── SLIDE TYPOGRAPHY ───────────────────────────── */
+.slide-tag {
+  display: inline-block;
+  font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 20px; margin-bottom: 16px;
+}
+.tag-intro { background: rgba(245,166,35,0.15); color: var(--accent); border: 1px solid rgba(245,166,35,0.3); }
+.tag-theory { background: rgba(124,159,245,0.15); color: var(--accent4); border: 1px solid rgba(124,159,245,0.3); }
+.tag-model { background: rgba(91,200,175,0.15); color: var(--accent3); border: 1px solid rgba(91,200,175,0.3); }
+.tag-analogi { background: rgba(232,102,90,0.15); color: var(--accent2); border: 1px solid rgba(232,102,90,0.3); }
+.tag-kasus { background: rgba(200,160,91,0.15); color: #c8a05b; border: 1px solid rgba(200,160,91,0.3); }
+.tag-praktik { background: rgba(160,91,200,0.15); color: #a05bc8; border: 1px solid rgba(160,91,200,0.3); }
+.tag-ringkasan { background: rgba(91,200,120,0.15); color: #5bc878; border: 1px solid rgba(91,200,120,0.3); }
+
+h1.slide-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 4.5vw, 52px); font-weight: 900;
+  line-height: 1.1; margin-bottom: 20px; color: var(--white);
+}
+h2.slide-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 3.5vw, 38px); font-weight: 700;
+  line-height: 1.2; margin-bottom: 16px; color: var(--white);
+}
+.slide-subtitle {
+  font-size: 15px; line-height: 1.7; color: var(--muted); max-width: 600px;
+  margin-bottom: 24px;
+}
+.slide-lead {
+  font-size: 17px; line-height: 1.7; color: var(--text);
+  margin-bottom: 20px;
+}
+
+/* ─── CARDS & GRIDS ──────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px;
+  transition: border-color .2s, transform .2s;
+}
+.card:hover { border-color: rgba(255,255,255,0.14); transform: translateY(-2px); }
+
+.card-accent { border-left: 3px solid var(--accent); }
+.card-blue { border-left: 3px solid var(--accent4); }
+.card-green { border-left: 3px solid var(--accent3); }
+.card-red { border-left: 3px solid var(--accent2); }
+
+.card-icon { font-size: 28px; margin-bottom: 10px; }
+.card-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+.card-body { font-size: 13px; line-height: 1.6; color: var(--muted); }
+
+/* ─── QUOTE / ANALOGI BOX ────────────────────────── */
+.analogi-box {
+  background: linear-gradient(135deg, rgba(245,166,35,0.08), rgba(232,102,90,0.08));
+  border: 1px solid rgba(245,166,35,0.2);
+  border-radius: var(--radius); padding: 24px 28px; margin-bottom: 16px;
+  position: relative;
+}
+.analogi-box::before {
+  content: '💡';
+  position: absolute; top: -14px; left: 20px;
+  font-size: 22px; background: var(--bg); padding: 0 6px;
+}
+.analogi-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 10px;
+}
+.analogi-text {
+  font-size: 15px; line-height: 1.75; color: var(--text); font-style: italic;
+}
+.analogi-text strong { color: var(--accent); font-style: normal; }
+
+/* ─── KASUS BOX ──────────────────────────────────── */
+.kasus-box {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; margin-bottom: 16px;
+}
+.kasus-header {
+  background: linear-gradient(135deg, rgba(200,160,91,0.2), rgba(232,102,90,0.15));
+  padding: 14px 20px; display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.kasus-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  background: rgba(200,160,91,0.25); color: #c8a05b;
+  padding: 3px 10px; border-radius: 20px; border: 1px solid rgba(200,160,91,0.3);
+}
+.kasus-title { font-size: 15px; font-weight: 700; color: var(--white); }
+.kasus-body { padding: 18px 20px; font-size: 13.5px; line-height: 1.75; color: var(--text); }
+.kasus-body strong { color: var(--accent); }
+
+/* ─── STEPS / KOTTER ─────────────────────────────── */
+.steps-list { display: flex; flex-direction: column; gap: 10px; }
+.step-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 16px;
+  transition: border-color .2s;
+}
+.step-item:hover { border-color: rgba(255,255,255,0.12); }
+.step-num {
+  min-width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 700;
+  flex-shrink: 0;
+}
+.step-content-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+.step-content-desc { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+
+/* ─── COMPARISON TABLE ───────────────────────────── */
+.compare-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+.compare-table th { background: var(--surface2); padding: 12px 16px; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; text-align: left; }
+.compare-table td { padding: 11px 16px; font-size: 13px; border-top: 1px solid var(--border); }
+.compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+.th-green { color: var(--accent3); }
+.th-red { color: var(--accent2); }
+
+/* ─── LEWIN MODEL ────────────────────────────────── */
+.lewin-flow { display: flex; align-items: center; gap: 0; margin-bottom: 20px; }
+.lewin-box {
+  flex: 1; padding: 20px 16px; border-radius: 12px; text-align: center;
+}
+.lewin-arrow { font-size: 22px; color: var(--muted); padding: 0 4px; flex-shrink: 0; }
+.lewin-icon { font-size: 32px; margin-bottom: 8px; }
+.lewin-title { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+.lewin-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* ─── KOTTER PHASES ──────────────────────────────── */
+.phase-header { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; margin-top: 14px; }
+
+/* ─── QUOTE ──────────────────────────────────────── */
+blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 12px 20px;
+  font-size: 15px; font-style: italic; color: var(--text);
+  background: rgba(245,166,35,0.05); border-radius: 0 10px 10px 0;
+  margin-bottom: 16px;
+}
+blockquote cite { display: block; font-size: 12px; color: var(--muted); margin-top: 8px; font-style: normal; }
+
+/* ─── HIGHLIGHT BOX ──────────────────────────────── */
+.highlight {
+  background: rgba(91,200,175,0.1); border: 1px solid rgba(91,200,175,0.25);
+  border-radius: 12px; padding: 16px 20px; margin-bottom: 16px;
+  font-size: 14px; line-height: 1.7; color: var(--text);
+}
+.highlight strong { color: var(--accent3); }
+
+.warning {
+  background: rgba(232,102,90,0.1); border: 1px solid rgba(232,102,90,0.25);
+  border-radius: 12px; padding: 16px 20px; margin-bottom: 16px;
+  font-size: 14px; line-height: 1.7;
+}
+.warning strong { color: var(--accent2); }
+
+/* ─── TITLE SLIDE SPECIAL ────────────────────────── */
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  align-items: center; min-height: 400px;
+}
+.hero-visual {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 20px; height: 340px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.hero-visual::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 40% 50%, rgba(245,166,35,0.12), transparent 70%),
+              radial-gradient(ellipse at 80% 20%, rgba(124,159,245,0.1), transparent 60%);
+}
+.hero-emoji-main { font-size: 80px; position: relative; z-index: 1; }
+.hero-stat { display: flex; flex-direction: column; gap: 12px; }
+.stat-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; color: var(--accent); }
+.stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* ─── ADKAR ──────────────────────────────────────── */
+.adkar-row { display: flex; gap: 10px; margin-bottom: 14px; }
+.adkar-letter {
+  min-width: 52px; height: 52px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900;
+  color: var(--white); flex-shrink: 0;
+}
+.adkar-info { flex: 1; }
+.adkar-word { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+.adkar-desc { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+.adkar-example { font-size: 12px; color: var(--accent3); margin-top: 4px; }
+
+/* ─── MCKINSEY 7S ────────────────────────────────── */
+.seven-s-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+.seven-s-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 12px; text-align: center; }
+.seven-s-icon { font-size: 22px; margin-bottom: 6px; }
+.seven-s-name { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.seven-s-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+.seven-s-center { background: linear-gradient(135deg, rgba(245,166,35,0.15), rgba(232,102,90,0.15)); border-color: rgba(245,166,35,0.3); }
+.seven-s-center .seven-s-name { color: var(--accent); }
+
+/* ─── INTERACTIVE QUIZ ───────────────────────────── */
+.quiz-wrap { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+.quiz-q { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 18px; line-height: 1.5; }
+.quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.quiz-opt {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 13px 18px; cursor: pointer;
+  font-size: 14px; color: var(--text); transition: all .2s;
+  text-align: left;
+}
+.quiz-opt:hover { border-color: var(--accent); color: var(--white); }
+.quiz-opt.correct { border-color: var(--accent3); background: rgba(91,200,175,0.12); color: var(--accent3); }
+.quiz-opt.wrong { border-color: var(--accent2); background: rgba(232,102,90,0.12); color: var(--accent2); }
+.quiz-feedback { font-size: 13.5px; line-height: 1.65; padding: 14px; border-radius: 10px; display: none; }
+.quiz-feedback.show { display: block; }
+.quiz-feedback.ok { background: rgba(91,200,175,0.1); border: 1px solid rgba(91,200,175,0.3); color: var(--accent3); }
+.quiz-feedback.no { background: rgba(232,102,90,0.1); border: 1px solid rgba(232,102,90,0.3); color: var(--accent2); }
+
+/* ─── RESISTANCE TABLE ───────────────────────────── */
+.resist-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 14px; border-radius: 10px; margin-bottom: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+}
+.resist-emoji { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+.resist-cause { font-size: 13.5px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+.resist-sol { font-size: 12.5px; color: var(--accent3); }
+
+/* ─── HERO DIVIDER ───────────────────────────────── */
+.divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+/* ─── WRAP for scrollable content ───────────────── */
+.wrap { padding-bottom: 8px; }
+
+/* ─── FOOTER NOTE ────────────────────────────────── */
+.footnote { font-size: 11px; color: var(--muted); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+
+/* keyboard hint */
+.kb-hint { display: flex; gap: 8px; align-items: center; }
+.kb { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- TOP BAR -->
+  <div id="topbar">
+    <div class="course-tag">Manajemen Proyek</div>
+    <div class="title-bar">Materi: <span>Change Management</span></div>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <div class="kb-hint"><span class="kb">←</span><span class="kb">→</span><span style="font-size:11px;color:var(--muted)">navigasi</span></div>
+      <div id="slide-counter">Slide <em id="curr-num">1</em> / <span id="total-num">1</span></div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div id="progress-bar"><div id="progress-fill"></div></div>
+
+  <!-- SLIDES -->
+  <div id="slides-wrap">
+
+    <!-- ────── SLIDE 1: JUDUL ────── -->
+    <div class="slide active" data-idx="0">
+      <div class="slide-inner">
+        <div class="hero-grid">
+          <div>
+            <div class="slide-tag tag-intro">Pengantar Materi</div>
+            <h1 class="slide-title">Manajemen<br>Perubahan</h1>
+            <p class="slide-subtitle">
+              Memahami mengapa perubahan itu sulit, bagaimana memimpinnya dengan efektif, dan apa yang membuat transformasi berhasil atau gagal.
+            </p>
+            <div class="hero-stat">
+              <div class="stat-item">
+                <div class="stat-num">70%</div>
+                <div class="stat-label">program perubahan besar gagal mencapai tujuannya — McKinsey & Company</div>
+              </div>
+              <div class="stat-item" style="border-left: 3px solid var(--accent3);">
+                <div class="stat-num" style="color:var(--accent3)">6 Model</div>
+                <div class="stat-label">teori utama yang akan dipelajari: Lewin, Kotter, ADKAR, McKinsey 7S, dll.</div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div style="text-align:center; position:relative; z-index:1;">
+              <div class="hero-emoji-main">🔄</div>
+              <div style="font-size:13px; color:var(--muted); margin-top:12px; font-style:italic;">"Satu-satunya yang konstan<br>adalah perubahan itu sendiri."</div>
+              <div style="font-size:11px; color:var(--accent); margin-top:6px;">— Heraclitus</div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-4" style="margin-top:20px;">
+          <div class="card card-accent"><div class="card-icon">📚</div><div class="card-title">Teori & Model</div><div class="card-body">Fondasi ilmiah manajemen perubahan</div></div>
+          <div class="card card-blue"><div class="card-icon">🔍</div><div class="card-title">Analogi</div><div class="card-body">Penjelasan visual dan mudah dipahami</div></div>
+          <div class="card card-green"><div class="card-icon">🏢</div><div class="card-title">Studi Kasus</div><div class="card-body">Netflix, Nokia, Unilever, GoTo</div></div>
+          <div class="card" style="border-left:3px solid #a05bc8;"><div class="card-icon">✅</div><div class="card-title">Praktik Terbaik</div><div class="card-body">Tips implementasi di lapangan</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────── SLIDE 2: DEFINISI ────── -->
+    <div class="slide" data-idx="1">
+      <div class="slide-inner wrap">
+        <div class="slide-tag tag-theory">Definisi & Konsep Dasar</div>
+        <h2 class="slide-title">Apa itu Manajemen Perubahan?</h2>
+
+        <div class="highlight">
+          <strong>Definisi:</strong> Manajemen Perubahan (Change Management) adalah pendekatan terstruktur untuk memastikan bahwa perubahan diimplementasikan secara menyeluruh, lancar, dan berhasil — serta memberikan manfaat yang bertahan lama bagi organisasi.
+        </div>
+
+        <div class="analogi-box">
+          <div class="analogi-label">Analogi — Mengapa Perubahan Sulit?</div>
+          <div class="analogi-text">
+            Bayangkan Anda terbiasa berkendara di jalan A setiap hari ke kantor. Suatu hari jalan itu ditutup permanen. <strong>Otak Anda tahu rute baru lebih baik</strong>, tapi kaki Anda secara otomatis masih ingin berbelok ke jalan lama. Itulah resistansi perubahan — <strong>kebiasaan vs. logika</strong>. Manajemen perubahan adalah GPS yang memandu kita melewati jalan baru dengan percaya diri.
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card card-accent">
+            <div class="card-icon">🧠</div>
+            <div class="card-title">Perubahan Individu</div>
+            <div class="card-body">Mengubah cara pikir, sikap, dan perilaku setiap orang yang terdampak perubahan</div>
+          </div>
+          <div class="card card-blue">
+            <div class="card-icon">🏛️</div>
+            <div class="card-title">Perubahan Organisasi</div>
+            <div class="card-body">Mengubah proses, sistem, struktur, dan budaya perusahaan secara sistematis</div>
+          </div>
+          <div class="card card-green">
+            <div class="card-icon">🌍</div>
+            <div class="card-title">Perubahan Strategis</div>
+            <div class="card-body">Merespons tekanan eksternal: teknologi, regulasi, kompetitor, atau krisis pasar</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title" style="color:var(--accent); margin-bottom:8px;">⚙️ Change Management vs. Project Management</div>
+            <table class="compare-table" style="margin-top:4px;">
+              <tr><th>Aspek</th><th class="th-blue" style="color:var(--accent4)">Project Mgmt</th><th class="th-green" style="color:var(--accent3)">Change Mgmt</th></tr>
+              <tr><td>Fokus</td><td>Teknis / Deliverable</td><td>Manusia / Adopsi</td></tr>
+              <tr><td>Hasil</td><td>Sistem, produk, proses</td><td>Perilaku yang berubah</td></tr>
+              <tr><td>Pertanyaan</td><td>"Apa yang berubah?"</td><td>"Siapa yang berubah?"</td></tr>
+            </table>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color:var(--accent2); margin-bottom:10px;">⚠️ Fakta Kritis</div>
+            <div class="card-body" style="font-size:13.5px; line-height:1.7;">
+              Kebanyakan proyek transformasi gagal <strong style="color:var(--white);">bukan karena teknologinya buruk</strong>, melainkan karena <strong style="color:var(--accent2);">orang-orang tidak mau atau tidak bisa beradaptasi</strong>.<br><br>
+              Kegagalan terbesar adalah mengasumsikan bahwa menjelaskan perubahan = menerima perubahan.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────── SLIDE 3: LEWIN ────── -->
+    <div class="slide" data-idx="2">
+      <div class="slide-inner wrap">
+        <div class="slide-tag tag-model">Model Klasik</div>
+        <h2 class="slide-title">Model Lewin: Unfreeze – Change – Refreeze</h2>
+        <p class="slide-subtitle">Kurt Lewin (1947) — psikolog sosial pertama yang memodelkan perubahan organisasi secara ilmiah.</p>
+
+        <div class="lewin-flow">
+          <div class="lewin-box" style="background: rgba(124,159,245,0.12); border: 1px solid rgba(124,159,245,0.25);">
+            <div class="lewin-icon">🧊</div>
+            <div class="lewin-title" style="color:var(--accent4);">UNFREEZE</div>
+            <div class="lewin-desc">Cairkan status quo. Ciptakan rasa urgensi dan motivasi untuk berubah. Hancurkan zona nyaman.</div>
+          </div>
+          <div class="lewin-arrow">→</div>
+          <div class="lewin-box" style="background: rgba(245,166,35,0.12); border: 1px solid rgba(245,166,35,0.25);">
+            <div class="lewin-icon">🔄</div>
+            <div class="lewin-title" style="color:var(--accent);">CHANGE</div>
+            <div class="lewin-desc">Implementasi. Orang belajar cara baru bekerja. Periode transisi yang penuh ketidakpastian.</div>
+          </div>
+          <div class="lewin-arrow">→</div>
+          <div class="lewin-box" style="background: rgba(91,200,175,0.12); border: 1px solid rgba(91,200,175,0.25);">
+            <div class="lewin-icon">✅</div>
+            <div class="lewin-title" style="color:var(--accent3);">REFREEZE</div>
+            <div class="lewin-desc">Stabilkan perubahan baru. Jadikan perilaku baru sebagai norma dan budaya organisasi.</div>
+          </div>
+        </div>
+
+        <div class="analogi-box">
+          <div class="analogi-label">Analogi — Es Batu 🧊</div>
+          <div class="analogi-text">
+            Lewin sendiri menggunakan metafora es: untuk mengubah bentuk es, Anda harus <strong>mencairkannya dulu</strong> (unfreeze), <strong>tuangkan ke cetakan baru</strong> (change), lalu <strong>bekukan kembali</strong> (refreeze). Jika Anda memaksakan es tanpa mencairkannya dulu, es itu akan <strong>retak dan hancur</strong> — itulah yang terjadi jika perubahan dipaksakan tanpa persiapan.
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card card-blue">
+            <div class="card-title">🔓 Unfreeze — Cara Melakukannya</div>
+            <div class="card-body">• Tunjukkan data masalah yang ada<br>• Buat perbandingan dengan kompetitor<br>• Ajak diskusi dampak jika tidak berubah<br>• Libatkan stakeholder kunci lebih awal</div>
+          </div>
+          <div class="card card-accent">
+            <div class="card-title">⚙️ Change — Cara Melakukannya</div>
+            <div class="card-body">• Komunikasi yang jelas dan konsisten<br>• Training dan pendampingan (coaching)<br>• Libatkan orang dalam proses desain<br>• Rayakan kemenangan kecil (quick wins)</div>
+          </div>
+          <div class="card card-green">
+            <div class="card-title">🔒 Refreeze — Cara Melakukannya</div>
+            <div class="card-body">• Perbarui SOP dan kebijakan resmi<br>• Integrasikan dalam sistem evaluasi kinerja<br>• Rayakan keberhasilan tim<br>• Jadikan cara baru sebagai "cara kita"</div>
+          </div>
+        </div>
+
+        <div class="kasus-box">
+          <div class="kasus-header">
+            <span class="kasus-badge">Studi Kasus Mini</span>
+            <div class="kasus-title">Penerapan Lewin di Perusahaan Manufaktur Indonesia</div>
+          </div>
+          <div class="kasus-body">
+            PT Astra International saat beralih ke sistem ERP baru: <strong>Unfreeze</strong> — manajer puncak menunjukkan data efisiensi perusahaan global yang pakai ERP vs. yang tidak. <strong>Change</strong> — pelatihan 3 bulan bertahap per divisi dengan mentor internal. <strong>Refreeze</strong> — penggunaan ERP dijadikan indikator KPI dan bagian dari proses onboarding karyawan baru.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────── SLIDE 4: KOTTER ────── -->
+    <div class="slide" data-idx="3">
+      <div class="slide-inner wrap">
+        <div class="slide-tag tag-model">Model 8 Langkah</div>
+        <h2 class="slide-title">Kotter's 8-Step Change Model</h2>
+        <p class="slide-subtitle">John Kotter (1995) — Harvard Business School. Model paling populer dalam transformasi organisasi besar.</p>
+
+        <div class="grid-2">
+          <div>
+            <div class="phase-header">Fase 1: Ciptakan Iklim Perubahan</div>
+            <div class="steps-list">
+              <div class="step-item">
+                <div class="step-num" style="background:rgba(232,102,90,0.2); color:var(--accent2);">1</div>
+                <div><div class="step-content-title">Ciptakan Rasa Urgensi</div><div class="step-content-desc">Tunjukkan ancaman nyata jika tidak berubah. Buat 75% orang merasa "kita harus berubah sekarang".</div></div>
+              </div>
+              <div class="step-item">
+                <div class="step-num" style="background:rgba(232,102,90,0.2); color:var(--accent2);">2</div>
+                <div><div class="step-content-title">Bangun Koalisi Pemimpin</div><div class="step-content-desc">Rekrut tokoh-tokoh berpengaruh dari berbagai level dan departemen sebagai "agen perubahan".</div></div>
+              </div>
+              <div class="step-item">
+                <div class="step-num" style="background:rgba(232,102,90,0.2); color:var(--accent2);">3</div>
+                <div><div class="step-content-title">Buat Visi & Strategi</div><div class="step-content-desc">Visi yang jelas, sederhana, dan bisa dijelaskan dalam 5 menit kepada siapa pun.</div></div>
+              </div>
+              <div class="step-item">
+                <div class="step-num" style="background:rgba(232,102,90,0.2); color:var(--accent2);">4</div>
+                <div><div class="step-content-title">Komunikasikan Visi</div><div class="step-content-desc">Gunakan setiap kesempatan dan saluran komunikasi. Pemimpin harus jadi teladan nyata.</div></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="phase-header">Fase 2 & 3: Implementasi & Permanenkan</div>
+            <div class="steps-list">
+              <div class="step-item">
+                <div class="step-num" style="background:rgba(245,166,35,0.2); color:var(--accent);">5</div>
+                <div><div class="step-content-title">Hapus Hambatan</div><div class="step-content-desc">Ubah sistem, struktur, atau proses yang menghambat. Dukung orang yang berani mencoba hal baru.</div></div>
+              </div>
+              <div class="step-item">
+                <div class="step-num" style="background:rgba(245,166,35,0.2); color:var(--accent);">6</div>
+                <div><div class="step-content-title">Raih Kemenangan Cepat</div><div class="step-content-desc">Rencanakan dan eksekusi quick wins yang terlihat jelas. Akui dan hargai yang berkontribusi.</div></div>
+              </div>
+              <div class="step-item">
+                <div class="step-num" style="background:rgba(91,200,175,0.2); color:var(--accent3);">7</div>
+                <div><div class="step-content-title">Konsolidasikan Hasil</div><div class="step-content-desc">Gunakan kredibilitas yang dibangun untuk mendorong lebih banyak perubahan. Jangan berhenti.</div></div>
+              </div>
+              <div class="step-item">
+                <div class="step-num" style="background:rgba(91,200,175,0.2); color:var(--accent3);">8</div>
+                <div><div class="step-content-title">Jadikan Budaya Baru</div><div class="step-content-desc">Tunjukkan koneksi antara perilaku baru dan kesuksesan organisasi. Pastikan kepemimpinan terus mendukung.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="analogi-box" style="margin-top:16px;">
+          <div class="analogi-label">Analogi — Merenovasi Rumah 🏗️</div>
+          <div class="analogi-text">
+            Kotter seperti merenovasi rumah: Anda harus <strong>yakin dulu mengapa perlu direnovasi</strong> (step 1), <strong>cari kontraktor dan desainer yang dipercaya</strong> (step 2-3), <strong>komunikasikan ke seluruh keluarga</strong> (step 4), <strong>singkirkan barang lama yang menghalangi</strong> (step 5), <strong>lihat kamar pertama jadi — berikan semangat baru</strong> (step 6-7), lalu <strong>jaga agar rumah tetap rapi sebagai kebiasaan baru</strong> (step 8).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────── SLIDE 5: ADKAR ────── -->
+    <div class="slide" data-idx="4">
+      <div class="slide-inner wrap">
+        <div class="slide-tag tag-model">Model Individu</div>
+        <h2 class="slide-title">Model ADKAR — Perubahan di Tingkat Individu</h2>
+        <p class="slide-subtitle">Prosci (Jeff Hiatt, 2003) — fokus pada perjalanan perubahan setiap individu, bukan hanya organisasi.</p>
+
+        <div class="highlight">
+          <strong>Kunci ADKAR:</strong> Organisasi berubah hanya ketika setiap individu di dalamnya berubah. Model ini membantu mengidentifikasi di mana seseorang "tersangkut" dalam proses perubahan.
+        </div>
+
+        <div class="adkar-row">
+          <div class="adkar-letter" style="background: rgba(124,159,245,0.3);">A</div>
+          <div class="adkar-info">
+            <div class="adkar-word">AWARENESS — Kesadaran</div>
+            <div class="adkar-desc">Mengapa perubahan ini perlu terjadi? Apa yang akan terjadi jika tidak berubah? Seseorang harus memahami alasan perubahan sebelum bisa menerimanya.</div>
+            <div class="adkar-example">✦ Contoh: Karyawan diberitahu bahwa kompetitor sudah 3x lebih cepat karena pakai sistem digital baru.</div>
+          </div>
+        </div>
+
+        <div class="adkar-row">
+          <div class="adkar-letter" style="background: rgba(245,166,35,0.3);">D</div>
+          <div class="adkar-info">
+            <div class="adkar-word">DESIRE — Keinginan</div>
+            <div class="adkar-desc">Keinginan aktif untuk mendukung dan berpartisipasi dalam perubahan. Ini adalah pilihan personal — tidak bisa dipaksakan, hanya bisa dimotivasi.</div>
+            <div class="adkar-example">✦ Contoh: Karyawan mulai aktif bertanya cara pakai sistem baru, bukan hanya menunggu instruksi.</div>
+          </div>
+        </div>
+
+        <div class="adkar-row">
+          <div class="adkar-letter" style="background: rgba(91,200,175,0.3);">K</div>
+          <div class="adkar-info">
+            <div class="adkar-word">KNOWLEDGE — Pengetahuan</div>
+            <div class="adkar-desc">Tahu bagaimana cara berubah — keterampilan, proses, perilaku, dan alat baru yang dibutuhkan. Training dan pendampingan ada di sini.</div>
+            <div class="adkar-example">✦ Contoh: Mengikuti workshop 2 hari tentang sistem baru dan mendapatkan panduan langkah demi langkah.</div>
+          </div>
+        </div>
+
+        <div class="adkar-row">
+          <div class="adkar-letter" style="background: rgba(232,102,90,0.3);">A</div>
+          <div class="adkar-info">
+            <div class="adkar-word">ABILITY — Kemampuan</div>
+            <div class="adkar-desc">Mampu benar-benar menerapkan perubahan dalam pekerjaan sehari-hari. Knowledge ≠ Ability — tahu teori vs. bisa praktek adalah dua hal berbeda.</div>
+            <div class="adkar-example">✦ Contoh: Karyawan bisa menyelesaikan tugasnya secara mandiri menggunakan sistem baru tanpa bantuan.</div>
+          </div>
+        </div>
+
+        <div class="adkar-row">
+          <div class="adkar-letter" style="background: rgba(160,91,200,0.3);">R</div>
+          <div class="adkar-info">
+            <div class="adkar-word">REINFORCEMENT — Penguatan</div>
+            <div class="adkar-desc">Memastikan perubahan tetap bertahan. Tanpa penguatan, orang cenderung kembali ke cara lama. Bisa berupa reward, pengakuan, atau konsekuensi.</div>
+            <div class="adkar-example">✦ Contoh: KPI diperbarui untuk mengukur kinerja dalam sistem baru; tim yang adopsi tercepat mendapat apresiasi.</div>
+          </div>
+        </div>
+
+        <div class="analogi-box">
+          <div class="analogi-label">Analogi — Belajar Mengendarai Mobil 🚗</div>
+          <div class="analogi-text">
+            <strong>A</strong> — Tahu kenapa perlu bisa nyetir (mobilitas, karier). <strong>D</strong> — Benar-benar mau belajar, bukan dipaksa. <strong>K</strong> — Belajar teori lalu lintas dan fungsi pedal. <strong>A</strong> — Bisa parkir parallel secara mandiri. <strong>R</strong> — Setiap hari mengendarai mobil ke tempat kerja membuatnya jadi kebiasaan.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────── SLIDE 6: McKINSEY 7S ────── -->
+    <div class="slide" data-idx="5">
+      <div class="slide-inner wrap">
+        <div class="slide-tag tag-model">Kerangka Holistik</div>
+        <h2 class="slide-title">McKinsey 7S Framework</h2>
+        <p class="slide-subtitle">Tom Peters & Robert Waterman (1980) — tujuh elemen yang harus selaras agar perubahan berhasil.</p>
+
+        <div class="seven-s-grid">
+          <div class="seven-s-item" style="border:1px solid rgba(124,159,245,0.3);">
+            <div class="seven-s-icon">🗺️</div>
+            <div class="seven-s-name" style="color:var(--accent4);">Strategy</div>
+            <div class="seven-s-desc">Rencana tindakan untuk mencapai tujuan kompetitif jangka panjang</div>
+          </div>
+          <div class="seven-s-item" style="border:1px solid rgba(124,159,245,0.3);">
+            <div class="seven-s-icon">🏗️</div>
+            <div class="seven-s-name" style="color:var(--accent4);">Structure</div>
+            <div class="seven-s-desc">Cara organisasi dibagi, dikelola, dan diintegrasikan (bagan org)</div>
+          </div>
+          <div class="seven-s-item" style="border:1px solid rgba(124,159,245,0.3);">
+            <div class="seven-s-icon">⚙️</div>
+            <div class="seven-s-name" style="color:var(--accent4);">Systems</div>
+            <div class="seven-s-desc">Proses dan prosedur sehari-hari; bagaimana keputusan dibuat</div>
+          </div>
+          <div class="seven-s-item seven-s-center">
+            <div class="seven-s-icon">💎</div>
+            <div class="seven-s-name">Shared Values</div>
+            <div class="seven-s-desc" style="color:var(--accent);">INTI — nilai dan norma budaya yang menjadi pedoman perilaku</div>
+          </div>
+          <div class="seven-s-item" style="border:1px solid rgba(91,200,175,0.3);">
+            <div class="seven-s-icon">🎨</div>
+            <div class="seven-s-name" style="color:var(--accent3);">Style</div>
+            <div class="seven-s-desc">Gaya kepemimpinan dan budaya organisasi yang berlaku</div>
+          </div>
+          <div class="seven-s-item" style="border:1px solid rgba(91,200,175,0.3);">
+            <div class="seven-s-icon">👥</div>
+            <div class="seven-s-name" style="color:var(--accent3);">Staff</div>
+            <div class="seven-s-desc">Karyawan dan kapabilitas SDM; pengembangan dan rekrutmen</div>
+          </div>
+          <div class="seven-s-item" style="border:1px solid rgba(91,200,175,0.3);">
+            <div class="seven-s-icon">🏆</div>
+            <div class="seven-s-name" style="color:var(--accent3);">Skills</div>
+            <div class="seven-s-desc">Kompetensi inti yang dimiliki karyawan dan organisasi</div>
+          </div>
+          <div class="seven-s-item" style="background:var(--surface2); border:1px dashed var(--border);">
+            <div class="seven-s-icon">🔗</div>
+            <div class="seven-s-name" style="color:var(--muted);">Hard S</div>
+            <div class="seven-s-desc" style="color:var(--muted);">Strategy, Structure, Systems → lebih mudah diubah</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="analogi-box" style="margin-bottom:0;">
+            <div class="analogi-label">Analogi — Tubuh Manusia 🧬</div>
+            <div class="analogi-text" style="font-size:13.5px;">
+              7S seperti organ tubuh: <strong>Strategy</strong> = otak (arah), <strong>Structure</strong> = kerangka tulang, <strong>Systems</strong> = sistem saraf (alur kerja), <strong>Shared Values</strong> = DNA (inti), <strong>Style</strong> = kepribadian, <strong>Staff</strong> = sel darah, <strong>Skills</strong> = otot. Jika satu organ tidak sehat, seluruh tubuh terpengaruh.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color:var(--accent); margin-bottom:10px;">💡 Cara Menggunakan 7S</div>
+            <div class="card-body" style="font-size:13px; line-height:1.75;">
+              1. Identifikasi di mana perubahan ingin dilakukan<br>
+              2. Cek dampak ke 6 elemen lainnya<br>
+              3. Temukan ketidakselarasan (misalignment)<br>
+              4. Tentukan perubahan apa yang harus dilakukan di tiap elemen<br>
+              5. Mulai dari <strong style="color:var(--accent3);">Shared Values</strong> — ubah cara pikir dulu
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────── SLIDE 7: RESISTANSI ────── -->
+    <div class="slide" data-idx="6">
+      <div class="slide-inner wrap">
+        <div class="slide-tag tag-theory">Tantangan Utama</div>
+        <h2 class="slide-title">Resistansi terhadap Perubahan</h2>
+        <p class="slide-subtitle">Resistansi bukan kelemahan — ini adalah respons manusiawi yang normal dan bahkan perlu dikelola dengan empati.</p>
+
+        <div class="analogi-box">
+          <div class="analogi-label">Analogi — Sistem Imun Tubuh 🛡️</div>
+          <div class="analogi-text">
+            Resistansi perubahan seperti <strong>sistem imun organisasi</strong>: ketika ada elemen asing (perubahan) masuk, tubuh organisasi secara otomatis menyerang. Ini bukan jahat — ini <strong>mekanisme perlindungan alami</strong>. Pemimpin perubahan yang baik tidak melawan sistem imun ini, melainkan <strong>melatihnya untuk mengenali perubahan sebagai "teman bukan musuh"</strong>.
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <div class="resist-item">
+            <div class="resist-emoji">😨</div>
+            <div><div class="resist-cause">Takut Kehilangan Pekerjaan atau Kekuasaan</div><div class="resist-sol">→ Komunikasi transparan tentang dampak perubahan terhadap peran; jaminan keamanan kerja jika memungkinkan</div></div>
+          </div>
+          <div class="resist-item">
+            <div class="resist-emoji">🤔</div>
+            <div><div class="resist-cause">Tidak Memahami Alasan Perubahan</div><div class="resist-sol">→ Jelaskan "mengapa" sebelum "bagaimana". Gunakan data dan cerita yang relatable</div></div>
+          </div>
+          <div class="resist-item">
+            <div class="resist-emoji">😤</div>
+            <div><div class="resist-cause">Tidak Dilibatkan dalam Proses Perubahan</div><div class="resist-sol">→ Libatkan orang-orang yang paling terdampak dalam merancang solusi. Mereka jadi co-creator bukan objek</div></div>
+          </div>
+          <div class="resist-item">
+            <div class="resist-emoji">😩</div>
+            <div><div class="resist-cause">Kelelahan Perubahan (Change Fatigue)</div><div class="resist-sol">→ Beri jeda antar inisiatif; rayakan keberhasilan; akui beban yang ditanggung karyawan</div></div>
+          </div>
+          <div class="resist-item">
+            <div class="resist-emoji">🏆</div>
+            <div><div class="resist-cause">Merasa Cara Lama Sudah Berhasil</div><div class="resist-sol">→ Hormati kontribusi masa lalu; tunjukkan bahwa cara baru melanjutkan, bukan menghapus, keberhasilan lama</div></div>
+          </div>
+          <div class="resist-item">
+            <div class="resist-emoji">😟</div>
+            <div><div class="resist-cause">Ketidakpercayaan pada Pimpinan</div><div class="resist-sol">→ Bangun track record kepercayaan; pimpinan harus jadi teladan pertama perubahan, bukan terakhir</div></div>
+          </div>
+        </div>
+
+        <div class="warning">
+          <strong>⚠️ Kesalahan Fatal:</strong> Mengabaikan atau menghukum resistansi justru membuatnya lebih kuat dan bawah tanah (underground resistance). Resistansi yang tidak terlihat jauh lebih berbahaya daripada yang terang-terangan.
+        </div>
+      </div>
+    </div>
+
+    <!-- ────── SLIDE 8: STUDI KASUS NOKIA ────── -->
+    <div class="slide" data-idx="7">
+      <div class="slide-inner wrap">
+        <div class="slide-tag tag-kasus">Studi Kasus — Kegagalan</div>
+        <h2 class="slide-title">Nokia: Ketika Manajemen Perubahan Gagal</h2>
+
+        <div class="grid-2">
+          <div>
+            <div class="kasus-box" style="margin-bottom:14px;">
+              <div class="kasus-header">
+                <span class="kasus-badge">Latar Belakang</span>
+                <div class="kasus-title">Nokia — Raksasa yang Jatuh</div>
+              </div>
+              <div class="kasus-body">
+                Nokia pernah menguasai <strong>40% pasar ponsel global</strong> pada tahun 2007. Saat iPhone diluncurkan, Nokia punya teknologi, uang, dan SDM — tapi gagal merespons perubahan. Pada 2013, divisi ponselnya dijual ke Microsoft dengan harga sepersepuluh nilai puncaknya.
+              </div>
+            </div>
+
+            <div class="kasus-box">
+              <div class="kasus-header">
+                <span class="kasus-badge">Apa yang Salah?</span>
+                <div class="kasus-title">Autopsi Kegagalan</div>
+              </div>
+              <div class="kasus-body">
+                <strong>1. Budaya Ketakutan:</strong> Insinyur tahu masalahnya tapi takut melaporkan ke atas karena budaya "bad news kills career".<br><br>
+                <strong>2. Tidak Ada Urgensi (Step 1 Kotter):</strong> Pemimpin merasa nyaman dengan dominasi pasar — tidak ciptakan rasa urgensi.<br><br>
+                <strong>3. Birokrasi Membunuh Inovasi (7S — Systems):</strong> Proses persetujuan internal terlalu panjang untuk merespons perubahan pasar yang cepat.<br><br>
+                <strong>4. Ego Organisasi:</strong> "Kami Nokia, siapa yang berani menggantikan kami?"
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="analogi-box" style="margin-bottom:14px;">
+              <div class="analogi-label">Analogi — Katak dalam Air Mendidih 🐸</div>
+              <div class="analogi-text" style="font-size:13.5px;">
+                Nokia seperti katak yang dimasukkan ke air yang dipanaskan perlahan. <strong>Perubahan terjadi gradual</strong> (Android, iPhone, app store) sehingga tidak terasa darurat. Ketika air sudah mendidih, sudah terlambat untuk loncat. Manajemen perubahan yang baik memasang "termometer" untuk deteksi dini — bahkan perubahan yang terasa kecil.
+              </div>
+            </div>
+
+            <div class="card" style="margin-bottom:14px;">
+              <div class="card-title" style="color:var(--accent); margin-bottom:10px;">📊 Timeline Kejatuhan</div>
+              <div class="card-body" style="font-size:13px; line-height:1.9;">
+                <span style="color:var(--accent3);">2007</span> — iPhone diluncurkan; Nokia abaikan<br>
+                <span style="color:var(--accent);">2008</span> — Android muncul; Nokia tetap fokus Symbian<br>
+                <span style="color:var(--accent);">2010</span> — Pangsa pasar mulai turun drastis<br>
+                <span style="color:var(--accent2);">2011</span> — CEO baru (Elop) umumkan platform burning<br>
+                <span style="color:var(--accent2);">2012</span> — PHK massal 10.000+ karyawan<br>
+                <span style="color:var(--accent2);">2013</span> — Dijual ke Microsoft $7,2 miliar
+              </div>
+            </div>
+
+            <div class="highlight">
+              <strong>Pelajaran:</strong> Bukan teknologi yang membunuh Nokia — melainkan <strong>budaya organisasi yang tidak bisa berubah</strong>. Ketakutan, birokrasi, dan kesombongan adalah musuh perubahan yang paling mematikan.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────── SLIDE 9: STUDI KASUS NETFLIX ────── -->
+    <div class="slide" data-idx="8">
+      <div class="slide-inner wrap">
+        <div class="slide-tag tag-kasus">Studi Kasus — Keberhasilan</div>
+        <h2 class="slide-title">Netflix: Transformasi Tiga Kali Berturut-turut</h2>
+
+        <div class="kasus-box" style="margin-bottom:16px;">
+          <div class="kasus-header">
+            <span class="kasus-badge">Konteks</span>
+            <div class="kasus-title">Netflix — Dari DVD ke Streaming ke Konten Original</div>
+          </div>
+          <div class="kasus-body">
+            Netflix berdiri 1997 sebagai layanan <strong>sewa DVD via pos</strong>. Mereka melakukan transformasi radikal <strong>tiga kali</strong> — dan berhasil di ketiganya. Pada 2024, Netflix memiliki 270 juta subscriber global dan kapitalisasi pasar $280 miliar.
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-bottom:16px;">
+          <div class="card" style="border-top:3px solid var(--accent4);">
+            <div class="card-icon">📀</div>
+            <div class="card-title" style="color:var(--accent4);">Transformasi 1 (2007)</div>
+            <div class="card-body"><strong style="color:var(--white);">DVD → Streaming</strong><br><br>Reed Hastings melihat bandwidth internet mulai murah. Keputusan berani: mulai streaming SEBELUM DVD mati. Rela "bunuh" bisnis DVD yang masih profit.</div>
+          </div>
+          <div class="card" style="border-top:3px solid var(--accent);">
+            <div class="card-icon">🌍</div>
+            <div class="card-title" style="color:var(--accent);">Transformasi 2 (2010-2016)</div>
+            <div class="card-body"><strong style="color:var(--white);">Distributor → Produsen Konten</strong><br><br>Dari platform yang "menyiarkan" ke pembuat konten original. "House of Cards" (2013) jadi pertama streaming original show yang menang Emmy.</div>
+          </div>
+          <div class="card" style="border-top:3px solid var(--accent3);">
+            <div class="card-icon">🎮</div>
+            <div class="card-title" style="color:var(--accent3);">Transformasi 3 (2022-kini)</div>
+            <div class="card-body"><strong style="color:var(--white);">Streaming → Entertainment Platform</strong><br><br>Tambah games, live events, dan monetisasi berbagi akun. Respons cepat terhadap saturasi pasar streaming.</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="analogi-box" style="margin-bottom:0;">
+            <div class="analogi-label">Analogi — Berselancar 🏄</div>
+            <div class="analogi-text" style="font-size:13.5px;">
+              Netflix seperti peselancar ahli: mereka tidak menunggu ombak sempurna — mereka <strong>belajar membaca ombak lebih awal dari orang lain</strong>. Ketika ombak DVD mau habis, mereka sudah berposisi di ombak streaming. Saat streaming mau flat, mereka sudah paddling ke ombak konten original. <strong>Kunci: mulai bergerak sebelum terpaksa bergerak.</strong>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" style="color:var(--accent); margin-bottom:10px;">🔑 Kunci Keberhasilan Change Management Netflix</div>
+            <div class="card-body" style="font-size:13px; line-height:1.8;">
+              ✓ <strong style="color:var(--white);">Culture of Freedom & Responsibility</strong> — karyawan diberi otonomi tinggi dengan akuntabilitas jelas<br>
+              ✓ <strong style="color:var(--white);">Data-Driven Decisions</strong> — setiap keputusan berbasis data tontonan, bukan intuisi<br>
+              ✓ <strong style="color:var(--white);">Berani Kanibalisasi Diri</strong> — hancurkan bisnis yang masih profit sebelum kompetitor melakukannya<br>
+              ✓ <strong style="color:var(--white);">Komunikasi Radikal</strong> — transparansi tinggi internal, termasuk soal risiko
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────── SLIDE 10: STUDI KASUS GOTO ────── -->
+    <div class="slide" data-idx="9">
+      <div class="slide-inner wrap">
+        <div class="slide-tag tag-kasus">Studi Kasus — Indonesia</div>
+        <h2 class="slide-title">GoTo Group: Manajemen Perubahan Pasca-Merger</h2>
+
+        <div class="kasus-box" style="margin-bottom:16px;">
+          <div class="kasus-header">
+            <span class="kasus-badge">Konteks Lokal</span>
+            <div class="kasus-title">Merger Gojek + Tokopedia = GoTo (2021)</div>
+          </div>
+          <div class="kasus-body">
+            Merger terbesar dalam sejarah startup Indonesia. Dua unicorn dengan budaya, sistem, dan cara kerja yang sangat berbeda harus menjadi satu entitas. Tantangan manajemen perubahan yang sangat kompleks: <strong>lebih dari 100.000 mitra driver, ratusan ribu merchant, dan jutaan pengguna</strong> harus merasakan transisi yang mulus.
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <div class="card card-blue" style="margin-bottom:12px;">
+              <div class="card-title">Tantangan Perubahan Utama</div>
+              <div class="card-body" style="font-size:13px; line-height:1.8; margin-top:8px;">
+                🔴 <strong style="color:var(--white);">Clash of Culture:</strong> Gojek (lean, agile, move fast) vs Tokopedia (structured, merchant-centric)<br><br>
+                🔴 <strong style="color:var(--white);">Sistem IT Berbeda:</strong> Infrastruktur teknis yang harus diintegrasikan tanpa downtime<br><br>
+                🔴 <strong style="color:var(--white);">Human Capital:</strong> Siapa yang jadi atasan siapa? Redundansi posisi di dua perusahaan<br><br>
+                🔴 <strong style="color:var(--white);">Brand Confusion:</strong> Masyarakat bingung perbedaan GoTo, Gojek, Tokopedia, GoTo Financial
+              </div>
+            </div>
+
+            <div class="analogi-box" style="margin-bottom:0;">
+              <div class="analogi-label">Analogi — Pernikahan Perusahaan 💍</div>
+              <div class="analogi-text" style="font-size:13px;">
+                Merger seperti pernikahan: dua orang dengan kebiasaan berbeda harus belajar hidup bersama. <strong>Jatuh cinta (deal signing)</strong> itu mudah — yang sulit adalah <strong>negosiasi siapa yang cuci piring dan bagaimana mengatur keuangan bersama</strong>. Manajemen perubahan adalah proses "penyesuaian pernikahan" jangka panjang.
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="card" style="margin-bottom:12px;">
+              <div class="card-title" style="color:var(--accent3);">Strategi Change Management GoTo</div>
+              <div class="card-body" style="font-size:13px; line-height:1.85; margin-top:8px;">
+                ✓ <strong style="color:var(--white);">Visi Bersama:</strong> "Mendorong kemajuan Indonesia" — narasi yang lebih besar dari kedua brand<br><br>
+                ✓ <strong style="color:var(--white);">Co-Leadership:</strong> Kepemimpinan dual dari kedua pendiri untuk menjaga kepercayaan dua kubu<br><br>
+                ✓ <strong style="color:var(--white);">Integrasi Bertahap:</strong> Tidak merger sekaligus — mulai dari layanan yang saling melengkapi (GoPay × Tokopedia)<br><br>
+                ✓ <strong style="color:var(--white);">Town Hall Rutin:</strong> Komunikasi terbuka dengan seluruh karyawan tentang arah dan keputusan strategis<br><br>
+                ✓ <strong style="color:var(--white);">Culture Charter:</strong> Dokumen bersama tentang nilai-nilai GoTo yang menggabungkan DNA kedua perusahaan
+              </div>
+            </div>
+
+            <div class="highlight">
+              <strong>Pelajaran:</strong> Dalam merger, perubahan yang paling kritis bukan teknisnya — melainkan <strong>membangun identitas bersama</strong> yang membuat semua pihak merasa "ini juga perusahaanku."
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────── SLIDE 11: KOMUNIKASI ────── -->
+    <div class="slide" data-idx="10">
+      <div class="slide-inner wrap">
+        <div class="slide-tag tag-praktik">Strategi Praktis</div>
+        <h2 class="slide-title">Komunikasi dalam Manajemen Perubahan</h2>
+        <p class="slide-subtitle">Komunikasi yang buruk adalah pembunuh nomor satu program perubahan. Bukan kurangnya komunikasi — tapi komunikasi yang salah arah.</p>
+
+        <div class="analogi-box">
+          <div class="analogi-label">Analogi — Pilot Pesawat ✈️</div>
+          <div class="analogi-text">
+            Bayangkan Anda penumpang pesawat dan pilot tidak memberi pengumuman apa pun saat ada turbulensi hebat. <strong>Panik total.</strong> Tapi jika pilot berkata: "Bapak Ibu, kita akan melewati area cuaca buruk selama 15 menit. Ini normal dan aman" — <strong>orang lebih tenang meski situasinya sama.</strong> Itulah fungsi komunikasi dalam perubahan: bukan untuk menghilangkan ketidakpastian, tapi untuk memberikan <strong>konteks dan kepercayaan</strong>.
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-bottom:14px;">
+          <div>
+            <div class="card-title" style="color:var(--accent); margin-bottom:10px;">❌ Komunikasi yang Salah</div>
+            <div class="resist-item" style="margin-bottom:6px;"><div class="resist-emoji">📧</div><div><div class="resist-cause">Email satu arah dari manajemen</div><div class="resist-sol">Tidak ada ruang untuk tanya jawab atau umpan balik</div></div></div>
+            <div class="resist-item" style="margin-bottom:6px;"><div class="resist-emoji">🔕</div><div><div class="resist-cause">Diam terlalu lama</div><div class="resist-sol">Kekosongan informasi diisi gosip dan spekulasi negatif</div></div></div>
+            <div class="resist-item" style="margin-bottom:6px;"><div class="resist-emoji">🧑‍💼</div><div><div class="resist-cause">Hanya menyampaikan "apa", bukan "mengapa"</div><div class="resist-sol">Orang patuh tapi tidak berkomitmen</div></div></div>
+            <div class="resist-item"><div class="resist-emoji">🎭</div><div><div class="resist-cause">Berpura-pura semuanya mudah</div><div class="resist-sol">Kredibilitas hilang saat realita berbeda dengan janji</div></div></div>
+          </div>
+          <div>
+            <div class="card-title" style="color:var(--accent3); margin-bottom:10px;">✅ Komunikasi yang Efektif</div>
+            <div class="resist-item" style="margin-bottom:6px;"><div class="resist-emoji">🔄</div><div><div class="resist-cause">Komunikasi dua arah berkelanjutan</div><div class="resist-sol">Town hall, survey, one-on-one, focus group secara reguler</div></div></div>
+            <div class="resist-item" style="margin-bottom:6px;"><div class="resist-emoji">🎯</div><div><div class="resist-cause">Pesan disesuaikan per audiens</div><div class="resist-sol">Pesan untuk eksekutif ≠ supervisor ≠ staf lapangan</div></div></div>
+            <div class="resist-item" style="margin-bottom:6px;"><div class="resist-emoji">📖</div><div><div class="resist-cause">Gunakan cerita (storytelling)</div><div class="resist-sol">Data + narasi manusiawi jauh lebih persuasif dari data saja</div></div></div>
+            <div class="resist-item"><div class="resist-emoji">👂</div><div><div class="resist-cause">Dengarkan lebih banyak dari berbicara</div><div class="resist-sol">Umpan balik karyawan adalah data berharga untuk navigasi perubahan</div></div></div>
+          </div>
+        </div>
+
+        <blockquote>
+          "The single biggest problem in communication is the illusion that it has taken place."
+          <cite>— George Bernard Shaw</cite>
+        </blockquote>
+      </div>
+    </div>
+
+    <!-- ────── SLIDE 12: QUIZ ────── -->
+    <div class="slide" data-idx="11">
+      <div class="slide-inner wrap">
+        <div class="slide-tag tag-praktik">Uji Pemahaman Interaktif</div>
+        <h2 class="slide-title">Mini Quiz — Cek Pemahamanmu!</h2>
+
+        <div class="quiz-wrap" style="margin-bottom:14px;">
+          <div class="quiz-q">1. Sebuah perusahaan ingin beralih ke sistem kerja hybrid. Karyawan senior kompak menolak karena merasa sistem kerja kantor selama ini sudah efektif. Berdasarkan model Lewin, perusahaan ada di fase mana dan apa yang harus dilakukan?</div>
+          <div class="quiz-options" id="q1-opts">
+            <button class="quiz-opt" onclick="answerQ(1,'a')">A. Fase Change — langsung mulai pelatihan sistem hybrid</button>
+            <button class="quiz-opt" onclick="answerQ(1,'b')">B. Fase Unfreeze — perlu menunjukkan data dan alasan kuat mengapa sistem hybrid lebih baik</button>
+            <button class="quiz-opt" onclick="answerQ(1,'c')">C. Fase Refreeze — menetapkan kebijakan dan SOP baru</button>
+            <button class="quiz-opt" onclick="answerQ(1,'d')">D. Tidak perlu proses — tinggal umumkan kebijakan baru</button>
+          </div>
+          <div class="quiz-feedback ok" id="q1-ok">✅ <strong>Tepat!</strong> Perusahaan ada di tahap <strong>Unfreeze</strong>. Resistansi tinggi berarti orang belum "dicairkan" — masih terikat cara lama. Langkah pertama: tunjukkan data, buat perbandingan, dan ciptakan urgensi sebelum memulai implementasi.</div>
+          <div class="quiz-feedback no" id="q1-no">❌ Kurang tepat. Jawabannya <strong>B — Fase Unfreeze</strong>. Penolakan kuat dari karyawan menandakan status quo belum "dicairkan". Sebelum bisa berubah, orang harus diyakinkan dulu mengapa perubahan diperlukan. Tanpa Unfreeze yang kuat, perubahan akan patah di tengah jalan.</div>
+        </div>
+
+        <div class="quiz-wrap" style="margin-bottom:14px;">
+          <div class="quiz-q">2. Manajer pelatihan menemukan bahwa karyawannya sudah ikut training sistem baru (3 hari) tapi ternyata masih tidak bisa menggunakan sistem itu secara mandiri. Dalam model ADKAR, "titik macet" ada di elemen mana?</div>
+          <div class="quiz-options" id="q2-opts">
+            <button class="quiz-opt" onclick="answerQ(2,'a')">A. Awareness — karyawan tidak tahu kenapa harus berubah</button>
+            <button class="quiz-opt" onclick="answerQ(2,'b')">B. Desire — karyawan tidak mau berubah</button>
+            <button class="quiz-opt" onclick="answerQ(2,'c')">C. Knowledge → Ability — sudah tahu teorinya, tapi belum mampu praktik mandiri</button>
+            <button class="quiz-opt" onclick="answerQ(2,'d')">D. Reinforcement — tidak ada reward yang diberikan</button>
+          </div>
+          <div class="quiz-feedback ok" id="q2-ok">✅ <strong>Benar!</strong> Ini adalah jebakan Knowledge vs. Ability. Karyawan sudah punya <strong>Knowledge</strong> (tahu cara pakainya dari training), tapi belum mencapai <strong>Ability</strong> (bisa eksekusi mandiri). Solusinya: pendampingan on-the-job (coaching), latihan terbimbing, dan simulasi di lingkungan kerja nyata — bukan training di kelas lagi.</div>
+          <div class="quiz-feedback no" id="q2-no">❌ Belum tepat. Jawabannya <strong>C — di celah Knowledge ke Ability</strong>. Karena mereka <em>sudah ikut training</em>, berarti Awareness, Desire, dan Knowledge sudah terlewati. Masalahnya ada di gap antara "tahu cara kerja sistem" dan "bisa menggunakannya secara mandiri di lapangan". Ini perlu coaching intensif, bukan pelatihan ulang.</div>
+        </div>
+
+        <div class="quiz-wrap">
+          <div class="quiz-q">3. Mengapa Nokia gagal dalam manajemen perubahan meskipun memiliki sumber daya yang sangat besar?</div>
+          <div class="quiz-options" id="q3-opts">
+            <button class="quiz-opt" onclick="answerQ(3,'a')">A. Tidak punya anggaran yang cukup untuk berinovasi</button>
+            <button class="quiz-opt" onclick="answerQ(3,'b')">B. Teknologi mereka kalah dari iPhone sejak awal</button>
+            <button class="quiz-opt" onclick="answerQ(3,'c')">C. Budaya ketakutan dan birokrasi mencegah informasi kritis naik ke pengambil keputusan</button>
+            <button class="quiz-opt" onclick="answerQ(3,'d')">D. Mereka tidak tahu tentang kemunculan smartphone</button>
+          </div>
+          <div class="quiz-feedback ok" id="q3-ok">✅ <strong>Tepat sekali!</strong> Nokia sebenarnya punya teknologi yang baik. Masalahnya adalah <strong>budaya organisasi</strong>: insinyur tahu bahaya yang datang tapi takut melapor karena "bad news kills career". Ini menghambat urgensi (Kotter step 1) dan menciptakan misalignment di 7S (Shared Values dan Style yang tidak sehat). Pelajaran: budaya > teknologi.</div>
+          <div class="quiz-feedback no" id="q3-no">❌ Belum tepat. Jawabannya <strong>C</strong>. Nokia justru punya uang, teknologi, dan talenta — bahkan insinyur mereka tahu masalahnya. Yang membunuh Nokia adalah <strong>budaya ketakutan</strong> di mana bad news tidak bisa naik ke pucuk pimpinan. Ini kegagalan change management murni, bukan kegagalan teknis.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────── SLIDE 13: RINGKASAN ────── -->
+    <div class="slide" data-idx="12">
+      <div class="slide-inner wrap">
+        <div class="slide-tag tag-ringkasan">Ringkasan & Kesimpulan</div>
+        <h2 class="slide-title">Poin-Poin Kunci yang Harus Diingat</h2>
+
+        <div class="grid-2" style="margin-bottom:16px;">
+          <div class="card card-accent">
+            <div class="card-icon">🎯</div>
+            <div class="card-title">Perubahan = Teknis + Manusiawi</div>
+            <div class="card-body">Proyek teknis sering berhasil, tapi adopsi gagal. Kedua dimensi harus dikelola bersamaan. Jangan hanya fokus pada "sistem baru" tapi abaikan "orang baru yang harus memakai sistem itu".</div>
+          </div>
+          <div class="card card-blue">
+            <div class="card-icon">🧊</div>
+            <div class="card-title">Lewin: Selalu Mulai dari Unfreeze</div>
+            <div class="card-body">Jangan lewati fase cair. Urgensi dan pemahaman mengapa perlu berubah adalah pondasi segalanya. Tanpa Unfreeze, perubahan akan selalu mendapat perlawanan kuat.</div>
+          </div>
+          <div class="card card-green">
+            <div class="card-icon">👤</div>
+            <div class="card-title">ADKAR: Perubahan Satu per Satu Individu</div>
+            <div class="card-body">Organisasi berubah karena individu-individu di dalamnya berubah. Cari tahu di mana titik macet setiap orang — awareness, desire, knowledge, ability, atau reinforcement.</div>
+          </div>
+          <div class="card card-red">
+            <div class="card-icon">🛡️</div>
+            <div class="card-title">Resistansi adalah Normal — Kelola dengan Empati</div>
+            <div class="card-body">Resistansi bukan musuh. Ia adalah sinyal bahwa ada kekhawatiran yang belum dijawab. Dengarkan, libatkan, dan jadikan penolak aktif sebagai agen perubahan.</div>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-bottom:16px;">
+          <div class="card" style="border-left:3px solid var(--accent);">
+            <div class="card-title" style="color:var(--accent);">📢 Komunikasi Itu Seni</div>
+            <div class="card-body">Bukan soal seberapa sering — tapi seberapa tepat. Pesan yang benar, untuk orang yang tepat, di waktu yang tepat.</div>
+          </div>
+          <div class="card" style="border-left:3px solid var(--accent3);">
+            <div class="card-title" style="color:var(--accent3);">⚡ Mulai Sebelum Terpaksa</div>
+            <div class="card-body">Nokia menunggu terlalu lama. Netflix bergerak sebelum harus. Perubahan proaktif selalu lebih murah dari perubahan reaktif.</div>
+          </div>
+          <div class="card" style="border-left:3px solid var(--accent4);">
+            <div class="card-title" style="color:var(--accent4);">🔗 7S: Semua Elemen Harus Selaras</div>
+            <div class="card-body">Mengubah satu elemen tanpa mempertimbangkan enam lainnya akan menciptakan misalignment dan sabotase diri sendiri.</div>
+          </div>
+        </div>
+
+        <div class="analogi-box">
+          <div class="analogi-label">Analogi Penutup — Orkestra 🎼</div>
+          <div class="analogi-text">
+            Manajemen perubahan yang baik seperti konduktor orkestra: <strong>setiap instrumen (orang, tim, divisi) punya peran berbeda</strong>, tapi konduktor memastikan semua bermain dalam satu irama yang harmonis. Konduktor tidak perlu memainkan semua alat musik — dia perlu <strong>memahami semua instrumen dan tahu kapan masing-masing harus memainkan bagiannya.</strong>
+          </div>
+        </div>
+
+        <div class="highlight" style="margin-bottom:0;">
+          <strong>Ingat selalu:</strong> Orang tidak menolak perubahan itu sendiri — mereka menolak <strong>dipaksa berubah tanpa suara, tanpa pemahaman, dan tanpa dukungan.</strong> Berikan ketiganya, dan perubahan akan mengalir alami.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides-wrap -->
+
+  <!-- NAVIGATION -->
+  <div id="nav">
+    <button id="btn-prev" onclick="goPrev()">← Sebelumnya</button>
+    <div id="dots"></div>
+    <button id="btn-next" onclick="goNext()">Selanjutnya →</button>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+let animating = false;
+
+document.getElementById('total-num').textContent = total;
+
+// Build dots
+const dotsEl = document.getElementById('dots');
+for (let i = 0; i < total; i++) {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.title = `Slide ${i+1}`;
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+}
+
+function updateUI() {
+  document.getElementById('curr-num').textContent = current + 1;
+  document.getElementById('progress-fill').style.width = ((current + 1) / total * 100) + '%';
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').textContent = current === total - 1 ? '⟳ Mulai Lagi' : 'Selanjutnya →';
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.classList.toggle('active', i === current);
+  });
+}
+
+function goTo(idx) {
+  if (animating || idx === current) return;
+  animating = true;
+  const prev = slides[current];
+  const next = slides[idx];
+
+  prev.classList.add('exit-left');
+  prev.classList.remove('active');
+
+  setTimeout(() => {
+    prev.classList.remove('exit-left');
+    prev.style.display = 'none';
+    next.style.display = 'flex';
+    // scroll back to top
+    const inner = next.querySelector('.slide-inner');
+    if (inner) inner.scrollTop = 0;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        next.classList.add('active');
+        current = idx;
+        updateUI();
+        setTimeout(() => { animating = false; }, 500);
+      });
+    });
+  }, 200);
+}
+
+function goNext() {
+  if (current === total - 1) { goTo(0); return; }
+  goTo(current + 1);
+}
+
+function goPrev() {
+  if (current > 0) goTo(current - 1);
+}
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goNext(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); goPrev(); }
+});
+
+updateUI();
+
+// ── QUIZ ──────────────────────────────────────────────────────────────────────
+const answers = { 1: 'b', 2: 'c', 3: 'c' };
+
+function answerQ(qNum, choice) {
+  const opts = document.querySelectorAll(`#q${qNum}-opts .quiz-opt`);
+  opts.forEach(o => o.disabled = true);
+
+  const map = { a: 0, b: 1, c: 2, d: 3 };
+  const chosen = opts[map[choice]];
+  const correct = answers[qNum] === choice;
+
+  chosen.classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) {
+    opts[map[answers[qNum]]].classList.add('correct');
+  }
+
+  const okEl = document.getElementById(`q${qNum}-ok`);
+  const noEl = document.getElementById(`q${qNum}-no`);
+  okEl.classList.toggle('show', correct);
+  noEl.classList.toggle('show', !correct);
+}
+</script>
+</body>
+</html>
