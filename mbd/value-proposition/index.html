@@ -1,0 +1,1954 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Value Proposition Design — Materi Interaktif</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --ink-light: #2d2d4e;
+    --cream: #fdf8f0;
+    --cream-dark: #f5ede0;
+    --accent: #e85d26;
+    --accent2: #2563eb;
+    --accent3: #16a34a;
+    --gold: #d97706;
+    --border: #d4c5b0;
+    --card-bg: #fffdf8;
+    --shadow: 0 4px 24px rgba(26,26,46,0.08);
+    --shadow-lg: 0 12px 48px rgba(26,26,46,0.14);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--ink);
+    display: flex; align-items: center; gap: 0;
+    padding: 0 2rem;
+    border-bottom: 3px solid var(--accent);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 900;
+    color: var(--cream);
+    padding: 1rem 1.5rem 1rem 0;
+    border-right: 1px solid rgba(255,255,255,0.15);
+    margin-right: 1rem;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-tabs { display: flex; gap: 0; flex: 1; overflow-x: auto; }
+  .nav-tab {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.78rem; font-weight: 600;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+    transition: all .2s;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    border: none; background: none;
+  }
+  .nav-tab:hover { color: rgba(255,255,255,0.85); }
+  .nav-tab.active { color: var(--cream); border-bottom: 3px solid var(--accent); }
+  .nav-progress {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.75rem; color: rgba(255,255,255,0.5);
+    padding-left: 1rem; border-left: 1px solid rgba(255,255,255,0.15);
+  }
+  .progress-bar {
+    width: 80px; height: 4px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px; overflow: hidden;
+  }
+  .progress-fill { height: 100%; background: var(--accent); transition: width .4s; }
+
+  /* PAGES */
+  .page { display: none; min-height: calc(100vh - 56px); }
+  .page.active { display: block; }
+
+  /* HERO */
+  .hero {
+    background: var(--ink);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 60%, rgba(232,93,38,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 30%, rgba(37,99,235,0.12) 0%, transparent 50%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 0.35rem 1rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .hero h1 em { color: var(--accent); font-style: normal; }
+  .hero p {
+    font-size: 1.05rem; color: rgba(255,255,255,0.6);
+    max-width: 560px; margin: 0 auto 2.5rem;
+    line-height: 1.7; position: relative;
+  }
+  .sessions-row {
+    display: flex; gap: 1rem; justify-content: center;
+    flex-wrap: wrap; position: relative;
+  }
+  .session-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    width: 220px; text-align: left;
+    cursor: pointer;
+    transition: all .25s;
+  }
+  .session-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }
+  .session-card .s-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 1.5px;
+    margin-bottom: 0.5rem;
+  }
+  .session-card h3 { font-size: 0.95rem; color: #fff; font-weight: 600; margin-bottom: 0.3rem; }
+  .session-card p { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.5; }
+
+  /* CONTENT LAYOUT */
+  .content-wrap { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem; }
+  .section-header {
+    display: flex; align-items: flex-start; gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 900;
+    color: var(--border);
+    line-height: 1; flex-shrink: 0;
+    margin-top: -0.3rem;
+  }
+  .section-title { flex: 1; }
+  .section-title .label {
+    font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  .section-title h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700;
+    line-height: 1.2;
+  }
+  .section-title p {
+    font-size: 0.95rem; color: #666; margin-top: 0.5rem; line-height: 1.7;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow);
+  }
+  .card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; margin-bottom: 0.75rem;
+  }
+  .card p { font-size: 0.9rem; color: #555; line-height: 1.7; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.25rem; }
+
+  @media (max-width: 640px) {
+    .two-col, .three-col { grid-template-columns: 1fr; }
+  }
+
+  /* HIGHLIGHT BOX */
+  .highlight {
+    background: linear-gradient(135deg, #fff9f2, #fff4e6);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .highlight.blue { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-left-color: var(--accent2); }
+  .highlight.green { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-left-color: var(--accent3); }
+  .highlight h4 { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem; }
+  .highlight p { font-size: 0.88rem; color: #444; line-height: 1.65; }
+  .highlight.blue h4 { color: var(--accent2); }
+  .highlight.green h4 { color: var(--accent3); }
+  .highlight h4 { color: var(--accent); }
+
+  /* VPC CANVAS DIAGRAM */
+  .vpc-diagram {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: var(--shadow-lg);
+  }
+  .vpc-title {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 2px;
+    text-transform: uppercase; color: #888;
+    margin-bottom: 1.5rem;
+  }
+  .vpc-shapes {
+    display: flex; align-items: center; justify-content: center; gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .vpc-square {
+    width: 280px; height: 280px;
+    background: #f8f4ee;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    position: relative;
+    display: grid;
+    grid-template-areas: "gc gains" "ps ps" "pr pains";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+  .vpc-circle {
+    width: 280px; height: 280px;
+    background: #f0f8ff;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    position: relative;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0;
+  }
+  .vpc-zone {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.72rem; font-weight: 600;
+    text-align: center; padding: 0.5rem;
+    cursor: pointer;
+    transition: all .2s;
+    border-radius: 4px;
+  }
+  .vpc-zone:hover { transform: scale(1.05); }
+  .zone-gc { grid-area: gc; color: var(--accent3); background: rgba(22,163,74,0.08); border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); }
+  .zone-gains { grid-area: gains; color: var(--gold); background: rgba(217,119,6,0.08); border-bottom: 1px solid var(--border); }
+  .zone-ps { grid-area: ps; color: var(--ink); background: rgba(26,26,46,0.05); border-bottom: 1px solid var(--border); border-top: 1px solid var(--border); font-size: 0.8rem; }
+  .zone-pr { grid-area: pr; color: var(--accent2); background: rgba(37,99,235,0.08); border-top: 1px solid var(--border); border-right: 1px solid var(--border); }
+  .zone-pains { grid-area: pains; color: var(--accent); background: rgba(232,93,38,0.08); }
+  .vpc-circle-row {
+    width: 100%; display: flex; justify-content: space-around;
+    padding: 0.25rem 2rem;
+  }
+  .zone-c {
+    font-size: 0.68rem; font-weight: 600;
+    text-align: center; cursor: pointer;
+    transition: all .2s; padding: 0.3rem;
+    border-radius: 4px;
+  }
+  .zone-c:hover { transform: scale(1.08); }
+  .zone-jobs { color: var(--ink); }
+  .zone-cpains { color: var(--accent); }
+  .zone-cgains { color: var(--gold); }
+  .vpc-connect {
+    font-size: 2rem; color: var(--border);
+    font-weight: 300;
+  }
+  .vpc-label {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 0.65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: #999; pointer-events: none;
+  }
+  .vpc-shapes-labels {
+    display: flex; gap: 2rem; justify-content: center;
+    margin-top: 1rem; flex-wrap: wrap;
+  }
+  .vpc-shape-label {
+    text-align: center; font-size: 0.78rem; font-weight: 600;
+  }
+  .vpc-shape-label span { color: #888; font-weight: 400; }
+
+  /* FIT BADGE */
+  .fit-badge {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%) scale(0);
+    background: var(--accent3);
+    color: #fff; font-weight: 700; font-size: 0.75rem;
+    padding: 0.4rem 0.8rem; border-radius: 20px;
+    transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+    white-space: nowrap;
+  }
+  .fit-badge.show { transform: translate(-50%,-50%) scale(1); }
+
+  /* INTERACTIVE CANVAS */
+  .canvas-tool {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+    margin: 2rem 0; box-shadow: var(--shadow-lg);
+  }
+  .canvas-tool-header {
+    background: var(--ink);
+    padding: 1rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .canvas-tool-header h3 {
+    color: #fff; font-size: 0.9rem; font-weight: 600;
+  }
+  .canvas-tool-header p { color: rgba(255,255,255,0.5); font-size: 0.78rem; }
+  .canvas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 0;
+    min-height: 320px;
+  }
+  .canvas-cell {
+    padding: 1rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    min-height: 120px;
+  }
+  .canvas-cell:last-child { border-right: none; }
+  .canvas-cell .cell-label {
+    font-size: 0.65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: #999; margin-bottom: 0.5rem;
+  }
+  .canvas-cell textarea {
+    width: 100%; border: none; background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem; color: var(--ink);
+    resize: none; outline: none; min-height: 80px;
+    line-height: 1.6;
+  }
+  .canvas-cell textarea::placeholder { color: #ccc; }
+
+  /* STICKY NOTES */
+  .sticky-area {
+    display: flex; flex-wrap: wrap; gap: 0.75rem;
+    padding: 1.5rem;
+    background: #f9f5ef;
+    border-radius: 12px;
+    min-height: 160px;
+    margin: 1.25rem 0;
+    border: 1px dashed var(--border);
+    position: relative;
+  }
+  .sticky-note {
+    background: #fef08a;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    box-shadow: 2px 3px 8px rgba(0,0,0,0.12);
+    cursor: grab;
+    position: relative;
+    max-width: 180px;
+    line-height: 1.4;
+    transform: rotate(var(--rot, 0deg));
+    transition: transform .15s;
+    user-select: none;
+  }
+  .sticky-note:hover { transform: rotate(0deg) scale(1.05); z-index: 5; }
+  .sticky-note .del-btn {
+    position: absolute; top: 3px; right: 6px;
+    font-size: 0.7rem; cursor: pointer; color: #999;
+    background: none; border: none;
+  }
+  .sticky-note.blue { background: #bae6fd; }
+  .sticky-note.green { background: #bbf7d0; }
+  .sticky-note.pink { background: #fce7f3; }
+  .sticky-note.orange { background: #fed7aa; }
+  .sticky-add-row {
+    display: flex; gap: 0.75rem; align-items: center;
+    margin-top: 0.75rem;
+  }
+  .sticky-input {
+    flex: 1; padding: 0.6rem 1rem;
+    border: 1px solid var(--border); border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+    background: #fff;
+  }
+  .sticky-input:focus { outline: none; border-color: var(--accent); }
+  .color-pick { display: flex; gap: 0.4rem; }
+  .cp { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: all .15s; }
+  .cp.active { border-color: var(--ink); transform: scale(1.2); }
+  .cp.y { background: #fef08a; }
+  .cp.b { background: #bae6fd; }
+  .cp.g { background: #bbf7d0; }
+  .cp.p { background: #fce7f3; }
+  .cp.o { background: #fed7aa; }
+
+  /* QUIZ */
+  .quiz-wrap { margin: 2rem 0; }
+  .quiz-q {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem; margin-bottom: 1.25rem;
+    box-shadow: var(--shadow);
+  }
+  .quiz-q .q-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 1.5px;
+    margin-bottom: 0.6rem;
+  }
+  .quiz-q .q-text { font-size: 0.95rem; font-weight: 600; margin-bottom: 1rem; line-height: 1.5; }
+  .options { display: grid; gap: 0.6rem; }
+  .option {
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    transition: all .2s;
+    background: #fff;
+  }
+  .option:hover { border-color: var(--accent2); background: #eff6ff; }
+  .option.correct { border-color: var(--accent3); background: #f0fdf4; color: var(--accent3); font-weight: 600; }
+  .option.wrong { border-color: var(--accent); background: #fff5f2; color: var(--accent); }
+  .quiz-feedback {
+    margin-top: 0.75rem; padding: 0.75rem 1rem;
+    border-radius: 8px; font-size: 0.85rem;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: #f0fdf4; color: var(--accent3); }
+  .quiz-feedback.no { background: #fff5f2; color: var(--accent); }
+
+  /* STEPS */
+  .steps-list { counter-reset: step; }
+  .step-item {
+    display: flex; gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #ede9e0;
+  }
+  .step-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .step-num {
+    width: 36px; height: 36px;
+    background: var(--accent);
+    color: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .step-body h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.35rem; }
+  .step-body p { font-size: 0.87rem; color: #555; line-height: 1.65; }
+
+  /* TAGS */
+  .tag {
+    display: inline-block;
+    background: rgba(232,93,38,0.1);
+    color: var(--accent);
+    font-size: 0.72rem; font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .tag.blue { background: rgba(37,99,235,0.1); color: var(--accent2); }
+  .tag.green { background: rgba(22,163,74,0.1); color: var(--accent3); }
+
+  /* BTN */
+  .btn {
+    padding: 0.65rem 1.4rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; border: none;
+    transition: all .2s;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #d44d1a; transform: translateY(-1px); }
+  .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--ink); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-small { padding: 0.4rem 0.9rem; font-size: 0.78rem; }
+  .btn-row { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; margin-top: 1.25rem; }
+
+  /* ACCORDION */
+  .accordion-item {
+    border: 1px solid var(--border);
+    border-radius: 10px; margin-bottom: 0.75rem;
+    overflow: hidden;
+  }
+  .accordion-header {
+    padding: 1rem 1.25rem;
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; font-weight: 600; font-size: 0.9rem;
+    background: var(--card-bg);
+    transition: background .15s;
+  }
+  .accordion-header:hover { background: var(--cream-dark); }
+  .accordion-icon { transition: transform .25s; }
+  .accordion-body {
+    display: none; padding: 0 1.25rem 1.25rem;
+    background: var(--card-bg);
+    font-size: 0.88rem; color: #555; line-height: 1.7;
+  }
+  .accordion-item.open .accordion-body { display: block; }
+  .accordion-item.open .accordion-icon { transform: rotate(180deg); }
+
+  /* SCENARIO EXERCISE */
+  .scenario-box {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d1b69 100%);
+    border-radius: 16px; padding: 2rem;
+    color: #fff; margin: 2rem 0;
+    position: relative; overflow: hidden;
+  }
+  .scenario-box::before {
+    content: '"';
+    position: absolute; top: -20px; left: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 120px; color: rgba(255,255,255,0.05);
+    line-height: 1;
+  }
+  .scenario-box .s-label {
+    font-size: 0.65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.75rem;
+  }
+  .scenario-box p { font-size: 1.05rem; line-height: 1.7; color: rgba(255,255,255,0.9); }
+  .scenario-box .s-source {
+    font-size: 0.78rem; color: rgba(255,255,255,0.45);
+    margin-top: 1rem; font-style: italic;
+  }
+
+  /* VPC INTERACTIVE */
+  .vpc-interactive { display: grid; grid-template-columns: 1fr 2rem 1fr; gap: 0; align-items: center; margin: 2rem 0; }
+  .vpc-half { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .vpc-half-title { padding: 0.75rem 1rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; background: var(--ink); color: #fff; }
+  .vpc-half-grid { display: grid; }
+  .vpc-cell {
+    padding: 1rem;
+    border-top: 1px solid var(--border);
+    cursor: pointer;
+    transition: background .15s;
+    position: relative;
+  }
+  .vpc-cell:hover { background: var(--cream-dark); }
+  .vpc-cell .vc-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.4rem; }
+  .vpc-cell .vc-label.red { color: var(--accent); }
+  .vpc-cell .vc-label.blue { color: var(--accent2); }
+  .vpc-cell .vc-label.green { color: var(--accent3); }
+  .vpc-cell .vc-label.gold { color: var(--gold); }
+  .vpc-cell .vc-desc { font-size: 0.8rem; color: #777; line-height: 1.55; }
+  .vpc-arrow { text-align: center; font-size: 1.5rem; color: var(--border); }
+
+  /* POPOVER */
+  .popover-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200;
+    display: none; align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+  .popover-overlay.show { display: flex; }
+  .popover-box {
+    background: #fff; border-radius: 16px; padding: 2rem;
+    max-width: 480px; width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .popover-box h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 1rem; }
+  .popover-box p { font-size: 0.9rem; color: #555; line-height: 1.7; }
+  .popover-box ul { padding-left: 1.25rem; margin-top: 0.75rem; }
+  .popover-box ul li { font-size: 0.88rem; color: #555; margin-bottom: 0.4rem; line-height: 1.6; }
+  .popover-close { float: right; cursor: pointer; font-size: 1.2rem; color: #999; background: none; border: none; line-height: 1; margin-top: -4px; }
+
+  /* SCORE */
+  .score-display {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem;
+    text-align: center; margin: 1.5rem 0;
+  }
+  .score-display .score-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 900;
+    color: var(--accent);
+  }
+  .score-display p { color: #666; font-size: 0.88rem; }
+
+  /* EXPERIMENT TABLE */
+  .exp-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .exp-table th {
+    background: var(--ink); color: #fff;
+    padding: 0.75rem 1rem;
+    text-align: left; font-size: 0.75rem;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .exp-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .exp-table tr:hover td { background: var(--cream-dark); }
+  .exp-table tr:last-child td { border-bottom: none; }
+
+  /* FOOTER NAV */
+  .page-footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+    background: var(--cream-dark);
+  }
+  .page-footer p { font-size: 0.8rem; color: #999; }
+
+  /* DRAG MATCH */
+  .match-game { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 1.5rem 0; }
+  .match-col h4 { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 1rem; }
+  .match-item {
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px; margin-bottom: 0.6rem;
+    font-size: 0.85rem; cursor: pointer;
+    background: #fff; transition: all .2s;
+    user-select: none;
+  }
+  .match-item:hover { border-color: var(--accent2); }
+  .match-item.selected { border-color: var(--accent2); background: #eff6ff; }
+  .match-item.matched-ok { border-color: var(--accent3); background: #f0fdf4; color: var(--accent3); cursor: default; }
+  .match-item.matched-no { border-color: var(--accent); background: #fff5f2; }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  /* SESSION BADGE */
+  .session-banner {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .session-banner .dot { width: 8px; height: 8px; background: rgba(255,255,255,0.5); border-radius: 50%; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">VPD<span>.</span></div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('home')">Beranda</button>
+    <button class="nav-tab" onclick="showPage('s1')">Pertemuan 1</button>
+    <button class="nav-tab" onclick="showPage('s2')">Pertemuan 2</button>
+    <button class="nav-tab" onclick="showPage('s3')">Pertemuan 3</button>
+    <button class="nav-tab" onclick="showPage('canvas')">Kanvas Interaktif</button>
+  </div>
+  <div class="nav-progress">
+    <span id="prog-label">0%</span>
+    <div class="progress-bar"><div class="progress-fill" id="prog-bar" style="width:0%"></div></div>
+  </div>
+</nav>
+
+<!-- POPOVER -->
+<div class="popover-overlay" id="popover" onclick="closePopover(event)">
+  <div class="popover-box">
+    <button class="popover-close" onclick="document.getElementById('popover').classList.remove('show')">✕</button>
+    <h3 id="pop-title"></h3>
+    <div id="pop-body"></div>
+  </div>
+</div>
+
+<!-- ===== HOME ===== -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-badge">Materi Interaktif • 3 Pertemuan</div>
+    <h1>Value<br><em>Proposition</em><br>Design</h1>
+    <p>Pelajari cara menciptakan produk dan layanan yang benar-benar diinginkan pelanggan — menggunakan Value Proposition Canvas dari Osterwalder & Pigneur.</p>
+    <div class="sessions-row">
+      <div class="session-card" onclick="showPage('s1')">
+        <div class="s-num">Pertemuan 01</div>
+        <h3>Memahami Value Proposition Canvas</h3>
+        <p>Canvas, Customer Profile, dan Value Map</p>
+      </div>
+      <div class="session-card" onclick="showPage('s2')">
+        <div class="s-num">Pertemuan 02</div>
+        <h3>Mencapai Fit & Mendesain VP</h3>
+        <p>Problem-Solution Fit, prototyping, dan riset pelanggan</p>
+      </div>
+      <div class="session-card" onclick="showPage('s3')">
+        <div class="s-num">Pertemuan 03</div>
+        <h3>Testing & Iterasi</h3>
+        <p>Eksperimen, hipotesis, dan evolusi VP</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap">
+    <div class="section-header">
+      <div class="section-num">?</div>
+      <div class="section-title">
+        <div class="label">Mengapa VPD?</div>
+        <h2>Mengapa Banyak Produk Gagal?</h2>
+        <p>Sebagian besar kegagalan bukan karena eksekusi yang buruk, melainkan karena membangun sesuatu yang tidak benar-benar dibutuhkan pelanggan.</p>
+      </div>
+    </div>
+    <div class="three-col">
+      <div class="card">
+        <h3>😵 Tim Tidak Selaras</h3>
+        <p>Produk, sales, dan marketing bekerja tanpa bahasa yang sama tentang nilai untuk pelanggan.</p>
+      </div>
+      <div class="card">
+        <h3>🎰 Taruhan Besar</h3>
+        <p>Ide besar dieksekusi penuh tanpa pengujian, menghabiskan sumber daya besar untuk sesuatu yang mungkin salah.</p>
+      </div>
+      <div class="card">
+        <h3>👂 Kurang Empati</h3>
+        <p>Fokus pada teknologi dan fitur, bukan pada apa yang benar-benar ingin diselesaikan pelanggan.</p>
+      </div>
+    </div>
+    <div class="highlight">
+      <h4>💡 Solusinya</h4>
+      <p>Value Proposition Design memberikan bahasa bersama, alat visual, dan proses sistematis untuk menciptakan nilai yang benar-benar diinginkan pelanggan — dan menguji ide sebelum terlambat.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PERTEMUAN 1 ===== -->
+<div class="page" id="page-s1">
+  <div class="session-banner"><span class="dot"></span>PERTEMUAN 1<span class="dot"></span>Durasi: ~90–120 menit</div>
+
+  <div class="content-wrap">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title">
+        <div class="label">Pertemuan 1</div>
+        <h2>Value Proposition Canvas</h2>
+        <p>Memahami dua sisi dari kanvas utama: <strong>Value Map</strong> (sisi perusahaan) dan <strong>Customer Profile</strong> (sisi pelanggan).</p>
+      </div>
+    </div>
+
+    <!-- VPC Diagram -->
+    <div class="vpc-diagram">
+      <div class="vpc-title">Value Proposition Canvas — Klik elemen untuk detail</div>
+      <div class="vpc-shapes">
+        <!-- VALUE MAP (square) -->
+        <div>
+          <div class="vpc-square" id="vpc-sq">
+            <div class="vpc-zone zone-gc" onclick="openPop('Gain Creators','Gain Creators menjelaskan bagaimana produk dan layanan Anda menciptakan keuntungan pelanggan.<br><br><strong>Contoh pertanyaan:</strong><ul><li>Apakah produk Anda menghasilkan penghematan yang membuat pelanggan senang?</li><li>Apakah menghasilkan hasil yang diharapkan pelanggan?</li><li>Apakah melampaui ekspektasi pelanggan?</li></ul>')">Gain<br>Creators</div>
+            <div class="vpc-zone zone-gains" onclick="openPop('Gains (Sisi VP)','Gains yang ada di value map adalah gain creators — cara Anda menghasilkan keuntungan yang diinginkan pelanggan.<br><br>Ini harus cocok dengan Gains di Customer Profile.')">Gains ↑</div>
+            <div class="vpc-zone zone-ps" onclick="openPop('Products & Services','Ini adalah daftar semua produk dan layanan yang menjadi fondasi value proposition Anda.<br><br>Produk bisa berupa:<ul><li>Fisik/tangible (barang, perangkat)</li><li>Digital/virtual (software, konten)</li><li>Intangible (hak, garansi)</li><li>Finansial (dana, asuransi)</li></ul><br>Penting: produk dan layanan tidak memiliki nilai secara inheren — nilai hanya ada ketika berinteraksi dengan pelanggan spesifik.')">Products<br>&amp; Services</div>
+            <div class="vpc-zone zone-pr" onclick="openPop('Pain Relievers','Pain Relievers menjelaskan bagaimana produk dan layanan Anda mengurangi penderitaan pelanggan.<br><br><strong>Pertanyaan kunci:</strong><ul><li>Apakah mengurangi rasa frustasi?</li><li>Apakah menghilangkan hambatan yang menghalangi pelanggan?</li><li>Apakah mengurangi risiko yang ditakuti pelanggan?</li></ul>')">Pain<br>Relievers</div>
+            <div class="vpc-zone zone-pains" onclick="openPop('Pains (Sisi VP)','Pain Relievers yang kuat adalah yang secara langsung mengatasi pains yang paling ekstrem di Customer Profile.')">Pains ↓</div>
+          </div>
+          <div style="text-align:center;margin-top:0.75rem;font-size:0.78rem;font-weight:600">Value Map <span style="color:#888;font-weight:400">(Perusahaan)</span></div>
+        </div>
+
+        <div class="vpc-connect">⇆</div>
+
+        <!-- CUSTOMER PROFILE (circle) -->
+        <div>
+          <div class="vpc-circle" id="vpc-ci">
+            <div class="vpc-circle-row">
+              <div class="zone-c zone-jobs" onclick="openPop('Customer Jobs','Customer Jobs menggambarkan apa yang pelanggan coba selesaikan dalam pekerjaan atau kehidupan mereka.<br><br><strong>Tiga tipe jobs:</strong><ul><li><strong>Functional</strong>: menyelesaikan tugas spesifik (merapikan rumah, menulis laporan)</li><li><strong>Social</strong>: ingin terlihat baik di mata orang lain</li><li><strong>Emotional/Personal</strong>: mencari kondisi emosional tertentu (rasa aman, kepuasan)</li></ul>')">Customer<br>Jobs 📋</div>
+            </div>
+            <div class="vpc-circle-row" style="justify-content:space-around;padding:0 1rem">
+              <div class="zone-c zone-cpains" onclick="openPop('Customer Pains','Pains menggambarkan hal-hal buruk yang dialami pelanggan sebelum, selama, dan setelah mencoba menyelesaikan tugasnya.<br><br><strong>3 tipe pains:</strong><ul><li><strong>Undesired outcomes</strong>: hasil buruk yang tidak diinginkan</li><li><strong>Obstacles</strong>: hambatan yang mencegah mereka mulai</li><li><strong>Risks</strong>: hal yang bisa salah dan berdampak negatif</li></ul>')">Pains 😣</div>
+              <div class="zone-c zone-cgains" onclick="openPop('Customer Gains','Gains menggambarkan hasil dan manfaat yang diinginkan pelanggan.<br><br><strong>4 tipe gains:</strong><ul><li><strong>Required</strong>: tanpa ini solusi tidak akan berhasil</li><li><strong>Expected</strong>: cukup dasar untuk diharapkan</li><li><strong>Desired</strong>: pelanggan ingin tapi tidak selalu mengharapkan</li><li><strong>Unexpected</strong>: melampaui ekspektasi, bahkan tidak terpikir sebelumnya</li></ul>')">Gains ✨</div>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:0.75rem;font-size:0.78rem;font-weight:600">Customer Profile <span style="color:#888;font-weight:400">(Pelanggan)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Customer Profile Detail -->
+    <div class="section-header">
+      <div class="section-num">1.1</div>
+      <div class="section-title">
+        <div class="label">Customer Profile</div>
+        <h2>Memahami Pelanggan</h2>
+        <p>Sebelum mendesain apapun, pahami dulu pelanggan Anda secara mendalam.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item open">
+      <div class="accordion-header" onclick="toggleAcc(this)">
+        📋 Customer Jobs — Apa yang Coba Diselesaikan Pelanggan?
+        <span class="accordion-icon">▼</span>
+      </div>
+      <div class="accordion-body">
+        <p>Jobs adalah tugas yang ingin diselesaikan, masalah yang ingin dipecahkan, atau kebutuhan yang ingin dipenuhi pelanggan — dalam bahasa mereka sendiri.</p>
+        <br>
+        <div class="three-col" style="margin-top:0.5rem">
+          <div class="highlight">
+            <h4>⚙️ Functional</h4>
+            <p>Tugas konkret: "memesan makanan", "membuat laporan keuangan", "mengirim uang ke luar negeri"</p>
+          </div>
+          <div class="highlight blue">
+            <h4>👥 Social</h4>
+            <p>Ingin dipersepsikan: "terlihat profesional di depan klien", "dianggap pemimpin yang baik"</p>
+          </div>
+          <div class="highlight green">
+            <h4>💭 Emotional</h4>
+            <p>Kondisi emosional: "merasa aman soal tabungan pensiun", "merasa puas dengan pencapaian"</p>
+          </div>
+        </div>
+        <div class="highlight" style="margin-top:1rem">
+          <h4>⚠️ Catatan Penting</h4>
+          <p>Tidak semua jobs memiliki kepentingan yang sama. Pahami mana yang <strong>crucial</strong> dan mana yang <strong>insignificant</strong>. Jobs yang sering dilakukan atau berdampak besar cenderung lebih penting.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header" onclick="toggleAcc(this)">
+        😣 Customer Pains — Apa yang Menyusahkan Pelanggan?
+        <span class="accordion-icon">▼</span>
+      </div>
+      <div class="accordion-body">
+        <p>Pains adalah segala sesuatu yang mengganggu, menghalangi, atau berisiko buruk bagi pelanggan saat mencoba menyelesaikan tugasnya.</p>
+        <br>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num" style="background:var(--accent)">1</div>
+            <div class="step-body">
+              <h4>Undesired outcomes & characteristics</h4>
+              <p>Hasil buruk yang tidak diinginkan: "produknya terlalu lambat", "tampilannya jelek", "menghabiskan terlalu banyak waktu"</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num" style="background:var(--accent)">2</div>
+            <div class="step-body">
+              <h4>Obstacles</h4>
+              <p>Hambatan yang mencegah memulai: "tidak punya waktu cukup", "tidak mampu membeli solusi yang ada", "tidak tahu harus mulai dari mana"</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num" style="background:var(--accent)">3</div>
+            <div class="step-body">
+              <h4>Risks</h4>
+              <p>Hal yang bisa salah: "takut kehilangan kredibilitas", "khawatir keamanan data bocor", "risiko finansial jika gagal"</p>
+            </div>
+          </div>
+        </div>
+        <div class="highlight" style="margin-top:0.5rem">
+          <h4>💡 Tip: Buat Konkret!</h4>
+          <p>Jika pelanggan bilang "antrian terlalu lama", tanyakan: berapa menit tepatnya sampai terasa membuang waktu? Dengan angka konkret, Anda bisa mendesain pain reliever yang lebih tepat sasaran.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header" onclick="toggleAcc(this)">
+        ✨ Customer Gains — Apa yang Diinginkan Pelanggan?
+        <span class="accordion-icon">▼</span>
+      </div>
+      <div class="accordion-body">
+        <p>Gains adalah hasil dan manfaat yang diinginkan pelanggan — mencakup utilitas fungsional, keuntungan sosial, emosi positif, dan penghematan biaya.</p>
+        <br>
+        <div class="two-col">
+          <div class="card" style="border-left:3px solid #ef4444">
+            <h3 style="font-size:0.9rem">🔴 Required Gains</h3>
+            <p>Tanpa ini produk tidak akan berhasil. Contoh: smartphone harus bisa menelepon — itu bukan keistimewaan, itu syarat dasar.</p>
+          </div>
+          <div class="card" style="border-left:3px solid #f97316">
+            <h3 style="font-size:0.9rem">🟠 Expected Gains</h3>
+            <p>Gains dasar yang kita harapkan dari solusi. Sejak iPhone, kita berharap ponsel memiliki desain yang bagus.</p>
+          </div>
+          <div class="card" style="border-left:3px solid #3b82f6">
+            <h3 style="font-size:0.9rem">🔵 Desired Gains</h3>
+            <p>Melampaui ekspektasi tapi tetap diinginkan. Pelanggan bisa menyebutkannya jika ditanya: "saya mau kalau ponsel sync otomatis dengan semua device saya".</p>
+          </div>
+          <div class="card" style="border-left:3px solid #16a34a">
+            <h3 style="font-size:0.9rem">🟢 Unexpected Gains</h3>
+            <p>Pelanggan bahkan tidak memikirkannya sebelum ada. Sebelum App Store, tidak ada yang membayangkan ribuan aplikasi di satu perangkat.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- EXERCISE 1 -->
+    <div class="section-header">
+      <div class="section-num">✏️</div>
+      <div class="section-title">
+        <div class="label">Latihan Pertemuan 1</div>
+        <h2>Buat Customer Profile</h2>
+        <p>Pilih segmen pelanggan yang Anda targetkan, lalu identifikasi jobs, pains, dan gains mereka menggunakan sticky notes di bawah ini.</p>
+      </div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="s-label">📌 Skenario Studi Kasus</div>
+      <p>Bayangkan Anda sedang mengembangkan <strong>aplikasi manajemen keuangan</strong> untuk mahasiswa Indonesia. Mereka sering kehabisan uang sebelum akhir bulan dan tidak tahu kemana uangnya pergi. Buat profil pelanggan untuk segmen ini!</p>
+      <div class="s-source">Gunakan ini sebagai konteks latihan — atau ganti dengan konteks bisnis Anda sendiri</div>
+    </div>
+
+    <!-- Sticky area Jobs -->
+    <div style="margin-bottom:1.5rem">
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
+        <span class="tag">Customer Jobs</span>
+        <span style="font-size:0.82rem;color:#888">Apa yang ingin diselesaikan pelanggan Anda?</span>
+      </div>
+      <div class="sticky-area" id="sa-jobs"></div>
+      <div class="sticky-add-row">
+        <input class="sticky-input" id="inp-jobs" placeholder="Ketik job pelanggan... (contoh: Lacak pengeluaran harian)" onkeydown="if(event.key==='Enter')addSticky('sa-jobs','inp-jobs')">
+        <div class="color-pick" id="cp-jobs">
+          <div class="cp y active" onclick="setColor('cp-jobs',this)"></div>
+          <div class="cp b" onclick="setColor('cp-jobs',this)"></div>
+          <div class="cp g" onclick="setColor('cp-jobs',this)"></div>
+          <div class="cp p" onclick="setColor('cp-jobs',this)"></div>
+        </div>
+        <button class="btn btn-primary btn-small" onclick="addSticky('sa-jobs','inp-jobs','cp-jobs')">+ Tambah</button>
+      </div>
+    </div>
+
+    <div style="margin-bottom:1.5rem">
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
+        <span class="tag">Pains</span>
+        <span style="font-size:0.82rem;color:#888">Apa yang menyusahkan / menghambat pelanggan?</span>
+      </div>
+      <div class="sticky-area" id="sa-pains" style="background:#fff8f5;border-color:#fed7c5"></div>
+      <div class="sticky-add-row">
+        <input class="sticky-input" id="inp-pains" placeholder="Ketik pain pelanggan... (contoh: Lupa mencatat pengeluaran kecil)" onkeydown="if(event.key==='Enter')addSticky('sa-pains','inp-pains','cp-pains')">
+        <div class="color-pick" id="cp-pains">
+          <div class="cp o active" onclick="setColor('cp-pains',this)"></div>
+          <div class="cp p" onclick="setColor('cp-pains',this)"></div>
+          <div class="cp y" onclick="setColor('cp-pains',this)"></div>
+        </div>
+        <button class="btn btn-primary btn-small" onclick="addSticky('sa-pains','inp-pains','cp-pains')">+ Tambah</button>
+      </div>
+    </div>
+
+    <div>
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
+        <span class="tag green">Gains</span>
+        <span style="font-size:0.82rem;color:#888">Hasil dan manfaat apa yang diinginkan pelanggan?</span>
+      </div>
+      <div class="sticky-area" id="sa-gains" style="background:#f0fdf4;border-color:#bbf7d0"></div>
+      <div class="sticky-add-row">
+        <input class="sticky-input" id="inp-gains" placeholder="Ketik gain pelanggan... (contoh: Tahu masih punya uang cukup sampai akhir bulan)" onkeydown="if(event.key==='Enter')addSticky('sa-gains','inp-gains','cp-gains')">
+        <div class="color-pick" id="cp-gains">
+          <div class="cp g active" onclick="setColor('cp-gains',this)"></div>
+          <div class="cp b" onclick="setColor('cp-gains',this)"></div>
+          <div class="cp y" onclick="setColor('cp-gains',this)"></div>
+        </div>
+        <button class="btn btn-primary btn-small" onclick="addSticky('sa-gains','inp-gains','cp-gains')">+ Tambah</button>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- KUIS 1 -->
+    <div class="section-header">
+      <div class="section-num">📝</div>
+      <div class="section-title">
+        <div class="label">Kuis Pertemuan 1</div>
+        <h2>Uji Pemahaman Anda</h2>
+        <p>Jawab pertanyaan berikut untuk mengecek pemahaman Anda tentang Customer Profile dan Value Map.</p>
+      </div>
+    </div>
+
+    <div class="quiz-wrap" id="quiz1">
+      <div class="quiz-q">
+        <div class="q-num">Pertanyaan 01</div>
+        <div class="q-text">Seorang mahasiswa ingin "terlihat produktif di mata teman-temannya". Ini termasuk tipe Customer Job apa?</div>
+        <div class="options">
+          <div class="option" onclick="answerQ(this,false,'quiz1-q1','Ini adalah Social Job — pelanggan ingin bagaimana mereka dipersepsikan oleh orang lain.')">Functional Job</div>
+          <div class="option" data-correct="true" onclick="answerQ(this,true,'quiz1-q1','Benar! Social Job berkaitan dengan bagaimana pelanggan ingin terlihat atau dipersepsikan oleh orang lain.')">Social Job</div>
+          <div class="option" onclick="answerQ(this,false,'quiz1-q1','Emotional job berkaitan dengan kondisi emosional internal, bukan bagaimana terlihat oleh orang lain.')">Emotional Job</div>
+          <div class="option" onclick="answerQ(this,false,'quiz1-q1','Supporting Job adalah peran dalam membeli atau menggunakan nilai, bukan tentang persepsi sosial.')">Supporting Job</div>
+        </div>
+        <div class="quiz-feedback" id="quiz1-q1"></div>
+      </div>
+
+      <div class="quiz-q">
+        <div class="q-num">Pertanyaan 02</div>
+        <div class="q-text">Pelanggan mengatakan "saya tidak punya waktu untuk mempelajari aplikasi baru yang rumit". Ini termasuk tipe Pain apa?</div>
+        <div class="options">
+          <div class="option" onclick="answerQ(this,false,'quiz1-q2','Risks adalah potensi hal buruk yang bisa terjadi, bukan hambatan yang sudah dirasakan saat ini.')">Risk</div>
+          <div class="option" onclick="answerQ(this,false,'quiz1-q2','Undesired outcomes adalah hasil yang tidak diinginkan, bukan hambatan untuk memulai.')">Undesired Outcome</div>
+          <div class="option" data-correct="true" onclick="answerQ(this,true,'quiz1-q2','Benar! Obstacle adalah sesuatu yang mencegah pelanggan untuk memulai atau memperlambat mereka.')">Obstacle</div>
+          <div class="option" onclick="answerQ(this,false,'quiz1-q2','Social risk bisa menjadi bagian dari risks, tapi ini lebih spesifik tentang hambatan untuk memulai.')">Social Risk</div>
+        </div>
+        <div class="quiz-feedback" id="quiz1-q2"></div>
+      </div>
+
+      <div class="quiz-q">
+        <div class="q-num">Pertanyaan 03</div>
+        <div class="q-text">Sebelum iPhone, tidak ada yang membayangkan App Store dengan jutaan aplikasi. Ini contoh tipe Gain apa?</div>
+        <div class="options">
+          <div class="option" onclick="answerQ(this,false,'quiz1-q3','Required gains adalah syarat minimum — tanpa ini produk tidak bisa berhasil sama sekali.')">Required Gain</div>
+          <div class="option" onclick="answerQ(this,false,'quiz1-q3','Expected gains adalah yang sudah kita harapkan dari solusi, bukan sesuatu yang mengejutkan.')">Expected Gain</div>
+          <div class="option" onclick="answerQ(this,false,'quiz1-q3','Desired gains bisa disebutkan pelanggan jika ditanya. App Store tidak terpikir bahkan jika ditanya.')">Desired Gain</div>
+          <div class="option" data-correct="true" onclick="answerQ(this,true,'quiz1-q3','Benar! Unexpected Gains melampaui ekspektasi dan bahkan tidak terpikir oleh pelanggan sebelumnya.')">Unexpected Gain</div>
+        </div>
+        <div class="quiz-feedback" id="quiz1-q3"></div>
+      </div>
+    </div>
+
+    <div class="score-display" id="score1" style="display:none">
+      <div class="score-num" id="score1-num">0/3</div>
+      <p>Lanjut ke Pertemuan 2 untuk belajar tentang Value Map dan Fit!</p>
+      <div class="btn-row" style="justify-content:center;margin-top:0.5rem">
+        <button class="btn btn-primary" onclick="showPage('s2')">Pertemuan 2 →</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-footer">
+    <p>Pertemuan 1 / 3 — Value Proposition Canvas</p>
+    <button class="btn btn-primary" onclick="showPage('s2')">Pertemuan 2: Fit & Desain →</button>
+  </div>
+</div>
+
+<!-- ===== PERTEMUAN 2 ===== -->
+<div class="page" id="page-s2">
+  <div class="session-banner" style="background:var(--accent2)"><span class="dot"></span>PERTEMUAN 2<span class="dot"></span>Durasi: ~90–120 menit</div>
+
+  <div class="content-wrap">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title">
+        <div class="label">Pertemuan 2</div>
+        <h2>Fit & Mendesain Value Proposition</h2>
+        <p>Memahami apa itu Fit, cara mencapainya, dan proses mendesain value proposition yang kuat.</p>
+      </div>
+    </div>
+
+    <!-- FIT EXPLANATION -->
+    <div class="highlight.blue" style="background:#eff6ff;border-left:4px solid var(--accent2);padding:1.5rem;border-radius:0 12px 12px 0;margin-bottom:2rem">
+      <h4 style="color:var(--accent2);font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.5rem">🎯 Definisi FIT</h4>
+      <p style="font-size:0.95rem;line-height:1.7">Anda mencapai <strong>Fit</strong> ketika Value Map Anda bertemu dengan Customer Profile — ketika produk dan layanan Anda menghasilkan pain relievers dan gain creators yang sesuai dengan jobs, pains, dan gains yang paling penting bagi pelanggan.</p>
+    </div>
+
+    <div class="three-col">
+      <div class="card" style="border-top:3px solid #ef4444">
+        <span class="tag">Tahap 1</span>
+        <h3 style="margin-top:0.5rem">Problem-Solution Fit</h3>
+        <p>Anda menemukan bukti bahwa pelanggan memiliki jobs, pains, dan gains yang cukup penting — dan value proposition Anda berpotensi mengatasinya.</p>
+        <br>
+        <p style="font-size:0.8rem;color:#888">Masih di atas kertas / wawancara awal</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent2)">
+        <span class="tag blue">Tahap 2</span>
+        <h3 style="margin-top:0.5rem">Product-Market Fit</h3>
+        <p>Anda menemukan bukti bahwa produk Anda benar-benar menciptakan nilai pelanggan dan mendapatkan traksi di pasar.</p>
+        <br>
+        <p style="font-size:0.8rem;color:#888">Produk diuji langsung dengan pelanggan nyata</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent3)">
+        <span class="tag green">Tahap 3</span>
+        <h3 style="margin-top:0.5rem">Business Model Fit</h3>
+        <p>Anda menemukan bukti bahwa value proposition dapat ditanamkan dalam model bisnis yang menguntungkan dan dapat diskalakan.</p>
+        <br>
+        <p style="font-size:0.8rem;color:#888">VP terintegrasi dengan Business Model Canvas</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- VALUE MAP -->
+    <div class="section-header">
+      <div class="section-num">2.1</div>
+      <div class="section-title">
+        <div class="label">Value Map</div>
+        <h2>Mendesain Value Map</h2>
+        <p>Setelah memahami Customer Profile, saatnya merancang Value Map yang berkorespondensi dengan pains dan gains pelanggan.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="accordion-item open">
+          <div class="accordion-header" onclick="toggleAcc(this)">
+            🔧 Products & Services
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-body">
+            <p>Daftar semua produk dan layanan yang menjadi fondasi value proposition. Ingat: produk tidak memiliki nilai secara inherent — nilai hanya muncul ketika berinteraksi dengan pelanggan spesifik.</p>
+            <br>
+            <p><strong>Tipe produk:</strong></p>
+            <ul style="padding-left:1.2rem;margin-top:0.5rem">
+              <li>Fisik: barang, perangkat keras</li>
+              <li>Digital: software, platform, konten</li>
+              <li>Intangible: hak, jaminan kualitas</li>
+              <li>Finansial: dana, asuransi, kredit</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAcc(this)">
+            💊 Pain Relievers
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-body">
+            <p>Pain Relievers menjelaskan bagaimana produk dan layanan Anda mengurangi penderitaan pelanggan. Anda <strong>tidak harus</strong> mengatasi setiap pain — fokus pada yang paling penting.</p>
+            <br>
+            <p><strong>Trigger questions:</strong></p>
+            <ul style="padding-left:1.2rem;margin-top:0.5rem">
+              <li>Apakah produk mengurangi rasa frustasi?</li>
+              <li>Apakah menghilangkan hambatan utama?</li>
+              <li>Apakah mengurangi risiko yang ditakuti?</li>
+              <li>Apakah membantu menghindari kesalahan umum?</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAcc(this)">
+            🚀 Gain Creators
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-body">
+            <p>Gain Creators menggambarkan bagaimana produk menghasilkan outcomes dan manfaat yang diinginkan pelanggan. Fokus pada gain creators yang relevan dan membuat perbedaan nyata.</p>
+            <br>
+            <p><strong>Trigger questions:</strong></p>
+            <ul style="padding-left:1.2rem;margin-top:0.5rem">
+              <li>Apakah menghasilkan penghematan yang menyenangkan?</li>
+              <li>Apakah menghasilkan lebih dari ekspektasi pelanggan?</li>
+              <li>Apakah membuat kehidupan/pekerjaan lebih mudah?</li>
+              <li>Apakah meningkatkan status sosial pelanggan?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="highlight blue" style="margin-bottom:1.25rem">
+          <h4>🔑 Kunci Desain VP yang Kuat</h4>
+          <p>Anda tidak harus mengatasi <em>semua</em> pains atau menciptakan <em>semua</em> gains. Fokus pada beberapa yang paling penting bagi pelanggan Anda. VP yang mencoba melakukan segalanya sering tidak melakukan apapun dengan baik.</p>
+        </div>
+        <div class="highlight green">
+          <h4>✅ Ranking & Prioritasi</h4>
+          <p>Setelah mengidentifikasi pains dan gains, ranking mereka dari yang paling ekstrem/essential hingga paling moderat/nice-to-have. Fokuskan pain relievers dan gain creators Anda pada yang paling atas.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- MATCHING EXERCISE -->
+    <div class="section-header">
+      <div class="section-num">✏️</div>
+      <div class="section-title">
+        <div class="label">Latihan Pertemuan 2</div>
+        <h2>Pasangkan Pain/Gain dengan Solusi</h2>
+        <p>Pasangkan Pain Pelanggan dengan Pain Reliever yang tepat. Klik satu dari kiri, lalu klik pasangannya di kanan.</p>
+      </div>
+    </div>
+
+    <div class="match-game" id="match-game">
+      <div>
+        <h4>😣 Customer Pains</h4>
+        <div class="match-item" data-id="p1" onclick="matchClick(this,'p')">Lupa mencatat pengeluaran karena ribet</div>
+        <div class="match-item" data-id="p2" onclick="matchClick(this,'p')">Tidak tahu kategori mana yang paling boros</div>
+        <div class="match-item" data-id="p3" onclick="matchClick(this,'p')">Tidak ada peringatan saat hampir kehabisan budget</div>
+        <div class="match-item" data-id="p4" onclick="matchClick(this,'p')">Takut salah input angka di spreadsheet manual</div>
+      </div>
+      <div>
+        <h4>💊 Pain Relievers</h4>
+        <div class="match-item" data-id="s2" onclick="matchClick(this,'s')">Laporan visual otomatis per kategori pengeluaran</div>
+        <div class="match-item" data-id="s4" onclick="matchClick(this,'s')">Auto-sinkronisasi dengan rekening bank untuk input akurat</div>
+        <div class="match-item" data-id="s3" onclick="matchClick(this,'s')">Notifikasi push saat pengeluaran mendekati limit</div>
+        <div class="match-item" data-id="s1" onclick="matchClick(this,'s')">Pencatatan 1-tap dari kamera struk belanja</div>
+      </div>
+    </div>
+    <div id="match-result" style="display:none" class="highlight green">
+      <h4>🎉 Semua Pasangan Benar!</h4>
+      <p>Anda berhasil menghubungkan pain pelanggan dengan pain reliever yang tepat. Inilah yang disebut Fit — pain reliever secara langsung mengatasi pain yang spesifik.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- STARTING POINTS -->
+    <div class="section-header">
+      <div class="section-num">2.2</div>
+      <div class="section-title">
+        <div class="label">Starting Points</div>
+        <h2>Titik Awal Desain VP</h2>
+        <p>Ada beberapa cara untuk memulai mendesain value proposition. Pilih yang paling sesuai dengan konteks Anda.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <span class="tag">Customer-First</span>
+        <h3 style="margin-top:0.5rem">Mulai dari Pelanggan</h3>
+        <p>Mulai dengan memahami customer profile terlebih dahulu, lalu desain value map yang menjawab kebutuhan mereka. <strong>Lebih aman</strong> karena berbasis fakta dari lapangan.</p>
+        <br>
+        <p style="font-size:0.8rem;color:var(--accent3)">✓ Cocok untuk: startup baru, redesign produk</p>
+      </div>
+      <div class="card">
+        <span class="tag blue">Idea-First</span>
+        <h3 style="margin-top:0.5rem">Mulai dari Ide</h3>
+        <p>Mulai dengan ide produk yang sudah ada, lalu cari customer yang paling cocok. Berguna saat ada teknologi/kapabilitas unik yang bisa dimonetisasi.</p>
+        <br>
+        <p style="font-size:0.8rem;color:var(--accent2)">✓ Cocok untuk: tech startup, pivot produk</p>
+      </div>
+      <div class="card">
+        <span class="tag green">Existing-VP</span>
+        <h3 style="margin-top:0.5rem">Perbaiki VP yang Ada</h3>
+        <p>Ambil VP yang sudah berjalan, mapping ke canvas, lalu identifikasi area yang bisa ditingkatkan untuk mengikuti perubahan kebutuhan pelanggan.</p>
+        <br>
+        <p style="font-size:0.8rem;color:var(--accent3)">✓ Cocok untuk: established company, inovasi bertahap</p>
+      </div>
+      <div class="card">
+        <span class="tag" style="background:rgba(217,119,6,0.1);color:var(--gold)">BMC-First</span>
+        <h3 style="margin-top:0.5rem">Mulai dari Business Model Canvas</h3>
+        <p>Punya Business Model Canvas? Zoom in ke pasangan Value Proposition + Customer Segment yang sudah ada, lalu kembangkan detailnya.</p>
+        <br>
+        <p style="font-size:0.8rem;color:var(--gold)">✓ Cocok untuk: organizations dengan BMC yang ada</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- KUIS 2 -->
+    <div class="section-header">
+      <div class="section-num">📝</div>
+      <div class="section-title">
+        <div class="label">Kuis Pertemuan 2</div>
+        <h2>Uji Pemahaman Anda</h2>
+      </div>
+    </div>
+
+    <div class="quiz-wrap" id="quiz2">
+      <div class="quiz-q">
+        <div class="q-num">Pertanyaan 01</div>
+        <div class="q-text">Kapan Anda dikatakan mencapai "Fit" dalam Value Proposition Design?</div>
+        <div class="options">
+          <div class="option" onclick="answerQ(this,false,'quiz2-q1','Fit bukan hanya tentang memiliki banyak fitur, tapi tentang kesesuaian dengan kebutuhan pelanggan.')">Ketika produk memiliki banyak fitur unggulan</div>
+          <div class="option" data-correct="true" onclick="answerQ(this,true,'quiz2-q1','Benar! Fit terjadi ketika pain relievers dan gain creators Anda sesuai dengan pains dan gains yang paling penting bagi pelanggan.')">Ketika Value Map bertemu Customer Profile — pain relievers & gain creators sesuai dengan pains & gains pelanggan</div>
+          <div class="option" onclick="answerQ(this,false,'quiz2-q1','Keuntungan finansial penting, tapi itu bukan definisi Fit dalam konteks VP Design.')">Ketika produk sudah menghasilkan keuntungan finansial</div>
+          <div class="option" onclick="answerQ(this,false,'quiz2-q1','Mendapat investor adalah milestone bisnis, bukan definisi Fit dalam VP Design.')">Ketika startup sudah mendapatkan investor</div>
+        </div>
+        <div class="quiz-feedback" id="quiz2-q1"></div>
+      </div>
+
+      <div class="quiz-q">
+        <div class="q-num">Pertanyaan 02</div>
+        <div class="q-text">Anda harus menciptakan gain creators yang menjawab SEMUA gains dari customer profile. Apakah pernyataan ini benar?</div>
+        <div class="options">
+          <div class="option" onclick="answerQ(this,false,'quiz2-q2','Tidak tepat. Mencoba melakukan segalanya sering justru melemahkan VP Anda.')">Benar — semua gains harus dijawab</div>
+          <div class="option" data-correct="true" onclick="answerQ(this,true,'quiz2-q2','Benar! Anda hanya perlu fokus pada beberapa gains yang paling penting. VP yang fokus jauh lebih kuat daripada VP yang mencoba menjawab segalanya.')">Salah — cukup fokus pada gains yang paling penting/essential bagi pelanggan</div>
+        </div>
+        <div class="quiz-feedback" id="quiz2-q2"></div>
+      </div>
+
+      <div class="quiz-q">
+        <div class="q-num">Pertanyaan 03</div>
+        <div class="q-text">Tahap Fit mana yang pertama kali harus dicapai sebelum berpikir tentang skala bisnis?</div>
+        <div class="options">
+          <div class="option" onclick="answerQ(this,false,'quiz2-q3','Business Model Fit adalah tahap ketiga, setelah Problem-Solution Fit dan Product-Market Fit.')">Business Model Fit</div>
+          <div class="option" data-correct="true" onclick="answerQ(this,true,'quiz2-q3','Benar! Problem-Solution Fit harus dicapai pertama — membuktikan pelanggan memiliki masalah nyata dan VP Anda berpotensi mengatasinya, sebelum investasi besar.')">Problem-Solution Fit</div>
+          <div class="option" onclick="answerQ(this,false,'quiz2-q3','Product-Market Fit adalah tahap kedua, dicapai setelah ada bukti awal di Problem-Solution Fit.')">Product-Market Fit</div>
+          <div class="option" onclick="answerQ(this,false,'quiz2-q3','Revenue Fit bukan tahapan dalam VPD. Kita bicara Problem-Solution, Product-Market, dan Business Model Fit.')">Revenue Fit</div>
+        </div>
+        <div class="quiz-feedback" id="quiz2-q3"></div>
+      </div>
+    </div>
+
+    <div class="score-display" id="score2" style="display:none">
+      <div class="score-num" id="score2-num">0/3</div>
+      <p>Lanjut ke Pertemuan 3 untuk belajar cara menguji hipotesis!</p>
+      <div class="btn-row" style="justify-content:center;margin-top:0.5rem">
+        <button class="btn btn-primary" onclick="showPage('s3')">Pertemuan 3 →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <button class="btn btn-outline" onclick="showPage('s1')">← Pertemuan 1</button>
+    <p>Pertemuan 2 / 3 — Fit & Desain</p>
+    <button class="btn btn-primary" onclick="showPage('s3')">Pertemuan 3: Testing →</button>
+  </div>
+</div>
+
+<!-- ===== PERTEMUAN 3 ===== -->
+<div class="page" id="page-s3">
+  <div class="session-banner" style="background:var(--accent3)"><span class="dot"></span>PERTEMUAN 3<span class="dot"></span>Durasi: ~90–120 menit</div>
+
+  <div class="content-wrap">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title">
+        <div class="label">Pertemuan 3</div>
+        <h2>Testing & Evolusi VP</h2>
+        <p>Mengurangi risiko kegagalan dengan sistem pengujian hipotesis, eksperimen terstruktur, dan bagaimana VP harus terus berevolusi.</p>
+      </div>
+    </div>
+
+    <div class="highlight green">
+      <h4>🧪 Mengapa Testing Penting?</h4>
+      <p>Setiap Value Proposition dimulai sebagai kumpulan asumsi. Testing adalah cara sistematis untuk mengubah asumsi menjadi fakta yang terbukti — sebelum Anda menghabiskan terlalu banyak waktu dan uang membangun sesuatu yang salah.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- WHAT TO TEST -->
+    <div class="section-header">
+      <div class="section-num">3.1</div>
+      <div class="section-title">
+        <div class="label">Apa yang Diuji?</div>
+        <h2>Hipotesis dalam VP Design</h2>
+        <p>Identifikasi asumsi terpenting yang mendasari VP Anda, lalu rancang eksperimen untuk mengujinya.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="card" style="border-left:3px solid var(--accent)">
+          <h3>Hipotesis Pelanggan</h3>
+          <p>Asumsi tentang <em>siapa</em> pelanggan Anda dan <em>apa</em> yang mereka butuhkan:</p>
+          <ul style="padding-left:1.2rem;margin-top:0.75rem;font-size:0.85rem;color:#555">
+            <li>Apakah segmen ini benar-benar ada?</li>
+            <li>Apakah jobs yang kita identifikasi benar-benar penting bagi mereka?</li>
+            <li>Apakah pains ini benar-benar menyakitkan?</li>
+            <li>Apakah gains ini benar-benar diinginkan?</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="border-left:3px solid var(--accent2)">
+          <h3>Hipotesis Value Proposition</h3>
+          <p>Asumsi tentang <em>bagaimana</em> VP Anda menciptakan nilai:</p>
+          <ul style="padding-left:1.2rem;margin-top:0.75rem;font-size:0.85rem;color:#555">
+            <li>Apakah pain reliever ini benar-benar mengatasi pain?</li>
+            <li>Apakah gain creator ini benar-benar diinginkan?</li>
+            <li>Apakah pelanggan mau membayar untuk ini?</li>
+            <li>Apakah lebih baik dari solusi yang ada?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:0.5rem">
+      <h4>⚠️ Prioritaskan yang Paling Kritis</h4>
+      <p>Tidak semua hipotesis sama pentingnya. Identifikasi asumsi yang jika salah akan <strong>menghancurkan seluruh bisnis Anda</strong> — uji ini terlebih dahulu. Ini adalah "leap-of-faith assumptions".</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- TESTING STEPS -->
+    <div class="section-header">
+      <div class="section-num">3.2</div>
+      <div class="section-title">
+        <div class="label">Proses Testing</div>
+        <h2>Testing Step-by-Step</h2>
+        <p>Proses sistematis untuk merancang dan menjalankan eksperimen yang valid.</p>
+      </div>
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num" style="background:var(--accent3)">1</div>
+        <div class="step-body">
+          <h4>Ekstrak Asumsi</h4>
+          <p>Tuliskan semua asumsi yang mendasari VP Anda. Dari customer profile hingga value map — semuanya adalah asumsi sampai terbukti.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num" style="background:var(--accent3)">2</div>
+        <div class="step-body">
+          <h4>Prioritaskan Asumsi</h4>
+          <p>Ranking asumsi berdasarkan <strong>kepentingan</strong> (seberapa penting untuk bisnis) dan <strong>ketidakpastian</strong> (seberapa yakin Anda). Uji yang paling penting dan paling tidak pasti terlebih dahulu.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num" style="background:var(--accent3)">3</div>
+        <div class="step-body">
+          <h4>Buat Eksperimen</h4>
+          <p>Rancang eksperimen yang paling efisien untuk mendapatkan bukti. Mulai dari yang paling murah dan cepat (customer discovery) sebelum investasi lebih besar.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num" style="background:var(--accent3)">4</div>
+        <div class="step-body">
+          <h4>Tentukan Kriteria Sukses</h4>
+          <p>Sebelum menjalankan eksperimen, tetapkan metrik yang jelas. Berapa banyak yang harus terbukti untuk mengkonfirmasi atau menolak hipotesis?</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num" style="background:var(--accent3)">5</div>
+        <div class="step-body">
+          <h4>Jalankan & Pelajari</h4>
+          <p>Jalankan eksperimen, kumpulkan data, dan ubah hasilnya menjadi insight. Apakah hipotesis terkonfirmasi, direfutasi, atau perlu dimodifikasi?</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- EXPERIMENT LIBRARY -->
+    <div class="section-header">
+      <div class="section-num">3.3</div>
+      <div class="section-title">
+        <div class="label">Library Eksperimen</div>
+        <h2>Jenis-Jenis Eksperimen</h2>
+        <p>Dari yang paling cepat dan murah hingga yang paling kuat dan mahal.</p>
+      </div>
+    </div>
+
+    <div style="overflow-x:auto;border-radius:12px;border:1px solid var(--border);margin-bottom:2rem">
+      <table class="exp-table">
+        <thead>
+          <tr>
+            <th>Eksperimen</th>
+            <th>Deskripsi</th>
+            <th>Biaya</th>
+            <th>Kekuatan Bukti</th>
+            <th>Cocok Untuk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Customer Interview</strong></td>
+            <td>Wawancara langsung untuk memahami jobs, pains, gains</td>
+            <td><span style="color:var(--accent3)">💰 Rendah</span></td>
+            <td>⭐⭐ Sedang</td>
+            <td>Tahap awal, validasi customer profile</td>
+          </tr>
+          <tr>
+            <td><strong>Online Survey</strong></td>
+            <td>Survei skala besar untuk mengkonfirmasi temuan wawancara</td>
+            <td><span style="color:var(--accent3)">💰 Rendah</span></td>
+            <td>⭐⭐ Sedang</td>
+            <td>Validasi kuantitatif asumsi pelanggan</td>
+          </tr>
+          <tr>
+            <td><strong>Paper Prototype</strong></td>
+            <td>Sketsa atau mockup fisik untuk test reaksi pelanggan</td>
+            <td><span style="color:var(--accent3)">💰 Sangat Rendah</span></td>
+            <td>⭐ Rendah</td>
+            <td>Validasi konsep sebelum development</td>
+          </tr>
+          <tr>
+            <td><strong>Landing Page</strong></td>
+            <td>Halaman web sederhana untuk ukur minat dengan signup/klik</td>
+            <td><span style="color:var(--gold)">💰💰 Menengah</span></td>
+            <td>⭐⭐⭐ Kuat</td>
+            <td>Validasi demand sebelum membangun produk</td>
+          </tr>
+          <tr>
+            <td><strong>Concierge MVP</strong></td>
+            <td>Deliver value secara manual untuk pelanggan pertama</td>
+            <td><span style="color:var(--gold)">💰💰 Menengah</span></td>
+            <td>⭐⭐⭐⭐ Sangat Kuat</td>
+            <td>Validasi VP sebelum membangun sistem otomatis</td>
+          </tr>
+          <tr>
+            <td><strong>Wizard of Oz</strong></td>
+            <td>Frontend seperti produk nyata tapi backend manual</td>
+            <td><span style="color:var(--gold)">💰💰 Menengah</span></td>
+            <td>⭐⭐⭐⭐ Sangat Kuat</td>
+            <td>Validasi UX dan flow tanpa teknologi penuh</td>
+          </tr>
+          <tr>
+            <td><strong>Pilot/MVP</strong></td>
+            <td>Produk minimum untuk pelanggan nyata dengan fitur inti</td>
+            <td><span style="color:var(--accent)">💰💰💰 Tinggi</span></td>
+            <td>⭐⭐⭐⭐⭐ Terkuat</td>
+            <td>Product-Market Fit, scale testing</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr class="divider">
+
+    <!-- EVOLVE -->
+    <div class="section-header">
+      <div class="section-num">3.4</div>
+      <div class="section-title">
+        <div class="label">Evolusi VP</div>
+        <h2>VP Harus Terus Berevolusi</h2>
+        <p>Mencapai Fit bukan akhir — VP harus terus dipantau dan diperbarui seiring perubahan pelanggan dan pasar.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3>📏 Measure & Monitor</h3>
+        <p>Tetapkan indikator yang jelas untuk mengukur apakah VP Anda masih relevan. Pantau secara regular — pelanggan dan kebutuhan mereka berubah.</p>
+      </div>
+      <div class="card">
+        <h3>🔄 Improve Relentlessly</h3>
+        <p>Gunakan data dari pengguna nyata untuk terus memperbaiki VP. Kumpulkan feedback, iterasi, dan tingkatkan secara berkelanjutan.</p>
+      </div>
+      <div class="card">
+        <h3>🔃 Reinvent Constantly</h3>
+        <p>Jangan tunggu VP usang. Proaktif eksplorasi VP baru sebelum yang ada mulai gagal — mempertahankan lebih mudah dari memulihkan.</p>
+      </div>
+      <div class="card">
+        <h3>📊 Portfolio VP</h3>
+        <p>Organisasi besar harus kelola portfolio VP: yang sudah mature, yang sedang tumbuh, dan yang sedang dieksperimen — semuanya sekaligus.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- LATIHAN 3: Hipotesis -->
+    <div class="section-header">
+      <div class="section-num">✏️</div>
+      <div class="section-title">
+        <div class="label">Latihan Pertemuan 3</div>
+        <h2>Rancang Kartu Eksperimen</h2>
+        <p>Praktikkan merancang eksperimen untuk menguji hipotesis VP Anda menggunakan template di bawah.</p>
+      </div>
+    </div>
+
+    <div class="canvas-tool">
+      <div class="canvas-tool-header">
+        <div>
+          <h3>🧪 Experiment Card</h3>
+          <p>Isi template untuk satu hipotesis yang ingin Anda uji</p>
+        </div>
+      </div>
+      <div style="padding:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+        <div>
+          <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:0.5rem">Hipotesis</div>
+          <textarea id="exp-hyp" style="width:100%;min-height:80px;padding:0.75rem;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.85rem;resize:vertical" placeholder="Kami percaya bahwa [segmen pelanggan] memiliki masalah [pain/job] yang cukup penting sehingga mereka akan [tindakan yang diharapkan]..."></textarea>
+        </div>
+        <div>
+          <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);margin-bottom:0.5rem">Eksperimen</div>
+          <textarea id="exp-method" style="width:100%;min-height:80px;padding:0.75rem;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.85rem;resize:vertical" placeholder="Untuk menguji ini, kami akan [jenis eksperimen] dengan [target peserta/sampel]..."></textarea>
+        </div>
+        <div>
+          <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent3);margin-bottom:0.5rem">Metrik Sukses</div>
+          <textarea id="exp-metric" style="width:100%;min-height:80px;padding:0.75rem;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.85rem;resize:vertical" placeholder="Kami akan mengukur [metrik spesifik]. Hipotesis dikonfirmasi jika [angka/persentase minimum]..."></textarea>
+        </div>
+        <div>
+          <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:0.5rem">Pelajaran & Keputusan</div>
+          <textarea id="exp-learn" style="width:100%;min-height:80px;padding:0.75rem;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.85rem;resize:vertical" placeholder="Jika hipotesis benar, kami akan [tindakan selanjutnya]. Jika salah, kami akan [pivot/tindakan alternatif]..."></textarea>
+        </div>
+      </div>
+      <div style="padding:0 1.5rem 1.5rem">
+        <button class="btn btn-primary" onclick="previewExp()">Preview Experiment Card</button>
+        <button class="btn btn-outline" style="margin-left:0.75rem" onclick="clearExp()">Reset</button>
+      </div>
+      <div id="exp-preview" style="display:none;margin:0 1.5rem 1.5rem;padding:1.25rem;background:var(--cream-dark);border-radius:10px;border:1px solid var(--border)"></div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- KUIS 3 -->
+    <div class="section-header">
+      <div class="section-num">📝</div>
+      <div class="section-title">
+        <div class="label">Kuis Pertemuan 3</div>
+        <h2>Uji Pemahaman Anda</h2>
+      </div>
+    </div>
+
+    <div class="quiz-wrap" id="quiz3">
+      <div class="quiz-q">
+        <div class="q-num">Pertanyaan 01</div>
+        <div class="q-text">Anda baru punya ide VP dan ingin memulai testing dengan biaya paling rendah. Eksperimen apa yang paling tepat?</div>
+        <div class="options">
+          <div class="option" onclick="answerQ(this,false,'quiz3-q1','MVP membutuhkan biaya development yang signifikan. Ada cara yang lebih murah terlebih dahulu.')">Langsung buat MVP</div>
+          <div class="option" data-correct="true" onclick="answerQ(this,true,'quiz3-q1','Benar! Customer Interview adalah cara paling murah dan cepat untuk mendapatkan insight awal tentang jobs, pains, dan gains pelanggan.')">Customer Interview</div>
+          <div class="option" onclick="answerQ(this,false,'quiz3-q1','A/B testing membutuhkan produk yang sudah ada untuk dibandingkan. Terlalu dini untuk tahap ini.')">A/B Testing</div>
+          <div class="option" onclick="answerQ(this,false,'quiz3-q1','Pilot membutuhkan produk yang sudah cukup matang. Ada tahap sebelumnya yang lebih penting.')">Pilot Program</div>
+        </div>
+        <div class="quiz-feedback" id="quiz3-q1"></div>
+      </div>
+
+      <div class="quiz-q">
+        <div class="q-num">Pertanyaan 02</div>
+        <div class="q-text">Setelah sebuah produk berhasil dan mencapai Product-Market Fit, apakah VP perlu terus dikembangkan?</div>
+        <div class="options">
+          <div class="option" onclick="answerQ(this,false,'quiz3-q2','Tidak tepat. Pasar dan pelanggan terus berubah, VP yang diam akan tertinggal.')">Tidak — setelah fit tercapai, VP bisa dibiarkan</div>
+          <div class="option" data-correct="true" onclick="answerQ(this,true,'quiz3-q2','Benar! VP harus terus dimonitor, diperbaiki, dan bahkan direinvensi seiring perubahan kebutuhan pelanggan dan kondisi pasar.')">Ya — VP harus terus dimonitor, diperbaiki, dan direinvensi</div>
+          <div class="option" onclick="answerQ(this,false,'quiz3-q2','VP bukan sesuatu yang hanya diperbarui 5 tahun sekali — pasar berubah jauh lebih cepat.')">Hanya jika ada keluhan pelanggan besar</div>
+        </div>
+        <div class="quiz-feedback" id="quiz3-q2"></div>
+      </div>
+
+      <div class="quiz-q">
+        <div class="q-num">Pertanyaan 03</div>
+        <div class="q-text">Apa yang harus ditetapkan SEBELUM menjalankan eksperimen?</div>
+        <div class="options">
+          <div class="option" onclick="answerQ(this,false,'quiz3-q3','Anggaran penting tapi bukan hal utama yang perlu ditetapkan sebelum eksperimen.')">Anggaran yang cukup besar</div>
+          <div class="option" onclick="answerQ(this,false,'quiz3-q3','Tim besar tidak selalu diperlukan untuk eksperimen awal — terkadang malah lebih baik tim kecil.')">Tim yang besar dan lengkap</div>
+          <div class="option" data-correct="true" onclick="answerQ(this,true,'quiz3-q3','Benar! Kriteria sukses (metrik) harus ditetapkan SEBELUM eksperimen berjalan untuk menghindari bias konfirmasi dan manipulasi hasil.')">Kriteria sukses dan metrik yang jelas</div>
+          <div class="option" onclick="answerQ(this,false,'quiz3-q3','Presentasi dilakukan setelah hasil tersedia, bukan sebelum eksperimen dimulai.')">Presentasi hasil untuk stakeholder</div>
+        </div>
+        <div class="quiz-feedback" id="quiz3-q3"></div>
+      </div>
+    </div>
+
+    <div class="score-display" id="score3" style="display:none">
+      <div class="score-num" id="score3-num">0/3</div>
+      <p>Selamat! Anda telah menyelesaikan semua 3 pertemuan.</p>
+      <div class="btn-row" style="justify-content:center;margin-top:0.5rem">
+        <button class="btn btn-primary" onclick="showPage('canvas')">Coba Kanvas Interaktif →</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-footer">
+    <button class="btn btn-outline" onclick="showPage('s2')">← Pertemuan 2</button>
+    <p>Pertemuan 3 / 3 — Testing & Evolusi</p>
+    <button class="btn btn-primary" onclick="showPage('canvas')">Kanvas Interaktif →</button>
+  </div>
+</div>
+
+<!-- ===== KANVAS INTERAKTIF ===== -->
+<div class="page" id="page-canvas">
+  <div class="session-banner" style="background:var(--ink)"><span class="dot"></span>KANVAS INTERAKTIF<span class="dot"></span>Buat VP Anda sendiri</div>
+
+  <div class="content-wrap">
+    <div class="section-header">
+      <div class="section-num">🎨</div>
+      <div class="section-title">
+        <div class="label">Tools</div>
+        <h2>Value Proposition Canvas Interaktif</h2>
+        <p>Gunakan kanvas ini untuk merancang VP Anda sendiri. Isi setiap area, lalu lihat hasilnya.</p>
+      </div>
+    </div>
+
+    <div class="canvas-tool">
+      <div class="canvas-tool-header">
+        <div>
+          <h3>🖊️ Value Proposition Canvas</h3>
+          <p>Isi setiap bagian untuk merancang VP Anda</p>
+        </div>
+        <div style="display:flex;gap:0.75rem">
+          <button class="btn btn-outline btn-small" style="color:#fff;border-color:rgba(255,255,255,0.3)" onclick="clearCanvas()">Reset</button>
+          <button class="btn btn-primary btn-small" onclick="analyzeCanvas()">Analisis Fit →</button>
+        </div>
+      </div>
+
+      <div style="padding:1.5rem">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1rem">
+          <!-- VALUE MAP -->
+          <div>
+            <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:1rem;text-align:center">□ VALUE MAP (Perusahaan)</div>
+            <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden">
+              <div style="padding:1rem;border-bottom:1px solid var(--border);background:#fff8f5">
+                <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent3);margin-bottom:0.4rem">Gain Creators</div>
+                <textarea id="c-gc" rows="3" style="width:100%;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.82rem;resize:none;outline:none;color:var(--ink)" placeholder="Bagaimana produk/layanan Anda menciptakan keuntungan yang diinginkan pelanggan?"></textarea>
+              </div>
+              <div style="padding:1rem;border-bottom:1px solid var(--border);background:#f8fbff">
+                <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);margin-bottom:0.4rem">Pain Relievers</div>
+                <textarea id="c-pr" rows="3" style="width:100%;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.82rem;resize:none;outline:none;color:var(--ink)" placeholder="Bagaimana produk/layanan Anda mengurangi penderitaan pelanggan?"></textarea>
+              </div>
+              <div style="padding:1rem;background:#fffbf0">
+                <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:0.4rem">Products & Services</div>
+                <textarea id="c-ps" rows="3" style="width:100%;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.82rem;resize:none;outline:none;color:var(--ink)" placeholder="Produk dan layanan apa yang Anda tawarkan?"></textarea>
+              </div>
+            </div>
+          </div>
+          <!-- CUSTOMER PROFILE -->
+          <div>
+            <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent2);margin-bottom:1rem;text-align:center">○ CUSTOMER PROFILE (Pelanggan)</div>
+            <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden">
+              <div style="padding:1rem;border-bottom:1px solid var(--border);background:#f0fdf4">
+                <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent3);margin-bottom:0.4rem">Gains</div>
+                <textarea id="c-cg" rows="3" style="width:100%;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.82rem;resize:none;outline:none;color:var(--ink)" placeholder="Hasil/manfaat apa yang diinginkan pelanggan Anda?"></textarea>
+              </div>
+              <div style="padding:1rem;border-bottom:1px solid var(--border);background:#fff5f2">
+                <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:0.4rem">Pains</div>
+                <textarea id="c-cp" rows="3" style="width:100%;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.82rem;resize:none;outline:none;color:var(--ink)" placeholder="Apa yang menyusahkan/menghambat pelanggan Anda?"></textarea>
+              </div>
+              <div style="padding:1rem;background:#f9fafb">
+                <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#555;margin-bottom:0.4rem">Customer Jobs</div>
+                <textarea id="c-cj" rows="3" style="width:100%;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.82rem;resize:none;outline:none;color:var(--ink)" placeholder="Apa yang ingin diselesaikan/dicapai pelanggan Anda?"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="canvas-analysis" style="display:none"></div>
+      </div>
+    </div>
+
+    <!-- VP STATEMENT GENERATOR -->
+    <div class="card" style="margin-top:1.5rem">
+      <h3>✍️ Generator Kalimat Value Proposition</h3>
+      <p style="margin-bottom:1rem">Gunakan template ini untuk merumuskan VP Anda dalam satu kalimat yang jelas.</p>
+      <div style="display:grid;gap:0.75rem">
+        <div>
+          <label style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#888;display:block;margin-bottom:0.4rem">Produk/Layanan Anda</label>
+          <input id="vps-product" type="text" style="width:100%;padding:0.65rem 1rem;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.88rem" placeholder="contoh: aplikasi keuangan FinTrack">
+        </div>
+        <div>
+          <label style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#888;display:block;margin-bottom:0.4rem">Untuk Siapa (Segmen)</label>
+          <input id="vps-segment" type="text" style="width:100%;padding:0.65rem 1rem;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.88rem" placeholder="contoh: mahasiswa Indonesia yang kesulitan mengelola keuangan">
+        </div>
+        <div>
+          <label style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#888;display:block;margin-bottom:0.4rem">Pain Utama yang Diatasi</label>
+          <input id="vps-pain" type="text" style="width:100%;padding:0.65rem 1rem;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.88rem" placeholder="contoh: lupa mencatat pengeluaran dan tidak tahu kemana uang pergi">
+        </div>
+        <div>
+          <label style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#888;display:block;margin-bottom:0.4rem">Gain Utama yang Diciptakan</label>
+          <input id="vps-gain" type="text" style="width:100%;padding:0.65rem 1rem;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.88rem" placeholder="contoh: kontrol penuh atas pengeluaran dengan laporan otomatis">
+        </div>
+        <button class="btn btn-primary" onclick="generateVPS()">Generate Kalimat VP</button>
+      </div>
+      <div id="vps-result" style="display:none;margin-top:1.25rem;padding:1.25rem;background:linear-gradient(135deg,#1a1a2e,#2d1b69);border-radius:10px;color:#fff">
+        <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.5);margin-bottom:0.75rem">Value Proposition Statement Anda</div>
+        <p id="vps-text" style="font-size:1.05rem;line-height:1.7;font-family:'Playfair Display',serif"></p>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-footer">
+    <button class="btn btn-outline" onclick="showPage('s3')">← Pertemuan 3</button>
+    <p>Value Proposition Design — Materi Interaktif</p>
+    <button class="btn btn-primary" onclick="showPage('home')">Kembali ke Beranda</button>
+  </div>
+</div>
+
+<script>
+// ===================== STATE =====================
+let matchState = { selectedP: null, selectedS: null, matched: [] };
+let correctMap = { p1:'s1', p2:'s2', p3:'s3', p4:'s4' };
+let scores = { s1: 0, s2: 0, s3: 0, total: 9, answered: { s1:0, s2:0, s3:0 } };
+let stickyColor = { 'sa-jobs':'y', 'sa-pains':'o', 'sa-gains':'g' };
+let colorMap = { y:'', b:'blue', g:'green', p:'pink', o:'orange' };
+
+// ===================== NAV =====================
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const idxMap = { home:0, s1:1, s2:2, s3:3, canvas:4 };
+  if(idxMap[id] !== undefined) tabs[idxMap[id]].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  updateProgress();
+}
+
+function updateProgress() {
+  let done = scores.answered.s1 + scores.answered.s2 + scores.answered.s3;
+  let pct = Math.round((done / 9) * 100);
+  document.getElementById('prog-fill') && (document.getElementById('prog-bar').style.width = pct+'%');
+  document.getElementById('prog-bar').style.width = pct+'%';
+  document.getElementById('prog-label').textContent = pct+'%';
+}
+
+// ===================== ACCORDION =====================
+function toggleAcc(el) {
+  el.parentElement.classList.toggle('open');
+}
+
+// ===================== POPOVER =====================
+function openPop(title, body) {
+  document.getElementById('pop-title').textContent = title;
+  document.getElementById('pop-body').innerHTML = '<p style="font-size:0.9rem;color:#555;line-height:1.7">'+body+'</p>';
+  document.getElementById('popover').classList.add('show');
+}
+function closePopover(e) {
+  if(e.target === document.getElementById('popover')) {
+    document.getElementById('popover').classList.remove('show');
+  }
+}
+
+// ===================== STICKY NOTES =====================
+function setColor(cpId, el) {
+  document.querySelectorAll('#'+cpId+' .cp').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  const cls = el.classList;
+  let col = cls.contains('y')?'y':cls.contains('b')?'b':cls.contains('g')?'g':cls.contains('p')?'p':'o';
+  const areaMap = { 'cp-jobs':'sa-jobs', 'cp-pains':'sa-pains', 'cp-gains':'sa-gains' };
+  if(areaMap[cpId]) stickyColor[areaMap[cpId]] = col;
+}
+
+function addSticky(areaId, inputId, cpId) {
+  const inp = document.getElementById(inputId);
+  const val = inp.value.trim();
+  if(!val) return;
+  const col = stickyColor[areaId] || 'y';
+  const cls = colorMap[col];
+  const rot = (Math.random() * 6 - 3).toFixed(1);
+  const note = document.createElement('div');
+  note.className = 'sticky-note'+(cls?' '+cls:'');
+  note.style.setProperty('--rot', rot+'deg');
+  note.innerHTML = val+'<button class="del-btn" onclick="this.parentElement.remove()">✕</button>';
+  document.getElementById(areaId).appendChild(note);
+  inp.value = '';
+  inp.focus();
+}
+
+// ===================== QUIZ =====================
+function answerQ(el, correct, fbId, msg) {
+  const q = el.closest('.quiz-q');
+  if(q.querySelector('.correct') || q.querySelector('.wrong')) return;
+  el.classList.add(correct ? 'correct' : 'wrong');
+  if(!correct) q.querySelector('[data-correct="true"]').classList.add('correct');
+  const fb = document.getElementById(fbId);
+  fb.textContent = (correct ? '✅ ' : '❌ ') + msg;
+  fb.className = 'quiz-feedback show '+(correct?'ok':'no');
+
+  // score tracking
+  let session = fbId.startsWith('quiz1')?'s1':fbId.startsWith('quiz2')?'s2':'s3';
+  if(correct) scores[session]++;
+  scores.answered[session]++;
+
+  // check if session quiz done
+  let totalQ = { s1:3, s2:3, s3:3 };
+  if(scores.answered[session] === totalQ[session]) {
+    showScore(session);
+  }
+  updateProgress();
+}
+
+function showScore(session) {
+  const el = document.getElementById('score'+session.replace('s',''));
+  const numEl = document.getElementById('score'+session.replace('s','')+'-num');
+  const totalQ = { s1:3, s2:3, s3:3 };
+  if(el && numEl) {
+    numEl.textContent = scores[session]+'/'+totalQ[session];
+    el.style.display = 'block';
+  }
+}
+
+// ===================== MATCH GAME =====================
+function matchClick(el, type) {
+  if(el.classList.contains('matched-ok')) return;
+  if(type === 'p') {
+    document.querySelectorAll('.match-item[data-id^="p"]').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    matchState.selectedP = el.dataset.id;
+  } else {
+    document.querySelectorAll('.match-item[data-id^="s"]').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    matchState.selectedS = el.dataset.id;
+  }
+  if(matchState.selectedP && matchState.selectedS) {
+    checkMatch();
+  }
+}
+
+function checkMatch() {
+  const pEl = document.querySelector('[data-id="'+matchState.selectedP+'"]');
+  const sEl = document.querySelector('[data-id="'+matchState.selectedS+'"]');
+  if(correctMap[matchState.selectedP] === matchState.selectedS) {
+    pEl.classList.remove('selected'); pEl.classList.add('matched-ok');
+    sEl.classList.remove('selected'); sEl.classList.add('matched-ok');
+    matchState.matched.push(matchState.selectedP);
+    if(matchState.matched.length === 4) {
+      document.getElementById('match-result').style.display = 'block';
+    }
+  } else {
+    pEl.classList.remove('selected'); sEl.classList.remove('selected');
+    pEl.classList.add('matched-no'); sEl.classList.add('matched-no');
+    setTimeout(() => { pEl.classList.remove('matched-no'); sEl.classList.remove('matched-no'); }, 800);
+  }
+  matchState.selectedP = null; matchState.selectedS = null;
+}
+
+// ===================== CANVAS =====================
+function clearCanvas() {
+  ['c-gc','c-pr','c-ps','c-cg','c-cp','c-cj'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('canvas-analysis').style.display='none';
+}
+
+function analyzeCanvas() {
+  const vals = {};
+  ['c-gc','c-pr','c-ps','c-cg','c-cp','c-cj'].forEach(id => vals[id] = document.getElementById(id).value.trim());
+  let filled = Object.values(vals).filter(v => v.length > 0).length;
+  let msg = '';
+  if(filled === 0) {
+    msg = '<div class="highlight"><h4>📋 Kanvas Kosong</h4><p>Silakan isi setidaknya beberapa area untuk mendapatkan analisis Fit.</p></div>';
+  } else if(filled < 3) {
+    msg = '<div class="highlight"><h4>🔧 Kanvas Belum Lengkap</h4><p>Anda telah mengisi '+filled+'/6 area. Lengkapi lebih banyak area untuk analisis yang lebih akurat.</p></div>';
+  } else {
+    let hasPainFit = vals['c-pr'].length > 0 && vals['c-cp'].length > 0;
+    let hasGainFit = vals['c-gc'].length > 0 && vals['c-cg'].length > 0;
+    let fitLevel = (hasPainFit ? 1 : 0) + (hasGainFit ? 1 : 0);
+    let color = fitLevel === 2 ? 'green' : fitLevel === 1 ? '' : 'blue';
+    let icon = fitLevel === 2 ? '🎯' : fitLevel === 1 ? '🔄' : '⚠️';
+    let title = fitLevel === 2 ? 'Potensi Fit Terdeteksi!' : fitLevel === 1 ? 'Fit Sebagian' : 'Perlu Penyesuaian';
+    let desc = fitLevel === 2 
+      ? 'Anda memiliki Pain Relievers yang menjawab Pains pelanggan DAN Gain Creators yang menciptakan Gains yang diinginkan. Ini adalah tanda awal yang baik! Langkah selanjutnya: lakukan Customer Interview untuk memvalidasi asumsi ini.'
+      : fitLevel === 1 
+        ? 'Anda hanya memiliki satu sisi Fit. Pastikan Pain Relievers menjawab Pains pelanggan secara langsung, DAN Gain Creators menciptakan Gains yang benar-benar diinginkan.'
+        : 'Pastikan Value Map Anda (Pain Relievers dan Gain Creators) secara langsung menjawab kebutuhan di Customer Profile (Pains dan Gains pelanggan).';
+    msg = '<div class="highlight '+color+'"><h4>'+icon+' '+title+'</h4><p>'+desc+'</p></div>';
+  }
+  const el = document.getElementById('canvas-analysis');
+  el.innerHTML = msg; el.style.display = 'block';
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ===================== VP STATEMENT =====================
+function generateVPS() {
+  const prod = document.getElementById('vps-product').value.trim();
+  const seg = document.getElementById('vps-segment').value.trim();
+  const pain = document.getElementById('vps-pain').value.trim();
+  const gain = document.getElementById('vps-gain').value.trim();
+  if(!prod || !seg || !pain || !gain) {
+    alert('Isi semua field terlebih dahulu!'); return;
+  }
+  const statement = `${prod.charAt(0).toUpperCase()+prod.slice(1)} membantu ${seg} yang mengalami masalah ${pain}, dengan memberikan ${gain}.`;
+  document.getElementById('vps-text').textContent = statement;
+  document.getElementById('vps-result').style.display='block';
+}
+
+// ===================== EXPERIMENT PREVIEW =====================
+function previewExp() {
+  const h = document.getElementById('exp-hyp').value.trim();
+  const m = document.getElementById('exp-method').value.trim();
+  const me = document.getElementById('exp-metric').value.trim();
+  const l = document.getElementById('exp-learn').value.trim();
+  if(!h && !m && !me && !l) { alert('Isi setidaknya satu field!'); return; }
+  const html = `
+    <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#888;margin-bottom:1rem">🧪 Experiment Card Preview</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+      ${h?`<div><div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem">Hipotesis</div><p style="font-size:0.85rem;line-height:1.6">${h}</p></div>`:''}
+      ${m?`<div><div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;color:var(--accent2);margin-bottom:0.3rem">Eksperimen</div><p style="font-size:0.85rem;line-height:1.6">${m}</p></div>`:''}
+      ${me?`<div><div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;color:var(--accent3);margin-bottom:0.3rem">Metrik Sukses</div><p style="font-size:0.85rem;line-height:1.6">${me}</p></div>`:''}
+      ${l?`<div><div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem">Keputusan</div><p style="font-size:0.85rem;line-height:1.6">${l}</p></div>`:''}
+    </div>`;
+  const el = document.getElementById('exp-preview');
+  el.innerHTML = html; el.style.display='block';
+}
+function clearExp() {
+  ['exp-hyp','exp-method','exp-metric','exp-learn'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('exp-preview').style.display='none';
+}
+
+// Seed some example stickies
+window.addEventListener('load', () => {
+  const examples = [
+    ['sa-jobs','inp-jobs','cp-jobs','Lacak pengeluaran harian','y'],
+    ['sa-jobs','inp-jobs','cp-jobs','Nabung untuk keperluan mendatang','b'],
+    ['sa-pains','inp-pains','cp-pains','Lupa input pengeluaran kecil','o'],
+    ['sa-gains','inp-gains','cp-gains','Tahu sisa budget setiap saat','g'],
+  ];
+  examples.forEach(([area, inp, cp, text, col]) => {
+    stickyColor[area] = col;
+    document.getElementById(inp).value = text;
+    addSticky(area, inp, cp);
+  });
+});
+</script>
+</body>
+</html>
