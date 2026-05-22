@@ -1,0 +1,228 @@
+
+<h2 class="sr-only">Daftar Tilik Audit Mutu Internal (AMI) Unit Kerja J – 30 instrumen dengan 5 pertanyaan tilik masing-masing</h2>
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.wrap { padding: 1rem 0; }
+.header-box { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.header-box h1 { font-size: 17px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--color-text-secondary); }
+.controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; align-items: center; }
+.controls select, .controls input { font-size: 13px; padding: 6px 10px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-primary); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; margin-bottom: 1rem; }
+.stat { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 12px; text-align: center; }
+.stat .val { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+.stat .lbl { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+thead th { background: #1F4E79; color: #fff; font-weight: 500; font-size: 12px; padding: 8px 10px; text-align: left; border: 0.5px solid rgba(255,255,255,0.2); position: sticky; top: 0; z-index: 2; }
+.th-no { width: 36px; }
+.th-id { width: 72px; }
+.th-klausul { width: 60px; }
+.th-kat { width: 88px; }
+.th-uraian { width: 22%; }
+.th-tilik { width: auto; }
+.th-hasil { width: 80px; text-align: center; }
+.th-cat { width: 88px; text-align: center; }
+tr.instr-row td { vertical-align: top; padding: 7px 10px; border: 0.5px solid var(--color-border-tertiary); }
+tr.instr-row:hover td { background: var(--color-background-info) !important; }
+tr.odd td { background: var(--color-background-primary); }
+tr.even td { background: var(--color-background-secondary); }
+.badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+.badge-P { background: #EAF3DE; color: #3B6D11; }
+.badge-Pl { background: #E6F1FB; color: #185FA5; }
+.badge-E { background: #FAEEDA; color: #854F0B; }
+.badge-Pg { background: #E1F5EE; color: #0F6E56; }
+.badge-Kd { background: #FAECE7; color: #993C1D; }
+.tilik-item { padding: 3px 0; line-height: 1.5; display: flex; gap: 6px; align-items: flex-start; }
+.tilik-num { flex-shrink: 0; color: var(--color-text-secondary); font-size: 11px; margin-top: 2px; }
+.checkbox-wrap { display: flex; justify-content: center; }
+.cb { display: flex; gap: 4px; flex-direction: column; align-items: center; }
+.cb input[type=checkbox] { width: 16px; height: 16px; cursor: pointer; accent-color: #1F4E79; }
+.cb .cb-lbl { font-size: 10px; color: var(--color-text-tertiary); }
+select.cat-sel { font-size: 12px; padding: 3px 4px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-primary); width: 82px; }
+.print-btn { margin-left: auto; font-size: 13px; padding: 6px 14px; cursor: pointer; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-primary); }
+.print-btn:hover { background: var(--color-background-secondary); }
+.no-data { text-align: center; padding: 2rem; color: var(--color-text-secondary); font-size: 14px; }
+.tbl-wrap { overflow-x: auto; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); }
+</style>
+
+<div class="wrap">
+  <div class="header-box">
+    <h1><i class="ti ti-clipboard-check" aria-hidden="true" style="margin-right:6px;font-size:18px;vertical-align:-2px"></i>Daftar tilik audit mutu internal (AMI) – Unit kerja J</h1>
+    <div class="meta">
+      <span><i class="ti ti-building" aria-hidden="true" style="margin-right:4px"></i>FKIP IPA</span>
+      <span><i class="ti ti-users" aria-hidden="true" style="margin-right:4px"></i>Auditor: Kelompok J</span>
+      <span><i class="ti ti-calendar" aria-hidden="true" style="margin-right:4px"></i>Kamis, 21 Mei 2026</span>
+      <span><i class="ti ti-list-check" aria-hidden="true" style="margin-right:4px"></i>30 instrumen · 150 pertanyaan</span>
+    </div>
+  </div>
+
+  <div class="stats" id="statsBar">
+    <div class="stat"><div class="val" id="s-total">0</div><div class="lbl">Total tilik</div></div>
+    <div class="stat"><div class="val" id="s-checked" style="color:#1D9E75">0</div><div class="lbl">Terpenuhi</div></div>
+    <div class="stat"><div class="val" id="s-no" style="color:#D85A30">0</div><div class="lbl">Tidak terpenuhi</div></div>
+    <div class="stat"><div class="val" id="s-pct">0%</div><div class="lbl">Persentase</div></div>
+    <div class="stat"><div class="val" id="s-kts" style="color:#D85A30">0</div><div class="lbl">KTS</div></div>
+    <div class="stat"><div class="val" id="s-obs">0</div><div class="lbl">Observasi</div></div>
+  </div>
+
+  <div class="controls">
+    <input type="text" id="searchBox" placeholder="Cari instrumen atau pertanyaan…" style="flex:1; min-width:160px;">
+    <select id="filterKat">
+      <option value="">Semua kategori</option>
+      <option value="Perencanaan">Perencanaan</option>
+      <option value="Pelaksanaan">Pelaksanaan</option>
+      <option value="Evaluasi">Evaluasi</option>
+      <option value="Peningkatan">Peningkatan</option>
+      <option value="Pengendalian">Pengendalian</option>
+    </select>
+    <button class="print-btn" onclick="window.print()"><i class="ti ti-printer" aria-hidden="true" style="margin-right:4px"></i>Cetak</button>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="th-no">No</th>
+          <th class="th-id">ID</th>
+          <th class="th-klausul">Klausul</th>
+          <th class="th-kat">Kategori</th>
+          <th class="th-uraian">Uraian instrumen</th>
+          <th class="th-tilik">Daftar tilik / pertanyaan audit</th>
+          <th class="th-hasil">Hasil</th>
+          <th class="th-cat">Kategori temuan</th>
+        </tr>
+      </thead>
+      <tbody id="tblBody"></tbody>
+    </table>
+    <div class="no-data" id="noData" style="display:none">Tidak ada instrumen yang sesuai filter.</div>
+  </div>
+</div>
+
+<script>
+const DATA = [
+  {no:1,id:"J1.9.1",k:"1.9.1",kat:"Perencanaan",uraian:"Program studi menetapkan standar kompetensi lulusan sebagai acuan bagi mahasiswa, dosen, dan pemangku kepentingan mengenai kompetensi sikap, keterampilan, dan pengetahuan yang harus dicapai mahasiswa pada akhir program pendidikan.",tilik:["Apakah program studi memiliki dokumen standar kompetensi lulusan yang ditetapkan secara resmi?","Apakah dokumen memuat kompetensi sikap, keterampilan, dan pengetahuan secara lengkap?","Apakah terdapat profil lulusan yang dirumuskan dalam dokumen kurikulum?","Apakah terdapat matriks keterkaitan antara sikap, keterampilan, dan pengetahuan?","Apakah dokumen tersebut telah disosialisasikan kepada mahasiswa, dosen, dan pemangku kepentingan?"]},
+  {no:2,id:"J1.9.2",k:"1.9.2",kat:"Perencanaan",uraian:"Program studi merumuskan Capaian Pembelajaran Lulusan (CPL) dengan memperhatikan visi-misi PT, KKNI, perkembangan IPTEK, kebutuhan dunia kerja, ranah keilmuan prodi, kompetensi utama lulusan, dan kurikulum prodi sejenis.",tilik:["Apakah CPL telah dirumuskan dan tercantum dalam dokumen kurikulum yang disahkan?","Apakah terdapat matriks yang menunjukkan kesesuaian CPL dengan 7 aspek (visi-misi PT, KKNI, IPTEK, dunia kerja, ranah keilmuan, kompetensi utama, kurikulum sejenis)?","Apakah terdapat berita acara lokakarya kurikulum sebagai bukti proses perumusan CPL?","Apakah terdapat masukan dari pemangku kepentingan atau hasil tracer study dalam perumusan CPL?","Apakah dokumen kurikulum/CPL telah mendapatkan pengesahan dari pejabat yang berwenang?"]},
+  {no:3,id:"J1.9.13",k:"1.9.13",kat:"Perencanaan",uraian:"Program studi menjabarkan CPL ke dalam kurikulum, mata kuliah, CPMK, dan/atau Sub-CPMK sebagai acuan bagi dosen dan mahasiswa dalam pelaksanaan dan pencapaian pembelajaran.",tilik:["Apakah terdapat matriks pemetaan CPL ke mata kuliah yang menunjukkan keterhubungan yang jelas?","Apakah setiap mata kuliah memiliki CPMK yang diturunkan dari CPL?","Apakah RPS mata kuliah mencantumkan CPMK dan/atau Sub-CPMK yang relevan?","Apakah struktur kurikulum mencerminkan penjabaran CPL secara sistematis?","Apakah dosen memahami dan menggunakan pemetaan CPL-CPMK dalam proses pembelajaran?"]},
+  {no:4,id:"J1.9.14",k:"1.9.14",kat:"Perencanaan",uraian:"Dosen atau tim dosen pengampu mata kuliah menyusun Rencana Pembelajaran Semester (RPS) sebagai acuan bagi dosen dan mahasiswa dalam pelaksanaan proses pembelajaran.",tilik:["Apakah seluruh mata kuliah memiliki RPS yang disusun oleh dosen/tim dosen pengampu?","Apakah RPS memuat komponen lengkap (CPL, CPMK, metode pembelajaran, penilaian, referensi)?","Apakah RPS telah divalidasi atau dikoordinasikan dengan program studi?","Apakah RPS diperbarui secara berkala sesuai perkembangan keilmuan dan kebutuhan?","Apakah RPS disampaikan kepada mahasiswa di awal semester?"]},
+  {no:5,id:"J1.9.15",k:"1.9.15",kat:"Pelaksanaan",uraian:"Dosen melaksanakan proses pembelajaran secara terstruktur sesuai RPS dengan menggunakan metode, sumber belajar, dan/atau media pembelajaran yang relevan.",tilik:["Apakah terdapat Berita Acara Perkuliahan (BAP) atau logbook yang menunjukkan pelaksanaan pembelajaran sesuai RPS?","Apakah metode pembelajaran yang digunakan sesuai dengan yang tercantum dalam RPS?","Apakah dosen menggunakan sumber belajar dan media pembelajaran yang relevan?","Apakah rekaman/log aktivitas pembelajaran tersedia di SIAKAD atau LMS?","Apakah ketercapaian perkuliahan memenuhi minimal 14 pertemuan per semester?"]},
+  {no:6,id:"J1.9.16",k:"1.9.16",kat:"Pelaksanaan",uraian:"Program studi menyediakan pembelajaran secara fleksibel melalui berbagai metode dan/atau modalitas pembelajaran, termasuk tatap muka, daring, bauran, dan/atau rekognisi pembelajaran.",tilik:["Apakah terdapat kebijakan atau pedoman yang mengatur fleksibilitas modalitas pembelajaran?","Apakah program studi menyelenggarakan pembelajaran daring atau bauran (hybrid) secara terstruktur?","Apakah terdapat bukti penggunaan LMS dalam mendukung proses pembelajaran?","Apakah terdapat pedoman dan bukti pelaksanaan Rekognisi Pembelajaran Lampau (RPL) jika relevan?","Apakah mahasiswa dapat mengakses materi pembelajaran secara fleksibel melalui platform digital?"]},
+  {no:7,id:"J1.9.18",k:"1.9.18",kat:"Perencanaan",uraian:"Program studi menetapkan beban belajar mahasiswa dalam satuan kredit semester (SKS) sebagai ukuran waktu kegiatan pembelajaran.",tilik:["Apakah pedoman akademik menetapkan secara jelas penggunaan SKS sebagai satuan beban belajar?","Apakah struktur kurikulum berbasis SKS telah ditetapkan dan terdokumentasi?","Apakah KRS mahasiswa mencerminkan beban belajar dalam satuan SKS?","Apakah jadwal perkuliahan sesuai dengan beban SKS yang ditetapkan?","Apakah mahasiswa memahami sistem SKS yang berlaku di program studi?"]},
+  {no:8,id:"J1.9.19",k:"1.9.19",kat:"Pelaksanaan",uraian:"Perguruan tinggi dan program studi menyelenggarakan tahun akademik paling sedikit dalam 2 semester melalui penetapan kalender akademik, jadwal pembelajaran, dan struktur penyelenggaraan pembelajaran.",tilik:["Apakah kalender akademik ditetapkan dan mencakup minimal 2 semester per tahun akademik?","Apakah jadwal perkuliahan (teori dan praktik) tersedia dan dapat diakses oleh sivitas akademika?","Apakah struktur kurikulum per semester terdokumentasi dengan jelas?","Apakah pelaksanaan tahun akademik sesuai dengan kalender yang telah ditetapkan?","Apakah terdapat dokumen yang menunjukkan masa tempuh kurikulum selama 2 semester/tahun?"]},
+  {no:9,id:"J1.9.23",k:"1.9.23",kat:"Perencanaan",uraian:"Program studi dan dosen menetapkan beban belajar mahasiswa dengan ketentuan 1 SKS setara dengan 45 jam kegiatan pembelajaran per semester sesuai karakteristik mata kuliah.",tilik:["Apakah pedoman akademik/kurikulum menjelaskan ekuivalensi 1 SKS = 45 jam kegiatan pembelajaran?","Apakah RPS mencantumkan rincian aktivitas pembelajaran per SKS sesuai ketentuan?","Apakah perhitungan beban belajar sesuai karakteristik mata kuliah (teori, praktik, lapangan)?","Apakah dosen memahami dan menerapkan standar ekuivalensi SKS dalam perencanaan pembelajaran?","Apakah terdapat mekanisme pemantauan beban belajar mahasiswa per semester?"]},
+  {no:10,id:"J1.9.28",k:"1.9.28",kat:"Pelaksanaan",uraian:"Program studi menyediakan berbagai bentuk pembelajaran yang dapat mencakup kuliah, responsi, tutorial, seminar, praktikum, praktik, studio, penelitian, perancangan, pengembangan, magang, wirausaha, dan/atau pengabdian kepada masyarakat.",tilik:["Apakah kurikulum mencantumkan beragam bentuk pembelajaran yang tersedia bagi mahasiswa?","Apakah terdapat bukti pelaksanaan bentuk pembelajaran seperti praktikum, praktik lapangan, atau penelitian?","Apakah program MBKM (magang, wirausaha, pengabdian) telah diimplementasikan dan terdokumentasi?","Apakah RPS mencerminkan ragam metode/bentuk pembelajaran yang digunakan?","Apakah mahasiswa mendapat kesempatan mengikuti lebih dari satu bentuk pembelajaran dalam kurikulum?"]},
+  {no:11,id:"J1.9.29",k:"1.9.29",kat:"Pelaksanaan",uraian:"Program studi dapat menyelenggarakan pembelajaran dalam bentuk blok, modul, atau bentuk lain yang setara dengan perhitungan beban belajar yang jelas dan terdokumentasi.",tilik:["Apakah program studi menyelenggarakan pembelajaran sistem blok atau modul (jika diterapkan)?","Apakah terdapat dokumen yang menetapkan perhitungan beban belajar untuk sistem blok/modul?","Apakah jadwal pelaksanaan pembelajaran blok/modul terdokumentasi dengan baik?","Apakah ekuivalensi beban belajar sistem blok/modul dengan SKS ditetapkan secara jelas?","Apakah pelaksanaan pembelajaran blok/modul dievaluasi secara berkala?"]},
+  {no:12,id:"J1.9.30",k:"1.9.30",kat:"Perencanaan",uraian:"Program studi menetapkan distribusi beban belajar mahasiswa sesuai ketentuan, termasuk batas maksimal beban belajar pada semester awal dan semester berikutnya.",tilik:["Apakah struktur kurikulum menetapkan distribusi beban belajar per semester secara jelas?","Apakah beban belajar semester 1 dan 2 tidak melebihi 20 SKS sesuai ketentuan?","Apakah beban belajar semester selanjutnya tidak melebihi 24 SKS?","Apakah KRS mahasiswa menunjukkan kepatuhan terhadap batas maksimal SKS per semester?","Apakah terdapat mekanisme persetujuan untuk pengambilan SKS di atas batas normal?"]},
+  {no:13,id:"J1.9.31",k:"1.9.31",kat:"Pelaksanaan",uraian:"Program studi diploma tiga menetapkan tugas akhir atau bentuk lain yang setara bagi mahasiswa sebagai bagian dari pemenuhan Capaian Pembelajaran Lulusan.",tilik:["Apakah terdapat pedoman tugas akhir D3 yang telah ditetapkan dan disosialisasikan?","Apakah tugas akhir atau bentuk setara tercantum dalam struktur kurikulum D3?","Apakah terdapat SK penetapan pembimbing dan penguji tugas akhir mahasiswa?","Apakah berita acara penilaian/sidang tugas akhir terdokumentasi dengan baik?","Apakah rekap/daftar mahasiswa yang telah menyelesaikan tugas akhir tersedia dan mutakhir?"]},
+  {no:14,id:"J1.9.32",k:"1.9.32",kat:"Perencanaan",uraian:"Program studi menetapkan masa tempuh kurikulum dan masa studi bagi mahasiswa, baik penuh waktu maupun paruh waktu, sesuai karakteristik dan ketentuan program pendidikan.",tilik:["Apakah pedoman akademik menetapkan masa tempuh kurikulum dan masa studi secara eksplisit?","Apakah masa studi bagi mahasiswa penuh waktu dan paruh waktu ditetapkan secara berbeda (jika relevan)?","Apakah terdapat data masa studi mahasiswa dan lulusan yang terdokumentasi?","Apakah program studi melakukan evaluasi terhadap masa studi rata-rata lulusan?","Apakah terdapat kebijakan perpanjangan masa studi bagi mahasiswa yang membutuhkan?"]},
+  {no:15,id:"J1.9.33",k:"1.9.33",kat:"Evaluasi",uraian:"Program studi melaksanakan evaluasi terhadap proses pembelajaran yang diselenggarakan oleh dosen dan diikuti oleh mahasiswa secara berkala untuk menilai keterlaksanaan dan pencapaian pembelajaran.",tilik:["Apakah program studi memiliki instrumen evaluasi proses pembelajaran (EDOM atau sejenisnya)?","Apakah evaluasi proses pembelajaran dilaksanakan secara berkala (minimal setiap semester)?","Apakah rekap hasil evaluasi proses pembelajaran terdokumentasi dan dianalisis?","Apakah terdapat berita acara koordinasi antara UPPS dan program studi terkait hasil evaluasi?","Apakah terdapat rencana perbaikan berdasarkan hasil evaluasi proses pembelajaran?"]},
+  {no:16,id:"J1.9.34",k:"1.9.34",kat:"Peningkatan",uraian:"Program studi menggunakan hasil evaluasi proses pembelajaran sebagai dasar perbaikan berkelanjutan terhadap perencanaan, pelaksanaan, dan penilaian pembelajaran.",tilik:["Apakah hasil evaluasi pembelajaran digunakan sebagai bahan dalam Rapat Tinjauan Manajemen (RTM)?","Apakah terdapat rencana tindak lanjut yang konkret berdasarkan hasil evaluasi?","Apakah ada bukti implementasi perbaikan yang dilakukan atas dasar hasil evaluasi pembelajaran?","Apakah perbaikan mencakup aspek perencanaan, pelaksanaan, dan/atau penilaian pembelajaran?","Apakah efektivitas perbaikan yang dilakukan dievaluasi pada periode berikutnya?"]},
+  {no:17,id:"J1.9.35",k:"1.9.35",kat:"Pelaksanaan",uraian:"Dosen melaksanakan penilaian hasil belajar mahasiswa secara formatif dan/atau sumatif untuk mengukur pencapaian capaian pembelajaran yang telah ditetapkan.",tilik:["Apakah RPS memuat komponen penilaian formatif dan/atau sumatif secara jelas?","Apakah dosen menggunakan rubrik atau instrumen penilaian yang terstandar?","Apakah daftar nilai mahasiswa terdokumentasi dan dapat dipertanggungjawabkan?","Apakah hasil tugas/ujian dikembalikan kepada mahasiswa sebagai umpan balik pembelajaran?","Apakah terdapat rekap capaian pembelajaran mahasiswa per mata kuliah?"]},
+  {no:18,id:"J1.9.36",k:"1.9.36",kat:"Perencanaan",uraian:"Program studi dan dosen menetapkan serta menyosialisasikan mekanisme dan kriteria penilaian hasil belajar kepada mahasiswa pada awal proses pembelajaran.",tilik:["Apakah terdapat pedoman penilaian hasil belajar yang ditetapkan oleh program studi?","Apakah RPS memuat mekanisme dan kriteria penilaian secara transparan?","Apakah sosialisasi mekanisme penilaian dilakukan di awal semester/perkuliahan?","Apakah terdapat bukti sosialisasi (kontrak kuliah, daftar hadir, atau catatan LMS)?","Apakah mahasiswa memahami bobot dan komponen penilaian yang digunakan?"]},
+  {no:19,id:"J1.9.37",k:"1.9.37",kat:"Perencanaan",uraian:"Perguruan tinggi memiliki rencana pengembangan jangka panjang sebagai acuan dalam pengembangan pendidikan, penelitian, pengabdian kepada masyarakat, sumber daya, dan tata kelola.",tilik:["Apakah perguruan tinggi memiliki Renstra atau Rencana Induk Pengembangan (RIP) yang disahkan?","Apakah Renstra/RIP mencakup aspek pendidikan, penelitian, PKM, sumber daya, dan tata kelola?","Apakah Renstra/RIP menjadi acuan bagi unit pengelola dan program studi dalam perencanaan?","Apakah terdapat dokumen pendukung penyusunan Renstra (analisis situasi, masukan pemangku)?","Apakah Renstra/RIP telah disosialisasikan kepada seluruh sivitas akademika?"]},
+  {no:20,id:"J1.9.38",k:"1.9.38",kat:"Peningkatan",uraian:"Perguruan tinggi menetapkan rencana pengembangan tahunan atau operasional sebagai acuan dalam peningkatan proses dan hasil pembelajaran secara berkelanjutan.",tilik:["Apakah terdapat Rencana Operasional (Renop)/RKT/RKA tahunan yang ditetapkan secara resmi?","Apakah rencana tahunan memuat program kerja peningkatan proses dan hasil pembelajaran?","Apakah indikator target dan sasaran mutu ditetapkan dalam rencana tahunan?","Apakah terdapat laporan capaian program yang menunjukkan realisasi rencana tahunan?","Apakah rencana tahunan disusun berdasarkan Renstra yang telah ditetapkan?"]},
+  {no:21,id:"J1.9.39",k:"1.9.39",kat:"Evaluasi",uraian:"Perguruan tinggi melakukan monitoring dan evaluasi terhadap program akademik dan nonakademik sebagai dasar pengendalian mutu dan perbaikan berkelanjutan.",tilik:["Apakah terdapat instrumen monitoring dan evaluasi (monev) akademik dan nonakademik?","Apakah monev dilaksanakan secara berkala dan terdokumentasi dalam laporan?","Apakah rekap temuan monev ditindaklanjuti dengan rencana perbaikan yang jelas?","Apakah hasil monev dibahas dalam rapat resmi (dibuktikan dengan berita acara)?","Apakah monev mencakup evaluasi realisasi RKAT/program kerja?"]},
+  {no:22,id:"J1.10.1",k:"1.10.1",kat:"Pelaksanaan",uraian:"Perguruan tinggi menyelenggarakan penerimaan mahasiswa baru berdasarkan prinsip objektif, transparan, akuntabel, adil, serta mempertimbangkan potensi akademik dan/atau nonakademik.",tilik:["Apakah terdapat SOP atau pedoman penerimaan mahasiswa baru (PMB) yang ditetapkan?","Apakah kriteria seleksi PMB berbasis potensi akademik dan/atau nonakademik secara tertulis?","Apakah proses PMB dilaksanakan secara objektif, transparan, dan akuntabel?","Apakah terdapat data pendaftar, peserta seleksi, dan hasil seleksi yang terdokumentasi?","Apakah terdapat laporan pelaksanaan PMB dan SK panitia PMB?"]},
+  {no:23,id:"J1.10.2",k:"1.10.2",kat:"Pelaksanaan",uraian:"Perguruan tinggi menyelenggarakan kegiatan pengenalan kehidupan kampus atau orientasi bagi mahasiswa baru untuk mendukung adaptasi terhadap lingkungan akademik, tata nilai, layanan, dan budaya perguruan tinggi.",tilik:["Apakah terdapat pedoman atau program orientasi mahasiswa baru yang ditetapkan?","Apakah jadwal dan materi kegiatan orientasi telah disusun dan terdokumentasi?","Apakah kegiatan orientasi dilaksanakan dan dibuktikan dengan daftar hadir serta dokumentasi?","Apakah materi orientasi mencakup lingkungan akademik, tata nilai, layanan, dan budaya kampus?","Apakah terdapat laporan dan evaluasi pelaksanaan kegiatan orientasi mahasiswa baru?"]},
+  {no:24,id:"J1.10.3",k:"1.10.3",kat:"Pelaksanaan",uraian:"Perguruan tinggi mengelola data dan informasi akademik secara akurat, mutakhir, aman, dan dapat dipertanggungjawabkan melalui sistem informasi yang relevan.",tilik:["Apakah terdapat kebijakan tata kelola data dan informasi akademik secara tertulis?","Apakah SIAKAD digunakan dan data tersinkronisasi dengan PD-Dikti secara rutin?","Apakah terdapat SOP keamanan data dan prosedur backup secara berkala?","Apakah log akses sistem informasi tersedia untuk keperluan audit?","Apakah informasi akademik dipublikasikan kepada publik secara transparan?"]},
+  {no:25,id:"J1.12.1",k:"1.12.1",kat:"Perencanaan",uraian:"Program studi memiliki dokumen kurikulum yang telah ditetapkan dan memuat minimal 8 komponen: CPL, masa tempuh kurikulum, metode pembelajaran, modalitas pembelajaran, syarat kompetensi/kualifikasi calon mahasiswa, penilaian hasil belajar, materi pembelajaran, dan tata cara penerimaan mahasiswa.",tilik:["Apakah dokumen kurikulum program studi telah ditetapkan dan disahkan oleh pejabat berwenang?","Apakah dokumen kurikulum memuat Capaian Pembelajaran Lulusan (CPL)?","Apakah dokumen kurikulum memuat masa tempuh kurikulum, metode dan modalitas pembelajaran?","Apakah dokumen kurikulum memuat syarat kompetensi/kualifikasi calon mahasiswa dan penilaian hasil belajar?","Apakah dokumen kurikulum memuat materi pembelajaran dan tata cara penerimaan mahasiswa pada berbagai tahapan?"]},
+  {no:26,id:"J1.12.2",k:"1.12.2",kat:"Pelaksanaan",uraian:"Program studi didukung oleh dosen dan tenaga kependidikan yang memiliki kualifikasi, kompetensi, dan penugasan sesuai kebutuhan layanan pendidikan dan pencapaian CPL.",tilik:["Apakah data kualifikasi dosen (pendidikan terakhir, NIDN/NIDK, jabatan akademik) tersedia dan mutakhir?","Apakah penugasan mengajar dosen sesuai dengan bidang keahlian dan kualifikasinya?","Apakah dosen memiliki sertifikat pendidik dan/atau sertifikat kompetensi yang relevan?","Apakah terdapat SK pengangkatan atau SK penugasan mengajar yang terdokumentasi?","Apakah tenaga kependidikan memiliki kualifikasi dan kompetensi sesuai tugas dan fungsinya?"]},
+  {no:27,id:"J1.12.3",k:"1.12.3",kat:"Pelaksanaan",uraian:"Perguruan tinggi menyediakan sarana dan prasarana pembelajaran, teknologi informasi, serta sumber pembelajaran yang memadai dan mudah diakses.",tilik:["Apakah terdapat daftar inventaris sarana dan prasarana pembelajaran yang mutakhir?","Apakah sarana TIK (perangkat keras, perangkat lunak, jaringan) tersedia dan berfungsi dengan baik?","Apakah mahasiswa dan dosen dapat mengakses LMS, perpustakaan, dan laboratorium dengan mudah?","Apakah terdapat SOP pemeliharaan sarana dan prasarana yang diterapkan secara berkala?","Apakah dilakukan evaluasi terhadap ketersediaan dan aksesibilitas sarana-prasarana?"]},
+  {no:28,id:"J1.12.5",k:"1.12.5",kat:"Pelaksanaan",uraian:"Perguruan tinggi menyediakan akses bagi mahasiswa dan dosen terhadap sumber pembelajaran terbuka, sumber belajar digital, dan/atau sistem pembelajaran elektronik.",tilik:["Apakah terdapat akses ke sumber pembelajaran digital (e-journal, e-book, repositori) bagi mahasiswa dan dosen?","Apakah terdapat daftar sumber pembelajaran terbuka (OER) yang tersedia dan dapat diakses?","Apakah panduan penggunaan sumber pembelajaran digital tersedia dan mudah dipahami?","Apakah log atau rekap penggunaan sumber pembelajaran digital terdokumentasi?","Apakah akses e-learning atau LMS dapat digunakan tanpa hambatan teknis yang signifikan?"]},
+  {no:29,id:"J4.8.2",k:"4.8.2",kat:"Perencanaan",uraian:"Perguruan tinggi memiliki perencanaan dan pengelolaan pembiayaan untuk menjamin keberlanjutan penyelenggaraan pendidikan tinggi dan peningkatan mutu secara berkelanjutan.",tilik:["Apakah terdapat Renstra keuangan atau perencanaan pembiayaan jangka panjang yang ditetapkan?","Apakah RKAT/RAB disusun setiap tahun dan mengacu pada Renstra keuangan?","Apakah terdapat proyeksi pendanaan atau arus kas yang menunjukkan keberlanjutan finansial?","Apakah laporan realisasi anggaran terdokumentasi dan dibandingkan dengan rencana?","Apakah terdapat kebijakan pengelolaan sumber dana yang menjamin keberlanjutan operasional?"]},
+  {no:30,id:"J4.9.4",k:"4.9.4",kat:"Pengendalian",uraian:"Perguruan tinggi melaksanakan pemantauan, evaluasi, pengendalian, dan tindak lanjut terhadap sistem penjaminan mutu sebagai bentuk akuntabilitas dalam memastikan kepatuhan dan peningkatan mutu berkelanjutan.",tilik:["Apakah sistem penjaminan mutu internal (SPMI) dilaksanakan secara menyeluruh dan terdokumentasi?","Apakah laporan RTM (Rapat Tinjauan Manajemen) tersedia dan mencakup evaluasi sistem mutu?","Apakah terdapat register risiko dan mekanisme pengelolaan risiko yang diterapkan?","Apakah rekap keluhan dan tindak lanjutnya terdokumentasi secara sistematis?","Apakah terdapat laporan akuntabilitas yang menunjukkan kepatuhan terhadap standar mutu?"]}
+];
+
+const katClass = {Perencanaan:"badge-P",Pelaksanaan:"badge-Pl",Evaluasi:"badge-E",Peningkatan:"badge-Pg",Pengendalian:"badge-Kd"};
+const catOpts = ["Sesuai","Obs (+)","Obs (-)","KTS Minor","KTS Mayor"];
+const state = {};
+
+DATA.forEach(d => {
+  d.tilik.forEach((_,ti) => {
+    state[`${d.no}_${ti}`] = {checked: false, cat: ""};
+  });
+});
+
+function updateStats() {
+  let total=0, checked=0, kts=0, obs=0;
+  DATA.forEach(d => d.tilik.forEach((_,ti) => {
+    const k = `${d.no}_${ti}`;
+    total++;
+    if(state[k].checked) checked++;
+    const c = state[k].cat;
+    if(c==="KTS Minor"||c==="KTS Mayor") kts++;
+    if(c==="Obs (+)"||c==="Obs (-)") obs++;
+  }));
+  const no = total - checked;
+  const pct = total>0 ? Math.round(checked/total*100) : 0;
+  document.getElementById("s-total").textContent = total;
+  document.getElementById("s-checked").textContent = checked;
+  document.getElementById("s-no").textContent = no;
+  document.getElementById("s-pct").textContent = pct + "%";
+  document.getElementById("s-kts").textContent = kts;
+  document.getElementById("s-obs").textContent = obs;
+}
+
+function render() {
+  const q = document.getElementById("searchBox").value.toLowerCase();
+  const fk = document.getElementById("filterKat").value;
+  const tbody = document.getElementById("tblBody");
+  tbody.innerHTML = "";
+  let shown = 0;
+
+  DATA.forEach((d, di) => {
+    if(fk && d.kat !== fk) return;
+    if(q && !d.uraian.toLowerCase().includes(q) && !d.id.toLowerCase().includes(q) && !d.tilik.some(t=>t.toLowerCase().includes(q))) return;
+    shown++;
+    const cls = di%2===0?"odd":"even";
+    d.tilik.forEach((t,ti) => {
+      const key = `${d.no}_${ti}`;
+      const tr = document.createElement("tr");
+      tr.className = "instr-row " + cls;
+      if(ti===0) {
+        tr.innerHTML = `
+          <td rowspan="${d.tilik.length}" style="text-align:center;font-weight:500;vertical-align:middle;">${d.no}</td>
+          <td rowspan="${d.tilik.length}" style="font-weight:500;vertical-align:middle;">${d.id}</td>
+          <td rowspan="${d.tilik.length}" style="text-align:center;vertical-align:middle;">${d.k}</td>
+          <td rowspan="${d.tilik.length}" style="vertical-align:middle;"><span class="badge ${katClass[d.kat]}">${d.kat}</span></td>
+          <td rowspan="${d.tilik.length}" style="vertical-align:top;font-size:12px;color:var(--color-text-secondary);">${d.uraian}</td>
+          <td><div class="tilik-item"><span class="tilik-num">${ti+1}.</span><span>${t}</span></div></td>
+          <td style="text-align:center;vertical-align:middle;"><div class="cb"><input type="checkbox" title="Terpenuhi" data-key="${key}" ${state[key].checked?"checked":""}><span class="cb-lbl">${state[key].checked?"✓ Ya":"– "}</span></div></td>
+          <td style="vertical-align:middle;"><select class="cat-sel" data-key="${key}"><option value="">–</option>${catOpts.map(o=>`<option ${state[key].cat===o?"selected":""}>${o}</option>`).join("")}</select></td>
+        `;
+      } else {
+        tr.innerHTML = `
+          <td><div class="tilik-item"><span class="tilik-num">${ti+1}.</span><span>${t}</span></div></td>
+          <td style="text-align:center;vertical-align:middle;"><div class="cb"><input type="checkbox" title="Terpenuhi" data-key="${key}" ${state[key].checked?"checked":""}><span class="cb-lbl">${state[key].checked?"✓ Ya":"– "}</span></div></td>
+          <td style="vertical-align:middle;"><select class="cat-sel" data-key="${key}"><option value="">–</option>${catOpts.map(o=>`<option ${state[key].cat===o?"selected":""}>${o}</option>`).join("")}</select></td>
+        `;
+      }
+      tbody.appendChild(tr);
+    });
+  });
+
+  document.getElementById("noData").style.display = shown===0?"block":"none";
+
+  tbody.querySelectorAll("input[type=checkbox]").forEach(cb => {
+    cb.addEventListener("change", function() {
+      const k = this.dataset.key;
+      state[k].checked = this.checked;
+      this.nextElementSibling.textContent = this.checked ? "✓ Ya" : "– ";
+      updateStats();
+    });
+  });
+  tbody.querySelectorAll("select.cat-sel").forEach(sel => {
+    sel.addEventListener("change", function() {
+      state[this.dataset.key].cat = this.value;
+      updateStats();
+    });
+  });
+}
+
+document.getElementById("searchBox").addEventListener("input", render);
+document.getElementById("filterKat").addEventListener("change", render);
+
+render();
+updateStats();
+</script>
