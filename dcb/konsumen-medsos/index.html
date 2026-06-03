@@ -1,0 +1,2547 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perilaku Konsumen di Media Sosial</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a25;
+    --surface3: #22223a;
+    --accent: #6c63ff;
+    --accent2: #ff6584;
+    --accent3: #43e97b;
+    --accent4: #f7971e;
+    --text: #e8e8f0;
+    --text-dim: #8888a8;
+    --border: rgba(108,99,255,0.18);
+    --glow: rgba(108,99,255,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── BACKGROUND GRID ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(108,99,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(108,99,255,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 260px;
+    background: rgba(10,10,15,0.95);
+    border-right: 1px solid var(--border);
+    padding: 32px 0;
+    z-index: 100;
+    overflow-y: auto;
+    backdrop-filter: blur(12px);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+
+  .sidebar-brand .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .nav-section {
+    padding: 8px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    cursor: pointer;
+    color: var(--text-dim);
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    text-decoration: none;
+  }
+
+  .nav-item:hover, .nav-item.active {
+    color: var(--text);
+    background: var(--glow);
+    border-left-color: var(--accent);
+  }
+
+  .nav-item .icon { font-size: 14px; opacity: 0.7; }
+
+  .nav-progress {
+    padding: 16px 24px;
+    margin-top: auto;
+    border-top: 1px solid var(--border);
+  }
+
+  .progress-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    letter-spacing: 0.1em;
+  }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--surface3);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 260px;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 80px 64px 64px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(108,99,255,0.15), transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-meta::before {
+    content: '';
+    display: inline-block;
+    width: 32px; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 580px;
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+
+  .hero-chips {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .chip {
+    padding: 6px 14px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 64px 64px;
+    border-bottom: 1px solid var(--border);
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .section-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(108,99,255,0.12);
+    border: 1px solid rgba(108,99,255,0.3);
+    border-radius: 6px;
+    padding: 4px 10px;
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+    margin-top: 8px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(22px, 2.5vw, 30px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .section-subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── CONTENT BLOCKS ── */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+
+  .content-grid.single { grid-template-columns: 1fr; }
+  .content-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .card:hover {
+    border-color: rgba(108,99,255,0.4);
+    transform: translateY(-2px);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .card:hover::before { opacity: 1; }
+
+  .card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .card p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.75;
+  }
+
+  /* Theory cards */
+  .theory-card {
+    background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(108,99,255,0.02));
+    border-color: rgba(108,99,255,0.25);
+  }
+
+  .theory-card .card-label { color: #a395ff; }
+
+  /* Analogy cards */
+  .analogy-card {
+    background: linear-gradient(135deg, rgba(255,101,132,0.08), rgba(255,101,132,0.02));
+    border-color: rgba(255,101,132,0.25);
+  }
+
+  .analogy-card .card-label { color: #ff8fa3; }
+
+  /* Example cards */
+  .example-card {
+    background: linear-gradient(135deg, rgba(67,233,123,0.08), rgba(67,233,123,0.02));
+    border-color: rgba(67,233,123,0.25);
+  }
+
+  .example-card .card-label { color: #43e97b; }
+
+  /* Research cards */
+  .research-card {
+    background: linear-gradient(135deg, rgba(247,151,30,0.08), rgba(247,151,30,0.02));
+    border-color: rgba(247,151,30,0.25);
+  }
+
+  .research-card .card-label { color: #f7971e; }
+
+  /* ── PROSE ── */
+  .prose {
+    max-width: 720px;
+    margin-bottom: 28px;
+  }
+
+  .prose p {
+    font-size: 15px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    line-height: 1.8;
+  }
+
+  .prose strong { color: var(--text); font-weight: 500; }
+
+  .prose .highlight {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    display: flex;
+    gap: 16px;
+    padding: 20px 24px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .callout-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+
+  .callout-body { flex: 1; }
+
+  .callout-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .callout-text {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .callout.info { border-color: rgba(108,99,255,0.3); background: rgba(108,99,255,0.06); }
+  .callout.info .callout-title { color: #a395ff; }
+
+  .callout.tip { border-color: rgba(67,233,123,0.3); background: rgba(67,233,123,0.06); }
+  .callout.tip .callout-title { color: #43e97b; }
+
+  .callout.warning { border-color: rgba(247,151,30,0.3); background: rgba(247,151,30,0.06); }
+  .callout.warning .callout-title { color: #f7971e; }
+
+  .callout.danger { border-color: rgba(255,101,132,0.3); background: rgba(255,101,132,0.06); }
+  .callout.danger .callout-title { color: #ff6584; }
+
+  /* ── LIST ── */
+  .styled-list {
+    list-style: none;
+    margin-bottom: 20px;
+  }
+
+  .styled-list li {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    align-items: flex-start;
+  }
+
+  .styled-list li::before {
+    content: '→';
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .styled-list li strong { color: var(--text); display: block; font-weight: 500; margin-bottom: 2px; }
+
+  /* ── PLATFORM GRID ── */
+  .platform-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .platform-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .platform-card:hover, .platform-card.active {
+    border-color: var(--accent);
+    background: rgba(108,99,255,0.1);
+    transform: translateY(-3px);
+  }
+
+  .platform-icon { font-size: 28px; margin-bottom: 8px; }
+
+  .platform-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .platform-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .platform-detail {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 28px;
+    display: none;
+    animation: fadeUp 0.3s ease both;
+  }
+
+  .platform-detail.active { display: block; }
+
+  /* ── ENGAGEMENT SLIDER ── */
+  .engagement-viz {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 28px;
+  }
+
+  .engagement-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .engagement-sub {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .engagement-bars { display: flex; flex-direction: column; gap: 12px; }
+
+  .eng-row { display: flex; align-items: center; gap: 16px; }
+
+  .eng-name {
+    font-size: 13px;
+    color: var(--text-dim);
+    width: 180px;
+    flex-shrink: 0;
+  }
+
+  .eng-bar-wrap {
+    flex: 1;
+    height: 8px;
+    background: var(--surface3);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .eng-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1.5s cubic-bezier(.16,1,.3,1);
+    width: 0;
+  }
+
+  .eng-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    width: 40px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ── ACCORDION ── */
+  .accordion { margin-bottom: 10px; }
+
+  .acc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .acc-header:hover { border-color: rgba(108,99,255,0.4); background: rgba(108,99,255,0.06); }
+  .acc-header.open { border-radius: 10px 10px 0 0; border-color: rgba(108,99,255,0.4); }
+
+  .acc-arrow {
+    font-size: 18px;
+    transition: transform 0.3s;
+    color: var(--accent);
+  }
+
+  .acc-header.open .acc-arrow { transform: rotate(180deg); }
+
+  .acc-body {
+    display: none;
+    padding: 20px;
+    background: var(--surface2);
+    border: 1px solid rgba(108,99,255,0.4);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.75;
+  }
+
+  .acc-body.open { display: block; animation: fadeUp 0.25s ease both; }
+
+  /* ── CASE STUDY ── */
+  .case-study {
+    background: var(--surface);
+    border: 1px solid rgba(247,151,30,0.3);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+
+  .case-header {
+    background: rgba(247,151,30,0.1);
+    padding: 20px 28px;
+    border-bottom: 1px solid rgba(247,151,30,0.2);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .case-icon { font-size: 24px; }
+
+  .case-meta {}
+
+  .case-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #f7971e;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .case-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .case-body { padding: 28px; }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .case-item { }
+
+  .case-item-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .case-item-content {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .case-finding {
+    background: rgba(247,151,30,0.08);
+    border-left: 3px solid #f7971e;
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .case-finding strong { color: #f7971e; }
+
+  /* ── RESEARCH BOX ── */
+  .research-box {
+    background: var(--surface);
+    border: 1px solid rgba(67,233,123,0.25);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .research-header {
+    background: rgba(67,233,123,0.08);
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(67,233,123,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .research-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #43e97b;
+  }
+
+  .research-journal {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  .research-body { padding: 20px 24px; }
+
+  .research-body p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+
+  .research-findings {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+
+  .finding-chip {
+    padding: 5px 12px;
+    background: rgba(67,233,123,0.1);
+    border: 1px solid rgba(67,233,123,0.25);
+    border-radius: 100px;
+    font-size: 12px;
+    color: #43e97b;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── QUIZ ── */
+  .quiz-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+
+  .quiz-header {
+    background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(255,101,132,0.08));
+    padding: 28px 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .quiz-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .quiz-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .quiz-score-display {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .quiz-header h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+  }
+
+  .quiz-body { padding: 32px; }
+
+  .question-card {
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .question-card:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .q-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+
+  .q-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 10px; }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .option:hover:not(.disabled) {
+    border-color: rgba(108,99,255,0.4);
+    background: rgba(108,99,255,0.08);
+    color: var(--text);
+  }
+
+  .option.selected { border-color: var(--accent); background: rgba(108,99,255,0.12); color: var(--text); }
+  .option.correct { border-color: #43e97b; background: rgba(67,233,123,0.1); color: var(--text); }
+  .option.wrong { border-color: #ff6584; background: rgba(255,101,132,0.08); color: var(--text-dim); }
+  .option.disabled { cursor: default; }
+
+  .option-letter {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--surface3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .option.correct .option-letter { background: rgba(67,233,123,0.3); color: #43e97b; }
+  .option.wrong .option-letter { background: rgba(255,101,132,0.2); color: #ff6584; }
+  .option.selected .option-letter { background: rgba(108,99,255,0.3); color: var(--accent); }
+
+  .explanation {
+    margin-top: 14px;
+    padding: 14px 18px;
+    background: rgba(108,99,255,0.06);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    display: none;
+  }
+
+  .explanation.show { display: block; animation: fadeUp 0.3s ease; }
+  .explanation strong { color: var(--accent); }
+
+  .quiz-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 28px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+
+  .btn {
+    padding: 12px 28px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .btn-primary:hover { background: #7c74ff; transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: var(--surface2);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost:hover { color: var(--text); border-color: rgba(108,99,255,0.4); }
+
+  .quiz-result {
+    text-align: center;
+    padding: 40px;
+    display: none;
+  }
+
+  .quiz-result.show { display: block; animation: fadeUp 0.4s ease; }
+
+  .result-score {
+    font-family: 'Syne', sans-serif;
+    font-size: 64px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .result-label {
+    font-size: 18px;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .result-sub {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+  }
+
+  /* ── STAT CARDS ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── FLIP CARDS ── */
+  .flip-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .flip-card {
+    height: 180px;
+    perspective: 1000px;
+    cursor: pointer;
+  }
+
+  .flip-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(.645,.045,.355,1);
+    transform-style: preserve-3d;
+  }
+
+  .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+
+  .flip-front, .flip-back {
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    padding: 20px;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .flip-front {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .flip-back {
+    background: var(--surface2);
+    border: 1px solid rgba(108,99,255,0.35);
+    transform: rotateY(180deg);
+  }
+
+  .flip-front-icon { font-size: 32px; margin-bottom: 12px; }
+
+  .flip-front-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .flip-front-hint {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    margin-top: 8px;
+  }
+
+  .flip-back-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+  }
+
+  .flip-back p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.65;
+  }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow-diagram {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .flow-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+    min-width: 120px;
+    transition: all 0.2s;
+  }
+
+  .flow-node:hover {
+    border-color: var(--accent);
+    background: rgba(108,99,255,0.08);
+  }
+
+  .flow-node-icon { font-size: 22px; margin-bottom: 6px; }
+
+  .flow-node-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .flow-node-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    margin-top: 4px;
+  }
+
+  .flow-arrow {
+    color: var(--accent);
+    font-size: 20px;
+    padding: 0 8px;
+    opacity: 0.5;
+  }
+
+  /* ── INFLUENCER TIER ── */
+  .tier-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    margin-bottom: 28px;
+  }
+
+  .tier-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    text-align: left;
+  }
+
+  .tier-table td {
+    padding: 14px 16px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+    vertical-align: top;
+  }
+
+  .tier-table td:first-child {
+    border-left: 1px solid var(--border);
+    border-radius: 10px 0 0 10px;
+  }
+
+  .tier-table td:last-child {
+    border-right: 1px solid var(--border);
+    border-radius: 0 10px 10px 0;
+  }
+
+  .tier-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    color: var(--text);
+    font-size: 14px;
+  }
+
+  .tier-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .tier-nano { background: rgba(67,233,123,0.12); color: #43e97b; border: 1px solid rgba(67,233,123,0.25); }
+  .tier-micro { background: rgba(108,99,255,0.12); color: #a395ff; border: 1px solid rgba(108,99,255,0.25); }
+  .tier-macro { background: rgba(247,151,30,0.12); color: #f7971e; border: 1px solid rgba(247,151,30,0.25); }
+  .tier-mega { background: rgba(255,101,132,0.12); color: #ff6584; border: 1px solid rgba(255,101,132,0.25); }
+
+  /* ── MOBILE TOGGLE ── */
+  .menu-toggle {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 200;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .menu-toggle { display: block; }
+    .section { padding: 48px 24px; }
+    .hero { padding: 60px 24px 40px; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-grid.three { grid-template-columns: 1fr; }
+    .platform-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .flip-grid { grid-template-columns: repeat(2, 1fr); }
+    .case-grid { grid-template-columns: 1fr; }
+    .tier-table { font-size: 12px; }
+    .flow-diagram { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 28px 0;
+  }
+
+  /* animate on scroll */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="tag">Digital Consumer Behaviour</div>
+    <h2>Perilaku Konsumen di Media Sosial</h2>
+  </div>
+
+  <div class="nav-section">Navigasi Materi</div>
+  <a class="nav-item active" href="#intro" onclick="setActive(this)">
+    <span class="icon">🏠</span> Pendahuluan
+  </a>
+  <a class="nav-item" href="#ekosistem" onclick="setActive(this)">
+    <span class="icon">🌐</span> Ekosistem Platform
+  </a>
+  <a class="nav-item" href="#motivasi" onclick="setActive(this)">
+    <span class="icon">💡</span> Motivasi & Engagement
+  </a>
+  <a class="nav-item" href="#ugc" onclick="setActive(this)">
+    <span class="icon">📸</span> User-Generated Content
+  </a>
+  <a class="nav-item" href="#ewom" onclick="setActive(this)">
+    <span class="icon">💬</span> eWOM
+  </a>
+  <a class="nav-item" href="#influencer" onclick="setActive(this)">
+    <span class="icon">⭐</span> Influencer & Parasocial
+  </a>
+  <a class="nav-item" href="#kasusriset" onclick="setActive(this)">
+    <span class="icon">🔬</span> Studi Kasus Riset
+  </a>
+  <a class="nav-item" href="#quiz" onclick="setActive(this)">
+    <span class="icon">🧠</span> Kuis Interaktif
+  </a>
+
+  <div class="nav-progress">
+    <div class="progress-label">PROGRESS BELAJAR</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero" id="intro">
+    <div class="hero-meta">Pertemuan 09 · Digital Consumer Behaviour</div>
+    <h1>Perilaku Konsumen<br>di Media Sosial</h1>
+    <p class="hero-desc">
+      Media sosial bukan sekadar saluran komunikasi — ia adalah lingkungan konsumsi baru yang membentuk ulang cara konsumen mencari informasi, membentuk opini, dan membuat keputusan pembelian.
+    </p>
+    <div class="hero-chips">
+      <span class="chip">Uses & Gratifications Theory</span>
+      <span class="chip">eWOM</span>
+      <span class="chip">UGC</span>
+      <span class="chip">Parasocial Relationship</span>
+      <span class="chip">Source Credibility</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1: EKOSISTEM PLATFORM -->
+  <div class="section animate-on-scroll" id="ekosistem">
+    <div class="section-header">
+      <div class="section-number">01</div>
+      <div>
+        <h2 class="section-title">Media Sosial sebagai Lingkungan Konsumsi Baru</h2>
+        <div class="section-subtitle">Mengapa medsos berbeda dari media tradisional?</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>Media tradisional bersifat <strong>one-to-many</strong> — satu pengirim (TV, koran) menyampaikan pesan kepada jutaan penerima pasif. Media sosial membalikkan logika ini: semua orang bisa jadi pengirim sekaligus penerima. Model ini disebut <strong class="highlight">many-to-many</strong>, dan dampaknya terhadap perilaku konsumen sangat masif.</p>
+      <p>Bayangkan sebuah pasar tradisional. Di sana, Anda tidak hanya membeli — Anda juga berbincang, merekomendasikan, bahkan berteriak mengeluhkan produk yang buruk kepada orang-orang di sekitar Anda. <strong>Media sosial adalah pasar tradisional itu, tapi dengan skala miliaran orang dan rekaman permanen.</strong></p>
+    </div>
+
+    <div class="stats-row animate-on-scroll">
+      <div class="stat-card">
+        <div class="stat-number" style="color:#6c63ff;">5.2M</div>
+        <div class="stat-label">pengguna medsos global (2024)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color:#ff6584;">2.5j</div>
+        <div class="stat-label">rata-rata waktu di medsos/hari</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color:#43e97b;">81%</div>
+        <div class="stat-label">konsumen riset produk di medsos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color:#f7971e;">74%</div>
+        <div class="stat-label">keputusan beli dipengaruhi medsos</div>
+      </div>
+    </div>
+
+    <div class="callout info animate-on-scroll">
+      <div class="callout-icon">📌</div>
+      <div class="callout-body">
+        <div class="callout-title">Perbedaan Utama: Medsos vs Media Tradisional</div>
+        <div class="callout-text">Media tradisional: one-to-many, pasif, terkontrol brand. Media sosial: many-to-many, interaktif, konten dikontrol pengguna. Algoritma menjadi gatekeeper baru yang menentukan konten apa yang dilihat siapa — menggantikan editor redaksi.</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:20px;">Ekosistem Platform: Satu Pengguna, Banyak Perilaku</h3>
+    <p style="font-size:14px;color:var(--text-dim);margin-bottom:20px;">Konsumen yang sama berperilaku berbeda di platform berbeda. Klik platform untuk melihat karakteristiknya:</p>
+
+    <div class="platform-grid animate-on-scroll">
+      <div class="platform-card" onclick="showPlatform('instagram')">
+        <div class="platform-icon">📸</div>
+        <div class="platform-name">Instagram</div>
+        <div class="platform-desc">visual · aspirasional</div>
+      </div>
+      <div class="platform-card" onclick="showPlatform('tiktok')">
+        <div class="platform-icon">🎵</div>
+        <div class="platform-name">TikTok</div>
+        <div class="platform-desc">viral · algorithm-driven</div>
+      </div>
+      <div class="platform-card" onclick="showPlatform('youtube')">
+        <div class="platform-icon">▶️</div>
+        <div class="platform-name">YouTube</div>
+        <div class="platform-desc">long-form · trust-building</div>
+      </div>
+      <div class="platform-card" onclick="showPlatform('twitter')">
+        <div class="platform-icon">🐦</div>
+        <div class="platform-name">X / Twitter</div>
+        <div class="platform-desc">opini · real-time</div>
+      </div>
+      <div class="platform-card" onclick="showPlatform('whatsapp')">
+        <div class="platform-icon">💚</div>
+        <div class="platform-name">WhatsApp</div>
+        <div class="platform-desc">private · intimate WOM</div>
+      </div>
+      <div class="platform-card" onclick="showPlatform('linkedin')">
+        <div class="platform-icon">💼</div>
+        <div class="platform-name">LinkedIn</div>
+        <div class="platform-desc">profesional · B2B</div>
+      </div>
+    </div>
+
+    <div class="platform-detail" id="platform-instagram">
+      <strong style="color:#a395ff;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;">INSTAGRAM</strong>
+      <h4 style="font-family:'Syne',sans-serif;font-size:16px;margin:8px 0 12px;">Visual-Driven & Discovery Mode</h4>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.75;">Konsumen di Instagram sedang dalam mode <strong>aspirasional</strong> — mereka mencari inspirasi, gaya hidup, dan produk yang mencerminkan identitas yang ingin mereka proyeksikan. Keputusan pembelian sering dipicu oleh estetika visual, bukan spesifikasi produk. <br><br><strong>Implikasi pemasaran:</strong> Konten berkualitas tinggi secara visual, storytelling lewat Stories & Reels, dan kolaborasi dengan influencer gaya hidup sangat efektif. Instagram Shopping mempersingkat jarak antara discovery dan purchase.</p>
+    </div>
+
+    <div class="platform-detail" id="platform-tiktok">
+      <strong style="color:#a395ff;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;">TIKTOK</strong>
+      <h4 style="font-family:'Syne',sans-serif;font-size:16px;margin:8px 0 12px;">Algoritma Berbasis Minat, Bukan Relasi</h4>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.75;">TikTok membalikkan paradigma: Anda tidak perlu punya follower banyak untuk viral. Algoritmanya merekomendasikan konten berdasarkan <strong>perilaku menonton</strong>, bukan jaringan sosial. Ini menciptakan "viral loop" yang bisa mengangkat brand kecil semalaman. <br><br><strong>Fenomena "TikTok Made Me Buy It"</strong> adalah bukti nyata betapa kuat impulse buying yang dipicu konten pendek yang menghibur. Konsumen tidak sedang mencari produk — produk yang mencari mereka lewat algoritma.</p>
+    </div>
+
+    <div class="platform-detail" id="platform-youtube">
+      <strong style="color:#a395ff;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;">YOUTUBE</strong>
+      <h4 style="font-family:'Syne',sans-serif;font-size:16px;margin:8px 0 12px;">Long-Form & Trust Building</h4>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.75;">YouTube adalah platform tempat konsumen datang dalam fase <strong>consideration dan research</strong>. Review panjang, unboxing, dan tutorial membantu konsumen mengevaluasi produk secara mendalam. Kepercayaan kepada YouTuber terbentuk melalui konsistensi konten selama berbulan-bulan. <br><br>Studi menunjukkan bahwa 68% konsumen menonton YouTube sebelum membuat keputusan pembelian besar (Google, 2018).</p>
+    </div>
+
+    <div class="platform-detail" id="platform-twitter">
+      <strong style="color:#a395ff;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;">X / TWITTER</strong>
+      <h4 style="font-family:'Syne',sans-serif;font-size:16px;margin:8px 0 12px;">Ruang Opini Publik & Real-Time</h4>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.75;">X/Twitter adalah tempat krisis brand sering meledak dan menyebar dengan cepat. Satu tweet keluhan yang di-retweet bisa menjadi berita nasional dalam hitungan jam. Tapi sebaliknya, brand yang merespons keluhan dengan cerdas bisa viral positif. <br><br><strong>Konsumen di sini adalah opinion leader</strong> — mereka yang memengaruhi percakapan, bukan sekadar mengonsumsi konten.</p>
+    </div>
+
+    <div class="platform-detail" id="platform-whatsapp">
+      <strong style="color:#a395ff;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;">WHATSAPP</strong>
+      <h4 style="font-family:'Syne',sans-serif;font-size:16px;margin:8px 0 12px;">Word-of-Mouth yang Paling Intim</h4>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.75;">WOM yang terjadi di WhatsApp — grup keluarga, grup arisan, grup teman — adalah yang <strong>paling kuat pengaruhnya</strong> karena didasarkan pada kepercayaan personal tinggi. Brand sering tidak bisa memantau atau mengintervensi percakapan ini (dark social). <br><br>Referral dari grup WhatsApp sering kali memiliki konversi tertinggi karena rekomendasi datang dari orang yang benar-benar dikenal.</p>
+    </div>
+
+    <div class="platform-detail" id="platform-linkedin">
+      <strong style="color:#a395ff;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;">LINKEDIN</strong>
+      <h4 style="font-family:'Syne',sans-serif;font-size:16px;margin:8px 0 12px;">Professional Identity & B2B Influence</h4>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.75;">Di LinkedIn, konsumen hadir sebagai <strong>profesional</strong> yang membangun identitas karier. Pengaruh sosial di sini berupa thought leadership, rekomendasi tool profesional, dan validasi dari sesama eksekutif atau pakar industri. <br><br>B2B purchase decisions sangat dipengaruhi oleh apa yang terlihat "diadopsi" oleh peers profesional di LinkedIn.</p>
+    </div>
+
+    <!-- Uses & Gratifications -->
+    <hr class="divider">
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:20px;">Teori: Uses & Gratifications</h3>
+
+    <div class="content-grid animate-on-scroll">
+      <div class="card theory-card">
+        <div class="card-label">Teori Inti</div>
+        <h3>Uses & Gratifications Theory</h3>
+        <p>Katz, Blumler & Gurevitch (1973) berpendapat bahwa manusia <strong>secara aktif memilih media</strong> berdasarkan kebutuhan yang ingin mereka penuhi. Ini menantang asumsi bahwa audiens bersifat pasif.</p>
+        <br><p style="font-size:13px;color:var(--text-dim);">Dalam konteks medsos: konsumen membuka Instagram bukan karena kebiasaan semata, tapi karena ada kebutuhan spesifik yang ingin dipenuhi — inspirasi, hiburan, koneksi sosial, atau informasi produk.</p>
+      </div>
+      <div class="card analogy-card">
+        <div class="card-label">Analogi</div>
+        <h3>Lemari es vs. Restoran</h3>
+        <p>Media pasif (TV) = lemari es: Anda membuka dan mengambil apa yang tersedia. Media sosial = restoran: Anda memilih menu, bahkan bisa memesan sesuai selera, dan sering kali merekomendasikan ke teman Anda.</p>
+        <br><p style="font-size:13px;color:var(--text-dim);">Implikasinya: brand harus memahami <em>mengapa</em> konsumen membuka platform tertentu, bukan sekadar <em>berapa lama</em> mereka ada di sana.</p>
+      </div>
+    </div>
+
+    <div class="content-grid three animate-on-scroll">
+      <div class="card example-card">
+        <div class="card-label">Gratifikasi Informasi</div>
+        <h3>📊 Mencari Data</h3>
+        <p>Membaca review, membandingkan harga, mencari tutorial. Contoh: menonton 10 review HP sebelum beli di YouTube.</p>
+      </div>
+      <div class="card example-card">
+        <div class="card-label">Gratifikasi Sosial</div>
+        <h3>🤝 Koneksi</h3>
+        <p>Berbagi pengalaman, mendapat validasi, merasa bagian dari komunitas. Contoh: posting foto unboxing di Instagram.</p>
+      </div>
+      <div class="card example-card">
+        <div class="card-label">Gratifikasi Identitas</div>
+        <h3>🎭 Self-Expression</h3>
+        <p>Mengekspresikan nilai, gaya hidup, dan kepribadian lewat konten yang dibagikan atau di-like.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: MOTIVASI & ENGAGEMENT -->
+  <div class="section animate-on-scroll" id="motivasi">
+    <div class="section-header">
+      <div class="section-number">02</div>
+      <div>
+        <h2 class="section-title">Motivasi & Pola Engagement Konsumen</h2>
+        <div class="section-subtitle">Mengapa konsumen berinteraksi, dan bagaimana polanya?</div>
+      </div>
+    </div>
+
+    <div class="content-grid animate-on-scroll">
+      <div class="card theory-card">
+        <div class="card-label">Teori: Social Comparison</div>
+        <h3>Festinger (1954): Social Comparison Theory</h3>
+        <p>Manusia secara alami mengevaluasi diri mereka dengan cara membandingkan diri dengan orang lain. Media sosial memberi stimuli perbandingan sosial yang konstan dan tak terbatas — dengan seluruh dunia, setiap saat.</p>
+        <br><p style="font-size:13px;color:var(--text-dim);"><strong>Upward comparison</strong> (membandingkan diri dengan yang "lebih") mendorong aspirasi dan keinginan memiliki produk tertentu. <strong>Downward comparison</strong> memberi rasa superioritas yang mendorong berbagi pencapaian.</p>
+      </div>
+      <div class="card analogy-card">
+        <div class="card-label">Analogi FOMO</div>
+        <h3>Pesta yang Tidak Pernah Berakhir</h3>
+        <p>FOMO (Fear of Missing Out) seperti melewati pesta yang terdengar dari luar rumah Anda — rasa ingin tahu dan khawatir ketinggalan mendorong Anda masuk. Di medsos, "pesta" ini tidak pernah berhenti, 24 jam sehari.</p>
+        <br><p style="font-size:13px;color:var(--text-dim);">Brand memanfaatkan FOMO: flash sale, "only 3 left!", countdown timer, Stories yang hilang dalam 24 jam — semua dirancang mengaktifkan kecemasan ketinggalan.</p>
+      </div>
+    </div>
+
+    <!-- 90-9-1 Rule -->
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin:32px 0 8px;">The 90-9-1 Rule of Online Participation</h3>
+    <p style="font-size:14px;color:var(--text-dim);margin-bottom:24px;">Dari setiap 100 pengguna media sosial, sebagian besar tidak pernah membuat konten aktif:</p>
+
+    <div class="engagement-viz animate-on-scroll" id="engagementViz">
+      <div class="engagement-label">Distribusi Tipe Engagement Konsumen di Media Sosial</div>
+      <div class="engagement-sub">Hover untuk detail tiap segmen</div>
+      <div class="engagement-bars">
+        <div class="eng-row">
+          <div class="eng-name">👁️ Lurkers (Pasif)</div>
+          <div class="eng-bar-wrap">
+            <div class="eng-bar" id="bar1" style="background:linear-gradient(90deg,#6c63ff,#8c84ff);width:0%;" data-target="90%"></div>
+          </div>
+          <div class="eng-val">90%</div>
+        </div>
+        <div class="eng-row">
+          <div class="eng-name">👍 Light Contributors</div>
+          <div class="eng-bar-wrap">
+            <div class="eng-bar" id="bar2" style="background:linear-gradient(90deg,#f7971e,#ffd200);width:0%;" data-target="9%"></div>
+          </div>
+          <div class="eng-val">9%</div>
+        </div>
+        <div class="eng-row">
+          <div class="eng-name">✍️ Heavy Contributors</div>
+          <div class="eng-bar-wrap">
+            <div class="eng-bar" id="bar3" style="background:linear-gradient(90deg,#43e97b,#38f9d7);width:0%;" data-target="1%"></div>
+          </div>
+          <div class="eng-val">1%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warning animate-on-scroll">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-body">
+        <div class="callout-title">Implikasi untuk Brand: Jangan Abaikan Lurkers</div>
+        <div class="callout-text">Meskipun 90% pengguna tidak aktif berinteraksi, mereka tetap <strong>mengamati, mengevaluasi, dan dipengaruhi</strong> oleh konten yang mereka lihat. Angka engagement (like, comment) bukanlah proksi yang sempurna untuk pengaruh sebenarnya dari sebuah konten.</div>
+      </div>
+    </div>
+
+    <!-- Tipe Engagement flip cards -->
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px;">Tipe-Tipe Engagement — Klik Kartu untuk Detail</h3>
+    <p style="font-size:14px;color:var(--text-dim);margin-bottom:20px;">Tiap tipe engagement memiliki implikasi berbeda bagi brand:</p>
+
+    <div class="flip-grid animate-on-scroll">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="flip-front-icon">👁️</div>
+            <div class="flip-front-label">Passive Engagement</div>
+            <div class="flip-front-hint">klik untuk detail →</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-title">LURKING</div>
+            <p>Scrolling, menonton tanpa interaksi. <strong>Mayoritas konsumen.</strong> Tetap dipengaruhi konten meski tidak merespons. Brand awareness terbentuk di sini.</p>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="flip-front-icon">❤️</div>
+            <div class="flip-front-label">Reactive Engagement</div>
+            <div class="flip-front-hint">klik untuk detail →</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-title">LIKE & SAVE</div>
+            <p>Like, share, save. Sinyal lemah tapi massal. "Save" adalah sinyal intent pembelian tertinggi di Instagram & TikTok menurut riset platform.</p>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="flip-front-icon">💬</div>
+            <div class="flip-front-label">Active Engagement</div>
+            <div class="flip-front-hint">klik untuk detail →</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-title">COMMENT & DM</div>
+            <p>Berkomentar, mengirim DM, mereply Stories. Sinyal kuat. Konsumen yang bertanya harga di kolom komentar adalah hot lead bagi brand.</p>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="flip-front-icon">✍️</div>
+            <div class="flip-front-label">Contributive</div>
+            <div class="flip-front-hint">klik untuk detail →</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-title">UGC CREATOR</div>
+            <p>Membuat review, unboxing, konten tentang brand. Hanya 1%, tapi impact-nya bisa lebih besar dari 99% yang lain. Asset terbesar brand.</p>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="flip-front-icon">📣</div>
+            <div class="flip-front-label">Advocacy</div>
+            <div class="flip-front-hint">klik untuk detail →</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-title">BRAND ADVOCATE</div>
+            <p>Membela brand secara aktif, merekomendasikan ke orang lain tanpa dibayar. Terbentuk dari pengalaman sangat positif atau identitas kuat dengan brand.</p>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="flip-front-icon">🔴</div>
+            <div class="flip-front-label">Negative Engagement</div>
+            <div class="flip-front-hint">klik untuk detail →</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-title">COMPLAIN & CANCEL</div>
+            <p>Komplain publik, review buruk, seruan boikot. Dampaknya asimetris — satu keluhan viral bisa lebih merusak dari 1000 ulasan positif.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: UGC -->
+  <div class="section animate-on-scroll" id="ugc">
+    <div class="section-header">
+      <div class="section-number">03</div>
+      <div>
+        <h2 class="section-title">User-Generated Content (UGC)</h2>
+        <div class="section-subtitle">Konten yang dibuat konsumen, bukan brand</div>
+      </div>
+    </div>
+
+    <div class="prose animate-on-scroll">
+      <p>UGC adalah semua bentuk konten — teks, foto, video, audio, ulasan — yang dibuat dan dipublikasikan oleh konsumen, bukan oleh brand. UGC bukan fenomena baru; orang sudah selalu merekomendasikan produk ke tetangga. Yang baru adalah <strong>skala, jangkauan, dan persistensinya</strong>.</p>
+    </div>
+
+    <div class="callout tip animate-on-scroll">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <div class="callout-title">Analogi: UGC adalah Versi Digital "Gosip Warung Kopi"</div>
+        <div class="callout-text">Dulu, rekomendasi produk tersebar perlahan dari mulut ke mulut di warung kopi atau arisan RT. Sekarang, satu video review bisa menggantikan jutaan percakapan warung kopi itu — tapi terjadi dalam semalam, tersebar ke seluruh Indonesia, dan terekam selamanya di internet.</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:20px;">Tipologi UGC</h3>
+
+    <div class="content-grid three animate-on-scroll">
+      <div class="card example-card">
+        <div class="card-label">Tipe 01</div>
+        <h3>⭐ Review & Rating</h3>
+        <p>Google Maps, Tokopedia, Shopee. Paling sering dibaca sebelum purchase. Teks + bintang = kombinasi yang sangat memengaruhi keputusan.</p>
+      </div>
+      <div class="card example-card">
+        <div class="card-label">Tipe 02</div>
+        <h3>📦 Unboxing & Haul</h3>
+        <p>Video membuka paket pertama kali. Format yang sangat emosional karena meniru pengalaman membeli sendiri. TikTok & YouTube.</p>
+      </div>
+      <div class="card example-card">
+        <div class="card-label">Tipe 03</div>
+        <h3>📸 Everyday UGC</h3>
+        <p>Foto produk dalam kehidupan sehari-hari. "OOTD" dengan brand tertentu. Natural dan autentik, tapi sering berdampak besar.</p>
+      </div>
+      <div class="card example-card">
+        <div class="card-label">Tipe 04</div>
+        <h3>😂 Meme & Parodi</h3>
+        <p>Brand dimasukkan dalam meme, humor, parodi. Bisa sangat viral. Brand yang "bisa ditertawakan" justru sering lebih dicintai konsumen muda.</p>
+      </div>
+      <div class="card example-card">
+        <div class="card-label">Tipe 05</div>
+        <h3>🗣️ Testimoni Organik</h3>
+        <p>Cerita pengalaman nyata di caption atau thread panjang. Tinggi kepercayaannya karena terasa genuine dan tidak dibayar.</p>
+      </div>
+      <div class="card example-card">
+        <div class="card-label">Tipe 06</div>
+        <h3>❌ Komplain Publik</h3>
+        <p>UGC negatif. Tweet keluhan, thread pengalaman buruk. Sering diabaikan brand, padahal adalah data riset konsumen paling jujur yang tersedia gratis.</p>
+      </div>
+    </div>
+
+    <!-- Motivasi membuat UGC -->
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin:32px 0 16px;">Mengapa Konsumen Membuat UGC?</h3>
+    <p style="font-size:14px;color:var(--text-dim);margin-bottom:20px;">Klik untuk expand tiap motivasi:</p>
+
+    <div class="animate-on-scroll">
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <span>🤲 Altruisme — Membantu Orang Lain</span>
+          <span class="acc-arrow">▾</span>
+        </div>
+        <div class="acc-body">
+          Banyak konsumen menulis review panjang tanpa reward karena genuinely ingin membantu orang lain membuat keputusan yang tepat. Motivasi ini sangat kuat khususnya setelah pengalaman buruk — "biar orang lain tidak mengalami hal yang sama." <br><br>
+          <strong>Implikasi brand:</strong> Jangan hanya fokus mempromosikan review positif. Review negatif yang direspons dengan baik justru membangun kepercayaan lebih kuat.
+        </div>
+      </div>
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <span>🏆 Self-Enhancement — Ingin Diakui</span>
+          <span class="acc-arrow">▾</span>
+        </div>
+        <div class="acc-body">
+          Konsumen yang menjadi early adopter suatu produk atau memiliki pengetahuan mendalam tentang kategori tertentu sering membuat UGC untuk memperkuat identitas mereka sebagai <strong>opinion leader atau expert</strong>. Menjadi "reviewer terpercaya" di platform review adalah status sosial yang bernilai.<br><br>
+          <strong>Contoh lokal:</strong> Komunitas reviewer kamera di YouTube Indonesia — mereka tidak dibayar, tapi mendapat status sosial sebagai ahli yang diakui ribuan subscriber.
+        </div>
+      </div>
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <span>😤 Venting — Melampiaskan Frustrasi</span>
+          <span class="acc-arrow">▾</span>
+        </div>
+        <div class="acc-body">
+          Ketika konsumen merasa dikecewakan secara signifikan, berbagi pengalaman negatif secara publik adalah cara melampiaskan frustrasi sekaligus "membalas" brand. Penelitian menunjukkan bahwa orang lebih termotivasi berbagi pengalaman sangat buruk dibanding yang biasa-biasa saja (negativity bias).<br><br>
+          <strong>Pola:</strong> Pengalaman buruk → intensitas emosi tinggi → kebutuhan validasi → posting publik → penyebaran viral.
+        </div>
+      </div>
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <span>🎁 Insentif Ekstrinsik — Ada Imbalan</span>
+          <span class="acc-arrow">▾</span>
+        </div>
+        <div class="acc-body">
+          Diskon, poin loyalitas, hadiah, atau kesempatan di-repost oleh brand besar mendorong konsumen membuat UGC. Ini adalah motivasi yang paling mudah dimanipulasi oleh brand, sekaligus yang paling berbahaya — jika konsumen merasa "dipaksa" berreview positif, kepercayaan audiens pada konten tersebut menurun drastis.<br><br>
+          <strong>Risiko:</strong> Incentivized reviews yang tidak transparan melanggar regulasi di banyak negara dan merusak kredibilitas brand dalam jangka panjang.
+        </div>
+      </div>
+    </div>
+
+    <!-- Dark side UGC -->
+    <div class="callout danger animate-on-scroll" style="margin-top:24px;">
+      <div class="callout-icon">⚡</div>
+      <div class="callout-body">
+        <div class="callout-title">Dark Side UGC: Fake Reviews & Astroturfing</div>
+        <div class="callout-text"><strong>Fake reviews:</strong> Ulasan palsu yang dibeli oleh brand atau kompetitor. <strong>Astroturfing:</strong> Kampanye terkoordinasi yang terlihat seperti opini organik konsumen, padahal diorganisir brand. Keduanya merusak kepercayaan ekosistem digital dan semakin sulit dideteksi oleh konsumen biasa. Platform seperti Tokopedia dan Google terus memperbarui algoritma untuk mendeteksinya.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: eWOM -->
+  <div class="section animate-on-scroll" id="ewom">
+    <div class="section-header">
+      <div class="section-number">04</div>
+      <div>
+        <h2 class="section-title">Electronic Word-of-Mouth (eWOM)</h2>
+        <div class="section-subtitle">Kekuatan rekomendasi di era digital</div>
+      </div>
+    </div>
+
+    <div class="content-grid animate-on-scroll">
+      <div class="card theory-card">
+        <div class="card-label">Definisi</div>
+        <h3>Apa itu eWOM?</h3>
+        <p>Hennig-Thurau et al. (2004) mendefinisikan eWOM sebagai <em>"setiap pernyataan positif atau negatif yang dibuat oleh calon, aktual, atau mantan pelanggan tentang produk atau perusahaan, yang tersedia bagi banyak orang dan institusi melalui internet."</em></p>
+      </div>
+      <div class="card analogy-card">
+        <div class="card-label">Analogi</div>
+        <h3>Bisik-bisik vs Pengeras Suara</h3>
+        <p>WOM tradisional = berbisik ke 5 orang terdekat. eWOM = berbicara lewat pengeras suara di stadion berisi jutaan orang, yang bisikannya terekam dan bisa diputar ulang kapan saja selama bertahun-tahun.</p>
+      </div>
+    </div>
+
+    <!-- WOM vs eWOM -->
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:20px;">WOM Tradisional vs. eWOM: Perbandingan</h3>
+
+    <div class="content-grid animate-on-scroll">
+      <div class="card">
+        <div class="card-label">WOM Tradisional</div>
+        <ul class="styled-list">
+          <li><div><strong>Jangkauan terbatas</strong>Hanya orang-orang dalam jaringan sosial langsung (5-15 orang)</div></li>
+          <li><div><strong>Bersifat sementara</strong>Pesan menghilang setelah percakapan berakhir</div></li>
+          <li><div><strong>Konteks kaya</strong>Nada suara, ekspresi wajah memperkaya makna</div></li>
+          <li><div><strong>Real-time</strong>Terjadi saat itu juga, tidak bisa diakses kembali</div></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-label">eWOM Digital</div>
+        <ul class="styled-list">
+          <li><div><strong>Jangkauan tidak terbatas</strong>Berpotensi menjangkau jutaan orang dalam hitungan jam</div></li>
+          <li><div><strong>Persisten</strong>Ulasan dari 3 tahun lalu masih bisa dibaca hari ini</div></li>
+          <li><div><strong>Konteks terbatas</strong>Kehilangan nada dan ekspresi, rentan disalahartikan</div></li>
+          <li><div><strong>Asynchronous</strong>Pembaca mengaksesnya kapan saja, sesuai kebutuhannya</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- eWOM Characteristics -->
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin:32px 0 8px;">Faktor yang Menentukan Efektivitas eWOM</h3>
+    <p style="font-size:14px;color:var(--text-dim);margin-bottom:20px;">Tidak semua ulasan memiliki pengaruh yang sama. Empat dimensi ini menentukan seberapa kuat sebuah eWOM mempengaruhi konsumen lain:</p>
+
+    <div class="content-grid animate-on-scroll">
+      <div class="card">
+        <div class="card-label">Dimensi 01 — Valence</div>
+        <h3>Positif vs. Negatif</h3>
+        <p>Riset konsisten menunjukkan ulasan <strong>negatif memiliki pengaruh lebih besar</strong> daripada ulasan positif (negativity bias). Satu ulasan 1-bintang bisa mengimbangi 5-10 ulasan 5-bintang dalam mempengaruhi keputusan.</p>
+        <br><p style="font-size:13px;color:var(--text-dim);">Mengapa? Evolusi manusia memprioritaskan informasi negatif sebagai sinyal bahaya (ancaman = lebih penting dari peluang).</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Dimensi 02 — Volume</div>
+        <h3>Jumlah Ulasan</h3>
+        <p>Produk dengan 500 ulasan dianggap lebih populer dan terpercaya dari produk dengan 10 ulasan, bahkan jika rating rata-rata sama. <strong>Volume = sinyal popularitas dan validitas</strong>.</p>
+        <br><p style="font-size:13px;color:var(--text-dim);">Prinsip: orang mengikuti keramaian (bandwagon effect). "5000 orang sudah membeli" lebih meyakinkan dari sekadar "bagus."</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Dimensi 03 — Credibility</div>
+        <h3>Kredibilitas Sumber</h3>
+        <p>Siapa yang berbicara sama pentingnya dengan apa yang dikatakan. Reviewer dengan track record panjang, profil lengkap, dan konten yang konsisten dianggap lebih kredibel dari akun anonim.</p>
+        <br><p style="font-size:13px;color:var(--text-dim);">Verified purchase badge di Tokopedia atau tanda centang di Google Maps adalah sinyal kredibilitas yang dirancang untuk mengatasi masalah ini.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Dimensi 04 — Specificity</div>
+        <h3>Kespesifikan Konten</h3>
+        <p>"Bagus!" (1 kata) vs. "Baterai bertahan 14 jam dengan screen brightness 80%, kamera bagus di kondisi cahaya cukup, tapi noise di low light cukup terasa" — ulasan mana yang lebih membantu?</p>
+        <br><p style="font-size:13px;color:var(--text-dim);">Specificity = kedalaman informasi = tingkat kepercayaan dan manfaat bagi konsumen lain.</p>
+      </div>
+    </div>
+
+    <!-- IAM Theory -->
+    <div class="card theory-card animate-on-scroll" style="margin-bottom:20px;">
+      <div class="card-label">Model Teoritis</div>
+      <h3>Information Adoption Model — Sussman & Siegal (2003)</h3>
+      <p>Model ini menjelaskan kapan seseorang mengadopsi informasi dari eWOM:</p>
+      <br>
+      <div class="flow-diagram">
+        <div class="flow-node">
+          <div class="flow-node-icon">📝</div>
+          <div class="flow-node-label">Argument Quality</div>
+          <div class="flow-node-sub">kualitas argumen</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="flow-node-icon">💎</div>
+          <div class="flow-node-label">Usefulness</div>
+          <div class="flow-node-sub">persepsi manfaat</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="flow-node-icon">✅</div>
+          <div class="flow-node-label">Adoption</div>
+          <div class="flow-node-sub">keputusan mengikuti</div>
+        </div>
+      </div>
+      <div class="flow-diagram" style="margin-top:8px;">
+        <div class="flow-node">
+          <div class="flow-node-icon">👤</div>
+          <div class="flow-node-label">Source Credibility</div>
+          <div class="flow-node-sub">kredibilitas sumber</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="flow-node-icon">💎</div>
+          <div class="flow-node-label">Usefulness</div>
+          <div class="flow-node-sub">persepsi manfaat</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="flow-node-icon">✅</div>
+          <div class="flow-node-label">Adoption</div>
+          <div class="flow-node-sub">keputusan mengikuti</div>
+        </div>
+      </div>
+      <br>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.7;">Implikasi penting: review panjang belum tentu lebih berpengaruh dari review yang pendek tapi sangat spesifik dan dari sumber kredibel. <strong>Kualitas + sumber = usefulness → adoption.</strong></p>
+    </div>
+  </div>
+
+  <!-- SECTION 5: INFLUENCER & PARASOCIAL -->
+  <div class="section animate-on-scroll" id="influencer">
+    <div class="section-header">
+      <div class="section-number">05</div>
+      <div>
+        <h2 class="section-title">Influencer & Parasocial Relationship</h2>
+        <div class="section-subtitle">Mengapa konsumen "merasa kenal" orang asing di internet?</div>
+      </div>
+    </div>
+
+    <div class="content-grid animate-on-scroll">
+      <div class="card theory-card">
+        <div class="card-label">Teori Inti</div>
+        <h3>Parasocial Relationship — Horton & Wohl (1956)</h3>
+        <p>Konsep parasocial relationship pertama kali diperkenalkan jauh sebelum media sosial ada — untuk menjelaskan mengapa pemirsa TV merasa "kenal" pembawa acara favorit mereka.</p>
+        <br><p style="font-size:13px;color:var(--text-dim);">Konsumen mengembangkan <strong>hubungan satu arah yang terasa dua arah</strong>. Mereka tahu detail kehidupan influencer, merasakan empati saat influencer sedih, dan merasa "dikhianati" saat influencer melakukan sesuatu yang bertentangan dengan nilai mereka.</p>
+      </div>
+      <div class="card analogy-card">
+        <div class="card-label">Analogi</div>
+        <h3>Teman yang Kamu Kenal tapi Tidak Mengenalmu</h3>
+        <p>Bayangkan seseorang yang selalu ada di beranda ponselmu setiap pagi — berbagi sarapannya, kecemasannya, rekomendasinya. Kamu tahu nama kucingnya, tahu dia suka kopi hitam, tahu dia putus sama pacarnya bulan lalu.</p>
+        <br><p style="font-size:13px;color:var(--text-dim);">Tapi dia tidak tahu kamu ada. Itulah parasocial relationship — ilusi keintiman yang terasa nyata, dan itulah mengapa rekomendasi produknya terasa seperti saran dari teman.</p>
+      </div>
+    </div>
+
+    <!-- Influencer Tiers Table -->
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:20px;">Tipologi Influencer & Trade-off Strategis</h3>
+
+    <div class="animate-on-scroll" style="overflow-x:auto;">
+      <table class="tier-table">
+        <thead>
+          <tr>
+            <th>Tier</th>
+            <th>Followers</th>
+            <th>Engagement Rate</th>
+            <th>Trust Level</th>
+            <th>Best For</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="tier-name">Nano</div><span class="tier-badge tier-nano">nano</span></td>
+            <td>1K – 10K</td>
+            <td style="color:#43e97b;font-weight:600;">5–8%+ (tertinggi)</td>
+            <td>Sangat tinggi — seperti teman</td>
+            <td>Komunitas niche, konversi tinggi, brand lokal</td>
+          </tr>
+          <tr>
+            <td><div class="tier-name">Micro</div><span class="tier-badge tier-micro">micro</span></td>
+            <td>10K – 100K</td>
+            <td style="color:#a395ff;font-weight:600;">2–5%</td>
+            <td>Tinggi — pakar komunitas spesifik</td>
+            <td>Kategori spesifik (skincare, gaming, kuliner)</td>
+          </tr>
+          <tr>
+            <td><div class="tier-name">Macro</div><span class="tier-badge tier-macro">macro</span></td>
+            <td>100K – 1M</td>
+            <td style="color:#f7971e;font-weight:600;">1–2%</td>
+            <td>Moderat</td>
+            <td>Brand awareness, peluncuran produk massal</td>
+          </tr>
+          <tr>
+            <td><div class="tier-name">Mega / Selebriti</div><span class="tier-badge tier-mega">mega</span></td>
+            <td>1M+</td>
+            <td style="color:#ff6584;font-weight:600;">0.5–1% (terendah)</td>
+            <td>Rendah — dikenal tapi tidak dipercaya sebagai "teman"</td>
+            <td>Mass reach, brand prestige, kampanye nasional</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout info animate-on-scroll">
+      <div class="callout-icon">📌</div>
+      <div class="callout-body">
+        <div class="callout-title">Paradoks Influencer: Semakin Besar, Semakin Kurang Dipercaya</div>
+        <div class="callout-text">Ketika influencer tumbuh dari nano ke mega, parasocial relationship-nya dengan setiap follower melemah. Pada skala jutaan follower, tidak mungkin mempertahankan kesan "autentik" dan "personal." Inilah mengapa brand semakin beralih ke strategi <strong>armada micro/nano influencer</strong> dibanding satu mega influencer mahal.</div>
+      </div>
+    </div>
+
+    <!-- Source Credibility Theory -->
+    <div class="content-grid animate-on-scroll">
+      <div class="card theory-card">
+        <div class="card-label">Teori: Source Credibility</div>
+        <h3>Ohanian (1990): 3 Dimensi Kredibilitas</h3>
+        <ul class="styled-list" style="margin-top:8px;">
+          <li><div><strong>Expertise</strong>Seberapa kompeten influencer di bidangnya? Dokter yang merekomendasikan suplemen lebih dipercaya dari selebriti.</div></li>
+          <li><div><strong>Trustworthiness</strong>Seberapa jujur dan tulus? Influencer yang pernah mengkritik produk lebih dipercaya dari yang selalu positif.</div></li>
+          <li><div><strong>Attractiveness</strong>Daya tarik fisik, kepribadian, atau aspirasional yang membuat audiens ingin mengidentifikasi diri dengan influencer.</div></li>
+        </ul>
+      </div>
+      <div class="card example-card">
+        <div class="card-label">Contoh Aplikasi</div>
+        <h3>Fit vs. Tidak Fit</h3>
+        <p><strong>Fit tinggi:</strong> Dr. Tirta (dokter) mengendorse hand sanitizer → expertise tinggi → sangat efektif.</p>
+        <br><p><strong>Fit rendah:</strong> Atlet sepakbola mengendorse produk kecantikan → expertise rendah → efektivitas berkurang.</p>
+        <br><p style="font-size:13px;color:var(--text-dim);">Kunci: <strong>perceived fit</strong> antara identitas influencer dan kategori produk adalah prediktor terkuat efektivitas endorsement.</p>
+      </div>
+    </div>
+
+    <!-- Parasocial Breakdown -->
+    <div class="case-study animate-on-scroll">
+      <div class="case-header">
+        <div class="case-icon">⚡</div>
+        <div class="case-meta">
+          <div class="case-tag">Fenomena</div>
+          <div class="case-title">Parasocial Breakdown: Ketika Ilusi Runtuh</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <p style="font-size:14px;color:var(--text-dim);line-height:1.75;">Parasocial relationship yang kuat bisa berbalik arah dengan dahsyat. Ketika influencer terlibat skandal, pengikutnya tidak bereaksi seperti orang yang mendengar berita tentang orang asing — mereka bereaksi seperti dikhianati oleh teman dekat. Fenomena ini disebut <strong>parasocial breakdown</strong>.</p>
+        <div class="case-grid">
+          <div class="case-item">
+            <div class="case-item-label">Konsekuensi bagi Brand</div>
+            <div class="case-item-content">Brand yang sedang diendorse influencer tersebut ikut terkena dampak. Konsumen menghubungkan brand dengan skandal karena asosiasi yang telah terbangun lewat endorsement berulang.</div>
+          </div>
+          <div class="case-item">
+            <div class="case-item-label">Pola Umum</div>
+            <div class="case-item-content">Skandal → unfollow massal → boikot brand yang diendorse → tekanan publik ke brand untuk memutus kontrak → krisis reputasi ganda (influencer + brand).</div>
+          </div>
+        </div>
+        <div class="case-finding"><strong>Implikasi strategis:</strong> Due diligence terhadap influencer sebelum kontrak bukan hanya soal engagement rate — tapi juga track record, nilai yang diperjuangkan, dan potensi risiko reputasi jangka panjang.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: STUDI KASUS RISET ILMIAH -->
+  <div class="section animate-on-scroll" id="kasusriset">
+    <div class="section-header">
+      <div class="section-number">06</div>
+      <div>
+        <h2 class="section-title">Studi Kasus dalam Konteks Riset Ilmiah</h2>
+        <div class="section-subtitle">Bukti empiris dari penelitian akademis</div>
+      </div>
+    </div>
+
+    <!-- Case 1: eWOM Research -->
+    <div class="research-box animate-on-scroll">
+      <div class="research-header">
+        <div class="research-title">📖 Riset 01: Pengaruh eWOM terhadap Keputusan Pembelian</div>
+        <div class="research-journal">Cheung & Thadani (2012) — Decision Support Systems</div>
+      </div>
+      <div class="research-body">
+        <p><strong>Pertanyaan Riset:</strong> Faktor apa yang menentukan apakah konsumen mengadopsi informasi dari eWOM?</p>
+        <p><strong>Metode:</strong> Systematic literature review terhadap 46 studi empiris tentang eWOM. Meta-analisis mengidentifikasi variabel yang paling konsisten mempengaruhi adoption of information.</p>
+        <p><strong>Temuan Utama:</strong> Dua faktor paling kuat adalah <em>argument quality</em> (kualitas argumen dalam ulasan) dan <em>source credibility</em> (kredibilitas pengirim). Variabel kontekstual seperti platform dan kategori produk memoderasi hubungan ini.</p>
+        <p><strong>Relevansi Kontemporer:</strong> Temuan ini menjelaskan mengapa konsumen yang membaca 100 ulasan singkat berbintang-5 masih memilih produk pesaing yang punya 20 ulasan panjang dan kredibel dari verified buyer.</p>
+        <div class="research-findings">
+          <span class="finding-chip">argument quality</span>
+          <span class="finding-chip">source credibility</span>
+          <span class="finding-chip">information adoption</span>
+          <span class="finding-chip">46 studi dianalisis</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 2: Parasocial Research -->
+    <div class="research-box animate-on-scroll">
+      <div class="research-header">
+        <div class="research-title">📖 Riset 02: Parasocial Relationship & Purchase Intention</div>
+        <div class="research-journal">Sokolova & Kefi (2020) — Journal of Retailing and Consumer Services</div>
+      </div>
+      <div class="research-body">
+        <p><strong>Pertanyaan Riset:</strong> Bagaimana parasocial relationship dan kepercayaan terhadap YouTuber mempengaruhi niat beli produk yang mereka endorse?</p>
+        <p><strong>Metode:</strong> Survey 376 pengguna YouTube di Prancis. Structural Equation Modeling (SEM) untuk menguji hubungan antara variabel parasocial interaction, trust, attractiveness, dan purchase intention.</p>
+        <p><strong>Temuan Utama:</strong> Parasocial interaction memiliki pengaruh signifikan dan positif terhadap purchase intention, dimediasi oleh trust. Menariknya, physical attractiveness memiliki pengaruh lebih lemah dibanding trustworthiness dan attitude homophily (kesamaan sikap antara influencer dan follower).</p>
+        <p><strong>Implikasi:</strong> Konsumen tidak membeli karena influencernya "cantik/tampan" — mereka membeli karena merasakan kesamaan nilai dan kepercayaan yang dibangun melalui konsistensi konten. Ini adalah alasan mengapa influencer autentik lebih efektif dari yang hanya mengandalkan penampilan fisik.</p>
+        <div class="research-findings">
+          <span class="finding-chip">SEM method</span>
+          <span class="finding-chip">n=376</span>
+          <span class="finding-chip">attitude homophily</span>
+          <span class="finding-chip">trust as mediator</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 3: UGC Research -->
+    <div class="research-box animate-on-scroll">
+      <div class="research-header">
+        <div class="research-title">📖 Riset 03: UGC vs. Brand Content — Mana yang Lebih Dipercaya?</div>
+        <div class="research-journal">Christodoulides et al. (2012) — Journal of Advertising Research</div>
+      </div>
+      <div class="research-body">
+        <p><strong>Pertanyaan Riset:</strong> Bagaimana konsumen mempersepsikan kredibilitas UGC dibandingkan konten yang diproduksi brand (brand-generated content)?</p>
+        <p><strong>Metode:</strong> Eksperimen dengan kelompok kontrol. Partisipan diekspos pada konten yang sama dengan atribusi berbeda (UGC vs. brand content) dan diminta mengevaluasi kredibilitas dan niat beli.</p>
+        <p><strong>Temuan Utama:</strong> UGC secara konsisten dinilai lebih kredibel, walaupun kualitas kontennya identik. Efek "credibility gap" ini terbukti mempengaruhi niat beli secara signifikan. Namun, efek ini melemah ketika konsumen mengetahui UGC tersebut mendapat insentif dari brand.</p>
+        <p><strong>Implikasi praktis:</strong> Brand yang membayar konsumen untuk membuat UGC tanpa disclosure yang transparan tidak hanya melanggar etika — mereka juga merusak kredibilitas konten yang mereka bayar, sehingga strategi ini kontraproduktif.</p>
+        <div class="research-findings">
+          <span class="finding-chip">experimental design</span>
+          <span class="finding-chip">credibility gap</span>
+          <span class="finding-chip">incentive disclosure</span>
+          <span class="finding-chip">UGC vs brand content</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Indonesian Case Study -->
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:20px;">Studi Kasus Konteks Indonesia</h3>
+
+    <div class="case-study animate-on-scroll">
+      <div class="case-header">
+        <div class="case-icon">🇮🇩</div>
+        <div class="case-meta">
+          <div class="case-tag">Case Study — Indonesia</div>
+          <div class="case-title">Fenomena "TikTok Made Me Buy It" & Produk Lokal</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <p style="font-size:14px;color:var(--text-dim);line-height:1.75;">Antara 2021–2023, sejumlah brand lokal Indonesia mengalami kenaikan penjualan dramatis yang hampir seluruhnya didorong oleh UGC organik di TikTok. Kasus Skintific, Wardah, dan beberapa brand F&B lokal menjadi contoh klasik bagaimana algoritma TikTok + UGC = pertumbuhan eksponensial tanpa iklan besar.</p>
+        <div class="case-grid">
+          <div class="case-item">
+            <div class="case-item-label">Mekanisme</div>
+            <div class="case-item-content">Satu video review organik viral → ribuan konsumen mencoba → membuat review sendiri → siklus berulang. Algoritma TikTok mendistribusikan konten ke audiens yang relevan tanpa memerlukan follower besar.</div>
+          </div>
+          <div class="case-item">
+            <div class="case-item-label">Variabel Kunci</div>
+            <div class="case-item-content">Before-after transformation (visual proof), specificity konten (manfaat terasa dalam X hari), relatable creator (bukan model sempurna, tapi "orang biasa"), dan "surprisingness" (hasil yang melebihi ekspektasi).</div>
+          </div>
+        </div>
+        <div class="case-finding"><strong>Pertanyaan diskusi kelas:</strong> Mengapa model "TikTok virality" ini lebih sulit direplikasi secara konsisten oleh brand dibandingkan oleh konsumen organik? Apa implikasinya bagi strategi konten brand di TikTok?</div>
+      </div>
+    </div>
+
+    <!-- Riset 4: 90-9-1 Rule -->
+    <div class="research-box animate-on-scroll">
+      <div class="research-header">
+        <div class="research-title">📖 Riset 04: Negativity Bias dalam eWOM</div>
+        <div class="research-journal">Yin et al. (2014) — MIS Quarterly</div>
+      </div>
+      <div class="research-body">
+        <p><strong>Pertanyaan Riset:</strong> Apakah ulasan negatif memiliki pengaruh yang lebih kuat dibanding ulasan positif terhadap penjualan produk?</p>
+        <p><strong>Metode:</strong> Analisis data penjualan dari platform e-commerce besar selama 24 bulan, dikombinasikan dengan sentiment analysis terhadap ratusan ribu ulasan. Pendekatan kuantitatif dengan model regresi longitudinal.</p>
+        <p><strong>Temuan Utama:</strong> Pengaruh ulasan negatif terhadap penjualan 2.2x lebih kuat dibanding ulasan positif dengan intensitas setara. Efek ini lebih besar untuk produk dengan keterlibatan tinggi (high-involvement products) seperti elektronik dan travel, dibanding produk keterlibatan rendah seperti makanan ringan.</p>
+        <p><strong>Nuansa penting:</strong> Produk tanpa satupun ulasan negatif justru dicurigai — konsumen menganggap terlalu sempurna tidak realistis. Kehadiran beberapa ulasan negatif di antara banyak ulasan positif justru meningkatkan credibility keseluruhan platform review.</p>
+        <div class="research-findings">
+          <span class="finding-chip">negativity bias</span>
+          <span class="finding-chip">longitudinal data</span>
+          <span class="finding-chip">2.2x stronger effect</span>
+          <span class="finding-chip">high-involvement products</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: KUIS -->
+  <div class="section animate-on-scroll" id="quiz">
+    <div class="section-header">
+      <div class="section-number">07</div>
+      <div>
+        <h2 class="section-title">Kuis Interaktif</h2>
+        <div class="section-subtitle">Uji pemahaman Anda terhadap materi hari ini</div>
+      </div>
+    </div>
+
+    <div class="quiz-section animate-on-scroll">
+      <div class="quiz-header">
+        <div class="quiz-header-top">
+          <div class="quiz-tag">📝 Evaluasi Formatif — Pertemuan 09</div>
+          <div class="quiz-score-display" id="scoreDisplay">Skor: 0/8</div>
+        </div>
+        <h3>Perilaku Konsumen di Media Sosial</h3>
+      </div>
+
+      <div class="quiz-body" id="quizBody">
+
+        <!-- Q1 -->
+        <div class="question-card" data-q="1">
+          <div class="q-number">PERTANYAAN 01/08</div>
+          <div class="q-text">Menurut Uses & Gratifications Theory, mengapa konsumen menggunakan media sosial?</div>
+          <div class="options">
+            <div class="option" onclick="selectOption(this, 1, false)">
+              <div class="option-letter">A</div>
+              Karena media sosial adalah satu-satunya sumber informasi yang tersedia
+            </div>
+            <div class="option" onclick="selectOption(this, 1, true)">
+              <div class="option-letter">B</div>
+              Karena konsumen secara aktif memilih media berdasarkan kebutuhan spesifik yang ingin mereka penuhi
+            </div>
+            <div class="option" onclick="selectOption(this, 1, false)">
+              <div class="option-letter">C</div>
+              Karena tekanan sosial dari lingkungan mengharuskan mereka hadir di media sosial
+            </div>
+            <div class="option" onclick="selectOption(this, 1, false)">
+              <div class="option-letter">D</div>
+              Karena media sosial dirancang untuk membuat pengguna tidak bisa berhenti menggunakannya
+            </div>
+          </div>
+          <div class="explanation" id="exp1">
+            <strong>B adalah jawaban yang tepat.</strong> Uses & Gratifications Theory (Katz, Blumler & Gurevitch, 1973) menegaskan bahwa audiens bersifat aktif — mereka secara sadar memilih media untuk memenuhi kebutuhan tertentu seperti informasi, hiburan, identitas sosial, atau koneksi. Pilihan D menggambarkan fenomena addiction/design persuasion, yang merupakan topik berbeda.
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-card" data-q="2">
+          <div class="q-number">PERTANYAAN 02/08</div>
+          <div class="q-text">Dalam 90-9-1 Rule, apa yang dimaksud dengan kelompok "1%"?</div>
+          <div class="options">
+            <div class="option" onclick="selectOption(this, 2, false)">
+              <div class="option-letter">A</div>
+              Konsumen yang hanya membaca konten tanpa pernah berinteraksi
+            </div>
+            <div class="option" onclick="selectOption(this, 2, false)">
+              <div class="option-letter">B</div>
+              Konsumen yang sesekali memberi like atau komentar ringan
+            </div>
+            <div class="option" onclick="selectOption(this, 2, true)">
+              <div class="option-letter">C</div>
+              Heavy contributors yang aktif membuat konten original dan berkontribusi signifikan
+            </div>
+            <div class="option" onclick="selectOption(this, 2, false)">
+              <div class="option-letter">D</div>
+              Konsumen premium yang membayar untuk fitur eksklusif platform
+            </div>
+          </div>
+          <div class="explanation" id="exp2">
+            <strong>C adalah jawaban yang tepat.</strong> Dalam 90-9-1 Rule: 90% adalah lurkers (pasif, hanya mengonsumsi), 9% adalah light contributors (like, comment sesekali), dan 1% adalah heavy contributors yang aktif membuat konten original, ulasan mendalam, thread panjang, dll. Kelompok 1% ini memiliki dampak yang jauh melebihi proporsi numeriknya.
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-card" data-q="3">
+          <div class="q-number">PERTANYAAN 03/08</div>
+          <div class="q-text">Sebuah brand ingin meningkatkan penjualan di segmen komunitas pecinta tanaman hias. Pilihan influencer mana yang paling tepat menurut konsep yang telah dipelajari?</div>
+          <div class="options">
+            <div class="option" onclick="selectOption(this, 3, false)">
+              <div class="option-letter">A</div>
+              Satu mega influencer dengan 5 juta follower campuran berbagai minat, karena jangkauannya paling luas
+            </div>
+            <div class="option" onclick="selectOption(this, 3, true)">
+              <div class="option-letter">B</div>
+              Armada 50 nano/micro influencer yang spesifik di komunitas tanaman hias, meski follower masing-masing hanya ribuan
+            </div>
+            <div class="option" onclick="selectOption(this, 3, false)">
+              <div class="option-letter">C</div>
+              Selebriti yang diketahui publik suka berkebun, karena recognition-nya membantu brand awareness
+            </div>
+            <div class="option" onclick="selectOption(this, 3, false)">
+              <div class="option-letter">D</div>
+              Tidak perlu influencer; lebih baik investasikan anggaran untuk iklan berbayar di Instagram
+            </div>
+          </div>
+          <div class="explanation" id="exp3">
+            <strong>B adalah jawaban yang tepat.</strong> Untuk segmen komunitas niche, nano/micro influencer dalam komunitas tersebut memiliki: (1) audience fit yang tinggi, (2) engagement rate lebih tinggi, (3) parasocial relationship yang lebih kuat karena skala kecil, dan (4) perceived expertise yang lebih relevan. Ini menerapkan prinsip "authenticity over reach" dan efisiensi anggaran untuk target yang spesifik.
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-card" data-q="4">
+          <div class="q-number">PERTANYAAN 04/08</div>
+          <div class="q-text">Menurut penelitian Yin et al. (2014) tentang negativity bias dalam eWOM, pernyataan mana yang paling akurat?</div>
+          <div class="options">
+            <div class="option" onclick="selectOption(this, 4, false)">
+              <div class="option-letter">A</div>
+              Brand harus menghapus semua ulasan negatif untuk menjaga reputasi
+            </div>
+            <div class="option" onclick="selectOption(this, 4, false)">
+              <div class="option-letter">B</div>
+              Ulasan positif dan negatif memiliki pengaruh yang seimbang terhadap keputusan pembelian
+            </div>
+            <div class="option" onclick="selectOption(this, 4, true)">
+              <div class="option-letter">C</div>
+              Ulasan negatif memiliki pengaruh sekitar 2x lebih kuat, dan kehadiran beberapa ulasan negatif justru bisa meningkatkan overall credibility
+            </div>
+            <div class="option" onclick="selectOption(this, 4, false)">
+              <div class="option-letter">D</div>
+              Negativity bias hanya berlaku untuk produk murah, tidak untuk produk premium
+            </div>
+          </div>
+          <div class="explanation" id="exp4">
+            <strong>C adalah jawaban yang tepat.</strong> Yin et al. (2014) menemukan bahwa pengaruh ulasan negatif 2.2x lebih kuat dibanding ulasan positif. Paradoksnya, produk yang tidak memiliki satupun ulasan negatif justru terlihat mencurigakan — terlalu sempurna untuk realistis. Beberapa ulasan negatif di antara banyak ulasan positif justru meningkatkan credibility keseluruhan platform review.
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-card" data-q="5">
+          <div class="q-number">PERTANYAAN 05/08</div>
+          <div class="q-text">Apa yang membedakan parasocial relationship dengan hubungan sosial biasa?</div>
+          <div class="options">
+            <div class="option" onclick="selectOption(this, 5, false)">
+              <div class="option-letter">A</div>
+              Parasocial relationship hanya terjadi antara penggemar dan selebriti Hollywood
+            </div>
+            <div class="option" onclick="selectOption(this, 5, true)">
+              <div class="option-letter">B</div>
+              Parasocial relationship bersifat satu arah — satu pihak merasa kenal dan terikat, sementara pihak lain tidak mengetahui eksistensi mereka
+            </div>
+            <div class="option" onclick="selectOption(this, 5, false)">
+              <div class="option-letter">C</div>
+              Parasocial relationship adalah hubungan yang dimulai di media sosial dan kemudian berlanjut ke dunia nyata
+            </div>
+            <div class="option" onclick="selectOption(this, 5, false)">
+              <div class="option-letter">D</div>
+              Parasocial relationship hanya terjadi ketika konsumen membeli produk yang direkomendasikan influencer
+            </div>
+          </div>
+          <div class="explanation" id="exp5">
+            <strong>B adalah jawaban yang tepat.</strong> Konsep parasocial relationship dari Horton & Wohl (1956) mendefinisikannya sebagai hubungan satu arah di mana salah satu pihak (konsumen/penggemar) mengembangkan perasaan keintiman, keterlibatan emosional, dan hubungan personal dengan tokoh media — sementara tokoh tersebut tidak mengetahui atau tidak dapat merespons secara individual.
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-card" data-q="6">
+          <div class="q-number">PERTANYAAN 06/08</div>
+          <div class="q-text">Seorang konsumen menulis ulasan sangat panjang dan detail tentang kamera mirrorless yang baru dibelinya di YouTube, tanpa mendapat kompensasi apapun. Berdasarkan teori motivasi UGC, motivasi apa yang paling mungkin mendasari perilaku ini?</div>
+          <div class="options">
+            <div class="option" onclick="selectOption(this, 6, false)">
+              <div class="option-letter">A</div>
+              Insentif ekstrinsik — ingin mendapat diskon untuk pembelian berikutnya
+            </div>
+            <div class="option" onclick="selectOption(this, 6, false)">
+              <div class="option-letter">B</div>
+              Venting — melampiaskan kekecewaan terhadap produk
+            </div>
+            <div class="option" onclick="selectOption(this, 6, true)">
+              <div class="option-letter">C</div>
+              Kombinasi altruisme (membantu pembeli lain) dan self-enhancement (membangun reputasi sebagai expert)
+            </div>
+            <div class="option" onclick="selectOption(this, 6, false)">
+              <div class="option-letter">D</div>
+              Reciprocity norm — membalas kebaikan brand yang telah mengirim produk gratis
+            </div>
+          </div>
+          <div class="explanation" id="exp6">
+            <strong>C adalah jawaban yang tepat.</strong> Review kamera panjang tanpa kompensasi paling tepat dijelaskan oleh dua motivasi yang saling menguatkan: (1) altruisme — genuinely ingin membantu calon pembeli lain membuat keputusan yang tepat, dan (2) self-enhancement — memposisikan diri sebagai authority/expert di komunitas kamera, yang memberi status sosial dan validasi dari sesama enthusiast.
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-card" data-q="7">
+          <div class="q-number">PERTANYAAN 07/08</div>
+          <div class="q-text">Menurut Information Adoption Model (Sussman & Siegal, 2003), kapan konsumen paling mungkin mengadopsi informasi dari sebuah ulasan produk?</div>
+          <div class="options">
+            <div class="option" onclick="selectOption(this, 7, false)">
+              <div class="option-letter">A</div>
+              Ketika ulasan tersebut sangat panjang dan komprehensif
+            </div>
+            <div class="option" onclick="selectOption(this, 7, false)">
+              <div class="option-letter">B</div>
+              Ketika ulasan tersebut berasal dari akun dengan followers terbanyak
+            </div>
+            <div class="option" onclick="selectOption(this, 7, true)">
+              <div class="option-letter">C</div>
+              Ketika kualitas argumen tinggi DAN sumber dinilai kredibel, sehingga ulasan dipersepsikan berguna (useful)
+            </div>
+            <div class="option" onclick="selectOption(this, 7, false)">
+              <div class="option-letter">D</div>
+              Ketika ulasan tersebut adalah yang pertama muncul di halaman pencarian
+            </div>
+          </div>
+          <div class="explanation" id="exp7">
+            <strong>C adalah jawaban yang tepat.</strong> Information Adoption Model menyatakan bahwa dua jalur utama menuju adoption adalah: argument quality (kualitas argumen) dan source credibility (kredibilitas sumber), keduanya dimediasi oleh perceived usefulness. Panjang ulasan, jumlah followers, atau posisi di pencarian bukan prediktor langsung dalam model ini — yang penting adalah apakah ulasan tersebut dinilai berguna oleh pembacanya.
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-card" data-q="8">
+          <div class="q-number">PERTANYAAN 08/08</div>
+          <div class="q-text">Sebuah brand minuman lokal menawarkan diskon 30% kepada konsumen yang membuat video review positif di TikTok, tanpa mewajibkan disclosure bahwa review tersebut disponsori. Berdasarkan riset Christodoulides et al. (2012), apa dampak jangka panjang dari strategi ini?</div>
+          <div class="options">
+            <div class="option" onclick="selectOption(this, 8, false)">
+              <div class="option-letter">A</div>
+              Strategi yang efektif karena meningkatkan volume UGC positif dengan biaya rendah
+            </div>
+            <div class="option" onclick="selectOption(this, 8, false)">
+              <div class="option-letter">B</div>
+              Berisiko namun acceptable selama konsumen tidak mengetahui adanya insentif
+            </div>
+            <div class="option" onclick="selectOption(this, 8, true)">
+              <div class="option-letter">C</div>
+              Kontraproduktif dan tidak etis: jika terungkap, efek credibility gap terbalik dan merusak kepercayaan, plus melanggar regulasi perlindungan konsumen
+            </div>
+            <div class="option" onclick="selectOption(this, 8, false)">
+              <div class="option-letter">D</div>
+              Tidak masalah selama produknya memang berkualitas dan review-nya jujur
+            </div>
+          </div>
+          <div class="explanation" id="exp8">
+            <strong>C adalah jawaban yang tepat.</strong> Riset Christodoulides et al. (2012) menunjukkan bahwa ketika konsumen mengetahui sebuah UGC mendapat insentif dari brand, credibility konten tersebut turun drastis — mengeliminasi keunggulan UGC atas brand content. Selain itu, non-disclosure untuk konten berbayar melanggar regulasi (di Indonesia, OJK dan BPKN mengatur iklan yang menyesatkan). Jika terungkap, reputasi brand bisa rusak jauh lebih parah dari keuntungan jangka pendeknya.
+          </div>
+        </div>
+
+        <div class="quiz-actions">
+          <button class="btn btn-primary" onclick="submitQuiz()">Lihat Hasil Kuis</button>
+          <button class="btn btn-ghost" onclick="resetQuiz()">Reset Kuis</button>
+        </div>
+      </div>
+
+      <div class="quiz-result" id="quizResult">
+        <div class="result-score" id="resultScore">0/8</div>
+        <div class="result-label" id="resultLabel">—</div>
+        <div class="result-sub" id="resultSub">—</div>
+        <button class="btn btn-ghost" onclick="resetQuiz()" style="margin-top:16px;">Coba Lagi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="padding:40px 64px;border-top:1px solid var(--border);text-align:center;">
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:.1em;">
+      DIGITAL CONSUMER BEHAVIOUR · PERTEMUAN 09 · PRODI BISNIS DIGITAL
+    </div>
+    <div style="margin-top:8px;font-size:13px;color:var(--text-dim);">
+      Referensi: Cheung & Thadani (2012) · Horton & Wohl (1956) · Ohanian (1990) · Sussman & Siegal (2003) · Katz et al. (1973) · Sokolova & Kefi (2020) · Yin et al. (2014)
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── SIDEBAR ──
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  function setActive(el) {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('sidebar').classList.remove('open');
+  }
+
+  // ── PLATFORM DETAIL ──
+  function showPlatform(id) {
+    document.querySelectorAll('.platform-detail').forEach(d => d.classList.remove('active'));
+    document.querySelectorAll('.platform-card').forEach(c => c.classList.remove('active'));
+    const detail = document.getElementById('platform-' + id);
+    if (detail) {
+      detail.classList.add('active');
+      detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    event.currentTarget.classList.add('active');
+  }
+
+  // ── ACCORDION ──
+  function toggleAcc(header) {
+    const body = header.nextElementSibling;
+    const isOpen = header.classList.contains('open');
+    document.querySelectorAll('.acc-header').forEach(h => {
+      h.classList.remove('open');
+      h.nextElementSibling.classList.remove('open');
+    });
+    if (!isOpen) {
+      header.classList.add('open');
+      body.classList.add('open');
+    }
+  }
+
+  // ── PROGRESS BAR ──
+  function updateProgress() {
+    const sections = document.querySelectorAll('.section');
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = Math.min((scrollTop / docHeight) * 100, 100);
+    document.getElementById('progressFill').style.width = progress + '%';
+  }
+
+  window.addEventListener('scroll', updateProgress);
+
+  // ── ANIMATE ON SCROLL ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Trigger engagement bars when in view
+        if (entry.target.id === 'engagementViz') {
+          setTimeout(() => {
+            document.querySelectorAll('.eng-bar').forEach(bar => {
+              bar.style.width = bar.dataset.target;
+            });
+          }, 200);
+        }
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+  observer.observe(document.getElementById('engagementViz'));
+
+  // ── QUIZ ──
+  let scores = {};
+  let answered = {};
+  let totalScore = 0;
+
+  function selectOption(el, qNum, isCorrect) {
+    if (answered[qNum]) return;
+    answered[qNum] = true;
+
+    const questionCard = el.closest('.question-card');
+    const allOptions = questionCard.querySelectorAll('.option');
+    const explanation = document.getElementById('exp' + qNum);
+
+    allOptions.forEach(opt => {
+      opt.classList.add('disabled');
+      opt.onclick = null;
+    });
+
+    if (isCorrect) {
+      el.classList.add('correct');
+      scores[qNum] = 1;
+    } else {
+      el.classList.add('wrong');
+      scores[qNum] = 0;
+      // highlight correct
+      allOptions.forEach((opt, i) => {
+        const letters = ['A','B','C','D'];
+        // mark correct option
+      });
+      // find correct and highlight it
+      const correctOpt = questionCard.querySelector('.option[onclick*="true"]');
+      // Since onclick is removed, find by original markup — re-highlight via data
+    }
+
+    if (explanation) explanation.classList.add('show');
+
+    // Update score display
+    totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+    const answeredCount = Object.keys(answered).length;
+    document.getElementById('scoreDisplay').textContent = `Skor: ${totalScore}/${answeredCount}`;
+  }
+
+  function submitQuiz() {
+    const total = 8;
+    const score = Object.values(scores).reduce((a, b) => a + b, 0);
+    const answeredCount = Object.keys(answered).length;
+
+    if (answeredCount < total) {
+      // Answer all remaining with 0
+      for (let i = 1; i <= total; i++) {
+        if (!answered[i]) {
+          answered[i] = true;
+          scores[i] = 0;
+        }
+      }
+    }
+
+    const finalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+    const pct = (finalScore / total) * 100;
+
+    document.getElementById('quizBody').style.display = 'none';
+    const result = document.getElementById('quizResult');
+    result.classList.add('show');
+
+    document.getElementById('resultScore').textContent = finalScore + '/' + total;
+
+    let label, sub;
+    if (pct >= 88) {
+      label = '🏆 Excellent! Pemahaman Sangat Baik';
+      sub = 'Anda menguasai konsep-konsep utama perilaku konsumen di media sosial.';
+    } else if (pct >= 75) {
+      label = '✅ Baik! Pemahaman Solid';
+      sub = 'Ada beberapa konsep yang perlu diperdalam — perhatikan penjelasan di tiap soal.';
+    } else if (pct >= 50) {
+      label = '📚 Cukup — Perlu Review Ulang';
+      sub = 'Disarankan untuk membaca ulang materi, terutama bagian teori dan riset empiris.';
+    } else {
+      label = '💪 Belum Optimal — Jangan Menyerah';
+      sub = 'Kembali ke materi dari awal dan fokus pada teori-teori inti terlebih dahulu.';
+    }
+
+    document.getElementById('resultLabel').textContent = label;
+    document.getElementById('resultSub').textContent = sub;
+  }
+
+  function resetQuiz() {
+    scores = {};
+    answered = {};
+    totalScore = 0;
+    document.getElementById('scoreDisplay').textContent = 'Skor: 0/8';
+    document.getElementById('quizBody').style.display = 'block';
+    document.getElementById('quizResult').classList.remove('show');
+
+    document.querySelectorAll('.option').forEach(opt => {
+      opt.classList.remove('correct', 'wrong', 'selected', 'disabled');
+    });
+
+    document.querySelectorAll('.explanation').forEach(exp => {
+      exp.classList.remove('show');
+    });
+
+    // Re-attach onclick events
+    const questionCards = document.querySelectorAll('.question-card');
+    questionCards.forEach(card => {
+      const qNum = parseInt(card.dataset.q);
+      const options = card.querySelectorAll('.option');
+      const correctAnswers = {1:1,2:2,3:1,4:2,5:1,6:2,7:2,8:2}; // index of correct (0-based)
+      options.forEach((opt, idx) => {
+        const correctIdx = correctAnswers[qNum];
+        opt.onclick = function() { selectOption(this, qNum, idx === correctIdx); };
+      });
+    });
+  }
+
+  // Re-initialize onclick on load
+  window.onload = function() {
+    const correctMap = {
+      1: [false, true, false, false],
+      2: [false, false, true, false],
+      3: [false, true, false, false],
+      4: [false, false, true, false],
+      5: [false, true, false, false],
+      6: [false, false, true, false],
+      7: [false, false, true, false],
+      8: [false, false, true, false]
+    };
+
+    document.querySelectorAll('.question-card').forEach(card => {
+      const qNum = parseInt(card.dataset.q);
+      card.querySelectorAll('.option').forEach((opt, idx) => {
+        const isCorrect = correctMap[qNum][idx];
+        opt.onclick = function() { selectOption(this, qNum, isCorrect); };
+      });
+    });
+  };
+
+  // Active nav on scroll
+  const navLinks = document.querySelectorAll('.nav-item[href]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    document.querySelectorAll('[id]').forEach(section => {
+      if (window.scrollY >= section.offsetTop - 120) {
+        current = section.id;
+      }
+    });
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+</body>
+</html>
