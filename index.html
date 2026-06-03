@@ -3,844 +3,1508 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Andika Chandra P</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <title>Andika Chandra P — Program Manager</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap');
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #f9f9f7;
-      --surface:  #ffffff;
-      --border:   #e8e8e4;
-      --text:     #1a1a1a;
-      --muted:    #6b7280;
-      --accent:   #2563eb;
-      --accent2:  #0ea5e9;
-      --tag-bg:   #eff6ff;
-      --tag-text: #1d4ed8;
-      --radius:   12px;
-      --shadow:   0 2px 16px rgba(0,0,0,.06);
+      --desktop: #008080;
+      --win-bg: #c0c0c0;
+      --win-border-light: #ffffff;
+      --win-border-dark: #808080;
+      --win-border-darker: #404040;
+      --win-border-darkest: #000000;
+      --titlebar: #000080;
+      --titlebar-active: #000080;
+      --titlebar-inactive: #808080;
+      --titlebar-text: #ffffff;
+      --text: #000000;
+      --text-muted: #404040;
+      --highlight: #000080;
+      --highlight-text: #ffffff;
+      --btn-face: #c0c0c0;
+      --menu-bg: #c0c0c0;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--desktop);
       color: var(--text);
-      line-height: 1.6;
-      font-size: 15px;
+      font-size: 12px;
+      line-height: 1.4;
+      min-height: 100vh;
+      overflow-x: hidden;
+      user-select: none;
     }
 
-    /* ── NAV ── */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(249,249,247,.88);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+    /* ══════════════════════════════════════
+       3D BORDER HELPERS (Windows 3.1 style)
+       ══════════════════════════════════════ */
+    .border-outset {
+      border-top: 2px solid var(--win-border-light);
+      border-left: 2px solid var(--win-border-light);
+      border-bottom: 2px solid var(--win-border-darker);
+      border-right: 2px solid var(--win-border-darker);
     }
-    .nav-inner {
-      max-width: 960px; margin: auto;
-      padding: 0 24px;
-      height: 56px;
-      display: flex; align-items: center; justify-content: space-between;
+    .border-inset {
+      border-top: 2px solid var(--win-border-darker);
+      border-left: 2px solid var(--win-border-darker);
+      border-bottom: 2px solid var(--win-border-light);
+      border-right: 2px solid var(--win-border-light);
     }
-    .nav-logo {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700; font-size: 15px;
-      color: var(--text); text-decoration: none;
-      letter-spacing: -.3px;
+    .border-outset-thin {
+      border-top: 1px solid var(--win-border-light);
+      border-left: 1px solid var(--win-border-light);
+      border-bottom: 1px solid var(--win-border-darker);
+      border-right: 1px solid var(--win-border-darker);
     }
-    .nav-links { display: flex; gap: 28px; list-style: none; }
-    .nav-links a {
-      text-decoration: none; color: var(--muted);
-      font-size: 13.5px; font-weight: 500;
-      transition: color .2s;
+    .border-inset-thin {
+      border-top: 1px solid var(--win-border-darker);
+      border-left: 1px solid var(--win-border-darker);
+      border-bottom: 1px solid var(--win-border-light);
+      border-right: 1px solid var(--win-border-light);
     }
-    .nav-links a:hover { color: var(--accent); }
 
-    /* ── HAMBURGER BUTTON ── */
-    .hamburger {
-      display: none;
+    /* ══════════════════════════════════════
+       DESKTOP
+       ══════════════════════════════════════ */
+    .desktop {
+      min-height: calc(100vh - 36px);
+      padding: 20px;
+      position: relative;
+    }
+
+    /* ══════════════════════════════════════
+       PROGRAM MANAGER (Desktop Icons)
+       ══════════════════════════════════════ */
+    .desktop-icons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 16px;
+    }
+    .desktop-icon {
+      display: flex;
       flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      width: 36px; height: 36px;
+      align-items: center;
+      width: 96px;
       cursor: pointer;
-      border: none;
-      background: transparent;
-      padding: 4px;
-      border-radius: 6px;
-      flex-shrink: 0;
+      padding: 8px 6px;
+      border: 1px solid transparent;
     }
-    .hamburger span {
-      display: block;
-      height: 2px;
-      background: var(--text);
-      border-radius: 2px;
-      transition: transform .25s ease, opacity .25s ease;
+    .desktop-icon:focus,
+    .desktop-icon.selected {
+      border: 1px dotted #ffffff;
+      background: rgba(0,0,128,0.3);
+      outline: none;
     }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .desktop-icon:active {
+      background: rgba(0,0,128,0.5);
+    }
+    .icon-img {
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+    }
+    .icon-img canvas {
+      image-rendering: pixelated;
+      -ms-interpolation-mode: nearest-neighbor;
+      width: 64px;
+      height: 64px;
+    }
+    .icon-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      text-align: center;
+      text-shadow: 1px 1px 2px #000000;
+      line-height: 1.3;
+      word-break: break-word;
+      font-family: 'Courier New', Courier, monospace;
+    }
 
-    /* ── MOBILE MENU ── */
-    .mobile-menu {
+    /* ══════════════════════════════════════
+       WINDOWS 3.1 WINDOW
+       ══════════════════════════════════════ */
+    .win31-window {
+      position: absolute;
+      background: var(--win-bg);
+      border: 2px solid;
+      border-color: var(--win-border-light) var(--win-border-darkest) var(--win-border-darkest) var(--win-border-light);
       display: none;
+      z-index: 10;
+      min-width: 320px;
+      max-width: 94%;
+    }
+    .win31-window.open {
+      display: flex;
       flex-direction: column;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 8px 0 16px;
-      position: sticky;
-      top: 56px;
-      z-index: 99;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      display: block;
-      padding: 12px 24px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--muted);
-      text-decoration: none;
-      border-left: 3px solid transparent;
-      transition: all .15s;
-    }
-    .mobile-menu a:hover,
-    .mobile-menu a:active {
-      color: var(--accent);
-      background: #f5f7ff;
-      border-left-color: var(--accent);
     }
 
-    /* ── LAYOUT ── */
-    .container { max-width: 960px; margin: auto; padding: 0 24px; }
-
-    section { padding: 72px 0; }
-    section + section { border-top: 1px solid var(--border); }
-
-    /* ── HERO ── */
-    #hero {
-      padding: 96px 0 80px;
-      display: flex; align-items: flex-start;
-      gap: 48px;
-    }
-    .hero-avatar {
+    /* Title Bar */
+    .win31-titlebar {
+      height: 22px;
+      background: var(--titlebar-active);
+      display: flex;
+      align-items: center;
+      padding: 0 3px;
+      gap: 3px;
       flex-shrink: 0;
-      width: 108px; height: 108px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #bfdbfe, #93c5fd);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Poppins', sans-serif;
-      font-size: 36px; font-weight: 700;
-      color: #1d4ed8;
-      letter-spacing: -1px;
+      cursor: move;
+    }
+    .win31-window.inactive .win31-titlebar {
+      background: var(--titlebar-inactive);
+    }
+    .win31-titlebar-icon {
+      font-size: 12px;
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .win31-titlebar-text {
+      flex: 1;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--titlebar-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 2px;
+      letter-spacing: 0.3px;
+    }
+    .win31-titlebar-buttons {
+      display: flex;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+    .win31-btn {
+      width: 18px;
+      height: 16px;
+      background: var(--btn-face);
+      border: 1px solid;
+      border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 900;
+      cursor: pointer;
+      color: #000;
+      padding: 0;
+      line-height: 1;
+    }
+    .win31-btn:active {
+      border-color: var(--win-border-darker) var(--win-border-light) var(--win-border-light) var(--win-border-darker);
+    }
+
+    /* Menu Bar */
+    .win31-menubar {
+      background: var(--menu-bg);
+      padding: 2px 4px;
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--win-border-dark);
+      flex-shrink: 0;
+    }
+    .win31-menu-item {
+      padding: 2px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      position: relative;
+    }
+    .win31-menu-item:hover {
+      background: var(--highlight);
+      color: var(--highlight-text);
+    }
+    .win31-menu-item .underline {
+      text-decoration: underline;
+    }
+
+    /* Window Body */
+    .win31-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0;
+      background: #ffffff;
+      border: 2px solid;
+      border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-dark);
+      margin: 4px;
+    }
+    .win31-body-inner {
+      padding: 16px;
+    }
+
+    /* Status Bar */
+    .win31-statusbar {
+      height: 22px;
+      background: var(--win-bg);
+      border-top: 1px solid var(--win-border-dark);
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      flex-shrink: 0;
+    }
+    .win31-statusbar-section {
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 0 6px;
+      border: 1px solid;
+      border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-dark);
+      height: 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* ══════════════════════════════════════
+       CONTENT STYLES (inside windows)
+       ══════════════════════════════════════ */
+
+    /* Hero/Profile */
+    .profile-section {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .profile-avatar {
+      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
+      background: #c0c0c0;
+      border: 2px solid;
+      border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
       background-image: url('image/foto.webp');
-      background-size: cover; /* Memastikan foto menutupi seluruh area div */
-      background-position: center; /* Memposisikan foto agar tepat di tengah */
-      /*background-color: #93c5fd;*/
-      box-shadow: 0 4px 12px rgba(0,0,0,.08);
+      background-size: cover;
+      background-position: center;
+      image-rendering: auto;
     }
-    .hero-text { flex: 1; }
-    .hero-label {
-      display: inline-block;
-      font-size: 11.5px; font-weight: 600;
-      letter-spacing: 1.2px; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 12px;
+    .profile-info { flex: 1; }
+    .profile-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--highlight);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
     }
-    .hero-name {
+    .profile-name {
       font-family: 'Poppins', sans-serif;
-      font-size: clamp(26px, 4vw, 38px);
-      font-weight: 800; line-height: 1.15;
-      letter-spacing: -.6px;
-      color: var(--text);
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 8px;
     }
-    .hero-degree {
-      font-size: 13.5px; color: var(--muted);
-      font-weight: 500; margin-top: 4px;
+    .profile-bio {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 10px;
     }
-    .hero-bio {
-      margin-top: 18px;
-      font-size: 15px; color: #374151;
-      max-width: 560px; line-height: 1.75;
+    .profile-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 12px;
     }
-    .hero-pills {
-      display: flex; flex-wrap: wrap; gap: 8px;
-      margin-top: 20px;
+    .pill-retro {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      background: var(--highlight);
+      color: var(--highlight-text);
     }
-    .pill {
-      background: var(--tag-bg); color: var(--tag-text);
-      font-size: 12px; font-weight: 600;
-      padding: 4px 12px; border-radius: 99px;
-      border: 1px solid #bfdbfe;
-    }
-    .hero-contact {
-      display: flex; gap: 16px; margin-top: 24px;
+    .profile-actions {
+      display: flex;
+      gap: 8px;
       flex-wrap: wrap;
     }
-    .btn {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 9px 20px; border-radius: 8px;
-      font-size: 13.5px; font-weight: 600;
-      text-decoration: none; transition: all .2s;
-      cursor: pointer; border: none;
-    }
-    .btn-primary {
-      background: var(--accent); color: #fff;
-      box-shadow: 0 2px 8px rgba(37,99,235,.25);
-    }
-    .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
-    .btn-outline {
-      background: transparent; color: var(--text);
-      border: 1.5px solid var(--border);
-    }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* ── SECTION HEADER ── */
-    .section-header { margin-bottom: 36px; }
-    .section-tag {
-      font-size: 11px; font-weight: 700;
-      letter-spacing: 1.4px; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 6px;
+    /* Win3.1 Button */
+    .win31-action-btn {
+      font-size: 12px;
+      font-family: inherit;
+      padding: 4px 16px;
+      background: var(--btn-face);
+      border: 2px solid;
+      border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
+      cursor: pointer;
+      color: #000;
     }
-    .section-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: clamp(20px, 3vw, 26px);
-      font-weight: 700; letter-spacing: -.4px;
+    .win31-action-btn:active {
+      border-color: var(--win-border-darker) var(--win-border-light) var(--win-border-light) var(--win-border-darker);
+      transform: translate(1px, 1px);
+    }
+    .win31-action-btn.default {
+      outline: 2px solid #000;
+      outline-offset: -4px;
+    }
+    .win31-action-btn a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Section divider */
+    .win31-groupbox {
+      border: 1px solid var(--win-border-dark);
+      padding: 12px 10px 10px;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .win31-groupbox-label {
+      position: absolute;
+      top: -8px;
+      left: 8px;
+      background: #ffffff;
+      padding: 0 4px;
+      font-size: 11px;
+      font-weight: 700;
       color: var(--text);
     }
-    .section-desc {
-      margin-top: 8px; color: var(--muted);
-      font-size: 14px; max-width: 520px;
+
+    /* Card (retro style) */
+    .retro-card {
+      background: #ffffff;
+      border: 1px solid var(--win-border-dark);
+      padding: 10px 12px;
+      margin-bottom: 8px;
+    }
+    .retro-card-title {
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+    .retro-card-meta {
+      font-size: 10px;
+      color: var(--highlight);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .retro-card-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .retro-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-top: 6px;
+    }
+    .retro-tag {
+      font-size: 9px;
+      font-weight: 600;
+      padding: 1px 6px;
+      background: var(--win-bg);
+      border: 1px solid var(--win-border-dark);
+    }
+    .retro-tag-badge {
+      background: #000080;
+      color: #fff;
+      border-color: #000080;
     }
 
-    /* ── CARDS GRID ── */
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      transition: box-shadow .25s, transform .25s;
-    }
-    .card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
-
-    .card-icon {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: var(--tag-bg);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; margin-bottom: 14px;
-    }
-    .card-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 14.5px; font-weight: 700;
-      color: var(--text); margin-bottom: 6px;
-      line-height: 1.3;
-    }
-    .card-meta {
-      font-size: 12px; font-weight: 600;
-      color: var(--accent); margin-bottom: 8px;
-    }
-    .card-desc {
-      font-size: 13.5px; color: var(--muted);
-      line-height: 1.65;
-    }
-    .card-tags {
-      display: flex; flex-wrap: wrap; gap: 6px;
-      margin-top: 14px;
-    }
-    .tag {
-      font-size: 11.5px; font-weight: 500;
-      padding: 2px 9px; border-radius: 6px;
-      background: var(--tag-bg); color: var(--tag-text);
-    }
-    .tag-gray {
-      background: #f3f4f6; color: #6b7280;
+    /* Badge */
+    .retro-badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 6px;
+      background: #008000;
+      color: #ffffff;
+      margin-bottom: 4px;
     }
 
-    /* status badge */
-    .badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: 11px; font-weight: 600;
-      padding: 2px 8px; border-radius: 99px;
-      margin-bottom: 10px;
+    /* Research */
+    .research-row {
+      display: flex;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #c0c0c0;
+      align-items: flex-start;
     }
-    .badge-green { background: #dcfce7; color: #15803d; }
-    .badge-yellow { background: #fef9c3; color: #a16207; }
-    .badge-blue { background: #dbeafe; color: #1d4ed8; }
-    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-
-    /* ── RESEARCH LIST ── */
-    .research-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px 24px;
-      margin-bottom: 14px;
-      display: flex; gap: 18px; align-items: flex-start;
-      transition: box-shadow .25s, transform .25s;
-    }
-    .research-item:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+    .research-row:last-child { border-bottom: none; }
     .research-year {
+      font-weight: 700;
+      font-size: 11px;
+      color: var(--highlight);
+      width: 36px;
       flex-shrink: 0;
-      font-family: 'Poppins', sans-serif;
-      font-size: 13px; font-weight: 700;
-      color: var(--accent);
-      padding-top: 2px; width: 42px;
+      padding-top: 1px;
     }
-    .research-body { flex: 1; }
+    .research-content { flex: 1; }
     .research-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px; font-weight: 700;
-      color: var(--text); margin-bottom: 4px;
+      font-weight: 700;
+      font-size: 12px;
       line-height: 1.4;
+      margin-bottom: 2px;
     }
     .research-title a {
-      color: inherit; text-decoration: none;
+      color: inherit;
+      text-decoration: none;
     }
-    .research-title a:hover { color: var(--accent); text-decoration: underline; }
+    .research-title a:hover {
+      text-decoration: underline;
+    }
     .research-venue {
-      font-size: 12.5px; color: var(--muted); margin-bottom: 8px;
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
     }
 
-    /* ── COURSES ── */
-    .course-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px 22px;
-      transition: box-shadow .25s, transform .25s;
+    /* Course */
+    .semester-header {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--highlight);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 12px 0 6px;
+      padding-bottom: 3px;
+      border-bottom: 1px dashed var(--win-border-dark);
     }
-    .course-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
-    .course-code {
-      font-size: 11px; font-weight: 700;
-      color: var(--accent); letter-spacing: .8px;
-      text-transform: uppercase; margin-bottom: 6px;
+    .semester-header:first-child { margin-top: 0; }
+    .course-row {
+      display: flex;
+      gap: 8px;
+      padding: 4px 0;
+      align-items: flex-start;
+      font-size: 11px;
     }
+    .course-icon { font-size: 13px; flex-shrink: 0; }
+    .course-info { flex: 1; }
+    .course-prodi-tag {
+      font-size: 8px;
+      font-weight: 700;
+      padding: 1px 5px;
+      display: inline-block;
+      margin-bottom: 2px;
+    }
+    .prodi-bd { background: #000080; color: #fff; }
+    .prodi-ti { background: #008000; color: #fff; }
     .course-name {
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px; font-weight: 700;
-      color: var(--text); margin-bottom: 6px;
+      font-weight: 700;
+      font-size: 11.5px;
+      line-height: 1.3;
     }
-    .course-name a { color: inherit; text-decoration: none; }
-    .course-name a:hover { color: var(--accent); text-decoration: underline; }
-    .course-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
-    .course-meta {
-      display: flex; align-items: center; gap: 12px;
-      margin-top: 12px; font-size: 12px; color: var(--muted);
+    .course-name a {
+      color: inherit;
+      text-decoration: none;
     }
-    .course-meta span { display: flex; align-items: center; gap: 4px; }
+    .course-name a:hover {
+      text-decoration: underline;
+    }
+    .course-desc {
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: 2px;
+    }
 
-    /* ── COURSES V2 ── */
-    .course-semester { margin-bottom: 28px; }
-    .semester-label {
-      font-size: 11px; font-weight: 700;
-      letter-spacing: 1.2px; text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 10px;
-      padding-left: 2px;
-    }
-    .course-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* Contact */
+    .contact-row {
+      display: flex;
+      align-items: center;
       gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px solid #c0c0c0;
     }
-    .course-card-v2 {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 16px;
-      transition: box-shadow .2s, transform .2s;
+    .contact-row:last-child { border-bottom: none; }
+    .contact-emoji { font-size: 18px; flex-shrink: 0; }
+    .contact-label-text {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 600;
     }
-    .course-card-v2:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
-    .course-card-top { margin-bottom: 8px; }
-    .course-prodi {
-      font-size: 10.5px; font-weight: 600;
-      padding: 2px 8px; border-radius: 99px;
-      letter-spacing: .3px;
+    .contact-value-text {
+      font-size: 12px;
+      font-weight: 600;
     }
-    .prodi-bd  { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-    .prodi-ti  { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
-    .course-card-name {
-      font-family: 'Poppins', sans-serif;
-      font-size: 13px; font-weight: 600;
-      color: var(--text); line-height: 1.35;
-      display: flex; align-items: flex-start; gap: 7px;
-    }
-    .course-card-name a { color: inherit; text-decoration: none; }
-    .course-card-name a:hover { color: var(--accent); text-decoration: underline; }
-    .course-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
-    .course-card-desc {
-      font-size: 12px; color: var(--muted);
-      line-height: 1.6; margin-top: 8px;
-      padding-left: 22px;
+    .contact-value-text a {
+      color: var(--highlight);
+      text-decoration: underline;
     }
 
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 36px 0;
+    /* Footer text */
+    .retro-footer {
+      font-size: 10px;
+      color: var(--text-muted);
       text-align: center;
-      font-size: 13px; color: var(--muted);
+      margin-top: 14px;
+      padding-top: 8px;
+      border-top: 1px solid #c0c0c0;
     }
-    footer a { color: var(--accent); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
-      #hero { flex-direction: column; gap: 24px; padding: 56px 0 48px; }
-      .hero-avatar { width: 80px; height: 80px; }
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
+    .retro-footer a {
+      color: var(--highlight);
     }
 
-    /* ── FADE-IN ANIMATION ── */
-    .fade-up {
-      opacity: 0; transform: translateY(20px);
-      transition: opacity .55s ease, transform .55s ease;
+    /* ══════════════════════════════════════
+       TASKBAR
+       ══════════════════════════════════════ */
+    .taskbar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 36px;
+      background: var(--win-bg);
+      border-top: 2px solid var(--win-border-light);
+      display: flex;
+      align-items: center;
+      padding: 3px 4px;
+      gap: 4px;
+      z-index: 1000;
     }
-    .fade-up.visible { opacity: 1; transform: none; }
+    .start-btn {
+      height: 28px;
+      padding: 0 8px;
+      background: var(--btn-face);
+      border: 2px solid;
+      border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .start-btn:active {
+      border-color: var(--win-border-darker) var(--win-border-light) var(--win-border-light) var(--win-border-darker);
+    }
+    .start-btn .start-flag {
+      font-size: 14px;
+    }
+    .taskbar-divider {
+      width: 2px;
+      height: 24px;
+      border-left: 1px solid var(--win-border-dark);
+      border-right: 1px solid var(--win-border-light);
+      flex-shrink: 0;
+    }
+    .taskbar-windows {
+      display: flex;
+      gap: 3px;
+      flex: 1;
+      overflow-x: auto;
+    }
+    .taskbar-win-btn {
+      height: 26px;
+      padding: 0 10px;
+      background: var(--btn-face);
+      border: 2px solid;
+      border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      display: none;
+      align-items: center;
+      gap: 4px;
+      max-width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .taskbar-win-btn.active {
+      border-color: var(--win-border-darker) var(--win-border-light) var(--win-border-light) var(--win-border-darker);
+      background: #ffffff;
+      font-weight: 700;
+    }
+    .taskbar-win-btn.visible {
+      display: flex;
+    }
+    .taskbar-clock {
+      flex-shrink: 0;
+      height: 26px;
+      padding: 0 10px;
+      border: 1px solid;
+      border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-dark);
+      display: flex;
+      align-items: center;
+      font-size: 11px;
+      gap: 5px;
+    }
+
+    /* ══════════════════════════════════════
+       START MENU (simple overlay)
+       ══════════════════════════════════════ */
+    .start-menu {
+      display: none;
+      position: fixed;
+      bottom: 36px;
+      left: 4px;
+      background: var(--win-bg);
+      border: 2px solid;
+      border-color: var(--win-border-light) var(--win-border-darkest) var(--win-border-darkest) var(--win-border-light);
+      z-index: 1001;
+      min-width: 200px;
+    }
+    .start-menu.open { display: block; }
+    .start-menu-sidebar {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 24px;
+      background: var(--win-border-dark);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 8px;
+    }
+    .start-menu-sidebar span {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 14px;
+      font-weight: 800;
+      color: #c0c0c0;
+      letter-spacing: 1px;
+    }
+    .start-menu-items {
+      margin-left: 24px;
+      padding: 4px 0;
+    }
+    .start-menu-item {
+      padding: 6px 16px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .start-menu-item:hover {
+      background: var(--highlight);
+      color: var(--highlight-text);
+    }
+    .start-menu-sep {
+      height: 1px;
+      background: var(--win-border-dark);
+      margin: 3px 8px;
+    }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE
+       ══════════════════════════════════════ */
+    @media (max-width: 640px) {
+      .desktop { padding: 10px; }
+      .desktop-icons { gap: 10px; justify-content: center; }
+      .desktop-icon { width: 80px; }
+      .icon-img { width: 48px; height: 48px; }
+      .icon-img canvas { width: 48px; height: 48px; }
+      .icon-label { font-size: 10px; }
+      .win31-window {
+        position: fixed !important;
+        left: 4px !important;
+        right: 4px !important;
+        top: 32px !important;
+        width: auto !important;
+        max-width: none;
+        max-height: calc(100vh - 72px);
+      }
+      .profile-section { flex-direction: column; align-items: center; text-align: center; }
+      .profile-pills { justify-content: center; }
+      .profile-actions { justify-content: center; }
+      .taskbar-win-btn { max-width: 80px; font-size: 10px; padding: 0 6px; }
+    }
+
+    /* ══════════════════════════════════════
+       SCROLLBAR (Win 3.1 style)
+       ══════════════════════════════════════ */
+    .win31-body::-webkit-scrollbar { width: 16px; }
+    .win31-body::-webkit-scrollbar-track { background: var(--win-bg); border-left: 1px solid var(--win-border-dark); }
+    .win31-body::-webkit-scrollbar-thumb {
+      background: var(--btn-face);
+      border: 2px solid;
+      border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
+    }
+    .win31-body::-webkit-scrollbar-button {
+      background: var(--btn-face);
+      border: 2px solid;
+      border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
+      height: 16px;
+    }
+
+    /* ══════════════════════════════════════
+       DECORATIVE PIXEL PATTERN (optional)
+       ══════════════════════════════════════ */
+    .win31-body-inner h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .win31-body-inner .section-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
   </style>
 </head>
 <body>
 
-<!-- ════════════════ NAV ════════════════ -->
-<nav>
-  <div class="nav-inner">
-    <a href="#hero" class="nav-logo">ACP.</a>
-    <ul class="nav-links">
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#research">Penelitian</a></li>
-      <li><a href="#service">Pengabdian</a></li>
-      <li><a href="https://andikachandra.com/daftar-mata-kuliah.html">Mata Kuliah</a></li>
-      <li><a href="#contact">Kontak</a></li>
-    </ul>
-    <button class="hamburger" id="hamburger" aria-label="Buka menu navigasi" aria-expanded="false">
-      <span></span>
-      <span></span>
-      <span></span>
+<!-- ════════════════ DESKTOP ════════════════ -->
+<div class="desktop" id="desktop">
+
+  <!-- ═══════ DESKTOP ICONS ═══════ -->
+  <div class="desktop-icons" id="desktopIcons">
+    <div class="desktop-icon" tabindex="0" data-target="win-profil" ondblclick="openWindow('win-profil')">
+      <div class="icon-img"><canvas class="retro-canvas" width="64" height="64" data-icon="person"></canvas></div>
+      <div class="icon-label">Profil</div>
+    </div>
+    <div class="desktop-icon" tabindex="0" data-target="win-portofolio" ondblclick="openWindow('win-portofolio')">
+      <div class="icon-img"><canvas class="retro-canvas" width="64" height="64" data-icon="briefcase"></canvas></div>
+      <div class="icon-label">Portofolio</div>
+    </div>
+    <div class="desktop-icon" tabindex="0" data-target="win-penelitian" ondblclick="openWindow('win-penelitian')">
+      <div class="icon-img"><canvas class="retro-canvas" width="64" height="64" data-icon="book"></canvas></div>
+      <div class="icon-label">Penelitian</div>
+    </div>
+    <div class="desktop-icon" tabindex="0" data-target="win-matkul" ondblclick="openWindow('win-matkul')">
+      <div class="icon-img"><canvas class="retro-canvas" width="64" height="64" data-icon="gradcap"></canvas></div>
+      <div class="icon-label">Mata Kuliah</div>
+    </div>
+    <div class="desktop-icon" tabindex="0" data-target="win-kontak" ondblclick="openWindow('win-kontak')">
+      <div class="icon-img"><canvas class="retro-canvas" width="64" height="64" data-icon="envelope"></canvas></div>
+      <div class="icon-label">Kontak</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       WINDOW: PROFIL
+       ═══════════════════════════════════════ -->
+  <div class="win31-window open" id="win-profil" style="left:60px; top:30px; width:560px;">
+    <div class="win31-titlebar" onmousedown="startDrag(event,'win-profil')">
+      <div class="win31-titlebar-icon">👤</div>
+      <div class="win31-titlebar-text">Profil — Andika Chandra P</div>
+      <div class="win31-titlebar-buttons">
+        <button class="win31-btn" onclick="minimizeWindow('win-profil')" title="Minimize">▼</button>
+        <button class="win31-btn" onclick="maximizeWindow('win-profil')" title="Maximize">▲</button>
+        <button class="win31-btn" onclick="closeWindow('win-profil')" title="Close">✕</button>
+      </div>
+    </div>
+    <div class="win31-menubar">
+      <span class="win31-menu-item"><span class="underline">F</span>ile</span>
+      <span class="win31-menu-item"><span class="underline">E</span>dit</span>
+      <span class="win31-menu-item"><span class="underline">V</span>iew</span>
+      <span class="win31-menu-item"><span class="underline">H</span>elp</span>
+    </div>
+    <div class="win31-body">
+      <div class="win31-body-inner">
+        <div class="profile-section">
+          <div class="profile-avatar"></div>
+          <div class="profile-info">
+            <div class="profile-label">Dosen & Tukang Ngopi</div>
+            <h1 class="profile-name">Andika Chandra P, S.Kom., M.T.I</h1>
+            <p class="profile-bio">
+              Pengajar dan peneliti di bidang teknologi informasi dan bisnis digital. Berfokus pada AI, socio-techno dan digital marketing.
+            </p>
+            <div class="profile-pills">
+              <span class="pill-retro">Machine Learning</span>
+              <span class="pill-retro">Web Design</span>
+              <span class="pill-retro">Digital Marketing</span>
+            </div>
+            <div class="profile-actions">
+              <button class="win31-action-btn default"><a href="mailto:me@andikachandra.com">✉ Email Saya</a></button>
+              <button class="win31-action-btn" onclick="openWindow('win-portofolio')">Lihat Portofolio →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="win31-statusbar">
+      <div class="win31-statusbar-section">Ready</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       WINDOW: PORTOFOLIO
+       ═══════════════════════════════════════ -->
+  <div class="win31-window" id="win-portofolio" style="left:100px; top:50px; width:540px;">
+    <div class="win31-titlebar" onmousedown="startDrag(event,'win-portofolio')">
+      <div class="win31-titlebar-icon">💼</div>
+      <div class="win31-titlebar-text">Portofolio Aplikasi</div>
+      <div class="win31-titlebar-buttons">
+        <button class="win31-btn" onclick="minimizeWindow('win-portofolio')" title="Minimize">▼</button>
+        <button class="win31-btn" onclick="maximizeWindow('win-portofolio')" title="Maximize">▲</button>
+        <button class="win31-btn" onclick="closeWindow('win-portofolio')" title="Close">✕</button>
+      </div>
+    </div>
+    <div class="win31-menubar">
+      <span class="win31-menu-item"><span class="underline">F</span>ile</span>
+      <span class="win31-menu-item"><span class="underline">E</span>dit</span>
+      <span class="win31-menu-item"><span class="underline">V</span>iew</span>
+    </div>
+    <div class="win31-body">
+      <div class="win31-body-inner">
+        <h2>Portofolio Aplikasi</h2>
+
+        <div class="retro-card">
+          <span class="retro-badge">✔ Selesai</span>
+          <div class="retro-card-title">🏫 NyariArtikel.App</div>
+          <div class="retro-card-meta">Aplikasi Web</div>
+          <div class="retro-card-desc">Aplikasi untuk pencarian artikel ilmiah yang bertipe open access</div>
+          <div class="retro-tags">
+            <span class="retro-tag">Web App</span><span class="retro-tag">HTML</span><span class="retro-tag">JS</span>
+          </div>
+          <button class="win31-action-btn" style="margin-top:8px; font-size:11px; padding:2px 10px;">
+            <a href="https://nyariartikel.app" target="_blank" rel="noopener noreferrer">Kunjungi Web ↗</a>
+          </button>
+        </div>
+
+        <div class="retro-card">
+          <span class="retro-badge">✔ Selesai</span>
+          <div class="retro-card-title">📝 bantusitasi.online</div>
+          <div class="retro-card-meta">Aplikasi Web</div>
+          <div class="retro-card-desc">Aplikasi untuk pencarian referensi berdasarkan kalimat yang dimasukan oleh pengguna</div>
+          <div class="retro-tags">
+            <span class="retro-tag">Web App</span><span class="retro-tag">HTML</span><span class="retro-tag">JS</span><span class="retro-tag">NodeJs</span><span class="retro-tag">PostgreSQL</span>
+          </div>
+          <button class="win31-action-btn" style="margin-top:8px; font-size:11px; padding:2px 10px;">
+            <a href="https://bantusitasi.online" target="_blank" rel="noopener noreferrer">Kunjungi Web ↗</a>
+          </button>
+        </div>
+
+        <div class="retro-card">
+          <span class="retro-badge">✔ Selesai</span>
+          <div class="retro-card-title">📄 papier.my</div>
+          <div class="retro-card-meta">Aplikasi Web</div>
+          <div class="retro-card-desc">Web app untuk melakukan organisasi artikel ilmiah dengan mudah dengan memanfaatkan teknologi AI</div>
+          <div class="retro-tags">
+            <span class="retro-tag">Web App</span><span class="retro-tag">HTML</span><span class="retro-tag">JS</span><span class="retro-tag">NodeJs</span><span class="retro-tag">PostgreSQL</span>
+          </div>
+          <button class="win31-action-btn" style="margin-top:8px; font-size:11px; padding:2px 10px;">
+            <a href="https://papier.my" target="_blank" rel="noopener noreferrer">Kunjungi Web ↗</a>
+          </button>
+        </div>
+
+      </div>
+    </div>
+    <div class="win31-statusbar">
+      <div class="win31-statusbar-section">3 item(s)</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       WINDOW: PENELITIAN
+       ═══════════════════════════════════════ -->
+  <div class="win31-window" id="win-penelitian" style="left:140px; top:40px; width:560px;">
+    <div class="win31-titlebar" onmousedown="startDrag(event,'win-penelitian')">
+      <div class="win31-titlebar-icon">📚</div>
+      <div class="win31-titlebar-text">Penelitian</div>
+      <div class="win31-titlebar-buttons">
+        <button class="win31-btn" onclick="minimizeWindow('win-penelitian')" title="Minimize">▼</button>
+        <button class="win31-btn" onclick="maximizeWindow('win-penelitian')" title="Maximize">▲</button>
+        <button class="win31-btn" onclick="closeWindow('win-penelitian')" title="Close">✕</button>
+      </div>
+    </div>
+    <div class="win31-menubar">
+      <span class="win31-menu-item"><span class="underline">F</span>ile</span>
+      <span class="win31-menu-item"><span class="underline">E</span>dit</span>
+      <span class="win31-menu-item"><span class="underline">V</span>iew</span>
+    </div>
+    <div class="win31-body">
+      <div class="win31-body-inner">
+        <h2>Penelitian</h2>
+        <p class="section-desc">Publikasi ilmiah dan riset yang telah dipresentasikan atau diterbitkan.</p>
+
+        <div class="research-row">
+          <div class="research-year">2017</div>
+          <div class="research-content">
+            <div class="research-title"><a href="https://ieeexplore.ieee.org/abstract/document/8267965">Factors influencing e-tourism stickiness: A perspective of TripTrus.Com</a></div>
+            <div class="research-venue">International Conference on Information Technology Systems and Innovation (ICITSI) 2017</div>
+            <div class="retro-tags">
+              <span class="retro-tag">Socio Techno</span><span class="retro-tag">E-Commerce</span><span class="retro-tag">Stickiness</span>
+              <span class="retro-tag retro-tag-badge">IEEE</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="research-row">
+          <div class="research-year">2024</div>
+          <div class="research-content">
+            <div class="research-title">Factors Influence Entrepreneurial Intention</div>
+            <div class="research-venue">Moneter: Jurnal Keuangan dan Perbankan</div>
+            <div class="retro-tags">
+              <span class="retro-tag">Entrepreneurial Intention</span><span class="retro-tag">Stickiness</span>
+              <span class="retro-tag retro-tag-badge">Sinta 3</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="research-row">
+          <div class="research-year">2025</div>
+          <div class="research-content">
+            <div class="research-title"><a href="https://jurnal.unismabekasi.ac.id/index.php/piksel/article/view/10580">YouTube Streaming Performance Over Wi-Fi: A Resolution-Based Analysis</a></div>
+            <div class="research-venue">Piksel: Penelitian Ilmu Komputer Sistem Embedded dan Logic</div>
+            <div class="retro-tags">
+              <span class="retro-tag">Network</span><span class="retro-tag">Network Performance</span><span class="retro-tag">Resolution-Based Analysis</span>
+              <span class="retro-tag retro-tag-badge">Sinta 3</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="research-row">
+          <div class="research-year">2026</div>
+          <div class="research-content">
+            <div class="research-title"><a href="https://publikasi.dinus.ac.id/technoc/article/view/15684">Sistem Klasifikasi Tingkat Resiko pada Pengguna Judi Online Berdasarkan Pola Perilaku dan Skor PGSI</a></div>
+            <div class="research-venue">Jurnal TECHNO.com</div>
+            <div class="retro-tags">
+              <span class="retro-tag">Classification</span><span class="retro-tag">Naive Bayes</span><span class="retro-tag">Decision Tree</span>
+              <span class="retro-tag retro-tag-badge">EBSCO</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="win31-statusbar">
+      <div class="win31-statusbar-section">4 publikasi</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       WINDOW: MATA KULIAH
+       ═══════════════════════════════════════ -->
+  <div class="win31-window" id="win-matkul" style="left:120px; top:60px; width:580px;">
+    <div class="win31-titlebar" onmousedown="startDrag(event,'win-matkul')">
+      <div class="win31-titlebar-icon">🎓</div>
+      <div class="win31-titlebar-text">Mata Kuliah yang Diampu</div>
+      <div class="win31-titlebar-buttons">
+        <button class="win31-btn" onclick="minimizeWindow('win-matkul')" title="Minimize">▼</button>
+        <button class="win31-btn" onclick="maximizeWindow('win-matkul')" title="Maximize">▲</button>
+        <button class="win31-btn" onclick="closeWindow('win-matkul')" title="Close">✕</button>
+      </div>
+    </div>
+    <div class="win31-menubar">
+      <span class="win31-menu-item"><span class="underline">F</span>ile</span>
+      <span class="win31-menu-item"><span class="underline">E</span>dit</span>
+      <span class="win31-menu-item"><span class="underline">V</span>iew</span>
+    </div>
+    <div class="win31-body">
+      <div class="win31-body-inner">
+        <h2>Mata Kuliah yang Diampu</h2>
+        <p class="section-desc">10 mata kuliah lintas semester di program studi Bisnis Digital & Teknik Informatika.</p>
+
+        <div class="semester-header">Semester 1</div>
+        <div class="course-row">
+          <span class="course-icon">💻</span>
+          <div class="course-info">
+            <span class="course-prodi-tag prodi-bd">BD</span>
+            <div class="course-name">Pengantar Teknologi Informasi</div>
+            <div class="course-desc">Landasan konseptual TI modern — perangkat keras, jaringan, keamanan data, dan pemanfaatannya dalam konteks bisnis digital.</div>
+          </div>
+        </div>
+
+        <div class="semester-header">Semester 3</div>
+        <div class="course-row">
+          <span class="course-icon">🌐</span>
+          <div class="course-info">
+            <span class="course-prodi-tag prodi-bd">BD</span>
+            <div class="course-name">Ekonomi Digital Baru</div>
+            <div class="course-desc">Transformasi ekonomi oleh teknologi digital — platform, e-commerce, sharing economy, dan regulasi ekosistem digital.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <span class="course-icon">🖱️</span>
+          <div class="course-info">
+            <span class="course-prodi-tag prodi-bd">BD</span>
+            <div class="course-name">Interaksi Manusia dan Komputer</div>
+            <div class="course-desc">Prinsip user-centered design, evaluasi usabilitas, dan prototipe interaktif untuk antarmuka yang efektif.</div>
+          </div>
+        </div>
+
+        <div class="semester-header">Semester 4</div>
+        <div class="course-row">
+          <span class="course-icon">🏗️</span>
+          <div class="course-info">
+            <span class="course-prodi-tag prodi-bd">BD</span>
+            <div class="course-name"><a href="https://andikachandra.com/mbd/">Model dan Desain Bisnis Digital</a></div>
+            <div class="course-desc">Merancang dan mengevaluasi model bisnis digital — freemium, subscription, marketplace — dengan Business Model Canvas.</div>
+          </div>
+        </div>
+
+        <div class="semester-header">Semester 5</div>
+        <div class="course-row">
+          <span class="course-icon">📊</span>
+          <div class="course-info">
+            <span class="course-prodi-tag prodi-bd">BD</span>
+            <div class="course-name">Analisis Bisnis Digital</div>
+            <div class="course-desc">Kerangka analitik untuk mengevaluasi kinerja bisnis digital dan pengambilan keputusan strategis berbasis data.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <span class="course-icon">📱</span>
+          <div class="course-info">
+            <span class="course-prodi-tag prodi-bd">BD</span>
+            <div class="course-name">Social Media Analysis</div>
+            <div class="course-desc">Teknik pengolahan data media sosial untuk branding, analisis sentimen, dan strategi konten digital.</div>
+          </div>
+        </div>
+
+        <div class="semester-header">Semester 6</div>
+        <div class="course-row">
+          <span class="course-icon">📋</span>
+          <div class="course-info">
+            <span class="course-prodi-tag prodi-ti">TI</span>
+            <div class="course-name">Manajemen Proyek SI</div>
+            <div class="course-desc">Metodologi manajemen proyek SI — perencanaan, estimasi biaya, manajemen risiko, dan Gantt Chart.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <span class="course-icon">🛒</span>
+          <div class="course-info">
+            <span class="course-prodi-tag prodi-bd">BD</span>
+            <div class="course-name"><a href="https://andikachandra.com/dcb/">Digital Consumer Behaviour</a></div>
+            <div class="course-desc">Pola perilaku konsumen online, pengaruh media sosial, personalisasi, dan strategi membangun loyalitas pelanggan.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <span class="course-icon">🗄️</span>
+          <div class="course-info">
+            <span class="course-prodi-tag prodi-bd">BD</span>
+            <div class="course-name">Data Warehouse & BI</div>
+            <div class="course-desc">Arsitektur data warehouse, ETL, OLAP, dan alat BI untuk mengolah data besar menjadi informasi bisnis yang bernilai.</div>
+          </div>
+        </div>
+
+        <div class="semester-header">Semester 7</div>
+        <div class="course-row">
+          <span class="course-icon">🚀</span>
+          <div class="course-info">
+            <span class="course-prodi-tag prodi-ti">TI</span>
+            <div class="course-name">Technopreneur</div>
+            <div class="course-desc">Mengintegrasikan kompetensi teknis dengan jiwa wirausaha — validasi pasar dan membangun startup berbasis produk digital.</div>
+          </div>
+        </div>
+        <div class="course-row">
+          <span class="course-icon">💡</span>
+          <div class="course-info">
+            <span class="course-prodi-tag prodi-bd">BD</span>
+            <div class="course-name">Technopreneurship</div>
+            <div class="course-desc">Ekosistem startup teknologi — pendanaan, pitching investor, growth hacking, dan scale-up dari ideasi hingga komersialisasi.</div>
+          </div>
+        </div>
+
+        <button class="win31-action-btn" style="margin-top:10px; font-size:11px; padding:3px 12px;">
+          <a href="https://andikachandra.com/daftar-mata-kuliah.html">Lihat deskripsi lengkap →</a>
+        </button>
+
+      </div>
+    </div>
+    <div class="win31-statusbar">
+      <div class="win31-statusbar-section">10 mata kuliah</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       WINDOW: KONTAK
+       ═══════════════════════════════════════ -->
+  <div class="win31-window" id="win-kontak" style="left:160px; top:50px; width:400px;">
+    <div class="win31-titlebar" onmousedown="startDrag(event,'win-kontak')">
+      <div class="win31-titlebar-icon">📧</div>
+      <div class="win31-titlebar-text">Kontak</div>
+      <div class="win31-titlebar-buttons">
+        <button class="win31-btn" onclick="minimizeWindow('win-kontak')" title="Minimize">▼</button>
+        <button class="win31-btn" onclick="maximizeWindow('win-kontak')" title="Maximize">▲</button>
+        <button class="win31-btn" onclick="closeWindow('win-kontak')" title="Close">✕</button>
+      </div>
+    </div>
+    <div class="win31-menubar">
+      <span class="win31-menu-item"><span class="underline">F</span>ile</span>
+      <span class="win31-menu-item"><span class="underline">E</span>dit</span>
+    </div>
+    <div class="win31-body">
+      <div class="win31-body-inner">
+        <h2>Kontak</h2>
+        <p class="section-desc">Silakan menghubungi untuk keperluan akademik, kolaborasi riset, atau pertanyaan lainnya.</p>
+
+        <div class="contact-row">
+          <div class="contact-emoji">✉️</div>
+          <div>
+            <div class="contact-label-text">Email</div>
+            <div class="contact-value-text"><a href="mailto:me@andikachandra.com">me@andikachandra.com</a></div>
+          </div>
+        </div>
+
+        <div class="contact-row">
+          <div class="contact-emoji">🐙</div>
+          <div>
+            <div class="contact-label-text">GitHub</div>
+            <div class="contact-value-text"><a href="https://github.com/andikachandrap" target="_blank">github.com/andikachandra23</a></div>
+          </div>
+        </div>
+
+        <div class="contact-row">
+          <div class="contact-emoji">📍</div>
+          <div>
+            <div class="contact-label-text">Lokasi</div>
+            <div class="contact-value-text" style="color:var(--text-muted);">Tegal, Jawa Tengah</div>
+          </div>
+        </div>
+
+        <div class="retro-footer">
+          © 2025 <strong>Andika Chandra P., S.Kom., M.T.I</strong> · Dibuat dengan ♥ · <a href="https://github.com/andikachandrap">GitHub Pages</a>
+        </div>
+
+      </div>
+    </div>
+    <div class="win31-statusbar">
+      <div class="win31-statusbar-section">Ready</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════ START MENU ════════════════ -->
+<div class="start-menu" id="startMenu">
+  <div class="start-menu-sidebar">
+    <span>Windows 3.1</span>
+  </div>
+  <div class="start-menu-items">
+    <div class="start-menu-item" onclick="openWindow('win-profil'); toggleStartMenu();">👤 Profil</div>
+    <div class="start-menu-item" onclick="openWindow('win-portofolio'); toggleStartMenu();">💼 Portofolio</div>
+    <div class="start-menu-item" onclick="openWindow('win-penelitian'); toggleStartMenu();">📚 Penelitian</div>
+    <div class="start-menu-item" onclick="openWindow('win-matkul'); toggleStartMenu();">🎓 Mata Kuliah</div>
+    <div class="start-menu-item" onclick="openWindow('win-kontak'); toggleStartMenu();">📧 Kontak</div>
+    <div class="start-menu-sep"></div>
+    <div class="start-menu-item"><a href="https://andikachandra.com/daftar-mata-kuliah.html" style="color:inherit; text-decoration:none;">📖 Semua Mata Kuliah</a></div>
+  </div>
+</div>
+
+<!-- ════════════════ TASKBAR ════════════════ -->
+<div class="taskbar">
+  <button class="start-btn" id="startBtn" onclick="toggleStartMenu()">
+    <span class="start-flag">🪟</span> Start
+  </button>
+  <div class="taskbar-divider"></div>
+  <div class="taskbar-windows">
+    <button class="taskbar-win-btn visible" id="tb-profil" onclick="toggleFromTaskbar('win-profil')">
+      👤 Profil
+    </button>
+    <button class="taskbar-win-btn" id="tb-portofolio" onclick="toggleFromTaskbar('win-portofolio')">
+      💼 Portofolio
+    </button>
+    <button class="taskbar-win-btn" id="tb-penelitian" onclick="toggleFromTaskbar('win-penelitian')">
+      📚 Penelitian
+    </button>
+    <button class="taskbar-win-btn" id="tb-matkul" onclick="toggleFromTaskbar('win-matkul')">
+      🎓 Mata Kuliah
+    </button>
+    <button class="taskbar-win-btn" id="tb-kontak" onclick="toggleFromTaskbar('win-kontak')">
+      📧 Kontak
     </button>
   </div>
-</nav>
-
-<!-- ════════════════ MOBILE MENU ════════════════ -->
-<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-  <a href="#projects" class="mobile-nav-link">Projects</a>
-  <a href="#research" class="mobile-nav-link">Penelitian</a>
-  <a href="#service" class="mobile-nav-link">Pengabdian</a>
-  <a href="https://andikachandra.com/daftar-mata-kuliah.html" class="mobile-nav-link">Mata Kuliah</a>
-  <a href="#contact" class="mobile-nav-link">Kontak</a>
+  <div class="taskbar-clock" id="taskbarClock">
+    <span>🔊</span>
+    <span id="clockText">00:00</span>
+  </div>
 </div>
-
-<!-- ════════════════ HERO ════════════════ -->
-<div class="container">
-  <section id="hero">
-    <div class="hero-avatar"></div>
-    <div class="hero-text">
-      <span class="hero-label">Dosen &amp; <s>Researcher</s>Tukang Ngopi</span>
-      <h1 class="hero-name">Andika Chandra P, S.Kom., M.T.I</h1>
-      <p class="hero-bio">
-        Pengajar dan peneliti di bidang teknologi informasi dan bisnis digital. Berfokus pada
-        AI, socio-techno dan digital marketing.
-      </p>
-      <div class="hero-pills">
-        <span class="pill">Machine Learning</span>
-        <span class="pill">Web Design</span>
-        <span class="pill">Digital Marketing</span>
-      </div>
-      <div class="hero-contact">
-        <a href="mailto:me@andikachandra.com" class="btn btn-primary">
-          ✉ Email Saya
-        </a>
-        <a href="#projects" class="btn btn-outline">Lihat Portfolio →</a>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- ════════════════ PROJECT ════════════════ -->
-<section id="service">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag">PROJECT</div>
-      <h2 class="section-title">Portofolio Aplikasi</h2>
-      <p class="section-desc"></p>
-    </div>
-    <div class="grid-2">
-
-      <div class="card fade-up">
-        <div class="card-icon">🏫</div>
-        <span class="badge badge-green"><span class="badge-dot"></span>Selesai</span>
-        <div class="card-title">NyariArtikel.App</div>
-        <div class="card-meta">Aplikasi Web</div>
-        <div class="card-desc">Aplikasi untuk pencarian artikel ilmiah yang bertipe open access</div>
-        <div class="card-tags">
-          <span class="tag">Web App</span><span class="tag">HTML</span><span class="tag">JS</span>
-        </div>
-        <!-- Tombol Link Eksternal -->
-        <a href="https://nyariartikel.app" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="margin-top: 16px; font-size: 12px; padding: 6px 12px; display: inline-flex;">
-    Kunjungi Web ↗
-        </a>
-      </div>
-
-       <div class="card fade-up">
-        <div class="card-icon">🏫</div>
-        <span class="badge badge-green"><span class="badge-dot"></span>Selesai</span>
-        <div class="card-title">bantusitasi.online</div>
-        <div class="card-meta">Aplikasi Web</div>
-        <div class="card-desc">Aplikasi untuk pencarian referensi berdasarkan kalimat yang dimasukan oleh pengguna</div>
-        <div class="card-tags">
-          <span class="tag">Web App</span><span class="tag">HTML</span><span class="tag">JS</span><span class="tag">NodeJs</span><span class="tag">PostgreSQL</span>
-        </div>
-        <!-- Tombol Link Eksternal -->
-        <a href="https://bantusitasi.online" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="margin-top: 16px; font-size: 12px; padding: 6px 12px; display: inline-flex;">
-    Kunjungi Web ↗
-        </a>
-      </div>
-
-      <div class="card fade-up">
-        <div class="card-icon">🏫</div>
-        <span class="badge badge-green"><span class="badge-dot"></span>Selesai</span>
-        <div class="card-title">papier.my</div>
-        <div class="card-meta">Aplikasi Web</div>
-        <div class="card-desc">Web app untuk melakukan organisasi artikel ilmiah dengan mudah dengan memanfaatkan teknologi AI</div>
-        <div class="card-tags">
-          <span class="tag">Web App</span><span class="tag">HTML</span><span class="tag">JS</span><span class="tag">NodeJs</span><span class="tag">PostgreSQL</span>
-        </div>
-        <!-- Tombol Link Eksternal -->
-        <a href="https://papier.my" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="margin-top: 16px; font-size: 12px; padding: 6px 12px; display: inline-flex;">
-    Kunjungi Web ↗
-        </a>
-      </div>
-      
-    </div>
-  </div>
-</section> 
-
-<!-- ════════════════ PENELITIAN ════════════════ -->
-<section id="research">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag">Akademik</div>
-      <h2 class="section-title">Penelitian</h2>
-      <p class="section-desc">Publikasi ilmiah dan riset yang telah dipresentasikan atau diterbitkan.</p>
-    </div>
-
-    <div class="research-item fade-up">
-      <div class="research-year">2017</div>
-      <div class="research-body">
-        <div class="research-title"><a href="https://ieeexplore.ieee.org/abstract/document/8267965">Factors influencing e-tourism stickiness: A perspective of TripTrus.Com</a></div>
-        <div class="research-venue">International Conference on Information Technology Systems and Innovation (ICITSI) 2017</div>
-        <div class="card-tags">
-          <span class="tag">Socio Techno</span><span class="tag">E-Commerce</span><span class="tag">Stickiness</span>
-          <span class="tag tag-gray">IEEE</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="research-item fade-up">
-      <div class="research-year">2024</div>
-      <div class="research-body">
-        <div class="research-title">Factors Influence Entrepreneurial Intention</div>
-        <div class="research-venue">Moneter: Jurnal Keuangan dan Perbankan</div>
-        <div class="card-tags">
-          <span class="tag">Entrepreneurial Intention</span><span class="tag">Stickiness</span>
-          <span class="tag tag-gray">Sinta 3</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="research-item fade-up">
-      <div class="research-year">2025</div>
-      <div class="research-body">
-        <div class="research-title"><a href="https://jurnal.unismabekasi.ac.id/index.php/piksel/article/view/10580">YouTube Streaming Performance Over Wi-Fi: A Resolution-Based Analysis</a></div>
-        <div class="research-venue">Piksel: Penelitian Ilmu Komputer Sistem Embedded dan Logic</div>
-        <div class="card-tags">
-          <span class="tag">Network</span><span class="tag">Network Performance</span><span class="tag">Resolution-Based Analysis</span>
-          <span class="tag tag-gray">Sinta 3</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="research-item fade-up">
-      <div class="research-year">2026</div>
-      <div class="research-body">
-        <div class="research-title"><a href="https://publikasi.dinus.ac.id/technoc/article/view/15684">Sistem Klasifikasi Tingkat Resiko pada Pengguna Judi Online Berdasarkan Pola Perilaku dan Skor PGSI</a></div>
-        <div class="research-venue">Jurnal TECHNO.com</div>
-        <div class="card-tags">
-          <span class="tag">Classification</span><span class="tag">Naive Bayes</span><span class="tag">Decision Tree</span>
-          <span class="tag tag-gray">EBSCO</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ════════════════ PENGABDIAN ════════════════ 
-<section id="service">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag">Tri Dharma</div>
-      <h2 class="section-title">Pengabdian kepada Masyarakat</h2>
-      <p class="section-desc">Kegiatan pengabdian dan transfer ilmu pengetahuan untuk masyarakat.</p>
-    </div>
-    <div class="grid-2">
-
-      <div class="card fade-up">
-        <div class="card-icon">🏫</div>
-        <span class="badge badge-green"><span class="badge-dot"></span>Selesai</span>
-        <div class="card-title">Pelatihan Literasi Digital untuk Guru SD/SMP di Kecamatan Ungaran</div>
-        <div class="card-meta">2024 · Hibah Pengabdian DRTPM</div>
-        <div class="card-desc">Pelatihan penggunaan teknologi pendidikan dan media pembelajaran digital bagi guru tingkat dasar dan menengah di wilayah Ungaran Barat.</div>
-        <div class="card-tags">
-          <span class="tag">Literasi Digital</span><span class="tag">Pendidikan</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section> -->
-
-<!-- ════════════════ COURSES ════════════════ -->
-<section id="courses">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag">Pengajaran</div>
-      <h2 class="section-title">Mata Kuliah yang Diampu</h2>
-      <p class="section-desc">10 mata kuliah lintas semester di program studi Bisnis Digital &amp; Teknik Informatika.</p>
-    </div>
-
-    <!-- Semester group -->
-    <div class="course-semester fade-up">
-      <div class="semester-label">Semester 1</div>
-      <div class="course-grid">
-        <div class="course-card-v2">
-          <div class="course-card-top">
-            <span class="course-prodi prodi-bd">Bisnis Digital</span>
-          </div>
-          <div class="course-card-name">
-            <span class="course-icon">💻</span>Pengantar Teknologi Informasi
-          </div>
-          <div class="course-card-desc">Landasan konseptual TI modern — perangkat keras, jaringan, keamanan data, dan pemanfaatannya dalam konteks bisnis digital.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="course-semester fade-up">
-      <div class="semester-label">Semester 3</div>
-      <div class="course-grid">
-        <div class="course-card-v2">
-          <div class="course-card-top">
-            <span class="course-prodi prodi-bd">Bisnis Digital</span>
-          </div>
-          <div class="course-card-name">
-            <span class="course-icon">🌐</span>Ekonomi Digital Baru
-          </div>
-          <div class="course-card-desc">Transformasi ekonomi oleh teknologi digital — platform, e-commerce, sharing economy, dan regulasi ekosistem digital.</div>
-        </div>
-        <div class="course-card-v2">
-          <div class="course-card-top">
-            <span class="course-prodi prodi-bd">Bisnis Digital</span>
-          </div>
-          <div class="course-card-name">
-            <span class="course-icon">🖱️</span>Interaksi Manusia dan Komputer
-          </div>
-          <div class="course-card-desc">Prinsip user-centered design, evaluasi usabilitas, dan prototipe interaktif untuk antarmuka yang efektif.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="course-semester fade-up">
-      <div class="semester-label">Semester 4</div>
-      <div class="course-grid">
-        <div class="course-card-v2">
-          <div class="course-card-top">
-            <span class="course-prodi prodi-bd">Bisnis Digital</span>
-          </div>
-          <div class="course-card-name">
-            <span class="course-icon">🏗️</span><a href="https://andikachandra.com/mbd/">Model dan Desain Bisnis Digital</a>
-          </div>
-          <div class="course-card-desc">Merancang dan mengevaluasi model bisnis digital — freemium, subscription, marketplace — dengan Business Model Canvas.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="course-semester fade-up">
-      <div class="semester-label">Semester 5</div>
-      <div class="course-grid">
-        <div class="course-card-v2">
-          <div class="course-card-top">
-            <span class="course-prodi prodi-bd">Bisnis Digital</span>
-          </div>
-          <div class="course-card-name">
-            <span class="course-icon">📊</span>Analisis Bisnis Digital
-          </div>
-          <div class="course-card-desc">Kerangka analitik untuk mengevaluasi kinerja bisnis digital dan pengambilan keputusan strategis berbasis data.</div>
-        </div>
-        <div class="course-card-v2">
-          <div class="course-card-top">
-            <span class="course-prodi prodi-bd">Bisnis Digital</span>
-          </div>
-          <div class="course-card-name">
-            <span class="course-icon">📱</span>Social Media Analysis
-          </div>
-          <div class="course-card-desc">Teknik pengolahan data media sosial untuk branding, analisis sentimen, dan strategi konten digital.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="course-semester fade-up">
-      <div class="semester-label">Semester 6</div>
-      <div class="course-grid">
-        <div class="course-card-v2">
-          <div class="course-card-top">
-            <span class="course-prodi prodi-ti">Teknik Informatika</span>
-          </div>
-          <div class="course-card-name">
-            <span class="course-icon">📋</span>Manajemen Proyek SI
-          </div>
-          <div class="course-card-desc">Metodologi manajemen proyek SI — perencanaan, estimasi biaya, manajemen risiko, dan Gantt Chart.</div>
-        </div>
-        <div class="course-card-v2">
-          <div class="course-card-top">
-            <span class="course-prodi prodi-bd">Bisnis Digital</span>
-          </div>
-          <div class="course-card-name">
-            <span class="course-icon">🛒</span><a href="https://andikachandra.com/dcb/">Digital Consumer Behaviour</a>
-          </div>
-          <div class="course-card-desc">Pola perilaku konsumen online, pengaruh media sosial, personalisasi, dan strategi membangun loyalitas pelanggan.</div>
-        </div>
-        <div class="course-card-v2">
-          <div class="course-card-top">
-            <span class="course-prodi prodi-bd">Bisnis Digital</span>
-          </div>
-          <div class="course-card-name">
-            <span class="course-icon">🗄️</span>Data Warehouse &amp; BI
-          </div>
-          <div class="course-card-desc">Arsitektur data warehouse, ETL, OLAP, dan alat BI untuk mengolah data besar menjadi informasi bisnis yang bernilai.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="course-semester fade-up">
-      <div class="semester-label">Semester 7</div>
-      <div class="course-grid">
-        <div class="course-card-v2">
-          <div class="course-card-top">
-            <span class="course-prodi prodi-ti">Teknik Informatika</span>
-          </div>
-          <div class="course-card-name">
-            <span class="course-icon">🚀</span>Technopreneur
-          </div>
-          <div class="course-card-desc">Mengintegrasikan kompetensi teknis dengan jiwa wirausaha — validasi pasar dan membangun startup berbasis produk digital.</div>
-        </div>
-        
-        <div class="course-card-v2">
-          <div class="course-card-top">
-            <span class="course-prodi prodi-bd">Bisnis Digital</span>
-          </div>
-          <div class="course-card-name">
-            <span class="course-icon">💡</span>Technopreneurship
-          </div>
-          <div class="course-card-desc">Ekosistem startup teknologi — pendanaan, pitching investor, growth hacking, dan scale-up dari ideasi hingga komersialisasi.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="fade-up" style="margin-top:24px;">
-      <a href="https://andikachandra.com/daftar-mata-kuliah.html" class="btn btn-outline" style="font-size:13px;">
-        Lihat deskripsi lengkap →
-      </a>
-    </div>
-
-  </div>
-</section>
-
-<!-- ════════════════ CONTACT ════════════════ -->
-<section id="contact">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-tag">Hubungi</div>
-      <h2 class="section-title">Kontak</h2>
-      <p class="section-desc">Silakan menghubungi untuk keperluan akademik, kolaborasi riset, atau pertanyaan lainnya.</p>
-    </div>
-    <div class="grid-2" style="max-width:560px;">
-
-      <div class="card fade-up" style="padding:20px;">
-        <div style="font-size:20px;margin-bottom:10px;">✉️</div>
-        <div class="card-title" style="font-size:13px;margin-bottom:4px;">Email</div>
-        <a href="mailto:me@andikachandra.com" style="font-size:13.5px;color:var(--accent);text-decoration:none;">me@andikachandra.com</a>
-      </div>
-
-      <div class="card fade-up" style="padding:20px;">
-        <div style="font-size:20px;margin-bottom:10px;">🐙</div>
-        <div class="card-title" style="font-size:13px;margin-bottom:4px;">GitHub</div>
-        <a href="https://github.com/andikachandrap" target="_blank" style="font-size:13.5px;color:var(--accent);text-decoration:none;">github.com/andikachandra23</a>
-      </div>
-
-      <div class="card fade-up" style="padding:20px;">
-        <div style="font-size:20px;margin-bottom:10px;">📍</div>
-        <div class="card-title" style="font-size:13px;margin-bottom:4px;">Lokasi</div>
-        <span style="font-size:13.5px;color:var(--muted);">Tegal, Jawa Tengah</span>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════ FOOTER ════════════════ -->
-<footer>
-  <div class="container">
-    <p>© 2025 <strong>Andika Chandra P., S.Kom., M.T.I</strong> &nbsp;·&nbsp; Dibuat dengan ❤️ &nbsp;·&nbsp; <a href="https://github.com/andikachandrap">GitHub Pages</a></p>
-  </div>
-</footer>
 
 <script>
-  // ── HAMBURGER MENU ──
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
+  // ══════════════════════════════════════
+  // WINDOW MANAGEMENT
+  // ══════════════════════════════════════
+  let highestZ = 10;
+  const windowStates = {};
 
-  hamburger.addEventListener('click', () => {
-    const isOpen = mobileMenu.classList.toggle('open');
-    hamburger.classList.toggle('open', isOpen);
-    hamburger.setAttribute('aria-expanded', isOpen);
-    mobileMenu.setAttribute('aria-hidden', !isOpen);
-  });
+  function openWindow(id) {
+    const win = document.getElementById(id);
+    if (!win) return;
+    win.classList.add('open');
+    win.style.display = 'flex';
+    focusWindow(id);
+    updateTaskbarButtons();
+  }
 
-  // Tutup menu saat link diklik
-  document.querySelectorAll('.mobile-nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      hamburger.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', false);
-      mobileMenu.setAttribute('aria-hidden', true);
+  function closeWindow(id) {
+    const win = document.getElementById(id);
+    if (!win) return;
+    win.classList.remove('open');
+    win.style.display = 'none';
+    updateTaskbarButtons();
+  }
+
+  function minimizeWindow(id) {
+    const win = document.getElementById(id);
+    if (!win) return;
+    win.classList.remove('open');
+    win.style.display = 'none';
+    updateTaskbarButtons();
+  }
+
+  function maximizeWindow(id) {
+    const win = document.getElementById(id);
+    if (!win) return;
+    if (windowStates[id] && windowStates[id].maximized) {
+      // Restore
+      win.style.left = windowStates[id].left;
+      win.style.top = windowStates[id].top;
+      win.style.width = windowStates[id].width;
+      win.style.height = windowStates[id].height;
+      windowStates[id].maximized = false;
+    } else {
+      // Maximize
+      windowStates[id] = {
+        left: win.style.left,
+        top: win.style.top,
+        width: win.style.width,
+        height: win.style.height,
+        maximized: true
+      };
+      win.style.left = '0';
+      win.style.top = '0';
+      win.style.width = '100%';
+      win.style.height = 'calc(100vh - 36px)';
+    }
+  }
+
+  function focusWindow(id) {
+    highestZ++;
+    const win = document.getElementById(id);
+    if (!win) return;
+    win.style.zIndex = highestZ;
+
+    // Mark all as inactive, then active
+    document.querySelectorAll('.win31-window').forEach(w => {
+      w.classList.add('inactive');
+      const tb = document.getElementById('tb-' + w.id.replace('win-', ''));
+      if (tb) tb.classList.remove('active');
+    });
+    win.classList.remove('inactive');
+    const tb = document.getElementById('tb-' + id.replace('win-', ''));
+    if (tb) tb.classList.add('active');
+  }
+
+  function toggleFromTaskbar(id) {
+    const win = document.getElementById(id);
+    if (!win) return;
+    if (win.classList.contains('open') && win.style.display !== 'none') {
+      // Already visible — minimize
+      minimizeWindow(id);
+    } else {
+      openWindow(id);
+    }
+  }
+
+  function updateTaskbarButtons() {
+    document.querySelectorAll('.win31-window').forEach(win => {
+      const btn = document.getElementById('tb-' + win.id.replace('win-', ''));
+      if (!btn) return;
+      if (win.classList.contains('open') && win.style.display !== 'none') {
+        btn.classList.add('visible');
+        btn.classList.add('active');
+      } else if (win.classList.contains('open')) {
+        btn.classList.add('visible');
+        btn.classList.remove('active');
+      } else {
+        btn.classList.remove('visible');
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  // Focus on click
+  document.querySelectorAll('.win31-window').forEach(win => {
+    win.addEventListener('mousedown', () => {
+      focusWindow(win.id);
     });
   });
 
-  // Tutup menu saat klik di luar area nav
+  // ══════════════════════════════════════
+  // DRAG (simple)
+  // ══════════════════════════════════════
+  let dragEl = null, dragOffX = 0, dragOffY = 0;
+
+  function startDrag(e, id) {
+    // Don't drag on buttons
+    if (e.target.classList.contains('win31-btn')) return;
+
+    const win = document.getElementById(id);
+    if (windowStates[id] && windowStates[id].maximized) return;
+
+    dragEl = win;
+    const rect = win.getBoundingClientRect();
+    dragOffX = e.clientX - rect.left;
+    dragOffY = e.clientY - rect.top;
+    focusWindow(id);
+    e.preventDefault();
+  }
+
+  document.addEventListener('mousemove', (e) => {
+    if (!dragEl) return;
+    const x = Math.max(0, e.clientX - dragOffX);
+    const y = Math.max(0, e.clientY - dragOffY);
+    dragEl.style.left = x + 'px';
+    dragEl.style.top = y + 'px';
+  });
+
+  document.addEventListener('mouseup', () => {
+    dragEl = null;
+  });
+
+  // ══════════════════════════════════════
+  // START MENU
+  // ══════════════════════════════════════
+  function toggleStartMenu() {
+    document.getElementById('startMenu').classList.toggle('open');
+  }
+
+  // Close start menu when clicking elsewhere
   document.addEventListener('click', (e) => {
-    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
-      mobileMenu.classList.remove('open');
-      hamburger.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', false);
-      mobileMenu.setAttribute('aria-hidden', true);
+    const menu = document.getElementById('startMenu');
+    const btn = document.getElementById('startBtn');
+    if (!menu.contains(e.target) && !btn.contains(e.target)) {
+      menu.classList.remove('open');
     }
   });
 
-  // ── SCROLL FADE-IN ──
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 60);
-        observer.unobserve(e.target);
+  // ══════════════════════════════════════
+  // CLOCK
+  // ══════════════════════════════════════
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    document.getElementById('clockText').textContent = h + ':' + m;
+  }
+  updateClock();
+  setInterval(updateClock, 30000);
+
+  // ══════════════════════════════════════
+  // DESKTOP ICON SELECTION
+  // ══════════════════════════════════════
+  document.querySelectorAll('.desktop-icon').forEach(icon => {
+    icon.addEventListener('click', (e) => {
+      document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+      icon.classList.add('selected');
+    });
+  });
+
+  // Deselect when clicking desktop background
+  document.getElementById('desktop').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('desktop') || e.target.classList.contains('desktop')) {
+      document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+    }
+  });
+
+  // Initialize taskbar
+  updateTaskbarButtons();
+
+  // ══════════════════════════════════════
+  // RETRO PIXEL ART ICONS (Canvas)
+  // ══════════════════════════════════════
+  function drawRetroIcons() {
+    const P = 4; // pixel size (16x16 grid * 4px = 64px)
+    document.querySelectorAll('.retro-canvas').forEach(canvas => {
+      const ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = false;
+      const type = canvas.dataset.icon;
+
+      // Helper: fill a pixel block at grid position (x,y) with size (w,h)
+      const f = (x, y, w, h, color) => {
+        ctx.fillStyle = color;
+        ctx.fillRect(x * P, y * P, w * P, h * P);
+      };
+
+      if (type === 'person') {
+        // Head
+        f(5,1,6,1,'#000080'); f(4,2,8,3,'#000080'); f(5,5,6,1,'#000080');
+        // Eyes
+        f(6,3,1,1,'#c0c0ff'); f(9,3,1,1,'#c0c0ff');
+        // Smile
+        f(7,4,2,1,'#c0c0ff');
+        // Neck
+        f(7,6,2,1,'#000080');
+        // Body
+        f(3,7,10,4,'#000080');
+        // Body highlight
+        f(4,7,1,3,'#4040c0');
+        // Legs
+        f(4,11,3,3,'#000080'); f(9,11,3,3,'#000080');
+        // Shoes
+        f(3,13,4,1,'#404040'); f(9,13,4,1,'#404040');
+      }
+      else if (type === 'briefcase') {
+        // Handle
+        f(6,1,4,1,'#808000'); f(5,2,1,2,'#808000'); f(10,2,1,2,'#808000');
+        // Body
+        f(3,4,10,9,'#c0c000');
+        // Top/bottom border
+        f(3,4,10,1,'#808000'); f(3,12,10,1,'#808000');
+        // Side borders
+        f(3,4,1,9,'#808000'); f(12,4,1,9,'#808000');
+        // Middle divider
+        f(3,7,10,1,'#808000');
+        // Clasp
+        f(7,6,2,1,'#808000'); f(7,8,2,1,'#808000');
+        // Highlight
+        f(4,5,1,2,'#ffff00'); f(5,5,7,1,'#ffff00');
+      }
+      else if (type === 'book') {
+        // Spine
+        f(7,1,2,13,'#800000');
+        // Left page
+        f(1,2,6,11,'#ffffff');
+        f(1,2,6,1,'#800000'); f(1,12,6,1,'#800000');
+        f(1,2,1,11,'#800000');
+        // Right page
+        f(9,2,6,11,'#ffffff');
+        f(9,2,6,1,'#800000'); f(9,12,6,1,'#800000');
+        f(14,2,1,11,'#800000');
+        // Text lines left page
+        f(2,4,4,1,'#808080'); f(2,6,4,1,'#808080'); f(2,8,3,1,'#808080');
+        f(2,10,4,1,'#808080');
+        // Text lines right page
+        f(10,4,4,1,'#808080'); f(10,6,4,1,'#808080'); f(10,8,3,1,'#808080');
+        f(10,10,4,1,'#808080');
+      }
+      else if (type === 'gradcap') {
+        // Top board (mortarboard)
+        f(2,3,12,2,'#000000');
+        f(1,5,14,2,'#000000');
+        f(2,7,12,1,'#000000');
+        // Board highlight
+        f(3,3,10,1,'#404040');
+        // Button on top
+        f(7,3,2,1,'#c0c000');
+        // Tassel string
+        f(14,5,1,4,'#000000');
+        // Tassel end
+        f(13,9,3,2,'#c0c000');
+        // Body / head placeholder
+        f(5,8,6,2,'#000000');
+        f(6,10,4,1,'#000000');
+        f(7,11,2,2,'#000000');
+      }
+      else if (type === 'envelope') {
+        // Body
+        f(1,4,14,9,'#c0c0c0');
+        // Border
+        f(1,4,14,1,'#000000'); f(1,12,14,1,'#000000');
+        f(1,4,1,9,'#000000'); f(14,4,1,9,'#000000');
+        // Flap V-shape (left side)
+        f(2,5,1,1,'#404040'); f(3,6,1,1,'#404040');
+        f(4,7,1,1,'#404040'); f(5,8,1,1,'#404040');
+        f(6,9,1,1,'#404040'); f(7,10,2,1,'#404040');
+        // Flap V-shape (right side)
+        f(13,5,1,1,'#404040'); f(12,6,1,1,'#404040');
+        f(11,7,1,1,'#404040'); f(10,8,1,1,'#404040');
+        f(9,9,1,1,'#404040');
+        // Top flap line
+        f(2,5,12,1,'#808080');
+        // Letter lines
+        f(4,7,8,1,'#ffffff'); f(5,8,6,1,'#ffffff'); f(6,9,4,1,'#ffffff');
       }
     });
-  }, { threshold: 0.08 });
-
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-</script>
+  }
+  drawRetroIcons();
 </body>
 </html>
