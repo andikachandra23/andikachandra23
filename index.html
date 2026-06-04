@@ -114,8 +114,7 @@
       margin-bottom: 6px;
     }
     .icon-img canvas {
-      image-rendering: pixelated;
-      -ms-interpolation-mode: nearest-neighbor;
+      image-rendering: auto;
       width: 64px;
       height: 64px;
     }
@@ -1402,106 +1401,456 @@
   // RETRO PIXEL ART ICONS (Canvas)
   // ══════════════════════════════════════
   function drawRetroIcons() {
-    const P = 4; // pixel size (16x16 grid * 4px = 64px)
     document.querySelectorAll('.retro-canvas').forEach(canvas => {
       const ctx = canvas.getContext('2d');
-      ctx.imageSmoothingEnabled = false;
+      const s = canvas.width; // 64
+      const u = s / 16;      // unit = 4px
+
+      ctx.imageSmoothingEnabled = true;
+      ctx.clearRect(0, 0, s, s);
+
       const type = canvas.dataset.icon;
 
-      // Helper: fill a pixel block at grid position (x,y) with size (w,h)
-      const f = (x, y, w, h, color) => {
-        ctx.fillStyle = color;
-        ctx.fillRect(x * P, y * P, w * P, h * P);
-      };
+      // ── Helper: 3D bevel rect ──
+      function bevelRect(x, y, w, h, fill, light, dark) {
+        ctx.fillStyle = fill;
+        ctx.fillRect(x, y, w, h);
+        ctx.strokeStyle = light;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x, y + h); ctx.lineTo(x, y); ctx.lineTo(x + w, y);
+        ctx.stroke();
+        ctx.strokeStyle = dark;
+        ctx.beginPath();
+        ctx.moveTo(x + w, y); ctx.lineTo(x + w, y + h); ctx.lineTo(x, y + h);
+        ctx.stroke();
+      }
 
+      // ── PERSON / USER ICON (Windows Classic) ──
       if (type === 'person') {
+        // Shadow on ground
+        ctx.fillStyle = 'rgba(0,0,0,0.2)';
+        ctx.beginPath();
+        ctx.ellipse(s/2, s - 2*u, 5*u, 1.5*u, 0, 0, Math.PI * 2);
+        ctx.fill();
+
         // Head
-        f(5,1,6,1,'#000080'); f(4,2,8,3,'#000080'); f(5,5,6,1,'#000080');
+        ctx.fillStyle = '#000080';
+        ctx.beginPath();
+        ctx.arc(s/2, 4*u, 2.8*u, 0, Math.PI * 2);
+        ctx.fill();
+        // Head highlight
+        ctx.fillStyle = '#3040b0';
+        ctx.beginPath();
+        ctx.arc(s/2 - 0.5*u, 3.5*u, 2*u, 0, Math.PI * 2);
+        ctx.fill();
+        // Skin face
+        ctx.fillStyle = '#d4a574';
+        ctx.beginPath();
+        ctx.arc(s/2, 4*u, 2.3*u, 0, Math.PI * 2);
+        ctx.fill();
+        // Hair top
+        ctx.fillStyle = '#2a2a2a';
+        ctx.beginPath();
+        ctx.arc(s/2, 3.2*u, 2.5*u, Math.PI * 1.15, Math.PI * 1.85);
+        ctx.fill();
         // Eyes
-        f(6,3,1,1,'#c0c0ff'); f(9,3,1,1,'#c0c0ff');
-        // Smile
-        f(7,4,2,1,'#c0c0ff');
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(s/2 - 1.3*u, 3.8*u, 0.6*u, 0.6*u);
+        ctx.fillRect(s/2 + 0.7*u, 3.8*u, 0.6*u, 0.6*u);
+        // Eye whites
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(s/2 - 1.2*u, 3.9*u, 0.4*u, 0.3*u);
+        ctx.fillRect(s/2 + 0.8*u, 3.9*u, 0.4*u, 0.3*u);
+        // Nose
+        ctx.fillStyle = '#c49464';
+        ctx.fillRect(s/2 - 0.2*u, 4.6*u, 0.5*u, 0.4*u);
+        // Mouth
+        ctx.fillStyle = '#a04040';
+        ctx.fillRect(s/2 - 0.5*u, 5.2*u, 1.1*u, 0.3*u);
+
         // Neck
-        f(7,6,2,1,'#000080');
-        // Body
-        f(3,7,10,4,'#000080');
-        // Body highlight
-        f(4,7,1,3,'#4040c0');
-        // Legs
-        f(4,11,3,3,'#000080'); f(9,11,3,3,'#000080');
+        ctx.fillStyle = '#d4a574';
+        ctx.fillRect(s/2 - 0.7*u, 6.3*u, 1.4*u, 0.8*u);
+
+        // Shirt collar (white)
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.moveTo(s/2 - 1.5*u, 7*u);
+        ctx.lineTo(s/2, 8.2*u);
+        ctx.lineTo(s/2 + 1.5*u, 7*u);
+        ctx.lineTo(s/2 + 1.5*u, 7.6*u);
+        ctx.lineTo(s/2, 8.8*u);
+        ctx.lineTo(s/2 - 1.5*u, 7.6*u);
+        ctx.closePath();
+        ctx.fill();
+
+        // Jacket body
+        var jg = ctx.createLinearGradient(s/2 - 5*u, 7*u, s/2 + 5*u, 7*u);
+        jg.addColorStop(0, '#000060');
+        jg.addColorStop(0.3, '#000080');
+        jg.addColorStop(0.7, '#000080');
+        jg.addColorStop(1, '#000050');
+        ctx.fillStyle = jg;
+        ctx.beginPath();
+        ctx.moveTo(s/2 - 1.5*u, 7*u);
+        ctx.lineTo(s/2 - 5*u, 7*u);
+        ctx.lineTo(s/2 - 5.5*u, 13*u);
+        ctx.lineTo(s/2 + 5.5*u, 13*u);
+        ctx.lineTo(s/2 + 5*u, 7*u);
+        ctx.lineTo(s/2 + 1.5*u, 7*u);
+        ctx.lineTo(s/2, 8.5*u);
+        ctx.lineTo(s/2 - 1.5*u, 7*u);
+        ctx.closePath();
+        ctx.fill();
+        // Jacket highlight left
+        ctx.strokeStyle = '#2030a0';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(s/2 - 4.8*u, 7.2*u);
+        ctx.lineTo(s/2 - 5.3*u, 12.8*u);
+        ctx.stroke();
+        // Jacket buttons
+        ctx.fillStyle = '#c0c0c0';
+        ctx.beginPath();
+        ctx.arc(s/2, 9.5*u, 0.3*u, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(s/2, 11*u, 0.3*u, 0, Math.PI * 2);
+        ctx.fill();
+        // Tie
+        ctx.fillStyle = '#800000';
+        ctx.beginPath();
+        ctx.moveTo(s/2 - 0.3*u, 8.5*u);
+        ctx.lineTo(s/2, 12*u);
+        ctx.lineTo(s/2 + 0.3*u, 8.5*u);
+        ctx.closePath();
+        ctx.fill();
+
+        // Legs (trousers)
+        ctx.fillStyle = '#000040';
+        ctx.fillRect(s/2 - 3.5*u, 13*u, 3*u, 3*u);
+        ctx.fillRect(s/2 + 0.5*u, 13*u, 3*u, 3*u);
         // Shoes
-        f(3,13,4,1,'#404040'); f(9,13,4,1,'#404040');
+        ctx.fillStyle = '#1a1a1a';
+        ctx.fillRect(s/2 - 4*u, 15.5*u, 3.5*u, 0.8*u);
+        ctx.fillRect(s/2 + 0.5*u, 15.5*u, 3.5*u, 0.8*u);
+        // Shoe highlight
+        ctx.fillStyle = '#2a2a2a';
+        ctx.fillRect(s/2 - 3.8*u, 15.5*u, 1.2*u, 0.3*u);
+        ctx.fillRect(s/2 + 0.7*u, 15.5*u, 1.2*u, 0.3*u);
       }
+
+      // ── FOLDER ICON (Windows Classic Program Group) ──
       else if (type === 'briefcase') {
-        // Handle
-        f(6,1,4,1,'#808000'); f(5,2,1,2,'#808000'); f(10,2,1,2,'#808000');
-        // Body
-        f(3,4,10,9,'#c0c000');
-        // Top/bottom border
-        f(3,4,10,1,'#808000'); f(3,12,10,1,'#808000');
-        // Side borders
-        f(3,4,1,9,'#808000'); f(12,4,1,9,'#808000');
-        // Middle divider
-        f(3,7,10,1,'#808000');
-        // Clasp
-        f(7,6,2,1,'#808000'); f(7,8,2,1,'#808000');
-        // Highlight
-        f(4,5,1,2,'#ffff00'); f(5,5,7,1,'#ffff00');
+        // Shadow
+        ctx.fillStyle = 'rgba(0,0,0,0.15)';
+        ctx.fillRect(2.5*u, 5*u, 12*u, 11*u);
+
+        // Tab
+        var tabGrad = ctx.createLinearGradient(0, 2*u, 0, 5*u);
+        tabGrad.addColorStop(0, '#ffffa0');
+        tabGrad.addColorStop(1, '#e8c840');
+        ctx.fillStyle = tabGrad;
+        ctx.beginPath();
+        ctx.roundRect(2*u, 2*u, 7*u, 3*u, [1*u, 1*u, 0, 0]);
+        ctx.fill();
+        // Tab border
+        ctx.strokeStyle = '#806000';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.roundRect(2*u, 2*u, 7*u, 3*u, [1*u, 1*u, 0, 0]);
+        ctx.stroke();
+        // Tab top bevel
+        ctx.strokeStyle = '#ffffe0';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(2.5*u, 2.5*u);
+        ctx.lineTo(8.5*u, 2.5*u);
+        ctx.stroke();
+
+        // Folder body
+        var fGrad = ctx.createLinearGradient(0, 4.5*u, 0, 14*u);
+        fGrad.addColorStop(0, '#ffe870');
+        fGrad.addColorStop(0.15, '#ffdc30');
+        fGrad.addColorStop(0.5, '#f0c800');
+        fGrad.addColorStop(1, '#c8a000');
+        ctx.fillStyle = fGrad;
+        ctx.beginPath();
+        ctx.roundRect(1.5*u, 4.5*u, 13*u, 9.5*u, [0.5*u, 0.5*u, 0.5*u, 0.5*u]);
+        ctx.fill();
+        // Folder outline
+        ctx.strokeStyle = '#806000';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.roundRect(1.5*u, 4.5*u, 13*u, 9.5*u, [0.5*u, 0.5*u, 0.5*u, 0.5*u]);
+        ctx.stroke();
+
+        // Folder front face gradient
+        var ffGrad = ctx.createLinearGradient(0, 7*u, 0, 14*u);
+        ffGrad.addColorStop(0, '#ffe050');
+        ffGrad.addColorStop(1, '#b89000');
+        ctx.fillStyle = ffGrad;
+        ctx.fillRect(2*u, 7.5*u, 12*u, 6*u);
+        // Front face outline
+        ctx.strokeStyle = '#806000';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(2*u, 7.5*u, 12*u, 6*u);
+
+        // Inner documents peeking
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(3.5*u, 6.5*u, 4*u, 5.5*u);
+        ctx.fillStyle = '#e0e0e0';
+        ctx.fillRect(3.5*u, 6.5*u, 4*u, 0.3*u);
+        // Document lines
+        ctx.fillStyle = '#c0c0c0';
+        for (var i = 0; i < 4; i++) {
+          ctx.fillRect(4*u, 7.2*u + i*1*u, 3*u, 0.2*u);
+        }
+
+        // Bevel highlight
+        ctx.strokeStyle = '#fffff0';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(2*u, 13.5*u);
+        ctx.lineTo(2*u, 7.5*u);
+        ctx.lineTo(14*u, 7.5*u);
+        ctx.stroke();
+        // Bevel shadow
+        ctx.strokeStyle = '#907000';
+        ctx.beginPath();
+        ctx.moveTo(14*u, 7.5*u);
+        ctx.lineTo(14*u, 13.5*u);
+        ctx.lineTo(2*u, 13.5*u);
+        ctx.stroke();
       }
+
+      // ── BOOK ICON (Windows Classic Help Book) ──
       else if (type === 'book') {
-        // Spine
-        f(7,1,2,13,'#800000');
-        // Left page
-        f(1,2,6,11,'#ffffff');
-        f(1,2,6,1,'#800000'); f(1,12,6,1,'#800000');
-        f(1,2,1,11,'#800000');
+        // Shadow
+        ctx.fillStyle = 'rgba(0,0,0,0.15)';
+        ctx.fillRect(3*u, 3*u, 12*u, 12*u);
+
+        // Back cover
+        ctx.fillStyle = '#8b0000';
+        ctx.fillRect(2*u, 1.5*u, 12*u, 13*u);
+        ctx.strokeStyle = '#4a0000';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(2*u, 1.5*u, 12*u, 13*u);
+
         // Right page
-        f(9,2,6,11,'#ffffff');
-        f(9,2,6,1,'#800000'); f(9,12,6,1,'#800000');
-        f(14,2,1,11,'#800000');
-        // Text lines left page
-        f(2,4,4,1,'#808080'); f(2,6,4,1,'#808080'); f(2,8,3,1,'#808080');
-        f(2,10,4,1,'#808080');
-        // Text lines right page
-        f(10,4,4,1,'#808080'); f(10,6,4,1,'#808080'); f(10,8,3,1,'#808080');
-        f(10,10,4,1,'#808080');
+        var rpGrad = ctx.createLinearGradient(8.5*u, 0, 13.5*u, 0);
+        rpGrad.addColorStop(0, '#f0f0f0');
+        rpGrad.addColorStop(1, '#ffffff');
+        ctx.fillStyle = rpGrad;
+        ctx.fillRect(8.5*u, 2*u, 5*u, 12*u);
+        // Right page shadow
+        ctx.fillStyle = 'rgba(0,0,0,0.05)';
+        ctx.fillRect(8.5*u, 2*u, 0.5*u, 12*u);
+        // Right page border
+        ctx.strokeStyle = '#a0a0a0';
+        ctx.lineWidth = 0.5;
+        ctx.strokeRect(8.5*u, 2*u, 5*u, 12*u);
+
+        // Left page
+        var lpGrad = ctx.createLinearGradient(2.5*u, 0, 7.5*u, 0);
+        lpGrad.addColorStop(0, '#ffffff');
+        lpGrad.addColorStop(1, '#f0f0f0');
+        ctx.fillStyle = lpGrad;
+        ctx.fillRect(2.5*u, 2*u, 5*u, 12*u);
+        // Left page shadow at spine
+        ctx.fillStyle = 'rgba(0,0,0,0.05)';
+        ctx.fillRect(7*u, 2*u, 0.5*u, 12*u);
+        // Left page border
+        ctx.strokeStyle = '#a0a0a0';
+        ctx.lineWidth = 0.5;
+        ctx.strokeRect(2.5*u, 2*u, 5*u, 12*u);
+
+        // Spine
+        var spGrad = ctx.createLinearGradient(7.2*u, 0, 8.8*u, 0);
+        spGrad.addColorStop(0, '#6b0000');
+        spGrad.addColorStop(0.5, '#a50000');
+        spGrad.addColorStop(1, '#6b0000');
+        ctx.fillStyle = spGrad;
+        ctx.fillRect(7.2*u, 1.5*u, 1.6*u, 13*u);
+
+        // Text on left page
+        ctx.fillStyle = '#000080';
+        for (var i = 0; i < 5; i++) {
+          var lw = (3 + Math.random() * 2) * u;
+          ctx.fillRect(3.2*u, 3.5*u + i*2*u, lw, 0.4*u);
+        }
+
+        // Text on right page
+        ctx.fillStyle = '#000080';
+        for (var i = 0; i < 5; i++) {
+          var rw = (3 + Math.random() * 1.5) * u;
+          ctx.fillRect(9.2*u, 3.5*u + i*2*u, rw, 0.4*u);
+        }
+
+        // Book outline
+        ctx.strokeStyle = '#4a0000';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(2*u, 1.5*u, 12*u, 13*u);
       }
+
+      // ── DOCUMENT ICON (Windows Classic) ──
       else if (type === 'gradcap') {
-        // Top board (mortarboard)
-        f(2,3,12,2,'#000000');
-        f(1,5,14,2,'#000000');
-        f(2,7,12,1,'#000000');
-        // Board highlight
-        f(3,3,10,1,'#404040');
-        // Button on top
-        f(7,3,2,1,'#c0c000');
-        // Tassel string
-        f(14,5,1,4,'#000000');
-        // Tassel end
-        f(13,9,3,2,'#c0c000');
-        // Body / head placeholder
-        f(5,8,6,2,'#000000');
-        f(6,10,4,1,'#000000');
-        f(7,11,2,2,'#000000');
-      }
-      else if (type === 'envelope') {
-        // Body
-        f(1,4,14,9,'#c0c0c0');
+        // Shadow
+        ctx.fillStyle = 'rgba(0,0,0,0.15)';
+        ctx.fillRect(5*u, 2*u, 10*u, 13*u);
+
+        // Document body
+        var dGrad = ctx.createLinearGradient(3*u, 0, 13*u, 0);
+        dGrad.addColorStop(0, '#ffffff');
+        dGrad.addColorStop(1, '#e8e8e8');
+        ctx.fillStyle = dGrad;
+        ctx.fillRect(3*u, 1*u, 10*u, 13*u);
+
         // Border
-        f(1,4,14,1,'#000000'); f(1,12,14,1,'#000000');
-        f(1,4,1,9,'#000000'); f(14,4,1,9,'#000000');
-        // Flap V-shape (left side)
-        f(2,5,1,1,'#404040'); f(3,6,1,1,'#404040');
-        f(4,7,1,1,'#404040'); f(5,8,1,1,'#404040');
-        f(6,9,1,1,'#404040'); f(7,10,2,1,'#404040');
-        // Flap V-shape (right side)
-        f(13,5,1,1,'#404040'); f(12,6,1,1,'#404040');
-        f(11,7,1,1,'#404040'); f(10,8,1,1,'#404040');
-        f(9,9,1,1,'#404040');
-        // Top flap line
-        f(2,5,12,1,'#808080');
+        ctx.strokeStyle = '#808080';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(3*u, 1*u, 10*u, 13*u);
+
+        // Dog-ear fold
+        ctx.fillStyle = '#d0d0d0';
+        ctx.beginPath();
+        ctx.moveTo(11*u, 1*u);
+        ctx.lineTo(13*u, 1*u);
+        ctx.lineTo(13*u, 3*u);
+        ctx.closePath();
+        ctx.fill();
+        // Fold shadow
+        ctx.fillStyle = '#a0a0a0';
+        ctx.beginPath();
+        ctx.moveTo(11*u, 1*u);
+        ctx.lineTo(13*u, 3*u);
+        ctx.lineTo(11*u, 3*u);
+        ctx.closePath();
+        ctx.fill();
+        // Fold line
+        ctx.strokeStyle = '#808080';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(11*u, 1*u);
+        ctx.lineTo(11*u, 3*u);
+        ctx.lineTo(13*u, 3*u);
+        ctx.stroke();
+
+        // Title bar (blue)
+        ctx.fillStyle = '#000080';
+        ctx.fillRect(3.5*u, 2*u, 7*u, 1.5*u);
+        // Title text
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold ' + (1.2*u) + 'px sans-serif';
+        ctx.fillText('DOC', 5*u, 3.2*u);
+
+        // Content lines
+        ctx.fillStyle = '#404040';
+        ctx.fillRect(4*u, 4.5*u, 8*u, 0.3*u);
+        ctx.fillRect(4*u, 5.5*u, 6*u, 0.3*u);
+        ctx.fillRect(4*u, 6.5*u, 7*u, 0.3*u);
+        ctx.fillRect(4*u, 8*u, 8*u, 0.3*u);
+        ctx.fillRect(4*u, 9*u, 5*u, 0.3*u);
+        ctx.fillRect(4*u, 10*u, 7*u, 0.3*u);
+
+        // Seal / checkmark
+        ctx.fillStyle = '#008000';
+        ctx.beginPath();
+        ctx.arc(10.5*u, 12*u, 1.2*u, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(9.6*u, 12*u);
+        ctx.lineTo(10.2*u, 12.6*u);
+        ctx.lineTo(11.4*u, 11.2*u);
+        ctx.stroke();
+
+        // 3D highlight edge
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(3.5*u, 13.5*u);
+        ctx.lineTo(3.5*u, 1.5*u);
+        ctx.lineTo(12.5*u, 1.5*u);
+        ctx.stroke();
+      }
+
+      // ── ENVELOPE ICON (Windows Classic Mail) ──
+      else if (type === 'envelope') {
+        // Shadow
+        ctx.fillStyle = 'rgba(0,0,0,0.12)';
+        ctx.fillRect(2*u, 5*u, 13*u, 10*u);
+
+        // Envelope body with gradient
+        var eGrad = ctx.createLinearGradient(0, 3*u, 0, 12*u);
+        eGrad.addColorStop(0, '#ffffff');
+        eGrad.addColorStop(1, '#d8d8d8');
+        ctx.fillStyle = eGrad;
+        ctx.fillRect(1.5*u, 3*u, 13*u, 9*u);
+
+        // Body border
+        ctx.strokeStyle = '#606060';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(1.5*u, 3*u, 13*u, 9*u);
+
+        // Flap (V-shape)
+        ctx.fillStyle = '#e0e0e0';
+        ctx.beginPath();
+        ctx.moveTo(1.5*u, 3*u);
+        ctx.lineTo(8*u, 8.5*u);
+        ctx.lineTo(14.5*u, 3*u);
+        ctx.closePath();
+        ctx.fill();
+        // Flap border
+        ctx.strokeStyle = '#808080';
+        ctx.lineWidth = 0.7;
+        ctx.beginPath();
+        ctx.moveTo(1.5*u, 3*u);
+        ctx.lineTo(8*u, 8.5*u);
+        ctx.lineTo(14.5*u, 3*u);
+        ctx.stroke();
+
+        // Bottom fold lines (subtle)
+        ctx.strokeStyle = '#b0b0b0';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(1.5*u, 12*u);
+        ctx.lineTo(5.5*u, 8*u);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(14.5*u, 12*u);
+        ctx.lineTo(10.5*u, 8*u);
+        ctx.stroke();
+
+        // Letter peeking out
+        ctx.fillStyle = '#f8f8ff';
+        ctx.fillRect(3*u, 5*u, 10*u, 5.5*u);
+        ctx.strokeStyle = '#c0c0e0';
+        ctx.lineWidth = 0.5;
+        ctx.strokeRect(3*u, 5*u, 10*u, 5.5*u);
         // Letter lines
-        f(4,7,8,1,'#ffffff'); f(5,8,6,1,'#ffffff'); f(6,9,4,1,'#ffffff');
+        ctx.fillStyle = '#000080';
+        ctx.fillRect(4*u, 6*u, 6*u, 0.3*u);
+        ctx.fillRect(4*u, 7*u, 8*u, 0.3*u);
+        ctx.fillRect(4*u, 8*u, 5*u, 0.3*u);
+
+        // 3D highlight
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(2*u, 11.5*u);
+        ctx.lineTo(2*u, 3.5*u);
+        ctx.lineTo(14*u, 3.5*u);
+        ctx.stroke();
+        // 3D shadow
+        ctx.strokeStyle = '#909090';
+        ctx.beginPath();
+        ctx.moveTo(14*u, 3.5*u);
+        ctx.lineTo(14*u, 11.5*u);
+        ctx.lineTo(2*u, 11.5*u);
+        ctx.stroke();
       }
     });
   }
