@@ -1,0 +1,2788 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Commerce & Mobile Consumer Behaviour</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f2eb;
+  --bg2: #edeae0;
+  --surface: #ffffff;
+  --surface2: #faf9f5;
+  --ink: #1a1814;
+  --ink2: #3d3a33;
+  --ink3: #7a7468;
+  --accent: #c84b2f;
+  --accent2: #2563a8;
+  --accent3: #1a7a4a;
+  --accent4: #8b4db8;
+  --amber: #d97706;
+  --border: rgba(26,24,20,0.1);
+  --border2: rgba(26,24,20,0.06);
+  --shadow: 0 2px 16px rgba(26,24,20,0.08);
+  --shadow-lg: 0 8px 40px rgba(26,24,20,0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* Grain texture overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 256px;
+  background: var(--ink);
+  padding: 0;
+  z-index: 100;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-top {
+  padding: 32px 24px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidebar-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.sidebar-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.sidebar-session {
+  margin-top: 8px;
+  display: inline-block;
+  padding: 3px 10px;
+  background: var(--accent);
+  border-radius: 3px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: #fff;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.nav-group {
+  padding: 16px 0 8px;
+}
+
+.nav-group-label {
+  padding: 0 24px 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 24px;
+  cursor: pointer;
+  color: rgba(255,255,255,0.45);
+  font-size: 12.5px;
+  font-weight: 400;
+  transition: all 0.2s;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  position: relative;
+}
+
+.nav-item:hover { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.04); }
+.nav-item.active { color: #fff; border-left-color: var(--accent); background: rgba(200,75,47,0.12); }
+
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.nav-item.active .nav-dot { background: var(--accent); }
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 20px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.progress-wrap { }
+.progress-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progress-track {
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* ── MAIN ── */
+.main {
+  margin-left: 256px;
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--ink);
+  color: #fff;
+  padding: 72px 72px 64px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 40%;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255,255,255,0.015) 0px,
+    rgba(255,255,255,0.015) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+}
+
+.hero-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 120px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.04);
+  position: absolute;
+  right: 48px;
+  top: -10px;
+  line-height: 1;
+  user-select: none;
+}
+
+.hero-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-tag::after {
+  content: '';
+  flex: 0 0 40px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 3.5vw, 52px);
+  font-weight: 900;
+  line-height: 1.1;
+  max-width: 600px;
+  margin-bottom: 24px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: rgba(255,255,255,0.6);
+}
+
+.hero-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,0.55);
+  max-width: 520px;
+  line-height: 1.8;
+  margin-bottom: 36px;
+}
+
+.hero-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hero-pill {
+  padding: 5px 14px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 2px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.08em;
+}
+
+/* ── SECTION ── */
+.section {
+  padding: 64px 72px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.section-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+}
+
+.section-rule {
+  flex: 0 0 32px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.section-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--ink3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 2.5vw, 36px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+.section-sub {
+  font-size: 13px;
+  color: var(--ink3);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 40px;
+  letter-spacing: 0.04em;
+}
+
+/* ── PROSE ── */
+.prose {
+  max-width: 680px;
+  margin-bottom: 32px;
+}
+
+.prose p {
+  font-size: 15px;
+  color: var(--ink2);
+  margin-bottom: 16px;
+  line-height: 1.85;
+}
+
+.prose strong { color: var(--ink); font-weight: 600; }
+.prose .hl { color: var(--accent); font-weight: 600; }
+.prose .hl2 { color: var(--accent2); font-weight: 600; }
+
+/* ── GRID ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 28px; }
+
+/* ── CARD ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 24px;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+
+.card-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: var(--ink3);
+}
+
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.card p { font-size: 13.5px; color: var(--ink2); line-height: 1.75; }
+
+/* Card variants */
+.card-theory { border-left: 3px solid var(--accent2); background: #f8faff; }
+.card-theory .card-eyebrow { color: var(--accent2); }
+
+.card-analogy { border-left: 3px solid var(--accent3); background: #f6fbf8; }
+.card-analogy .card-eyebrow { color: var(--accent3); }
+
+.card-data { border-left: 3px solid var(--accent); background: #fff8f6; }
+.card-data .card-eyebrow { color: var(--accent); }
+
+.card-warn { border-left: 3px solid var(--amber); background: #fffbf0; }
+.card-warn .card-eyebrow { color: var(--amber); }
+
+/* ── CALLOUT ── */
+.callout {
+  display: flex;
+  gap: 16px;
+  padding: 18px 22px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+.callout-title { font-weight: 600; font-size: 14px; margin-bottom: 5px; color: var(--ink); }
+.callout-text { font-size: 13px; color: var(--ink2); line-height: 1.7; }
+
+.callout.red { border-color: rgba(200,75,47,0.25); background: #fff8f6; }
+.callout.red .callout-title { color: var(--accent); }
+.callout.blue { border-color: rgba(37,99,168,0.2); background: #f8faff; }
+.callout.blue .callout-title { color: var(--accent2); }
+.callout.green { border-color: rgba(26,122,74,0.2); background: #f6fbf8; }
+.callout.green .callout-title { color: var(--accent3); }
+.callout.amber { border-color: rgba(217,119,6,0.2); background: #fffbf0; }
+.callout.amber .callout-title { color: var(--amber); }
+
+/* ── STAT CARDS ── */
+.stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 32px; }
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 22px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.stat-card.red::before { background: var(--accent); }
+.stat-card.blue::before { background: var(--accent2); }
+.stat-card.green::before { background: var(--accent3); }
+.stat-card.amber::before { background: var(--amber); }
+
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-card.red .stat-num { color: var(--accent); }
+.stat-card.blue .stat-num { color: var(--accent2); }
+.stat-card.green .stat-num { color: var(--accent3); }
+.stat-card.amber .stat-num { color: var(--amber); }
+
+.stat-label { font-size: 11.5px; color: var(--ink3); line-height: 1.5; }
+
+/* ── LIST ── */
+.item-list { list-style: none; margin-bottom: 20px; }
+
+.item-list li {
+  display: flex;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border2);
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.65;
+  align-items: flex-start;
+}
+
+.item-list li:last-child { border-bottom: none; }
+
+.item-list .bullet {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 500;
+}
+
+.bullet-red { background: rgba(200,75,47,0.1); color: var(--accent); }
+.bullet-blue { background: rgba(37,99,168,0.1); color: var(--accent2); }
+.bullet-green { background: rgba(26,122,74,0.1); color: var(--accent3); }
+
+.item-list strong { color: var(--ink); font-weight: 600; display: block; margin-bottom: 2px; }
+
+/* ── TABS ── */
+.tabs-wrap { margin-bottom: 32px; }
+
+.tab-nav {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tab-nav::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  padding: 12px 20px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink3);
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 500; }
+
+.tab-panel { display: none; padding: 28px 0 0; animation: fadeUp 0.3s ease; }
+.tab-panel.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── ACCORDION ── */
+.acc-item { margin-bottom: 8px; }
+
+.acc-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.acc-trigger:hover { background: var(--surface2); border-color: rgba(26,24,20,0.18); }
+.acc-trigger.open { border-radius: 4px 4px 0 0; border-color: rgba(26,24,20,0.18); background: var(--surface2); }
+
+.acc-chevron {
+  font-size: 14px;
+  color: var(--ink3);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+
+.acc-trigger.open .acc-chevron { transform: rotate(180deg); }
+
+.acc-content {
+  display: none;
+  padding: 20px 24px;
+  background: var(--surface);
+  border: 1px solid rgba(26,24,20,0.18);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.8;
+  animation: fadeUp 0.25s ease;
+}
+
+.acc-content.open { display: block; }
+.acc-content strong { color: var(--ink); font-weight: 600; }
+
+/* ── JOURNEY MAP ── */
+.journey-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 32px;
+  margin-bottom: 28px;
+  overflow-x: auto;
+}
+
+.journey-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--ink3);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.journey-steps {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  min-width: 600px;
+}
+
+.journey-step {
+  flex: 1;
+  padding: 20px 16px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.journey-step:hover, .journey-step.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+  z-index: 1;
+}
+
+.journey-step:not(:first-child) { margin-left: -1px; }
+
+.journey-icon { font-size: 22px; margin-bottom: 8px; }
+
+.journey-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.journey-step:hover .journey-label,
+.journey-step.active .journey-label { color: rgba(255,255,255,0.6); }
+
+.journey-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  transition: color 0.2s;
+}
+
+.journey-step:hover .journey-name,
+.journey-step.active .journey-name { color: #fff; }
+
+.journey-detail {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-top: none;
+  padding: 24px 28px;
+  display: none;
+  animation: fadeUp 0.3s ease;
+}
+
+.journey-detail.active { display: block; }
+
+.journey-detail h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.journey-detail p { font-size: 14px; color: var(--ink2); line-height: 1.75; }
+
+/* ── COMPARISON TABLE ── */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 28px;
+  font-size: 14px;
+}
+
+.compare-table th {
+  background: var(--ink);
+  color: #fff;
+  padding: 14px 16px;
+  text-align: left;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.compare-table th:first-child { border-radius: 4px 0 0 0; }
+.compare-table th:last-child { border-radius: 0 4px 0 0; }
+
+.compare-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border2);
+  color: var(--ink2);
+  line-height: 1.6;
+  vertical-align: top;
+  background: var(--surface);
+}
+
+.compare-table tr:hover td { background: var(--surface2); }
+
+.compare-table td:first-child {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 13.5px;
+  border-right: 2px solid var(--border);
+}
+
+.tag-mobile {
+  display: inline-block;
+  padding: 2px 8px;
+  background: rgba(200,75,47,0.1);
+  color: var(--accent);
+  border-radius: 2px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.tag-desktop {
+  display: inline-block;
+  padding: 2px 8px;
+  background: rgba(37,99,168,0.1);
+  color: var(--accent2);
+  border-radius: 2px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/* ── RISK MATRIX ── */
+.risk-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.risk-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.25s;
+  border-top: 3px solid transparent;
+}
+
+.risk-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.risk-card.active { border-top-color: var(--accent); background: #fff8f6; }
+
+.risk-icon { font-size: 24px; margin-bottom: 10px; }
+.risk-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.risk-level {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.risk-high { background: rgba(200,75,47,0.12); color: var(--accent); }
+.risk-med { background: rgba(217,119,6,0.12); color: var(--amber); }
+.risk-low { background: rgba(26,122,74,0.12); color: var(--accent3); }
+
+.risk-desc { font-size: 12.5px; color: var(--ink3); line-height: 1.6; }
+
+.risk-detail {
+  background: #fff8f6;
+  border: 1px solid rgba(200,75,47,0.2);
+  border-radius: 4px;
+  padding: 24px;
+  margin-top: -8px;
+  margin-bottom: 20px;
+  display: none;
+  animation: fadeUp 0.3s ease;
+}
+
+.risk-detail.active { display: block; }
+.risk-detail p { font-size: 14px; color: var(--ink2); line-height: 1.75; }
+.risk-detail strong { color: var(--ink); }
+
+/* ── ABANDONMENT FUNNEL ── */
+.funnel-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 32px;
+  margin-bottom: 28px;
+}
+
+.funnel-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--ink3);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.funnel-steps { display: flex; flex-direction: column; gap: 8px; }
+
+.funnel-step {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+}
+
+.funnel-bar-wrap { flex: 1; position: relative; height: 40px; }
+
+.funnel-bar {
+  height: 100%;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  transition: opacity 0.2s, width 1.2s cubic-bezier(.16,1,.3,1);
+  white-space: nowrap;
+  width: 0;
+}
+
+.funnel-pct {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--ink3);
+  width: 40px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.funnel-label-left {
+  font-size: 12px;
+  color: var(--ink2);
+  width: 120px;
+  flex-shrink: 0;
+  text-align: right;
+  font-weight: 500;
+}
+
+/* ── ABANDON REASONS ── */
+.reasons-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 28px;
+  margin-bottom: 28px;
+}
+
+.reason-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border2);
+  cursor: pointer;
+  transition: background 0.15s;
+  padding: 10px 8px;
+  border-radius: 3px;
+  margin: 0 -8px;
+}
+
+.reason-row:hover { background: var(--bg2); }
+.reason-row:last-child { border-bottom: none; }
+
+.reason-rank {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--ink3);
+  width: 24px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.reason-bar-wrap { flex: 1; height: 6px; background: var(--bg2); border-radius: 3px; overflow: hidden; }
+
+.reason-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1.2s cubic-bezier(.16,1,.3,1);
+  width: 0;
+}
+
+.reason-name { font-size: 13px; color: var(--ink2); width: 240px; flex-shrink: 0; }
+.reason-pct {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--ink3);
+  width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── CASE STUDY ── */
+.case-wrap {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 28px;
+  background: var(--surface);
+}
+
+.case-head {
+  background: var(--ink2);
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.case-icon-wrap {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.case-head-meta { flex: 1; }
+.case-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.case-head-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.case-body { padding: 28px; }
+.case-body > p { font-size: 14px; color: var(--ink2); line-height: 1.8; margin-bottom: 20px; }
+
+.case-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 8px; }
+
+.case-col-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--ink3);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.case-col-content { font-size: 13.5px; color: var(--ink2); line-height: 1.75; }
+
+.case-finding {
+  background: var(--bg2);
+  border-left: 3px solid var(--accent);
+  padding: 14px 18px;
+  margin-top: 20px;
+  border-radius: 0 3px 3px 0;
+  font-size: 13.5px;
+  color: var(--ink2);
+  line-height: 1.7;
+}
+
+.case-finding strong { color: var(--accent); }
+
+/* ── RESEARCH BOX ── */
+.research-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.research-head {
+  background: #f6fbf8;
+  padding: 14px 22px;
+  border-bottom: 1px solid rgba(26,122,74,0.15);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.research-htitle {
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--accent3);
+}
+
+.research-journal {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--ink3);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.research-body { padding: 20px 22px; }
+.research-body p { font-size: 13.5px; color: var(--ink2); line-height: 1.75; margin-bottom: 10px; }
+.research-body p:last-child { margin-bottom: 0; }
+.research-body strong { color: var(--ink); font-weight: 600; }
+
+.research-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+
+.rtag {
+  padding: 3px 10px;
+  background: rgba(26,122,74,0.08);
+  border: 1px solid rgba(26,122,74,0.2);
+  border-radius: 2px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--accent3);
+}
+
+/* ── QUIZ ── */
+.quiz-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+
+.quiz-head {
+  background: var(--ink);
+  padding: 28px 32px;
+}
+
+.quiz-head-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.quiz-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.quiz-score-lbl {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+}
+
+.quiz-head h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.quiz-body { padding: 32px; }
+
+.q-card { margin-bottom: 36px; padding-bottom: 36px; border-bottom: 1px solid var(--border2); }
+.q-card:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.q-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--ink3);
+  letter-spacing: 0.12em;
+  margin-bottom: 10px;
+}
+
+.q-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 18px;
+  line-height: 1.55;
+}
+
+.options { display: flex; flex-direction: column; gap: 8px; }
+
+.opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.55;
+}
+
+.opt:hover:not(.disabled) { border-color: rgba(26,24,20,0.25); background: var(--surface); color: var(--ink); }
+
+.opt.correct { border-color: var(--accent3); background: #f6fbf8; color: var(--ink); }
+.opt.wrong { border-color: rgba(200,75,47,0.4); background: #fff8f6; color: var(--ink2); }
+.opt.disabled { cursor: default; }
+
+.opt-ltr {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--ink3);
+  transition: all 0.2s;
+}
+
+.opt.correct .opt-ltr { background: var(--accent3); color: #fff; border-color: var(--accent3); }
+.opt.wrong .opt-ltr { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.exp {
+  margin-top: 12px;
+  padding: 14px 18px;
+  background: #f8faff;
+  border-left: 3px solid var(--accent2);
+  border-radius: 0 3px 3px 0;
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.75;
+  display: none;
+}
+
+.exp.show { display: block; animation: fadeUp 0.3s ease; }
+.exp strong { color: var(--accent2); font-weight: 600; }
+
+.quiz-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding-top: 28px;
+  border-top: 1px solid var(--border2);
+}
+
+.btn {
+  padding: 12px 28px;
+  border-radius: 3px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.btn-ink { background: var(--ink); color: #fff; }
+.btn-ink:hover { background: var(--ink2); transform: translateY(-1px); box-shadow: var(--shadow); }
+.btn-ghost { background: transparent; color: var(--ink3); border: 1px solid var(--border); }
+.btn-ghost:hover { color: var(--ink); border-color: rgba(26,24,20,0.25); }
+
+.quiz-result {
+  text-align: center;
+  padding: 48px 32px;
+  display: none;
+}
+
+.quiz-result.show { display: block; animation: fadeUp 0.4s ease; }
+
+.result-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 72px;
+  font-weight: 900;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.result-num span { color: var(--accent); }
+.result-title { font-size: 18px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+.result-sub { font-size: 13.5px; color: var(--ink3); max-width: 440px; margin: 0 auto 24px; line-height: 1.7; }
+
+/* ── MICRO MOMENTS ── */
+.moments-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.moment-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 22px 18px;
+  cursor: pointer;
+  transition: all 0.25s;
+  border-top: 3px solid var(--border);
+  text-align: center;
+}
+
+.moment-card:hover, .moment-card.active {
+  border-top-color: var(--accent);
+  box-shadow: var(--shadow);
+  background: #fff8f6;
+}
+
+.moment-icon { font-size: 28px; margin-bottom: 10px; }
+.moment-name { font-weight: 700; font-size: 13px; color: var(--ink); margin-bottom: 4px; }
+.moment-tag { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--ink3); letter-spacing: 0.08em; }
+
+.moment-detail {
+  background: #fff8f6;
+  border: 1px solid rgba(200,75,47,0.2);
+  border-radius: 4px;
+  padding: 22px 24px;
+  margin-bottom: 28px;
+  display: none;
+  animation: fadeUp 0.3s ease;
+}
+
+.moment-detail.active { display: block; }
+.moment-detail h4 { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.moment-detail p { font-size: 14px; color: var(--ink2); line-height: 1.75; }
+
+/* ── BNPL / PAYMENT ── */
+.payment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.payment-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+}
+
+.payment-icon { font-size: 26px; margin-bottom: 8px; }
+.payment-name { font-weight: 700; font-size: 13px; color: var(--ink); margin-bottom: 4px; }
+.payment-type {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--ink3);
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+
+.payment-desc { font-size: 12.5px; color: var(--ink3); line-height: 1.6; }
+
+/* ── MOBILE MENU ── */
+.menu-btn {
+  display: none;
+  position: fixed;
+  top: 14px; left: 14px;
+  z-index: 200;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* ── DIVIDER ── */
+hr.div { border: none; border-top: 1px solid var(--border2); margin: 28px 0; }
+
+/* ── ANIMATION ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.reveal.in { opacity: 1; transform: none; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: rgba(26,24,20,0.2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(26,24,20,0.4); }
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; }
+  .menu-btn { display: block; }
+  .section { padding: 48px 24px; }
+  .hero { padding: 56px 24px 40px; }
+  .hero-number { display: none; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .stat-row { grid-template-columns: repeat(2,1fr); }
+  .moments-grid { grid-template-columns: repeat(2,1fr); }
+  .payment-grid { grid-template-columns: 1fr 1fr; }
+  .risk-grid { grid-template-columns: 1fr 1fr; }
+  .case-2col { grid-template-columns: 1fr; }
+  .compare-table { font-size: 12px; }
+  .journey-steps { min-width: 500px; }
+  .funnel-label-left { width: 80px; font-size: 11px; }
+  .reason-name { width: 150px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="sidebar-eyebrow">Digital Consumer Behaviour</div>
+    <div class="sidebar-title">E-Commerce & Mobile Consumer Behaviour</div>
+    <span class="sidebar-session">Pertemuan 10</span>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Navigasi</div>
+    <a class="nav-item active" href="#intro" onclick="setNav(this)">
+      <span class="nav-dot"></span> Pendahuluan
+    </a>
+    <a class="nav-item" href="#konteks" onclick="setNav(this)">
+      <span class="nav-dot"></span> Konteks Indonesia
+    </a>
+    <a class="nav-item" href="#journey" onclick="setNav(this)">
+      <span class="nav-dot"></span> Proses Keputusan Digital
+    </a>
+    <a class="nav-item" href="#mobile" onclick="setNav(this)">
+      <span class="nav-dot"></span> Mobile Commerce
+    </a>
+    <a class="nav-item" href="#trust" onclick="setNav(this)">
+      <span class="nav-dot"></span> Trust & Perceived Risk
+    </a>
+    <a class="nav-item" href="#abandon" onclick="setNav(this)">
+      <span class="nav-dot"></span> Cart Abandonment
+    </a>
+    <a class="nav-item" href="#riset" onclick="setNav(this)">
+      <span class="nav-dot"></span> Studi Kasus Riset
+    </a>
+    <a class="nav-item" href="#quiz" onclick="setNav(this)">
+      <span class="nav-dot"></span> Kuis Interaktif
+    </a>
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>PROGRESS</span>
+        <span id="pctLabel">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero" id="intro">
+    <div class="hero-number">10</div>
+    <div class="hero-tag">Pertemuan 10</div>
+    <h1>E-Commerce &<br><em>Mobile Consumer</em><br>Behaviour</h1>
+    <p class="hero-desc">Bagaimana konsumen Indonesia berbelanja secara digital — dari momen pertama discovery hingga titik kritis cart abandonment — dan apa yang benar-benar mendorong atau menghambat mereka menyelesaikan transaksi.</p>
+    <div class="hero-pills">
+      <span class="hero-pill">S-O-R Framework</span>
+      <span class="hero-pill">TAM Davis (1989)</span>
+      <span class="hero-pill">ZMOT</span>
+      <span class="hero-pill">Micro-Moments</span>
+      <span class="hero-pill">Cart Abandonment</span>
+      <span class="hero-pill">Perceived Risk</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1: KONTEKS INDONESIA -->
+  <div class="section reveal" id="konteks">
+    <div class="section-label">
+      <span class="section-num">01</span>
+      <span class="section-rule"></span>
+      <span class="section-tag">Landscape</span>
+    </div>
+    <h2>Konteks E-Commerce Indonesia</h2>
+    <p class="section-sub">Pasar terbesar Asia Tenggara dengan karakteristik unik yang tidak bisa dianalogikan langsung dari riset Barat</p>
+
+    <div class="stat-row reveal">
+      <div class="stat-card red">
+        <div class="stat-num">#1</div>
+        <div class="stat-label">E-commerce terbesar<br>di Asia Tenggara</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-num">77%</div>
+        <div class="stat-label">Transaksi e-commerce<br>via smartphone</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-num">3,5j</div>
+        <div class="stat-label">Rata-rata waktu online<br>konsumen Indonesia/hari</div>
+      </div>
+      <div class="stat-card amber">
+        <div class="stat-num">42%</div>
+        <div class="stat-label">Konsumen masih pilih<br>COD sebagai pembayaran</div>
+      </div>
+    </div>
+
+    <div class="prose reveal">
+      <p>Indonesia adalah pasar yang tidak bisa hanya dibaca lewat lensa riset e-commerce Barat. Ada sejumlah karakteristik yang bersifat <strong>unik lokal</strong> — mulai dari dominasi COD, perilaku price-hunting lintas platform, hingga pertumbuhan pesat social commerce lewat TikTok Shop — yang secara fundamental membentuk cara konsumen Indonesia berinteraksi dengan e-commerce.</p>
+      <p>Konsumen Indonesia juga bukan satu segmen homogen. Perilaku konsumen di Jakarta berbeda signifikan dari konsumen di kota Tier 2-3 dalam hal kepercayaan platform, metode pembayaran yang digunakan, dan sensitivitas terhadap biaya pengiriman.</p>
+    </div>
+
+    <!-- Platform Landscape Tabs -->
+    <div class="tabs-wrap reveal">
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('platform', 'shopee', this)">Shopee</button>
+        <button class="tab-btn" onclick="switchTab('platform', 'tokopedia', this)">Tokopedia</button>
+        <button class="tab-btn" onclick="switchTab('platform', 'tiktokshop', this)">TikTok Shop</button>
+        <button class="tab-btn" onclick="switchTab('platform', 'lazada', this)">Lazada</button>
+        <button class="tab-btn" onclick="switchTab('platform', 'blibli', this)">Blibli</button>
+      </div>
+
+      <div class="tab-panel active" id="platform-shopee">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-eyebrow">Posisi Pasar</div>
+            <h3>Market Leader Konsumen Massal</h3>
+            <p>Shopee mendominasi dengan strategi gamification (Shopee Coins, daily check-in), flash sale harian, dan ekosistem pembayaran ShopeePay. Model bisnis yang sangat bergantung pada diskon dan subsidi pengiriman menciptakan perilaku konsumen yang sangat price-sensitive dan promotion-driven.</p>
+          </div>
+          <div class="card card-data">
+            <div class="card-eyebrow">Karakteristik Perilaku Konsumen</div>
+            <h3>Promotion-Triggered Buying</h3>
+            <p>Konsumen Shopee sangat terlatih untuk menunggu event promo (9.9, 10.10, 11.11, 12.12, Harbolnas). Banyak yang menambahkan produk ke cart berminggu-minggu sebelum event, lalu menyelesaikan pembelian saat cashback dan voucher tersedia. <strong>Cart = daftar tunggu, bukan sinyal beli segera.</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="platform-tokopedia">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-eyebrow">Posisi Pasar</div>
+            <h3>Marketplace Produk Lokal & B2C</h3>
+            <p>Tokopedia (kini bagian GoTo/TikTok) memposisikan diri lebih kuat di segmen produk lokal dan UMKM. Official Store dari brand besar memberikan sinyal trust yang kuat. Ekosistem dengan GoPay dan layanan Gojek menciptakan stickiness melalui super-app experience.</p>
+          </div>
+          <div class="card card-data">
+            <div class="card-eyebrow">Karakteristik Perilaku Konsumen</div>
+            <h3>Research-Heavy Buyers</h3>
+            <p>Konsumen Tokopedia cenderung lebih teliti dalam proses evaluasi — membandingkan seller, membaca ulasan lebih mendalam, dan memeriksa reputasi toko sebelum membeli. Fitur "Beli Langsung" yang memotong proses cart menjadi respons terhadap friction di proses checkout panjang.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="platform-tiktokshop">
+        <div class="grid-2">
+          <div class="card card-warn">
+            <div class="card-eyebrow">Disruptor Terbaru</div>
+            <h3>Social Commerce yang Mengubah Logika</h3>
+            <p>TikTok Shop membalik model discovery tradisional: konsumen tidak datang untuk mencari produk, tapi <strong>produk menemukan konsumen</strong> lewat konten yang menghibur. Discovery → Desire → Purchase terjadi dalam satu sesi video, menghilangkan fase research panjang yang biasa.</p>
+          </div>
+          <div class="card card-data">
+            <div class="card-eyebrow">Karakteristik Perilaku Konsumen</div>
+            <h3>Entertained Buyers</h3>
+            <p>Keputusan beli didorong oleh emosi dan entertainment, bukan evaluasi rasional. Live streaming shopping menciptakan urgensi real-time (stok terbatas, harga khusus live). Brand lokal kecil yang tidak akan pernah muncul di iklan TV bisa menjadi viral overnight melalui mekanisme ini.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="platform-lazada">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-eyebrow">Posisi Pasar</div>
+            <h3>Regional Player dengan Brand Internasional</h3>
+            <p>Lazada (Alibaba) memiliki kekuatan di kategori elektronik dan brand internasional. LazMall sebagai gateway brand resmi memberikan trust yang kuat untuk produk premium. Cenderung menarik segmen yang mencari produk branded dengan garansi resmi.</p>
+          </div>
+          <div class="card card-data">
+            <div class="card-eyebrow">Karakteristik Perilaku Konsumen</div>
+            <h3>Brand-Conscious Shoppers</h3>
+            <p>Konsumen Lazada umumnya lebih berorientasi pada brand dibanding harga. Mereka memprioritaskan keaslian produk dan garansi resmi. Proses evaluasi lebih panjang tapi nilai transaksi per pembelian cenderung lebih tinggi.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="platform-blibli">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-eyebrow">Posisi Pasar</div>
+            <h3>Premium & Kurated Marketplace</h3>
+            <p>Blibli memposisikan diri sebagai marketplace premium dengan kurasi seller yang lebih ketat. Kemitraan dengan jaringan toko fisik (Indomaret, dll.) menciptakan model omnichannel yang unik — buy online, pickup in store.</p>
+          </div>
+          <div class="card card-data">
+            <div class="card-eyebrow">Karakteristik Perilaku Konsumen</div>
+            <h3>Trust-First Buyers</h3>
+            <p>Konsumen memilih Blibli bukan karena harga termurah tapi karena trust tertinggi. Model ini menarik segmen yang pernah punya pengalaman buruk di marketplace lain dan memprioritaskan keamanan transaksi di atas segalanya.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S-O-R Framework -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:20px;">Kerangka Teoritis: S-O-R dalam Konteks E-Commerce</h3>
+
+    <div class="grid-3 reveal">
+      <div class="card card-theory">
+        <div class="card-eyebrow">S — Stimulus</div>
+        <h3>Pemicu dari Platform</h3>
+        <p>Desain antarmuka, notifikasi push, banner flash sale, harga coret, countdown timer, label "terlaris", foto produk berkualitas tinggi, rekomendasi personal. Semua elemen ini dirancang untuk memicu respons spesifik dari konsumen.</p>
+      </div>
+      <div class="card card-theory">
+        <div class="card-eyebrow">O — Organism</div>
+        <h3>Proses Internal Konsumen</h3>
+        <p>Persepsi nilai, evaluasi risiko, emosi (excitement saat flash sale, kecemasan saat kehabisan stok), sikap terhadap brand/seller, dan tingkat kepercayaan terhadap platform. Inilah "kotak hitam" yang menentukan respons akhir.</p>
+      </div>
+      <div class="card card-theory">
+        <div class="card-eyebrow">R — Response</div>
+        <h3>Perilaku Akhir</h3>
+        <p>Membeli (purchase), menambah ke wishlist/cart tanpa beli (intention tanpa konversi), meninggalkan platform (abandon), atau membagikan konten (advocacy). Setiap respons adalah data berharga bagi brand dan platform.</p>
+      </div>
+    </div>
+
+    <div class="callout blue reveal">
+      <div class="callout-icon">📐</div>
+      <div class="callout-body">
+        <div class="callout-title">TAM — Technology Acceptance Model (Davis, 1989)</div>
+        <div class="callout-text">Dua konstruk utama TAM: <strong>Perceived Usefulness</strong> (seberapa berguna e-commerce untuk memenuhi kebutuhan saya?) dan <strong>Perceived Ease of Use</strong> (seberapa mudah saya menggunakannya?). Kedua konstruk ini memediasi antara fitur sistem dan actual use behavior. Dalam konteks Indonesia: perceived ease of use sering menjadi hambatan utama untuk konsumen Tier 2-3 yang baru pertama kali belanja online.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: PROSES KEPUTUSAN -->
+  <div class="section reveal" id="journey">
+    <div class="section-label">
+      <span class="section-num">02</span>
+      <span class="section-rule"></span>
+      <span class="section-tag">Decision Process</span>
+    </div>
+    <h2>Proses Keputusan Pembelian Digital</h2>
+    <p class="section-sub">Dari model linear klasik ke customer journey yang non-linear dan multi-touchpoint</p>
+
+    <div class="prose reveal">
+      <p>Model keputusan pembelian klasik (problem recognition → information search → evaluation → purchase → post-purchase) masih relevan sebagai kerangka konseptual, tapi dalam praktiknya konsumen digital tidak mengikuti urutan linear tersebut. Mereka <strong>melompat-lompat antar tahap</strong>, meninggalkan dan kembali, dan sering kali memulai dari tengah perjalanan berkat algoritma rekomendasi.</p>
+    </div>
+
+    <!-- Interactive Journey Map -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:16px;">Customer Journey Digital — Klik Tahap untuk Detail</h3>
+
+    <div class="journey-wrap reveal">
+      <div class="journey-title">TAHAPAN KEPUTUSAN PEMBELIAN DIGITAL</div>
+      <div class="journey-steps">
+        <div class="journey-step" onclick="showJourney('zmot')">
+          <div class="journey-icon">🔍</div>
+          <div class="journey-label">Tahap 0</div>
+          <div class="journey-name">ZMOT</div>
+        </div>
+        <div class="journey-step" onclick="showJourney('discovery')">
+          <div class="journey-icon">✨</div>
+          <div class="journey-label">Tahap 1</div>
+          <div class="journey-name">Discovery</div>
+        </div>
+        <div class="journey-step" onclick="showJourney('search')">
+          <div class="journey-icon">📊</div>
+          <div class="journey-label">Tahap 2</div>
+          <div class="journey-name">Search</div>
+        </div>
+        <div class="journey-step" onclick="showJourney('eval')">
+          <div class="journey-icon">⚖️</div>
+          <div class="journey-label">Tahap 3</div>
+          <div class="journey-name">Evaluasi</div>
+        </div>
+        <div class="journey-step" onclick="showJourney('purchase')">
+          <div class="journey-icon">🛒</div>
+          <div class="journey-label">Tahap 4</div>
+          <div class="journey-name">Purchase</div>
+        </div>
+        <div class="journey-step" onclick="showJourney('post')">
+          <div class="journey-icon">💬</div>
+          <div class="journey-label">Tahap 5</div>
+          <div class="journey-name">Post-Purchase</div>
+        </div>
+      </div>
+      <div class="journey-detail" id="jd-zmot">
+        <h4>Zero Moment of Truth (ZMOT) — Google (2011)</h4>
+        <p>Procter & Gamble pernah menyebut "First Moment of Truth" sebagai saat konsumen berdiri di depan rak toko dan memilih produk. Google memperkenalkan ZMOT: momen sebelum itu — saat konsumen melakukan riset online. Di sinilah <strong>sebagian besar keputusan sudah terbentuk</strong> sebelum konsumen bahkan membuka aplikasi e-commerce. Riset di media sosial, tanya teman di WhatsApp, menonton review YouTube — semua ini adalah ZMOT. Implikasi: brand harus hadir dan relevan di ZMOT, bukan hanya di toko online.</p>
+      </div>
+      <div class="journey-detail" id="jd-discovery">
+        <h4>Discovery: Konsumen Tidak Selalu Mencari Aktif</h4>
+        <p>Di era algoritma, discovery bisa bersifat pasif. Konsumen tidak mencari sepatu — sepatu yang menemukan mereka lewat iklan Instagram yang ditargetkan, rekomendasi TikTok For You Page, atau notifikasi flash sale dari Shopee. <strong>Passive discovery</strong> ini semakin mendominasi dibanding active search, terutama di kategori fashion, F&B, dan lifestyle. Ini membalik asumsi lama bahwa konsumen selalu memulai perjalanan dengan kebutuhan yang sudah disadari.</p>
+      </div>
+      <div class="journey-detail" id="jd-search">
+        <h4>Information Search: Multi-Platform, Non-Linear</h4>
+        <p>Konsumen Indonesia khas melakukan pencarian di beberapa tempat: review di TikTok atau YouTube, harga di Shopee dan Tokopedia, pertanyaan di grup WhatsApp atau forum komunitas, dan testimoni di Instagram. Ini disebut <strong>multi-touchpoint search behavior</strong>. Setiap platform memberikan jenis informasi berbeda: YouTube untuk deep review, TikTok untuk first impression, marketplace untuk harga dan seller reputation, komunitas untuk honest opinion. Brand yang hanya hadir di satu touchpoint kehilangan konsumen di tahap ini.</p>
+      </div>
+      <div class="journey-detail" id="jd-eval">
+        <h4>Evaluasi: Heuristik, Bukan Kalkulasi Rasional</h4>
+        <p>Teori mengatakan konsumen mengevaluasi semua alternatif secara rasional. Kenyataannya, konsumen menggunakan <strong>heuristik kognitif</strong> — jalan pintas mental — untuk menyederhanakan evaluasi yang terlalu kompleks. Rating bintang sebagai sinyal kualitas, jumlah terjual sebagai sinyal popularitas, badge "Official Store" sebagai sinyal kepercayaan, harga coret sebagai sinyal penghematan (anchoring effect). Paradox of choice (Schwartz, 2004) menjelaskan mengapa terlalu banyak pilihan justru menurunkan kepuasan dan menghambat keputusan — ini adalah alasan mengapa filter dan sorting di marketplace sangat penting secara strategis.</p>
+      </div>
+      <div class="journey-detail" id="jd-purchase">
+        <h4>Purchase: Titik Kritis yang Sering Diabaikan</h4>
+        <p>Konsumen yang sudah berniat beli masih bisa gagal di tahap ini karena friction di proses checkout: biaya pengiriman yang muncul tiba-tiba, dipaksa membuat akun, metode pembayaran tidak tersedia, atau estimasi pengiriman terlalu lama. <strong>Setiap langkah tambahan dalam checkout adalah potensi kehilangan konsumen.</strong> Ini adalah titik di mana data analitik platform paling banyak bicara — heatmap checkout, session recording, dan funnel analysis dapat mengidentifikasi persis di mana konsumen drop off.</p>
+      </div>
+      <div class="journey-detail" id="jd-post">
+        <h4>Post-Purchase: Awal dari Siklus Berikutnya</h4>
+        <p>Pengalaman post-purchase — kecepatan pengiriman, kondisi produk saat tiba, kemudahan return jika bermasalah, dan respons customer service — menentukan apakah konsumen akan menjadi repeat buyer dan/atau membuat UGC positif. Di e-commerce, <strong>post-purchase experience adalah marketing yang paling efektif</strong>: konsumen yang puas organik menjadi sumber review, rekomendasi WOM, dan konten UGC yang nilainya jauh melebihi iklan berbayar.</p>
+      </div>
+    </div>
+
+    <!-- Heuristics -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:16px;">Heuristik Evaluasi di E-Commerce Indonesia</h3>
+
+    <div class="grid-2 reveal">
+      <div class="card card-analogy">
+        <div class="card-eyebrow">Analogi</div>
+        <h3>Warung vs. Supermarket</h3>
+        <p>Saat berbelanja di warung dekat rumah, Anda tidak membandingkan harga secara sistematis — Anda percaya pada pemilik warung yang sudah dikenal. E-commerce memaksa konsumen membuat keputusan tanpa kepercayaan personal itu, sehingga mereka menggunakan sinyal-sinyal proxy: rating = reputasi pemilik warung, jumlah terjual = ramai dikunjungi pelanggan, Official Store = toko resmi besar.</p>
+      </div>
+      <div class="card card-warn">
+        <div class="card-eyebrow">Paradox of Choice — Schwartz (2004)</div>
+        <h3>Lebih Banyak Pilihan = Lebih Sedikit Keputusan</h3>
+        <p>Ketika konsumen dihadapkan pada terlalu banyak opsi yang sebanding, mereka mengalami <em>decision paralysis</em> — tidak jadi beli sama sekali, atau merasa tidak puas dengan pilihan yang dibuat. Search query "kaos putih polos" di Shopee menghasilkan 500.000+ produk. Tanpa heuristik dan filter, keputusan menjadi imposible. Ini menjelaskan mengapa <strong>rekomendasi personal dan kurasi produk</strong> adalah fitur strategis, bukan sekadar kenyamanan.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: MOBILE COMMERCE -->
+  <div class="section reveal" id="mobile">
+    <div class="section-label">
+      <span class="section-num">03</span>
+      <span class="section-rule"></span>
+      <span class="section-tag">M-Commerce</span>
+    </div>
+    <h2>Mobile Commerce</h2>
+    <p class="section-sub">Bukan sekadar e-commerce di layar kecil — konteks penggunaan yang fundamental berbeda</p>
+
+    <div class="callout red reveal">
+      <div class="callout-icon">📱</div>
+      <div class="callout-body">
+        <div class="callout-title">Kesalahan Paling Umum dalam Memahami M-Commerce</div>
+        <div class="callout-text">Banyak yang menganggap mobile commerce hanya versi "diperkecil" dari desktop e-commerce. Ini keliru. Konsumen yang membuka Shopee di smartphone sedang dalam konteks yang fundamental berbeda dari ketika mereka membuka laptop: mereka mungkin sedang di angkutan umum, sambil menonton TV, atau di antara dua aktivitas. <strong>Konteks = perilaku yang berbeda = kebutuhan desain yang berbeda.</strong></div>
+      </div>
+    </div>
+
+    <!-- Mobile vs Desktop Compare -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:16px;">Mobile vs. Desktop: Perbandingan Perilaku</h3>
+
+    <div class="reveal" style="overflow-x:auto;margin-bottom:28px;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Dimensi</th>
+            <th><span class="tag-mobile">Mobile</span></th>
+            <th><span class="tag-desktop">Desktop</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Konteks Penggunaan</td>
+            <td>On-the-go, multitasking, terfragmentasi, kapan saja</td>
+            <td>Dedicated browsing, di rumah/kantor, lebih focused</td>
+          </tr>
+          <tr>
+            <td>Durasi Sesi</td>
+            <td>Pendek (2–5 menit), frekuensi tinggi (8–12x/hari)</td>
+            <td>Panjang (15–45 menit), frekuensi lebih rendah</td>
+          </tr>
+          <tr>
+            <td>Abandonment Rate</td>
+            <td>~85% — lebih tinggi karena interupsi & friction checkout</td>
+            <td>~73% — lebih rendah, sesi lebih intentional</td>
+          </tr>
+          <tr>
+            <td>Conversion Rate</td>
+            <td>Umumnya lebih rendah (1.5–2.5%)</td>
+            <td>Umumnya lebih tinggi (3–4%), terutama high-involvement</td>
+          </tr>
+          <tr>
+            <td>Produk yang Dibeli</td>
+            <td>Produk familiar, low-involvement, repeat purchase</td>
+            <td>Produk baru, high-involvement (elektronik, furnitur)</td>
+          </tr>
+          <tr>
+            <td>Discovery</td>
+            <td>Pasif (algoritma, notifikasi, social media feed)</td>
+            <td>Aktif (search, perbandingan sistematis)</td>
+          </tr>
+          <tr>
+            <td>Input Metode</td>
+            <td>Touch, voice, kamera — tap > type</td>
+            <td>Keyboard & mouse — lebih mudah input teks panjang</td>
+          </tr>
+          <tr>
+            <td>Pembayaran Favorit</td>
+            <td>E-wallet (GoPay, OVO, ShopeePay), COD, BNPL</td>
+            <td>Transfer bank, kartu kredit, virtual account</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Google Micro-Moments -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:8px;">Google Micro-Moments: 4 Momen Kritis di Mobile</h3>
+    <p style="font-size:14px;color:var(--ink3);margin-bottom:20px;">Klik setiap momen untuk melihat implikasinya bagi brand:</p>
+
+    <div class="moments-grid reveal">
+      <div class="moment-card" onclick="showMoment('know')">
+        <div class="moment-icon">🤔</div>
+        <div class="moment-name">I-Want-to-Know</div>
+        <div class="moment-tag">curiosity → research</div>
+      </div>
+      <div class="moment-card" onclick="showMoment('go')">
+        <div class="moment-icon">📍</div>
+        <div class="moment-name">I-Want-to-Go</div>
+        <div class="moment-tag">local intent</div>
+      </div>
+      <div class="moment-card" onclick="showMoment('do')">
+        <div class="moment-icon">🛠️</div>
+        <div class="moment-name">I-Want-to-Do</div>
+        <div class="moment-tag">how-to intent</div>
+      </div>
+      <div class="moment-card" onclick="showMoment('buy')">
+        <div class="moment-icon">💳</div>
+        <div class="moment-name">I-Want-to-Buy</div>
+        <div class="moment-tag">purchase intent</div>
+      </div>
+    </div>
+
+    <div class="moment-detail" id="md-know">
+      <h4>I-Want-to-Know Moment</h4>
+      <p>Konsumen sedang dalam mode eksplorasi — mereka penasaran tapi belum berniat beli. "Bedanya retinol vs niacinamide itu apa ya?" atau "Laptop gaming di bawah 10 juta bagus yang mana?" Mereka mencari konten edukatif, bukan iklan. <strong>Implikasi brand:</strong> Hadir dengan konten informatif (artikel, video tutorial, FAQ) yang menjawab pertanyaan-pertanyaan ini. Brand yang membantu di I-Want-to-Know moment membangun consideration set bahkan sebelum konsumen berniat beli.</p>
+    </div>
+    <div class="moment-detail" id="md-go">
+      <h4>I-Want-to-Go Moment</h4>
+      <p>Konsumen mencari sesuatu di sekitar mereka — "toko HP terdekat", "service center Samsung Jakarta Selatan". Ini sangat relevan untuk brand yang punya toko fisik atau model omnichannel. <strong>Implikasi brand:</strong> Optimasi Google My Business, pastikan alamat dan jam operasional akurat, dan pertimbangkan geo-targeted ads. Konsumen dalam momen ini memiliki high purchase intent — mereka sudah memutuskan produk, sekarang mencari di mana mendapatkannya.</p>
+    </div>
+    <div class="moment-detail" id="md-do">
+      <h4>I-Want-to-Do Moment</h4>
+      <p>Konsumen mencari cara melakukan sesuatu — "cara pakai sunscreen yang benar", "setting router baru", "resep rendang". Ini adalah content marketing gold: konten how-to yang genuinely membantu membangun kepercayaan dan asosiasi positif dengan brand. <strong>Implikasi brand:</strong> Konten tutorial, how-to video, dan panduan penggunaan produk bukan sekadar layanan purna jual — ini adalah discovery channel yang mengantarkan konsumen baru ke produk Anda.</p>
+    </div>
+    <div class="moment-detail" id="md-buy">
+      <h4>I-Want-to-Buy Moment</h4>
+      <p>Konsumen sudah siap bertransaksi — mereka sudah memutuskan apa yang ingin dibeli, sekarang mencari di mana dan bagaimana. Momen ini adalah yang paling berharga dan paling kompetitif: semua brand bersaing memperebutkan konversi di sini. <strong>Implikasi brand:</strong> Frictionless checkout, opsi pembayaran lengkap, informasi stok real-time, dan kemudahan return policy adalah yang paling menentukan konversi di momen ini — bukan lagi harga atau fitur produk.</p>
+    </div>
+
+    <!-- Mobile Payment Ecosystem -->
+    <hr class="div">
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:8px;">Ekosistem Pembayaran Mobile Indonesia</h3>
+    <p style="font-size:14px;color:var(--ink3);margin-bottom:20px;">Keragaman metode pembayaran adalah faktor unik yang membentuk perilaku m-commerce Indonesia:</p>
+
+    <div class="payment-grid reveal">
+      <div class="payment-card">
+        <div class="payment-icon">💚</div>
+        <div class="payment-name">GoPay / OVO / Dana</div>
+        <div class="payment-type">E-Wallet</div>
+        <div class="payment-desc">Frictionless payment, checkout 1-tap. Mendorong impulse buying karena "uangnya tidak terasa keluar". Dominan di segmen urban muda.</div>
+      </div>
+      <div class="payment-card">
+        <div class="payment-icon">🛍️</div>
+        <div class="payment-name">ShopeePay / Paylater</div>
+        <div class="payment-type">Platform Wallet + BNPL</div>
+        <div class="payment-desc">Terintegrasi dengan ekosistem platform. Paylater menaikkan perceived purchasing power — konsumen bisa beli sekarang, bayar nanti dengan cicilan.</div>
+      </div>
+      <div class="payment-card">
+        <div class="payment-icon">💳</div>
+        <div class="payment-name">Kredivo / Akulaku</div>
+        <div class="payment-type">BNPL Independen</div>
+        <div class="payment-desc">Buy Now Pay Later yang mengubah persepsi keterjangkauan produk. Kategori elektronik dan fashion adalah yang paling banyak menggunakan BNPL.</div>
+      </div>
+      <div class="payment-card">
+        <div class="payment-icon">💵</div>
+        <div class="payment-name">COD</div>
+        <div class="payment-type">Cash on Delivery</div>
+        <div class="payment-desc">Masih 42%+ transaksi. Proxy kepercayaan untuk konsumen yang belum percaya pembayaran digital. Tingkat return lebih tinggi — konsumen bisa "tidak jadi beli" saat kurir datang.</div>
+      </div>
+      <div class="payment-card">
+        <div class="payment-icon">🏦</div>
+        <div class="payment-name">Transfer Bank</div>
+        <div class="payment-type">Bank Transfer</div>
+        <div class="payment-desc">Masih digunakan untuk pembelian bernilai besar. Proses lebih panjang (harus buka banking app), tapi memberi rasa kontrol lebih kepada konsumen.</div>
+      </div>
+      <div class="payment-card">
+        <div class="payment-icon">🏪</div>
+        <div class="payment-name">Minimarket (Indomaret/Alfamart)</div>
+        <div class="payment-type">Offline Payment</div>
+        <div class="payment-desc">Opsi unik Indonesia: bayar pesanan online di kasir minimarket. Menjangkau konsumen yang belum punya rekening bank atau e-wallet. Penghubung digital-fisik.</div>
+      </div>
+    </div>
+
+    <div class="callout amber reveal">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-body">
+        <div class="callout-title">BNPL dan Ilusi Keterjangkauan</div>
+        <div class="callout-text">Buy Now Pay Later secara signifikan mengubah persepsi harga konsumen — produk Rp2 juta terasa seperti "hanya Rp167.000/bulan". Riset menunjukkan BNPL meningkatkan average order value 20–30% tapi juga berkorelasi dengan tingkat default yang lebih tinggi dan potensi over-consumption. Ini adalah area etika pemasaran digital yang perlu dikritisi: sampai mana tanggung jawab platform dalam memastikan konsumen tidak mengambil komitmen finansial yang melebihi kapasitasnya?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: TRUST & PERCEIVED RISK -->
+  <div class="section reveal" id="trust">
+    <div class="section-label">
+      <span class="section-num">04</span>
+      <span class="section-rule"></span>
+      <span class="section-tag">Trust & Risk</span>
+    </div>
+    <h2>Trust & Perceived Risk</h2>
+    <p class="section-sub">Hambatan psikologis yang menentukan apakah konsumen melewati garis finish transaksi</p>
+
+    <div class="grid-2 reveal">
+      <div class="card card-theory">
+        <div class="card-eyebrow">Teori Inti — McKnight & Chervany (2001)</div>
+        <h3>Mengapa Trust Adalah Fondasi E-Commerce</h3>
+        <p>Dalam transaksi fisik, konsumen bisa melihat, menyentuh, mencoba produk — ketidakpastian diminimalkan oleh pengalaman langsung. E-commerce menghilangkan semua itu, menciptakan uncertainty yang harus diatasi oleh trust. McKnight & Chervany mengidentifikasi bahwa trust e-commerce terdiri dari: <strong>trusting beliefs</strong> (keyakinan bahwa penjual kompeten, jujur, dan peduli) dan <strong>trusting intentions</strong> (kesiapan bergantung pada penjual).</p>
+      </div>
+      <div class="card card-analogy">
+        <div class="card-eyebrow">Analogi</div>
+        <h3>Beli Kucing Dalam Karung</h3>
+        <p>Pepatah "membeli kucing dalam karung" — membeli sesuatu tanpa tahu isinya — adalah metafora sempurna untuk ketidakpastian e-commerce. Anda memesan sepatu berdasarkan foto yang mungkin di-edit, ukuran yang mungkin tidak akurat, dari seller yang belum pernah Anda temui. Seluruh arsitektur trust-building di e-commerce (rating, review, garansi, Official Store) adalah cara platform membuktikan bahwa karungnya tidak kosong.</p>
+      </div>
+    </div>
+
+    <!-- Risk Cards -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:8px;">Dimensi Perceived Risk di E-Commerce</h3>
+    <p style="font-size:14px;color:var(--ink3);margin-bottom:20px;">Klik setiap tipe risiko untuk melihat detail dan mekanisme mitigasinya:</p>
+
+    <div class="risk-grid reveal">
+      <div class="risk-card" onclick="showRisk('financial')">
+        <div class="risk-icon">💰</div>
+        <div class="risk-name">Financial Risk</div>
+        <span class="risk-level risk-high">TINGGI</span>
+        <div class="risk-desc">Takut ditipu, uang tidak kembali, produk tidak dikirim.</div>
+      </div>
+      <div class="risk-card" onclick="showRisk('product')">
+        <div class="risk-icon">📦</div>
+        <div class="risk-name">Product Risk</div>
+        <span class="risk-level risk-high">TINGGI</span>
+        <div class="risk-desc">Produk tidak sesuai foto, deskripsi menyesatkan, kualitas buruk.</div>
+      </div>
+      <div class="risk-card" onclick="showRisk('privacy')">
+        <div class="risk-icon">🔒</div>
+        <div class="risk-name">Privacy Risk</div>
+        <span class="risk-level risk-med">SEDANG</span>
+        <div class="risk-desc">Data pribadi dan informasi pembayaran disalahgunakan.</div>
+      </div>
+      <div class="risk-card" onclick="showRisk('delivery')">
+        <div class="risk-icon">🚚</div>
+        <div class="risk-name">Delivery Risk</div>
+        <span class="risk-level risk-med">SEDANG</span>
+        <div class="risk-desc">Paket terlambat, rusak, atau tidak sampai sama sekali.</div>
+      </div>
+      <div class="risk-card" onclick="showRisk('social')">
+        <div class="risk-icon">👥</div>
+        <div class="risk-name">Social Risk</div>
+        <span class="risk-level risk-low">RENDAH–SEDANG</span>
+        <div class="risk-desc">Malu jika pilihan produk dihakimi. Relevan untuk kategori fashion dan hadiah.</div>
+      </div>
+      <div class="risk-card" onclick="showRisk('time')">
+        <div class="risk-icon">⏱️</div>
+        <div class="risk-name">Time/Convenience Risk</div>
+        <span class="risk-level risk-low">RENDAH</span>
+        <div class="risk-desc">Proses return rumit, menunggu pengiriman terlalu lama.</div>
+      </div>
+    </div>
+
+    <div class="risk-detail" id="rd-financial">
+      <p><strong>Financial Risk</strong> adalah dimensi perceived risk tertinggi di e-commerce, terutama untuk first-time buyers dan konsumen Tier 2-3. Ketakutan ditipu berakar dari pengalaman nyata atau cerita orang terdekat tentang penipuan online. <br><br><strong>Mekanisme mitigasi:</strong> Program Perlindungan Pembeli (Shopee Garansi, Tokopedia Proteksi) yang menahan dana seller hingga pembeli konfirmasi penerimaan. COD sebagai solusi radikal — tidak perlu percaya sistem pembayaran digital karena uang baru keluar saat barang ada di tangan. Verified seller dan rating sistem juga secara tidak langsung mengurangi financial risk.</p>
+    </div>
+    <div class="risk-detail" id="rd-product">
+      <p><strong>Product Risk</strong> adalah sumber paling umum komplain konsumen e-commerce: "tidak sesuai foto", "kualitas lebih buruk dari yang diiklankan", "ukuran tidak akurat". Gap antara ekspektasi yang dibentuk foto produk yang di-edit vs. realitas fisik produk adalah masalah struktural e-commerce. <br><br><strong>Mekanisme mitigasi:</strong> Foto real dari pembeli (bukan foto produk official), video unboxing dalam ulasan, fitur "Tanya Penjual" untuk klarifikasi spesifik, dan kebijakan return yang mudah. Brand yang menyediakan size guide akurat dan foto produk dari multiple angle secara signifikan mengurangi product risk perception.</p>
+    </div>
+    <div class="risk-detail" id="rd-privacy">
+      <p><strong>Privacy Risk</strong> berhubungan dengan kekhawatiran data pribadi — nama, alamat, nomor HP, dan data pembayaran — disalahgunakan oleh platform, seller, atau pihak ketiga. Di Indonesia, insiden kebocoran data dari beberapa platform besar meningkatkan persepsi risiko ini secara signifikan. <br><br><strong>Mekanisme mitigasi:</strong> Sertifikasi keamanan (SSL, PCI-DSS), transparansi kebijakan privasi, opsi masking nomor HP dalam transaksi, dan komunikasi proaktif jika ada insiden keamanan. Regulasi PDP (Perlindungan Data Pribadi) Indonesia yang semakin kuat juga memaksa platform meningkatkan standar ini.</p>
+    </div>
+    <div class="risk-detail" id="rd-delivery">
+      <p><strong>Delivery Risk</strong> mencakup keterlambatan, kerusakan, dan kegagalan pengiriman. Di Indonesia, variasi kualitas layanan jasa pengiriman antar wilayah sangat besar — pengiriman ke Jakarta berbeda jauh pengalamannya dengan pengiriman ke Flores. <br><br><strong>Mekanisme mitigasi:</strong> Real-time tracking, asuransi pengiriman, multiple kurir pilihan, dan kebijakan penggantian yang mudah. Fitur "Aman" di marketplace yang memfoto produk sebelum dikirim adalah salah satu inovasi lokal yang secara langsung mengurangi delivery risk perception. Gratis ongkir tetap menjadi salah satu cara paling efektif mengurangi persepsi delivery risk secara psikologis.</p>
+    </div>
+    <div class="risk-detail" id="rd-social">
+      <p><strong>Social Risk</strong> adalah ketakutan dihakimi oleh lingkungan sosial atas pilihan produk yang dibeli. Relevan terutama di kategori fashion, kosmetik, dan hadiah. Konsumen muda di segmen urban sangat aware akan social risk — mereka tidak ingin terlihat membeli produk "kurang bergengsi".<br><br><strong>Mekanisme mitigasi:</strong> Packaging premium yang membuat produk tampak mahal meski harganya terjangkau, opsi gift wrapping, dan fitur private wishlist. Platform yang memungkinkan pembelian diskret (tanpa nama produk di bukti transfer) juga mengurangi social risk untuk kategori tertentu.</p>
+    </div>
+    <div class="risk-detail" id="rd-time">
+      <p><strong>Time/Convenience Risk</strong> adalah persepsi bahwa e-commerce justru merepotkan karena proses return yang rumit, waktu tunggu yang lama, atau customer service yang sulit dihubungi. Meski lebih rendah dibanding dimensi lain, ini sangat relevan untuk produk yang diperlukan segera.<br><br><strong>Mekanisme mitigasi:</strong> Same-day delivery (GrabExpress, GoSend), express shipping, dan proses return yang seamless. Tokopedia Instant (2 jam sampai) dan Shopee Express prioritas adalah jawaban langsung terhadap time risk. Semakin mudah return, semakin rendah perceived risk — ini paradoks yang banyak brand belum sepenuhnya pahami.</p>
+    </div>
+
+    <!-- Trust Building Mechanisms -->
+    <hr class="div">
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:16px;">Mekanisme Trust-Building di Platform Indonesia</h3>
+
+    <div class="reveal">
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="toggleAcc(this)">
+          <span>🏅 Official Store Badge & Garansi Resmi</span>
+          <span class="acc-chevron">▾</span>
+        </div>
+        <div class="acc-content">
+          Badge "Official Store" dan "Mall" di Shopee/Tokopedia adalah sinyal trust paling kuat di platform. Konsumen secara intuitif memahami bahwa Official Store = produk asli, garansi resmi, layanan purna jual tersedia. <strong>Efek psikologis:</strong> konsumen rela membayar 5-15% lebih mahal di Official Store dibanding seller biasa untuk produk yang sama — ini adalah monetary value dari trust. Brand yang belum memiliki Official Store kehilangan segmen konsumen yang sangat sensitif terhadap risiko produk.
+        </div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="toggleAcc(this)">
+          <span>⭐ Sistem Rating & Review Terverifikasi</span>
+          <span class="acc-chevron">▾</span>
+        </div>
+        <div class="acc-content">
+          Rating seller dan produk adalah mekanisme trust-building paling demokratis di e-commerce — setiap konsumen berkontribusi pada reputasi seller. Verified purchase badge mencegah review palsu (minimal). <strong>Temuan menarik:</strong> Seller dengan 4.8 bintang dari 5.000 ulasan lebih dipercaya dari seller dengan 5.0 bintang dari 20 ulasan — konsumen secara intuitif menganggap sempurna tidak realistis dan berpotensi manipulatif. Volume ulasan = legitimasi.
+        </div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="toggleAcc(this)">
+          <span>🛡️ Program Perlindungan Pembeli</span>
+          <span class="acc-chevron">▾</span>
+        </div>
+        <div class="acc-content">
+          Shopee Garansi, Tokopedia Proteksi, dan sejenisnya menghilangkan financial risk dengan menjamin uang kembali jika produk tidak sesuai atau tidak diterima. Sistem escrow ini — dana ditahan platform hingga pembeli konfirmasi — adalah arsitektur kepercayaan yang membuat e-commerce bisa berkembang di populasi yang belum terbiasa transaksi digital. <strong>Implikasi:</strong> Konsumen yang tahu ada "safety net" ini lebih berani berbelanja di seller baru dengan harga lebih kompetitif.
+        </div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="toggleAcc(this)">
+          <span>💵 COD sebagai Trust Proxy</span>
+          <span class="acc-chevron">▾</span>
+        </div>
+        <div class="acc-content">
+          COD tetap populer bukan karena konsumen tidak tahu cara transfer atau pakai e-wallet — tapi karena COD memberikan kontrol maksimal: uang keluar hanya jika barang ada di tangan dan kondisinya diterima. Ini adalah solusi radikal untuk trust problem. <strong>Paradoks COD:</strong> menguntungkan konsumen tapi merugikan ekosistem — tingkat return lebih tinggi (konsumen bisa tidak jadi beli), fraud seller sulit dikontrol, dan biaya operasional logistik lebih tinggi. Platform secara bertahap memberikan insentif (cashback, voucher) untuk mendorong migrasi ke pembayaran digital.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: CART ABANDONMENT -->
+  <div class="section reveal" id="abandon">
+    <div class="section-label">
+      <span class="section-num">05</span>
+      <span class="section-rule"></span>
+      <span class="section-tag">Cart Abandonment</span>
+    </div>
+    <h2>Cart Abandonment</h2>
+    <p class="section-sub">7 dari 10 keranjang belanja tidak pernah berakhir di kasir</p>
+
+    <div class="stat-row reveal">
+      <div class="stat-card red">
+        <div class="stat-num">70%</div>
+        <div class="stat-label">Global average cart<br>abandonment rate</div>
+      </div>
+      <div class="stat-card amber">
+        <div class="stat-num">85%</div>
+        <div class="stat-label">Abandonment rate<br>di mobile devices</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-num">73%</div>
+        <div class="stat-label">Abandonment rate<br>di desktop</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-num">15%</div>
+        <div class="stat-label">Rata-rata peningkatan<br>konversi setelah recovery</div>
+      </div>
+    </div>
+
+    <div class="callout green reveal">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <div class="callout-title">Analogi: Trolley di Supermarket</div>
+        <div class="callout-text">Bayangkan 70% orang yang memenuhi trolley supermarket mereka kemudian meninggalkan trolley itu di lorong dan pulang tanpa membeli apapun. Di dunia fisik ini terdengar absurd. Di e-commerce, ini adalah norma — dan sebagian besar pelaku bisnis hanya menerima angka ini sebagai fakta, padahal setiap persentase recovery bisa berarti jutaan rupiah dalam revenue tambahan.</div>
+      </div>
+    </div>
+
+    <!-- Funnel visualization -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:16px;">Funnel Konversi E-Commerce: Di Mana Konsumen Hilang</h3>
+
+    <div class="funnel-wrap reveal" id="funnelWrap">
+      <div class="funnel-title">FUNNEL KONVERSI RATA-RATA E-COMMERCE (BASIS 100 PENGUNJUNG)</div>
+      <div class="funnel-steps">
+        <div class="funnel-step">
+          <div class="funnel-label-left">Pengunjung</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="background:#1a1814;" data-w="100%">100 pengunjung</div>
+          </div>
+          <div class="funnel-pct">100%</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-label-left">Lihat Produk</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="background:#3d3a33;" data-w="45%">45 melihat produk</div>
+          </div>
+          <div class="funnel-pct">45%</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-label-left">Add to Cart</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="background:var(--accent2);" data-w="15%">15 tambah ke cart</div>
+          </div>
+          <div class="funnel-pct">15%</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-label-left">Mulai Checkout</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="background:var(--amber);" data-w="8%">8 mulai checkout</div>
+          </div>
+          <div class="funnel-pct">8%</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-label-left">Selesai Beli</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="background:var(--accent3);" data-w="3%">3 menyelesaikan</div>
+          </div>
+          <div class="funnel-pct">3%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Abandonment Reasons Chart -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:16px;">Penyebab Cart Abandonment — Data Baymard Institute (2024)</h3>
+
+    <div class="reasons-wrap reveal" id="reasonsWrap">
+      <div class="reason-row">
+        <div class="reason-rank">01</div>
+        <div class="reason-name">Biaya pengiriman terlalu mahal / muncul tiba-tiba</div>
+        <div class="reason-bar-wrap"><div class="reason-bar" style="background:var(--accent);" data-w="48%"></div></div>
+        <div class="reason-pct">48%</div>
+      </div>
+      <div class="reason-row">
+        <div class="reason-rank">02</div>
+        <div class="reason-name">Dipaksa membuat akun sebelum checkout</div>
+        <div class="reason-bar-wrap"><div class="reason-bar" style="background:var(--accent);" data-w="26%"></div></div>
+        <div class="reason-pct">26%</div>
+      </div>
+      <div class="reason-row">
+        <div class="reason-rank">03</div>
+        <div class="reason-name">Proses checkout terlalu panjang / rumit</div>
+        <div class="reason-bar-wrap"><div class="reason-bar" style="background:#e06b52;" data-w="22%"></div></div>
+        <div class="reason-pct">22%</div>
+      </div>
+      <div class="reason-row">
+        <div class="reason-rank">04</div>
+        <div class="reason-name">Tidak bisa melihat total biaya di muka</div>
+        <div class="reason-bar-wrap"><div class="reason-bar" style="background:#e06b52;" data-w="21%"></div></div>
+        <div class="reason-pct">21%</div>
+      </div>
+      <div class="reason-row">
+        <div class="reason-rank">05</div>
+        <div class="reason-name">Website / app error atau crash</div>
+        <div class="reason-bar-wrap"><div class="reason-bar" style="background:var(--amber);" data-w="17%"></div></div>
+        <div class="reason-pct">17%</div>
+      </div>
+      <div class="reason-row">
+        <div class="reason-rank">06</div>
+        <div class="reason-name">Tidak percaya keamanan data kartu kredit</div>
+        <div class="reason-bar-wrap"><div class="reason-bar" style="background:var(--amber);" data-w="14%"></div></div>
+        <div class="reason-pct">14%</div>
+      </div>
+      <div class="reason-row">
+        <div class="reason-rank">07</div>
+        <div class="reason-name">Estimasi pengiriman terlalu lama</div>
+        <div class="reason-bar-wrap"><div class="reason-bar" style="background:var(--accent2);" data-w="12%"></div></div>
+        <div class="reason-pct">12%</div>
+      </div>
+      <div class="reason-row">
+        <div class="reason-rank">08</div>
+        <div class="reason-name">Kebijakan return tidak memuaskan</div>
+        <div class="reason-bar-wrap"><div class="reason-bar" style="background:var(--accent2);" data-w="11%"></div></div>
+        <div class="reason-pct">11%</div>
+      </div>
+    </div>
+
+    <!-- Tipologi Abandonment -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:16px;">Tipologi Cart Abandonment</h3>
+
+    <div class="grid-2 reveal">
+      <div class="card card-data">
+        <div class="card-eyebrow">Tipe 01</div>
+        <h3>Intentional Abandonment</h3>
+        <p>Disengaja — konsumen menggunakan cart sebagai <strong>daftar simpan</strong> atau wishlist. Menunggu harga turun, menunggu gajian, atau membandingkan harga di platform lain. Sangat umum di Indonesia menjelang event Harbolnas.</p>
+        <br><p style="font-size:12.5px;color:var(--ink3);">Strategi recovery: price drop notification, personalized voucher, reminder saat event promo dimulai.</p>
+      </div>
+      <div class="card card-theory">
+        <div class="card-eyebrow">Tipe 02</div>
+        <h3>Unintentional Abandonment</h3>
+        <p>Tidak disengaja — gangguan eksternal (telepon masuk, baterai habis), sesi berakhir, atau koneksi internet putus. Konsumen berniat melanjutkan tapi lupa atau menemukan friction saat kembali.</p>
+        <br><p style="font-size:12.5px;color:var(--ink3);">Strategi recovery: push notification pengingat, saved cart yang persisten (tidak reset), email reminder 1-24 jam setelah abandonment.</p>
+      </div>
+      <div class="card card-warn">
+        <div class="card-eyebrow">Tipe 03</div>
+        <h3>Friction-Induced Abandonment</h3>
+        <p>Konsumen berniat beli tapi dihentikan oleh hambatan di proses checkout: terlalu banyak langkah, dipaksa daftar akun, metode pembayaran pilihan tidak tersedia, atau UI yang membingungkan.</p>
+        <br><p style="font-size:12.5px;color:var(--ink3);">Strategi recovery: one-page checkout, guest checkout, saved payment method, A/B testing UI checkout.</p>
+      </div>
+      <div class="card card-analogy">
+        <div class="card-eyebrow">Tipe 04</div>
+        <h3>Trust-Induced Abandonment</h3>
+        <p>Konsumen ragu pada momen terakhir — seller baru tanpa ulasan, tidak ada opsi COD, kebijakan return tidak jelas, atau harga terlalu murah sehingga terasa mencurigakan.</p>
+        <br><p style="font-size:12.5px;color:var(--ink3);">Strategi recovery: trust signals di halaman checkout, live chat tersedia, opsi COD untuk first-time buyer, display kebijakan return yang jelas.</p>
+      </div>
+    </div>
+
+    <!-- Indonesia Context -->
+    <div class="case-wrap reveal">
+      <div class="case-head">
+        <div class="case-icon-wrap">🇮🇩</div>
+        <div class="case-head-meta">
+          <div class="case-eyebrow">Konteks Lokal</div>
+          <div class="case-head-title">Cart Abandonment di Indonesia: Ada yang Beda</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <p>Pola cart abandonment Indonesia memiliki nuansa yang tidak selalu tercermin dalam data global dari Baymard Institute (yang majoritasnya berasal dari pasar Barat).</p>
+        <div class="case-2col">
+          <div>
+            <div class="case-col-label">Fenomena Price-Hunting</div>
+            <div class="case-col-content">Konsumen Indonesia terkenal sebagai price-hunter yang sangat aktif. Cart di satu platform sering digunakan sambil membandingkan harga di platform lain secara paralel. "Add to cart dulu sambil cek di Tokopedia" adalah perilaku yang sangat umum — dan ini bukan tanda ketidakpuasan dengan platform, tapi perilaku rasional konsumen yang price-sensitive.</div>
+          </div>
+          <div>
+            <div class="case-col-label">Harbolnas Effect</div>
+            <div class="case-col-content">Menjelang event besar (9.9, 11.11, 12.12), abandonment rate justru meningkat secara paradoks karena konsumen sengaja menambah item ke cart lebih banyak dari biasa sebagai "persiapan" — lalu hanya membeli sebagian saat event dimulai dengan voucher terbaik yang berhasil dikumpulkan. Platform yang paham ini justru mendorong "cart filling" sebelum event.</div>
+          </div>
+        </div>
+        <div class="case-finding"><strong>Implikasi strategis:</strong> Angka abandonment rate Indonesia perlu diinterpretasikan berbeda dari benchmark global. Intentional abandonment yang tinggi bukan selalu tanda masalah UX — bisa jadi tanda bahwa konsumen sangat engaged dengan platform sebagai "tool perencanaan belanja", yang justru meningkatkan lifetime value mereka.</div>
+      </div>
+    </div>
+
+    <!-- Recovery Strategies -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:16px;">Strategi Recovery Cart Abandonment</h3>
+
+    <div class="reveal">
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="toggleAcc(this)">
+          <span>📧 Email & Push Notification Sequence</span>
+          <span class="acc-chevron">▾</span>
+        </div>
+        <div class="acc-content">
+          Sequence reminder yang terbukti efektif: <strong>Email 1 (1 jam setelah abandon):</strong> Pengingat netral — "Kamu ada yang ketinggalan di cart". <strong>Email 2 (24 jam):</strong> Tambahkan social proof — "Produk ini dilihat X orang sekarang". <strong>Email 3 (72 jam):</strong> Berikan insentif — voucher atau free shipping. Setelah 72 jam, probability konversi turun drastis dan insentif lebih besar diperlukan. Penting: jangan langsung berikan diskon di email pertama — konsumen belajar untuk selalu abandon cart agar dapat diskon.
+        </div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="toggleAcc(this)">
+          <span>🎯 Retargeting Ads</span>
+          <span class="acc-chevron">▾</span>
+        </div>
+        <div class="acc-content">
+          Iklan yang menampilkan kembali produk yang ditinggalkan di cart kepada konsumen yang sudah meninggalkan platform. Ini memanfaatkan familiarity dan residual desire yang sudah ada. <strong>Best practice:</strong> Tampilkan produk spesifik yang ditinggalkan (bukan kategori umum), sertakan urgensi jika relevan (stok terbatas, harga naik), dan batasi frekuensi untuk menghindari stalking effect yang justru menciptakan asosiasi negatif dengan brand.
+        </div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="toggleAcc(this)">
+          <span>🛒 Frictionless Checkout Redesign</span>
+          <span class="acc-chevron">▾</span>
+        </div>
+        <div class="acc-content">
+          Untuk friction-induced abandonment, solusi paling efektif adalah mengurangi langkah checkout. <strong>Tindakan prioritas:</strong> (1) Guest checkout — jangan paksa daftar akun. (2) One-page checkout — semua field dalam satu halaman. (3) Saved payment method — tidak perlu input ulang. (4) Progress indicator — konsumen tahu ada berapa langkah lagi. (5) Address autofill. Setiap langkah yang dihilangkan berpotensi meningkatkan conversion rate 10-20%.
+        </div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="toggleAcc(this)">
+          <span>💸 Free Shipping Threshold Strategy</span>
+          <span class="acc-chevron">▾</span>
+        </div>
+        <div class="acc-content">
+          Karena biaya pengiriman adalah penyebab #1 cart abandonment, free shipping threshold adalah salah satu teknik konversi paling efektif: "Tambah Rp25.000 lagi untuk gratis ongkir". Konsumen sering menambah item yang tidak mereka butuhkan semata untuk mencapai threshold ini — yang justru meningkatkan average order value. <strong>Perhatian:</strong> Threshold yang terlalu tinggi justru kontraproduktif dan mendorong konsumen meninggalkan cart sama sekali.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: STUDI KASUS RISET -->
+  <div class="section reveal" id="riset">
+    <div class="section-label">
+      <span class="section-num">06</span>
+      <span class="section-rule"></span>
+      <span class="section-tag">Research</span>
+    </div>
+    <h2>Studi Kasus dalam Konteks Riset Ilmiah</h2>
+    <p class="section-sub">Bukti empiris dari penelitian akademis yang mendasari konsep-konsep hari ini</p>
+
+    <div class="research-box reveal">
+      <div class="research-head">
+        <div class="research-htitle">📖 Riset 01: TAM dalam Konteks M-Commerce Indonesia</div>
+        <div class="research-journal">Shih (2004) — Information & Management</div>
+      </div>
+      <div class="research-body">
+        <p><strong>Pertanyaan Riset:</strong> Apakah Technology Acceptance Model (TAM) Davis (1989) dapat diaplikasikan untuk memprediksi adoption m-commerce, dan faktor apa yang paling dominan?</p>
+        <p><strong>Metode:</strong> Survey empiris dengan 364 responden. Structural Equation Modeling (SEM) untuk menguji hubungan antara perceived usefulness, perceived ease of use, attitude, dan behavioral intention to use m-commerce.</p>
+        <p><strong>Temuan Utama:</strong> Perceived usefulness memiliki pengaruh yang jauh lebih kuat terhadap adoption intention dibanding perceived ease of use. Artinya: konsumen memaafkan sistem yang agak sulit digunakan jika mereka merasa itu genuinely berguna bagi mereka. Namun untuk segmen first-time users, ease of use menjadi barrier kritis yang harus diatasi terlebih dahulu sebelum usefulness dapat dievaluasi.</p>
+        <p><strong>Relevansi Indonesia:</strong> Ini menjelaskan mengapa aplikasi marketplace Indonesia yang UX-nya masih complex tetap berhasil — karena nilai (harga murah, pilihan banyak) yang ditawarkan sangat kuat. Tapi juga menjelaskan mengapa onboarding first-time buyer di Tier 2-3 harus diprioritaskan: ease of use barrier yang belum teratasi mencegah mereka sampai pada tahap menilai usefulness.</p>
+        <div class="research-tags">
+          <span class="rtag">SEM method</span>
+          <span class="rtag">TAM extension</span>
+          <span class="rtag">n=364</span>
+          <span class="rtag">perceived usefulness dominant</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="research-box reveal">
+      <div class="research-head">
+        <div class="research-htitle">📖 Riset 02: Trust dan Perceived Risk dalam Keputusan Pembelian Online</div>
+        <div class="research-journal">Pavlou (2003) — MIS Quarterly</div>
+      </div>
+      <div class="research-body">
+        <p><strong>Pertanyaan Riset:</strong> Bagaimana trust dan perceived risk secara bersama-sama mempengaruhi niat transaksi online konsumen, dan variabel mana yang lebih dominan?</p>
+        <p><strong>Metode:</strong> Eksperimen dengan manipulasi level trust dan perceived risk. Analisis regresi bertingkat untuk mengidentifikasi efek mediasi dan moderasi.</p>
+        <p><strong>Temuan Utama:</strong> Trust dan perceived risk bukan sekadar dua sisi koin yang sama — keduanya adalah konstruk independen dengan jalur pengaruh berbeda. Meningkatkan trust tidak otomatis mengurangi perceived risk, dan mengurangi perceived risk tidak otomatis meningkatkan trust. Brand harus bekerja pada kedua dimensi secara paralel. Trust memiliki pengaruh lebih kuat terhadap niat transaksi dibanding perceived risk untuk produk dengan keterlibatan tinggi.</p>
+        <p><strong>Implikasi praktis:</strong> Strategi "beri diskon besar" tidak efektif mengatasi trust problem — konsumen yang tidak percaya pada seller tidak akan membeli meski harganya 50% lebih murah. Trust harus dibangun terlebih dahulu melalui mekanisme struktural (garansi, reputasi, program perlindungan), bukan sekadar insentif harga.</p>
+        <div class="research-tags">
+          <span class="rtag">experimental design</span>
+          <span class="rtag">trust ≠ risk reduction</span>
+          <span class="rtag">high-involvement products</span>
+          <span class="rtag">structural trust building</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="research-box reveal">
+      <div class="research-head">
+        <div class="research-htitle">📖 Riset 03: Faktor Determinan Cart Abandonment — Meta-Analisis</div>
+        <div class="research-journal">Baymard Institute (2024) + Kukar-Kinney & Close (2010) — Journal of the Academy of Marketing Science</div>
+      </div>
+      <div class="research-body">
+        <p><strong>Pertanyaan Riset:</strong> Kukar-Kinney & Close (2010) meneliti: apakah perilaku menambahkan produk ke cart tanpa membeli (cart abandonment) adalah perilaku bermasalah atau perilaku fungsional yang memiliki nilai strategis?</p>
+        <p><strong>Metode:</strong> Mixed-method: survey kualitatif mendalam + data behavioral dari panel konsumen. Dikombinasikan dengan data quantitative Baymard Institute yang menganalisis lebih dari 4.000 studi e-commerce.</p>
+        <p><strong>Temuan Utama (Kukar-Kinney & Close):</strong> Cart abandonment sering merupakan perilaku fungsional yang disengaja — konsumen menggunakan cart sebagai tool planning dan comparison shopping. Konsumen yang abandon cart memiliki purchase likelihood yang secara signifikan lebih tinggi dibanding konsumen yang tidak pernah menambahkan item ke cart sama sekali. <strong>Cart abandoner ≠ lost customer; mereka adalah highly-engaged prospective buyer.</strong></p>
+        <p><strong>Implikasi:</strong> Strategi recovery yang agresif (terlalu banyak follow-up email, diskon langsung) bisa justru merusak hubungan dengan segmen ini. Pendekatan yang lebih efektif adalah facilitating — memudahkan konsumen melanjutkan perjalanan yang sudah dimulai, bukan memaksa mereka dengan urgency dan diskon.</p>
+        <div class="research-tags">
+          <span class="rtag">mixed-method</span>
+          <span class="rtag">functional abandonment</span>
+          <span class="rtag">cart = planning tool</span>
+          <span class="rtag">4000+ studies meta</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="research-box reveal">
+      <div class="research-head">
+        <div class="research-htitle">📖 Riset 04: Paradox of Choice dalam Konteks E-Commerce</div>
+        <div class="research-journal">Iyengar & Lepper (2000) — Journal of Personality and Social Psychology</div>
+      </div>
+      <div class="research-body">
+        <p><strong>Pertanyaan Riset:</strong> Apakah lebih banyak pilihan selalu menghasilkan kepuasan dan konversi yang lebih tinggi, ataukah ada titik di mana pilihan yang berlebihan justru kontraproduktif?</p>
+        <p><strong>Metode:</strong> Eksperimen klasik "jam display" — kelompok dengan 24 pilihan vs. 6 pilihan selai di supermarket. Diukur: keterlibatan awal, kepuasan, dan konversi pembelian.</p>
+        <p><strong>Temuan Utama:</strong> Display dengan 24 pilihan menarik lebih banyak perhatian awal, tapi display dengan 6 pilihan menghasilkan konversi pembelian 10x lebih tinggi. Lebih banyak pilihan = decision paralysis = tidak jadi beli. Konsumen yang dipaksa memilih dari banyak opsi juga melaporkan kepuasan lebih rendah setelah membeli — selalu merasa mungkin ada opsi yang lebih baik.</p>
+        <p><strong>Implikasi untuk E-Commerce Indonesia:</strong> Search query di Shopee bisa menghasilkan ratusan ribu produk. Tanpa curation yang baik (filter, sorting, rekomendasi personal, "pilihan terbaik" oleh platform), konsumen mengalami choice overload yang menghambat keputusan. Fitur "Pilihan Terlaris" dan "Rekomendasi untuk Kamu" bukan sekadar marketing tool — secara psikologis mereka mengurangi decision paralysis dan meningkatkan konversi.</p>
+        <div class="research-tags">
+          <span class="rtag">classic experiment</span>
+          <span class="rtag">choice overload</span>
+          <span class="rtag">10x conversion gap</span>
+          <span class="rtag">decision paralysis</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Indonesian Case Study -->
+    <div class="case-wrap reveal">
+      <div class="case-head">
+        <div class="case-icon-wrap">📱</div>
+        <div class="case-head-meta">
+          <div class="case-eyebrow">Case Study — Indonesia</div>
+          <div class="case-head-title">TikTok Shop & Pergeseran Paradigma Social Commerce</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <p>Masuknya TikTok Shop ke Indonesia (dan kemudian merger operasionalnya dengan Tokopedia) adalah salah satu disruption terbesar dalam lanskap e-commerce Indonesia. Model ini menggabungkan entertainment dengan commerce dalam cara yang sebelumnya tidak ada — dan memaksa pelaku e-commerce tradisional untuk mempertanyakan asumsi dasar tentang bagaimana konsumen berbelanja online.</p>
+        <div class="case-2col">
+          <div>
+            <div class="case-col-label">Model Tradisional vs. Social Commerce</div>
+            <div class="case-col-content"><strong>Model tradisional:</strong> Konsumen punya kebutuhan → mencari di search bar → menemukan produk → evaluasi → beli. <br><br><strong>TikTok Shop:</strong> Konsumen tidak punya kebutuhan yang disadari → konten entertaining muncul di FYP → produk terlihat menarik/relevan → desire terbentuk dalam hitungan detik → satu tap beli. Phase penelitian hampir hilang sepenuhnya.</div>
+          </div>
+          <div>
+            <div class="case-col-label">Implikasi terhadap Consumer Behavior Theory</div>
+            <div class="case-col-content">Model keputusan klasik (Engel-Kollat-Blackwell) mengasumsikan problem recognition sebagai tahap pertama. TikTok Shop membuktikan bahwa problem recognition bisa di-create oleh konten, bukan berasal dari kebutuhan yang sudah ada. Ini mengusik asumsi bahwa konsumen adalah aktor rasional yang bereaksi terhadap kebutuhan — mereka juga bisa menjadi target pasif yang kebutuhannya "diinstall" oleh algoritma.</div>
+          </div>
+        </div>
+        <div class="case-finding"><strong>Pertanyaan diskusi:</strong> Jika konsumen membeli sesuatu yang tidak mereka "butuhkan" sebelum melihat konten TikTok, apakah ini contoh demand creation yang legitimate atau manipulasi sistematis terhadap perilaku konsumen? Di mana garis antara pemasaran yang efektif dan desain yang mengeksploitasi kelemahan psikologis?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: KUIS -->
+  <div class="section reveal" id="quiz">
+    <div class="section-label">
+      <span class="section-num">07</span>
+      <span class="section-rule"></span>
+      <span class="section-tag">Evaluasi</span>
+    </div>
+    <h2>Kuis Interaktif</h2>
+    <p class="section-sub">Evaluasi pemahaman materi E-Commerce & Mobile Consumer Behaviour</p>
+
+    <div class="quiz-wrap reveal">
+      <div class="quiz-head">
+        <div class="quiz-head-top">
+          <div class="quiz-eyebrow">Evaluasi Formatif — Pertemuan 10</div>
+          <div class="quiz-score-lbl" id="scoreDisplay">Skor: 0 / 9</div>
+        </div>
+        <h3>E-Commerce & Mobile Consumer Behaviour</h3>
+      </div>
+
+      <div class="quiz-body" id="quizBody">
+
+        <!-- Q1 -->
+        <div class="q-card" data-q="1">
+          <div class="q-num">PERTANYAAN 01 / 09</div>
+          <div class="q-text">Dalam Technology Acceptance Model (Davis, 1989), dua konstruk utama yang memprediksi adoption e-commerce adalah:</div>
+          <div class="options">
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">A</div>
+              Trust dan Perceived Risk
+            </div>
+            <div class="opt" data-correct="true">
+              <div class="opt-ltr">B</div>
+              Perceived Usefulness dan Perceived Ease of Use
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">C</div>
+              Social Influence dan Facilitating Conditions
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">D</div>
+              Attitude dan Subjective Norm
+            </div>
+          </div>
+          <div class="exp" id="e1"><strong>B adalah jawaban yang tepat.</strong> TAM Davis (1989) mengidentifikasi dua konstruk utama: Perceived Usefulness (seberapa berguna sistem untuk meningkatkan kinerja pengguna) dan Perceived Ease of Use (seberapa mudah sistem digunakan tanpa usaha berlebih). Keduanya mempengaruhi attitude toward use, yang kemudian mempengaruhi behavioral intention dan actual use. Pilihan C adalah konstruk dari UTAUT (Venkatesh et al., 2003), yang merupakan model yang berbeda.</div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="q-card" data-q="2">
+          <div class="q-num">PERTANYAAN 02 / 09</div>
+          <div class="q-text">Konsumen membuka Shopee di smartphone sambil menonton TV, menambahkan 5 produk ke cart, lalu menutup aplikasi tanpa membeli karena acara TV berlanjut. Ini adalah contoh tipe cart abandonment apa?</div>
+          <div class="options">
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">A</div>
+              Intentional abandonment — konsumen sengaja menunggu promo
+            </div>
+            <div class="opt" data-correct="true">
+              <div class="opt-ltr">B</div>
+              Unintentional abandonment — gangguan eksternal menyebabkan sesi berakhir
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">C</div>
+              Friction-induced abandonment — proses checkout terlalu panjang
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">D</div>
+              Trust-induced abandonment — konsumen ragu dengan keamanan pembayaran
+            </div>
+          </div>
+          <div class="exp" id="e2"><strong>B adalah jawaban yang tepat.</strong> Unintentional abandonment terjadi ketika konsumen terganggu oleh faktor eksternal dan keluar dari sesi belanja tanpa niat untuk meninggalkan cart secara permanen. Konteks multitasking (nonton TV + belanja) adalah karakteristik khas perilaku mobile shopper. Tidak ada indikasi dalam skenario ini bahwa konsumen menunggu promo, mengalami friction checkout, atau meragukan keamanan transaksi.</div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="q-card" data-q="3">
+          <div class="q-num">PERTANYAAN 03 / 09</div>
+          <div class="q-text">Menurut penelitian Kukar-Kinney & Close (2010), apa interpretasi yang paling tepat tentang konsumen yang sering menambah produk ke cart tapi tidak menyelesaikan pembelian?</div>
+          <div class="options">
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">A</div>
+              Mereka adalah lost customers yang sudah tidak tertarik dengan produk
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">B</div>
+              Mereka memiliki masalah dengan UX platform yang harus segera diperbaiki
+            </div>
+            <div class="opt" data-correct="true">
+              <div class="opt-ltr">C</div>
+              Mereka adalah highly-engaged prospective buyers yang menggunakan cart sebagai planning tool
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">D</div>
+              Mereka tidak punya niat beli dan hanya browsing untuk hiburan
+            </div>
+          </div>
+          <div class="exp" id="e3"><strong>C adalah jawaban yang tepat.</strong> Temuan kunci Kukar-Kinney & Close (2010) adalah bahwa cart abandonment sering merupakan perilaku fungsional yang disengaja. Konsumen yang abandon cart memiliki purchase likelihood yang jauh lebih tinggi dibanding yang tidak pernah menambah ke cart sama sekali — mereka adalah prospective buyers dengan niat beli yang sudah teridentifikasi, bukan lost customers. Implikasinya: strategi recovery harus facilitative, bukan coercive.</div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="q-card" data-q="4">
+          <div class="q-num">PERTANYAAN 04 / 09</div>
+          <div class="q-text">Berdasarkan data Baymard Institute, apa penyebab #1 cart abandonment secara global?</div>
+          <div class="options">
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">A</div>
+              Proses checkout yang terlalu panjang
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">B</div>
+              Dipaksa membuat akun sebelum bisa checkout
+            </div>
+            <div class="opt" data-correct="true">
+              <div class="opt-ltr">C</div>
+              Biaya pengiriman yang terlalu tinggi atau muncul secara tiba-tiba di checkout
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">D</div>
+              Tidak percaya pada keamanan data pembayaran
+            </div>
+          </div>
+          <div class="exp" id="e4"><strong>C adalah jawaban yang tepat.</strong> Data Baymard Institute secara konsisten menunjukkan bahwa unexpected shipping costs adalah penyebab #1 cart abandonment (48% responden). Ini menjelaskan mengapa strategi free shipping threshold sangat efektif: menghilangkan atau meminimalkan biaya pengiriman secara langsung mengatasi hambatan terbesar konversi. "Unexpected" adalah kata kunci — biaya pengiriman yang sudah diketahui dari awal jauh lebih bisa diterima dibanding yang muncul mengejutkan di halaman checkout terakhir.</div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="q-card" data-q="5">
+          <div class="q-num">PERTANYAAN 05 / 09</div>
+          <div class="q-text">Seorang konsumen baru pertama kali akan belanja online di Tokopedia. Ia adalah ibu rumah tangga di Surabaya yang biasa berbelanja di pasar tradisional. Berdasarkan TAM, apa barrier utama yang paling mungkin ia hadapi?</div>
+          <div class="options">
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">A</div>
+              Perceived usefulness — ia tidak melihat manfaat berbelanja online dibanding pasar
+            </div>
+            <div class="opt" data-correct="true">
+              <div class="opt-ltr">B</div>
+              Perceived ease of use — kompleksitas UI dan proses pembayaran digital menjadi hambatan pertama
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">C</div>
+              Harga produk — e-commerce umumnya lebih mahal dari pasar tradisional
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">D</div>
+              Kurangnya variasi produk — pasar tradisional memiliki lebih banyak pilihan
+            </div>
+          </div>
+          <div class="exp" id="e5"><strong>B adalah jawaban yang tepat.</strong> Menurut temuan Shih (2004) yang mengaplikasikan TAM, untuk first-time users perceived ease of use adalah barrier kritis yang harus diatasi sebelum konsumen dapat mengevaluasi usefulness. Konsumen yang belum pernah pakai e-commerce tidak tahu bagaimana melakukan checkout, input alamat, atau menggunakan e-wallet — semua ini adalah friction points yang harus dieliminasi melalui onboarding yang baik. Usefulness (harga lebih murah, pilihan lebih banyak) baru bisa dinilai setelah barrier ease of use teratasi.</div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="q-card" data-q="6">
+          <div class="q-num">PERTANYAAN 06 / 09</div>
+          <div class="q-text">Mengapa conversion rate mobile (smartphone) umumnya lebih rendah dari desktop, meskipun traffic e-commerce di mobile jauh lebih tinggi?</div>
+          <div class="options">
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">A</div>
+              Karena konsumen mobile lebih miskin dan tidak mampu membeli produk
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">B</div>
+              Karena aplikasi mobile biasanya memiliki lebih sedikit produk dibanding versi desktop
+            </div>
+            <div class="opt" data-correct="true">
+              <div class="opt-ltr">C</div>
+              Karena konteks penggunaan mobile lebih terfragmentasi, sesi lebih mudah terinterupsi, dan proses checkout lebih friction di layar kecil
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">D</div>
+              Karena konsumen mobile lebih price-sensitive dan lebih sering membandingkan harga
+            </div>
+          </div>
+          <div class="exp" id="e6"><strong>C adalah jawaban yang tepat.</strong> Perbedaan conversion rate mobile vs. desktop bukan soal kemampuan finansial atau katalog produk — tapi tentang konteks penggunaan yang fundamental berbeda. Mobile digunakan on-the-go, multitasking, sesi pendek, lebih mudah terinterupsi. Checkout di layar kecil lebih friction: input teks lebih sulit, tombol lebih kecil, form lebih panjang. Selain itu, mobile lebih banyak digunakan untuk browsing dan discovery, sementara desktop lebih sering digunakan untuk intentional purchase setelah evaluasi matang.</div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="q-card" data-q="7">
+          <div class="q-num">PERTANYAAN 07 / 09</div>
+          <div class="q-text">Pavlou (2003) menemukan bahwa trust dan perceived risk adalah konstruk independen dengan jalur pengaruh berbeda. Apa implikasi praktis terpenting dari temuan ini bagi strategi e-commerce?</div>
+          <div class="options">
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">A</div>
+              Brand hanya perlu fokus membangun trust — pengurangan perceived risk akan mengikuti secara otomatis
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">B</div>
+              Memberikan diskon besar adalah cara paling efektif mengatasi trust problem
+            </div>
+            <div class="opt" data-correct="true">
+              <div class="opt-ltr">C</div>
+              Brand harus bekerja pada trust-building dan risk-reduction secara paralel karena keduanya tidak otomatis saling menggantikan
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">D</div>
+              Perceived risk lebih penting dari trust karena konsumen selalu berorientasi pada menghindari kerugian
+            </div>
+          </div>
+          <div class="exp" id="e7"><strong>C adalah jawaban yang tepat.</strong> Karena trust dan perceived risk adalah konstruk independen, strategi yang hanya fokus pada satu dimensi tidak cukup. Misalnya: seller dengan Official Store badge (trust tinggi) tapi tanpa program perlindungan pembeli (perceived risk tinggi) masih bisa kehilangan konsumen. Sebaliknya: seller dengan garansi uang kembali (risk reduction) tapi reputasi buruk (trust rendah) juga gagal mengkonversi. Investasi harus paralel pada keduanya: reputasi + mekanisme perlindungan.</div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="q-card" data-q="8">
+          <div class="q-num">PERTANYAAN 08 / 09</div>
+          <div class="q-text">Sebuah brand kosmetik lokal ingin meningkatkan konversi di aplikasi mobile mereka. Data menunjukkan: traffic tinggi, add-to-cart rate baik, tapi checkout completion rate hanya 8%. Berdasarkan materi hari ini, apa prioritas tindakan pertama yang paling tepat?</div>
+          <div class="options">
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">A</div>
+              Menambah lebih banyak produk agar konsumen punya lebih banyak pilihan
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">B</div>
+              Meningkatkan budget iklan untuk mendatangkan lebih banyak traffic
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">D</div>
+              Menurunkan harga produk secara signifikan
+            </div>
+            <div class="opt" data-correct="true">
+              <div class="opt-ltr">C</div>
+              Mengaudit dan menyederhanakan proses checkout — identifikasi friction points spesifik yang menyebabkan drop-off antara "mulai checkout" dan "selesai beli"
+            </div>
+          </div>
+          <div class="exp" id="e8"><strong>C adalah jawaban yang tepat.</strong> Data menunjukkan funnel sehat hingga add-to-cart, tapi ada masalah spesifik di tahap checkout. Menambah produk (A) akan memperburuk masalah melalui choice overload. Menambah traffic (B) hanya mendatangkan lebih banyak orang ke funnel yang bocor — tidak menyelesaikan kebocoran. Menurunkan harga (D) tidak menjawab masalah friction checkout. Yang dibutuhkan adalah audit checkout yang sistematis: di langkah mana konsumen paling banyak drop-off? Ini bisa diidentifikasi melalui heatmap, session recording, dan funnel analytics.</div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="q-card" data-q="9">
+          <div class="q-num">PERTANYAAN 09 / 09</div>
+          <div class="q-text">Sebuah brand mengirimkan email diskon 20% kepada setiap konsumen yang abandon cart dalam 1 jam pertama. Berdasarkan best practice cart recovery, apa risiko utama dari strategi ini?</div>
+          <div class="options">
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">A</div>
+              Email akan masuk spam karena dikirim terlalu cepat
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">B</div>
+              Konsumen tidak suka menerima email promosi sama sekali
+            </div>
+            <div class="opt" data-correct="true">
+              <div class="opt-ltr">C</div>
+              Konsumen "belajar" untuk selalu abandon cart agar mendapat diskon, yang merusak margin dan mendestabilisasi pricing strategy brand
+            </div>
+            <div class="opt" data-correct="false">
+              <div class="opt-ltr">D</div>
+              Diskon 20% terlalu kecil untuk mempengaruhi keputusan pembelian
+            </div>
+          </div>
+          <div class="exp" id="e9"><strong>C adalah jawaban yang tepat.</strong> Memberikan diskon langsung di email recovery pertama menciptakan pavlovian conditioning yang tidak diinginkan: konsumen belajar bahwa abandon cart = diskon. Akibatnya, mereka secara sengaja abandon cart bahkan untuk produk yang sudah pasti ingin dibeli, semata untuk mendapat diskon. Ini merusak pricing integrity brand jangka panjang dan menurunkan margin. Best practice: email pertama (1 jam) cukup reminder netral, email kedua (24 jam) tambahkan social proof atau urgensi stok, email ketiga (72 jam) baru pertimbangkan insentif.</div>
+        </div>
+
+        <div class="quiz-actions">
+          <button class="btn btn-ink" onclick="submitQuiz()">Lihat Hasil Kuis</button>
+          <button class="btn btn-ghost" onclick="resetQuiz()">Reset</button>
+        </div>
+      </div>
+
+      <div class="quiz-result" id="quizResult">
+        <div class="result-num" id="resultNum">0<span>/9</span></div>
+        <div class="result-title" id="resultTitle">—</div>
+        <div class="result-sub" id="resultSub">—</div>
+        <button class="btn btn-ghost" onclick="resetQuiz()" style="margin-top:4px;">Coba Lagi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="padding:36px 72px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink3);letter-spacing:.12em;text-transform:uppercase;">Digital Consumer Behaviour · Pertemuan 10 · Prodi Bisnis Digital</div>
+      <div style="margin-top:6px;font-size:12px;color:var(--ink3);">Davis (1989) · McKnight & Chervany (2001) · Pavlou (2003) · Schwartz (2004) · Shih (2004) · Kukar-Kinney & Close (2010) · Baymard Institute (2024)</div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+// ── UTILS ──
+function toggleMenu() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+function setNav(el) {
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+// ── TABS ──
+function switchTab(group, id, btn) {
+  document.querySelectorAll(`[id^="${group}-"]`).forEach(p => p.classList.remove('active'));
+  btn.closest('.tabs-wrap').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`${group}-${id}`).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── ACCORDION ──
+function toggleAcc(trigger) {
+  const content = trigger.nextElementSibling;
+  const isOpen = trigger.classList.contains('open');
+  // close siblings
+  trigger.closest('.section').querySelectorAll('.acc-trigger.open').forEach(t => {
+    t.classList.remove('open');
+    t.nextElementSibling.classList.remove('open');
+  });
+  if (!isOpen) {
+    trigger.classList.add('open');
+    content.classList.add('open');
+  }
+}
+
+// ── JOURNEY MAP ──
+function showJourney(id) {
+  document.querySelectorAll('.journey-detail').forEach(d => d.classList.remove('active'));
+  document.querySelectorAll('.journey-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('jd-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ── RISK CARDS ──
+function showRisk(id) {
+  const wasActive = document.getElementById('rd-' + id).classList.contains('active');
+  document.querySelectorAll('.risk-detail').forEach(d => d.classList.remove('active'));
+  document.querySelectorAll('.risk-card').forEach(c => c.classList.remove('active'));
+  if (!wasActive) {
+    document.getElementById('rd-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+}
+
+// ── MICRO MOMENTS ──
+function showMoment(id) {
+  const wasActive = document.getElementById('md-' + id).classList.contains('active');
+  document.querySelectorAll('.moment-detail').forEach(d => d.classList.remove('active'));
+  document.querySelectorAll('.moment-card').forEach(c => c.classList.remove('active'));
+  if (!wasActive) {
+    document.getElementById('md-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+}
+
+// ── SCROLL ANIMATIONS ──
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      // Trigger bar animations
+      if (entry.target.id === 'funnelWrap') animateFunnel();
+      if (entry.target.id === 'reasonsWrap') animateReasons();
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+function animateFunnel() {
+  document.querySelectorAll('.funnel-bar').forEach(bar => {
+    setTimeout(() => { bar.style.width = bar.dataset.w; }, 200);
+  });
+}
+
+function animateReasons() {
+  document.querySelectorAll('.reason-bar').forEach((bar, i) => {
+    setTimeout(() => { bar.style.width = bar.dataset.w; }, 100 + i * 80);
+  });
+}
+
+// ── PROGRESS ──
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = Math.round((scrolled / total) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('pctLabel').textContent = pct + '%';
+
+  // Update active nav
+  const sections = ['intro','konteks','journey','mobile','trust','abandon','riset','quiz'];
+  let current = 'intro';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && scrolled >= el.offsetTop - 140) current = id;
+  });
+  document.querySelectorAll('.nav-item').forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+  });
+});
+
+// ── QUIZ ──
+const correctAnswers = {
+  1: 1, // B
+  2: 1, // B
+  3: 2, // C
+  4: 2, // C
+  5: 1, // B
+  6: 2, // C
+  7: 2, // C
+  8: 3, // D (index 3 = option D, but data-correct=true is on C which is index 2)
+  9: 2  // C
+};
+
+// Map: qNum -> index of correct option (0-based)
+const correctIdx = { 1:1, 2:1, 3:2, 4:2, 5:1, 6:2, 7:2, 8:3, 9:2 };
+
+let scores = {};
+let answered = {};
+
+function handleOption(opt, qNum) {
+  if (answered[qNum]) return;
+  answered[qNum] = true;
+
+  const card = opt.closest('.q-card');
+  const allOpts = card.querySelectorAll('.opt');
+  const exp = document.getElementById('e' + qNum);
+  const isCorrect = opt.dataset.correct === 'true';
+
+  allOpts.forEach(o => {
+    o.classList.add('disabled');
+    o.onclick = null;
+  });
+
+  if (isCorrect) {
+    opt.classList.add('correct');
+    scores[qNum] = 1;
+  } else {
+    opt.classList.add('wrong');
+    scores[qNum] = 0;
+    // Highlight the correct one
+    allOpts.forEach(o => {
+      if (o.dataset.correct === 'true') o.classList.add('correct');
+    });
+  }
+
+  if (exp) exp.classList.add('show');
+
+  const totalSoFar = Object.values(scores).reduce((a,b) => a+b, 0);
+  const answeredCount = Object.keys(answered).length;
+  document.getElementById('scoreDisplay').textContent = `Skor: ${totalSoFar} / ${answeredCount}`;
+}
+
+// Attach handlers
+function attachHandlers() {
+  document.querySelectorAll('.q-card').forEach(card => {
+    const qNum = parseInt(card.dataset.q);
+    card.querySelectorAll('.opt').forEach(opt => {
+      opt.onclick = function() { handleOption(this, qNum); };
+    });
+  });
+}
+
+attachHandlers();
+
+function submitQuiz() {
+  const total = 9;
+  const finalScore = Object.values(scores).reduce((a,b) => a+b, 0);
+
+  document.getElementById('quizBody').style.display = 'none';
+  const result = document.getElementById('quizResult');
+  result.classList.add('show');
+
+  document.getElementById('resultNum').innerHTML = `${finalScore}<span>/${total}</span>`;
+
+  const pct = (finalScore / total) * 100;
+  let title, sub;
+  if (pct >= 89) {
+    title = '🏆 Luar Biasa — Pemahaman Sangat Kuat';
+    sub = 'Anda menguasai konsep e-commerce dan mobile consumer behaviour dengan sangat baik. Siap untuk membahas implikasi strategis di tingkat yang lebih dalam.';
+  } else if (pct >= 67) {
+    title = '✅ Baik — Fondasi yang Solid';
+    sub = 'Pemahaman Anda sudah solid pada sebagian besar konsep. Tinjau kembali soal yang salah dan baca penjelasannya untuk memperkuat pemahaman.';
+  } else if (pct >= 44) {
+    title = '📚 Cukup — Perlu Review Teori';
+    sub = 'Beberapa konsep kunci perlu diperdalam — terutama TAM, tipologi cart abandonment, dan model trust-risk. Baca ulang materi sebelum ujian.';
+  } else {
+    title = '💪 Belum Optimal — Mulai dari Teori Dasar';
+    sub = 'Disarankan untuk kembali ke outline materi dari awal, fokus pada kerangka teoritis (S-O-R, TAM) sebelum lanjut ke konsep aplikatif.';
+  }
+
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultSub').textContent = sub;
+}
+
+function resetQuiz() {
+  scores = {};
+  answered = {};
+
+  document.getElementById('quizBody').style.display = 'block';
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('scoreDisplay').textContent = 'Skor: 0 / 9';
+
+  document.querySelectorAll('.opt').forEach(opt => {
+    opt.classList.remove('correct', 'wrong', 'disabled');
+  });
+  document.querySelectorAll('.exp').forEach(e => e.classList.remove('show'));
+
+  attachHandlers();
+}
+
+// Trigger bar animations on first load if already visible
+window.addEventListener('load', () => {
+  const fw = document.getElementById('funnelWrap');
+  const rw = document.getElementById('reasonsWrap');
+  if (fw) {
+    const rect = fw.getBoundingClientRect();
+    if (rect.top < window.innerHeight) animateFunnel();
+  }
+  if (rw) {
+    const rect = rw.getBoundingClientRect();
+    if (rect.top < window.innerHeight) animateReasons();
+  }
+});
+</script>
+</body>
+</html>
