@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireframe — Dashboard Penjualan Retail (Looker Studio)</title>
+<style>
+  :root{
+    --paper:#fafaf9;
+    --card:#ffffff;
+    --ink:#1b1b19;
+    --muted:#6c6b65;
+    --faint:#9b998f;
+    --line:#e5e3db;
+    --line-strong:#d0cdc3;
+    --skeleton:#eae8e0;
+    --accent:#2f54c4;
+    --accent-soft:#eaeefb;
+    --accent-ink:#1d3a8f;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--sans); font-size:15px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sheet{max-width:1080px; margin:0 auto; padding:32px 28px 56px;}
+
+  .topbar{display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:4px;}
+  .doc-title{font-size:23px; font-weight:600; letter-spacing:-0.01em; margin:0;}
+  .doc-meta{font-family:var(--mono); font-size:12px; color:var(--faint);}
+  .doc-sub{color:var(--muted); font-size:14px; margin:6px 0 22px; max-width:60ch;}
+
+  .blend{display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-bottom:14px;}
+  .blend-lbl{font-size:12px; font-weight:600; color:var(--muted); margin-right:2px;}
+  .tbl{font-family:var(--mono); font-size:13px; background:var(--paper); border:1px solid var(--line-strong); border-radius:7px; padding:4px 10px;}
+  .joinkey{font-family:var(--mono); font-size:11px; color:var(--faint);}
+
+  .canvas{background:var(--card); border:1px solid var(--line-strong); border-radius:14px; padding:16px; }
+  .frame-head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; flex-wrap:wrap;}
+  .frame-title{font-size:15px; font-weight:600; margin:0;}
+  .filters{display:flex; gap:7px; flex-wrap:wrap;}
+  .chip{display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--muted);
+    border:1px solid var(--line-strong); border-radius:7px; padding:5px 10px; background:var(--paper);}
+  .chip::before{content:""; width:7px; height:7px; border:1.5px solid var(--faint); border-radius:2px; display:inline-block;}
+
+  .row{display:grid; gap:12px; margin-bottom:12px;}
+  .kpis{grid-template-columns:repeat(5, 1fr);}
+  .r-ab{grid-template-columns:1.7fr 1fr;}
+  .r-three{grid-template-columns:repeat(3, minmax(0,1fr));}
+
+  .num{display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px;
+    border-radius:6px; background:var(--ink); color:#fff; font-family:var(--mono); font-size:11px; font-weight:500; flex:none;}
+
+  .kpi{background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:12px;}
+  .kpi-top{display:flex; align-items:center; gap:7px; margin-bottom:7px;}
+  .kpi-lbl{font-size:12px; color:var(--muted);}
+  .kpi-val{font-size:23px; font-weight:600; letter-spacing:-0.02em; line-height:1;}
+  .formula{font-family:var(--mono); font-size:11px; color:var(--faint); margin-top:7px; display:flex; align-items:center; gap:5px; word-break:break-word;}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:11px; padding:14px;}
+  .card-head{display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:12px;}
+  .card-title-wrap{display:flex; align-items:center; gap:7px; min-width:0;}
+  .card-title{font-size:14px; font-weight:600; margin:0;}
+  .type-tag{font-family:var(--mono); font-size:10px; letter-spacing:0.03em; text-transform:uppercase; color:var(--muted);
+    border:1px solid var(--line-strong); border-radius:6px; padding:3px 7px; white-space:nowrap;}
+  .anno{font-size:11.5px; color:var(--muted); line-height:1.55; margin-top:11px;}
+  .anno .k{font-family:var(--mono); color:var(--ink);}
+
+  .plot{border-radius:8px;
+    background-color:var(--paper);
+    background-image:radial-gradient(var(--line) 1px, transparent 1px);
+    background-size:11px 11px; background-position:center;
+    border:1px dashed var(--line-strong); padding:10px;}
+
+  .bars{display:flex; align-items:flex-end; gap:8px; height:74px;}
+  .bars > span{flex:1; background:var(--skeleton); border-radius:3px 3px 0 0; display:block;}
+  .hbars{display:flex; flex-direction:column; gap:9px; height:74px; justify-content:center;}
+  .hbars > span{height:13px; background:var(--skeleton); border-radius:3px; display:block;}
+
+  .fx{width:8px; height:8px; border-radius:50%; background:var(--accent); flex:none; display:inline-block;}
+  .anno .fx{vertical-align:1px; margin-right:1px;}
+
+  table.tbluild{width:100%; border-collapse:collapse;}
+  .tbluild th{font-size:11px; font-weight:500; color:var(--muted); text-align:left; padding:0 8px 9px; border-bottom:1px solid var(--line-strong); font-family:var(--mono);}
+  .tbluild td{padding:11px 8px; border-bottom:1px solid var(--line);}
+  .skel{height:9px; background:var(--skeleton); border-radius:3px;}
+
+  .legend{display:flex; align-items:center; gap:18px; flex-wrap:wrap; font-size:12.5px; color:var(--muted); margin:18px 2px 0;}
+  .legend .item{display:flex; align-items:center; gap:7px;}
+  .sw-skel{width:18px; height:10px; border-radius:3px; background:var(--skeleton); display:inline-block;}
+
+  .divider{height:1px; background:var(--line); border:0; margin:38px 0 26px;}
+
+  .spec-h{font-size:18px; font-weight:600; margin:0 0 4px;}
+  .spec-sub{color:var(--muted); font-size:14px; margin:0 0 18px;}
+  table.spec{width:100%; border-collapse:collapse; font-size:13px;}
+  table.spec th{text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:0.04em; color:var(--faint); font-weight:600; padding:0 10px 10px; border-bottom:1px solid var(--line-strong);}
+  table.spec td{padding:13px 10px; border-bottom:1px solid var(--line); vertical-align:top;}
+  table.spec .fname{font-weight:600; white-space:nowrap;}
+  .pill{font-family:var(--mono); font-size:10px; letter-spacing:0.03em; padding:3px 8px; border-radius:6px; display:inline-block; white-space:nowrap;}
+  .pill-metric{background:var(--accent-soft); color:var(--accent-ink);}
+  .pill-dim{background:var(--skeleton); color:var(--muted);}
+  code.f{font-family:var(--mono); font-size:12px; background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:2px 6px; display:inline-block; line-height:1.7; color:var(--ink); white-space:pre-wrap; word-break:break-word;}
+
+  .notes{margin-top:30px; display:grid; gap:14px; grid-template-columns:1fr 1fr;}
+  .note{border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:0 10px 10px 0; padding:14px 16px; background:var(--card);}
+  .note h4{margin:0 0 6px; font-size:14px; font-weight:600;}
+  .note p{margin:0; font-size:13px; color:var(--muted); line-height:1.6;}
+  .note .k{font-family:var(--mono); color:var(--ink); font-size:12px;}
+
+  @media (max-width:760px){
+    .kpis{grid-template-columns:repeat(2,1fr);}
+    .r-ab,.r-three{grid-template-columns:1fr;}
+    .notes{grid-template-columns:1fr;}
+    .filters{width:100%;}
+  }
+  @media print{
+    body{background:#fff;}
+    .sheet{max-width:none; padding:0;}
+    .canvas,.card,.kpi,.blend,.note{break-inside:avoid;}
+    .plot{background:#fafafa;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="topbar">
+    <h1 class="doc-title">Dashboard penjualan retail</h1>
+    <span class="doc-meta">wireframe · latihan looker studio</span>
+  </div>
+  <p class="doc-sub">Satu halaman dashboard dari hasil <strong>blend tiga tabel</strong>. Angka berupa placeholder — fokus latihan ada di menyusun blend, membuat calculated field, dan menata komponen. Titik biru menandai metrik yang dibuat sendiri.</p>
+
+  <div class="blend">
+    <span class="blend-lbl">Sumber data — blend 3 tabel:</span>
+    <span class="tbl">orders</span>
+    <span class="joinkey">⨝ order_id →</span>
+    <span class="tbl">order_details</span>
+    <span class="joinkey">⨝ product_id →</span>
+    <span class="tbl">products</span>
+  </div>
+
+  <div class="canvas">
+
+    <div class="frame-head">
+      <h2 class="frame-title">Kontrol &amp; filter</h2>
+      <div class="filters">
+        <span class="chip">Rentang tanggal · order_date</span>
+        <span class="chip">Kategori</span>
+        <span class="chip">Brand</span>
+        <span class="chip">Status</span>
+        <span class="chip">Metode bayar</span>
+      </div>
+    </div>
+
+    <div class="row kpis">
+      <div class="kpi">
+        <div class="kpi-top"><span class="num">1</span><span class="kpi-lbl">Net revenue</span></div>
+        <div class="kpi-val">Rp •••</div>
+        <div class="formula"><span class="fx"></span>SUM(net revenue)</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-top"><span class="num">2</span><span class="kpi-lbl">Total pesanan</span></div>
+        <div class="kpi-val">•••</div>
+        <div class="formula">COUNT_DISTINCT(order_id)</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-top"><span class="num">3</span><span class="kpi-lbl">AOV</span></div>
+        <div class="kpi-val">Rp •••</div>
+        <div class="formula"><span class="fx"></span>net rev ÷ pesanan</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-top"><span class="num">4</span><span class="kpi-lbl">Unit terjual</span></div>
+        <div class="kpi-val">•••</div>
+        <div class="formula">SUM(quantity)</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-top"><span class="num">5</span><span class="kpi-lbl">% selesai</span></div>
+        <div class="kpi-val">••%</div>
+        <div class="formula"><span class="fx"></span>CASE WHEN (metrik)</div>
+      </div>
+    </div>
+
+    <div class="row r-ab">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title-wrap"><span class="num">6</span><h3 class="card-title">Tren net revenue per bulan</h3></div>
+          <span class="type-tag">Time series</span>
+        </div>
+        <div class="plot">
+          <svg viewBox="0 0 320 74" width="100%" height="74" preserveAspectRatio="none" aria-hidden="true">
+            <polyline points="0,58 45,46 90,50 135,33 180,39 225,24 270,30 320,16" fill="none" stroke="#2f54c4" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <p class="anno">Dimensi: <span class="k">order_date</span> (granular bulan) · Metrik: <span class="fx"></span><span class="k">SUM(net revenue)</span> · Breakdown opsional: <span class="k">status</span></p>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title-wrap"><span class="num">7</span><h3 class="card-title">Status pesanan</h3></div>
+          <span class="type-tag">Donut</span>
+        </div>
+        <div class="plot" style="display:flex; justify-content:center;">
+          <svg viewBox="0 0 100 100" width="84" height="84" aria-hidden="true">
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#d6d3ca" stroke-width="14"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#8a887f" stroke-width="14" stroke-dasharray="79 160" transform="rotate(-90 50 50)"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#b4b2a9" stroke-width="14" stroke-dasharray="79 160" stroke-dashoffset="-79" transform="rotate(-90 50 50)"/>
+          </svg>
+        </div>
+        <p class="anno">Dimensi: <span class="k">status</span> · Metrik: <span class="k">COUNT_DISTINCT(order_id)</span></p>
+      </div>
+    </div>
+
+    <div class="row r-three">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title-wrap"><span class="num">8</span><h3 class="card-title">Revenue / kategori</h3></div>
+          <span class="type-tag">Bar</span>
+        </div>
+        <div class="plot">
+          <div class="bars"><span style="height:80%"></span><span style="height:62%"></span><span style="height:70%"></span><span style="height:48%"></span></div>
+        </div>
+        <p class="anno">Dim: <span class="k">category</span><br>Metrik: <span class="fx"></span><span class="k">SUM(net revenue)</span></p>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title-wrap"><span class="num">9</span><h3 class="card-title">Revenue / brand</h3></div>
+          <span class="type-tag">Bar</span>
+        </div>
+        <div class="plot">
+          <div class="bars"><span style="height:72%"></span><span style="height:58%"></span><span style="height:80%"></span><span style="height:50%"></span><span style="height:64%"></span></div>
+        </div>
+        <p class="anno">Dim: <span class="k">brand</span><br>Metrik: <span class="fx"></span><span class="k">SUM(net revenue)</span></p>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title-wrap"><span class="num">10</span><h3 class="card-title">Metode bayar</h3></div>
+          <span class="type-tag">Pie</span>
+        </div>
+        <div class="plot">
+          <div class="hbars"><span style="width:82%"></span><span style="width:66%"></span><span style="width:54%"></span></div>
+        </div>
+        <p class="anno">Dim: <span class="k">payment_method</span><br>Metrik: <span class="k">COUNT_DISTINCT(order_id)</span></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title-wrap"><span class="num">11</span><h3 class="card-title">Tabel produk terlaris</h3></div>
+        <span class="type-tag">Table</span>
+      </div>
+      <table class="tbluild">
+        <thead><tr>
+          <th style="width:32%">product_name</th>
+          <th style="width:18%">category</th>
+          <th style="width:12%">qty</th>
+          <th style="width:20%"><span class="fx"></span> net revenue</th>
+          <th style="width:18%"><span class="fx"></span> avg diskon</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><div class="skel"></div></td><td><div class="skel" style="width:70%"></div></td><td><div class="skel" style="width:55%"></div></td><td><div class="skel" style="width:78%"></div></td><td><div class="skel" style="width:52%"></div></td></tr>
+          <tr><td><div class="skel" style="width:88%"></div></td><td><div class="skel" style="width:62%"></div></td><td><div class="skel" style="width:50%"></div></td><td><div class="skel" style="width:70%"></div></td><td><div class="skel" style="width:48%"></div></td></tr>
+          <tr><td><div class="skel" style="width:80%"></div></td><td><div class="skel" style="width:66%"></div></td><td><div class="skel" style="width:46%"></div></td><td><div class="skel" style="width:74%"></div></td><td><div class="skel" style="width:55%"></div></td></tr>
+        </tbody>
+      </table>
+      <p class="anno">Dimensi: <span class="k">product_name</span>, <span class="k">category</span> · Metrik: <span class="k">SUM(quantity)</span>, <span class="fx"></span><span class="k">SUM(net revenue)</span>, <span class="k">AVG(discount)</span> · urut desc by net revenue</p>
+    </div>
+
+  </div>
+
+  <div class="legend">
+    <span class="item"><span class="fx"></span> = metrik calculated field (dibuat sendiri di blend)</span>
+    <span class="item"><span class="sw-skel"></span> = placeholder data chart</span>
+  </div>
+
+  <hr class="divider">
+
+  <h2 class="spec-h">Spesifikasi calculated field</h2>
+  <p class="spec-sub">Tujuh field yang dibuat sendiri. Tulis di editor formula Looker Studio; pilih field <code class="f">discount (%)</code> lewat field picker (namanya mengandung spasi &amp; tanda kurung).</p>
+
+  <table class="spec">
+    <thead><tr><th style="width:18%">Field</th><th style="width:14%">Tipe</th><th>Rumus</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="fname">Net revenue</td>
+        <td><span class="pill pill-metric">metrik</span></td>
+        <td><code class="f">quantity * unit_price * (1 - (discount (%) / 100))</code></td>
+      </tr>
+      <tr>
+        <td class="fname">Gross revenue</td>
+        <td><span class="pill pill-metric">metrik</span></td>
+        <td><code class="f">quantity * unit_price</code></td>
+      </tr>
+      <tr>
+        <td class="fname">Discount amount</td>
+        <td><span class="pill pill-metric">metrik</span></td>
+        <td><code class="f">quantity * unit_price * (discount (%) / 100)</code></td>
+      </tr>
+      <tr>
+        <td class="fname">AOV</td>
+        <td><span class="pill pill-metric">metrik</span></td>
+        <td><code class="f">SUM(Net revenue) / COUNT_DISTINCT(order_id)</code></td>
+      </tr>
+      <tr>
+        <td class="fname">% selesai</td>
+        <td><span class="pill pill-metric">metrik</span></td>
+        <td><code class="f">COUNT_DISTINCT(CASE WHEN status = "Completed" THEN order_id END)
+/ COUNT_DISTINCT(order_id)</code></td>
+      </tr>
+      <tr>
+        <td class="fname">Revenue batal</td>
+        <td><span class="pill pill-metric">metrik</span></td>
+        <td><code class="f">SUM(CASE WHEN status = "Cancelled"
+  THEN quantity * unit_price * (1 - (discount (%) / 100))
+  ELSE 0 END)</code></td>
+      </tr>
+      <tr>
+        <td class="fname">Label status</td>
+        <td><span class="pill pill-dim">dimensi</span></td>
+        <td><code class="f">CASE
+  WHEN status = "Cancelled" THEN "Batal"
+  WHEN status = "Completed" THEN "Selesai"
+  ELSE "Tertunda"
+END</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="notes">
+    <div class="note">
+      <h4>Jebakan grain (penting untuk blend)</h4>
+      <p>Setelah blend turun ke grain baris (<span class="k">order_details</span>), kolom <span class="k">orders.total_amount</span> ikut terduplikasi di tiap baris produk. Jangan pakai <span class="k">SUM(total_amount)</span> — hasilnya membengkak. Hitung pendapatan dari <span class="k">order_details</span> (Net revenue), dan hitung jumlah pesanan selalu dengan <span class="k">COUNT_DISTINCT(order_id)</span>.</p>
+    </div>
+    <div class="note">
+      <h4>CASE WHEN: dimensi vs metrik</h4>
+      <p><span class="k">Label status</span> dipakai sebagai <strong>dimensi</strong> — per baris, tanpa agregasi (untuk warna/segmentasi). <span class="k">% selesai</span> &amp; <span class="k">Revenue batal</span> dipakai sebagai <strong>metrik</strong> — CASE WHEN dibungkus di dalam agregasi. Mencampur SUM di dalam CASE WHEN yang dipakai sebagai dimensi itu yang menghasilkan nilai "1".</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
