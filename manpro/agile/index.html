@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modul Interaktif — Agile Frameworks | Manajemen Proyek TI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1F2933;          /* papan kanban gelap */
+    --ink-soft:#3E4C59;
+    --paper:#FAF9F6;        /* latar kertas */
+    --card:#FFFFFF;
+    --amber:#F7B32B;        /* sticky note */
+    --amber-soft:#FDF0D5;
+    --teal:#0E7C7B;
+    --teal-soft:#E0F2F1;
+    --coral:#E4572E;
+    --coral-soft:#FDEAE3;
+    --line:#E2E0DB;
+    --radius:14px;
+    --shadow:0 2px 10px rgba(31,41,51,.08);
+    --display:'Space Grotesk',sans-serif;
+    --body:'Source Sans 3',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{animation:none!important;transition:none!important}}
+  body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.65;font-size:17px}
+  h1,h2,h3,h4{font-family:var(--display);line-height:1.2}
+  a{color:var(--teal)}
+  .wrap{max-width:980px;margin:0 auto;padding:0 22px}
+
+  /* ===== Kanban progress nav (signature element) ===== */
+  .board{position:sticky;top:0;z-index:50;background:var(--ink);padding:10px 0;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+  .board .wrap{display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin}
+  .ticket{flex:0 0 auto;background:#2B3742;color:#C8D2DC;border:none;border-radius:8px;padding:7px 12px;font-family:var(--display);font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:7px;transition:transform .15s, background .2s}
+  .ticket .dot{width:9px;height:9px;border-radius:50%;background:#55626E;flex:0 0 auto;transition:background .2s}
+  .ticket:hover{transform:translateY(-1px)}
+  .ticket:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+  .ticket.active{background:var(--amber);color:var(--ink)}
+  .ticket.active .dot{background:var(--ink)}
+  .ticket.done .dot{background:#4CAF7D}
+  .board-label{color:#8A97A3;font-family:var(--display);font-size:11px;letter-spacing:.14em;text-transform:uppercase;align-self:center;flex:0 0 auto;margin-right:4px}
+
+  /* ===== Hero ===== */
+  header.hero{background:var(--ink);color:#F4F6F8;padding:72px 0 64px;position:relative;overflow:hidden}
+  .hero .eyebrow{font-family:var(--display);letter-spacing:.18em;text-transform:uppercase;font-size:12px;color:var(--amber);margin-bottom:18px}
+  .hero h1{font-size:clamp(34px,6vw,58px);font-weight:700;max-width:14em}
+  .hero p.lede{margin-top:18px;max-width:34em;color:#C8D2DC;font-size:19px}
+  .hero .meta{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px}
+  .chip{font-family:var(--display);font-size:13px;padding:6px 13px;border-radius:999px;border:1px solid #44525E;color:#C8D2DC}
+  .sticky-deco{position:absolute;right:-30px;top:30px;width:340px;opacity:.95;transform:rotate(4deg)}
+  @media(max-width:860px){.sticky-deco{display:none}}
+
+  /* ===== Sections ===== */
+  section{padding:58px 0;border-bottom:1px solid var(--line)}
+  .sec-tag{display:inline-block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;background:var(--amber);color:var(--ink);padding:5px 12px;border-radius:6px;transform:rotate(-1.2deg);box-shadow:2px 3px 0 rgba(31,41,51,.18);margin-bottom:16px}
+  section h2{font-size:clamp(26px,4vw,38px);margin-bottom:10px}
+  .sub{color:var(--ink-soft);max-width:42em;margin-bottom:26px}
+  .src{font-size:13.5px;color:#7B8794;margin-top:10px;font-style:italic}
+
+  .cards{display:grid;gap:16px}
+  .cards.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .cards.c3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+  .card h3{font-size:18px;margin-bottom:8px}
+  .card h4{font-size:16px;margin-bottom:6px}
+  .card p{font-size:15.5px;color:var(--ink-soft)}
+  .card .big{font-family:var(--display);font-size:40px;font-weight:700;color:var(--teal)}
+
+  /* flip values */
+  .flip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+  .flip{perspective:900px;cursor:pointer;min-height:170px}
+  .flip-inner{position:relative;width:100%;height:100%;min-height:170px;transition:transform .5s;transform-style:preserve-3d}
+  .flip.flipped .flip-inner{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;justify-content:center}
+  .face.front{background:var(--amber-soft);border:1px solid #EAD9AE}
+  .face.front strong{font-family:var(--display);font-size:17px}
+  .face.front em{display:block;margin-top:6px;color:var(--ink-soft);font-size:14px}
+  .face.back{background:var(--ink);color:#F4F6F8;transform:rotateY(180deg);font-size:14.5px}
+  .hint{font-size:13px;color:#7B8794;margin-top:10px}
+
+  details{background:var(--card);border:1px solid var(--line);border-radius:10px;margin-bottom:10px;overflow:hidden}
+  details summary{cursor:pointer;padding:14px 18px;font-family:var(--display);font-weight:600;font-size:15.5px;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  details summary::after{content:"+";font-size:20px;color:var(--teal)}
+  details[open] summary::after{content:"–"}
+  details .body{padding:0 18px 16px;font-size:15.5px;color:var(--ink-soft)}
+
+  /* tabs */
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+  .tab-btn{font-family:var(--display);font-weight:600;font-size:14.5px;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);padding:9px 16px;border-radius:999px;cursor:pointer;transition:all .15s}
+  .tab-btn:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+  .tab-btn.on{background:var(--teal);border-color:var(--teal);color:#fff}
+  .tab-pane{display:none}
+  .tab-pane.on{display:block;animation:fadeUp .3s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);font-size:15px}
+  th{background:var(--ink);color:#fff;font-family:var(--display);font-weight:600;text-align:left;padding:11px 14px;font-size:14px}
+  td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+  td:first-child{font-weight:600;color:var(--ink)}
+
+  .note{border-radius:var(--radius);padding:18px 20px;margin-top:20px;font-size:15.5px}
+  .note.warn{background:var(--coral-soft);border:1px solid #F2C4B3}
+  .note.tip{background:var(--teal-soft);border:1px solid #BFE0DE}
+  .note strong{font-family:var(--display)}
+
+  /* scrum 3-5-3 */
+  .scrum353{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+  .col353{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .col353 header{padding:13px 18px;font-family:var(--display);font-weight:700;color:#fff;display:flex;align-items:baseline;gap:10px}
+  .col353 header .n{font-size:26px}
+  .col353.r header{background:var(--teal)} .col353.e header{background:var(--coral)} .col353.a header{background:var(--ink)}
+  .item353{padding:12px 18px;border-top:1px solid var(--line);cursor:pointer;transition:background .15s}
+  .item353:hover{background:var(--amber-soft)}
+  .item353:focus-visible{outline:2px solid var(--teal);outline-offset:-2px}
+  .item353 strong{font-family:var(--display);font-size:15.5px;display:block}
+  .item353 .d{display:none;font-size:14.5px;color:var(--ink-soft);margin-top:5px}
+  .item353.open .d{display:block}
+
+  /* suitability filter */
+  .filter-q{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin-bottom:12px}
+  .filter-q .qt{font-weight:600;font-size:15.5px;margin-bottom:8px}
+  .scale{display:flex;gap:6px;flex-wrap:wrap}
+  .scale label{flex:1;min-width:52px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:7px 4px;font-size:13px;cursor:pointer;color:var(--ink-soft);transition:all .12s}
+  .scale input{position:absolute;opacity:0;pointer-events:none}
+  .scale label:has(input:checked){background:var(--teal);border-color:var(--teal);color:#fff;font-weight:600}
+  .scale label:has(input:focus-visible){outline:2px solid var(--amber)}
+  .cat-title{font-family:var(--display);font-weight:700;font-size:17px;margin:22px 0 10px;display:flex;align-items:center;gap:8px}
+  .cat-title .badge{font-size:12px;background:var(--ink);color:#fff;border-radius:6px;padding:3px 9px}
+  .verdict{display:none;margin-top:24px}
+  .verdict.show{display:block;animation:fadeUp .35s ease}
+  .meter{height:26px;background:#EDEBE6;border-radius:999px;position:relative;margin:14px 0 6px;overflow:hidden}
+  .meter .fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--coral),var(--amber),var(--teal));width:0;transition:width .6s ease}
+  .meter-cap{display:flex;justify-content:space-between;font-size:13px;color:#7B8794;font-family:var(--display)}
+  .vbars .row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:14px}
+  .vbars .lbl{width:72px;font-family:var(--display);font-weight:600}
+  .vbars .track{flex:1;height:12px;background:#EDEBE6;border-radius:99px;overflow:hidden}
+  .vbars .bar{height:100%;background:var(--teal);border-radius:99px;width:0;transition:width .5s ease}
+  .btn{font-family:var(--display);font-weight:600;font-size:15.5px;background:var(--ink);color:#fff;border:none;border-radius:10px;padding:12px 22px;cursor:pointer;transition:transform .12s,background .15s}
+  .btn:hover{background:#33414D;transform:translateY(-1px)}
+  .btn:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+  .btn.alt{background:var(--teal)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+
+  /* case tabs */
+  .case-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .case-head h3{font-size:22px}
+  .pill{font-family:var(--display);font-size:12.5px;font-weight:600;padding:4px 11px;border-radius:999px}
+  .pill.ok{background:var(--teal-soft);color:var(--teal)} .pill.mid{background:var(--amber-soft);color:#9A6E0B} .pill.bad{background:var(--coral-soft);color:var(--coral)}
+  .lesson{background:var(--amber-soft);border:1px dashed #D9B65E;border-radius:10px;padding:14px 18px;margin-top:14px;font-size:15.5px}
+  .lesson strong{font-family:var(--display)}
+
+  /* quiz */
+  .q{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:16px;box-shadow:var(--shadow)}
+  .q .qn{font-family:var(--display);font-weight:700;color:var(--teal);font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+  .q .qt{font-weight:600;margin-bottom:12px}
+  .opt{display:block;border:1.5px solid var(--line);border-radius:10px;padding:11px 14px;margin-bottom:8px;cursor:pointer;font-size:15.5px;transition:all .12s}
+  .opt:hover{border-color:var(--teal)}
+  .opt input{margin-right:9px;accent-color:var(--teal)}
+  .opt.correct{border-color:var(--teal);background:var(--teal-soft)}
+  .opt.wrong{border-color:var(--coral);background:var(--coral-soft)}
+  .expl{display:none;margin-top:10px;font-size:14.5px;background:var(--paper);border-radius:8px;padding:11px 14px;color:var(--ink-soft)}
+  .expl.show{display:block}
+  .quiz-result{display:none;text-align:center;background:var(--ink);color:#fff;border-radius:var(--radius);padding:34px;margin-top:10px}
+  .quiz-result.show{display:block;animation:fadeUp .35s ease}
+  .quiz-result .score{font-family:var(--display);font-size:54px;font-weight:700;color:var(--amber)}
+
+  footer{background:var(--ink);color:#A9B6C2;padding:46px 0;font-size:14.5px}
+  footer h3{color:#fff;font-size:18px;margin-bottom:10px}
+  .next-link{display:inline-block;margin-top:14px;background:var(--amber);color:var(--ink);font-family:var(--display);font-weight:700;padding:10px 18px;border-radius:10px;text-decoration:none}
+</style>
+</head>
+<body>
+
+<!-- ===== KANBAN PROGRESS NAV ===== -->
+<nav class="board" aria-label="Navigasi modul">
+  <div class="wrap">
+    <span class="board-label">Papan&nbsp;Belajar</span>
+    <button class="ticket" data-go="fondasi"><span class="dot"></span>1 · Fondasi</button>
+    <button class="ticket" data-go="scrum"><span class="dot"></span>2 · Scrum</button>
+    <button class="ticket" data-go="kanban"><span class="dot"></span>3 · Kanban</button>
+    <button class="ticket" data-go="xplean"><span class="dot"></span>4 · XP & Lean</button>
+    <button class="ticket" data-go="hybrid"><span class="dot"></span>5 · Hybrid</button>
+    <button class="ticket" data-go="filter"><span class="dot"></span>6 · Suitability</button>
+    <button class="ticket" data-go="kasus"><span class="dot"></span>7 · Studi Kasus</button>
+    <button class="ticket" data-go="kuis"><span class="dot"></span>8 · Kuis</button>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <svg class="sticky-deco" viewBox="0 0 340 300" aria-hidden="true">
+    <g transform="rotate(-6 170 150)">
+      <rect x="20" y="20" width="120" height="120" rx="6" fill="#F7B32B"/>
+      <rect x="160" y="50" width="120" height="120" rx="6" fill="#0E7C7B"/>
+      <rect x="80" y="160" width="120" height="120" rx="6" fill="#E4572E"/>
+      <line x1="40" y1="55" x2="115" y2="55" stroke="#1F2933" stroke-width="6" stroke-linecap="round" opacity=".35"/>
+      <line x1="40" y1="78" x2="100" y2="78" stroke="#1F2933" stroke-width="6" stroke-linecap="round" opacity=".35"/>
+      <line x1="180" y1="85" x2="255" y2="85" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".5"/>
+      <line x1="180" y1="108" x2="240" y2="108" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".5"/>
+      <line x1="100" y1="195" x2="175" y2="195" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".5"/>
+      <line x1="100" y1="218" x2="160" y2="218" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".5"/>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="eyebrow">Manajemen Proyek TI · Pertemuan Agile Frameworks</div>
+    <h1>Agile Frameworks: dari Manifesto sampai Praktik di Indonesia</h1>
+    <p class="lede">Scrum, Kanban, XP, Lean, dan Hybrid — bukan untuk dihafal, tapi untuk dipilih dan diracik sesuai konteks proyek. Modul ini memandu Anda dari teori, praktik terbaik, sampai studi kasus perusahaan Indonesia.</p>
+    <div class="meta">
+      <span class="chip">⏱ ±150 menit</span>
+      <span class="chip">📚 Agile Practice Guide (PMI)</span>
+      <span class="chip">🇮🇩 3 studi kasus lokal</span>
+      <span class="chip">✏️ Kuis 12 soal</span>
+    </div>
+  </div>
+</header>
+
+<!-- ===== 1. FONDASI ===== -->
+<section id="fondasi">
+  <div class="wrap">
+    <span class="sec-tag">Bagian 1 · Fondasi</span>
+    <h2>Agile adalah Mindset, Bukan Ritual</h2>
+    <p class="sub">Sebelum membahas framework satu per satu, kita harus paham <em>mengapa</em> Agile ada. Pendekatan prediktif (Waterfall) bekerja baik ketika kebutuhan stabil dan bisa direncanakan di muka — tetapi banyak proyek TI hidup di wilayah <strong>kompleks</strong>: kebutuhan berubah, teknologi berubah, dan pengguna baru tahu apa yang mereka mau setelah melihat produknya.</p>
+
+    <div class="cards c3">
+      <div class="card"><div class="big">1957</div><p>Teknik pengembangan inkremental sudah dipakai di IBM & Motorola — jauh sebelum istilah "Agile" lahir.</p></div>
+      <div class="card"><div class="big">2001</div><p>17 praktisi software berkumpul di Snowbird, Utah, dan menulis <strong>Manifesto for Agile Software Development</strong>.</p></div>
+      <div class="card"><div class="big">94%</div><p>Organisasi telah mempraktikkan agile pada 2015 — agile menjadi standar manajemen proyek software.</p></div>
+    </div>
+    <p class="src">Sumber: Agile Project Management Whitepaper (AltexSoft); Agile Practice Guide (PMI).</p>
+
+    <h3 style="margin:34px 0 6px;font-size:21px">4 Nilai Agile Manifesto</h3>
+    <p class="hint">Klik tiap kartu untuk melihat maknanya. Ingat: yang di kanan tetap bernilai — yang di kiri <em>lebih</em> bernilai.</p>
+    <div class="flip-grid" style="margin-top:12px">
+      <div class="flip" tabindex="0" role="button" aria-label="Nilai 1, klik untuk membalik">
+        <div class="flip-inner">
+          <div class="face front"><strong>Individu & interaksi</strong><em>di atas proses dan alat</em></div>
+          <div class="face back">Alat dan proses penting, tetapi tim yang saling percaya dan berkomunikasi-lah yang menyelesaikan masalah. Jira tidak menulis kode.</div>
+        </div>
+      </div>
+      <div class="flip" tabindex="0" role="button" aria-label="Nilai 2, klik untuk membalik">
+        <div class="flip-inner">
+          <div class="face front"><strong>Software yang bekerja</strong><em>di atas dokumentasi lengkap</em></div>
+          <div class="face back">Ukuran kemajuan utama adalah produk yang bisa dipakai — bukan tumpukan dokumen yang menjelaskan produk yang belum ada.</div>
+        </div>
+      </div>
+      <div class="flip" tabindex="0" role="button" aria-label="Nilai 3, klik untuk membalik">
+        <div class="flip-inner">
+          <div class="face front"><strong>Kolaborasi pelanggan</strong><em>di atas negosiasi kontrak</em></div>
+          <div class="face back">Kontrak melindungi, tetapi produk yang tepat lahir dari percakapan terus-menerus dengan pelanggan — bukan dari pasal-pasal.</div>
+        </div>
+      </div>
+      <div class="flip" tabindex="0" role="button" aria-label="Nilai 4, klik untuk membalik">
+        <div class="flip-inner">
+          <div class="face front"><strong>Merespons perubahan</strong><em>di atas mengikuti rencana</em></div>
+          <div class="face back">Perubahan bukan musuh — ia peluang memastikan ide paling mutakhir yang dibangun. Rencana tetap dibuat, tapi tidak disembah.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin:34px 0 10px;font-size:21px">Peta Frameworks</h3>
+    <p class="sub" style="margin-bottom:16px">Agile adalah istilah payung. Agile Practice Guide memetakan framework berdasarkan <strong>cakupan siklus hidup</strong> dan <strong>kedalaman panduan</strong>: Kanban paling ringan aturannya, XP paling dalam panduan tekniknya, Scrum di tengah, sementara SAFe/LeSS/DSDM berada di level skala besar.</p>
+    <div class="cards c3">
+      <div class="card"><h4>🟡 Tim tunggal</h4><p><strong>Scrum</strong> (proses), <strong>XP</strong> (teknik engineering), <strong>Kanban</strong> (aliran kerja). Fokus pertemuan ini.</p></div>
+      <div class="card"><h4>🟢 Filosofi</h4><p><strong>Lean</strong> — eliminasi pemborosan; akar dari Kanban, lahir dari Toyota Production System.</p></div>
+      <div class="card"><h4>🔵 Skala besar</h4><p><strong>SAFe, LeSS, Scrum of Scrums</strong> — untuk koordinasi banyak tim. Disinggung sekilas; menambah kompleksitas, gunakan hanya jika perlu.</p></div>
+    </div>
+
+    <div class="note warn"><strong>⚠ Anti-pattern #1 — "Agile teater".</strong> Menjalankan ritual (standup, sprint, sticky notes) tanpa mengubah cara berpikir. Seperti yang dialami penulis <em>Agile for Everybody</em>: timnya memakai Scrum, tetapi eksekutif terus menyela sprint dengan permintaan mendadak — hasilnya tidak lebih cepat sama sekali. Agile justru <em>mengekspos</em> disfungsi organisasi, bukan menyembunyikannya.</div>
+  </div>
+</section>
+
+<!-- ===== 2. SCRUM ===== -->
+<section id="scrum">
+  <div class="wrap">
+    <span class="sec-tag">Bagian 2 · Scrum</span>
+    <h2>Scrum: Kerangka 3–5–3</h2>
+    <p class="sub">Scrum adalah framework paling dominan — dipakai eksklusif oleh <strong>58% organisasi</strong>, ditambah 18% yang mengombinasikannya. Scrum berjalan dalam <em>timebox</em> konsisten maksimal 1 bulan (sprint), dan setiap sprint menghasilkan <em>increment</em> produk yang berpotensi dirilis. Klik tiap item untuk detail.</p>
+
+    <div class="scrum353">
+      <div class="col353 r">
+        <header><span class="n">3</span> Peran</header>
+        <div class="item353" tabindex="0"><strong>Product Owner</strong><span class="d">Bertanggung jawab memaksimalkan nilai produk. Satu orang (bukan komite) yang memprioritaskan Product Backlog.</span></div>
+        <div class="item353" tabindex="0"><strong>Development Team</strong><span class="d">Tim lintas fungsi yang mengatur dirinya sendiri (self-organizing) — punya semua keahlian untuk menghasilkan produk tanpa bergantung pihak luar.</span></div>
+        <div class="item353" tabindex="0"><strong>Scrum Master</strong><span class="d">Penjaga proses Scrum: memastikan praktik & aturan dijalankan, melatih tim, dan menyingkirkan hambatan (impediments). Pemimpin yang melayani, bukan bos.</span></div>
+      </div>
+      <div class="col353 e">
+        <header><span class="n">5</span> Events</header>
+        <div class="item353" tabindex="0"><strong>Sprint</strong><span class="d">Wadah semua event lain. Timebox tetap 1–4 minggu. Tujuan sprint tidak diubah di tengah jalan.</span></div>
+        <div class="item353" tabindex="0"><strong>Sprint Planning</strong><span class="d">Tim memilih item backlog yang akan dikerjakan dan menyusun rencana sprint.</span></div>
+        <div class="item353" tabindex="0"><strong>Daily Scrum</strong><span class="d">Maksimal 15 menit setiap hari: apa yang selesai, apa berikutnya, apa yang menghambat. Untuk sinkronisasi tim — bukan laporan ke atasan.</span></div>
+        <div class="item353" tabindex="0"><strong>Sprint Review</strong><span class="d">Tim mendemokan increment ke stakeholder dan mengumpulkan umpan balik produk.</span></div>
+        <div class="item353" tabindex="0"><strong>Sprint Retrospective</strong><span class="d">Tim merefleksikan proses kerjanya sendiri: apa yang dipertahankan, apa yang diperbaiki. Event yang paling sering diabaikan — dan paling mahal akibatnya (lihat studi kasus PT XYZ).</span></div>
+      </div>
+      <div class="col353 a">
+        <header><span class="n">3</span> Artifacts</header>
+        <div class="item353" tabindex="0"><strong>Product Backlog</strong><span class="d">Daftar terurut semua hal yang diketahui dibutuhkan produk. Hidup dan terus diperbarui oleh Product Owner.</span></div>
+        <div class="item353" tabindex="0"><strong>Sprint Backlog</strong><span class="d">Item backlog yang dipilih untuk sprint ini, plus rencana untuk mewujudkannya.</span></div>
+        <div class="item353" tabindex="0"><strong>Increment</strong><span class="d">Hasil kerja yang "Done" — berpotensi dirilis ke pengguna di akhir setiap sprint.</span></div>
+      </div>
+    </div>
+    <p class="src">Sumber: Agile Practice Guide (PMI), Annex A3.2, Table A3-1.</p>
+
+    <div class="cards c2" style="margin-top:24px">
+      <div class="card"><h3>✅ Kapan Scrum cocok</h3><p>Kebutuhan berubah cepat; produk bisa dipecah jadi increment kecil; tim 3–9 orang yang bisa berdedikasi penuh; ada akses rutin ke pemilik produk/pengguna.</p></div>
+      <div class="card"><h3>❌ Kapan Scrum tidak cocok</h3><p>Scope, biaya, dan jadwal terkunci kontrak; tim terpencar di banyak proyek sekaligus; stakeholder tidak bisa diakses (bandingkan kasus di Agile Practice Guide: jawaban dari analis kontrak butuh 10 hari).</p></div>
+    </div>
+
+    <div class="note tip"><strong>🎲 Simulasi kelas (10 menit):</strong> bagi kelompok 4–5 orang. Misi: rencanakan "Sprint 1" untuk aplikasi kantin kampus. Tunjuk Product Owner, susun 5 item Product Backlog, pilih 2 item untuk Sprint Backlog, dan definisikan apa artinya "Done". Presentasikan 1 menit per kelompok.</div>
+  </div>
+</section>
+
+<!-- ===== 3. KANBAN ===== -->
+<section id="kanban">
+  <div class="wrap">
+    <span class="sec-tag">Bagian 3 · Kanban</span>
+    <h2>Kanban: Mengelola Aliran, Bukan Iterasi</h2>
+    <p class="sub">Kanban lahir dari Toyota Production System. Berbeda fundamental dari Scrum: <strong>tidak ada timebox</strong>, <strong>tidak ada peran wajib</strong>, dan rencana kerja bisa berubah kapan saja. Fokusnya: membuat pekerjaan terlihat dan membatasi pekerjaan yang sedang berjalan (WIP).</p>
+
+    <div class="cards c3">
+      <div class="card"><h4>1 · Visualisasikan workflow</h4><p>Semua pekerjaan tampak di papan — masalah terlihat lebih awal, kolaborasi membaik.</p></div>
+      <div class="card"><h4>2 · Batasi WIP</h4><p>Limit per kolom memaksa fokus: menyelesaikan lebih penting daripada memulai.</p></div>
+      <div class="card"><h4>3 · Kelola aliran</h4><p>Pantau kelancaran flow — aliran yang mulus berarti nilai tercipta cepat.</p></div>
+      <div class="card"><h4>4 · Kebijakan eksplisit</h4><p>Semua paham aturan main: apa definisi "Done", kapan kartu boleh pindah kolom.</p></div>
+      <div class="card"><h4>5 · Perbaikan berkelanjutan</h4><p>Perubahan kecil yang konsisten — tim mengidentifikasi masalah dan terus menyesuaikan.</p></div>
+      <div class="card" style="background:var(--amber-soft)"><h4>💡 Coba sekarang</h4><p>Navigasi di atas halaman ini adalah papan kanban mini: tiket menyala saat dikerjakan, titiknya menghijau saat selesai Anda lewati.</p></div>
+    </div>
+
+    <h3 style="margin:30px 0 12px;font-size:21px">Scrum vs Kanban</h3>
+    <table>
+      <tr><th style="width:30%">Aspek</th><th>Scrum</th><th>Kanban</th></tr>
+      <tr><td>Irama kerja</td><td>Sprint timebox 1–4 minggu</td><td>Aliran kontinu, tanpa timebox</td></tr>
+      <tr><td>Peran</td><td>PO, Dev Team, Scrum Master (wajib)</td><td>Tidak ada peran wajib</td></tr>
+      <tr><td>Perubahan rencana</td><td>Menunggu sprint berikutnya</td><td>Kapan saja</td></tr>
+      <tr><td>Metrik utama</td><td>Velocity per sprint</td><td>Lead time, cycle time, WIP</td></tr>
+      <tr><td>Cocok untuk</td><td>Pengembangan produk bertahap</td><td>Pekerjaan mengalir terus: support, maintenance, operasional</td></tr>
+    </table>
+    <p class="src">Sumber: Agile Project Management Whitepaper (AltexSoft); Agile Practice Guide (PMI).</p>
+  </div>
+</section>
+
+<!-- ===== 4. XP & LEAN ===== -->
+<section id="xplean">
+  <div class="wrap">
+    <span class="sec-tag">Bagian 4 · XP & Lean</span>
+    <h2>XP: Disiplin Teknik · Lean: Filosofi Anti-Pemborosan</h2>
+    <p class="sub">Scrum dan Kanban mengatur <em>cara kerja tim</em> — tetapi keduanya diam soal <em>cara menulis kode yang baik</em>. Di situlah eXtreme Programming masuk. Sementara Lean menyumbang cara berpikir yang melandasi hampir semua framework agile.</p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab-btn on" data-tab="xp" role="tab">eXtreme Programming</button>
+      <button class="tab-btn" data-tab="lean" role="tab">Lean</button>
+    </div>
+
+    <div class="tab-pane on" id="pane-xp">
+      <div class="cards c2">
+        <div class="card"><h3>Pair Programming</h3><p>Dua programmer, satu layar: satu menulis, satu mereview secara real-time. Kualitas naik, pengetahuan menyebar.</p></div>
+        <div class="card"><h3>Test-First Programming</h3><p>Tulis tes <em>sebelum</em> kode. Tes yang gagal mendefinisikan "selesai" secara objektif.</p></div>
+        <div class="card"><h3>Continuous Integration</h3><p>Integrasikan kode sesering mungkin (build < 10 menit) — konflik ditemukan saat masih kecil.</p></div>
+        <div class="card"><h3>Refactoring</h3><p>Perbaiki struktur kode terus-menerus tanpa mengubah perilakunya. Hutang teknis dicicil, bukan ditumpuk.</p></div>
+      </div>
+      <p style="margin-top:16px;font-size:15.5px;color:var(--ink-soft)">Nilai inti XP: <strong>communication, simplicity, feedback, courage, respect</strong>. Nama "extreme" berarti: ambil praktik terbaik, suling ke bentuk paling murni, lakukan terus-menerus.</p>
+      <p class="src">Sumber: Agile Practice Guide (PMI), Annex A3.3, Table A3-2.</p>
+    </div>
+
+    <div class="tab-pane" id="pane-lean">
+      <div class="cards c3">
+        <div class="card"><h4>Eliminate waste</h4><p>Buang yang tidak menambah nilai: fitur tak terpakai, waktu menganggur, defect.</p></div>
+        <div class="card"><h4>Amplify learning</h4><p>Pengembangan = proses belajar; kode membaik lewat iterasi.</p></div>
+        <div class="card"><h4>Decide late</h4><p>Keputusan terlambat = keputusan berbasis fakta, bukan tebakan.</p></div>
+        <div class="card"><h4>Deliver fast</h4><p>Siklus pendek → feedback cepat → belajar lebih banyak.</p></div>
+        <div class="card"><h4>Empower the team</h4><p>Tim mandiri dengan tanggung jawab lebih luas — bahkan ikut merumuskan konsep produk.</p></div>
+        <div class="card"><h4>Build quality in · See the whole</h4><p>Kualitas dibangun sejak awal; optimalkan sistem keseluruhan, bukan bagian-bagian.</p></div>
+      </div>
+      <p style="margin-top:16px;font-size:15.5px;color:var(--ink-soft)">Fakta menarik (Standish Group, dikutip <em>Agile for Dummies</em>): hingga <strong>80% fitur aplikasi jarang atau tidak pernah dipakai</strong> — itulah "waste" terbesar yang ingin dieliminasi Lean.</p>
+      <p class="src">Sumber: Agile Project Management Whitepaper (AltexSoft) — 7 prinsip Poppendieck; Agile for Dummies.</p>
+    </div>
+
+    <div class="note tip"><strong>🧪 Racikan paling umum di industri</strong> (Agile Practice Guide §3.2): <strong>Scrum</strong> memberi struktur (peran, sprint, backlog) + <strong>papan Kanban</strong> memvisualkan aliran & WIP + <strong>praktik XP</strong> menjaga kualitas teknis (CI, test-first, refactoring). Framework adalah titik awal — tim meraciknya sendiri, bukan memakainya mentah-mentah.</div>
+  </div>
+</section>
+
+<!-- ===== 5. HYBRID & BIMODAL ===== -->
+<section id="hybrid">
+  <div class="wrap">
+    <span class="sec-tag">Bagian 5 · Hybrid & Bimodal</span>
+    <h2>Ketika Dunia Nyata Tidak Memberi Anda Pilihan Murni</h2>
+    <p class="sub">Sebagian besar organisasi Indonesia masih hidup di lingkungan Waterfall: kontrak fixed-scope, anggaran tahunan, audit ketat. Dua pola ini menjembatani.</p>
+    <div class="cards c2">
+      <div class="card">
+        <h3>Hybrid</h3>
+        <p>Pengembangan agile dijalankan <em>di dalam</em> kondisi Waterfall: deadline tetap, anggaran terprediksi, dan penilaian risiko menyeluruh di awal. Agile dan Waterfall saling melengkapi, bukan saling meniadakan.</p>
+        <p style="margin-top:8px"><strong>Relevansi lokal:</strong> tender pemerintah & proyek enterprise dengan kontrak fixed-scope.</p>
+      </div>
+      <div class="card">
+        <h3>Bimodal</h3>
+        <p>Dua mode kerja paralel dengan dua tim berbeda: <strong>Mode 1</strong> memelihara infrastruktur TI dengan cara tradisional; <strong>Mode 2</strong> mengembangkan aplikasi inovatif dengan agile. Kolaborasi lintas tim menjadi krusial.</p>
+        <p style="margin-top:8px"><strong>Relevansi lokal:</strong> persis pola Jenius di Bank BTPN (lihat studi kasus).</p>
+      </div>
+    </div>
+    <div class="note tip"><strong>Strategi transisi gradual</strong> (Agile Practice Guide §3.1.11): organisasi besar tidak bisa beralih semalam. Mulai dari teknik iteratif di proyek berisiko rendah → tambah teknik inkremental → perluas ke proyek lebih kompleks setelah terbukti berhasil.</div>
+  </div>
+</section>
+
+<!-- ===== 6. SUITABILITY FILTER ===== -->
+<section id="filter">
+  <div class="wrap">
+    <span class="sec-tag">Bagian 6 · Suitability Filter</span>
+    <h2>Alat Uji: Agile, Hybrid, atau Prediktif?</h2>
+    <p class="sub">Agile Practice Guide (Appendix X3) menilai kecocokan pendekatan lewat tiga kategori: <strong>Culture</strong>, <strong>Team</strong>, dan <strong>Project</strong>. Filter ini adalah <em>bahan diskusi objektif</em>, bukan gerbang mutlak. Bayangkan satu proyek nyata (atau gunakan skenario dari dosen), lalu jawab 9 pertanyaan berikut.</p>
+
+    <div id="filterForm">
+      <div class="cat-title"><span class="badge">CULTURE</span> Lingkungan organisasi</div>
+      <div class="filter-q"><div class="qt">1. Apakah manajemen mendukung dan mempercayai tim untuk mengatur cara kerjanya sendiri?</div><div class="scale" data-q="c1"></div></div>
+      <div class="filter-q"><div class="qt">2. Apakah organisasi nyaman dengan rencana yang berubah-ubah (bukan rencana terkunci di awal)?</div><div class="scale" data-q="c2"></div></div>
+      <div class="filter-q"><div class="qt">3. Apakah kegagalan kecil dianggap bahan belajar, bukan aib yang dicari kambing hitamnya?</div><div class="scale" data-q="c3"></div></div>
+
+      <div class="cat-title"><span class="badge">TEAM</span> Kondisi tim</div>
+      <div class="filter-q"><div class="qt">4. Apakah ukuran tim kecil (±3–9 orang) dan anggotanya berdedikasi penuh ke proyek ini?</div><div class="scale" data-q="t1"></div></div>
+      <div class="filter-q"><div class="qt">5. Apakah tim berpengalaman dengan cara kerja iteratif (atau punya pendamping yang berpengalaman)?</div><div class="scale" data-q="t2"></div></div>
+      <div class="filter-q"><div class="qt">6. Apakah tim punya akses cepat & rutin ke perwakilan bisnis/pengguna untuk bertanya?</div><div class="scale" data-q="t3"></div></div>
+
+      <div class="cat-title"><span class="badge">PROJECT</span> Sifat proyek</div>
+      <div class="filter-q"><div class="qt">7. Apakah kebutuhan (requirements) sering berubah atau masih banyak yang belum jelas?</div><div class="scale" data-q="p1"></div></div>
+      <div class="filter-q"><div class="qt">8. Apakah produk bisa dipecah dan dirilis sebagian-sebagian (incremental delivery)?</div><div class="scale" data-q="p2"></div></div>
+      <div class="filter-q"><div class="qt">9. Apakah dampak kegagalan rilis relatif kecil (bukan menyangkut nyawa / kepatuhan hukum berat)?</div><div class="scale" data-q="p3"></div></div>
+
+      <button class="btn alt" id="btnVerdict" style="margin-top:16px">Hitung Rekomendasi Pendekatan</button>
+
+      <div class="verdict" id="verdict" aria-live="polite">
+        <div class="meter"><div class="fill" id="meterFill"></div></div>
+        <div class="meter-cap"><span>Prediktif</span><span>Hybrid</span><span>Agile</span></div>
+        <h3 id="verdictTitle" style="margin:14px 0 6px;font-size:22px"></h3>
+        <p id="verdictText" style="color:var(--ink-soft)"></p>
+        <div class="vbars" style="margin-top:16px">
+          <div class="row"><span class="lbl">Culture</span><div class="track"><div class="bar" id="barC"></div></div><span id="valC" style="width:34px;text-align:right;font-weight:600"></span></div>
+          <div class="row"><span class="lbl">Team</span><div class="track"><div class="bar" id="barT"></div></div><span id="valT" style="width:34px;text-align:right;font-weight:600"></span></div>
+          <div class="row"><span class="lbl">Project</span><div class="track"><div class="bar" id="barP"></div></div><span id="valP" style="width:34px;text-align:right;font-weight:600"></span></div>
+        </div>
+        <p style="margin-top:14px;font-size:14.5px;color:var(--ink-soft)">💬 Kategori dengan skor terendah adalah <em>topik diskusi pertama</em> dengan stakeholder — bukan alasan otomatis menolak agile.</p>
+      </div>
+    </div>
+
+    <div class="note warn" style="margin-top:26px"><strong>Latihan kelas:</strong> nilai dua skenario dengan filter ini — (a) aplikasi startup kampus yang kebutuhannya masih meraba-raba, dan (b) proyek tender pemerintah fixed-scope dengan serah terima tunggal di akhir tahun anggaran. Bandingkan hasilnya dan diskusikan: di skenario (b), elemen agile apa yang <em>tetap bisa</em> diselundupkan secara sehat?</div>
+  </div>
+</section>
+
+<!-- ===== 7. STUDI KASUS ===== -->
+<section id="kasus">
+  <div class="wrap">
+    <span class="sec-tag">Bagian 7 · Studi Kasus Indonesia</span>
+    <h2>Tiga Wajah Agile di Indonesia</h2>
+    <p class="sub">Tiga kasus, tiga pelajaran berbeda: sukses dengan kewaspadaan, adaptasi struktural, dan implementasi yang tersendat. Perhatikan: tidak ada satu pun yang "memakai Scrum dari buku" mentah-mentah.</p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab-btn on" data-case="gojek" role="tab">🛵 Gojek</button>
+      <button class="tab-btn" data-case="jenius" role="tab">🏦 Jenius / BTPN</button>
+      <button class="tab-btn" data-case="xyz" role="tab">📡 PT XYZ (Telko)</button>
+    </div>
+
+    <div class="tab-pane on" id="case-gojek">
+      <div class="card">
+        <div class="case-head"><h3>Gojek: Agile ala Startup Hyper-Growth</h3><span class="pill ok">Sukses — dengan catatan</span></div>
+        <p style="color:var(--ink-soft)">Tim produk Gojek beranggotakan 4–6 orang campuran developer, PM, desainer, dan analis — masing-masing fokus memecahkan satu masalah dengan iterasi mingguan/dwi-mingguan berdasarkan feedback pengguna. Tim bersifat self-organized: tiap tim boleh bekerja dengan cara berbeda. Di skala besar, GoMerchants PDG menggabungkan 5 tim (±240 orang lintas fungsi) yang masing-masing punya budaya engineering berbeda — disatukan lewat program management, bukan dipaksa seragam.</p>
+        <p style="color:var(--ink-soft);margin-top:10px">Yang paling penting: CTO Gojek sendiri mengingatkan bahwa metodologi yang dijalankan membabi buta <em>tidak</em> mempercepat apa pun. Gojek memantau tiga hal terus-menerus: <strong>kecepatan rilis fitur, tingkat defect, dan aliran komunikasi tim</strong> — lalu mengadaptasi prosesnya.</p>
+        <div class="lesson"><strong>Pelajaran:</strong> framework bukan tujuan. Ukur nilai (value), lalu sesuaikan proses — persis semangat <em>inspect & adapt</em>.</div>
+        <p class="src">Sumber: blog engineering Gojek (gojek.io); wawancara CTO Gojek di CIO.com.</p>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="case-jenius">
+      <div class="card">
+        <div class="case-head"><h3>Jenius / Bank BTPN: Agile di Industri Teregulasi</h3><span class="pill mid">Adaptasi struktural</span></div>
+        <p style="color:var(--ink-soft)">Tahun 2015, BTPN — bank yang awalnya fokus pada pensiunan — memutuskan go digital dengan menciptakan <em>startup di dalam bank</em>: Jenius. Ruang kerjanya sengaja dibuat berbeda dari lantai lain, dengan cara kerja dan SDM yang berbeda. Jenius dikembangkan dengan Agile Manifesto dan praktik Scrum; lebih dari 100 karyawan dilatih budaya digital dan metode Agile. Hasilnya: salah satu pelopor digital banking Indonesia, 2,5 juta unduhan dalam waktu singkat, dan fitur baru lahir dalam ritme yang mustahil bagi bank tradisional.</p>
+        <p style="color:var(--ink-soft);margin-top:10px">Perhatikan polanya: BTPN tidak meng-agile-kan seluruh bank. Bank inti tetap berjalan dengan kontrol ketat (Mode 1), sementara Jenius berlari dengan agile (Mode 2) — ini contoh nyata pola <strong>Bimodal</strong> dari teori kita. Kasus ini bahkan menjadi teaching case NUS/IESE yang dijual di Harvard Business Publishing.</p>
+        <div class="lesson"><strong>Pelajaran:</strong> agile bisa hidup di organisasi teregulasi — tetapi butuh "kantong" struktural khusus, bukan sekadar mengganti proses rapat.</div>
+        <p class="src">Sumber: CNBC Indonesia; Sindonews; Codepolitan; teaching case "BTPN: A Traditional Bank that became a Digital Indonesian Jenius" (W21020).</p>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="case-xyz">
+      <div class="card">
+        <div class="case-head"><h3>PT XYZ: Ritual Berjalan, Kematangan Tertinggal</h3><span class="pill bad">Bermasalah — bahan analisis</span></div>
+        <p style="color:var(--ink-soft)">Perusahaan telekomunikasi dengan 34,3 juta pengguna mengadopsi Scrum di 3 proyek pengembangan aplikasinya. Masalahnya: selama setahun penuh, <strong>tidak ada satu sprint pun yang mencapai 100% keterselesaian</strong> — memperlambat rilis fitur dan membuang potensi pendapatan. Penilaian dengan Scrum Maturity Model menempatkan implementasinya di level 3, dengan rekomendasi utama: standardisasi dan pelaksanaan <strong>sprint retrospective yang disiplin</strong>.</p>
+        <p style="color:var(--ink-soft);margin-top:10px">Diskusikan di kelompok: kenapa sprint terus gagal selesai? Kandidat diagnosis: estimasi terlalu optimis, gangguan eksternal masuk ke tengah sprint, definisi "Done" kabur, atau retrospective dilewati sehingga masalah yang sama berulang. Bandingkan dengan kasus "Trojan Horse" di <em>Agile for Everybody</em> — eksekutif yang menyela sprint dengan permintaan rahasia.</p>
+        <div class="lesson"><strong>Pelajaran:</strong> mengadopsi ritual Scrum ≠ matang ber-Scrum. Retrospective yang diabaikan adalah anti-pattern paling umum — tim kehilangan satu-satunya mekanisme memperbaiki diri.</div>
+        <p class="src">Sumber: jurnal nasional "Evaluasi Implementasi Scrum dengan SMM dan AMM: Studi Kasus Perusahaan Telekomunikasi PT XYZ". Catatan kritis: ini publikasi jurnal nasional — pakai sebagai bahan diskusi, bukan temuan definitif.</p>
+      </div>
+    </div>
+
+    <div class="note tip"><strong>Diskusi kritis:</strong> sumber kasus Gojek & Jenius adalah blog resmi perusahaan dan media — perusahaan cenderung menceritakan versi terbaik dirinya. Apa yang <em>tidak</em> diceritakan? Itulah pertanyaan seorang analis yang baik.</div>
+  </div>
+</section>
+
+<!-- ===== 8. KUIS ===== -->
+<section id="kuis">
+  <div class="wrap">
+    <span class="sec-tag">Bagian 8 · Kuis</span>
+    <h2>Uji Pemahaman: 12 Soal</h2>
+    <p class="sub">Jawab semua soal, lalu klik "Periksa Jawaban". Tiap soal disertai penjelasan.</p>
+    <div id="quiz"></div>
+    <button class="btn alt" id="btnQuiz">Periksa Jawaban</button>
+    <button class="btn ghost" id="btnReset" style="margin-left:8px">Ulangi Kuis</button>
+    <div class="quiz-result" id="quizResult" aria-live="polite">
+      <div class="score" id="quizScore"></div>
+      <p id="quizMsg" style="margin-top:6px"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <h3>Berikutnya: Risk Management</h3>
+    <p>Setiap framework menangani risiko dengan cara berbeda — Waterfall lewat analisis di muka, agile lewat iterasi pendek yang membuat risiko cepat terlihat. Topik berikutnya membedah ini lewat PMBOK Bab 11 dan HBR Project Management Handbook Bab 7.</p>
+    <p style="margin-top:18px;font-size:13.5px">Referensi utama: Agile Practice Guide (PMI) · Agile Project Management Whitepaper (AltexSoft) · Agile for Dummies · Agile for Everybody (M. LeMay) · PMBOK Guide 5th Ed. · HBR Project Management Handbook.</p>
+  </div>
+</footer>
+
+<script>
+/* ===== nav tickets ===== */
+const tickets=[...document.querySelectorAll('.ticket')];
+tickets.forEach(t=>t.addEventListener('click',()=>{document.getElementById(t.dataset.go).scrollIntoView({behavior:'smooth'});}));
+const secIds=tickets.map(t=>t.dataset.go);
+const seen=new Set();
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    const i=secIds.indexOf(e.target.id);
+    if(e.isIntersecting){
+      tickets.forEach(t=>t.classList.remove('active'));
+      tickets[i].classList.add('active');
+      seen.add(e.target.id);
+      secIds.forEach((id,j)=>{ if(seen.has(id)&&!tickets[j].classList.contains('active'))tickets[j].classList.add('done'); });
+    }
+  });
+},{rootMargin:'-30% 0px -55% 0px'});
+secIds.forEach(id=>io.observe(document.getElementById(id)));
+
+/* ===== flip cards ===== */
+document.querySelectorAll('.flip').forEach(f=>{
+  const tog=()=>f.classList.toggle('flipped');
+  f.addEventListener('click',tog);
+  f.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tog();}});
+});
+
+/* ===== 3-5-3 items ===== */
+document.querySelectorAll('.item353').forEach(it=>{
+  const tog=()=>it.classList.toggle('open');
+  it.addEventListener('click',tog);
+  it.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tog();}});
+});
+
+/* ===== tabs (XP/Lean) ===== */
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-tab]').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  document.getElementById('pane-xp').classList.toggle('on',b.dataset.tab==='xp');
+  document.getElementById('pane-lean').classList.toggle('on',b.dataset.tab==='lean');
+}));
+
+/* ===== case tabs ===== */
+document.querySelectorAll('[data-case]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-case]').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  ['gojek','jenius','xyz'].forEach(c=>document.getElementById('case-'+c).classList.toggle('on',b.dataset.case===c));
+}));
+
+/* ===== suitability filter ===== */
+const scaleLabels=['1<br>Tidak','2','3<br>Sedang','4','5<br>Ya, sangat'];
+document.querySelectorAll('.scale').forEach(s=>{
+  const name=s.dataset.q;
+  s.innerHTML=scaleLabels.map((l,i)=>`<label><input type="radio" name="${name}" value="${i+1}">${l}</label>`).join('');
+});
+document.getElementById('btnVerdict').addEventListener('click',()=>{
+  const get=q=>{const el=document.querySelector(`input[name="${q}"]:checked`);return el?+el.value:null;};
+  const qs=['c1','c2','c3','t1','t2','t3','p1','p2','p3'].map(get);
+  if(qs.some(v=>v===null)){alert('Jawab dulu semua 9 pertanyaan ya.');return;}
+  const avg=a=>a.reduce((x,y)=>x+y)/a.length;
+  const c=avg(qs.slice(0,3)),t=avg(qs.slice(3,6)),p=avg(qs.slice(6,9));
+  const total=(c+t+p)/3;
+  const pct=v=>((v-1)/4*100).toFixed(0);
+  document.getElementById('meterFill').style.width=pct(total)+'%';
+  ['C','T','P'].forEach((k,i)=>{
+    const v=[c,t,p][i];
+    document.getElementById('bar'+k).style.width=pct(v)+'%';
+    document.getElementById('val'+k).textContent=v.toFixed(1);
+  });
+  let title,text;
+  if(total>=3.8){title='🟢 Condong AGILE';text='Budaya, tim, dan sifat proyek mendukung pendekatan iteratif penuh seperti Scrum atau Kanban. Tetap mulai dari proyek yang risikonya terkendali, dan jaga disiplin retrospective.';}
+  else if(total>=2.6){title='🟡 Condong HYBRID';text='Sebagian faktor mendukung agile, sebagian tidak. Pertimbangkan pola Hybrid: kerangka Waterfall di tingkat kontrak/milestone, eksekusi iteratif di dalamnya. Gunakan kategori berskor rendah sebagai bahan negosiasi dengan stakeholder.';}
+  else{title='🔴 Condong PREDIKTIF';text='Untuk saat ini, pendekatan prediktif (atau hybrid yang sangat konservatif) lebih realistis. Ini bukan vonis permanen — strategi transisi gradual (Agile Practice Guide §3.1.11) bisa memulai dari teknik iteratif kecil di proyek berisiko rendah.';}
+  document.getElementById('verdictTitle').textContent=title;
+  document.getElementById('verdictText').textContent=text;
+  document.getElementById('verdict').classList.add('show');
+});
+
+/* ===== quiz ===== */
+const QUIZ=[
+ {q:"Menurut Agile Manifesto, mana pernyataan yang PALING tepat?",
+  o:["Proses dan alat tidak penting dalam agile","Individu dan interaksi lebih bernilai daripada proses dan alat","Dokumentasi dilarang dalam proyek agile","Rencana tidak perlu dibuat sama sekali"],
+  a:1,e:"Manifesto tidak meniadakan sisi kanan ('proses dan alat' tetap bernilai) — ia menyatakan sisi kiri LEBIH bernilai. Ini sering disalahpahami sebagai 'agile = tanpa dokumentasi/rencana'."},
+ {q:"Siapa yang bertanggung jawab memaksimalkan nilai produk dalam Scrum?",
+  o:["Scrum Master","Project Manager","Product Owner","Stakeholder"],
+  a:2,e:"Product Owner memaksimalkan nilai produk dan mengelola urutan Product Backlog. Scrum Master menjaga proses; tidak ada peran 'Project Manager' dalam Scrum."},
+ {q:"Berapa durasi maksimal sebuah sprint menurut Scrum?",
+  o:["1 minggu","2 minggu","1 bulan","3 bulan"],
+  a:2,e:"Sprint adalah timebox konsisten berdurasi 1 bulan atau kurang (Agile Practice Guide, Annex A3.2). Praktik umum: 1–4 minggu."},
+ {q:"Event Scrum mana yang fungsinya memperbaiki PROSES kerja tim (bukan produknya)?",
+  o:["Sprint Review","Sprint Retrospective","Daily Scrum","Sprint Planning"],
+  a:1,e:"Sprint Review membahas PRODUK bersama stakeholder; Sprint Retrospective membahas PROSES oleh tim sendiri. Kasus PT XYZ menunjukkan mahalnya mengabaikan retrospective."},
+ {q:"Apa fungsi utama membatasi Work in Progress (WIP) di Kanban?",
+  o:["Mengurangi jumlah anggota tim","Memaksa fokus menyelesaikan pekerjaan, bukan terus memulai yang baru","Mempercepat rapat harian","Menghapus kebutuhan akan papan visual"],
+  a:1,e:"Limit WIP meningkatkan kecepatan dan fleksibilitas dengan memaksa tim menyelesaikan sebelum memulai — mengurangi multitasking dan antrean setengah jadi."},
+ {q:"Perbedaan paling fundamental antara Kanban dan Scrum adalah…",
+  o:["Kanban tidak memakai papan visual","Kanban tidak punya timebox dan rencana boleh berubah kapan saja","Kanban hanya untuk tim besar","Kanban mewajibkan peran Product Owner"],
+  a:1,e:"Kanban berbasis aliran kontinu: tanpa sprint, tanpa peran wajib, perubahan kapan saja. Justru Kanban-lah yang identik dengan papan visual."},
+ {q:"Praktik XP di mana dua programmer bekerja pada satu komputer disebut…",
+  o:["Mob programming","Pair programming","Test-first programming","Continuous integration"],
+  a:1,e:"Pair programming: satu menulis, satu mereview real-time — kualitas naik dan pengetahuan menyebar. Test-first = menulis tes sebelum kode; CI = integrasi kode sesering mungkin."},
+ {q:"'Eliminate waste' dalam Lean berarti membuang…",
+  o:["Anggota tim yang lambat","Semua dokumentasi proyek","Segala hal yang tidak menambah nilai: fitur tak terpakai, waktu menganggur, defect","Semua rapat termasuk retrospective"],
+  a:2,e:"Waste = apa pun yang tidak menambah nilai. Riset Standish menunjukkan hingga 80% fitur jarang/tidak pernah dipakai — pemborosan terbesar di software."},
+ {q:"Pola Jenius di Bank BTPN — bank inti berjalan tradisional sementara unit digital berlari dengan agile — paling tepat disebut…",
+  o:["Bimodal","XP","Lean murni","Scrum of Scrums"],
+  a:0,e:"Bimodal: Mode 1 memelihara sistem inti dengan cara tradisional, Mode 2 mengembangkan inovasi dengan agile, dua tim terpisah yang tetap berkolaborasi."},
+ {q:"Pelajaran utama dari kasus Gojek menurut CTO-nya adalah…",
+  o:["Semakin banyak ritual agile, semakin cepat tim","Metodologi yang dijalankan membabi buta tidak mempercepat apa pun — ukur kecepatan rilis, defect, dan komunikasi","Semua tim wajib bekerja dengan cara yang persis sama","Agile hanya cocok untuk startup"],
+  a:1,e:"Gojek memantau tiga parameter (kecepatan rilis fitur, defect rate, aliran komunikasi) dan terus mengadaptasi proses — semangat inspect & adapt, bukan kepatuhan ritual."},
+ {q:"Agile Suitability Filter (Agile Practice Guide, Appendix X3) menilai kecocokan lewat tiga kategori:",
+  o:["Budget, Schedule, Scope","Culture, Team, Project","People, Process, Technology","Plan, Do, Check"],
+  a:1,e:"Culture (dukungan & kepercayaan), Team (ukuran, pengalaman, akses ke bisnis), Project (laju perubahan, kemungkinan rilis bertahap, kekritisan). Hasilnya diplot pada radar chart sebagai bahan diskusi."},
+ {q:"Racikan framework yang paling umum di industri menurut Agile Practice Guide adalah…",
+  o:["Waterfall + SAFe","Scrum (struktur) + papan Kanban (aliran) + praktik engineering XP","Lean + Bimodal","XP murni tanpa tambahan apa pun"],
+  a:1,e:"Scrum menyumbang peran/event/artifact, Kanban menyumbang visualisasi aliran & limit WIP, XP menyumbang CI, test-first, dan refactoring. Tim meracik — bukan memakai framework mentah-mentah."}
+];
+const quizEl=document.getElementById('quiz');
+QUIZ.forEach((item,i)=>{
+  const d=document.createElement('div');d.className='q';
+  d.innerHTML=`<div class="qn">Soal ${i+1} / ${QUIZ.length}</div><div class="qt">${item.q}</div>`+
+    item.o.map((o,j)=>`<label class="opt"><input type="radio" name="q${i}" value="${j}">${o}</label>`).join('')+
+    `<div class="expl" id="ex${i}"><strong>Penjelasan:</strong> ${item.e}</div>`;
+  quizEl.appendChild(d);
+});
+document.getElementById('btnQuiz').addEventListener('click',()=>{
+  let score=0,answered=0;
+  QUIZ.forEach((item,i)=>{
+    const sel=document.querySelector(`input[name="q${i}"]:checked`);
+    const opts=[...document.querySelectorAll(`input[name="q${i}"]`)].map(x=>x.closest('.opt'));
+    opts.forEach(o=>o.classList.remove('correct','wrong'));
+    if(sel){
+      answered++;
+      const v=+sel.value;
+      if(v===item.a){score++;opts[v].classList.add('correct');}
+      else{opts[v].classList.add('wrong');opts[item.a].classList.add('correct');}
+      document.getElementById('ex'+i).classList.add('show');
+    }
+  });
+  if(answered<QUIZ.length){alert(`Masih ada ${QUIZ.length-answered} soal yang belum dijawab.`);return;}
+  const r=document.getElementById('quizResult');
+  document.getElementById('quizScore').textContent=`${score} / ${QUIZ.length}`;
+  let msg;
+  if(score>=11)msg='Luar biasa — Anda siap jadi Scrum Master dadakan. 🏆';
+  else if(score>=8)msg='Bagus! Tinjau kembali soal yang keliru lewat penjelasannya.';
+  else if(score>=5)msg='Cukup — baca ulang Bagian 2–4, terutama perbedaan Scrum vs Kanban.';
+  else msg='Jangan menyerah: ulangi modul dari Bagian 1, lalu coba lagi. Agile itu soal iterasi, kan?';
+  document.getElementById('quizMsg').textContent=msg;
+  r.classList.add('show');
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+});
+document.getElementById('btnReset').addEventListener('click',()=>{
+  document.querySelectorAll('#quiz input').forEach(x=>x.checked=false);
+  document.querySelectorAll('#quiz .opt').forEach(o=>o.classList.remove('correct','wrong'));
+  document.querySelectorAll('#quiz .expl').forEach(e=>e.classList.remove('show'));
+  document.getElementById('quizResult').classList.remove('show');
+  window.scrollTo({top:document.getElementById('kuis').offsetTop,behavior:'smooth'});
+});
+</script>
+</body>
+</html>
