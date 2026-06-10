@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lateral Thinking — Studi Kasus Pengayaan</title>
+<style>
+  /* ── RESET & BASE ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:    #0B0F2A;
+    --navy2:   #141937;
+    --navy3:   #1C2444;
+    --navy4:   #243060;
+    --blue:    #3B4FD8;
+    --blue2:   #5B72FF;
+    --amber:   #F5A623;
+    --amber2:  #FFD080;
+    --green:   #10B981;
+    --red:     #EF4444;
+    --white:   #FFFFFF;
+    --light:   #E2E8F0;
+    --mid:     #8899BB;
+    --sidebar-w: 280px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--navy);
+    color: var(--light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--navy2);
+    border-bottom: 1px solid var(--navy4);
+    padding: 0 2rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-left { display: flex; align-items: center; gap: 1rem; }
+
+  .header-badge {
+    background: var(--amber);
+    color: var(--navy);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+
+  .header-title {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .header-title span { color: var(--amber); }
+
+  .progress-info {
+    font-size: 0.78rem;
+    color: var(--mid);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .progress-dots { display: flex; gap: 4px; }
+
+  .progress-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--navy4);
+    transition: background 0.3s;
+  }
+
+  .progress-dot.done { background: var(--amber); }
+  .progress-dot.active { background: var(--blue2); }
+
+  /* ── LAYOUT ── */
+  .app { display: flex; flex: 1; overflow: hidden; height: calc(100vh - 60px); }
+
+  /* ── SIDEBAR ── */
+  aside {
+    width: var(--sidebar-w);
+    background: var(--navy2);
+    border-right: 1px solid var(--navy4);
+    overflow-y: auto;
+    flex-shrink: 0;
+    padding: 1rem 0;
+  }
+
+  .sidebar-group {
+    margin-bottom: 0.5rem;
+  }
+
+  .sidebar-group-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--mid);
+    text-transform: uppercase;
+    padding: 0.5rem 1.2rem 0.3rem;
+  }
+
+  .case-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.7rem 1.2rem;
+    text-align: left;
+    transition: background 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .case-btn:hover { background: var(--navy3); }
+
+  .case-btn.active {
+    background: var(--navy3);
+    border-left-color: var(--amber);
+  }
+
+  .case-btn.active .case-btn-num { color: var(--amber); }
+
+  .case-btn.completed .case-btn-num::after {
+    content: " ✓";
+    color: var(--green);
+    font-size: 0.7rem;
+  }
+
+  .case-btn-num {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--mid);
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+    font-family: monospace;
+    letter-spacing: 0.05em;
+  }
+
+  .case-btn-info { flex: 1; min-width: 0; }
+
+  .case-btn-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--light);
+    line-height: 1.3;
+    margin-bottom: 0.2rem;
+  }
+
+  .case-btn.active .case-btn-name { color: var(--white); }
+
+  .case-btn-tag {
+    font-size: 0.68rem;
+    color: var(--mid);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .tag-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .sidebar-divider {
+    height: 1px;
+    background: var(--navy4);
+    margin: 0.5rem 1.2rem;
+  }
+
+  /* ── MAIN CONTENT ── */
+  main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2.5rem 3rem;
+    max-width: 900px;
+  }
+
+  /* ── WELCOME SCREEN ── */
+  .welcome {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 70vh;
+    max-width: 600px;
+  }
+
+  .welcome-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.2rem;
+  }
+
+  .welcome h1 {
+    font-family: Georgia, serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  .welcome h1 em {
+    font-style: normal;
+    color: var(--amber);
+  }
+
+  .welcome-desc {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--mid);
+    margin-bottom: 2rem;
+  }
+
+  .how-it-works {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .how-card {
+    background: var(--navy3);
+    border: 1px solid var(--navy4);
+    border-radius: 10px;
+    padding: 1.1rem;
+  }
+
+  .how-card-num {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .how-card-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+
+  .how-card-desc {
+    font-size: 0.78rem;
+    color: var(--mid);
+    line-height: 1.5;
+  }
+
+  .start-hint {
+    font-size: 0.85rem;
+    color: var(--mid);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .start-hint::before {
+    content: "←";
+    color: var(--amber);
+    font-size: 1rem;
+  }
+
+  /* ── CASE CONTENT ── */
+  .case-content { display: none; }
+  .case-content.visible { display: block; }
+
+  .case-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--navy4);
+  }
+
+  .case-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .case-group-tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+  }
+
+  .case-industry-tag {
+    font-size: 0.72rem;
+    color: var(--mid);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .case-country {
+    font-size: 0.72rem;
+    color: var(--mid);
+  }
+
+  .case-title {
+    font-family: Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+  }
+
+  .case-subtitle {
+    font-size: 0.9rem;
+    color: var(--mid);
+    line-height: 1.6;
+    max-width: 680px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 2rem;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--navy4);
+  }
+
+  .context-box {
+    background: var(--navy3);
+    border: 1px solid var(--navy4);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: var(--light);
+  }
+
+  /* ── ASSUMPTION REVEAL ── */
+  .assumption-intro {
+    font-size: 0.85rem;
+    color: var(--mid);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .assumption-intro .hint-icon {
+    background: var(--amber);
+    color: var(--navy);
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+
+  .assumptions-grid {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .assumption-item {
+    background: var(--navy3);
+    border: 1px solid var(--navy4);
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .assumption-item:hover:not(.revealed) {
+    border-color: var(--blue);
+    background: var(--navy4);
+  }
+
+  .assumption-item.revealed {
+    border-color: var(--red);
+    background: rgba(239, 68, 68, 0.06);
+    cursor: default;
+  }
+
+  .assumption-text {
+    font-size: 0.88rem;
+    color: var(--light);
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .assumption-icon {
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+  }
+
+  .assumption-hidden-hint {
+    font-size: 0.72rem;
+    color: var(--mid);
+    margin-top: 0.5rem;
+    font-style: italic;
+    display: none;
+  }
+
+  .assumption-item:not(.revealed) .assumption-hidden-hint { display: block; }
+  .assumption-item.revealed .assumption-hidden-hint { display: none; }
+
+  .assumption-revealed-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+    display: none;
+  }
+
+  .assumption-item.revealed .assumption-revealed-label { display: block; }
+
+  .reveal-counter {
+    font-size: 0.78rem;
+    color: var(--mid);
+    margin-top: 0.75rem;
+    text-align: right;
+  }
+
+  .reveal-all-btn {
+    font-size: 0.75rem;
+    color: var(--blue2);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: 0.5rem;
+  }
+
+  /* ── LATERAL QUESTION ── */
+  .lateral-question-box {
+    background: linear-gradient(135deg, var(--navy4) 0%, var(--navy3) 100%);
+    border: 1px solid var(--blue);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .lq-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--blue2);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .lq-text {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.6;
+  }
+
+  .lq-source {
+    font-size: 0.75rem;
+    color: var(--mid);
+    margin-top: 0.75rem;
+  }
+
+  /* ── TECHNIQUES ── */
+  .techniques-grid {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .technique-card {
+    background: var(--navy3);
+    border: 1px solid var(--navy4);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+  }
+
+  .technique-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .technique-badge {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+  }
+
+  .technique-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .technique-desc {
+    font-size: 0.85rem;
+    color: var(--light);
+    line-height: 1.6;
+  }
+
+  /* ── WHAT HAPPENED ── */
+  .what-happened {
+    background: var(--navy3);
+    border: 1px solid var(--navy4);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-item { text-align: center; }
+
+  .stat-num {
+    font-family: Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--mid);
+    line-height: 1.3;
+  }
+
+  .stat-divider {
+    width: 1px;
+    background: var(--navy4);
+    align-self: stretch;
+  }
+
+  .happened-text {
+    font-size: 0.88rem;
+    color: var(--light);
+    line-height: 1.75;
+  }
+
+  /* ── LESSON ── */
+  .lesson-box {
+    background: linear-gradient(135deg, rgba(245,166,35,0.12) 0%, rgba(245,166,35,0.04) 100%);
+    border: 1px solid rgba(245,166,35,0.35);
+    border-radius: 12px;
+    padding: 1.4rem 1.5rem;
+  }
+
+  .lesson-icon {
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .lesson-text {
+    font-size: 0.9rem;
+    color: var(--light);
+    line-height: 1.75;
+  }
+
+  .lesson-text strong { color: var(--amber); }
+
+  /* ── SPECIAL: FAILURE TAG ── */
+  .failure-warning {
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.3);
+    border-radius: 8px;
+    padding: 0.75rem 1.1rem;
+    font-size: 0.82rem;
+    color: #FCA5A5;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── QUIZ ── */
+  .quiz-section {
+    background: var(--navy2);
+    border: 1px solid var(--navy4);
+    border-radius: 14px;
+    padding: 1.75rem;
+    margin-top: 2.5rem;
+  }
+
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .quiz-badge {
+    background: var(--blue);
+    color: var(--white);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+  }
+
+  .quiz-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .quiz-question {
+    font-size: 0.9rem;
+    color: var(--light);
+    line-height: 1.6;
+    margin-bottom: 1.1rem;
+  }
+
+  .quiz-options {
+    display: grid;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-option {
+    background: var(--navy3);
+    border: 1px solid var(--navy4);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--light);
+    text-align: left;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .quiz-option:hover:not(:disabled) {
+    border-color: var(--blue);
+    background: var(--navy4);
+    color: var(--white);
+  }
+
+  .quiz-option.correct {
+    border-color: var(--green);
+    background: rgba(16,185,129,0.1);
+    color: var(--white);
+  }
+
+  .quiz-option.wrong {
+    border-color: var(--red);
+    background: rgba(239,68,68,0.08);
+    color: #FCA5A5;
+  }
+
+  .quiz-option.neutral-reveal {
+    opacity: 0.5;
+  }
+
+  .quiz-option-letter {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--navy4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+
+  .quiz-option.correct .quiz-option-letter { background: var(--green); }
+  .quiz-option.wrong .quiz-option-letter { background: var(--red); }
+
+  .quiz-feedback {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    padding: 0.9rem 1.1rem;
+    border-radius: 8px;
+    display: none;
+  }
+
+  .quiz-feedback.correct {
+    background: rgba(16,185,129,0.1);
+    border: 1px solid rgba(16,185,129,0.3);
+    color: #6EE7B7;
+    display: block;
+  }
+
+  .quiz-feedback.wrong {
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.25);
+    color: #FCA5A5;
+    display: block;
+  }
+
+  .quiz-reset {
+    font-size: 0.78rem;
+    color: var(--mid);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 0.75rem;
+    display: none;
+  }
+
+  .quiz-reset.visible { display: inline-block; }
+
+  /* ── NAV FOOTER ── */
+  .case-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--navy4);
+  }
+
+  .nav-btn {
+    background: var(--navy3);
+    border: 1px solid var(--navy4);
+    color: var(--light);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .nav-btn:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+
+  .nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .nav-btn:disabled:hover {
+    border-color: var(--navy4);
+    color: var(--light);
+  }
+
+  .case-position {
+    font-size: 0.78rem;
+    color: var(--mid);
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--navy2); }
+  ::-webkit-scrollbar-thumb { background: var(--navy4); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--mid); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    aside { display: none; }
+    main { padding: 1.5rem; }
+    .how-it-works { grid-template-columns: 1fr; }
+    .stat-row { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <span class="header-badge">Pengayaan</span>
+    <span class="header-title">Lateral Thinking — <span>Studi Kasus</span></span>
+  </div>
+  <div class="progress-info">
+    <span id="progress-text">0 / 9 selesai</span>
+    <div class="progress-dots" id="progress-dots"></div>
+  </div>
+</header>
+
+<div class="app">
+  <aside id="sidebar"></aside>
+  <main id="main-content"></main>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const GROUPS = [
+  { id: "g1", label: "Bisnis Digital & Platform", color: "#3B4FD8", bg: "rgba(59,79,216,0.15)" },
+  { id: "g2", label: "Industri Konvensional", color: "#10B981", bg: "rgba(16,185,129,0.15)" },
+  { id: "g3", label: "Konteks Indonesia & Asia Tenggara", color: "#F5A623", bg: "rgba(245,166,35,0.15)" },
+  { id: "g4", label: "Kasus Gagal — Diskusi Kritis", color: "#EF4444", bg: "rgba(239,68,68,0.15)" },
+];
+
+const CASES = [
+  // ── GROUP 1 ──
+  {
+    id: "canva", group: "g1", num: "1.1",
+    name: "Canva",
+    industry: "Desain Grafis", country: "🇦🇺 Australia",
+    subtitle: "Bagaimana desain profesional menjadi milik semua orang — bukan hanya yang terlatih.",
+    context: "Desain grafis dikuasai software profesional seperti Adobe Photoshop dan Illustrator. Untuk membuat desain yang layak, seseorang butuh: lisensi mahal, pelatihan teknis berbulan-bulan, atau menyewa desainer profesional. Industri ini secara implisit menyatakan bahwa desain bagus adalah domain orang-orang terlatih.",
+    assumptions: [
+      "Desain profesional membutuhkan software yang kompleks",
+      "Pengguna non-desainer tidak bisa menghasilkan output berkualitas",
+      "Perangkat desain harus diinstal secara lokal",
+      "Kurva belajar yang panjang adalah harga yang wajar untuk dibayar",
+    ],
+    lateralQ: {
+      text: "\"Bagaimana kalau siapapun bisa mendesain hal apapun dalam hitungan menit, tanpa perlu belajar desain?\"",
+      source: "Melanie Perkins, founder — terinspirasi saat mengajar software desain kepada mahasiswa yang frustasi"
+    },
+    techniques: [
+      { name: "Challenge Assumptions", color: "#3B4FD8", bgColor: "rgba(59,79,216,0.2)",
+        desc: "Perkins mempertanyakan apakah kompleksitas software memang diperlukan, atau itu hanya akibat software dibangun untuk profesional, bukan untuk semua orang." },
+      { name: "Concept Extraction", color: "#10B981", bgColor: "rgba(16,185,129,0.2)",
+        desc: "Dari \"software desain\" → konsep abstraknya adalah \"kemampuan mengkomunikasikan ide secara visual\" → eksekusi baru: platform template drag-and-drop yang bisa diakses siapapun." },
+      { name: "SCAMPER — Eliminate", color: "#F5A623", bgColor: "rgba(245,166,35,0.2)",
+        desc: "Menghilangkan hampir semua fitur advanced, menyisakan hanya apa yang dibutuhkan pengguna kasual." },
+    ],
+    stats: [
+      { num: "$40M", label: "Valuasi (2021)" },
+      { num: "2013", label: "Tahun Diluncurkan" },
+      { num: "100M+", label: "Pengguna Aktif" },
+    ],
+    happened: "Canva diluncurkan 2013. Pada 2021, valuasinya mencapai $40 miliar. Ia tidak mengalahkan Adobe di pasar profesional — ia membuka pasar baru yang sebelumnya tidak ada: ratusan juta non-desainer yang butuh membuat konten visual. Britannica tidak diserang Canva — yang diserang adalah asumsi bahwa desain visual adalah wilayah eksklusif.",
+    lesson: "<strong>Inovasi tidak selalu tentang mengalahkan incumbent di medan mereka sendiri.</strong> Lateral thinking yang paling kuat sering membuka pasar yang belum ada, bukan merebut pasar yang sudah ada. Canva tidak bersaing dengan Adobe — mereka menciptakan kategori baru.",
+    lessonIcon: "💡",
+    quiz: {
+      question: "Teknik lateral thinking utama yang digunakan Canva adalah memisahkan 'software desain' dari konsep yang lebih abstrak. Konsep abstrak apa yang mereka identifikasi?",
+      options: [
+        "Kemampuan menggunakan komputer dengan efisien",
+        "Kemampuan mengkomunikasikan ide secara visual",
+        "Akses ke template desain yang sudah jadi",
+        "Pengganti layanan desainer profesional",
+      ],
+      correct: 1,
+      feedback: {
+        correct: "Tepat! Inilah inti dari Concept Extraction. Dengan memisahkan 'software desain' dari konsep 'mengkomunikasikan ide visual', Canva bisa menemukan eksekusi yang sama sekali berbeda — dan lebih luas jangkauannya.",
+        wrong: "Belum tepat. Coba pikirkan: apa yang sebenarnya ingin dicapai pengguna saat membuka Adobe Photoshop? Bukan toolnya — tapi kemampuan apa yang mereka kejar? Jawabannya ada di Concept Extraction."
+      }
+    }
+  },
+  {
+    id: "wikipedia", group: "g1", num: "1.2",
+    name: "Wikipedia",
+    industry: "Ensiklopedia & Penerbitan", country: "🌐 Global",
+    subtitle: "Ketika pengetahuan dikurasi oleh semua orang — dan hasilnya lebih akurat dari yang dikurasi segelintir ahli.",
+    context: "Ensiklopedia adalah bisnis yang sangat mapan. Britannica berdiri sejak 1768. Model bisnisnya jelas: tim editor ahli mengkurasi pengetahuan, diterbitkan dalam buku mahal, dijual ke perpustakaan dan rumah tangga. Versi digital CD-ROM muncul di era 90-an — tapi modelnya sama: kurator ahli, konten terkontrol, berbayar.",
+    assumptions: [
+      "Pengetahuan harus dikurasi oleh ahli agar bisa dipercaya",
+      "Konten yang dibuat sembarangan orang tidak akan akurat",
+      "Model berbayar adalah satu-satunya cara membiayai ensiklopedia berkualitas",
+      "Ensiklopedia harus selesai dulu sebelum bisa digunakan",
+    ],
+    lateralQ: {
+      text: "\"Bagaimana kalau ensiklopedia ditulis oleh semua orang — dan justru karena itu menjadi lebih lengkap dan lebih akurat dari yang manapun?\"",
+      source: "Jimmy Wales & Larry Sanger, co-founders Wikipedia"
+    },
+    techniques: [
+      { name: "Provocation & Movement", color: "#3B4FD8", bgColor: "rgba(59,79,216,0.2)",
+        desc: "Po: \"Ensiklopedia tidak perlu editor ahli.\" Movement: kalau siapapun bisa mengedit, kesalahan akan dikoreksi lebih cepat oleh komunitas daripada oleh tim kecil editor." },
+      { name: "Reversal", color: "#10B981", bgColor: "rgba(16,185,129,0.2)",
+        desc: "Model konvensional: sedikit orang menulis, banyak orang membaca. Wikipedia membaliknya: banyak orang menulis dan mengedit, semua orang membaca gratis." },
+      { name: "SCAMPER — Reverse", color: "#F5A623", bgColor: "rgba(245,166,35,0.2)",
+        desc: "Produsen konten dan konsumen konten dibalik perannya secara total." },
+    ],
+    stats: [
+      { num: "60M+", label: "Artikel" },
+      { num: "300+", label: "Bahasa" },
+      { num: "2012", label: "Britannica cetak berhenti" },
+    ],
+    happened: "Wikipedia kini memiliki lebih dari 60 juta artikel dalam 300+ bahasa. Studi Nature 2005 menemukan akurasi Wikipedia sebanding dengan Britannica untuk artikel sains. Britannica versi cetak dihentikan pada 2012. Wikipedia beroperasi dengan donasi dan hanya memiliki ratusan karyawan — dibanding ribuan editor berbayar Britannica.",
+    lesson: "<strong>Wisdom of crowds sebagai prinsip bisnis.</strong> Lateral thinking terkadang menemukan bahwa hambatan yang dianggap teknis — akurasi, kualitas — sebenarnya bisa diselesaikan oleh sistem yang dirancang dengan benar, bukan oleh kontrol terpusat.",
+    lessonIcon: "🌐",
+    quiz: {
+      question: "Wikipedia menggunakan teknik Reversal. Apa yang dibalik secara spesifik dalam model Wikipedia?",
+      options: [
+        "Cara penyimpanan data — dari fisik ke digital",
+        "Bahasa yang digunakan — dari bahasa akademis ke bahasa awam",
+        "Siapa yang menulis dan siapa yang membaca — dari sedikit menulis/banyak membaca menjadi banyak menulis/semua membaca gratis",
+        "Model bisnis — dari berbayar ke gratis",
+      ],
+      correct: 2,
+      feedback: {
+        correct: "Tepat! Reversal di Wikipedia bukan hanya soal harga — tapi soal pembalikan peran fundamental antara produser dan konsumen konten. Ini yang membuat modelnya benar-benar berbeda, bukan sekadar 'versi gratis' dari Britannica.",
+        wrong: "Belum tepat. Perhatikan baik-baik: Reversal berarti membalik sesuatu yang mendasar. Di Wikipedia, yang dibalik adalah peran siapa yang menulis dan siapa yang membaca — bukan sekadar soal harga atau format."
+      }
+    }
+  },
+  {
+    id: "zoom", group: "g1", num: "1.3",
+    name: "Zoom",
+    industry: "Komunikasi Korporat", country: "🇺🇸 Amerika Serikat",
+    subtitle: "Ide yang sudah ada bertahun-tahun, tapi dunia belum siap menerimanya — sampai pandemi memaksanya.",
+    context: "Sebelum Zoom, video conferencing sudah ada — Skype, WebEx, GoToMeeting, Microsoft Teams. Tapi semua dianggap sebagai alat darurat atau pelengkap, bukan pengganti pertemuan fisik. Budaya korporat global memegang teguh: pertemuan penting harus tatap muka.",
+    assumptions: [
+      "Pertemuan penting harus tatap muka untuk efektif",
+      "Video call adalah pengalaman yang inferior, hanya untuk situasi tidak memungkinkan hadir fisik",
+      "Software enterprise harus rumit dan perlu instalasi IT",
+      "Orang tidak akan mau meeting virtual tanpa terpaksa",
+    ],
+    lateralQ: {
+      text: "\"Bagaimana kalau pengalaman video meeting dibuat semudah dan senatural mungkin — sampai orang lebih memilih ini daripada harus bepergian?\"",
+      source: "Eric Yuan, founder — mantan karyawan Cisco WebEx yang frustrasi dengan kerumitan produk lama"
+    },
+    techniques: [
+      { name: "Challenge Assumptions", color: "#3B4FD8", bgColor: "rgba(59,79,216,0.2)",
+        desc: "Yuan mempertanyakan apakah kompleksitas WebEx karena video conferencing memang sulit, atau karena tidak ada yang cukup peduli untuk menyederhanakannya." },
+      { name: "SCAMPER — Simplify", color: "#F5A623", bgColor: "rgba(245,166,35,0.2)",
+        desc: "Zoom menghilangkan semua hambatan onboarding: tidak perlu akun untuk join, link langsung masuk, kualitas video diprioritaskan bahkan di bandwidth rendah." },
+      { name: "Concept Extraction", color: "#10B981", bgColor: "rgba(16,185,129,0.2)",
+        desc: "Dari \"video conferencing tool\" → konsep: \"kehadiran jarak jauh\" → eksekusi: pengalaman yang cukup natural sehingga otak tidak terus-menerus merasakan jarak." },
+    ],
+    stats: [
+      { num: "10M→300M", label: "Pengguna harian (Des 2019 → Apr 2020)" },
+      { num: "2013", label: "Tahun berdiri (jauh sebelum pandemi)" },
+      { num: "~$100M", label: "Biaya konferensi fisik yang digantikan" },
+    ],
+    happened: "Zoom sudah ada sejak 2013, tapi pandemi COVID-19 menjadi forced experiment global yang membuktikan bahwa meeting virtual bisa efektif. Pengguna harian melonjak dari 10 juta ke 300 juta dalam 4 bulan. Yang lebih menarik: setelah pandemi, sebagian besar pekerja tidak mau kembali ke model sebelumnya sepenuhnya. Asumsi 'tatap muka selalu lebih baik' runtuh secara permanen.",
+    lesson: "<strong>Terkadang pertanyaan lateral yang benar sudah ada, tapi dunia belum siap menerimanya.</strong> Pandemi bertindak sebagai forced adoption — membuktikan bahwa asumsi lama bisa salah total jika ada cukup tekanan untuk mengubah perilaku. Pertanyaan untuk didiskusikan: kapan timing sebuah ide lateral menjadi krusial?",
+    lessonIcon: "⏱️",
+    quiz: {
+      question: "Kasus Zoom memperlihatkan bahwa sebuah ide lateral bisa sudah benar tapi gagal diadopsi karena satu hal. Hal apa itu?",
+      options: [
+        "Teknologinya belum cukup baik",
+        "Kompetitornya terlalu kuat",
+        "Timing — dunia belum siap mengubah perilaku tanpa tekanan eksternal",
+        "Harganya terlalu mahal untuk pasar massal",
+      ],
+      correct: 2,
+      feedback: {
+        correct: "Tepat! Ini adalah pelajaran penting: inovasi bukan hanya soal ide yang benar, tapi juga tentang kesiapan ekosistem untuk menerimanya. Zoom sudah ada 7 tahun sebelum pandemi — idenya benar, tapi dunia butuh 'forced experiment' untuk membuktikannya.",
+        wrong: "Belum tepat. Zoom sudah tersedia sejak 2013 dengan teknologi yang memadai dan harga yang kompetitif. Yang berbeda di 2020 bukan teknologinya — tapi kondisi eksternal yang memaksa jutaan orang untuk mencoba dan membuktikan asumsi lama mereka salah."
+      }
+    }
+  },
+
+  // ── GROUP 2 ──
+  {
+    id: "dollarshave", group: "g2", num: "2.1",
+    name: "Dollar Shave Club",
+    industry: "FMCG — Produk Perawatan Pria", country: "🇺🇸 Amerika Serikat",
+    subtitle: "Bagaimana sebuah video YouTube $4.500 menghancurkan monopoli distribusi Gillette yang bertahan puluhan tahun.",
+    context: "Industri pisau cukur dikuasai Gillette (P&G) selama puluhan tahun. Model bisnisnya legendaris: jual gagang murah, buat pelanggan bergantung pada isi ulang (blade) yang mahal. Harga blade terus naik — sepaket isi 4 bisa seharga $20–25. Semua inovasi bersifat vertikal: 2 mata pisau → 3 → 4 → 5 → dengan pelembab → dengan getaran.",
+    assumptions: [
+      "Pisau cukur harus dijual di toko fisik melalui retailer besar",
+      "Konsumen bersedia membayar premium untuk 'teknologi' blade terbaru",
+      "Distribusi melalui retailer besar adalah satu-satunya cara menjangkau pasar massal",
+      "Brand besar dengan marketing masif adalah satu-satunya cara bersaing di FMCG",
+    ],
+    lateralQ: {
+      text: "\"Pisau cukur adalah produk yang orang butuhkan secara rutin dan terprediksi — mengapa tidak dikirim langsung ke rumah dengan harga jauh lebih murah?\"",
+      source: "Michael Dubin, founder Dollar Shave Club"
+    },
+    techniques: [
+      { name: "Challenge Assumptions", color: "#3B4FD8", bgColor: "rgba(59,79,216,0.2)",
+        desc: "Dubin mempertanyakan apakah premium harga Gillette mencerminkan nilai nyata atau hanya monopoli distribusi dan brand yang tidak pernah ditantang." },
+      { name: "Concept Extraction", color: "#10B981", bgColor: "rgba(16,185,129,0.2)",
+        desc: "Dari \"menjual pisau cukur\" → konsep: \"memastikan pria tidak pernah kehabisan alat cukur yang layak\" → eksekusi: subscription langsung ke konsumen, tanpa retailer." },
+      { name: "SCAMPER — Substitute + Eliminate", color: "#F5A623", bgColor: "rgba(245,166,35,0.2)",
+        desc: "Substitusi distribusi retail dengan direct-to-consumer, eliminasi lapisan distributor dan margin retailer yang memakan sebagian besar harga jual." },
+    ],
+    stats: [
+      { num: "$4.500", label: "Biaya video viral" },
+      { num: "12.000", label: "Pendaftar dalam 48 jam pertama" },
+      { num: "$1M", label: "Harga akuisisi Unilever (2016)" },
+    ],
+    happened: "Dollar Shave Club diluncurkan 2012 dengan video YouTube yang ditonton 27 juta kali. Dalam 48 jam pertama, 12.000 orang mendaftar. Pada 2016, Unilever mengakuisisi seharga $1 miliar — padahal perusahaan baru 4 tahun berdiri. Setelah ini, Gillette terpaksa memotong harga dan mengubah strategi distribusinya untuk pertama kali dalam sejarah.",
+    lesson: "<strong>Monopoli distribusi adalah salah satu asumsi industri yang paling jarang dipertanyakan — dan paling rapuh ketika akhirnya dipertanyakan.</strong> Pertanyaan lateral yang paling produktif sering bukan 'bagaimana membuat produk lebih baik' tapi 'bagaimana menghilangkan hambatan antara produk dan konsumen.'",
+    lessonIcon: "🪒",
+    quiz: {
+      question: "Dollar Shave Club berhasil memenangkan pasar bukan dengan membuat pisau cukur yang lebih baik dari Gillette. Apa yang sebenarnya mereka ubah?",
+      options: [
+        "Kualitas material pisau cukur yang lebih superior",
+        "Model distribusi — dari toko fisik ke direct-to-consumer dengan subscription",
+        "Segmentasi target — hanya menarget pria muda milenial",
+        "Harga yang lebih murah dari semua kompetitor di kategori yang sama",
+      ],
+      correct: 1,
+      feedback: {
+        correct: "Tepat! Dollar Shave Club tidak menang di produk — mereka menang di distribusi. Dengan menghilangkan lapisan retailer dan langsung ke konsumen melalui subscription, mereka memotong biaya dan menciptakan hubungan langsung yang tidak bisa dimiliki Gillette.",
+        wrong: "Belum tepat. Pisau cukur Dollar Shave Club tidak lebih superior dari Gillette secara material. Kemenangan mereka ada di lapisan yang berbeda — pikirkan: apa yang membuat harga Gillette mahal dan bagaimana Dollar Shave Club memotong itu?"
+      }
+    }
+  },
+  {
+    id: "ikea", group: "g2", num: "2.2",
+    name: "IKEA",
+    industry: "Furnitur & Perabot Rumah", country: "🇸🇪 Swedia",
+    subtitle: "Memindahkan pekerjaan ke konsumen — dan menemukan bahwa mereka justru lebih menghargai hasilnya.",
+    context: "Industri furnitur berasumsi bahwa furnitur diproduksi secara penuh di pabrik, dikirim dalam kondisi jadi, dan dirakit oleh pekerja profesional saat pengiriman. Ini mahal — biaya produksi, penyimpanan, dan pengiriman furnitur jadi sangat tinggi. Inovasi di industri ini selalu tentang desain atau material, bukan tentang cara furnitur sampai ke tangan konsumen.",
+    assumptions: [
+      "Furnitur harus dikirim dalam kondisi sudah jadi",
+      "Konsumen tidak mau atau tidak bisa merakit sendiri",
+      "Gudang furnitur harus menyimpan barang jadi yang memakan banyak ruang",
+      "Toko furnitur harus di lokasi premium agar terlihat bergengsi",
+    ],
+    lateralQ: {
+      text: "\"Bagaimana kalau konsumen yang merakit furniturnya sendiri — dan kita kompensasi dengan harga yang jauh lebih murah?\"",
+      source: "Ingvar Kamprad, founder IKEA — idenya muncul ketika karyawan mencoba memasukkan meja ke mobil dan melepas kakinya"
+    },
+    techniques: [
+      { name: "Provocation & Movement", color: "#3B4FD8", bgColor: "rgba(59,79,216,0.2)",
+        desc: "Po: 'Furnitur dijual belum selesai.' Movement: kalau konsumen yang merakit, biaya produksi dan logistik turun drastis, harga bisa jauh lebih rendah — dan ini bisa jadi proposisi nilai tersendiri." },
+      { name: "Reversal", color: "#10B981", bgColor: "rgba(16,185,129,0.2)",
+        desc: "Industri selalu bergerak: pabrik → jadi → kirim → pakai. IKEA membalik: pabrik → komponen → kirim → konsumen rakit → pakai." },
+      { name: "SCAMPER — Rearrange", color: "#F5A623", bgColor: "rgba(245,166,35,0.2)",
+        desc: "Menyusun ulang siapa yang melakukan pekerjaan apa dalam rantai nilai — pekerjaan perakitan dipindahkan dari pabrik ke rumah konsumen." },
+    ],
+    stats: [
+      { num: "€40M+", label: "Revenue tahunan" },
+      { num: "#1", label: "Retailer furnitur terbesar di dunia" },
+      { num: "\"IKEA Effect\"", label: "Efek psikologis yang terdokumentasi dalam riset perilaku" },
+    ],
+    happened: "IKEA kini adalah retailer furnitur terbesar di dunia dengan revenue lebih dari €40 miliar per tahun. Yang lebih menarik: merakit furnitur IKEA sendiri menjadi experience yang pelanggan hargai — bahkan ada yang bangga dengan hasilnya. Fenomena ini dikenal sebagai \"IKEA Effect\" dalam psikologi perilaku konsumen: orang menilai lebih tinggi sesuatu yang mereka buat sendiri.",
+    lesson: "<strong>Memindahkan sebagian kerja ke konsumen bukan selalu pengalaman yang lebih buruk</strong> — jika dirancang dengan benar, justru bisa meningkatkan attachment konsumen terhadap produk. Ini adalah contoh lateral thinking yang menghasilkan efek psikologis yang tidak terduga dan bernilai.",
+    lessonIcon: "🪑",
+    quiz: {
+      question: "IKEA Effect adalah fenomena psikologis yang tidak terduga dari model bisnis IKEA. Apa yang dimaksud dengan IKEA Effect?",
+      options: [
+        "Konsumen merasa lelah setelah berbelanja di toko IKEA yang besar",
+        "Orang menilai lebih tinggi sesuatu yang mereka buat atau rakit sendiri",
+        "Harga murah IKEA membuat konsumen membeli lebih banyak dari yang direncanakan",
+        "Desain Skandinavia IKEA memengaruhi selera furnitur global",
+      ],
+      correct: 1,
+      feedback: {
+        correct: "Tepat! IKEA Effect, yang dipopulerkan oleh peneliti perilaku Norton, Mochon, dan Ariely (2012), menunjukkan bahwa effort yang dikeluarkan untuk membuat sesuatu justru meningkatkan perceived value-nya. IKEA tidak hanya menciptakan model bisnis yang efisien — tapi tanpa sengaja menciptakan keunggulan psikologis.",
+        wrong: "Belum tepat. IKEA Effect adalah istilah dalam psikologi perilaku konsumen, bukan tentang pengalaman belanja atau pengaruh desain. Coba pikirkan: apa yang terjadi secara psikologis ketika kita menyelesaikan sesuatu dengan usaha kita sendiri?"
+      }
+    }
+  },
+  {
+    id: "grameen", group: "g2", num: "2.3",
+    name: "Grameen Bank",
+    industry: "Perbankan & Keuangan Mikro", country: "🇧🇩 Bangladesh",
+    subtitle: "Ketika asumsi tentang siapa yang 'layak' dipertanyakan — dan ditemukan bahwa yang dianggap paling berisiko ternyata paling disiplin.",
+    context: "Bank konvensional beroperasi dengan asumsi kuat tentang siapa yang layak mendapat kredit: agunan fisik, riwayat kredit, penghasilan terverifikasi, rekening bank. Model ini secara sistematis mengecualikan orang miskin — yang justru paling butuh modal untuk keluar dari kemiskinan.",
+    assumptions: [
+      "Pinjaman membutuhkan agunan fisik sebagai jaminan",
+      "Orang miskin adalah risiko kredit yang tinggi dan tidak layak dipinjami",
+      "Bank hanya bisa untung dari nasabah kelas menengah ke atas",
+      "Kredit skala kecil tidak ekonomis untuk dikelola",
+    ],
+    lateralQ: {
+      text: "\"Bagaimana kalau kepercayaan sosial dan tekanan komunitas bisa menggantikan agunan fisik — dan orang miskin ternyata lebih disiplin membayar utang karena reputasi mereka adalah satu-satunya aset?\"",
+      source: "Muhammad Yunus, founder Grameen Bank — dimulai dengan meminjamkan $27 dari kantongnya sendiri kepada 42 pembuat furnitur bambu (1974)"
+    },
+    techniques: [
+      { name: "Challenge Assumptions", color: "#3B4FD8", bgColor: "rgba(59,79,216,0.2)",
+        desc: "Yunus mempertanyakan apakah risiko kredit memang inheren pada kemiskinan, atau itu adalah produk dari sistem yang tidak pernah mencoba melayani orang miskin dengan benar." },
+      { name: "Concept Extraction", color: "#10B981", bgColor: "rgba(16,185,129,0.2)",
+        desc: "Dari \"jaminan kredit berupa aset fisik\" → konsep: \"jaminan bahwa pinjaman akan dikembalikan\" → eksekusi alternatif: jaminan sosial melalui kelompok tanggung renteng (group lending)." },
+      { name: "Reversal", color: "#EF4444", bgColor: "rgba(239,68,68,0.15)",
+        desc: "Bank konvensional pergi ke atas (nasabah kaya, pinjaman besar). Grameen Bank pergi ke bawah (nasabah termiskin, pinjaman kecil) — dan menemukan bahwa di sana tingkat pengembalian lebih tinggi." },
+    ],
+    stats: [
+      { num: "9M+", label: "Nasabah (97% perempuan)" },
+      { num: "98%", label: "Tingkat pengembalian pinjaman" },
+      { num: "2006", label: "Nobel Perdamaian" },
+    ],
+    happened: "Grameen Bank kini memiliki lebih dari 9 juta nasabah di Bangladesh. Tingkat pengembalian pinjaman mencapai 98% — lebih tinggi dari banyak bank konvensional. Muhammad Yunus memenangkan Nobel Perdamaian 2006. Model microfinance kemudian diadopsi global dan menginspirasi ribuan lembaga keuangan mikro, termasuk di Indonesia: BRI Unit Desa, berbagai koperasi simpan pinjam, dan lainnya.",
+    lesson: "<strong>Asumsi tentang siapa yang layak dilayani adalah salah satu asumsi paling berbahaya dalam bisnis.</strong> Lateral thinking yang paling berdampak sosial sering lahir dari pertanyaan: 'Siapa yang selama ini diabaikan — dan mengapa?' Bukan karena memang tidak layak, tapi karena sistem tidak pernah dirancang untuk mereka.",
+    lessonIcon: "🏦",
+    quiz: {
+      question: "Grameen Bank mengganti agunan fisik dengan mekanisme lain sebagai jaminan kredit. Mekanisme apa yang digunakan?",
+      options: [
+        "Asuransi jiwa nasabah sebagai pengganti agunan",
+        "Jaminan sosial melalui kelompok tanggung renteng — tekanan dan kepercayaan komunitas",
+        "Pemerintah Bangladesh menjamin semua pinjaman Grameen Bank",
+        "Nasabah menyerahkan aset produktif seperti alat kerja sebagai jaminan",
+      ],
+      correct: 1,
+      feedback: {
+        correct: "Tepat! Inilah inti dari Concept Extraction yang dilakukan Yunus. Agunan fisik adalah satu eksekusi dari konsep 'jaminan pengembalian'. Grameen Bank menemukan eksekusi alternatif: jaminan sosial melalui group lending, di mana tekanan dan kepercayaan komunitas terbukti lebih efektif dari agunan fisik untuk segmen ini.",
+        wrong: "Belum tepat. Yunus tidak mengandalkan pihak ketiga untuk menjamin pinjaman. Ia menemukan bahwa dalam komunitas miskin yang saling mengenal, sesuatu yang lebih kuat dari aset fisik bisa menjadi jaminan. Pikirkan: apa yang paling berharga bagi seseorang yang tidak punya harta?"
+      }
+    }
+  },
+
+  // ── GROUP 3 ──
+  {
+    id: "traveloka", group: "g3", num: "3.1",
+    name: "Traveloka",
+    industry: "Agen Perjalanan & Tiket", country: "🇮🇩 Indonesia",
+    subtitle: "Pertanyaan lateral yang sederhana — tapi tidak ada yang pernah bertanya sebelumnya di Indonesia.",
+    context: "Awal 2010-an, memesan tiket pesawat di Indonesia adalah proses yang frustrasi. Opsi utama: datang ke agen travel fisik, atau navigasi website maskapai yang masing-masing berbeda format dan harganya. Perbandingan harga lintas maskapai harus dilakukan manual — buka satu tab, catat, buka tab lain, bandingkan.",
+    assumptions: [
+      "Memesan tiket membutuhkan agen atau keahlian navigasi website masing-masing maskapai",
+      "Perbandingan harga adalah tanggung jawab konsumen untuk dilakukan sendiri",
+      "Agen travel fisik diperlukan untuk transaksi besar seperti tiket pesawat",
+      "Kepercayaan konsumen Indonesia untuk transaksi digital masih terlalu rendah",
+    ],
+    lateralQ: {
+      text: "\"Mengapa tidak ada satu tempat yang bisa melihat semua harga tiket semua maskapai sekaligus dan langsung memesan?\"",
+      source: "Ferry Unardi, founder — menemukan masalah ini saat kesulitan memesan tiket pulang dari Amerika Serikat ke Indonesia selama kuliah di Harvard"
+    },
+    techniques: [
+      { name: "Challenge Assumptions", color: "#3B4FD8", bgColor: "rgba(59,79,216,0.2)",
+        desc: "Unardi mempertanyakan mengapa fragmentasi informasi harga dianggap sebagai kondisi normal yang harus diterima konsumen." },
+      { name: "Concept Extraction", color: "#10B981", bgColor: "rgba(16,185,129,0.2)",
+        desc: "Dari \"menjual tiket pesawat\" → konsep: \"menghilangkan friksi dalam merencanakan perjalanan\" → eksekusi: agregator + pemesanan dalam satu platform." },
+      { name: "SCAMPER — Combine", color: "#F5A623", bgColor: "rgba(245,166,35,0.2)",
+        desc: "Menggabungkan fungsi perbandingan harga, pemesanan, dan pembayaran dalam satu pengalaman yang seamless." },
+    ],
+    stats: [
+      { num: "$3M+", label: "Valuasi (Unicorn)" },
+      { num: "6", label: "Negara Asia Tenggara" },
+      { num: "2012", label: "Tahun berdiri" },
+    ],
+    happened: "Traveloka kini adalah unicorn Indonesia dengan valuasi di atas $3 miliar dan beroperasi di 6 negara Asia Tenggara. Yang menarik: Traveloka kemudian berkembang jauh melampaui tiket — ke paylater, asuransi perjalanan, dan lifestyle. Setiap ekspansi mengikuti logika yang sama: friksi apa lagi yang bisa dihilangkan dari perjalanan konsumen ini?",
+    lesson: "<strong>Pertanyaan lateral tidak harus revolusioner untuk menghasilkan bisnis besar.</strong> Terkadang pertanyaannya sederhana: 'Mengapa hal yang seharusnya mudah ini masih sulit?' — dan itulah bisnisnya. Yang penting bukan kecanggihan pertanyaan, tapi kejelian melihat friksi yang sudah dinormalisasi.",
+    lessonIcon: "✈️",
+    quiz: {
+      question: "Traveloka menggunakan kombinasi teknik SCAMPER Combine. Apa yang secara spesifik mereka gabungkan?",
+      options: [
+        "Maskapai penerbangan yang berbeda dalam satu platform pemesanan bersama",
+        "Fungsi perbandingan harga, pemesanan, dan pembayaran dalam satu pengalaman",
+        "Travel agent konvensional dengan teknologi digital",
+        "Tiket pesawat dengan akomodasi hotel dalam satu bundle",
+      ],
+      correct: 1,
+      feedback: {
+        correct: "Tepat! Inovasi Traveloka bukan hanya 'menampilkan semua maskapai' — tapi menggabungkan tiga fungsi terpisah (cari/bandingkan harga, pesan, bayar) yang sebelumnya harus dilakukan di tempat berbeda menjadi satu pengalaman mulus.",
+        wrong: "Belum tepat. Pikirkan dari perspektif konsumen: sebelum Traveloka, berapa banyak langkah yang harus dilakukan untuk mendapat tiket pesawat? Apa yang Traveloka satukan dalam satu alur?"
+      }
+    }
+  },
+  {
+    id: "kopikenangan", group: "g3", num: "3.2",
+    name: "Kopi Kenangan",
+    industry: "F&B — Kopi", country: "🇮🇩 Indonesia",
+    subtitle: "Menemukan celah yang tidak terlihat karena semua orang terlalu fokus pada dua ekstrem yang sudah ada.",
+    context: "Pasar kopi Indonesia dihadapkan dua pilihan ekstrem: kopi premium Starbucks/Coffee Bean (~Rp 60.000–80.000, butuh tempat duduk dan waktu) atau kopi sachet warung (~Rp 2.000–5.000, kualitas sangat terbatas). Tidak ada yang mengisi celah antara keduanya secara sistematis dan scalable.",
+    assumptions: [
+      "Kopi berkualitas harus mahal dan diminum di kafe dengan suasana tertentu",
+      "F&B berkualitas tidak bisa dioperasikan tanpa tempat duduk yang nyaman",
+      "Brand kopi tidak bisa tumbuh cepat tanpa franchise model konvensional",
+      "Konsumen Indonesia kelas menengah tidak akan antri untuk kopi take-away",
+    ],
+    lateralQ: {
+      text: "\"Bagaimana kalau kita buat kopi berkualitas espresso-based dengan harga terjangkau yang bisa diambil dalam 3 menit tanpa perlu duduk?\"",
+      source: "Edward Tirtanata, founder Kopi Kenangan"
+    },
+    techniques: [
+      { name: "Concept Extraction", color: "#10B981", bgColor: "rgba(16,185,129,0.2)",
+        desc: "Dari \"kafe sebagai tempat nongkrong\" → konsep: \"akses ke kopi berkualitas\" → eksekusi: grab-and-go dengan gerai kecil di high-traffic location." },
+      { name: "SCAMPER — Eliminate + Modify", color: "#F5A623", bgColor: "rgba(245,166,35,0.2)",
+        desc: "Hilangkan tempat duduk, hilangkan ambiance mahal, perkecil gerai, pertahankan kualitas espresso. Hasilnya: cost structure jauh lebih rendah, harga bisa ditekan ke Rp 25.000–35.000." },
+      { name: "Challenge Assumptions", color: "#3B4FD8", bgColor: "rgba(59,79,216,0.2)",
+        desc: "Mempertanyakan apakah 'pengalaman kafe' adalah tentang tempat duduk dan dekorasi, atau tentang kopi itu sendiri." },
+    ],
+    stats: [
+      { num: "$1M", label: "Unicorn pertama F&B Indonesia (2021)" },
+      { num: "700+", label: "Gerai" },
+      { num: "2017", label: "Tahun berdiri" },
+    ],
+    happened: "Kopi Kenangan didirikan 2017. Pada 2021 menjadi unicorn pertama Indonesia di sektor F&B dengan valuasi $1 miliar. Mereka membuka lebih dari 700 gerai dalam waktu singkat — kecepatan ekspansi yang tidak mungkin dengan model kafe konvensional. Model ini kemudian ditiru banyak pemain lokal (Fore Coffee, Janji Jiwa, dll) dan menciptakan kategori baru: grab-and-go coffee di Indonesia.",
+    lesson: "<strong>Celah pasar yang paling menguntungkan sering bukan di ekstrem manapun, tapi di antara dua ekstrem yang tidak ada yang mengisi.</strong> Lateral thinking membantu melihat celah ini karena pemain lama terlalu terfokus pada segmen mereka sendiri untuk melihat ruang di tengah.",
+    lessonIcon: "☕",
+    quiz: {
+      question: "Kopi Kenangan berhasil karena menemukan 'celah' di pasar. Celah apa yang dimaksud?",
+      options: [
+        "Pasar yang belum punya kopi sama sekali di Indonesia",
+        "Ruang antara kopi premium mahal dan kopi sachet murah yang tidak ada yang mengisi secara sistematis",
+        "Segmen konsumen yang tidak suka nongkrong di kafe",
+        "Pasar kota kecil yang belum punya gerai kopi brand nasional",
+      ],
+      correct: 1,
+      feedback: {
+        correct: "Tepat! Inilah contoh klasik dari Challenge Assumptions: semua pemain kopi berasumsi bahwa pilihan hanya ada dua (premium atau murah). Kopi Kenangan mempertanyakan asumsi itu dan menemukan ruang di tengah yang tidak ada yang isi — espresso berkualitas dengan harga terjangkau dan format grab-and-go.",
+        wrong: "Belum tepat. Celah yang dilihat Kopi Kenangan bukan tentang geografi atau demografi — tapi tentang positioning harga dan format yang kosong di tengah dua ekstrem yang sudah ada. Coba lihat kembali dua ekstrem yang digambarkan di konteks kasus."
+      }
+    }
+  },
+  {
+    id: "ewallet", group: "g3", num: "3.3",
+    name: "GoPay / OVO / Dana",
+    industry: "Fintech — Pembayaran Digital", country: "🇮🇩 Indonesia",
+    subtitle: "Berhasil menginklusikan jutaan orang ke sistem keuangan formal — sesuatu yang bank konvensional tidak lakukan dalam puluhan tahun.",
+    context: "Pada 2015–2016, penetrasi rekening bank di Indonesia sekitar 49% populasi dewasa tidak memiliki rekening. Untuk membuka rekening: perlu KTP, NPWP, datang ke kantor cabang, antri, setor minimum saldo. Proses ini mengecualikan jutaan orang yang tinggal jauh dari bank atau tidak memiliki dokumen lengkap.",
+    assumptions: [
+      "Layanan keuangan membutuhkan infrastruktur fisik seperti kantor cabang dan ATM",
+      "KYC (Know Your Customer) harus dilakukan tatap muka dengan dokumen fisik",
+      "Kepercayaan konsumen pada uang digital sangat rendah tanpa backing bank konvensional",
+      "Merchant kecil tidak akan mau menerima pembayaran non-tunai karena ribet",
+    ],
+    lateralQ: {
+      text: "\"Bagaimana kalau seseorang bisa mendapat akses layanan keuangan dasar hanya dengan nomor HP dan foto KTP — tanpa pernah perlu ke kantor cabang manapun?\"",
+      source: "Logika kolektif yang mendorong lahirnya ekosistem e-wallet di Indonesia"
+    },
+    techniques: [
+      { name: "Reversal", color: "#10B981", bgColor: "rgba(16,185,129,0.2)",
+        desc: "Bank pergi ke nasabah melalui kantor cabang. E-wallet membalik: nasabah 'pergi' ke layanan melalui HP mereka kapan saja." },
+      { name: "Challenge Assumptions", color: "#3B4FD8", bgColor: "rgba(59,79,216,0.2)",
+        desc: "Mempertanyakan apakah KYC fisik memang diperlukan untuk keamanan, atau itu hanya prosedur warisan yang bisa digantikan verifikasi digital." },
+      { name: "SCAMPER — Substitute", color: "#F5A623", bgColor: "rgba(245,166,35,0.2)",
+        desc: "Substitusi kantor cabang dengan aplikasi, tanda tangan basah dengan OTP, setoran fisik dengan transfer digital — seluruh infrastruktur fisik disubstitusi dengan digital." },
+    ],
+    stats: [
+      { num: "49%", label: "Populasi unbanked sebelum e-wallet masif (2016)" },
+      { num: "+30%", label: "Pertumbuhan transaksi non-tunai per tahun pasca 2020" },
+      { num: "Jutaan", label: "Orang terinklusikan ke sistem keuangan formal" },
+    ],
+    happened: "GoPay, OVO, dan Dana mendorong penetrasi layanan keuangan digital di Indonesia secara masif. Pandemi COVID-19 mempercepat adopsi. Bank Indonesia mencatat bahwa e-wallet berhasil menginklusikan jutaan orang yang sebelumnya unbanked ke dalam sistem keuangan formal — sesuatu yang bank konvensional tidak berhasil lakukan selama puluhan tahun.",
+    lesson: "<strong>Terkadang asumsi tentang cara melakukan sesuatu — KYC fisik, kantor cabang — bukan karena cara itu terbaik, tapi karena regulasi dan kebiasaan industri belum pernah dipaksa untuk berevolusi.</strong> Lateral thinking yang paling powerful terjadi ketika ada tekanan eksternal (teknologi baru, krisis, regulasi) yang memaksa asumsi lama untuk dipertanyakan.",
+    lessonIcon: "📱",
+    quiz: {
+      question: "E-wallet Indonesia menggunakan teknik Reversal secara mendasar. Apa yang secara spesifik dibalik dari model bank konvensional?",
+      options: [
+        "Mata uang yang digunakan — dari rupiah fisik ke rupiah digital",
+        "Siapa yang 'mendatangi' siapa — bank mendatangi nasabah via kantor cabang, e-wallet dibalik: nasabah mengakses layanan via HP",
+        "Regulasi perbankan — dari ketat menjadi longgar",
+        "Target nasabah — dari orang kaya ke orang miskin",
+      ],
+      correct: 1,
+      feedback: {
+        correct: "Tepat! Reversal yang paling fundamental adalah arah akses layanan: bank konvensional mengharuskan nasabah datang ke infrastruktur fisiknya. E-wallet membalik logika ini secara penuh — nasabah tidak pergi ke mana-mana, layanan yang hadir di genggaman mereka.",
+        wrong: "Belum tepat. Reversal yang dimaksud bukan tentang mata uang, regulasi, atau target nasabah semata. Pikirkan interaksi paling mendasar antara bank dan nasabah: siapa yang harus pergi ke mana? E-wallet membalik itu."
+      }
+    }
+  },
+
+  // ── GROUP 4 ──
+  {
+    id: "wework", group: "g4", num: "4.1",
+    name: "WeWork",
+    industry: "Real Estate & Co-working", country: "🇺🇸 Amerika Serikat",
+    subtitle: "Pertanyaan lateral yang tepat — model bisnis yang salah. Jembatan menuju Systems Thinking.",
+    isFailure: true,
+    failureNote: "Kasus ini memperlihatkan bahwa lateral thinking yang benar tidak menjamin keberhasilan bisnis. Gunakan sebagai jembatan ke diskusi Systems Thinking.",
+    context: "Kantor tradisional: sewa jangka panjang 3–10 tahun, modal awal besar, perusahaan menanggung semua biaya setup. Untuk startup dan freelancer, ini bukan pilihan feasible. Solusi ada yang sudah mencoba, tapi belum ada yang melakukannya dengan skala dan branding yang premium.",
+    assumptions: [
+      "Kantor harus disewa jangka panjang dengan kontrak kaku",
+      "Ruang kerja adalah utilitas, bukan komunitas",
+      "Real estate adalah bisnis yang mature dan tidak bisa didisrupt",
+    ],
+    lateralQ: {
+      text: "\"Bagaimana kalau kantor disewa per meja per bulan — dan penghuninya membentuk komunitas yang saling menguntungkan?\"",
+      source: "Adam Neumann, co-founder WeWork"
+    },
+    techniques: [
+      { name: "Concept Extraction", color: "#3B4FD8", bgColor: "rgba(59,79,216,0.2)",
+        desc: "Dari 'menyewakan ruang kantor' → konsep: 'memberikan kondisi optimal untuk bekerja dan berkembang' → eksekusi: co-working space dengan desain premium, komunitas, dan fleksibilitas." },
+      { name: "SCAMPER — Combine", color: "#F5A623", bgColor: "rgba(245,166,35,0.2)",
+        desc: "Menggabungkan real estate, hospitality, dan community management dalam satu produk." },
+    ],
+    stats: [
+      { num: "$47M", label: "Valuasi puncak (2019)" },
+      { num: "$9M", label: "Valuasi setelah IPO gagal" },
+      { num: "2019", label: "IPO gagal, Neumann dicopot" },
+    ],
+    happened: "WeWork tumbuh eksplosif dan sempat mencapai valuasi $47 miliar pada 2019. Tapi kemudian model bisnisnya terekspos: WeWork menyewa jangka panjang (fixed cost), lalu menyewakan jangka pendek (variable revenue). Saat ekonomi melambat atau pandemi datang, revenue turun tapi cost tetap. IPO gagal setelah prospektus menunjukkan kerugian masif. Neumann dicopot. Valuasi jatuh ke $9 miliar.",
+    lesson: "<strong>Pertanyaan lateral yang tepat tidak menjamin model bisnis yang sustainable.</strong> WeWork berhasil mengidentifikasi kebutuhan nyata dan melanggar asumsi industri yang valid — tapi gagal karena unit economics yang tidak pernah masuk akal. Ini adalah jembatan sempurna ke Systems Thinking: <strong>lateral thinking membuka kemungkinan, tapi tanpa pemahaman sistem (feedback loop keuangan, leverage, timing ekonomi) — kemungkinan itu bisa menjadi bencana.</strong>",
+    lessonIcon: "⚠️",
+    quiz: {
+      question: "WeWork gagal meskipun pertanyaan lateralnya benar. Apa yang secara fundamental salah dari model bisnisnya?",
+      options: [
+        "Tidak ada permintaan nyata untuk co-working space di pasar",
+        "Kompetitornya lebih kuat dan bergerak lebih cepat",
+        "Struktur cost-revenue yang tidak simetris: sewa jangka panjang (fixed cost) vs sewa jangka pendek (variable revenue)",
+        "Ekspansi ke terlalu banyak kota sekaligus sebelum profitable",
+      ],
+      correct: 2,
+      feedback: {
+        correct: "Tepat! Inilah inti masalah WeWork yang sebenarnya. Mereka terjebak dalam asymmetry: kewajiban jangka panjang (sewa gedung 10–15 tahun) dikombinasikan dengan revenue yang bisa hilang kapan saja (member bisa keluar dengan notifikasi singkat). Ini adalah masalah sistem — bukan masalah ide. Dan inilah mengapa Systems Thinking penting setelah Lateral Thinking.",
+        wrong: "Belum tepat. Permintaan co-working space nyata dan terus tumbuh. Masalah WeWork bukan di sisi demand atau kompetitor. Pikirkan: bagaimana struktur keuangannya ketika kondisi ekonomi memburuk atau pandemi datang?"
+      }
+    }
+  },
+  {
+    id: "juicero", group: "g4", num: "4.2",
+    name: "Juicero",
+    industry: "Peralatan Dapur & Minuman Sehat", country: "🇺🇸 Amerika Serikat",
+    subtitle: "Ketika lateral thinking gagal memvalidasi apakah masalah yang dipecahkan cukup nyata untuk justifikasi solusinya.",
+    isFailure: true,
+    failureNote: "Kasus ini memperlihatkan bahaya lateral thinking tanpa validasi masalah yang cukup kuat. Juicero melanggar asumsi — tapi tidak memvalidasi apakah asumsinya layak dilanggar.",
+    context: "Juicero adalah mesin jus seharga $400 (turun dari $699) yang menekan kantong pre-cut sayuran dan buah berlangganan seharga $5–8 per kantong. Didanai $120 juta dari investor Silicon Valley terkemuka. Idenya: membuat jus segar di rumah semudah menekan tombol.",
+    assumptions: [
+      "Membuat jus segar di rumah terlalu merepotkan untuk dilakukan setiap hari",
+      "Konsumen bersedia membayar premium besar untuk kemudahan membuat jus",
+      "Hardware premium bisa menciptakan ekosistem subscription yang menguntungkan",
+    ],
+    lateralQ: {
+      text: "\"Bagaimana kalau membuat jus segar di rumah semudah menekan tombol — dengan kualitas premium dan tanpa repot memotong dan membersihkan?\"",
+      source: "Doug Evans, founder Juicero"
+    },
+    techniques: [
+      { name: "SCAMPER — Simplify", color: "#F5A623", bgColor: "rgba(245,166,35,0.2)",
+        desc: "Mencoba menyederhanakan proses membuat jus dari 'beli buah → cuci → potong → masuk juicer → bersihkan' menjadi 'beli kantong → tekan tombol'." },
+      { name: "Concept Extraction", color: "#3B4FD8", bgColor: "rgba(59,79,216,0.2)",
+        desc: "Dari 'membuat jus' → konsep: 'akses ke nutrisi segar tanpa friksi'. Tapi eksekusinya tidak menjawab pertanyaan paling mendasar: apakah friksinya cukup besar untuk justifikasi $400?" },
+    ],
+    stats: [
+      { num: "$120M", label: "Total pendanaan" },
+      { num: "$400", label: "Harga mesin" },
+      { num: "2017", label: "Tutup — 2 bulan setelah artikel Bloomberg" },
+    ],
+    happened: "Sebuah artikel Bloomberg April 2017 menemukan bahwa kantong Juicero bisa diperas dengan tangan langsung — menghasilkan jus yang sama dengan mesin $400. Mesin itu tidak diperlukan. Dalam hitungan hari, Juicero menjadi lelucon global. Perusahaan tutup September 2017. Saat jatuhnya: tidak ada yang membela produknya, termasuk investornya sendiri.",
+    lesson: "<strong>Tidak semua asumsi yang dilanggar menghasilkan nilai nyata.</strong> Juicero melanggar asumsi tentang kemudahan membuat jus — tapi gagal mempertanyakan apakah masalah yang mereka selesaikan cukup nyata dan cukup besar untuk justifikasi solusinya. Lateral thinking membutuhkan validasi: <strong>'Apakah ini masalah yang cukup nyata?'</strong> harus dijawab sebelum 'Bagaimana membalik asumsinya?'",
+    lessonIcon: "🍋",
+    quiz: {
+      question: "Apa pelajaran paling kritis dari kasus Juicero untuk seorang innovator yang menggunakan lateral thinking?",
+      options: [
+        "Jangan pernah membuat hardware — software selalu lebih baik",
+        "Investor Silicon Valley tidak selalu bisa dipercaya sebagai validator ide",
+        "Lateral thinking harus diikuti validasi: apakah masalahnya cukup nyata dan cukup besar untuk justifikasi solusinya?",
+        "Produk premium harus lebih jelas superior sebelum diluncurkan ke pasar",
+      ],
+      correct: 2,
+      feedback: {
+        correct: "Tepat! Inilah pelajaran inti dari Juicero. Lateral thinking membantu menemukan asumsi yang bisa dilanggar — tapi tidak otomatis memvalidasi apakah pelanggaran asumsi itu menghasilkan nilai yang cukup bagi konsumen. Juicero melakukan langkah pertama (menemukan asumsi) tapi melewatkan langkah krusial: membuktikan bahwa masalahnya cukup menyakitkan untuk disolusi dengan cara semahal itu.",
+        wrong: "Belum tepat. Pelajaran dari Juicero bukan tentang jenis produk atau validasi investor. Pikirkan di level yang lebih mendasar: sebelum membalik asumsi industri, apa yang harus kita pastikan terlebih dahulu?"
+      }
+    }
+  },
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let currentCase = null;
+let completed = new Set();
+let quizAnswered = new Set();
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+function init() {
+  buildSidebar();
+  buildProgressDots();
+  showWelcome();
+}
+
+function buildProgressDots() {
+  const container = document.getElementById("progress-dots");
+  CASES.forEach((c, i) => {
+    const dot = document.createElement("div");
+    dot.className = "progress-dot";
+    dot.id = `dot-${c.id}`;
+    container.appendChild(dot);
+  });
+}
+
+function updateProgress() {
+  const text = document.getElementById("progress-text");
+  text.textContent = `${completed.size} / ${CASES.length} selesai`;
+  CASES.forEach(c => {
+    const dot = document.getElementById(`dot-${c.id}`);
+    if (!dot) return;
+    dot.className = "progress-dot" + (completed.has(c.id) ? " done" : (currentCase === c.id ? " active" : ""));
+  });
+}
+
+function buildSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  sidebar.innerHTML = "";
+  GROUPS.forEach(group => {
+    const groupCases = CASES.filter(c => c.group === group.id);
+    const div = document.createElement("div");
+    div.className = "sidebar-group";
+
+    const label = document.createElement("div");
+    label.className = "sidebar-group-label";
+    label.textContent = group.label;
+    div.appendChild(label);
+
+    groupCases.forEach(c => {
+      const btn = document.createElement("button");
+      btn.className = "case-btn" + (currentCase === c.id ? " active" : "") + (completed.has(c.id) ? " completed" : "");
+      btn.id = `sidebar-btn-${c.id}`;
+      btn.onclick = () => loadCase(c.id);
+      btn.innerHTML = `
+        <span class="case-btn-num">${c.num}</span>
+        <div class="case-btn-info">
+          <div class="case-btn-name">${c.name}</div>
+          <div class="case-btn-tag">
+            <span class="tag-dot" style="background:${group.color}"></span>
+            ${c.industry}
+          </div>
+        </div>
+      `;
+      div.appendChild(btn);
+    });
+
+    const div2 = document.createElement("div");
+    div2.className = "sidebar-divider";
+    sidebar.appendChild(div);
+    if (group.id !== "g4") sidebar.appendChild(div2);
+  });
+}
+
+function showWelcome() {
+  const main = document.getElementById("main-content");
+  main.innerHTML = `
+    <div class="welcome">
+      <div class="welcome-eyebrow">Materi Pengayaan · Lateral Thinking</div>
+      <h1>Studi Kasus <em>Nyata</em><br>dari Dunia Bisnis</h1>
+      <p class="welcome-desc">
+        Sembilan kasus dari berbagai industri dan negara — termasuk dua kasus
+        kegagalan yang mengajarkan hal berbeda dari keberhasilan. Setiap kasus
+        dilengkapi mekanik interaktif untuk melatih cara berpikir lateral, bukan sekadar membaca.
+      </p>
+      <div class="how-it-works">
+        <div class="how-card">
+          <div class="how-card-num">Langkah 1</div>
+          <div class="how-card-title">Bongkar Asumsi</div>
+          <div class="how-card-desc">Klik satu per satu untuk membongkar asumsi industri yang dilanggar. Coba tebak dulu sebelum klik.</div>
+        </div>
+        <div class="how-card">
+          <div class="how-card-num">Langkah 2</div>
+          <div class="how-card-title">Analisis Teknik</div>
+          <div class="how-card-desc">Identifikasi teknik lateral thinking mana yang digunakan dan bagaimana ia bekerja di konteks nyata.</div>
+        </div>
+        <div class="how-card">
+          <div class="how-card-num">Langkah 3</div>
+          <div class="how-card-title">Uji Pemahaman</div>
+          <div class="how-card-desc">Jawab quiz singkat di akhir setiap kasus untuk mengecek seberapa dalam pemahamanmu.</div>
+        </div>
+        <div class="how-card">
+          <div class="how-card-num">Langkah 4</div>
+          <div class="how-card-title">Refleksi Kritis</div>
+          <div class="how-card-desc">Dua kasus terakhir adalah kegagalan — baca dengan lebih kritis dan cari pola yang berbeda.</div>
+        </div>
+      </div>
+      <div class="start-hint">Pilih kasus dari sidebar untuk mulai</div>
+    </div>
+  `;
+}
+
+function loadCase(caseId) {
+  currentCase = caseId;
+  const c = CASES.find(x => x.id === caseId);
+  if (!c) return;
+
+  // Update sidebar
+  document.querySelectorAll(".case-btn").forEach(btn => btn.classList.remove("active"));
+  const activeBtn = document.getElementById(`sidebar-btn-${caseId}`);
+  if (activeBtn) activeBtn.classList.add("active");
+
+  updateProgress();
+
+  const group = GROUPS.find(g => g.id === c.group);
+  const caseIndex = CASES.findIndex(x => x.id === caseId);
+
+  const main = document.getElementById("main-content");
+  main.scrollTop = 0;
+
+  // Build case HTML
+  let html = `<div class="case-content visible">`;
+
+  // Header
+  html += `
+    <div class="case-header">
+      <div class="case-eyebrow">
+        <span class="case-group-tag" style="background:${group.bg};color:${group.color}">${group.label}</span>
+        <span class="case-industry-tag">🏭 ${c.industry}</span>
+        <span class="case-country">${c.country}</span>
+      </div>
+      <h1 class="case-title">${c.name}</h1>
+      <p class="case-subtitle">${c.subtitle}</p>
+    </div>
+  `;
+
+  // Failure warning
+  if (c.isFailure) {
+    html += `
+      <div class="failure-warning">
+        ⚠️ <strong>Kasus Kritis:</strong> ${c.failureNote}
+      </div>
+    `;
+  }
+
+  // Context
+  html += `
+    <div class="section" style="animation-delay:0.05s">
+      <div class="section-label">Konteks Industri</div>
+      <div class="context-box">${c.context}</div>
+    </div>
+  `;
+
+  // Assumptions (interactive reveal)
+  html += `
+    <div class="section" style="animation-delay:0.1s">
+      <div class="section-label">Asumsi yang Dilanggar</div>
+      <div class="assumption-intro">
+        <span class="hint-icon">INTERAKTIF</span>
+        Klik setiap asumsi untuk membongkarnya. Coba tebak dulu mana yang paling mengejutkan.
+      </div>
+      <div class="assumptions-grid" id="assumptions-${c.id}">
+  `;
+  c.assumptions.forEach((a, i) => {
+    html += `
+      <div class="assumption-item" id="assum-${c.id}-${i}" onclick="revealAssumption('${c.id}', ${i})">
+        <div class="assumption-revealed-label">Asumsi yang tidak pernah dipertanyakan ✗</div>
+        <div class="assumption-text">
+          <span class="assumption-icon">🔒</span>
+          <span>${a}</span>
+        </div>
+        <div class="assumption-hidden-hint">Klik untuk membongkar asumsi ini</div>
+      </div>
+    `;
+  });
+  html += `
+      </div>
+      <div class="reveal-counter" id="reveal-counter-${c.id}">
+        0 / ${c.assumptions.length} terbongkar
+        <button class="reveal-all-btn" onclick="revealAll('${c.id}')">Bongkar semua</button>
+      </div>
+    </div>
+  `;
+
+  // Lateral question
+  html += `
+    <div class="section" style="animation-delay:0.15s">
+      <div class="section-label">Pertanyaan Lateral yang Mengubah Segalanya</div>
+      <div class="lateral-question-box">
+        <div class="lq-label">Pertanyaan Pemantik</div>
+        <div class="lq-text">${c.lateralQ.text}</div>
+        <div class="lq-source">— ${c.lateralQ.source}</div>
+      </div>
+    </div>
+  `;
+
+  // Techniques
+  html += `
+    <div class="section" style="animation-delay:0.2s">
+      <div class="section-label">Teknik Lateral Thinking yang Teridentifikasi</div>
+      <div class="techniques-grid">
+  `;
+  c.techniques.forEach(t => {
+    html += `
+      <div class="technique-card">
+        <div class="technique-header">
+          <span class="technique-badge" style="background:${t.bgColor};color:${t.color}">${t.name}</span>
+        </div>
+        <div class="technique-desc">${t.desc}</div>
+      </div>
+    `;
+  });
+  html += `</div></div>`;
+
+  // What happened
+  html += `
+    <div class="section" style="animation-delay:0.25s">
+      <div class="section-label">Yang Terjadi</div>
+      <div class="what-happened">
+  `;
+  if (c.stats && c.stats.length > 0) {
+    html += `<div class="stat-row">`;
+    c.stats.forEach((s, i) => {
+      if (i > 0) html += `<div class="stat-divider"></div>`;
+      html += `
+        <div class="stat-item">
+          <div class="stat-num">${s.num}</div>
+          <div class="stat-label">${s.label}</div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  }
+  html += `<div class="happened-text">${c.happened}</div></div></div>`;
+
+  // Lesson
+  html += `
+    <div class="section" style="animation-delay:0.3s">
+      <div class="section-label">Pelajaran Utama</div>
+      <div class="lesson-box">
+        <div class="lesson-icon">${c.lessonIcon}</div>
+        <div class="lesson-text">${c.lesson}</div>
+      </div>
+    </div>
+  `;
+
+  // Quiz
+  const quizAnsweredAlready = quizAnswered.has(c.id);
+  html += `
+    <div class="quiz-section">
+      <div class="quiz-header">
+        <span class="quiz-badge">Quiz</span>
+        <span class="quiz-title">Uji Pemahamanmu</span>
+      </div>
+      <div class="quiz-question">${c.quiz.question}</div>
+      <div class="quiz-options" id="quiz-opts-${c.id}">
+  `;
+  const letters = ["A", "B", "C", "D"];
+  c.quiz.options.forEach((opt, i) => {
+    html += `
+      <button class="quiz-option" id="quiz-opt-${c.id}-${i}"
+        onclick="answerQuiz('${c.id}', ${i})"
+        ${quizAnsweredAlready ? "disabled" : ""}>
+        <span class="quiz-option-letter">${letters[i]}</span>
+        ${opt}
+      </button>
+    `;
+  });
+  html += `
+      </div>
+      <div class="quiz-feedback" id="quiz-feedback-${c.id}"></div>
+      <button class="quiz-reset" id="quiz-reset-${c.id}" onclick="resetQuiz('${c.id}')">Coba lagi</button>
+    </div>
+  `;
+
+  // Navigation
+  html += `
+    <div class="case-nav">
+      <button class="nav-btn" onclick="navigateCase(-1)" ${caseIndex === 0 ? "disabled" : ""}>
+        ← Kasus Sebelumnya
+      </button>
+      <span class="case-position">${caseIndex + 1} dari ${CASES.length}</span>
+      <button class="nav-btn" onclick="navigateCase(1)" ${caseIndex === CASES.length - 1 ? "disabled" : ""}>
+        Kasus Berikutnya →
+      </button>
+    </div>
+  `;
+
+  html += `</div>`;
+  main.innerHTML = html;
+
+  // Restore quiz state if already answered
+  if (quizAnsweredAlready) {
+    // Find which answer was given — re-highlight correct
+    highlightCorrect(c.id);
+  }
+
+  // Mark complete when fully scrolled or after some time
+  setTimeout(() => {
+    completed.add(caseId);
+    buildSidebar();
+    updateProgress();
+    // Re-attach active state
+    document.querySelectorAll(".case-btn").forEach(btn => btn.classList.remove("active"));
+    const btn2 = document.getElementById(`sidebar-btn-${caseId}`);
+    if (btn2) btn2.classList.add("active");
+  }, 8000);
+}
+
+// Reveal assumption
+let revealCounts = {};
+
+function revealAssumption(caseId, idx) {
+  const item = document.getElementById(`assum-${caseId}-${idx}`);
+  if (!item || item.classList.contains("revealed")) return;
+  item.classList.add("revealed");
+
+  if (!revealCounts[caseId]) revealCounts[caseId] = 0;
+  revealCounts[caseId]++;
+
+  const c = CASES.find(x => x.id === caseId);
+  const counter = document.getElementById(`reveal-counter-${caseId}`);
+  if (counter) {
+    counter.innerHTML = `
+      ${revealCounts[caseId]} / ${c.assumptions.length} terbongkar
+      <button class="reveal-all-btn" onclick="revealAll('${caseId}')">Bongkar semua</button>
+    `;
+  }
+}
+
+function revealAll(caseId) {
+  const c = CASES.find(x => x.id === caseId);
+  c.assumptions.forEach((_, i) => revealAssumption(caseId, i));
+}
+
+// Quiz
+function answerQuiz(caseId, selectedIdx) {
+  if (quizAnswered.has(caseId)) return;
+  quizAnswered.add(caseId);
+
+  const c = CASES.find(x => x.id === caseId);
+  const isCorrect = selectedIdx === c.quiz.correct;
+
+  // Disable all options
+  c.quiz.options.forEach((_, i) => {
+    const opt = document.getElementById(`quiz-opt-${caseId}-${i}`);
+    if (!opt) return;
+    opt.disabled = true;
+    if (i === c.quiz.correct) {
+      opt.classList.add("correct");
+    } else if (i === selectedIdx && !isCorrect) {
+      opt.classList.add("wrong");
+    } else {
+      opt.classList.add("neutral-reveal");
+    }
+  });
+
+  // Show feedback
+  const feedback = document.getElementById(`quiz-feedback-${caseId}`);
+  if (feedback) {
+    feedback.className = `quiz-feedback ${isCorrect ? "correct" : "wrong"}`;
+    feedback.innerHTML = `${isCorrect ? "✓ " : "✗ "}${isCorrect ? c.quiz.feedback.correct : c.quiz.feedback.wrong}`;
+  }
+
+  // Show reset
+  const reset = document.getElementById(`quiz-reset-${caseId}`);
+  if (reset) reset.classList.add("visible");
+}
+
+function highlightCorrect(caseId) {
+  const c = CASES.find(x => x.id === caseId);
+  const opt = document.getElementById(`quiz-opt-${caseId}-${c.quiz.correct}`);
+  if (opt) opt.classList.add("correct");
+}
+
+function resetQuiz(caseId) {
+  quizAnswered.delete(caseId);
+  const c = CASES.find(x => x.id === caseId);
+  c.quiz.options.forEach((_, i) => {
+    const opt = document.getElementById(`quiz-opt-${caseId}-${i}`);
+    if (!opt) return;
+    opt.disabled = false;
+    opt.className = "quiz-option";
+  });
+  const feedback = document.getElementById(`quiz-feedback-${caseId}`);
+  if (feedback) { feedback.className = "quiz-feedback"; feedback.innerHTML = ""; }
+  const reset = document.getElementById(`quiz-reset-${caseId}`);
+  if (reset) reset.classList.remove("visible");
+}
+
+function navigateCase(direction) {
+  const caseIndex = CASES.findIndex(x => x.id === currentCase);
+  const nextIndex = caseIndex + direction;
+  if (nextIndex >= 0 && nextIndex < CASES.length) {
+    loadCase(CASES[nextIndex].id);
+  }
+}
+
+// ── START ─────────────────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
