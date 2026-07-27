@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modul Excel 8 Pertemuan — Universitas Bhamada Slawi</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+:root{
+  --green:#1A6B3C;--green2:#22863A;--green-lt:#E6F4EC;--green-md:#B2DFCB;
+  --accent:#F59E0B;--accent-lt:#FEF3C7;
+  --red:#DC2626;--red-lt:#FEE2E2;
+  --blue:#1D4ED8;--blue-lt:#EFF6FF;
+  --purple:#7C3AED;--purple-lt:#F5F3FF;--purple-md:#DDD6FE;
+  --gray50:#F9FAFB;--gray100:#F3F4F6;--gray200:#E5E7EB;
+  --gray400:#9CA3AF;--gray600:#4B5563;--gray800:#1F2937;
+  --white:#FFFFFF;--radius:12px;--shadow:0 2px 12px rgba(0,0,0,.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--gray50);color:var(--gray800);min-height:100vh}
+.hero{background:linear-gradient(135deg,var(--green) 0%,#0F4A2A 100%);color:white;padding:48px 24px 36px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-icon{width:72px;height:72px;background:rgba(255,255,255,.15);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:36px;border:1px solid rgba(255,255,255,.2)}
+.hero h1{font-size:clamp(22px,4vw,34px);font-weight:800;letter-spacing:-.5px}
+.hero p{margin-top:10px;opacity:.8;font-size:15px}
+.hero-badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:50px;padding:5px 14px;font-size:12px;font-weight:600}
+.tab-nav{background:var(--white);border-bottom:2px solid var(--gray200);display:flex;overflow-x:auto;padding:0 8px;gap:2px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow);scrollbar-width:none}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{padding:12px 14px;border:none;background:none;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;color:var(--gray600);border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .2s;display:flex;align-items:center;gap:5px}
+.tab-btn:hover{color:var(--green)}
+.tab-btn.active{color:var(--green);border-bottom-color:var(--green)}
+.tab-emoji{font-size:14px}
+.main{max-width:900px;margin:0 auto;padding:28px 16px 80px}
+.tab-section{display:none}
+.tab-section.active{display:block}
+.session-header{background:linear-gradient(135deg,var(--green-lt),var(--white));border:1.5px solid var(--green-md);border-radius:var(--radius);padding:22px 24px;margin-bottom:24px;display:flex;align-items:flex-start;gap:16px}
+.session-num{background:var(--green);color:white;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;flex-shrink:0}
+.session-info h2{font-size:20px;font-weight:800;color:var(--green)}
+.session-info p{font-size:13px;color:var(--gray600);margin-top:4px}
+.session-meta{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap}
+.meta-tag{background:var(--green-lt);color:var(--green);border-radius:50px;padding:3px 10px;font-size:11px;font-weight:700;border:1px solid var(--green-md)}
+.objectives{background:var(--blue-lt);border:1.5px solid #BFDBFE;border-radius:var(--radius);padding:16px 18px;margin-bottom:20px}
+.obj-title{font-size:12px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.obj-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.obj-list li{font-size:13px;color:#1E40AF;display:flex;gap:8px;align-items:flex-start;line-height:1.4}
+.obj-list li::before{content:'✓';color:var(--blue);font-weight:700;flex-shrink:0}
+.card{background:var(--white);border-radius:var(--radius);border:1.5px solid var(--gray200);padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow)}
+.card-title{font-size:15px;font-weight:700;color:var(--gray800);display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.card-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;background:var(--green-lt)}
+.materi-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.materi-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.5;color:var(--gray600)}
+.materi-list li::before{content:'▸';color:var(--green);font-size:12px;margin-top:2px;flex-shrink:0}
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.formula-card{background:var(--gray800);border-radius:10px;padding:14px 16px;color:white}
+.formula-name{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#86EFAC;margin-bottom:4px}
+.formula-syntax{font-family:'JetBrains Mono',monospace;font-size:11px;color:#FCD34D;margin-bottom:6px}
+.formula-desc{font-size:12px;color:rgba(255,255,255,.75);line-height:1.4}
+.contoh-box{background:var(--blue-lt);border:1.5px solid #BFDBFE;border-radius:10px;padding:14px 16px;margin-top:10px}
+.contoh-box .label{font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.contoh-box code{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--blue);white-space:pre-wrap;display:block}
+.tip-box{background:var(--accent-lt);border:1.5px solid #FDE68A;border-radius:10px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;margin-top:10px}
+.tip-box .tip-icon{font-size:18px;flex-shrink:0}
+.tip-box p{font-size:13px;color:#92400E;line-height:1.5}
+.warn-box{background:var(--red-lt);border:1.5px solid #FECACA;border-radius:10px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;margin-top:10px}
+.warn-box .tip-icon{font-size:18px;flex-shrink:0}
+.warn-box p{font-size:13px;color:#991B1B;line-height:1.5}
+.steps{display:flex;flex-direction:column;gap:10px}
+.step{display:flex;gap:12px;align-items:flex-start}
+.step-num{width:26px;height:26px;border-radius:50%;background:var(--green);color:white;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step-text{font-size:14px;color:var(--gray600);line-height:1.5}
+.step-text strong{color:var(--gray800)}
+.table-demo{overflow-x:auto;margin-top:10px}
+.table-demo table{width:100%;border-collapse:collapse;font-size:13px}
+.table-demo th{background:var(--green);color:white;padding:8px 12px;text-align:left;font-weight:700}
+.table-demo td{padding:7px 12px;border-bottom:1px solid var(--gray200)}
+.table-demo tr:nth-child(even) td{background:var(--gray50)}
+.cell-formula{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--blue)}
+.cell-result{font-weight:700;color:var(--green)}
+.shortcut-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.shortcut-item{background:var(--gray50);border:1px solid var(--gray200);border-radius:8px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.shortcut-key{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--gray800);color:white;border-radius:5px;padding:3px 8px;white-space:nowrap}
+.shortcut-desc{font-size:12px;color:var(--gray600)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.quiz-header{background:linear-gradient(135deg,#1D4ED8,#1E40AF);color:white;border-radius:var(--radius);padding:20px 22px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.quiz-header .q-icon{font-size:32px}
+.quiz-header h2{font-size:18px;font-weight:800}
+.quiz-header p{font-size:13px;opacity:.8;margin-top:2px}
+.quiz-selector{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.quiz-sel-btn{padding:7px 14px;border-radius:50px;border:2px solid var(--gray200);background:var(--white);cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;color:var(--gray600);transition:all .2s}
+.quiz-sel-btn:hover{border-color:var(--blue);color:var(--blue)}
+.quiz-sel-btn.active{background:var(--blue);border-color:var(--blue);color:white}
+.quiz-container{display:none}
+.quiz-container.active{display:block}
+.question-card{background:var(--white);border-radius:var(--radius);border:1.5px solid var(--gray200);padding:20px 22px;margin-bottom:14px;box-shadow:var(--shadow)}
+.q-num{font-size:11px;font-weight:700;color:var(--gray400);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.q-text{font-size:15px;font-weight:600;color:var(--gray800);margin-bottom:14px;line-height:1.5}
+.q-code{font-family:'JetBrains Mono',monospace;background:var(--gray100);border-radius:6px;padding:8px 12px;font-size:12px;color:var(--blue);display:block;margin-bottom:12px}
+.options{display:flex;flex-direction:column;gap:8px}
+.option-btn{padding:11px 16px;border-radius:10px;border:1.5px solid var(--gray200);background:var(--white);cursor:pointer;font-family:inherit;font-size:14px;text-align:left;color:var(--gray700);transition:all .2s;display:flex;align-items:center;gap:10px}
+.option-btn:hover:not(.answered){border-color:var(--blue);background:var(--blue-lt)}
+.option-btn.correct{background:var(--green-lt);border-color:var(--green);color:var(--green);font-weight:600}
+.option-btn.wrong{background:var(--red-lt);border-color:var(--red);color:var(--red)}
+.option-btn.revealed{border-color:var(--green-md);background:var(--green-lt);color:var(--green);opacity:.7}
+.option-letter{width:24px;height:24px;border-radius:6px;background:var(--gray100);color:var(--gray600);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.option-btn.correct .option-letter{background:var(--green);color:white}
+.option-btn.wrong .option-letter{background:var(--red);color:white}
+.explanation{display:none;background:var(--green-lt);border:1.5px solid var(--green-md);border-radius:10px;padding:12px 14px;margin-top:12px;font-size:13px;color:var(--green);line-height:1.5}
+.explanation.show{display:block}
+.quiz-controls{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.btn-primary{background:var(--green);color:white;border:none;border-radius:10px;padding:12px 24px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s}
+.btn-primary:hover{background:var(--green2)}
+.btn-secondary{background:var(--white);color:var(--gray600);border:1.5px solid var(--gray200);border-radius:10px;padding:12px 24px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-secondary:hover{border-color:var(--green);color:var(--green)}
+.score-box{display:none;background:linear-gradient(135deg,var(--green),#0F4A2A);color:white;border-radius:var(--radius);padding:24px;text-align:center;margin-top:20px}
+.score-box.show{display:block}
+.score-num{font-size:56px;font-weight:800}
+.score-label{font-size:16px;opacity:.85;margin-top:4px}
+.score-msg{font-size:20px;font-weight:700;margin-top:12px}
+.kasus-header{background:linear-gradient(135deg,#7C3AED,#5B21B6);color:white;border-radius:var(--radius);padding:20px 22px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.kasus-header .k-icon{font-size:32px}
+.kasus-header h2{font-size:18px;font-weight:800}
+.kasus-header p{font-size:13px;opacity:.8;margin-top:2px}
+.kasus-card{background:var(--white);border-radius:var(--radius);border:1.5px solid var(--gray200);margin-bottom:20px;overflow:hidden;box-shadow:var(--shadow)}
+.kasus-top{background:linear-gradient(135deg,#F3E8FF,#EDE9FE);padding:18px 22px;border-bottom:1.5px solid #DDD6FE;display:flex;gap:14px;align-items:flex-start}
+.kasus-badge{background:#7C3AED;color:white;border-radius:10px;padding:8px 12px;font-size:11px;font-weight:700;text-align:center;flex-shrink:0;min-width:60px}
+.kasus-badge span{font-size:20px;display:block}
+.kasus-top h3{font-size:16px;font-weight:800;color:#4C1D95}
+.kasus-top .subtitle{font-size:12px;color:#6D28D9;margin-top:3px}
+.kasus-body{padding:20px 22px}
+.kasus-skenario{background:var(--gray50);border:1px solid var(--gray200);border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:14px;color:var(--gray600);line-height:1.6}
+.tugas-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.tugas-item{display:flex;gap:12px;align-items:flex-start;background:#F5F3FF;border-radius:10px;padding:12px 14px;border:1px solid #DDD6FE}
+.tugas-num{background:#7C3AED;color:white;width:24px;height:24px;border-radius:6px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tugas-text{font-size:14px;color:#4C1D95;line-height:1.5}
+.kasus-hint{background:var(--accent-lt);border:1px solid #FDE68A;border-radius:10px;padding:12px 14px;font-size:13px;color:#92400E;line-height:1.5}
+.show-sol-btn{background:#7C3AED;color:white;border:none;border-radius:10px;padding:10px 20px;margin-top:14px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .2s}
+.show-sol-btn:hover{background:#6D28D9}
+.solution-box{display:none;background:#F5F3FF;border:1.5px solid #C4B5FD;border-radius:10px;padding:16px 18px;margin-top:12px}
+.solution-box.show{display:block}
+.solution-box h4{font-size:13px;font-weight:700;color:#4C1D95;margin-bottom:10px}
+.sol-step{font-size:13px;color:var(--gray600);margin-bottom:6px;line-height:1.5}
+.sol-step code{font-family:'JetBrains Mono',monospace;background:white;border:1px solid #DDD6FE;border-radius:4px;padding:1px 5px;color:#7C3AED;font-size:11px}
+@media(max-width:600px){.two-col{grid-template-columns:1fr}.formula-grid{grid-template-columns:1fr}.session-header{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-icon">📊</div>
+  <h1>Belajar Microsoft Excel</h1>
+  <p>Modul Pengajaran Lengkap — Universitas Bhamada Slawi</p>
+  <div class="hero-badges">
+    <span class="badge">📅 8 Pertemuan</span>
+    <span class="badge">🎯 Pemula → Mahir</span>
+    <span class="badge">🧠 40 Soal Kuis</span>
+    <span class="badge">💼 5 Studi Kasus</span>
+    <span class="badge">📝 8 Latihan Praktik</span>
+  </div>
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('p1')" data-tab="p1"><span class="tab-emoji">1️⃣</span> P1: Interface</button>
+  <button class="tab-btn" onclick="showTab('p2')" data-tab="p2"><span class="tab-emoji">2️⃣</span> P2: Rumus Dasar</button>
+  <button class="tab-btn" onclick="showTab('p3')" data-tab="p3"><span class="tab-emoji">3️⃣</span> P3: Teks & Tanggal</button>
+  <button class="tab-btn" onclick="showTab('p4')" data-tab="p4"><span class="tab-emoji">4️⃣</span> P4: Logika IF</button>
+  <button class="tab-btn" onclick="showTab('p5')" data-tab="p5"><span class="tab-emoji">5️⃣</span> P5: Format & Grafik</button>
+  <button class="tab-btn" onclick="showTab('p6')" data-tab="p6"><span class="tab-emoji">6️⃣</span> P6: VLOOKUP</button>
+  <button class="tab-btn" onclick="showTab('p7')" data-tab="p7"><span class="tab-emoji">7️⃣</span> P7: Pivot Table</button>
+  <button class="tab-btn" onclick="showTab('p8')" data-tab="p8"><span class="tab-emoji">8️⃣</span> P8: Proyek Akhir</button>
+  <button class="tab-btn" onclick="showTab('kuis')" data-tab="kuis"><span class="tab-emoji">🧠</span> Kuis</button>
+  <button class="tab-btn" onclick="showTab('kasus')" data-tab="kasus"><span class="tab-emoji">💼</span> Studi Kasus</button>
+</nav>
+
+<div class="main">
+  <section class="tab-section active" id="p1"><div class="session-header">
+    <div class="session-num">1️⃣</div>
+    <div class="session-info">
+      <h2>Pertemuan 1: Mengenal Excel & Antarmuka Dasar</h2>
+      <p>Mahasiswa mampu membuka, mengenal komponen Excel, dan menginput data pertama</p>
+      <div class="session-meta">
+        <span class="meta-tag">⏱ 100 menit</span>
+        <span class="meta-tag">🎯 Pemula Mutlak</span>
+        <span class="meta-tag">📁 Interface & Navigasi</span>
+      </div>
+    </div>
+  </div><div class="objectives"><div class="obj-title">🎯 Tujuan Pembelajaran</div>
+    <ul class="obj-list"><li>Menjelaskan apa itu Microsoft Excel dan kegunaannya di dunia kerja</li><li>Mengidentifikasi setiap komponen antarmuka Excel (Ribbon, Cell, Formula Bar, dll.)</li><li>Membuka, menyimpan, dan menutup file Excel dengan benar</li><li>Menginput data teks, angka, dan tanggal ke dalam sel</li></ul>
+  </div><div class="card"><div class="card-title"><div class="card-icon">💡</div> Apa Itu Microsoft Excel?</div>
+<ul class="materi-list">
+<li>Excel adalah <strong>program pengolah angka (spreadsheet)</strong> buatan Microsoft — bagian dari paket Microsoft Office.</li>
+<li>Digunakan di hampir semua bidang pekerjaan: keuangan, bisnis, administrasi, pendidikan, riset, dan lainnya.</li>
+<li>File Excel modern berekstensi <strong>.xlsx</strong>. Versi lama menggunakan <strong>.xls</strong>.</li>
+<li>Keunggulan utama: mampu menghitung ribuan data secara <em>otomatis</em> hanya dengan satu rumus.</li>
+<li>Tersedia di Microsoft Office (lisensi berbayar) dan Microsoft 365 (berlangganan online).</li>
+</ul>
+<div class="tip-box"><span class="tip-icon">💡</span><p><strong>Analogi sederhana:</strong> Bayangkan Excel seperti buku catatan kotak-kotak raksasa. Setiap kotak bisa diisi angka, teks, atau rumus yang menghitung otomatis — seperti kalkulator tak terbatas!</p></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">🖥️</div> Komponen Antarmuka Excel</div>
+<ul class="materi-list">
+<li><strong>Title Bar</strong> — Bagian paling atas, menampilkan nama file yang sedang dibuka (contoh: "Buku1 - Excel").</li>
+<li><strong>Ribbon</strong> — Kumpulan menu perintah di bagian atas, dikelompokkan dalam tab: Home, Insert, Formulas, Data, Review, View.</li>
+<li><strong>Quick Access Toolbar</strong> — Di pojok kiri atas, tombol cepat untuk Save, Undo, Redo.</li>
+<li><strong>Name Box</strong> — Kotak di kiri atas area kerja, menampilkan alamat sel aktif (misal: A1, C5).</li>
+<li><strong>Formula Bar</strong> — Di bawah Ribbon, tempat melihat dan mengedit isi atau rumus sel.</li>
+<li><strong>Lembar Kerja (Worksheet)</strong> — Area kotak-kotak utama tempat Anda bekerja.</li>
+<li><strong>Sheet Tab</strong> — Tab di bagian bawah layar untuk berpindah antar lembar kerja (Sheet1, Sheet2…).</li>
+<li><strong>Scroll Bar</strong> — Bilah geser horizontal dan vertikal untuk menavigasi lembar kerja.</li>
+<li><strong>Status Bar</strong> — Di bawah layar, menampilkan info cepat (SUM, AVERAGE, COUNT) saat sel dipilih.</li>
+</ul>
+</div><div class="card"><div class="card-title"><div class="card-icon">📐</div> Memahami Sel, Baris, Kolom, dan Range</div>
+<ul class="materi-list">
+<li><strong>Kolom</strong> — Ditandai huruf (A, B, C … Z, AA, AB …) berjalan secara <em>vertikal</em>. Total 16.384 kolom.</li>
+<li><strong>Baris</strong> — Ditandai angka (1, 2, 3 … 1.048.576) berjalan secara <em>horizontal</em>.</li>
+<li><strong>Sel (Cell)</strong> — Pertemuan antara satu kolom dan satu baris. Contoh: <strong>B3</strong> = kolom B, baris ke-3.</li>
+<li><strong>Sel Aktif</strong> — Sel yang sedang dipilih, ditandai batas berwarna hijau tebal.</li>
+<li><strong>Range</strong> — Kumpulan beberapa sel. Contoh: <strong>A1:C5</strong> = semua sel dari A1 sampai C5 (15 sel total).</li>
+</ul>
+<div class="contoh-box"><div class="label">📌 Cara Membaca Alamat Sel</div><code>C7     → Kolom C, Baris ke-7
+A1:E10 → Range dari A1 (kiri atas) sampai E10 (kanan bawah)
+B:B    → Seluruh kolom B
+3:3    → Seluruh baris ke-3</code></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">💾</div> Membuka, Menyimpan & Menutup File</div>
+<div class="steps">
+<div class="step"><div class="step-num">1</div><div class="step-text"><strong>Buka Excel baru:</strong> Klik Start → ketik "Excel" → Enter → pilih <em>Blank Workbook</em>.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><strong>Simpan (Save):</strong> Tekan <strong>Ctrl + S</strong> → pilih lokasi folder → ketik nama file → klik Save.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><strong>Buka file lama:</strong> Tekan <strong>Ctrl + O</strong> → Browse → cari file → double-click atau klik Open.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><strong>Save As (simpan salinan):</strong> Tekan <strong>F12</strong> → ganti nama atau lokasi → klik Save.</div></div>
+<div class="step"><div class="step-num">5</div><div class="step-text"><strong>Tutup file:</strong> Tekan <strong>Ctrl + W</strong>. Jika ada perubahan belum tersimpan, Excel akan bertanya.</div></div>
+</div>
+<div class="warn-box"><span class="tip-icon">⚠️</span><p><strong>Kebiasaan baik:</strong> Simpan pekerjaan setiap 5–10 menit dengan Ctrl+S. Beri nama file yang deskriptif — misalnya "Nilai_Mahasiswa_Genap_2025", bukan "Book1" atau "file_baru"!</p></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">⌨️</div> Menginput dan Mengedit Data</div>
+<ul class="materi-list">
+<li>Klik sel → ketik data → tekan <strong>Enter</strong> (pindah ke bawah) atau <strong>Tab</strong> (pindah ke kanan).</li>
+<li><strong>Data Teks</strong> (nama, alamat) → otomatis rata kiri. <strong>Data Angka</strong> → otomatis rata kanan.</li>
+<li><strong>Data Tanggal</strong> → ketik format 1/1/2025 atau 1-Jan-2025. Excel mengenali sebagai tanggal.</li>
+<li><strong>Mengedit</strong> isi sel: double-click pada sel ATAU klik sel lalu tekan <strong>F2</strong>.</li>
+<li><strong>Menghapus</strong> isi sel: klik sel → tekan <strong>Delete</strong>.</li>
+<li><strong>Batalkan</strong> perubahan terakhir: tekan <strong>Ctrl + Z</strong> (bisa berkali-kali).</li>
+<li><strong>AutoComplete</strong>: Excel menebak teks dari entri sebelumnya. Tekan Enter untuk menerima, Esc untuk menolak.</li>
+</ul>
+<div class="table-demo"><table>
+<tr><th>Jenis Data</th><th>Contoh Input</th><th>Tampilan</th><th>Perataan</th></tr>
+<tr><td>Teks</td><td>Budi Santoso</td><td>Budi Santoso</td><td>Kiri</td></tr>
+<tr><td>Angka</td><td>85000</td><td>85000</td><td>Kanan</td></tr>
+<tr><td>Tanggal</td><td>15/3/2025</td><td>15/03/2025</td><td>Kanan</td></tr>
+<tr><td>Persentase</td><td>0.75 lalu format %</td><td>75%</td><td>Kanan</td></tr>
+</table></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">⌨️</div> Keyboard Shortcut Wajib Pertemuan 1</div>
+<div class="shortcut-grid">
+<div class="shortcut-item"><span class="shortcut-key">Ctrl + S</span><span class="shortcut-desc">Simpan file</span></div><div class="shortcut-item"><span class="shortcut-key">Ctrl + Z</span><span class="shortcut-desc">Undo — batalkan</span></div><div class="shortcut-item"><span class="shortcut-key">Ctrl + Y</span><span class="shortcut-desc">Redo — ulangi</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Ctrl + C</span><span class="shortcut-desc">Copy (salin)</span></div><div class="shortcut-item"><span class="shortcut-key">Ctrl + V</span><span class="shortcut-desc">Paste (tempel)</span></div><div class="shortcut-item"><span class="shortcut-key">Ctrl + X</span><span class="shortcut-desc">Cut (potong)</span></div>
+<div class="shortcut-item"><span class="shortcut-key">F2</span><span class="shortcut-desc">Edit isi sel</span></div><div class="shortcut-item"><span class="shortcut-key">Delete</span><span class="shortcut-desc">Hapus isi sel</span></div><div class="shortcut-item"><span class="shortcut-key">Ctrl + Home</span><span class="shortcut-desc">Ke sel A1</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Tab</span><span class="shortcut-desc">Pindah kanan</span></div><div class="shortcut-item"><span class="shortcut-key">Enter</span><span class="shortcut-desc">Pindah bawah</span></div><div class="shortcut-item"><span class="shortcut-key">Esc</span><span class="shortcut-desc">Batalkan input</span></div>
+</div>
+</div><div class="card" style="border-color:#FDE68A;background:var(--accent-lt)">
+    <div class="card-title"><div class="card-icon" style="background:#FEF3C7">📝</div> Latihan Praktik</div>
+    <ul class="materi-list"><li>Buka Excel baru → simpan dengan nama <strong>"P1_NamaMahasiswa"</strong></li><li>Buat tabel 5 kolom: No | Nama | Kota Asal | Usia | Nomor HP — isi 8 data teman sekelas</li><li>Coba navigasi menggunakan Tab, Enter, dan tombol arah (arrow key)</li><li>Praktikkan Undo (Ctrl+Z) dan Redo (Ctrl+Y) setelah menghapus data</li><li>Simpan file dalam format .xlsx di folder Dokumen</li></ul>
+  </div></section>
+  <section class="tab-section" id="p2"><div class="session-header">
+    <div class="session-num">2️⃣</div>
+    <div class="session-info">
+      <h2>Pertemuan 2: Rumus Dasar & Fungsi Statistik</h2>
+      <p>Mahasiswa mampu membuat rumus matematika dan menggunakan fungsi bawaan Excel</p>
+      <div class="session-meta">
+        <span class="meta-tag">⏱ 100 menit</span>
+        <span class="meta-tag">🎯 Pemula</span>
+        <span class="meta-tag">📁 Rumus & Fungsi</span>
+      </div>
+    </div>
+  </div><div class="objectives"><div class="obj-title">🎯 Tujuan Pembelajaran</div>
+    <ul class="obj-list"><li>Membuat rumus aritmatika (+, -, *, /, ^) dan memahami hierarki operator</li><li>Menggunakan fungsi SUM, AVERAGE, MAX, MIN, COUNT, COUNTA</li><li>Menggunakan AutoFill untuk menyalin rumus secara efisien</li><li>Memahami referensi relatif vs absolut ($)</li><li>Memformat angka sebagai mata uang, persentase, dan desimal</li></ul>
+  </div><div class="card"><div class="card-title"><div class="card-icon">➕</div> Operator Aritmatika — Aturan Dasar</div>
+<ul class="materi-list">
+<li>Setiap rumus Excel <strong>wajib diawali tanda sama dengan ( = )</strong>. Tanpanya, Excel menganggap sebagai teks biasa!</li>
+<li><strong>+ (tambah)</strong>: =A1+B1 &nbsp;&nbsp; <strong>- (kurang)</strong>: =A1-B1 &nbsp;&nbsp; <strong>* (kali)</strong>: =A1*B1</li>
+<li><strong>/ (bagi)</strong>: =A1/B1 &nbsp;&nbsp; <strong>^ (pangkat)</strong>: =A1^2 (kuadrat) &nbsp;&nbsp; <strong>% (persen)</strong>: =A1*20%</li>
+</ul>
+<div class="contoh-box"><div class="label">Contoh Rumus Sederhana</div><code>=5+3            → 8
+=A2*B2          → mengalikan isi A2 dan B2
+=(A1+B1)/2      → rata-rata manual A1 dan B1
+=2^10           → 1024 (2 pangkat 10)</code></div>
+<div class="warn-box"><span class="tip-icon">⚠️</span><p><strong>Urutan prioritas (seperti matematika):</strong> ^ dulu, lalu */  , baru +-. Gunakan kurung ( ) untuk mengubah urutan! Contoh: =2+3*4 → 14. Sedangkan =(2+3)*4 → 20.</p></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">📊</div> Fungsi Statistik Dasar</div>
+<div class="formula-grid">
+<div class="formula-card"><div class="formula-name">SUM</div><div class="formula-syntax">=SUM(A1:A10)</div><div class="formula-desc">Menjumlahkan semua angka dalam range yang ditentukan</div></div>
+<div class="formula-card"><div class="formula-name">AVERAGE</div><div class="formula-syntax">=AVERAGE(A1:A10)</div><div class="formula-desc">Menghitung nilai rata-rata dari range</div></div>
+<div class="formula-card"><div class="formula-name">MAX</div><div class="formula-syntax">=MAX(A1:A10)</div><div class="formula-desc">Mencari nilai terbesar dalam range</div></div>
+<div class="formula-card"><div class="formula-name">MIN</div><div class="formula-syntax">=MIN(A1:A10)</div><div class="formula-desc">Mencari nilai terkecil dalam range</div></div>
+<div class="formula-card"><div class="formula-name">COUNT</div><div class="formula-syntax">=COUNT(A1:A10)</div><div class="formula-desc">Menghitung jumlah sel berisi ANGKA</div></div>
+<div class="formula-card"><div class="formula-name">COUNTA</div><div class="formula-syntax">=COUNTA(A1:A10)</div><div class="formula-desc">Menghitung sel yang TIDAK KOSONG (termasuk teks)</div></div>
+</div>
+<div class="table-demo" style="margin-top:14px"><table>
+<tr><th>Nama</th><th>Nilai</th><th>Fungsi</th><th>Hasil</th></tr>
+<tr><td>Budi</td><td>75</td><td rowspan="4"></td><td rowspan="4"></td></tr>
+<tr><td>Siti</td><td>85</td></tr><tr><td>Ahmad</td><td>70</td></tr><tr><td>Rina</td><td>90</td></tr>
+<tr><td><strong>Jumlah</strong></td><td></td><td class="cell-formula">=SUM(B2:B5)</td><td class="cell-result">320</td></tr>
+<tr><td><strong>Rata-rata</strong></td><td></td><td class="cell-formula">=AVERAGE(B2:B5)</td><td class="cell-result">80</td></tr>
+<tr><td><strong>Tertinggi</strong></td><td></td><td class="cell-formula">=MAX(B2:B5)</td><td class="cell-result">90</td></tr>
+<tr><td><strong>Terendah</strong></td><td></td><td class="cell-formula">=MIN(B2:B5)</td><td class="cell-result">70</td></tr>
+<tr><td><strong>Jumlah Data</strong></td><td></td><td class="cell-formula">=COUNT(B2:B5)</td><td class="cell-result">4</td></tr>
+</table></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">🔄</div> AutoFill — Salin Rumus Otomatis</div>
+<div class="steps">
+<div class="step"><div class="step-num">1</div><div class="step-text">Ketik rumus di sel pertama. Contoh: <strong>=B2+C2</strong> di sel D2.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text">Klik sel D2 → arahkan kursor ke <strong>pojok kanan bawah</strong> sel. Kursor berubah jadi tanda <strong>+</strong> hitam kecil (Fill Handle).</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><strong>Klik dan drag ke bawah</strong> — Excel menyalin dan menyesuaikan rumus otomatis! D3 → =B3+C3, D4 → =B4+C4, dst.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><strong>Cara super cepat:</strong> Double-click Fill Handle jika kolom sebelah kiri sudah terisi — AutoFill otomatis sampai baris terakhir!</div></div>
+</div>
+<div class="tip-box"><span class="tip-icon">💡</span><p><strong>AutoFill juga untuk urutan data!</strong> Ketik "Senin" → AutoFill → Excel lanjutkan "Selasa, Rabu, …". Ketik 1 dan 2 di dua sel → pilih keduanya → AutoFill → menghasilkan 3, 4, 5, dst.</p></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">$</div> Referensi Absolut vs Relatif</div>
+<ul class="materi-list">
+<li><strong>Referensi Relatif</strong> (A1) — berubah saat rumus disalin. Ini adalah mode default.</li>
+<li><strong>Referensi Absolut</strong> ($A$1) — TIDAK berubah saat disalin. $ mengunci kolom DAN baris.</li>
+<li><strong>Campuran:</strong> $A1 (kolom dikunci, baris berubah) atau A$1 (baris dikunci, kolom berubah).</li>
+<li>Tekan <strong>F4</strong> saat mengedit rumus untuk berganti: A1 → $A$1 → A$1 → $A1 → A1.</li>
+</ul>
+<div class="contoh-box"><div class="label">Contoh — Hitung Diskon Semua Produk</div><code>Harga diskon: =B2*(1-$D$1)
+$D$1 = sel persentase diskon (misal 20%)
+Saat AutoFill ke bawah, B2 berubah → B3, B4, … tapi $D$1 tetap!</code></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">💰</div> Format Angka: Mata Uang, Persen, Desimal</div>
+<ul class="materi-list">
+<li>Pilih sel/range → tekan <strong>Ctrl+1</strong> untuk buka dialog Format Cells → tab Number.</li>
+<li><strong>Number</strong>: angka umum dengan pemisah ribuan dan desimal (misal: 1.234,56)</li>
+<li><strong>Currency / Accounting</strong>: tampilkan simbol mata uang (Rp, $). Accounting lebih rapi untuk laporan keuangan.</li>
+<li><strong>Percentage</strong>: otomatis kalikan 100 dan tambah tanda %. Angka 0,75 tampil sebagai 75%.</li>
+<li><strong>Date</strong>: format tanggal sesuai pilihan (dd/mm/yyyy, dd mmmm yyyy, dll.)</li>
+</ul>
+<div class="tip-box"><span class="tip-icon">⌨️</span><p>Shortcut cepat format: <strong>Ctrl+Shift+1</strong> = Number | <strong>Ctrl+Shift+4</strong> = Currency | <strong>Ctrl+Shift+5</strong> = Percentage.</p></div>
+</div><div class="card" style="border-color:#FDE68A;background:var(--accent-lt)">
+    <div class="card-title"><div class="card-icon" style="background:#FEF3C7">📝</div> Latihan Praktik</div>
+    <ul class="materi-list"><li>Buat tabel <strong>Pengeluaran Bulanan</strong>: Kategori | Jan | Feb | Mar | Total | Rata-rata | Terbesar</li><li>Isi 8 kategori (Makan, Transportasi, Listrik, Air, Pulsa, dll.) dengan nilai realistis</li><li>Hitung <strong>Total</strong> per baris menggunakan =SUM() dan AutoFill ke semua baris</li><li>Hitung <strong>Rata-rata</strong> dan <strong>Nilai Terbesar</strong> per kategori</li><li>Buat baris ringkasan bawah: Total Semua Pengeluaran, Kategori Terbesar (MAX), Terkecil (MIN)</li><li>Format semua angka sebagai <strong>Rupiah (Rp)</strong> menggunakan Format Cells</li></ul>
+  </div></section>
+  <section class="tab-section" id="p3"><div class="session-header">
+    <div class="session-num">3️⃣</div>
+    <div class="session-info">
+      <h2>Pertemuan 3: Fungsi Teks & Tanggal</h2>
+      <p>Mahasiswa mampu memanipulasi data teks dan menghitung selisih waktu</p>
+      <div class="session-meta">
+        <span class="meta-tag">⏱ 100 menit</span>
+        <span class="meta-tag">🎯 Pemula-Menengah</span>
+        <span class="meta-tag">📁 Fungsi Teks & Tanggal</span>
+      </div>
+    </div>
+  </div><div class="objectives"><div class="obj-title">🎯 Tujuan Pembelajaran</div>
+    <ul class="obj-list"><li>Menggunakan fungsi teks: UPPER, LOWER, PROPER, LEN, LEFT, RIGHT, MID, TRIM</li><li>Menggabungkan teks dari beberapa sel menggunakan & dan TEXTJOIN</li><li>Menggunakan fungsi tanggal: TODAY, NOW, YEAR, MONTH, DAY, DATEDIF</li><li>Membersihkan data teks tidak rapi menggunakan TRIM dan PROPER</li></ul>
+  </div><div class="card"><div class="card-title"><div class="card-icon">🔤</div> Fungsi Teks Esensial</div>
+<div class="formula-grid">
+<div class="formula-card"><div class="formula-name">UPPER</div><div class="formula-syntax">=UPPER(teks)</div><div class="formula-desc">Mengubah semua huruf menjadi KAPITAL</div></div>
+<div class="formula-card"><div class="formula-name">LOWER</div><div class="formula-syntax">=LOWER(teks)</div><div class="formula-desc">Mengubah semua huruf menjadi kecil</div></div>
+<div class="formula-card"><div class="formula-name">PROPER</div><div class="formula-syntax">=PROPER(teks)</div><div class="formula-desc">Huruf Pertama Setiap Kata Jadi Kapital</div></div>
+<div class="formula-card"><div class="formula-name">LEN</div><div class="formula-syntax">=LEN(teks)</div><div class="formula-desc">Menghitung jumlah karakter (termasuk spasi)</div></div>
+<div class="formula-card"><div class="formula-name">LEFT</div><div class="formula-syntax">=LEFT(teks;n)</div><div class="formula-desc">Ambil n karakter dari KIRI teks</div></div>
+<div class="formula-card"><div class="formula-name">RIGHT</div><div class="formula-syntax">=RIGHT(teks;n)</div><div class="formula-desc">Ambil n karakter dari KANAN teks</div></div>
+<div class="formula-card"><div class="formula-name">MID</div><div class="formula-syntax">=MID(teks;mulai;n)</div><div class="formula-desc">Ambil n karakter mulai posisi tertentu</div></div>
+<div class="formula-card"><div class="formula-name">TRIM</div><div class="formula-syntax">=TRIM(teks)</div><div class="formula-desc">Hapus spasi berlebih (depan, belakang, tengah)</div></div>
+<div class="formula-card"><div class="formula-name">SUBSTITUTE</div><div class="formula-syntax">=SUBSTITUTE(teks;lama;baru)</div><div class="formula-desc">Ganti karakter/kata tertentu dalam teks</div></div>
+<div class="formula-card"><div class="formula-name">FIND</div><div class="formula-syntax">=FIND(cari;dalam)</div><div class="formula-desc">Cari posisi suatu karakter dalam teks</div></div>
+</div>
+<div class="contoh-box"><div class="label">Contoh Penggunaan</div><code>=UPPER("budi santoso")          → BUDI SANTOSO
+=PROPER("budi santoso")         → Budi Santoso
+=LEN("Microsoft Excel")          → 15
+=LEFT("Indonesia",5)            → Indon
+=RIGHT("08123456789",8)         → 23456789
+=MID("D-III-Manajemen",3,3)     → III
+=TRIM("  Budi  Santoso  ")      → Budi Santoso
+=SUBSTITUTE("2025-01-15","-","/") → 2025/01/15</code></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">🔗</div> Menggabungkan Teks (Concatenate)</div>
+<ul class="materi-list">
+<li><strong>Operator &</strong> — cara paling mudah: =A1&" "&B1 menggabungkan A1, spasi, dan B1.</li>
+<li><strong>CONCATENATE()</strong> — fungsi lama: =CONCATENATE(A1;" ";B1)</li>
+<li><strong>TEXTJOIN()</strong> — fungsi modern: =TEXTJOIN(", ";TRUE;A1:C1) — berguna untuk range banyak sel.</li>
+<li>Selalu tambahkan <strong>spasi atau pemisah</strong> di antara teks: &" "& atau &", "&</li>
+</ul>
+<div class="contoh-box"><div class="label">Contoh Kasus — Buat Alamat Lengkap</div><code>A2="Jl. Merdeka No.5", B2="Slawi", C2="Jawa Tengah"
+=A2&", "&B2&", "&C2
+→ Jl. Merdeka No.5, Slawi, Jawa Tengah
+
+=TEXTJOIN(", ";TRUE;A2:C2)  → hasil sama, lebih ringkas</code></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">📅</div> Fungsi Tanggal & Waktu</div>
+<div class="formula-grid">
+<div class="formula-card"><div class="formula-name">TODAY</div><div class="formula-syntax">=TODAY()</div><div class="formula-desc">Tanggal hari ini (diperbarui otomatis setiap hari)</div></div>
+<div class="formula-card"><div class="formula-name">NOW</div><div class="formula-syntax">=NOW()</div><div class="formula-desc">Tanggal DAN jam sekarang</div></div>
+<div class="formula-card"><div class="formula-name">YEAR</div><div class="formula-syntax">=YEAR(tanggal)</div><div class="formula-desc">Ambil tahun dari tanggal</div></div>
+<div class="formula-card"><div class="formula-name">MONTH</div><div class="formula-syntax">=MONTH(tanggal)</div><div class="formula-desc">Ambil bulan dari tanggal (1–12)</div></div>
+<div class="formula-card"><div class="formula-name">DAY</div><div class="formula-syntax">=DAY(tanggal)</div><div class="formula-desc">Ambil hari dari tanggal (1–31)</div></div>
+<div class="formula-card"><div class="formula-name">DATE</div><div class="formula-syntax">=DATE(th;bln;hr)</div><div class="formula-desc">Buat tanggal dari komponen terpisah</div></div>
+<div class="formula-card"><div class="formula-name">DATEDIF</div><div class="formula-syntax">=DATEDIF(mulai;akhir;"Y")</div><div class="formula-desc">Hitung selisih: Y=tahun, M=bulan, D=hari</div></div>
+<div class="formula-card"><div class="formula-name">TEXT</div><div class="formula-syntax">=TEXT(tgl;"dd mmmm yyyy")</div><div class="formula-desc">Format tanggal menjadi teks tertentu</div></div>
+</div>
+<div class="contoh-box"><div class="label">Contoh — Hitung Usia & Masa Kerja</div><code>Tgl lahir di A2 = 15/03/1995:
+=DATEDIF(A2;TODAY();"Y")         → Usia dalam tahun penuh
+=DATEDIF(A2;TODAY();"YM")        → Sisa bulan setelah tahun penuh
+
+Tgl masuk di B2 = 01/07/2018:
+=DATEDIF(B2;TODAY();"Y")&" tahun "&DATEDIF(B2;TODAY();"YM")&" bulan"
+→ Contoh hasil: "6 tahun 11 bulan"</code></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">🧹</div> Praktik: Membersihkan Data Kotor</div>
+<p style="font-size:14px;color:var(--gray600);margin-bottom:12px">Data dari sistem lain sering tidak rapi — ada spasi ganda, huruf tidak konsisten, atau format salah. Excel bisa membersihkannya!</p>
+<div class="table-demo"><table>
+<tr><th>Data Kotor</th><th>Rumus Pembersih</th><th>Hasil Bersih</th></tr>
+<tr><td>"  budi SANTOSO  "</td><td class="cell-formula">=PROPER(TRIM(A2))</td><td class="cell-result">Budi Santoso</td></tr>
+<tr><td>"08 123 456 789"</td><td class="cell-formula">=SUBSTITUTE(A3," ","")</td><td class="cell-result">08123456789</td></tr>
+<tr><td>"2025-01-15"</td><td class="cell-formula">=DATE(LEFT(A4,4),MID(A4,6,2),RIGHT(A4,2))</td><td class="cell-result">15/01/2025</td></tr>
+<tr><td>"NIM: M-2025-001"</td><td class="cell-formula">=MID(A5,6,10)</td><td class="cell-result">M-2025-001</td></tr>
+</table></div>
+</div><div class="card" style="border-color:#FDE68A;background:var(--accent-lt)">
+    <div class="card-title"><div class="card-icon" style="background:#FEF3C7">📝</div> Latihan Praktik</div>
+    <ul class="materi-list"><li>Buat tabel <strong>Data Mahasiswa</strong>: NIM | Nama (huruf kecil acak) | Tempat Lahir | Tanggal Lahir | Prodi</li><li>Kolom <strong>"Nama Rapi"</strong>: gunakan =PROPER(TRIM()) dari kolom Nama</li><li>Kolom <strong>"Usia"</strong>: gunakan =DATEDIF(TglLahir;TODAY();"Y")</li><li>Kolom <strong>"NIM Singkat"</strong>: ambil 4 digit terakhir NIM menggunakan =RIGHT()</li><li>Kolom <strong>"Identitas Lengkap"</strong>: gabungkan Nama Rapi + " — " + Prodi + " (" + NIM + ")" menggunakan &</li></ul>
+  </div></section>
+  <section class="tab-section" id="p4"><div class="session-header">
+    <div class="session-num">4️⃣</div>
+    <div class="session-info">
+      <h2>Pertemuan 4: Fungsi Logika: IF, AND, OR, COUNTIF</h2>
+      <p>Mahasiswa mampu membuat keputusan otomatis dan menghitung data bersyarat</p>
+      <div class="session-meta">
+        <span class="meta-tag">⏱ 100 menit</span>
+        <span class="meta-tag">🎯 Menengah</span>
+        <span class="meta-tag">📁 Fungsi Logika</span>
+      </div>
+    </div>
+  </div><div class="objectives"><div class="obj-title">🎯 Tujuan Pembelajaran</div>
+    <ul class="obj-list"><li>Membangun rumus IF tunggal dan IF bersarang (nested IF)</li><li>Mengombinasikan IF dengan AND dan OR untuk kondisi ganda</li><li>Menggunakan COUNTIF dan COUNTIFS untuk menghitung data bersyarat</li><li>Menggunakan SUMIF dan SUMIFS untuk menjumlahkan data bersyarat</li></ul>
+  </div><div class="card"><div class="card-title"><div class="card-icon">🔀</div> Fungsi IF — Logika Bercabang</div>
+<ul class="materi-list">
+<li>IF membuat <strong>keputusan otomatis</strong>: "jika kondisi ini benar, tampilkan X; jika tidak, tampilkan Y".</li>
+<li>Struktur: <strong>=IF(kondisi; nilai_jika_benar; nilai_jika_salah)</strong></li>
+<li>Operator perbandingan: <strong>= &lt; &gt; &lt;= &gt;= &lt;&gt;</strong> (tidak sama dengan)</li>
+</ul>
+<div class="contoh-box"><div class="label">Contoh IF Tunggal</div><code>=IF(B2>=75;"LULUS";"TIDAK LULUS")
+→ Jika nilai ≥ 75 tampil "LULUS", selain itu "TIDAK LULUS"
+
+=IF(C2="Laki-laki";"Bapak";"Ibu")
+→ Sapa berdasarkan jenis kelamin
+
+=IF(D2>0;D2*0.1;0)
+→ Hitung komisi 10% hanya jika penjualan > 0</code></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">🪆</div> IF Bersarang & IFS — Lebih dari 2 Kemungkinan</div>
+<ul class="materi-list">
+<li>Jika ada lebih dari 2 kemungkinan, masukkan IF di dalam IF — disebut <strong>Nested IF</strong>.</li>
+<li><strong>=IFS()</strong> adalah alternatif modern: lebih mudah dibaca dari nested IF.</li>
+<li>IFS: =IFS(kondisi1;hasil1; kondisi2;hasil2; … ;TRUE;hasil_default)</li>
+</ul>
+<div class="contoh-box"><div class="label">Contoh Grade Nilai (Nested IF vs IFS)</div><code>Nested IF:
+=IF(B2>=85;"A";IF(B2>=75;"B";IF(B2>=65;"C";IF(B2>=55;"D";"E"))))
+
+Menggunakan IFS (lebih rapi):
+=IFS(B2>=85;"A";B2>=75;"B";B2>=65;"C";B2>=55;"D";TRUE;"E")</code></div>
+<div class="table-demo"><table>
+<tr><th>Nama</th><th>Nilai</th><th>Status</th><th>Grade</th></tr>
+<tr><td>Budi</td><td>88</td><td class="cell-result">LULUS</td><td class="cell-result">A</td></tr>
+<tr><td>Siti</td><td>72</td><td style="color:var(--red);font-weight:700">TIDAK LULUS</td><td class="cell-result">C</td></tr>
+<tr><td>Ahmad</td><td>55</td><td style="color:var(--red);font-weight:700">TIDAK LULUS</td><td class="cell-result">D</td></tr>
+<tr><td>Rina</td><td>95</td><td class="cell-result">LULUS</td><td class="cell-result">A</td></tr>
+</table></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">🤝</div> AND & OR — Kombinasi Kondisi</div>
+<div class="formula-grid">
+<div class="formula-card"><div class="formula-name">AND</div><div class="formula-syntax">=AND(k1;k2;…)</div><div class="formula-desc">Semua kondisi HARUS benar → TRUE. Satu saja salah → FALSE.</div></div>
+<div class="formula-card"><div class="formula-name">OR</div><div class="formula-syntax">=OR(k1;k2;…)</div><div class="formula-desc">Cukup SATU kondisi benar → TRUE.</div></div>
+<div class="formula-card"><div class="formula-name">IF + AND</div><div class="formula-syntax">=IF(AND(k1;k2);"Ya";"Tidak")</div><div class="formula-desc">Gabungkan IF dan AND untuk kondisi ganda.</div></div>
+<div class="formula-card"><div class="formula-name">IF + OR</div><div class="formula-syntax">=IF(OR(k1;k2);"Ya";"Tidak")</div><div class="formula-desc">IF yang berlaku jika salah satu kondisi benar.</div></div>
+</div>
+<div class="contoh-box"><div class="label">Contoh Kasus</div><code>=IF(AND(B2>=75;C2>=75);"Lulus Semua";"Ada yang Tidak Lulus")
+→ Lulus jika nilai UTS DAN UAS sama-sama ≥ 75
+
+=IF(OR(B2>=90;C2>=90);"Nilai Tinggi";"Biasa")
+→ "Nilai Tinggi" jika UTS ATAU UAS ≥ 90</code></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">🔢</div> COUNTIF, SUMIF & Variannya</div>
+<div class="formula-grid">
+<div class="formula-card"><div class="formula-name">COUNTIF</div><div class="formula-syntax">=COUNTIF(range;kriteria)</div><div class="formula-desc">Hitung sel yang memenuhi 1 kriteria</div></div>
+<div class="formula-card"><div class="formula-name">COUNTIFS</div><div class="formula-syntax">=COUNTIFS(range1;k1;range2;k2)</div><div class="formula-desc">Hitung sel yang memenuhi BEBERAPA kriteria</div></div>
+<div class="formula-card"><div class="formula-name">SUMIF</div><div class="formula-syntax">=SUMIF(range;kriteria;sum_range)</div><div class="formula-desc">Jumlahkan sel yang memenuhi 1 kriteria</div></div>
+<div class="formula-card"><div class="formula-name">SUMIFS</div><div class="formula-syntax">=SUMIFS(sum_r;range1;k1;range2;k2)</div><div class="formula-desc">Jumlahkan dengan BEBERAPA kriteria</div></div>
+<div class="formula-card"><div class="formula-name">AVERAGEIF</div><div class="formula-syntax">=AVERAGEIF(range;kriteria;avg_r)</div><div class="formula-desc">Rata-rata sel yang memenuhi kriteria</div></div>
+</div>
+<div class="contoh-box"><div class="label">Contoh Penggunaan</div><code>=COUNTIF(D2:D30;"LULUS")              → Hitung berapa mahasiswa LULUS
+=COUNTIF(B2:B30;">=75")               → Hitung nilai ≥ 75
+=SUMIF(A2:A30;"Elektronik";C2:C30)    → Total penjualan Elektronik saja
+=COUNTIFS(C2:C30;"Pria";D2:D30;">=25") → Hitung pria berusia ≥ 25</code></div>
+</div><div class="card" style="border-color:#FDE68A;background:var(--accent-lt)">
+    <div class="card-title"><div class="card-icon" style="background:#FEF3C7">📝</div> Latihan Praktik</div>
+    <ul class="materi-list"><li>Buka file Pertemuan 2 (tabel nilai mahasiswa)</li><li>Tambah kolom <strong>"Status"</strong>: LULUS jika Nilai Akhir ≥ 70, TIDAK LULUS jika &lt; 70 — pakai IF</li><li>Tambah kolom <strong>"Grade"</strong>: A(≥85), B(≥75), C(≥65), D(≥55), E(&lt;55) — pakai IFS</li><li>Di bawah tabel: hitung <strong>Jumlah LULUS</strong> dan <strong>Jumlah TIDAK LULUS</strong> dengan COUNTIF</li><li>Hitung <strong>Total Nilai Akhir</strong> mahasiswa yang memperoleh Grade A menggunakan SUMIF</li><li>Kolom <strong>"Naik Kelas"</strong>: gunakan AND — naik jika nilai UTS DAN UAS keduanya ≥ 60</li></ul>
+  </div></section>
+  <section class="tab-section" id="p5"><div class="session-header">
+    <div class="session-num">5️⃣</div>
+    <div class="session-info">
+      <h2>Pertemuan 5: Pemformatan & Visualisasi Data</h2>
+      <p>Mahasiswa mampu membuat tabel profesional, Conditional Formatting, dan grafik</p>
+      <div class="session-meta">
+        <span class="meta-tag">⏱ 100 menit</span>
+        <span class="meta-tag">🎯 Menengah</span>
+        <span class="meta-tag">📁 Format & Grafik</span>
+      </div>
+    </div>
+  </div><div class="objectives"><div class="obj-title">🎯 Tujuan Pembelajaran</div>
+    <ul class="obj-list"><li>Membuat dan memformat Excel Table (Ctrl+T) dengan fitur otomatis</li><li>Menerapkan Conditional Formatting untuk visualisasi data cepat</li><li>Membuat berbagai jenis grafik (Column, Pie, Line) dan mengkustomisasinya</li><li>Menerapkan Freeze Panes dan mengatur tampilan cetak</li></ul>
+  </div><div class="card"><div class="card-title"><div class="card-icon">📋</div> Format Tabel Profesional</div>
+<div class="steps">
+<div class="step"><div class="step-num">1</div><div class="step-text"><strong>Buat Excel Table:</strong> Klik sel di dalam data → tekan <strong>Ctrl+T</strong> → centang "My table has headers" → OK. Tabel kini memiliki filter otomatis dan total row!</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><strong>Pilih Style Tabel:</strong> Klik tabel → tab "Table Design" di Ribbon → pilih warna/gaya di galeri "Table Styles".</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><strong>Merge & Center:</strong> Pilih beberapa sel → Home → Merge & Center. Berguna untuk judul yang merentang beberapa kolom.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><strong>Freeze Panes:</strong> Klik sel B2 → View → Freeze Panes → "Freeze Panes". Baris 1 dan kolom A kini tidak bergerak saat scroll.</div></div>
+<div class="step"><div class="step-num">5</div><div class="step-text"><strong>Border & Warna:</strong> Pilih range → Home → Borders pilih jenis garis tepi. Fill Color untuk warna latar sel.</div></div>
+<div class="step"><div class="step-num">6</div><div class="step-text"><strong>Auto-fit ukuran:</strong> Double-click batas antar header kolom/baris untuk menyesuaikan ukuran secara otomatis.</div></div>
+</div>
+</div><div class="card"><div class="card-title"><div class="card-icon">🎨</div> Conditional Formatting — Warna Otomatis Berdasarkan Data</div>
+<ul class="materi-list">
+<li><strong>Conditional Formatting</strong> memberi warna/ikon/bar otomatis pada sel berdasarkan nilai — tanpa perlu manual!</li>
+<li>Cara akses: <strong>Home → Conditional Formatting</strong></li>
+</ul>
+<div class="table-demo"><table>
+<tr><th>Fitur</th><th>Cara Penggunaan</th><th>Contoh</th></tr>
+<tr><td>Highlight Cell Rules</td><td>Greater Than, Less Than, Between, Text Contains</td><td>Merah jika nilai &lt;70, Hijau jika ≥85</td></tr>
+<tr><td>Top/Bottom Rules</td><td>Top 10, Bottom 10, Above/Below Average</td><td>Highlight 5 nilai tertinggi di kelas</td></tr>
+<tr><td>Data Bars</td><td>Bar gradasi di dalam sel</td><td>Visualisasi perbandingan angka</td></tr>
+<tr><td>Color Scales</td><td>Gradasi warna dari rendah ke tinggi</td><td>Hijau=tinggi, Merah=rendah otomatis</td></tr>
+<tr><td>Icon Sets</td><td>Ikon panah ▲▼, bintang, traffic light 🔴🟡🟢</td><td>Status performa secara visual</td></tr>
+<tr><td>New Rule (Formula)</td><td>Aturan kustom dengan rumus</td><td>=AND(B2>=75;C2>=75) → warnai jika keduanya lulus</td></tr>
+</table></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">📈</div> Membuat Grafik (Chart)</div>
+<div class="steps">
+<div class="step"><div class="step-num">1</div><div class="step-text"><strong>Pilih data</strong> yang akan divisualisasi — termasuk header/label kolom.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text">Klik tab <strong>Insert</strong> → pilih jenis chart: Column, Bar, Line, Pie, Scatter, dll.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text">Chart muncul di lembar kerja. Klik chart → muncul tab <strong>Chart Design</strong> dan <strong>Format</strong>.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><strong>Judul Chart:</strong> Klik area "Chart Title" → ketik judul yang deskriptif dan bermakna.</div></div>
+<div class="step"><div class="step-num">5</div><div class="step-text"><strong>Data Labels:</strong> Chart Design → Add Chart Element → Data Labels → pilih posisi.</div></div>
+<div class="step"><div class="step-num">6</div><div class="step-text"><strong>Ubah jenis:</strong> Chart Design → Change Chart Type untuk ganti jenis grafik.</div></div>
+</div>
+<div class="formula-grid" style="margin-top:14px">
+<div class="formula-card" style="background:#1E40AF"><div class="formula-name">📊 Column / Bar</div><div class="formula-syntax">Data Kategorik</div><div class="formula-desc">Membandingkan nilai antar kategori. Column=vertikal, Bar=horizontal.</div></div>
+<div class="formula-card" style="background:#065F46"><div class="formula-name">🥧 Pie</div><div class="formula-syntax">Satu seri data</div><div class="formula-desc">Menampilkan proporsi dari keseluruhan. Batasi max 6 kategori!</div></div>
+<div class="formula-card" style="background:#7C2D12"><div class="formula-name">📉 Line</div><div class="formula-syntax">Data Berkala</div><div class="formula-desc">Menampilkan tren dari waktu ke waktu (bulanan, tahunan).</div></div>
+<div class="formula-card" style="background:#4C1D95"><div class="formula-name">⚡ Scatter</div><div class="formula-syntax">Dua variabel</div><div class="formula-desc">Melihat korelasi/hubungan antara dua variabel angka.</div></div>
+</div>
+<div class="tip-box"><span class="tip-icon">📊</span><p><strong>Aturan memilih chart:</strong> Bandingkan antar kategori → Column/Bar. Lihat porsi → Pie. Lihat tren waktu → Line. Lihat hubungan 2 variabel → Scatter.</p></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">🖨️</div> Mengatur Tampilan Cetak</div>
+<div class="steps">
+<div class="step"><div class="step-num">1</div><div class="step-text"><strong>Print Preview:</strong> Tekan <strong>Ctrl+P</strong> untuk melihat tampilan sebelum mencetak.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><strong>Orientasi & Ukuran:</strong> Tab Page Layout → Orientation (Portrait/Landscape) → Size (A4).</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><strong>Print Area:</strong> Blok area → Page Layout → Print Area → Set Print Area. Hanya area itu yang tercetak.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><strong>Fit to Page:</strong> Page Layout → Scale to Fit → Width: "1 page" agar tidak terpotong di kanan.</div></div>
+<div class="step"><div class="step-num">5</div><div class="step-text"><strong>Print Titles:</strong> Page Layout → Print Titles → Rows to repeat at top → pilih baris header agar terulang di setiap halaman.</div></div>
+</div>
+</div><div class="card" style="border-color:#FDE68A;background:var(--accent-lt)">
+    <div class="card-title"><div class="card-icon" style="background:#FEF3C7">📝</div> Latihan Praktik</div>
+    <ul class="materi-list"><li>Buka file tabel nilai mahasiswa dari pertemuan sebelumnya</li><li>Ubah data menjadi Excel Table (<strong>Ctrl+T</strong>) dengan style warna biru atau hijau</li><li>Terapkan <strong>Conditional Formatting</strong> kolom Nilai Akhir: merah &lt;70, kuning 70–84, hijau ≥85</li><li>Terapkan <strong>Color Scale</strong> pada kolom nilai UTS dan UAS</li><li>Buat <strong>Pie Chart</strong> dari data distribusi Grade (A, B, C, D, E)</li><li>Buat <strong>Bar Chart</strong> membandingkan nama mahasiswa vs nilai akhir</li><li>Atur tampilan cetak: A4 Landscape, header terulang di setiap halaman</li></ul>
+  </div></section>
+  <section class="tab-section" id="p6"><div class="session-header">
+    <div class="session-num">6️⃣</div>
+    <div class="session-info">
+      <h2>Pertemuan 6: VLOOKUP, HLOOKUP & Pencarian Data</h2>
+      <p>Mahasiswa mampu mencari dan mencocokkan data antar tabel menggunakan fungsi Lookup</p>
+      <div class="session-meta">
+        <span class="meta-tag">⏱ 100 menit</span>
+        <span class="meta-tag">🎯 Menengah</span>
+        <span class="meta-tag">📁 Pencarian Data</span>
+      </div>
+    </div>
+  </div><div class="objectives"><div class="obj-title">🎯 Tujuan Pembelajaran</div>
+    <ul class="obj-list"><li>Menggunakan VLOOKUP untuk mencari data secara vertikal antar tabel</li><li>Memahami perbedaan VLOOKUP dan HLOOKUP</li><li>Menggunakan INDEX & MATCH sebagai alternatif VLOOKUP yang lebih fleksibel</li><li>Mereferensikan data dari sheet yang berbeda</li></ul>
+  </div><div class="card"><div class="card-title"><div class="card-icon">🔍</div> VLOOKUP — Pencarian Data Vertikal</div>
+<ul class="materi-list">
+<li><strong>VLOOKUP</strong> = Vertical Lookup — mencari nilai di kolom <em>pertama</em> tabel, lalu mengambil data dari kolom lain di baris yang sama.</li>
+<li>Struktur: <strong>=VLOOKUP(nilai_cari; tabel_referensi; nomor_kolom; [0/FALSE])</strong></li>
+<li><strong>Parameter 1:</strong> nilai yang dicari (kode produk, NIM, nama)</li>
+<li><strong>Parameter 2:</strong> range tabel referensi — kolom PERTAMA harus berisi nilai yang dicari. SELALU gunakan $!</li>
+<li><strong>Parameter 3:</strong> nomor kolom yang ingin diambil datanya (dihitung dari kolom pertama tabel referensi)</li>
+<li><strong>Parameter 4:</strong> selalu isi 0 atau FALSE untuk pencarian tepat (exact match)!</li>
+</ul>
+<div class="contoh-box"><div class="label">Contoh Dasar VLOOKUP</div><code>Tabel Produk ada di F2:H20 (Kode | Nama | Harga)
+Ambil Nama produk berdasarkan kode di A2:
+=VLOOKUP(A2;$F$2:$H$20;2;0)
+→ Cari A2 di kolom F, ambil kolom ke-2 (Nama)
+
+=VLOOKUP(A2;$F$2:$H$20;3;0)
+→ Cari A2 di kolom F, ambil kolom ke-3 (Harga)</code></div>
+<div class="table-demo"><table>
+<tr><th colspan="3" style="text-align:center">Tabel Produk (Sumber)</th></tr>
+<tr><th>Kode</th><th>Nama Produk</th><th>Harga</th></tr>
+<tr><td>P001</td><td>Beras 5kg</td><td class="cell-result">65.000</td></tr>
+<tr><td>P002</td><td>Gula Pasir 1kg</td><td class="cell-result">14.000</td></tr>
+<tr><td>P003</td><td>Minyak Goreng 1L</td><td class="cell-result">18.000</td></tr>
+</table>
+<table style="margin-top:12px"><tr><th colspan="3" style="text-align:center">Tabel Penjualan (Pakai VLOOKUP)</th></tr>
+<tr><th>Kode</th><th>Nama (VLOOKUP)</th><th>Harga (VLOOKUP)</th></tr>
+<tr><td>P002</td><td class="cell-formula">=VLOOKUP(A2;$F$2:$H$20;2;0) → Gula Pasir 1kg</td><td class="cell-formula">=VLOOKUP(A2;$F$2:$H$20;3;0) → 14.000</td></tr>
+</table></div>
+<div class="warn-box"><span class="tip-icon">⚠️</span><p><strong>Kesalahan Umum VLOOKUP:</strong> (1) Lupa tanda $ — tabel bergeser saat AutoFill! (2) Nomor kolom salah — hitung dari kolom PERTAMA tabel. (3) Lupa 0 di parameter 4 — hasil tidak akurat!</p></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">↔️</div> HLOOKUP — Pencarian Data Horizontal</div>
+<ul class="materi-list">
+<li><strong>HLOOKUP</strong> = Horizontal Lookup — mencari nilai di <em>baris pertama</em> tabel, lalu mengambil data dari baris lain di kolom yang sama.</li>
+<li>Struktur: <strong>=HLOOKUP(nilai_cari; tabel_referensi; nomor_baris; [0/FALSE])</strong></li>
+<li>Digunakan ketika data disusun secara horizontal (kategori di baris atas, data di bawahnya).</li>
+<li>Lebih jarang digunakan dibanding VLOOKUP. Jika ragu, gunakan VLOOKUP saja.</li>
+</ul>
+<div class="contoh-box"><div class="label">Kapan Pakai HLOOKUP?</div><code>Tabel jadwal dengan hari sebagai header kolom:
+        | Sen | Sel | Rab | Kam | Jum
+Kelas A | Mat | Fis | Mat | Fis | OR
+Kelas B | Bhs | Sen | Bhs | Sen | SB
+
+=HLOOKUP("Sel";A1:F3;2;0) → Fis (hari Selasa, Kelas A, baris ke-2)</code></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">🎯</div> INDEX & MATCH — Kombinasi Paling Fleksibel</div>
+<ul class="materi-list">
+<li><strong>INDEX(range; nomor_baris; [nomor_kolom])</strong> — Mengambil nilai dari posisi tertentu dalam range.</li>
+<li><strong>MATCH(nilai_cari; range; 0)</strong> — Mencari posisi (nomor urut) suatu nilai dalam range.</li>
+<li>Gabungan <strong>INDEX+MATCH</strong> lebih kuat dari VLOOKUP: bisa mencari ke KIRI, tidak bergantung nomor kolom tetap.</li>
+</ul>
+<div class="contoh-box"><div class="label">Contoh INDEX+MATCH</div><code>Tabel A1:C10 (Nama | NIM | Nilai)
+Cari nilai mahasiswa bernama "Budi":
+=INDEX(C1:C10;MATCH("Budi";A1:A10;0))
+→ MATCH mencari posisi "Budi" di kolom A → misal baris 3
+→ INDEX mengambil nilai dari baris 3 di kolom C</code></div>
+<div class="tip-box"><span class="tip-icon">💡</span><p>Gunakan INDEX+MATCH ketika: (1) Anda perlu mencari ke kiri, (2) kolom yang dicari bisa berpindah, (3) data sangat besar. Untuk kebutuhan sederhana, VLOOKUP sudah cukup!</p></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">📂</div> VLOOKUP ke Sheet Lain</div>
+<div class="steps">
+<div class="step"><div class="step-num">1</div><div class="step-text">Saat mengetik parameter tabel referensi VLOOKUP, <strong>klik tab sheet lain</strong> → Excel otomatis menulis referensi antar sheet.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text">Format referensi antar sheet: <strong>'Nama Sheet'!Range</strong> (nama dengan spasi harus diapit kutip tunggal).</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text">Contoh: <strong>=VLOOKUP(A2;'Master Produk'!$A:$E;2;0)</strong></div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text">Selalu tambahkan $ pada range antar sheet agar tidak bergeser saat AutoFill!</div></div>
+</div>
+<div class="contoh-box"><div class="label">Referensi Antar Sheet</div><code>=VLOOKUP(A2;Sheet2!$A:$D;3;0)
+→ Cari di Sheet2, ambil kolom ke-3
+
+=VLOOKUP(A2;'Master Data'!$A$1:$D$100;2;0)
+→ Cari di sheet bernama "Master Data"</code></div>
+</div><div class="card" style="border-color:#FDE68A;background:var(--accent-lt)">
+    <div class="card-title"><div class="card-icon" style="background:#FEF3C7">📝</div> Latihan Praktik</div>
+    <ul class="materi-list"><li>Buat <strong>Sheet "Master_Karyawan"</strong>: ID | Nama | Jabatan | Departemen | Gaji Pokok (isi 15 data)</li><li>Buat <strong>Sheet "Rekap_Absensi"</strong>: ID | Hadir | Lembur (jam) | Alfa</li><li>Di sheet Rekap, gunakan <strong>VLOOKUP</strong> untuk mengambil Nama, Jabatan, Gaji dari sheet Master</li><li>Hitung <strong>Tunjangan Lembur</strong>: Rp 25.000 × Jam Lembur</li><li>Hitung <strong>Potongan Alfa</strong>: (Gaji Pokok ÷ 22) × Jumlah Alfa</li><li>Hitung <strong>Gaji Bersih</strong> = Gaji Pokok + Tunjangan Lembur − Potongan Alfa</li></ul>
+  </div></section>
+  <section class="tab-section" id="p7"><div class="session-header">
+    <div class="session-num">7️⃣</div>
+    <div class="session-info">
+      <h2>Pertemuan 7: Pivot Table, Sort, Filter & Validasi Data</h2>
+      <p>Mahasiswa mampu menganalisis data besar menggunakan Pivot Table dan fitur data management</p>
+      <div class="session-meta">
+        <span class="meta-tag">⏱ 100 menit</span>
+        <span class="meta-tag">🎯 Menengah-Lanjut</span>
+        <span class="meta-tag">📁 Analisis Data</span>
+      </div>
+    </div>
+  </div><div class="objectives"><div class="obj-title">🎯 Tujuan Pembelajaran</div>
+    <ul class="obj-list"><li>Membuat dan mengkustomisasi Pivot Table untuk analisis data cepat</li><li>Menggunakan Sort multi-level dan AutoFilter untuk mengelola data</li><li>Menerapkan Data Validation untuk membatasi dan memvalidasi input</li><li>Membuat PivotChart dari hasil Pivot Table</li></ul>
+  </div><div class="card"><div class="card-title"><div class="card-icon">🔄</div> Pivot Table — Ringkasan Data Tanpa Rumus Rumit</div>
+<ul class="materi-list">
+<li>Pivot Table merangkum ratusan/ribuan baris menjadi laporan ringkas hanya dengan <strong>drag-and-drop</strong>.</li>
+<li>Tanpa rumus kompleks, bisa melihat: total penjualan per produk, rata-rata nilai per kelas, jumlah karyawan per departemen.</li>
+</ul>
+<div class="steps" style="margin-top:12px">
+<div class="step"><div class="step-num">1</div><div class="step-text">Klik sel di dalam data → <strong>Insert → PivotTable</strong> → OK (pilih New Worksheet).</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text">Panel <strong>PivotTable Fields</strong> muncul di kanan. Ini tempat mengatur laporan Anda.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><strong>ROWS:</strong> Drag field kategori baris. Contoh: Nama Produk, Divisi, Bulan.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><strong>COLUMNS:</strong> Drag field kategori kolom. Contoh: Bulan (data per bulan di kolom).</div></div>
+<div class="step"><div class="step-num">5</div><div class="step-text"><strong>VALUES:</strong> Drag field yang dihitung. Excel otomatis SUM untuk angka. Klik kanan → Value Field Settings untuk ganti ke COUNT, AVERAGE, MAX, dll.</div></div>
+<div class="step"><div class="step-num">6</div><div class="step-text"><strong>FILTERS:</strong> Drag field untuk filter global di atas tabel (misal: filter per Tahun).</div></div>
+<div class="step"><div class="step-num">7</div><div class="step-text"><strong>Refresh:</strong> Jika data asli berubah → klik kanan Pivot Table → Refresh.</div></div>
+</div>
+<div class="tip-box"><span class="tip-icon">💡</span><p>Setelah membuat Pivot Table, klik sel di dalamnya → <strong>Insert → PivotChart</strong> untuk otomatis membuat grafik dari ringkasan tersebut!</p></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">🔽</div> Sort Multi-Level & AutoFilter</div>
+<div class="steps">
+<div class="step"><div class="step-num">1</div><div class="step-text"><strong>Sort Multi-Level:</strong> Klik sel dalam data → <strong>Data → Sort</strong> → pilih kolom utama → klik "Add Level" → tambah kriteria kedua.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text">Contoh: Sort berdasarkan Departemen (A→Z), lalu dalam departemen yang sama sort berdasarkan Gaji (besar ke kecil).</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><strong>AutoFilter:</strong> Klik sel di header → <strong>Ctrl+Shift+L</strong>. Panah dropdown muncul di setiap header.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text">Klik panah dropdown → pilih nilai spesifik, atau gunakan "Number Filters" / "Text Filters" untuk kondisi lebih kompleks.</div></div>
+<div class="step"><div class="step-num">5</div><div class="step-text"><strong>Hapus filter:</strong> Klik panah → "Clear Filter" untuk satu kolom, atau <strong>Data → Clear</strong> untuk semua.</div></div>
+</div>
+<div class="contoh-box"><div class="label">Contoh Sort Multi-Level</div><code>Level 1: Kolom "Divisi"   → A to Z
+Level 2: Kolom "Gaji"     → Largest to Smallest
+Hasil: Karyawan Akuntansi (gaji terbesar dulu),
+lalu Keuangan (gaji terbesar dulu), dst.</code></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">✅</div> Data Validation — Batasi Input yang Valid</div>
+<ul class="materi-list">
+<li><strong>Data Validation</strong> memastikan user hanya memasukkan data sesuai aturan — mencegah kesalahan input dari awal.</li>
+<li>Cara: Pilih sel/range → <strong>Data → Data Validation</strong>.</li>
+</ul>
+<div class="table-demo"><table>
+<tr><th>Jenis Validasi</th><th>Penggunaan</th><th>Contoh</th></tr>
+<tr><td>Whole Number</td><td>Hanya angka bulat dalam range tertentu</td><td>Usia: antara 17 dan 99</td></tr>
+<tr><td>Decimal</td><td>Angka desimal</td><td>Nilai: antara 0.0 dan 100.0</td></tr>
+<tr><td><strong>List</strong></td><td>Dropdown pilihan dari daftar</td><td>Divisi: Keuangan, SDM, IT, Marketing</td></tr>
+<tr><td>Date</td><td>Hanya tanggal valid dalam range</td><td>Tanggal lahir: sebelum hari ini</td></tr>
+<tr><td>Text Length</td><td>Batasi panjang teks</td><td>Kode produk: tepat 5 karakter</td></tr>
+<tr><td>Custom (Formula)</td><td>Validasi kustom dengan rumus</td><td>=LEN(A2)=16 untuk validasi NIK</td></tr>
+</table></div>
+<div class="tip-box"><span class="tip-icon">💡</span><p>Setelah atur validasi, klik tab <strong>"Input Message"</strong> untuk pesan panduan saat sel diklik, dan <strong>"Error Alert"</strong> untuk pesan kesalahan saat data tidak valid.</p></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">🔗</div> Menghubungkan Data Antar Sheet & Workbook</div>
+<div class="steps">
+<div class="step"><div class="step-num">1</div><div class="step-text"><strong>Referensi antar sheet:</strong> Ketik = → klik tab sheet lain → klik sel → Enter. Format otomatis: Sheet2!A1</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><strong>Referensi antar file:</strong> Buka kedua file → ketik = → klik ke file lain → klik sel → Enter. Format: [NamaFile.xlsx]Sheet1!A1</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text">Jika file sumber ditutup, Excel menampilkan path lengkap: 'C:\Data\[NamaFile.xlsx]Sheet1'!A1</div></div>
+</div>
+</div><div class="card" style="border-color:#FDE68A;background:var(--accent-lt)">
+    <div class="card-title"><div class="card-icon" style="background:#FEF3C7">📝</div> Latihan Praktik</div>
+    <ul class="materi-list"><li>Buat tabel penjualan: Tanggal | Produk | Kategori | Wilayah | Kuantitas | Harga | Total (isi 30+ baris)</li><li>Buat <strong>Pivot Table</strong>: Total Penjualan per Produk per Bulan (Rows=Produk, Columns=Bulan)</li><li>Buat Pivot Table kedua: Rata-rata Harga per Kategori</li><li>Tambahkan <strong>PivotChart</strong> (grafik batang) dari Pivot Table pertama</li><li>Terapkan <strong>AutoFilter</strong> pada data asli — filter untuk melihat hanya satu wilayah tertentu</li><li>Tambahkan <strong>Data Validation Dropdown</strong> untuk kolom Kategori dan Wilayah</li></ul>
+  </div></section>
+  <section class="tab-section" id="p8"><div class="session-header">
+    <div class="session-num">8️⃣</div>
+    <div class="session-info">
+      <h2>Pertemuan 8: Proyek Akhir & Tips Profesional</h2>
+      <p>Mahasiswa mampu membangun workbook terpadu, proteksi data, dan menggunakan trik efisiensi</p>
+      <div class="session-meta">
+        <span class="meta-tag">⏱ 100 menit</span>
+        <span class="meta-tag">🎯 Lanjut</span>
+        <span class="meta-tag">📁 Integrasi & Best Practice</span>
+      </div>
+    </div>
+  </div><div class="objectives"><div class="obj-title">🎯 Tujuan Pembelajaran</div>
+    <ul class="obj-list"><li>Membangun workbook multi-sheet yang terstruktur dan terintegrasi</li><li>Menggunakan Named Ranges untuk rumus yang lebih mudah dibaca</li><li>Melindungi data dengan fitur Protect Sheet dan Protect Workbook</li><li>Menguasai tips dan trik Excel untuk efisiensi dan produktivitas kerja</li></ul>
+  </div><div class="card"><div class="card-title"><div class="card-icon">🏗️</div> Struktur Workbook Profesional</div>
+<ul class="materi-list">
+<li><strong>Pisahkan data dan laporan:</strong> Sheet berbeda untuk data mentah, tabel bantu, dan laporan akhir.</li>
+<li><strong>Beri nama sheet deskriptif:</strong> "Data_Penjualan", "Master_Produk", "Laporan_Bulanan" — bukan "Sheet1".</li>
+<li><strong>Warnai tab sheet:</strong> Klik kanan tab → Tab Color. Gunakan warna berbeda per kategori sheet.</li>
+<li><strong>Named Ranges:</strong> Formulas → Name Manager → beri nama range penting. Contoh: nama "TabelProduk" untuk F2:H50 → rumus jadi =VLOOKUP(A2;TabelProduk;2;0) lebih mudah dibaca!</li>
+<li><strong>Sembunyikan kolom bantu:</strong> Klik kanan header kolom → Hide. Tampilkan kembali → Select kolom di kedua sisi → Unhide.</li>
+</ul>
+<div class="table-demo"><table>
+<tr><th>Sheet</th><th>Isi</th><th>Warna Tab</th></tr>
+<tr><td>📋 Cover</td><td>Judul laporan, periode, nama pembuat, logo</td><td>🟢 Hijau</td></tr>
+<tr><td>📊 Dashboard</td><td>Ringkasan KPI, grafik utama, angka penting</td><td>🔵 Biru</td></tr>
+<tr><td>📁 Data_Mentah</td><td>Data asli yang tidak diubah — jangan hapus!</td><td>⚪ Abu-abu</td></tr>
+<tr><td>🔧 Tabel_Bantu</td><td>Tabel master, lookup tables, formula bantu</td><td>🟡 Kuning</td></tr>
+<tr><td>📈 Analisis</td><td>Pivot Table, ringkasan, perhitungan</td><td>🟠 Orange</td></tr>
+<tr><td>🖨️ Cetak</td><td>Versi siap cetak — sudah diatur print area</td><td>🔴 Merah</td></tr>
+</table></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">🔒</div> Proteksi Sheet & Workbook</div>
+<div class="steps">
+<div class="step"><div class="step-num">1</div><div class="step-text"><strong>Unlock sel yang boleh diedit:</strong> Pilih sel input → Ctrl+1 → tab Protection → hapus centang "Locked" → OK.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><strong>Protect Sheet:</strong> Review → Protect Sheet → masukkan password → tentukan apa yang boleh dilakukan user → OK.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><strong>Protect Workbook:</strong> Review → Protect Workbook → user tidak bisa menambah/menghapus/mengganti nama sheet.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><strong>Buka proteksi:</strong> Review → Unprotect Sheet → masukkan password.</div></div>
+</div>
+<div class="warn-box"><span class="tip-icon">⚠️</span><p><strong>Catat password Anda!</strong> Excel tidak menyediakan fitur "lupa password". Workbook yang terlupa passwordnya sangat sulit dibuka kembali.</p></div>
+</div><div class="card"><div class="card-title"><div class="card-icon">⚡</div> Tips & Trik Profesional</div>
+<div class="two-col">
+<div>
+<p style="font-size:13px;font-weight:700;margin-bottom:10px">⚡ Produktivitas Tinggi</p>
+<div class="shortcut-grid" style="grid-template-columns:1fr">
+<div class="shortcut-item"><span class="shortcut-key">Alt + =</span><span class="shortcut-desc">AutoSum cepat</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Ctrl + ;</span><span class="shortcut-desc">Input tanggal hari ini (statis)</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Ctrl + Shift + ;</span><span class="shortcut-desc">Input jam sekarang (statis)</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Ctrl + D</span><span class="shortcut-desc">Fill Down — salin ke bawah</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Ctrl + R</span><span class="shortcut-desc">Fill Right — salin ke kanan</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Alt + Enter</span><span class="shortcut-desc">Baris baru dalam satu sel</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Ctrl + F</span><span class="shortcut-desc">Find — cari data</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Ctrl + H</span><span class="shortcut-desc">Find & Replace</span></div>
+</div>
+</div>
+<div>
+<p style="font-size:13px;font-weight:700;margin-bottom:10px">🎯 Navigasi Cepat</p>
+<div class="shortcut-grid" style="grid-template-columns:1fr">
+<div class="shortcut-item"><span class="shortcut-key">Ctrl + End</span><span class="shortcut-desc">Ke sel data terakhir</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Ctrl + Shift + End</span><span class="shortcut-desc">Pilih hingga sel terakhir</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Ctrl + G / F5</span><span class="shortcut-desc">Go To sel tertentu</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Ctrl + A</span><span class="shortcut-desc">Pilih semua sel</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Shift + Spasi</span><span class="shortcut-desc">Pilih seluruh baris</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Ctrl + Spasi</span><span class="shortcut-desc">Pilih seluruh kolom</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Ctrl + PageDown</span><span class="shortcut-desc">Pindah ke sheet berikut</span></div>
+<div class="shortcut-item"><span class="shortcut-key">Ctrl + PageUp</span><span class="shortcut-desc">Pindah ke sheet sebelum</span></div>
+</div>
+</div>
+</div>
+</div><div class="card"><div class="card-title"><div class="card-icon">📤</div> Berbagi & Ekspor File Excel</div>
+<ul class="materi-list">
+<li><strong>Simpan sebagai PDF:</strong> File → Save As → pilih PDF. Untuk laporan yang tidak boleh diedit.</li>
+<li><strong>Simpan sebagai CSV:</strong> File → Save As → CSV. Untuk data yang akan diimpor ke sistem lain.</li>
+<li><strong>Copy ke Word/PPT:</strong> Copy range di Excel → Paste Special di Word/PPT → pilih "Picture" untuk tampilan terbaik.</li>
+<li><strong>Upload ke Google Sheets:</strong> Buka drive.google.com → drag file .xlsx → buka dengan Google Sheets untuk kolaborasi online.</li>
+<li><strong>Share via email:</strong> File → Share → Email → "Send as Attachment" atau "Send as PDF".</li>
+</ul>
+</div><div class="card" style="border-color:#FDE68A;background:var(--accent-lt)">
+    <div class="card-title"><div class="card-icon" style="background:#FEF3C7">📝</div> Latihan Praktik</div>
+    <ul class="materi-list"><li><strong>PROYEK AKHIR:</strong> Bangun Workbook "Laporan Akademik Semester" multi-sheet</li><li>Sheet "Data_Nilai": semua nilai mahasiswa (min. 20 mhs × 5 mata kuliah)</li><li>Sheet "Master_MK": Kode MK | Nama | SKS | Dosen</li><li>Sheet "Rekap_Mhs": VLOOKUP + IF untuk nilai, IPK estimasi, dan status tiap mahasiswa</li><li>Sheet "Pivot_Analisis": Pivot Table rata-rata per mata kuliah dan per mahasiswa</li><li>Sheet "Dashboard": chart distribusi nilai, highlight mahasiswa terbaik & perlu perhatian</li><li>Proteksi sheet "Data_Nilai" agar tidak dapat diedit sembarangan</li><li>Export laporan sebagai PDF dan simpan di folder terpisah</li></ul>
+  </div></section>
+  <section class="tab-section" id="kuis">
+<div class="quiz-header">
+  <div class="q-icon">🧠</div>
+  <div><h2>Kuis Interaktif — 8 Pertemuan</h2><p>Pilih pertemuan, jawab soal, dan lihat nilai Anda langsung!</p></div>
+</div>
+<div class="quiz-selector">
+  <button class="quiz-sel-btn active" onclick="showQuiz('q1',this)">P1</button>
+  <button class="quiz-sel-btn" onclick="showQuiz('q2',this)">P2</button>
+  <button class="quiz-sel-btn" onclick="showQuiz('q3',this)">P3</button>
+  <button class="quiz-sel-btn" onclick="showQuiz('q4',this)">P4</button>
+  <button class="quiz-sel-btn" onclick="showQuiz('q5',this)">P5</button>
+  <button class="quiz-sel-btn" onclick="showQuiz('q6',this)">P6</button>
+  <button class="quiz-sel-btn" onclick="showQuiz('q7',this)">P7</button>
+  <button class="quiz-sel-btn" onclick="showQuiz('q8',this)">P8</button>
+</div>
+
+<div class="quiz-container active" id="q1">
+    <div class="question-card" data-correct="b">
+    <div class="q-num">Soal 1 dari 5</div>
+    <div class="q-text">Apa yang dimaksud dengan "sel" (cell) dalam Microsoft Excel?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> Baris menu paling atas</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Pertemuan antara satu kolom dan satu baris dalam lembar kerja</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> Nama file yang sedang dibuka</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Tab di bagian bawah untuk berpindah lembar</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Sel adalah unit terkecil dalam spreadsheet — pertemuan antara kolom (huruf) dan baris (angka). Contoh: sel B3 = kolom B, baris ke-3.</div>
+  </div><div class="question-card" data-correct="c">
+    <div class="q-num">Soal 2 dari 5</div>
+    <div class="q-text">Keyboard shortcut apa yang digunakan untuk menyimpan file Excel?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','c')"><span class="option-letter">A</span> Ctrl + O</button><button class="option-btn" onclick="answer(this,'b','c')"><span class="option-letter">B</span> Ctrl + Z</button><button class="option-btn" onclick="answer(this,'c','c')"><span class="option-letter">C</span> Ctrl + S</button><button class="option-btn" onclick="answer(this,'d','c')"><span class="option-letter">D</span> Ctrl + P</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Ctrl+S = Save (Simpan). Ctrl+O = Open, Ctrl+Z = Undo, Ctrl+P = Print.</div>
+  </div><div class="question-card" data-correct="a">
+    <div class="q-num">Soal 3 dari 5</div>
+    <div class="q-text">Apa arti dari range "A1:C5" dalam Excel?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','a')"><span class="option-letter">A</span> Kumpulan sel dari A1 sampai C5 (3 kolom × 5 baris = 15 sel)</button><button class="option-btn" onclick="answer(this,'b','a')"><span class="option-letter">B</span> Hanya sel A1 dan C5 saja</button><button class="option-btn" onclick="answer(this,'c','a')"><span class="option-letter">C</span> Seluruh kolom A sampai kolom C</button><button class="option-btn" onclick="answer(this,'d','a')"><span class="option-letter">D</span> 5 kolom dan 3 baris</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> A1:C5 adalah range persegi panjang dari pojok kiri atas A1 hingga pojok kanan bawah C5, mencakup 15 sel.</div>
+  </div><div class="question-card" data-correct="c">
+    <div class="q-num">Soal 4 dari 5</div>
+    <div class="q-text">Di mana kita bisa melihat RUMUS ASLI yang ada di dalam sebuah sel?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','c')"><span class="option-letter">A</span> Di Name Box</button><button class="option-btn" onclick="answer(this,'b','c')"><span class="option-letter">B</span> Di Status Bar</button><button class="option-btn" onclick="answer(this,'c','c')"><span class="option-letter">C</span> Di Formula Bar</button><button class="option-btn" onclick="answer(this,'d','c')"><span class="option-letter">D</span> Di Title Bar</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Formula Bar (di bawah Ribbon) menampilkan isi asli sel — termasuk rumus lengkap seperti =SUM(A1:A10), bukan hanya hasilnya.</div>
+  </div><div class="question-card" data-correct="c">
+    <div class="q-num">Soal 5 dari 5</div>
+    <div class="q-text">Format file Excel modern menggunakan ekstensi…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','c')"><span class="option-letter">A</span> .doc</button><button class="option-btn" onclick="answer(this,'b','c')"><span class="option-letter">B</span> .xls</button><button class="option-btn" onclick="answer(this,'c','c')"><span class="option-letter">C</span> .xlsx</button><button class="option-btn" onclick="answer(this,'d','c')"><span class="option-letter">D</span> .ppt</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> .xlsx adalah format Excel modern (2007 ke atas). .xls adalah format lama. .doc = Word, .ppt = PowerPoint.</div>
+  </div>
+    <div class="quiz-controls">
+      <button class="btn-primary" onclick="showScore('q1',5)">📊 Lihat Nilai</button>
+      <button class="btn-secondary" onclick="resetQuiz('q1')">🔄 Ulangi</button>
+    </div>
+    <div class="score-box" id="score-q1">
+      <div class="score-num" id="score-num-q1">0/5</div>
+      <div class="score-label">Jawaban Benar</div>
+      <div class="score-msg" id="score-msg-q1"></div>
+    </div>
+  </div>
+
+<div class="quiz-container" id="q2">
+    <div class="question-card" data-correct="c">
+    <div class="q-num">Soal 1 dari 5</div>
+    <div class="q-text">Apa hasil dari rumus =2^8 di Excel?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','c')"><span class="option-letter">A</span> 16</button><button class="option-btn" onclick="answer(this,'b','c')"><span class="option-letter">B</span> 64</button><button class="option-btn" onclick="answer(this,'c','c')"><span class="option-letter">C</span> 256</button><button class="option-btn" onclick="answer(this,'d','c')"><span class="option-letter">D</span> 128</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Operator ^ adalah pangkat. 2^8 = 2×2×2×2×2×2×2×2 = 256.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 2 dari 5</div>
+    <div class="q-text">Rumus manakah yang benar untuk menjumlahkan sel B2 hingga B50?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> =SUM(B2,B50)</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> =SUM(B2:B50)</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> =TOTAL(B2 TO B50)</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> =ADD(B2-B50)</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> =SUM(B2:B50) menggunakan titik dua (:) yang artinya "dari B2 sampai B50". Koma hanya menghitung dua sel saja.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 3 dari 5</div>
+    <div class="q-text">Fungsi =COUNTA() berbeda dari =COUNT() karena…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> COUNTA lebih akurat</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> COUNTA menghitung semua sel tidak kosong termasuk teks; COUNT hanya menghitung sel berisi angka</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> COUNTA bisa pakai lebih banyak argumen</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> COUNTA memformat hasilnya otomatis</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> COUNT hanya menghitung sel berisi angka. COUNTA menghitung semua sel tidak kosong — angka, teks, tanggal, dan apapun.</div>
+  </div><div class="question-card" data-correct="a">
+    <div class="q-num">Soal 4 dari 5</div>
+    <div class="q-text">Anda menulis =$B$1*A2 di sel C2, lalu menyalinnya ke C5. Isi rumus di C5 adalah…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','a')"><span class="option-letter">A</span> =$B$1*A5</button><button class="option-btn" onclick="answer(this,'b','a')"><span class="option-letter">B</span> =$B$5*A5</button><button class="option-btn" onclick="answer(this,'c','a')"><span class="option-letter">C</span> =$B$1*$A$2</button><button class="option-btn" onclick="answer(this,'d','a')"><span class="option-letter">D</span> =$B$5*$A$5</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> $B$1 dikunci (absolut) tidak berubah. A2 relatif — berubah mengikuti baris → A5.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 5 dari 5</div>
+    <div class="q-text">Shortcut Ctrl+1 di Excel digunakan untuk…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> Membuka file pertama</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Membuka dialog Format Cells</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> Memilih sel pertama</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Membuat rumus SUM</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Ctrl+1 membuka dialog Format Cells — tempat mengatur format Number, Alignment, Font, Border, Fill, dan Protection.</div>
+  </div>
+    <div class="quiz-controls">
+      <button class="btn-primary" onclick="showScore('q2',5)">📊 Lihat Nilai</button>
+      <button class="btn-secondary" onclick="resetQuiz('q2')">🔄 Ulangi</button>
+    </div>
+    <div class="score-box" id="score-q2">
+      <div class="score-num" id="score-num-q2">0/5</div>
+      <div class="score-label">Jawaban Benar</div>
+      <div class="score-msg" id="score-msg-q2"></div>
+    </div>
+  </div>
+
+<div class="quiz-container" id="q3">
+    <div class="question-card" data-correct="c">
+    <div class="q-num">Soal 1 dari 5</div>
+    <div class="q-text">Apa hasil dari =LEN("Bhamada Slawi")?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','c')"><span class="option-letter">A</span> 11</button><button class="option-btn" onclick="answer(this,'b','c')"><span class="option-letter">B</span> 12</button><button class="option-btn" onclick="answer(this,'c','c')"><span class="option-letter">C</span> 13</button><button class="option-btn" onclick="answer(this,'d','c')"><span class="option-letter">D</span> 14</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> "Bhamada Slawi" = 7 (Bhamada) + 1 (spasi) + 5 (Slawi) = 13 karakter.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 2 dari 5</div>
+    <div class="q-text">Rumus =MID("D-III-Manajemen";3;3) menghasilkan…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> D-I</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> III</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> -Ma</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Man</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> MID mulai dari posisi ke-3 karakter ("I"), ambil 3 karakter → "III".</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 3 dari 5</div>
+    <div class="q-text">Fungsi =TODAY() dan =NOW() berbeda karena…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> TODAY() lebih akurat</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> NOW() menampilkan tanggal DAN jam; TODAY() hanya tanggal</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> TODAY() lebih sering diperbarui</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Tidak ada perbedaan</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> =TODAY() hanya tanggal hari ini. =NOW() menampilkan tanggal DAN waktu saat ini.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 4 dari 5</div>
+    <div class="q-text">=DATEDIF(A2;TODAY();"Y") menghitung…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> Jumlah hari dari A2 hingga hari ini</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Jumlah tahun penuh dari tanggal di A2 hingga hari ini</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> Jumlah bulan dari A2 hingga hari ini</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Selisih jam antara dua waktu</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Parameter "Y" di DATEDIF = Year (Tahun penuh). "M"=bulan, "D"=hari.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 5 dari 5</div>
+    <div class="q-text">Apa yang dilakukan fungsi =TRIM() pada teks?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> Memotong teks jadi lebih pendek</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Menghapus spasi berlebih di depan, belakang, dan tengah teks</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> Mengubah teks menjadi kapital</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Menghapus karakter khusus</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> =TRIM() menghapus spasi di awal dan akhir, serta mengurangi spasi ganda di tengah menjadi satu spasi.</div>
+  </div>
+    <div class="quiz-controls">
+      <button class="btn-primary" onclick="showScore('q3',5)">📊 Lihat Nilai</button>
+      <button class="btn-secondary" onclick="resetQuiz('q3')">🔄 Ulangi</button>
+    </div>
+    <div class="score-box" id="score-q3">
+      <div class="score-num" id="score-num-q3">0/5</div>
+      <div class="score-label">Jawaban Benar</div>
+      <div class="score-msg" id="score-msg-q3"></div>
+    </div>
+  </div>
+
+<div class="quiz-container" id="q4">
+    <div class="question-card" data-correct="b">
+    <div class="q-num">Soal 1 dari 5</div>
+    <div class="q-text">Manakah penulisan IF yang benar: tampilkan "Lulus" jika B2 ≥ 75?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> =IF(B2>=75,Lulus,Tidak Lulus)</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> =IF(B2>=75;"Lulus";"Tidak Lulus")</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> =IF("Lulus";B2>=75;"Tidak Lulus")</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> =IF(B2>75;"Lulus";"Tidak Lulus")</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Urutan IF: kondisi → hasil benar → hasil salah. Teks harus dalam tanda kutip. Pilihan D salah karena > tidak termasuk nilai 75 itu sendiri.</div>
+  </div><div class="question-card" data-correct="c">
+    <div class="q-num">Soal 2 dari 5</div>
+    <div class="q-text">Perbedaan utama COUNTIF dan COUNTIFS adalah…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','c')"><span class="option-letter">A</span> COUNTIFS lebih cepat</button><button class="option-btn" onclick="answer(this,'b','c')"><span class="option-letter">B</span> COUNTIF untuk teks, COUNTIFS untuk angka</button><button class="option-btn" onclick="answer(this,'c','c')"><span class="option-letter">C</span> COUNTIF menggunakan 1 kriteria; COUNTIFS bisa beberapa kriteria sekaligus</button><button class="option-btn" onclick="answer(this,'d','c')"><span class="option-letter">D</span> Tidak ada perbedaan</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> COUNTIF = satu range, satu kriteria. COUNTIFS = banyak pasang range+kriteria sekaligus.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 3 dari 5</div>
+    <div class="q-text">=SUMIF(A2:A20;"Elektronik";C2:C20) menghasilkan…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> Jumlah baris yang berisi "Elektronik"</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Total nilai di kolom C di mana kolom A berisi "Elektronik"</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> Rata-rata nilai kolom C untuk Elektronik</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Daftar semua item Elektronik</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> SUMIF: cek kolom A yang isinya "Elektronik", lalu jumlahkan nilai kolom C yang bersesuaian.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 4 dari 5</div>
+    <div class="q-text">=OR(A1>10;B1>10) menghasilkan TRUE ketika…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> A1 DAN B1 sama-sama harus >10</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Cukup salah satu dari A1 atau B1 yang >10</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> A1 >10 tapi B1 tidak boleh >10</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Keduanya harus ≤10</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> OR menghasilkan TRUE jika SETIDAKNYA SATU kondisi benar. Berbeda dengan AND yang butuh SEMUA kondisi benar.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 5 dari 5</div>
+    <div class="q-text">Untuk menghitung mahasiswa dengan nilai UTS ≥70 DAN UAS ≥70, rumus yang tepat adalah…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> =COUNTIF(C:C;">=70")+COUNTIF(D:D;">=70")</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> =COUNTIFS(C2:C30;">=70";D2:D30;">=70")</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> =AND(COUNTIF(C:C;">=70");COUNTIF(D:D;">=70"))</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> =COUNT(IF(AND(C2>=70;D2>=70)))</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> COUNTIFS dengan dua pasang range+kriteria: hitung baris di mana kolom C ≥70 DAN kolom D ≥70 bersamaan.</div>
+  </div>
+    <div class="quiz-controls">
+      <button class="btn-primary" onclick="showScore('q4',5)">📊 Lihat Nilai</button>
+      <button class="btn-secondary" onclick="resetQuiz('q4')">🔄 Ulangi</button>
+    </div>
+    <div class="score-box" id="score-q4">
+      <div class="score-num" id="score-num-q4">0/5</div>
+      <div class="score-label">Jawaban Benar</div>
+      <div class="score-msg" id="score-msg-q4"></div>
+    </div>
+  </div>
+
+<div class="quiz-container" id="q5">
+    <div class="question-card" data-correct="b">
+    <div class="q-num">Soal 1 dari 5</div>
+    <div class="q-text">Shortcut Ctrl+T di Excel digunakan untuk…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> Membuka tab baru</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Mengubah range menjadi Excel Table terformat</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> Mengubah ukuran font</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Menambah sheet baru</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Ctrl+T mengkonversi range data biasa menjadi Excel Table dengan filter otomatis dan styling.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 2 dari 5</div>
+    <div class="q-text">Fitur Freeze Panes berfungsi untuk…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> Membekukan rumus agar tidak berubah</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Mengunci baris/kolom agar tetap terlihat saat scroll</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> Menghentikan kalkulasi otomatis</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Melindungi sel dari pengeditan</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Freeze Panes mengunci baris atau kolom (biasanya header) sehingga tetap terlihat meskipun kita scroll jauh.</div>
+  </div><div class="question-card" data-correct="c">
+    <div class="q-num">Soal 3 dari 5</div>
+    <div class="q-text">Jenis chart apa yang PALING TIDAK TEPAT untuk menampilkan perubahan suhu harian selama sebulan?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','c')"><span class="option-letter">A</span> Line Chart</button><button class="option-btn" onclick="answer(this,'b','c')"><span class="option-letter">B</span> Area Chart</button><button class="option-btn" onclick="answer(this,'c','c')"><span class="option-letter">C</span> Pie Chart</button><button class="option-btn" onclick="answer(this,'d','c')"><span class="option-letter">D</span> Scatter Plot</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Pie Chart untuk proporsi dari keseluruhan, bukan perubahan dari waktu ke waktu. Untuk tren gunakan Line atau Area Chart.</div>
+  </div><div class="question-card" data-correct="a">
+    <div class="q-num">Soal 4 dari 5</div>
+    <div class="q-text">Apa itu Conditional Formatting di Excel?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','a')"><span class="option-letter">A</span> Format sel berdasarkan kondisi nilai data — misal warna merah jika <70</button><button class="option-btn" onclick="answer(this,'b','a')"><span class="option-letter">B</span> Format angka untuk kondisi tertentu</button><button class="option-btn" onclick="answer(this,'c','a')"><span class="option-letter">C</span> Format yang berlaku saat sel terpilih</button><button class="option-btn" onclick="answer(this,'d','a')"><span class="option-letter">D</span> Format berdasarkan kondisi cuaca</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Conditional Formatting otomatis mengubah tampilan sel (warna, ikon, bar) berdasarkan nilai datanya.</div>
+  </div><div class="question-card" data-correct="c">
+    <div class="q-num">Soal 5 dari 5</div>
+    <div class="q-text">Untuk header tabel terulang di setiap halaman saat dicetak, digunakan fitur…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','c')"><span class="option-letter">A</span> Header & Footer</button><button class="option-btn" onclick="answer(this,'b','c')"><span class="option-letter">B</span> Repeat Row Headers</button><button class="option-btn" onclick="answer(this,'c','c')"><span class="option-letter">C</span> Print Titles</button><button class="option-btn" onclick="answer(this,'d','c')"><span class="option-letter">D</span> Page Break Preview</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Page Layout → Print Titles → Rows to repeat at top → pilih baris header. Header muncul di setiap halaman cetak.</div>
+  </div>
+    <div class="quiz-controls">
+      <button class="btn-primary" onclick="showScore('q5',5)">📊 Lihat Nilai</button>
+      <button class="btn-secondary" onclick="resetQuiz('q5')">🔄 Ulangi</button>
+    </div>
+    <div class="score-box" id="score-q5">
+      <div class="score-num" id="score-num-q5">0/5</div>
+      <div class="score-label">Jawaban Benar</div>
+      <div class="score-msg" id="score-msg-q5"></div>
+    </div>
+  </div>
+
+<div class="quiz-container" id="q6">
+    <div class="question-card" data-correct="b">
+    <div class="q-num">Soal 1 dari 5</div>
+    <div class="q-text">Dalam =VLOOKUP(A2;$D$2:$G$50;3;0), angka "3" berarti…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> Mencari di 3 kolom pertama</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Mengambil data dari kolom ke-3 dalam tabel $D$2:$G$50</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> Batas pencarian 3 baris saja</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Tingkat ketepatan pencarian</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Parameter ke-3 VLOOKUP adalah nomor kolom yang datanya diambil dari tabel referensi. Kolom D=1, E=2, F=3.</div>
+  </div><div class="question-card" data-correct="c">
+    <div class="q-num">Soal 2 dari 5</div>
+    <div class="q-text">Mengapa tabel referensi VLOOKUP harus diberi tanda $ (seperti $D$2:$F$50)?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','c')"><span class="option-letter">A</span> Agar hasilnya tampil dalam format mata uang</button><button class="option-btn" onclick="answer(this,'b','c')"><span class="option-letter">B</span> Agar Excel mencari dari kanan ke kiri</button><button class="option-btn" onclick="answer(this,'c','c')"><span class="option-letter">C</span> Agar tabel tidak bergeser saat rumus di-AutoFill ke bawah</button><button class="option-btn" onclick="answer(this,'d','c')"><span class="option-letter">D</span> Agar pencarian lebih cepat</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Tanpa $, tabel D2:F50 berubah jadi D3:F51 di baris berikutnya — sehingga pencarian pakai tabel yang salah!</div>
+  </div><div class="question-card" data-correct="a">
+    <div class="q-num">Soal 3 dari 5</div>
+    <div class="q-text">Cara menulis referensi ke Sheet2 di Excel adalah…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','a')"><span class="option-letter">A</span> 'Sheet 2'!A1</button><button class="option-btn" onclick="answer(this,'b','a')"><span class="option-letter">B</span> "Sheet2"!A1</button><button class="option-btn" onclick="answer(this,'c','a')"><span class="option-letter">C</span> Sheet2->A1</button><button class="option-btn" onclick="answer(this,'d','a')"><span class="option-letter">D</span> Sheet2.A1</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Format referensi antar sheet: NamaSheet!AlamatSel. Jika nama sheet ada spasi, wajib diapit tanda kutip tunggal: 'Nama Sheet'!A1.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 4 dari 5</div>
+    <div class="q-text">Keunggulan INDEX+MATCH dibanding VLOOKUP adalah…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> INDEX+MATCH lebih mudah ditulis</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> INDEX+MATCH bisa mencari ke kiri; VLOOKUP hanya ke kanan</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> INDEX+MATCH lebih populer</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> VLOOKUP tidak bisa mencari teks</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> VLOOKUP hanya bisa mengambil data dari kolom di KANAN kolom pencarian. INDEX+MATCH bisa dari kolom mana saja, termasuk kiri.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 5 dari 5</div>
+    <div class="q-text">HLOOKUP berbeda dari VLOOKUP karena…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> HLOOKUP lebih cepat</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> HLOOKUP mencari di baris pertama (horizontal); VLOOKUP di kolom pertama (vertikal)</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> HLOOKUP hanya untuk angka</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> HLOOKUP tidak perlu parameter ke-4</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> V=Vertical (mencari ke bawah di kolom). H=Horizontal (mencari ke samping di baris).</div>
+  </div>
+    <div class="quiz-controls">
+      <button class="btn-primary" onclick="showScore('q6',5)">📊 Lihat Nilai</button>
+      <button class="btn-secondary" onclick="resetQuiz('q6')">🔄 Ulangi</button>
+    </div>
+    <div class="score-box" id="score-q6">
+      <div class="score-num" id="score-num-q6">0/5</div>
+      <div class="score-label">Jawaban Benar</div>
+      <div class="score-msg" id="score-msg-q6"></div>
+    </div>
+  </div>
+
+<div class="quiz-container" id="q7">
+    <div class="question-card" data-correct="b">
+    <div class="q-num">Soal 1 dari 5</div>
+    <div class="q-text">Apa yang terjadi jika data sumber Pivot Table berubah tapi Pivot Table tidak di-Refresh?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> Pivot Table otomatis update</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Pivot Table menampilkan data lama yang tidak mencerminkan perubahan</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> Excel memberi peringatan error</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Pivot Table terhapus</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Pivot Table tidak otomatis mengikuti perubahan. Klik kanan → Refresh untuk memperbarui.</div>
+  </div><div class="question-card" data-correct="c">
+    <div class="q-num">Soal 2 dari 5</div>
+    <div class="q-text">Di Pivot Table, area "VALUES" berfungsi untuk…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','c')"><span class="option-letter">A</span> Label baris</button><button class="option-btn" onclick="answer(this,'b','c')"><span class="option-letter">B</span> Header kolom</button><button class="option-btn" onclick="answer(this,'c','c')"><span class="option-letter">C</span> Angka yang dihitung (SUM, COUNT, AVERAGE, dll.)</button><button class="option-btn" onclick="answer(this,'d','c')"><span class="option-letter">D</span> Filter di atas tabel</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> VALUES berisi angka yang diagregasi. Klik kanan → Value Field Settings untuk ganti jenis kalkulasi.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 3 dari 5</div>
+    <div class="q-text">Data Validation dengan tipe "List" berguna untuk…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> Memvalidasi data berupa daftar berurutan</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Membuat dropdown pilihan — user hanya bisa memilih dari daftar tertentu</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> Menghitung item dalam daftar</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Membuat tabel berformat list</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Data Validation → List menghasilkan dropdown di sel, mencegah kesalahan ketik dan memastikan konsistensi data.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 4 dari 5</div>
+    <div class="q-text">Shortcut Ctrl+Shift+L di Excel digunakan untuk…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> Membuat Pivot Table baru</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Toggle AutoFilter (nyalakan/matikan filter)</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> Mengunci sel</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Mengubah ke lowercase</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Ctrl+Shift+L = Toggle AutoFilter. Menambah dropdown filter ke semua header jika belum ada, atau menghapusnya.</div>
+  </div><div class="question-card" data-correct="a">
+    <div class="q-num">Soal 5 dari 5</div>
+    <div class="q-text">Apa fungsi Sort Multi-Level?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','a')"><span class="option-letter">A</span> Mengurutkan berdasarkan beberapa kriteria secara berurutan</button><button class="option-btn" onclick="answer(this,'b','a')"><span class="option-letter">B</span> Mengurutkan data dari beberapa sheet sekaligus</button><button class="option-btn" onclick="answer(this,'c','a')"><span class="option-letter">C</span> Mengurutkan huruf dan angka bersamaan</button><button class="option-btn" onclick="answer(this,'d','a')"><span class="option-letter">D</span> Mengurutkan data secara acak</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Sort Multi-Level: urutkan dengan lebih dari satu kriteria. Contoh: Divisi (A→Z), lalu Gaji (besar ke kecil) dalam divisi yang sama.</div>
+  </div>
+    <div class="quiz-controls">
+      <button class="btn-primary" onclick="showScore('q7',5)">📊 Lihat Nilai</button>
+      <button class="btn-secondary" onclick="resetQuiz('q7')">🔄 Ulangi</button>
+    </div>
+    <div class="score-box" id="score-q7">
+      <div class="score-num" id="score-num-q7">0/5</div>
+      <div class="score-label">Jawaban Benar</div>
+      <div class="score-msg" id="score-msg-q7"></div>
+    </div>
+  </div>
+
+<div class="quiz-container" id="q8">
+    <div class="question-card" data-correct="b">
+    <div class="q-num">Soal 1 dari 5</div>
+    <div class="q-text">Mengapa disarankan memisahkan data mentah dan laporan ke sheet berbeda?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> Membuat file lebih besar</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Data mentah terlindungi dari perubahan tidak sengaja; laporan lebih mudah diformat</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> Excel tidak bisa menampung keduanya di satu sheet</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Karena aturan Microsoft</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Pemisahan ini adalah best practice: data mentah aman, laporan bisa diformat bebas tanpa mengganggu data asli.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 2 dari 5</div>
+    <div class="q-text">Saat Protect Sheet aktif, sel yang TIDAK dicentang "Locked" akan…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> Ikut terkunci</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Tetap bisa diedit meskipun sheet diproteksi</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> Terhapus otomatis</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Berubah warna abu-abu</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Logika proteksi: sel "Locked" → terkunci saat Protect Sheet aktif. Sel yang di-unlock → tetap bisa diedit.</div>
+  </div><div class="question-card" data-correct="c">
+    <div class="q-num">Soal 3 dari 5</div>
+    <div class="q-text">Format file paling tepat untuk laporan yang hanya boleh dibaca (tidak diedit)?</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','c')"><span class="option-letter">A</span> .xlsx</button><button class="option-btn" onclick="answer(this,'b','c')"><span class="option-letter">B</span> .csv</button><button class="option-btn" onclick="answer(this,'c','c')"><span class="option-letter">C</span> .pdf</button><button class="option-btn" onclick="answer(this,'d','c')"><span class="option-letter">D</span> .xls</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> .pdf tidak bisa diedit dengan mudah, tampilan konsisten di semua perangkat, dan tidak perlu Excel untuk membukanya.</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 4 dari 5</div>
+    <div class="q-text">Named Range di Excel berguna untuk…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> Memberi nama sheet</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Memberi nama range sel agar lebih mudah digunakan dalam rumus</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> Memberi nama grafik</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Menyimpan nama file otomatis</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Named Range memberi alias pada range: "TabelProduk" untuk F2:H50. Rumus jadi =VLOOKUP(A2;TabelProduk;2;0) — lebih mudah dibaca!</div>
+  </div><div class="question-card" data-correct="b">
+    <div class="q-num">Soal 5 dari 5</div>
+    <div class="q-text">Shortcut Ctrl+H di Excel digunakan untuk…</div>
+    
+    <div class="options">
+      <button class="option-btn" onclick="answer(this,'a','b')"><span class="option-letter">A</span> Menyembunyikan baris</button><button class="option-btn" onclick="answer(this,'b','b')"><span class="option-letter">B</span> Membuka dialog Find & Replace</button><button class="option-btn" onclick="answer(this,'c','b')"><span class="option-letter">C</span> Membuka Help Excel</button><button class="option-btn" onclick="answer(this,'d','b')"><span class="option-letter">D</span> Membuat Hyperlink</button>
+    </div>
+    <div class="explanation">✅ <strong>Penjelasan:</strong> Ctrl+H membuka Find & Replace — mencari dan mengganti teks/angka tertentu di seluruh sheet atau workbook.</div>
+  </div>
+    <div class="quiz-controls">
+      <button class="btn-primary" onclick="showScore('q8',5)">📊 Lihat Nilai</button>
+      <button class="btn-secondary" onclick="resetQuiz('q8')">🔄 Ulangi</button>
+    </div>
+    <div class="score-box" id="score-q8">
+      <div class="score-num" id="score-num-q8">0/5</div>
+      <div class="score-label">Jawaban Benar</div>
+      <div class="score-msg" id="score-msg-q8"></div>
+    </div>
+  </div>
+</section>
+  <section class="tab-section" id="kasus">
+<div class="kasus-header">
+  <div class="k-icon">💼</div>
+  <div><h2>Studi Kasus Praktis</h2><p>5 skenario dunia nyata — tingkat dasar hingga lanjut</p></div>
+</div>
+
+<div class="kasus-card">
+    <div class="kasus-top">
+      <div class="kasus-badge"><span>📚</span>Kasus 1</div>
+      <div><h3>Rekap Nilai & Absensi Kelas XII IPS</h3><div class="subtitle">Pertemuan 1–4 · Tingkat: Dasar</div></div>
+    </div>
+    <div class="kasus-body">
+      <div class="kasus-skenario">🏫 <strong>Skenario:</strong> Anda adalah wali kelas XII IPS di SMA Pembangunan, Slawi. Kepala sekolah meminta rekap akhir semester: nilai per mata pelajaran, rata-rata, grade, status kelulusan, dan rekap kehadiran 15 siswa.</div>
+      <ul class="tugas-list">
+        <li class="tugas-item"><div class="tugas-num">1</div><div class="tugas-text">Buat tabel: No | Nama | Ekonomi | Geografi | Sosiologi | Sejarah | Rata-rata | Grade | Status | Hadir | Alfa | Izin | % Hadir</div></li><li class="tugas-item"><div class="tugas-num">2</div><div class="tugas-text">Isi 12 data siswa dengan nilai 55–95 dan data kehadiran bervariasi</div></li><li class="tugas-item"><div class="tugas-num">3</div><div class="tugas-text">Hitung <strong>Rata-rata</strong> nilai 4 mata pelajaran per siswa menggunakan =AVERAGE()</div></li><li class="tugas-item"><div class="tugas-num">4</div><div class="tugas-text">Kolom <strong>Grade</strong> menggunakan =IFS(): A(≥85), B(≥75), C(≥65), D(≥55), E(&lt;55)</div></li><li class="tugas-item"><div class="tugas-num">5</div><div class="tugas-text">Kolom <strong>% Hadir</strong> = Hadir ÷ (Hadir+Alfa+Izin) × 100, format Persentase</div></li><li class="tugas-item"><div class="tugas-num">6</div><div class="tugas-text">Kolom <strong>Status</strong>: "TUNTAS" jika rata-rata ≥70 DAN % hadir ≥80%, "TIDAK TUNTAS" jika tidak memenuhi — gunakan IF+AND</div></li><li class="tugas-item"><div class="tugas-num">7</div><div class="tugas-text">Buat baris ringkasan: Rata-rata kelas, Nilai tertinggi, Jumlah TUNTAS, Jumlah TIDAK TUNTAS</div></li><li class="tugas-item"><div class="tugas-num">8</div><div class="tugas-text">Terapkan Conditional Formatting: hijau untuk TUNTAS, merah untuk TIDAK TUNTAS</div></li>
+      </ul>
+      <div class="kasus-hint">💡 <strong>Petunjuk:</strong> Rata-rata: =AVERAGE(C2:F2) | % Hadir: =J2/SUM(J2:L2) | Status: =IF(AND(G2>=70;M2>=80%);"TUNTAS";"TIDAK TUNTAS")</div>
+      <button class="show-sol-btn" onclick="toggleSolution(this)">💡 Lihat Panduan Solusi</button>
+      <div class="solution-box">
+        <h4>📋 Langkah Solusi:</h4>
+        <div class="sol-step">1. Buat header sesuai deskripsi. Isi data baris 2–13 (12 siswa).</div><div class="sol-step">2. Rata-rata di G2: <code>=AVERAGE(C2:F2)</code> → AutoFill ke G13</div><div class="sol-step">3. Grade di H2: <code>=IFS(G2>=85;"A";G2>=75;"B";G2>=65;"C";G2>=55;"D";TRUE;"E")</code></div><div class="sol-step">4. % Hadir di M2: <code>=J2/SUM(J2:L2)</code> → format sebagai Percentage</div><div class="sol-step">5. Status di N2: <code>=IF(AND(G2>=70;M2>=80%);"TUNTAS";"TIDAK TUNTAS")</code></div><div class="sol-step">6. Jumlah TUNTAS: <code>=COUNTIF(N2:N13;"TUNTAS")</code></div><div class="sol-step">7. Conditional Formatting: N2:N13 → Highlight "TUNTAS" hijau, "TIDAK TUNTAS" merah</div>
+      </div>
+    </div>
+  </div>
+
+<div class="kasus-card">
+    <div class="kasus-top">
+      <div class="kasus-badge"><span>🏪</span>Kasus 2</div>
+      <div><h3>Laporan Keuangan Toko Batik "Srikandi"</h3><div class="subtitle">Pertemuan 2–5 · Tingkat: Dasar-Menengah</div></div>
+    </div>
+    <div class="kasus-body">
+      <div class="kasus-skenario">🧵 <strong>Skenario:</strong> Toko Batik Srikandi di Tegal meminta Anda membuat laporan keuangan bulanan. Data: penjualan harian per produk, harga, dan biaya pokok. Pemilik ingin mengetahui omzet, laba kotor, dan produk terlaris setiap bulannya.</div>
+      <ul class="tugas-list">
+        <li class="tugas-item"><div class="tugas-num">1</div><div class="tugas-text">Buat Sheet "Master_Produk": Kode | Nama | Kategori | Harga Jual | HPP (Harga Pokok Penjualan) — isi 8 produk</div></li><li class="tugas-item"><div class="tugas-num">2</div><div class="tugas-text">Buat Sheet "Data_Penjualan": Tanggal | Kode | Nama (VLOOKUP) | Kategori (VLOOKUP) | Qty | Harga (VLOOKUP) | Total | Laba Kotor — isi 25+ transaksi</div></li><li class="tugas-item"><div class="tugas-num">3</div><div class="tugas-text">Gunakan <strong>VLOOKUP</strong> untuk otomatis mengisi Nama, Kategori, dan Harga dari sheet Master</div></li><li class="tugas-item"><div class="tugas-num">4</div><div class="tugas-text">Hitung <strong>Total</strong> = Qty × Harga, dan <strong>Laba Kotor</strong> = Total − (Qty × HPP)</div></li><li class="tugas-item"><div class="tugas-num">5</div><div class="tugas-text">Buat ringkasan di sheet terpisah: Total Omzet, Total Laba, Omzet per Kategori (SUMIF)</div></li><li class="tugas-item"><div class="tugas-num">6</div><div class="tugas-text">Terapkan <strong>Conditional Formatting</strong> pada kolom Laba Kotor: hijau jika laba, merah jika rugi</div></li><li class="tugas-item"><div class="tugas-num">7</div><div class="tugas-text">Buat <strong>Bar Chart</strong> perbandingan omzet per kategori produk</div></li>
+      </ul>
+      <div class="kasus-hint">💡 <strong>Petunjuk:</strong> VLOOKUP ke sheet Master: =VLOOKUP(B2;Master_Produk!$A:$E;3;0) | Total omzet Batik Tulis: =SUMIF(D:D;"Batik Tulis";G:G)</div>
+      <button class="show-sol-btn" onclick="toggleSolution(this)">💡 Lihat Panduan Solusi</button>
+      <div class="solution-box">
+        <h4>📋 Langkah Solusi:</h4>
+        <div class="sol-step">1. Sheet "Master_Produk": A=Kode, B=Nama, C=Kategori, D=Harga Jual, E=HPP. Isi 8 produk.</div><div class="sol-step">2. Sheet "Data_Penjualan": isi kode produk manual, lalu Nama: <code>=VLOOKUP(B2;Master_Produk!$A:$E;2;0)</code></div><div class="sol-step">3. Kategori: <code>=VLOOKUP(B2;Master_Produk!$A:$E;3;0)</code> | Harga: <code>=VLOOKUP(B2;Master_Produk!$A:$E;4;0)</code></div><div class="sol-step">4. Total G2: <code>=E2*F2</code> | HPP per unit: <code>=VLOOKUP(B2;Master_Produk!$A:$E;5;0)</code></div><div class="sol-step">5. Laba Kotor H2: <code>=G2-(E2*I2)</code></div><div class="sol-step">6. Ringkasan: Total Omzet: <code>=SUM(G:G)</code> | Per Kategori: <code>=SUMIF(D:D;"Batik Tulis";G:G)</code></div><div class="sol-step">7. Bar Chart: pilih data nama kategori + omzet → Insert → Bar/Column Chart</div>
+      </div>
+    </div>
+  </div>
+
+<div class="kasus-card">
+    <div class="kasus-top">
+      <div class="kasus-badge"><span>🏥</span>Kasus 3</div>
+      <div><h3>Sistem Absensi & Penggajian Klinik Pratama</h3><div class="subtitle">Pertemuan 4–6 · Tingkat: Menengah</div></div>
+    </div>
+    <div class="kasus-body">
+      <div class="kasus-skenario">🏥 <strong>Skenario:</strong> Klinik Pratama Slawi memiliki 20 karyawan. Setiap bulan HRD membuat rekap absensi dan menghitung gaji bersih termasuk tunjangan dan potongan. Anda diminta membangun sistem otomatis berbasis Excel.</div>
+      <ul class="tugas-list">
+        <li class="tugas-item"><div class="tugas-num">1</div><div class="tugas-text">Sheet "Master_Karyawan": ID | Nama | Jabatan | Departemen | Gaji Pokok | Tunjangan Jabatan — isi 15 karyawan</div></li><li class="tugas-item"><div class="tugas-num">2</div><div class="tugas-text">Sheet "Absensi_Jan": ID | Hadir | Lembur (jam) | Alfa | Cuti</div></li><li class="tugas-item"><div class="tugas-num">3</div><div class="tugas-text">Gunakan <strong>VLOOKUP</strong> di sheet Absensi untuk mengambil Nama, Jabatan, dan Gaji dari Master</div></li><li class="tugas-item"><div class="tugas-num">4</div><div class="tugas-text">Hitung <strong>Tunjangan Lembur</strong>: Rp 25.000 × Jam Lembur</div></li><li class="tugas-item"><div class="tugas-num">5</div><div class="tugas-text">Hitung <strong>Potongan Alfa</strong>: (Gaji Pokok ÷ 22) × Jumlah Alfa</div></li><li class="tugas-item"><div class="tugas-num">6</div><div class="tugas-text">Hitung <strong>Tunjangan Kehadiran</strong> dengan IF bersarang: Alfa=0→Rp300.000; Alfa≤2→Rp150.000; Alfa>2→Rp0</div></li><li class="tugas-item"><div class="tugas-num">7</div><div class="tugas-text">Hitung <strong>Gaji Bersih</strong> = Gaji Pokok + Tunjangan Jabatan + Tunjangan Lembur + Tunjangan Kehadiran − Potongan Alfa</div></li><li class="tugas-item"><div class="tugas-num">8</div><div class="tugas-text">Buat Pivot Table: Total Gaji Bersih per Departemen + Grafik Batang</div></li>
+      </ul>
+      <div class="kasus-hint">💡 <strong>Petunjuk:</strong> T.Kehadiran: =IF(D2=0;300000;IF(D2<=2;150000;0)) | Potongan Alfa: =(GajiPokok/22)*D2 | Gaji Bersih: =E+F+G+H-I (sesuaikan kolom)</div>
+      <button class="show-sol-btn" onclick="toggleSolution(this)">💡 Lihat Panduan Solusi</button>
+      <div class="solution-box">
+        <h4>📋 Langkah Solusi:</h4>
+        <div class="sol-step">1. Sheet Master: A=ID, B=Nama, C=Jabatan, D=Departemen, E=Gaji Pokok, F=Tunjangan Jabatan</div><div class="sol-step">2. Sheet Absensi: isi ID di A. Nama: <code>=VLOOKUP(A2;Master!$A:$F;2;0)</code></div><div class="sol-step">3. Gaji Pokok: <code>=VLOOKUP(A2;Master!$A:$F;5;0)</code> | Tunjangan Jabatan: <code>=VLOOKUP(A2;Master!$A:$F;6;0)</code></div><div class="sol-step">4. Tunjangan Lembur: <code>=C2*25000</code> (C2=jam lembur)</div><div class="sol-step">5. Potongan Alfa: <code>=(H2/22)*D2</code> (H2=gaji pokok hasil VLOOKUP, D2=alfa)</div><div class="sol-step">6. Tunjangan Kehadiran: <code>=IF(D2=0;300000;IF(D2<=2;150000;0))</code></div><div class="sol-step">7. Gaji Bersih: jumlahkan semua komponen, kurangi potongan</div><div class="sol-step">8. Pivot Table: Rows=Departemen, Values=Gaji Bersih (Sum)</div>
+      </div>
+    </div>
+  </div>
+
+<div class="kasus-card">
+    <div class="kasus-top">
+      <div class="kasus-badge"><span>📦</span>Kasus 4</div>
+      <div><h3>Dashboard Inventory Minimarket "FreshMart"</h3><div class="subtitle">Pertemuan 6–7 · Tingkat: Menengah-Lanjut</div></div>
+    </div>
+    <div class="kasus-body">
+      <div class="kasus-skenario">🛒 <strong>Skenario:</strong> FreshMart memiliki 3 cabang (Tegal, Slawi, Lebaksiu). Manajer ingin satu workbook yang memantau stok per cabang, mendeteksi produk hampir habis, dan meringkas performa penjualan bulanan.</div>
+      <ul class="tugas-list">
+        <li class="tugas-item"><div class="tugas-num">1</div><div class="tugas-text">Sheet "Master": Kode | Nama | Kategori | Harga Jual | Harga Modal | Stok Minimum — isi 20 produk dari 4 kategori</div></li><li class="tugas-item"><div class="tugas-num">2</div><div class="tugas-text">Sheet "Stok": Kode | Nama (VLOOKUP) | Stok Tegal | Stok Slawi | Stok Lebaksiu | Total Stok | Nilai Stok | Status</div></li><li class="tugas-item"><div class="tugas-num">3</div><div class="tugas-text">Hitung Total Stok = jumlah 3 cabang; Nilai Stok = Total Stok × Harga Jual (VLOOKUP)</div></li><li class="tugas-item"><div class="tugas-num">4</div><div class="tugas-text">Kolom Status menggunakan IF bersarang: ⛔ HABIS (=0), ⚠️ KRITIS (&lt;Stok Min), 🟡 MENIPIS (Min–Min×2), ✅ AMAN</div></li><li class="tugas-item"><div class="tugas-num">5</div><div class="tugas-text">Sheet "Penjualan": Tanggal | Cabang | Kode | Qty | Total — isi 40+ transaksi dari 3 cabang</div></li><li class="tugas-item"><div class="tugas-num">6</div><div class="tugas-text">Buat Pivot Table: Total Penjualan per Cabang per Bulan + Column Chart perbandingan 3 cabang</div></li><li class="tugas-item"><div class="tugas-num">7</div><div class="tugas-text">Tambahkan Data Validation Dropdown untuk kolom Cabang dan Kategori</div></li><li class="tugas-item"><div class="tugas-num">8</div><div class="tugas-text">Terapkan Conditional Formatting pada kolom Status: warna merah untuk HABIS/KRITIS</div></li>
+      </ul>
+      <div class="kasus-hint">💡 <strong>Petunjuk:</strong> Status: =IF(E2=0;"⛔ HABIS";IF(E2<StokMin;"⚠️ KRITIS";IF(E2<StokMin*2;"🟡 MENIPIS";"✅ AMAN"))) — ambil StokMin dari VLOOKUP ke Master</div>
+      <button class="show-sol-btn" onclick="toggleSolution(this)">💡 Lihat Panduan Solusi</button>
+      <div class="solution-box">
+        <h4>📋 Langkah Solusi:</h4>
+        <div class="sol-step">1. Sheet Master: isi 20 produk. Kolom F = Stok Minimum.</div><div class="sol-step">2. Sheet Stok: B=VLOOKUP(A2;Master!$A:$F;2;0) untuk nama produk</div><div class="sol-step">3. Total Stok F2: <code>=C2+D2+E2</code></div><div class="sol-step">4. Nilai Stok G2: <code>=F2*VLOOKUP(A2;Master!$A:$F;4;0)</code></div><div class="sol-step">5. StokMin via VLOOKUP: <code>=VLOOKUP(A2;Master!$A:$F;6;0)</code> simpan di kolom bantu</div><div class="sol-step">6. Status H2: <code>=IF(F2=0;"⛔ HABIS";IF(F2<I2;"⚠️ KRITIS";IF(F2<I2*2;"🟡 MENIPIS";"✅ AMAN")))</code></div><div class="sol-step">7. Sheet Penjualan: isi 40 transaksi. Pivot Table: Rows=Bulan, Cols=Cabang, Values=Total (Sum)</div><div class="sol-step">8. Data Validation Cabang: Data → Validation → List → "Tegal,Slawi,Lebaksiu"</div>
+      </div>
+    </div>
+  </div>
+
+<div class="kasus-card">
+    <div class="kasus-top">
+      <div class="kasus-badge"><span>🎓</span>Kasus 5</div>
+      <div><h3>Sistem Informasi Akademik Prodi Manajemen</h3><div class="subtitle">Pertemuan 1–8 · Tingkat: Lanjut (Proyek Akhir)</div></div>
+    </div>
+    <div class="kasus-body">
+      <div class="kasus-skenario">🎓 <strong>Skenario:</strong> Program Studi Manajemen Universitas Bhamada Slawi meminta Anda membangun Sistem Informasi Akademik berbasis Excel untuk satu angkatan (20 mahasiswa, 6 mata kuliah). Sistem harus menghitung IPK, menentukan predikat, dan menyajikan dashboard laporan.</div>
+      <ul class="tugas-list">
+        <li class="tugas-item"><div class="tugas-num">1</div><div class="tugas-text">Sheet "Master_MK": Kode MK | Nama MK | SKS | Dosen | Jenis (Wajib/Pilihan) — isi 6 mata kuliah</div></li><li class="tugas-item"><div class="tugas-num">2</div><div class="tugas-text">Sheet "Master_Mhs": NIM | Nama | Angkatan | Kelas — isi 20 mahasiswa</div></li><li class="tugas-item"><div class="tugas-num">3</div><div class="tugas-text">Sheet "Nilai": NIM | Kode MK | Nilai Angka | Nilai Huruf (IFS) | Bobot (IFS) | SKS (VLOOKUP) | Poin — isi 20×6=120 baris</div></li><li class="tugas-item"><div class="tugas-num">4</div><div class="tugas-text">Bobot Nilai: A=4, B=3, C=2, D=1, E=0 menggunakan IFS(); Poin per MK = Bobot × SKS</div></li><li class="tugas-item"><div class="tugas-num">5</div><div class="tugas-text">Sheet "Rekap_IPK": NIM | Nama (VLOOKUP) | Total SKS | Total Poin | IPK | Predikat | Status Akademik</div></li><li class="tugas-item"><div class="tugas-num">6</div><div class="tugas-text">IPK = Total Poin ÷ Total SKS; Predikat: Cum Laude(≥3.75), Sangat Memuaskan(≥3.5), Memuaskan(≥3.0), Cukup(&lt;3.0)</div></li><li class="tugas-item"><div class="tugas-num">7</div><div class="tugas-text">Sheet "Dashboard": rata-rata IPK angkatan, distribusi predikat (Pie Chart), perbandingan rata-rata nilai per MK (Bar Chart)</div></li><li class="tugas-item"><div class="tugas-num">8</div><div class="tugas-text">Proteksi sheet "Nilai" dan "Master_MK"; buat sheet "Cetak" yang siap dicetak sebagai transkrip nilai</div></li>
+      </ul>
+      <div class="kasus-hint">💡 <strong>Petunjuk:</strong> IPK: =SUMIF(Nilai!B:B;A2;Nilai!G:G)/SUMIF(Nilai!B:B;A2;Nilai!F:F) | Predikat: =IFS(E2>=3.75;"Cum Laude";E2>=3.5;"Sangat Memuaskan";E2>=3.0;"Memuaskan";TRUE;"Cukup")</div>
+      <button class="show-sol-btn" onclick="toggleSolution(this)">💡 Lihat Panduan Solusi</button>
+      <div class="solution-box">
+        <h4>📋 Langkah Solusi:</h4>
+        <div class="sol-step">1. Isi semua sheet Master terlebih dahulu (MK dan Mahasiswa).</div><div class="sol-step">2. Sheet Nilai: isi 20×6=120 baris. NIM dan Kode MK sebagai identifier.</div><div class="sol-step">3. Nilai Huruf D2: <code>=IFS(C2>=85;"A";C2>=75;"B";C2>=65;"C";C2>=55;"D";TRUE;"E")</code></div><div class="sol-step">4. Bobot E2: <code>=IFS(D2="A";4;D2="B";3;D2="C";2;D2="D";1;TRUE;0)</code></div><div class="sol-step">5. SKS F2: <code>=VLOOKUP(B2;Master_MK!$A:$C;3;0)</code></div><div class="sol-step">6. Poin G2: <code>=E2*F2</code> (Bobot × SKS)</div><div class="sol-step">7. IPK di Rekap: <code>=SUMIF(Nilai!B:B;A2;Nilai!G:G)/SUMIF(Nilai!B:B;A2;Nilai!F:F)</code></div><div class="sol-step">8. Predikat: <code>=IFS(E2>=3.75;"Cum Laude";E2>=3.5;"Sangat Memuaskan";E2>=3.0;"Memuaskan";TRUE;"Cukup")</code></div><div class="sol-step">9. Dashboard: Pivot Table rata-rata nilai per MK, Pie Chart distribusi predikat</div><div class="sol-step">10. Protect sheet Nilai: Review → Protect Sheet → set password</div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<script>
+function showTab(id){
+  document.querySelectorAll('.tab-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector('[data-tab="'+id+'"]').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showQuiz(id,btn){
+  document.querySelectorAll('.quiz-container').forEach(q=>q.classList.remove('active'));
+  document.querySelectorAll('.quiz-sel-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function answer(btn,chosen,correct){
+  const card=btn.closest('.question-card');
+  if(card.dataset.answered)return;
+  card.dataset.answered='true';
+  const btns=card.querySelectorAll('.option-btn');
+  btns.forEach(b=>b.classList.add('answered'));
+  if(chosen===correct){btn.classList.add('correct');}
+  else{
+    btn.classList.add('wrong');
+    btns.forEach(b=>{
+      const m=b.getAttribute('onclick').match(/'([a-z])'/g);
+      if(m&&m[0].replace(/'/g,'')===correct)b.classList.add('revealed');
+    });
+  }
+  card.querySelector('.explanation').classList.add('show');
+}
+function showScore(quizId,total){
+  const container=document.getElementById(quizId);
+  let correct=0;
+  container.querySelectorAll('.question-card').forEach(card=>{
+    if(card.querySelector('.option-btn.correct'))correct++;
+  });
+  const pct=Math.round((correct/total)*100);
+  document.getElementById('score-num-'+quizId).textContent=correct+'/'+total;
+  const msg=pct<60?'📚 Yuk pelajari lagi materinya!':pct<80?'👍 Cukup baik, terus semangat!':pct<100?'🎉 Bagus sekali!':'🏆 Sempurna!';
+  document.getElementById('score-msg-'+quizId).textContent=msg;
+  document.getElementById('score-'+quizId).classList.add('show');
+}
+function resetQuiz(quizId){
+  const container=document.getElementById(quizId);
+  container.querySelectorAll('.question-card').forEach(card=>{
+    delete card.dataset.answered;
+    card.querySelectorAll('.option-btn').forEach(b=>b.classList.remove('answered','correct','wrong','revealed'));
+    card.querySelector('.explanation').classList.remove('show');
+  });
+  const box=document.getElementById('score-'+quizId);
+  if(box)box.classList.remove('show');
+}
+function toggleSolution(btn){
+  const box=btn.nextElementSibling;
+  if(box.classList.contains('show')){box.classList.remove('show');btn.textContent='💡 Lihat Panduan Solusi';}
+  else{box.classList.add('show');btn.textContent='🔼 Sembunyikan Solusi';}
+}
+</script>
+</body>
+</html>
