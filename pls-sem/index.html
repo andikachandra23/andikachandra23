@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan Lengkap Analisis PLS-SEM</title>
+<style>
+:root{--bg:#F7F6F2;--surface:#FFFFFF;--surface2:#F0EEE8;--border:#DDD9D0;--border-strong:#BDB9B0;--text:#1A1A18;--text2:#5A5955;--text3:#888580;--accent:#1D5FA8;--accent-bg:#EAF1FB;--accent-border:#B5D0EF;--green:#0F6E56;--green-bg:#E1F5EE;--green-border:#9FE1CB;--amber:#7A4F0A;--amber-bg:#FDF3E2;--amber-border:#F5D99A;--red:#8B2020;--red-bg:#FDEAEA;--red-border:#F0BBBB;--purple:#4A3FAA;--purple-bg:#EEEDFE;--purple-border:#CECBF6;--mono:'Courier New',Courier,monospace;--r:8px;--rl:12px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;line-height:1.7;display:flex}
+.sidebar{width:255px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);position:sticky;top:0;height:100vh;overflow-y:auto;padding-bottom:40px}
+.sb-logo{padding:18px 18px 14px;border-bottom:1px solid var(--border);font-size:13px;font-weight:600;color:var(--text)}
+.sb-logo span{color:var(--accent)}
+.sb-sec{padding:13px 16px 3px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)}
+.sidebar a{display:flex;align-items:center;gap:8px;padding:6px 16px;font-size:13px;color:var(--text2);text-decoration:none;border-left:2px solid transparent;transition:all .15s}
+.sidebar a:hover{color:var(--text);background:var(--bg)}
+.sidebar a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-bg);font-weight:500}
+.num{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:4px;font-size:11px;font-weight:600;flex-shrink:0;background:var(--surface2);color:var(--text3)}
+.sidebar a.active .num{background:var(--accent);color:#fff}
+.main{flex:1;min-width:0;padding:36px 44px 80px;max-width:920px}
+.ph{margin-bottom:36px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.ph-ey{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.ph-title{font-size:27px;font-weight:700;color:var(--text);letter-spacing:-.02em;line-height:1.2;margin-bottom:8px}
+.ph-sub{font-size:14px;color:var(--text2)}
+.ph-sub strong{color:var(--text)}
+.badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.section{margin-bottom:52px;scroll-margin-top:20px}
+.sh{display:flex;align-items:flex-start;gap:13px;margin-bottom:18px}
+.sn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;flex-shrink:0;font-size:14px;font-weight:700;background:var(--accent);color:#fff}
+.sn.g{background:var(--green)}
+.sn.a{background:#BA7517}
+.sn.p{background:var(--purple)}
+.sm{}
+.sp{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:1px}
+.st{font-size:19px;font-weight:600;color:var(--text);letter-spacing:-.01em}
+.sd{margin-left:47px}
+p{font-size:14px;color:var(--text2);margin-bottom:10px;line-height:1.7}
+p strong{color:var(--text)}
+ul,ol{padding-left:20px}
+li{font-size:14px;color:var(--text2);margin-bottom:4px}
+li strong{color:var(--text)}
+h3{font-size:15px;font-weight:600;color:var(--text);margin:16px 0 7px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:18px 20px;margin-bottom:13px}
+.ct{font-size:13px;font-weight:600;color:var(--text);margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.dot.g{background:var(--green)}.dot.a{background:#BA7517}.dot.r{background:#A32D2D}.dot.p{background:var(--purple)}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:9px;margin:11px 0}
+.tc{border-radius:var(--r);padding:11px 13px;border:1px solid transparent}
+.tc.g{background:var(--green-bg);border-color:var(--green-border)}
+.tc.a{background:var(--amber-bg);border-color:var(--amber-border)}
+.tc.r{background:var(--red-bg);border-color:var(--red-border)}
+.tc.b{background:var(--accent-bg);border-color:var(--accent-border)}
+.tv{font-size:19px;font-weight:700;line-height:1;margin-bottom:3px}
+.tc.g .tv{color:var(--green)}.tc.a .tv{color:var(--amber)}.tc.r .tv{color:#8B2020}.tc.b .tv{color:var(--accent)}
+.tl{font-size:12px;color:var(--text2)}.tv2{font-size:12px;font-weight:600;margin-top:4px}
+.tc.g .tv2{color:var(--green)}.tc.a .tv2{color:var(--amber)}.tc.r .tv2{color:#8B2020}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:11px 0}
+thead th{background:var(--surface2);padding:7px 11px;text-align:left;font-weight:600;font-size:12px;border-bottom:1px solid var(--border);color:var(--text2)}
+tbody td{padding:8px 11px;border-bottom:1px solid var(--border);color:var(--text)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--bg)}
+.cg{color:var(--green);font-weight:600}.ca{color:var(--amber);font-weight:600}.cr{color:#8B2020;font-weight:600}.cb{color:var(--accent);font-weight:600}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.b-g{background:var(--green-bg);color:var(--green)}.b-a{background:var(--amber-bg);color:var(--amber)}.b-r{background:var(--red-bg);color:#8B2020}.b-b{background:var(--accent-bg);color:var(--accent)}.b-p{background:var(--purple-bg);color:var(--purple)}
+.note{border-radius:var(--r);padding:10px 13px;font-size:13px;margin:9px 0;line-height:1.5}
+.ni{background:var(--accent-bg);border:1px solid var(--accent-border);color:var(--accent)}
+.nw{background:var(--amber-bg);border:1px solid var(--amber-border);color:var(--amber)}
+.no{background:var(--green-bg);border:1px solid var(--green-border);color:var(--green)}
+.alt{background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:var(--rl);padding:14px 17px;margin:13px 0}
+.alt-t{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#BA7517;margin-bottom:7px}
+.alt ul{padding-left:17px}
+.alt li{font-size:13px;color:var(--amber);margin-bottom:4px}
+.alt li strong{color:#5A3200}
+.ex{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rl);padding:14px 17px;margin:13px 0}
+.ex-h{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:9px;display:flex;align-items:center;gap:5px}
+.ex-h::before{content:'';display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--text3)}
+.ex p{font-size:13px;color:var(--text2);margin-bottom:5px}
+.ex strong{color:var(--text)}
+.formula{background:#F0EEF8;border:1px solid #D0CCEE;border-radius:var(--r);padding:11px 15px;font-family:var(--mono);font-size:12.5px;color:#2D2060;margin:9px 0;line-height:1.65;white-space:pre-wrap}
+.spath{background:#F0EEF8;border:1px solid #D0CCEE;border-radius:6px;padding:5px 11px;font-size:12px;color:#2D2060;font-family:var(--mono);display:inline-block;margin:4px 0}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.df{display:flex;flex-direction:column;gap:0;margin:13px 0}
+.dfi{display:flex;gap:0}
+.dfl{display:flex;flex-direction:column;align-items:center;width:30px;flex-shrink:0}
+.dfd{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.dfv{flex:1;width:2px;background:var(--border);margin:2px 0}
+.dfc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:9px 13px;margin-bottom:8px;flex:1;font-size:13px;color:var(--text2)}
+.dfc strong{color:var(--text);display:block;font-size:13px;margin-bottom:2px}
+.dfc.cond{background:var(--accent-bg);border-color:var(--accent-border)}
+.dfc.ok-p{background:var(--green-bg);border-color:var(--green-border)}
+.dfc.wa-p{background:var(--amber-bg);border-color:var(--amber-border)}
+.dfc.er-p{background:var(--red-bg);border-color:var(--red-border)}
+.cl{list-style:none;padding:0}
+.cl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text2)}
+.cl li:last-child{border-bottom:none}
+.cl input[type=checkbox]{margin-top:3px;flex-shrink:0;width:15px;height:15px;cursor:pointer;accent-color:var(--green)}
+hr{border:none;border-top:1px solid var(--border);margin:18px 0}
+code{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-family:var(--mono);font-size:12px;color:#2D2060}
+@media(max-width:768px){.sidebar{display:none}.main{padding:22px 18px 60px}}
+
+/* NARASI */
+.narasi{background:#F5F3FF;border:1px solid #C8C3F0;border-radius:var(--rl);padding:16px 18px;margin:14px 0}
+.narasi-t{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--purple);margin-bottom:9px;display:flex;align-items:center;gap:6px}
+.narasi-t::before{content:'✍';font-size:13px}
+.narasi-body{font-size:13.5px;color:#2D2060;line-height:1.85;font-style:italic}
+.narasi-body strong{color:#1A1050;font-style:normal}
+.narasi-body .hl{background:#E0DCF8;border-radius:3px;padding:1px 5px;font-style:normal;font-weight:500}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sb-logo">Panduan <span>PLS-SEM</span> Lengkap</div>
+  <div class="sb-sec">Persiapan</div>
+  <a href="#s0"><span class="num">i</span> Tentang PLS-SEM</a>
+  <a href="#s1"><span class="num">1</span> Spesifikasi Model</a>
+  <a href="#s2"><span class="num">2</span> Pemeriksaan Data</a>
+  <a href="#s3"><span class="num">3</span> Estimasi Algoritma</a>
+  <div class="sb-sec">Outer Model Reflektif</div>
+  <a href="#s4a"><span class="num">4a</span> Outer Loading</a>
+  <a href="#s4b"><span class="num">4b</span> Composite Reliability</a>
+  <a href="#s4c"><span class="num">4c</span> AVE (Convergent)</a>
+  <a href="#s4d"><span class="num">4d</span> Discriminant Validity</a>
+  <div class="sb-sec">Outer Model Formatif</div>
+  <a href="#s5a"><span class="num">5a</span> Convergent Validity</a>
+  <a href="#s5b"><span class="num">5b</span> VIF Formatif</a>
+  <a href="#s5c"><span class="num">5c</span> Outer Weights</a>
+  <div class="sb-sec">Inner Model</div>
+  <a href="#s6a"><span class="num">6a</span> VIF Inner Model</a>
+  <a href="#s6b"><span class="num">6b</span> Path Coefficients</a>
+  <a href="#s6c"><span class="num">6c</span> R² &amp; R² Adjusted</a>
+  <a href="#s6d"><span class="num">6d</span> f² Effect Size</a>
+  <a href="#s6e"><span class="num">6e</span> Q² Blindfolding</a>
+  <a href="#s6f"><span class="num">6f</span> q² Effect Size</a>
+  <div class="sb-sec">Referensi</div>
+  <a href="#chk"><span class="num">✓</span> Checklist Pelaporan</a>
+  <a href="#tbl"><span class="num">≡</span> Tabel Semua Threshold</a>
+</aside>
+
+<main class="main">
+
+<div class="ph">
+  <div class="ph-ey">Hair, Henseler, Ringle &amp; Sarstedt (2016)</div>
+  <h1 class="ph-title">Panduan Lengkap Analisis PLS-SEM</h1>
+  <p class="ph-sub">Mencakup seluruh tahap — <strong>outer model reflektif, formatif, dan inner model</strong> — beserta threshold penerimaan, contoh kasus nyata dari model reputasi perusahaan (n = 344), dan alternatif apabila suatu kriteria tidak terpenuhi.</p>
+  <div class="badges">
+    <span class="badge b-b">SmartPLS 3</span>
+    <span class="badge b-g">Bootstrapping 5.000 sampel</span>
+    <span class="badge b-p">Reflektif &amp; Formatif</span>
+    <span class="badge b-a">Contoh Kasus Nyata</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S0 — TENTANG PLS-SEM           -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s0">
+  <div class="sh">
+    <div class="sn p">i</div>
+    <div class="sm"><div class="sp">Pengantar</div><div class="st">Apa itu PLS-SEM?</div></div>
+  </div>
+  <div class="sd">
+    <p>PLS-SEM (Partial Least Squares Structural Equation Modeling) adalah teknik multivariat generasi kedua yang menggabungkan analisis jalur dengan model pengukuran. PLS-SEM <strong>memaksimalkan varian yang dijelaskan (R²)</strong> pada variabel endogen — berbeda dari CB-SEM yang meminimalkan perbedaan kovarians.</p>
+    <div class="card">
+      <div class="ct"><span class="dot p"></span>Kapan Memilih PLS-SEM?</div>
+      <table>
+        <thead><tr><th>Kondisi</th><th>PLS-SEM</th><th>CB-SEM</th></tr></thead>
+        <tbody>
+          <tr><td>Tujuan utama</td><td class="cg">Prediksi &amp; eksplorasi</td><td>Konfirmasi teori</td></tr>
+          <tr><td>Distribusi data</td><td class="cg">Non-normal — tidak masalah</td><td>Butuh distribusi normal</td></tr>
+          <tr><td>Ukuran sampel</td><td class="cg">Kecil bisa ditangani (≥ 30–50)</td><td>Butuh sampel besar</td></tr>
+          <tr><td>Model kompleks</td><td class="cg">Banyak konstruk &amp; indikator ✓</td><td>Terbatas, bisa tidak konvergen</td></tr>
+          <tr><td>Konstruk formatif</td><td class="cg">Ditangani penuh</td><td>Bermasalah identifikasi</td></tr>
+          <tr><td>Goodness-of-fit</td><td class="ca">Prediksi-oriented (R², Q²)</td><td>χ², CFI, RMSEA tersedia</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="ex">
+      <div class="ex-h">Konteks Studi Kasus (Digunakan Sepanjang Panduan Ini)</div>
+      <p>Model <strong>Reputasi Perusahaan</strong> (Hair et al., 2016). Konstruk formatif eksogen: ATTR (Attractiveness), CSOR (CSR), PERF (Performance), QUAL (Quality). Konstruk reflektif endogen: COMP (Competence), LIKE (Likeability), CUSA (Customer Satisfaction), CUSL (Customer Loyalty). <strong>n = 344 responden</strong>, operator jaringan seluler di Jerman.</p>
+    </div>
+    <div class="note ni"><strong>Urutan evaluasi wajib:</strong> Outer model (Stage 5) harus selesai dan valid sebelum inner model (Stage 6) boleh diinterpretasikan. Ini adalah prinsip fundamental PLS-SEM.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S1 — SPESIFIKASI               -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s1">
+  <div class="sh">
+    <div class="sn">1</div>
+    <div class="sm"><div class="sp">Fase 1 — Persiapan</div><div class="st">Spesifikasi Model</div></div>
+  </div>
+  <div class="sd">
+    <p>Tentukan: (1) konstruk laten beserta indikatornya, (2) jenis pengukuran — <strong>reflektif atau formatif</strong>, (3) arah hubungan antar konstruk berdasarkan teori.</p>
+    <div class="tgrid">
+      <div class="tc b"><div class="tv">Reflektif</div><div class="tl">Panah: konstruk → indikator. Indikator saling berkorelasi. Contoh: skala Likert kepuasan. Perubahan konstruk mengubah semua indikator.</div></div>
+      <div class="tc b"><div class="tv">Formatif</div><div class="tl">Panah: indikator → konstruk. Indikator tidak harus berkorelasi. Contoh: indeks SES. Menghapus satu indikator mengubah makna konstruk.</div></div>
+    </div>
+    <div class="note nw"><strong>Cara menentukan reflektif vs. formatif:</strong> Tanya — jika satu indikator dihapus, apakah makna konstruk berubah? Jika ya → formatif. Apakah indikator bisa saling menggantikan? Jika ya → reflektif. Gunakan Confirmatory Tetrad Analysis (CTA-PLS) untuk uji empiris jika ragu.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S2 — PEMERIKSAAN DATA          -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s2">
+  <div class="sh">
+    <div class="sn">2</div>
+    <div class="sm"><div class="sp">Fase 1 — Persiapan</div><div class="st">Pemeriksaan Data</div></div>
+  </div>
+  <div class="sd">
+    <div class="card">
+      <div class="ct"><span class="dot a"></span>Missing Values</div>
+      <table>
+        <thead><tr><th>Kondisi</th><th>Tindakan</th></tr></thead>
+        <tbody>
+          <tr><td>Missing values per observasi <strong>&gt; 15%</strong></td><td class="cr">Hapus observasi tersebut</td></tr>
+          <tr><td>Missing values per indikator (jumlah terbatas)</td><td class="ca">Mean replacement atau EM algorithm</td></tr>
+          <tr><td>Data lengkap</td><td class="cg">Lanjutkan estimasi</td></tr>
+        </tbody>
+      </table>
+      <div class="alt"><div class="alt-t">⚠ Alternatif jika banyak missing</div><ul>
+        <li><strong>Multiple imputation</strong> — jika pola missing acak (MCAR/MAR)</li>
+        <li><strong>Subgroup mean replacement</strong> — rata-rata per kelompok, bukan keseluruhan</li>
+        <li><strong>Casewise deletion</strong> — hanya jika persentase kecil dan tidak sistematis</li>
+      </ul></div>
+    </div>
+    <div class="card">
+      <div class="ct"><span class="dot a"></span>Ukuran Sampel Minimum</div>
+      <div class="formula">Min. sampel = max(
+  10 × jumlah panah terbanyak menuju satu konstruk,
+  10 × jumlah indikator terbanyak pada satu konstruk
+)</div>
+      <div class="ex"><div class="ex-h">Contoh Kasus</div>
+        <p>Konstruk CUSL diprediksi oleh COMP, LIKE, dan CUSA (3 panah) → min. = 3 × 10 = <strong>30</strong>. Untuk power memadai (R² = 0.25, α = 5%) direkomendasikan <strong>minimal 59 sampel</strong> (Cohen, 1992).</p>
+      </div>
+      <div class="alt"><div class="alt-t">⚠ Jika Sampel Sangat Terbatas</div><ul>
+        <li><strong>Gunakan G*Power</strong> untuk analisis power yang lebih akurat dan tepat</li>
+        <li><strong>Kurangi konstruk/indikator</strong> agar model lebih parsimonious</li>
+        <li><strong>Pastikan outer loading ≥ 0.70</strong> — model dengan loading tinggi membutuhkan sampel lebih sedikit</li>
+      </ul></div>
+    </div>
+    <div class="card">
+      <div class="ct"><span class="dot g"></span>Distribusi &amp; Outlier</div>
+      <p>PLS-SEM <strong>tidak mensyaratkan</strong> distribusi normal. Namun outlier ekstrem perlu diperiksa karena OLS dalam algoritma PLS sensitif terhadap nilai ekstrem. Pertahankan outlier jika ada alasan substantif; hapus hanya jika terbukti data entry error.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S3 — ESTIMASI                  -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s3">
+  <div class="sh">
+    <div class="sn">3</div>
+    <div class="sm"><div class="sp">Fase 1 — Persiapan</div><div class="st">Estimasi Model (SmartPLS)</div></div>
+  </div>
+  <div class="sd">
+    <div class="card">
+      <div class="ct"><span class="dot"></span>Setting Algoritma yang Direkomendasikan</div>
+      <table>
+        <thead><tr><th>Parameter</th><th>Nilai yang Direkomendasikan</th></tr></thead>
+        <tbody>
+          <tr><td>Structural model weighting scheme</td><td class="cb">Path weighting scheme</td></tr>
+          <tr><td>Maximum iterations</td><td class="cg">300</td></tr>
+          <tr><td>Stop criterion</td><td class="cg">1 × 10⁻⁷ (default SmartPLS)</td></tr>
+          <tr><td>Missing value treatment</td><td>Mean replacement (default)</td></tr>
+        </tbody>
+      </table>
+      <div class="note ni">Algoritma berhasil jika berhenti karena <em>stop criterion tercapai</em>, bukan karena iterasi habis. Jumlah iterasi harus &lt; 300.</div>
+    </div>
+    <div class="spath">Calculate → PLS Algorithm → Start Calculation</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S4A — OUTER LOADING            -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s4a">
+  <div class="sh">
+    <div class="sn g">4a</div>
+    <div class="sm"><div class="sp">Fase 2 — Outer Model Reflektif (Stage 5a)</div><div class="st">Reliabilitas Indikator — Outer Loading</div></div>
+  </div>
+  <div class="sd">
+    <p>Outer loading mencerminkan seberapa besar varian indikator yang dijelaskan konstruknya. Loading² = <em>indicator reliability</em>.</p>
+    <div class="note ni"><strong>Mengapa 0.708?</strong> Karena 0.708² ≈ 0.50 — indikator menjelaskan ≥ 50% varian konstruknya. Dalam praktik, 0.70 dianggap cukup dekat.</div>
+    <div class="tgrid">
+      <div class="tc g"><div class="tv">≥ 0.708</div><div class="tl">Dibulatkan: ≥ 0.70</div><div class="tv2">✓ Pertahankan indikator</div></div>
+      <div class="tc a"><div class="tv">0.40 – 0.70</div><div class="tl">Zona abu-abu</div><div class="tv2">⚠ Pertimbangkan, lihat CR &amp; AVE</div></div>
+      <div class="tc r"><div class="tv">&lt; 0.40</div><div class="tl">Loading lemah</div><div class="tv2">✗ Hapus indikator</div></div>
+    </div>
+    <div class="ex"><div class="ex-h">Contoh Kasus — Model Reputasi Perusahaan</div>
+      <table>
+        <thead><tr><th>Indikator</th><th>Outer Loading</th><th>Reliability (loading²)</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>comp_1</td><td class="cg">0.858</td><td>0.736</td><td><span class="badge b-g">Pertahankan ✓</span></td></tr>
+          <tr><td>comp_2</td><td class="cg">0.798</td><td>0.637</td><td><span class="badge b-g">Pertahankan ✓</span></td></tr>
+          <tr><td>comp_3</td><td class="cg">0.818</td><td>0.669</td><td><span class="badge b-g">Pertahankan ✓</span></td></tr>
+          <tr><td>cusl_1</td><td class="cg">0.833</td><td>0.694</td><td><span class="badge b-g">Pertahankan ✓</span></td></tr>
+          <tr><td>cusl_2</td><td class="cg">0.917</td><td>0.841</td><td><span class="badge b-g">Pertahankan ✓</span></td></tr>
+          <tr><td>cusl_3</td><td class="cg">0.843</td><td>0.711</td><td><span class="badge b-g">Pertahankan ✓</span></td></tr>
+        </tbody>
+      </table>
+      <p>Semua loading konstruk COMP, LIKE, CUSA, dan CUSL berada di atas 0.821 — jauh melampaui threshold.</p>
+    </div>
+    <div class="narasi">
+      <div class="narasi-t">Contoh Narasi — Outer Loading Terpenuhi</div>
+      <div class="narasi-body">"Evaluasi model pengukuran reflektif dimulai dengan memeriksa reliabilitas indikator melalui nilai <em>outer loading</em>. Hasil analisis menunjukkan bahwa seluruh indikator pada konstruk COMP memiliki outer loading di atas <span class="hl">0.70</span> — comp_1 (0.858), comp_2 (0.798), dan comp_3 (0.818). Indikator cusl_2 mencatat outer loading tertinggi sebesar <span class="hl">0.917</span>. Karena semua nilai outer loading melampaui batas minimum yang disyaratkan (<strong>λ ≥ 0.70</strong>), seluruh indikator dipertahankan dalam model. Kondisi ini mengindikasikan bahwa setiap indikator menjelaskan lebih dari 50% varian konstruknya, memenuhi standar reliabilitas indikator yang disarankan Hair et al. (2016)."</div>
+    </div>
+    <div class="narasi">
+      <div class="narasi-t">Contoh Narasi — Jika Ada Indikator Dihapus</div>
+      <div class="narasi-body">"Pada tahap awal evaluasi, indikator <strong>like_4</strong> menunjukkan outer loading sebesar <span class="hl">0.452</span>, berada di bawah nilai ideal 0.708. Setelah dilakukan analisis dampak penghapusan, mengeluarkan like_4 meningkatkan nilai CR konstruk LIKE dari 0.812 menjadi <span class="hl">0.871</span> dan AVE dari 0.479 menjadi <span class="hl">0.630</span>. Mengingat peningkatan signifikan tersebut dan tidak adanya argumen teoritis kuat untuk mempertahankan item ini, like_4 dikeluarkan dari model final."</div>
+    </div>
+    <div class="alt"><div class="alt-t">⚠ Alternatif jika Loading 0.40 – 0.70</div><ul>
+      <li><strong>Cek dampak penghapusan:</strong> hapus indikator hanya jika CR dan AVE naik di atas threshold setelahnya</li>
+      <li><strong>Pertahankan jika ada alasan konten:</strong> indikator penting secara teoritis boleh dipertahankan meski loading agak rendah</li>
+      <li><strong>Periksa cross-loading:</strong> jika loading pada konstruk lain hampir setara, itu sinyal item bermasalah secara konseptual</li>
+      <li><strong>Tinjau wording item:</strong> ambiguitas pertanyaan sering menjadi penyebab loading rendah</li>
+    </ul></div>
+    <div class="spath">Final Results → Outer Loadings</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S4B — CR                       -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s4b">
+  <div class="sh">
+    <div class="sn g">4b</div>
+    <div class="sm"><div class="sp">Fase 2 — Outer Model Reflektif (Stage 5a)</div><div class="st">Internal Consistency Reliability — CR &amp; Cronbach's Alpha</div></div>
+  </div>
+  <div class="sd">
+    <p>Composite Reliability (CR) dan Cronbach's Alpha mengukur konsistensi internal pengukuran. CR lebih diutamakan di PLS-SEM karena tidak mengasumsikan bobot yang sama untuk semua indikator.</p>
+    <div class="card">
+      <div class="ct"><span class="dot g"></span>Threshold Composite Reliability (CR)</div>
+      <table>
+        <thead><tr><th>Nilai CR</th><th>Konteks</th><th>Interpretasi</th></tr></thead>
+        <tbody>
+          <tr><td class="cr">&lt; 0.60</td><td>—</td><td class="cr">Kurang — revisi model atau indikator</td></tr>
+          <tr><td class="ca">0.60 – 0.70</td><td>Eksploratori</td><td class="ca">Dapat diterima (batas minimum)</td></tr>
+          <tr><td class="cg">0.70 – 0.90</td><td>Penelitian lanjutan</td><td class="cg">Memuaskan ✓</td></tr>
+          <tr><td class="cr">&gt; 0.95</td><td>—</td><td class="cr">Tidak diinginkan — indikator redundan</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="ct"><span class="dot a"></span>Catatan Cronbach's Alpha</div>
+      <ul>
+        <li>Threshold sama dengan CR: eksploratori 0.60–0.70, lanjutan 0.70–0.90</li>
+        <li>Alpha adalah <strong>batas bawah</strong> reliabilitas — selalu lebih konservatif dari CR</li>
+        <li>Sensitif terhadap jumlah item: banyak item → alpha naik meski reliabilitas biasa saja</li>
+        <li>Laporkan keduanya agar reviewer dapat membandingkan</li>
+      </ul>
+    </div>
+    <div class="ex"><div class="ex-h">Contoh Kasus</div>
+      <table>
+        <thead><tr><th>Konstruk</th><th>CR</th><th>Cronbach's Alpha</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>COMP</td><td class="cg">0.865</td><td class="cg">0.776</td><td><span class="badge b-g">Terpenuhi ✓</span></td></tr>
+          <tr><td>CUSL</td><td class="cg">0.899</td><td class="cg">0.831</td><td><span class="badge b-g">Terpenuhi ✓</span></td></tr>
+          <tr><td>LIKE</td><td class="cg">0.899</td><td class="cg">0.831</td><td><span class="badge b-g">Terpenuhi ✓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alt"><div class="alt-t">⚠ Alternatif jika CR &lt; 0.70</div><ul>
+      <li><strong>Hapus indikator loading terendah</strong> secara bertahap, cek perubahan CR setiap langkah</li>
+      <li><strong>Tambahkan indikator baru</strong> yang lebih relevan secara konten (jika memungkinkan di revisi penelitian)</li>
+      <li><strong>Tinjau ulang operasionalisasi konstruk</strong> — definisi yang terlalu luas membuat indikator tidak konsisten</li>
+      <li><strong>Jangan hanya hapus item untuk mengejar angka</strong> tanpa pertimbangan content validity</li>
+    </ul></div>
+    <div class="spath">Quality Criteria → Construct Reliability and Validity</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S4C — AVE                      -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s4c">
+  <div class="sh">
+    <div class="sn g">4c</div>
+    <div class="sm"><div class="sp">Fase 2 — Outer Model Reflektif (Stage 5a)</div><div class="st">Convergent Validity — Average Variance Extracted (AVE)</div></div>
+  </div>
+  <div class="sd">
+    <p>AVE mengukur rata-rata varian yang ditangkap konstruk dari indikatornya dibandingkan varian error. AVE = Σ(λ²) / [Σ(λ²) + Σ(1−λ²)].</p>
+    <div class="tgrid">
+      <div class="tc g"><div class="tv">≥ 0.50</div><div class="tl">Konstruk menjelaskan &gt;50% varian indikatornya</div><div class="tv2">✓ Convergent validity terpenuhi</div></div>
+      <div class="tc r"><div class="tv">&lt; 0.50</div><div class="tl">Error varian lebih besar dari yang dijelaskan</div><div class="tv2">✗ Convergent validity lemah</div></div>
+    </div>
+    <div class="ex"><div class="ex-h">Contoh Kasus</div>
+      <table>
+        <thead><tr><th>Konstruk</th><th>AVE</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>COMP</td><td class="cg">0.681</td><td><span class="badge b-g">Terpenuhi ✓</span></td></tr>
+          <tr><td>CUSL</td><td class="cg">0.748</td><td><span class="badge b-g">Terpenuhi ✓</span></td></tr>
+          <tr><td>LIKE</td><td class="cg">0.747</td><td><span class="badge b-g">Terpenuhi ✓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alt"><div class="alt-t">⚠ Alternatif jika AVE &lt; 0.50</div><ul>
+      <li><strong>Hapus indikator loading terendah</strong> — AVE naik karena indikator lemah dikeluarkan dari kalkulasi</li>
+      <li><strong>Tinjau wording item:</strong> indikator ambigu atau terlalu luas menurunkan AVE</li>
+      <li><strong>Perhatikan trade-off:</strong> menghapus indikator meningkatkan AVE tapi mengorbankan content validity — justifikasikan keputusan</li>
+    </ul></div>
+    <div class="spath">Quality Criteria → Construct Reliability and Validity → AVE</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S4D — DISCRIMINANT             -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s4d">
+  <div class="sh">
+    <div class="sn g">4d</div>
+    <div class="sm"><div class="sp">Fase 2 — Outer Model Reflektif (Stage 5a)</div><div class="st">Discriminant Validity</div></div>
+  </div>
+  <div class="sd">
+    <p>Discriminant validity memastikan setiap konstruk berbeda secara empiris dari konstruk lainnya.</p>
+    <div class="card">
+      <div class="ct"><span class="dot"></span>1 — Cross-Loadings</div>
+      <p>Setiap indikator harus memiliki loading lebih tinggi pada konstruknya sendiri daripada pada konstruk lain manapun.</p>
+      <div class="ex" style="margin-top:8px"><div class="ex-h">Contoh Kasus</div>
+        <p>Indikator <strong>cusl_2</strong>: loading pada CUSL = 0.917. Cross-loading pada COMP = 0.389, LIKE = 0.482, CUSA = 0.551. Semuanya jauh lebih kecil → <span class="badge b-g">Terpenuhi ✓</span></p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct"><span class="dot"></span>2 — Fornell-Larcker Criterion</div>
+      <p>√AVE setiap konstruk harus lebih besar dari korelasinya dengan konstruk lain manapun.</p>
+      <div class="formula">√AVE_COMP = √0.681 = 0.825
+Korelasi COMP–CUSL = 0.567  &lt; 0.825  ✓
+Korelasi COMP–LIKE = 0.630  &lt; 0.825  ✓
+Korelasi COMP–CUSA = 0.576  &lt; 0.825  ✓</div>
+      <div class="note nw">Fornell-Larcker memiliki keterbatasan saat loading antar konstruk hanya sedikit berbeda. Gunakan HTMT sebagai konfirmasi utama.</div>
+    </div>
+    <div class="card">
+      <div class="ct"><span class="dot g"></span>3 — HTMT (Direkomendasikan oleh Hair et al.)</div>
+      <p>Rasio rata-rata korelasi heterotraits terhadap rata-rata korelasi monotraits. Lebih sensitif dari dua metode di atas.</p>
+      <div class="tgrid">
+        <div class="tc g"><div class="tv">&lt; 0.85</div><div class="tl">Konstruk konseptual berbeda jelas</div><div class="tv2">✓ Threshold konservatif</div></div>
+        <div class="tc a"><div class="tv">&lt; 0.90</div><div class="tl">Konstruk konseptual mirip</div><div class="tv2">⚠ Threshold lebih longgar</div></div>
+        <div class="tc r"><div class="tv">≥ 0.90</div><div class="tl">—</div><div class="tv2">✗ Discriminant validity bermasalah</div></div>
+      </div>
+      <div class="ex" style="margin-top:10px"><div class="ex-h">Contoh Kasus — HTMT</div>
+        <table>
+          <thead><tr><th>Pasangan Konstruk</th><th>HTMT</th><th>95% CI</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>COMP – CUSL</td><td class="cg">0.701</td><td>[0.578, 0.812]</td><td><span class="badge b-g">&lt; 0.85, CI ≠ 1 ✓</span></td></tr>
+            <tr><td>COMP – LIKE</td><td class="cg">0.742</td><td>[0.627, 0.842]</td><td><span class="badge b-g">&lt; 0.85, CI ≠ 1 ✓</span></td></tr>
+            <tr><td>CUSA – CUSL</td><td class="cg">0.665</td><td>[0.564, 0.759]</td><td><span class="badge b-g">&lt; 0.85, CI ≠ 1 ✓</span></td></tr>
+          </tbody>
+        </table>
+        <p>Semua nilai HTMT di bawah 0.85 dan tidak ada confidence interval yang mencakup nilai 1 → discriminant validity terkonfirmasi penuh.</p>
+      </div>
+    </div>
+
+    <div class="narasi">
+      <div class="narasi-t">Contoh Narasi — Discriminant Validity Terpenuhi</div>
+      <div class="narasi-body">"Discriminant validity dievaluasi menggunakan tiga pendekatan komplementer. Pertama, pemeriksaan cross-loading menunjukkan bahwa setiap indikator memiliki loading tertinggi pada konstruknya sendiri dibandingkan konstruk lain — misalnya, cusl_2 memiliki loading <span class="hl">0.917</span> pada CUSL namun hanya 0.551 pada CUSA. Kedua, kriteria Fornell-Larcker terpenuhi karena akar kuadrat AVE setiap konstruk (berkisar 0.825–0.917) melampaui korelasi tertinggi dengan konstruk lain. Ketiga, nilai HTMT untuk semua pasangan konstruk berada di bawah <span class="hl">0.85</span>, dengan confidence interval BCa 95% yang seluruhnya tidak mencakup nilai 1. Berdasarkan ketiga kriteria tersebut, discriminant validity terkonfirmasi secara meyakinkan untuk seluruh konstruk reflektif dalam model."</div>
+    </div>
+    <div class="alt"><div class="alt-t">⚠ Alternatif jika HTMT ≥ 0.85 atau CI Mencakup 1</div><ul>
+      <li><strong>Tinjau ulang definisi konstruk:</strong> dua konstruk mungkin terlalu overlap konseptual — pertimbangkan penggabungan</li>
+      <li><strong>Hapus indikator cross-loading tinggi:</strong> indikator yang turut mengukur konstruk lain menjadi sumber masalah</li>
+      <li><strong>Pertimbangkan higher-order construct:</strong> jika dua konstruk berkorelasi tinggi karena keduanya adalah dimensi dari satu konstruk lebih luas</li>
+      <li><strong>Tambahkan indikator lebih spesifik</strong> untuk memperkuat diferensiasi antar konstruk</li>
+    </ul></div>
+    <div class="spath">Quality Criteria → Discriminant Validity → HTMT / Cross Loadings / Fornell-Larcker</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S5A — CONV VALID FORMATIF      -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s5a">
+  <div class="sh">
+    <div class="sn a">5a</div>
+    <div class="sm"><div class="sp">Fase 3 — Outer Model Formatif (Stage 5b)</div><div class="st">Convergent Validity Formatif — Redundancy Analysis</div></div>
+  </div>
+  <div class="sd">
+    <p>Konstruk formatif tidak menggunakan AVE. Convergent validity diuji dengan <strong>redundancy analysis</strong>: konstruk formatif memprediksi konstruk reflektif global (single-item atau multi-item) dari konsep yang sama.</p>
+    <div class="tgrid">
+      <div class="tc g"><div class="tv">≥ 0.80</div><div class="tl">Path coefficient ideal (R² ≥ 0.64)</div><div class="tv2">✓ Sangat kuat</div></div>
+      <div class="tc a"><div class="tv">≥ 0.70</div><div class="tl">Minimum yang diterima (R² ≥ 0.50)</div><div class="tv2">⚠ Dapat diterima</div></div>
+      <div class="tc r"><div class="tv">&lt; 0.70</div><div class="tl">—</div><div class="tv2">✗ Tidak ada convergent validity</div></div>
+    </div>
+    <div class="ex"><div class="ex-h">Contoh Kasus — Redundancy Analysis (Model Reputasi)</div>
+      <table>
+        <thead><tr><th>Konstruk Formatif</th><th>Path → Global Item</th><th>R²</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>ATTR</td><td class="cg">0.874</td><td>0.764</td><td><span class="badge b-g">Terpenuhi ✓</span></td></tr>
+          <tr><td>CSOR</td><td class="cg">0.857</td><td>0.734</td><td><span class="badge b-g">Terpenuhi ✓</span></td></tr>
+          <tr><td>PERF</td><td class="cg">0.811</td><td>0.658</td><td><span class="badge b-g">Terpenuhi ✓</span></td></tr>
+          <tr><td>QUAL</td><td class="cg">0.805</td><td>0.648</td><td><span class="badge b-g">Terpenuhi ✓</span></td></tr>
+        </tbody>
+      </table>
+      <p>Dibuat model terpisah di SmartPLS: mis. ATTR_F (formatif) → ATTR_G (single-item reflektif). Path coefficient antara keduanya adalah bukti convergent validity.</p>
+    </div>
+    <div class="alt"><div class="alt-t">⚠ Alternatif jika Path &lt; 0.70</div><ul>
+      <li><strong>Revisi indikator formatif:</strong> mungkin ada facet domain konstruk yang tidak tertangkap</li>
+      <li><strong>Tambahkan indikator baru</strong> yang mencakup aspek domain yang terlewat</li>
+      <li><strong>Tinjau apakah global item benar-benar representatif</strong> dari seluruh konstruk</li>
+      <li><strong>Gunakan multi-item reflektif</strong> sebagai kriteria jika single-item dianggap tidak representatif</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S5B — VIF FORMATIF             -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s5b">
+  <div class="sh">
+    <div class="sn a">5b</div>
+    <div class="sm"><div class="sp">Fase 3 — Outer Model Formatif (Stage 5b)</div><div class="st">Kolinearitas Indikator Formatif — VIF</div></div>
+  </div>
+  <div class="sd">
+    <p>Kolinearitas tinggi antar indikator formatif membiaskan outer weights dan bisa membalik tanda (sign reversal). VIF = 1 / (1 − R²ₓ), di mana R²ₓ adalah varian indikator x yang dijelaskan indikator lain.</p>
+    <div class="tgrid">
+      <div class="tc g"><div class="tv">VIF &lt; 5</div><div class="tl">Toleransi &gt; 0.20</div><div class="tv2">✓ Kolinearitas tidak kritis</div></div>
+      <div class="tc r"><div class="tv">VIF ≥ 5</div><div class="tl">Toleransi ≤ 0.20</div><div class="tv2">✗ Kolinearitas kritis — tindakan diperlukan</div></div>
+    </div>
+    <div class="ex"><div class="ex-h">Contoh Kasus — VIF Indikator Formatif (QUAL)</div>
+      <table>
+        <thead><tr><th>Indikator</th><th>VIF</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>qual_1</td><td class="cg">1.924</td><td><span class="badge b-g">&lt; 5 ✓</span></td></tr>
+          <tr><td>qual_3</td><td class="ca">2.269</td><td><span class="badge b-g">&lt; 5 ✓</span></td></tr>
+          <tr><td>qual_8</td><td class="cg">1.532</td><td><span class="badge b-g">&lt; 5 ✓</span></td></tr>
+        </tbody>
+      </table>
+      <p>Semua VIF di bawah 5 → tidak ada masalah kolinearitas pada indikator formatif model ini.</p>
+    </div>
+
+    <div class="narasi">
+      <div class="narasi-t">Contoh Narasi — VIF Formatif Terpenuhi</div>
+      <div class="narasi-body">"Untuk memastikan tidak terdapat masalah kolinearitas antar indikator formatif, dihitung nilai Variance Inflation Factor (VIF) untuk setiap indikator dalam masing-masing konstruk formatif. Hasil menunjukkan bahwa seluruh nilai VIF berada di bawah batas kritis <span class="hl">5</span> — nilai tertinggi ditemukan pada qual_3 sebesar <span class="hl">2.269</span>. Oleh karena itu, tidak ada indikasi kolinearitas yang dapat mengganggu estimasi outer weights, dan evaluasi dapat dilanjutkan ke tahap berikutnya."</div>
+    </div>
+    <div class="note nw"><strong>Perhatian:</strong> Bivariate correlation &gt; 0.60 antara dua indikator formatif sudah bisa menjadi sinyal potensi kolinearitas meski VIF belum mencapai 5. Selalu periksa correlation matrix sebagai langkah awal.</div>
+    <div class="alt"><div class="alt-t">⚠ Alternatif jika VIF ≥ 5</div><ul>
+      <li><strong>Hapus salah satu indikator kolinear</strong> — pilih yang paling dapat diwakilkan oleh indikator lain, pastikan content validity tetap terjaga</li>
+      <li><strong>Gabungkan menjadi satu indeks komposit</strong> — rata-ratakan atau beri bobot indikator bermasalah menjadi satu variabel baru</li>
+      <li><strong>Buat higher-order formative construct</strong> — kelompokkan indikator kolinear ke sub-konstruk tersendiri lalu jadikan indikator formatif tingkat atas</li>
+    </ul></div>
+    <div class="spath">Quality Criteria → Collinearity Statistics (VIF) → Outer VIF Values</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S5C — OUTER WEIGHTS            -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s5c">
+  <div class="sh">
+    <div class="sn a">5c</div>
+    <div class="sm"><div class="sp">Fase 3 — Outer Model Formatif (Stage 5b)</div><div class="st">Signifikansi &amp; Relevansi Outer Weights Formatif</div></div>
+  </div>
+  <div class="sd">
+    <p>Outer weight formatif menunjukkan kontribusi <em>relatif</em> setiap indikator dalam membentuk konstruk. Outer loading menunjukkan kontribusi <em>absolut</em>. Keduanya perlu diperiksa.</p>
+    <div class="card">
+      <div class="ct"><span class="dot"></span>Pohon Keputusan — Hapus atau Pertahankan?</div>
+      <div class="df">
+        <div class="dfi"><div class="dfl"><div class="dfd" style="background:var(--accent)"></div><div class="dfv"></div></div><div class="dfc cond"><strong>Outer weight signifikan? (t &gt; 1.96, p &lt; 0.05)</strong>Ya → Pertahankan. Interpretasikan kontribusi relatif dan absolut.</div></div>
+        <div class="dfi"><div class="dfl"><div class="dfd" style="background:#BA7517"></div><div class="dfv"></div></div><div class="dfc cond"><strong>Tidak signifikan → Cek outer loading-nya</strong></div></div>
+        <div class="dfi"><div class="dfl"><div class="dfd" style="background:var(--green)"></div><div class="dfv"></div></div><div class="dfc ok-p"><strong>Loading ≥ 0.50 (meski weight tidak signifikan)</strong> → Pertahankan — indikator penting secara absolut, hanya tidak dominan secara relatif</div></div>
+        <div class="dfi"><div class="dfl"><div class="dfd" style="background:#BA7517"></div><div class="dfv"></div></div><div class="dfc wa-p"><strong>Loading 0.10–0.50, tidak signifikan</strong> → Pertimbangkan hapus. Jika ada dukungan teori kuat → pertahankan dan justifikasikan</div></div>
+        <div class="dfi"><div class="dfl"><div class="dfd" style="background:#8B2020"></div></div><div class="dfc er-p"><strong>Loading &lt; 0.10, tidak signifikan</strong> → Hapus dari model</div></div>
+      </div>
+    </div>
+    <div class="ex"><div class="ex-h">Contoh Kasus — Outer Weights QUAL</div>
+      <table>
+        <thead><tr><th>Indikator</th><th>Outer Weight</th><th>Outer Loading</th><th>t-value</th><th>p-value</th><th>Keputusan</th></tr></thead>
+        <tbody>
+          <tr><td>qual_5</td><td class="cg">0.398</td><td class="cg">0.856</td><td class="cg">6.397</td><td class="cg">0.000</td><td><span class="badge b-g">Pertahankan ✓</span></td></tr>
+          <tr><td>qual_6</td><td class="cg">0.229</td><td class="cg">0.722</td><td class="cg">3.789</td><td class="cg">0.000</td><td><span class="badge b-g">Pertahankan ✓</span></td></tr>
+          <tr><td>qual_2</td><td class="ca">0.106</td><td class="cg">0.749</td><td class="cr">1.752</td><td class="cr">0.080 (ns)</td><td><span class="badge b-a">Pertahankan (loading ≥ 0.50)</span></td></tr>
+          <tr><td>qual_3</td><td class="cr">−0.005</td><td class="cg">0.664</td><td class="cr">0.086</td><td class="cr">0.932 (ns)</td><td><span class="badge b-a">Pertahankan (teori + loading ≥ 0.50)</span></td></tr>
+        </tbody>
+      </table>
+      <p>Hair et al. mempertahankan semua indikator QUAL meski beberapa weight tidak signifikan, karena outer loading-nya signifikan dan ada dukungan teoritis kuat dari Schwaiger (2004).</p>
+    </div>
+
+    <div class="narasi">
+      <div class="narasi-t">Contoh Narasi — Outer Weights dengan Kasus Campuran</div>
+      <div class="narasi-body">"Signifikansi outer weights konstruk QUAL dievaluasi menggunakan bootstrapping (5.000 sampel, BCa, two-tailed, α = 0.05). Dari delapan indikator, qual_5 menunjukkan kontribusi relatif terbesar (w = <span class="hl">0.398</span>, t = 6.397, p &lt; 0.001) dan qual_6 juga signifikan (w = 0.229, t = 3.789, p &lt; 0.001). Dua indikator — qual_2 (w = 0.106, p = 0.080) dan qual_3 (w = −0.005, p = 0.932) — memiliki outer weight yang tidak signifikan. Namun, outer loading keduanya sebesar <span class="hl">0.749 dan 0.664</span> melampaui batas 0.50. Sesuai rekomendasi Hair et al. (2016), indikator dengan weight tidak signifikan namun loading ≥ 0.50 tetap dipertahankan karena kontribusi absolutnya masih bermakna dan didukung secara teoritis."</div>
+    </div>
+    <div class="spath">Calculate → Bootstrapping (5.000, No Sign Changes, BCa) → Outer Weights</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S6A — VIF INNER                -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s6a">
+  <div class="sh">
+    <div class="sn">6a</div>
+    <div class="sm"><div class="sp">Fase 4 — Inner Model / Struktural (Stage 6)</div><div class="st">Kolinearitas Konstruk Prediktor — VIF Inner Model</div></div>
+  </div>
+  <div class="sd">
+    <p>Estimasi path coefficient bisa bias jika konstruk-konstruk prediktor saling berkolinear tinggi. Periksa setiap set prediktor untuk setiap konstruk endogen secara terpisah.</p>
+    <div class="tgrid">
+      <div class="tc g"><div class="tv">VIF &lt; 5</div><div class="tl">Toleransi &gt; 0.20</div><div class="tv2">✓ Lanjutkan interpretasi</div></div>
+      <div class="tc r"><div class="tv">VIF ≥ 5</div><div class="tl">Toleransi ≤ 0.20</div><div class="tv2">✗ Tindakan sebelum interpretasi</div></div>
+    </div>
+    <div class="ex"><div class="ex-h">Contoh Kasus — VIF Inner Model (Prediktor → COMP)</div>
+      <table>
+        <thead><tr><th>Konstruk Prediktor</th><th>VIF (terhadap COMP)</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>ATTR</td><td class="cg">1.210</td><td><span class="badge b-g">✓</span></td></tr>
+          <tr><td>CSOR</td><td class="cg">1.434</td><td><span class="badge b-g">✓</span></td></tr>
+          <tr><td>PERF</td><td class="cg">1.613</td><td><span class="badge b-g">✓</span></td></tr>
+          <tr><td>QUAL</td><td class="cg">1.839</td><td><span class="badge b-g">✓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="narasi">
+      <div class="narasi-t">Contoh Narasi — VIF Inner Model Terpenuhi</div>
+      <div class="narasi-body">"Sebelum mengevaluasi koefisien jalur, dilakukan pemeriksaan kolinearitas pada konstruk-konstruk prediktor. Nilai VIF seluruh prediktor terhadap COMP — ATTR (1.210), CSOR (1.434), PERF (1.613), dan QUAL (1.839) — semuanya berada jauh di bawah ambang batas kritis <span class="hl">5</span>. Hasil serupa ditemukan untuk seluruh submodel dalam penelitian ini. Tidak ada indikasi kolinearitas yang dapat mengganggu stabilitas estimasi koefisien jalur, sehingga interpretasi path coefficient dapat dilanjutkan."</div>
+    </div>
+    <div class="alt"><div class="alt-t">⚠ Alternatif jika VIF Inner ≥ 5</div><ul>
+      <li><strong>Hapus konstruk prediktor yang paling redundan</strong> secara teoritis</li>
+      <li><strong>Gabungkan konstruk kolinear</strong> menjadi satu higher-order construct</li>
+      <li><strong>Pertimbangkan mediasi atau moderasi</strong> untuk merestrukturisasi model lebih parsimonious</li>
+    </ul></div>
+    <div class="spath">Quality Criteria → Collinearity Statistics (VIF) → Inner VIF Values</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S6B — PATH COEFFICIENTS        -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s6b">
+  <div class="sh">
+    <div class="sn">6b</div>
+    <div class="sm"><div class="sp">Fase 4 — Inner Model / Struktural (Stage 6)</div><div class="st">Path Coefficients &amp; Signifikansi</div></div>
+  </div>
+  <div class="sd">
+    <p>Path coefficient adalah koefisien beta terstandarisasi (−1 hingga +1). Signifikansi diuji via <strong>bootstrapping</strong> — PLS-SEM tidak memiliki distribusi parametrik bawaan.</p>
+    <div class="card">
+      <div class="ct"><span class="dot"></span>Setting Bootstrapping yang Direkomendasikan</div>
+      <table>
+        <thead><tr><th>Parameter</th><th>Nilai</th></tr></thead>
+        <tbody>
+          <tr><td>Bootstrap samples</td><td class="cg">5.000 (min = n sampel valid)</td></tr>
+          <tr><td>Sign change option</td><td class="cg">No Sign Changes (paling konservatif)</td></tr>
+          <tr><td>Confidence interval</td><td class="cg">BCa (Bias-Corrected and Accelerated)</td></tr>
+          <tr><td>Jenis test</td><td class="cg">Two-tailed (standar)</td></tr>
+          <tr><td>Significance level</td><td class="cg">α = 0.05</td></tr>
+          <tr><td>Mode</td><td>Complete Bootstrapping</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="ct"><span class="dot"></span>Critical Values Signifikansi</div>
+      <table>
+        <thead><tr><th>Tingkat Signifikansi</th><th>t kritis (two-tailed)</th><th>t kritis (one-tailed)</th><th>p-value</th><th>Konteks</th></tr></thead>
+        <tbody>
+          <tr><td>10% (α = 0.10)</td><td class="ca">1.65</td><td>1.28</td><td class="ca">p &lt; 0.10</td><td>Eksploratori</td></tr>
+          <tr><td>5% (α = 0.05)</td><td class="cg">1.96</td><td>1.65</td><td class="cg">p &lt; 0.05</td><td>Standar umum ✓</td></tr>
+          <tr><td>1% (α = 0.01)</td><td class="cg">2.57</td><td>2.33</td><td class="cg">p &lt; 0.01</td><td>Eksperimental</td></tr>
+        </tbody>
+      </table>
+      <div class="note ni">Hipotesis didukung jika: (1) t &gt; critical value, ATAU (2) p &lt; α, ATAU (3) BCa confidence interval tidak mencakup angka 0. Ketiganya harus konsisten.</div>
+    </div>
+    <div class="card">
+      <div class="ct"><span class="dot g"></span>Efek Langsung, Tidak Langsung, dan Total</div>
+      <div class="formula">Efek tidak langsung (Y1→Y2→Y3) = p₁₂ × p₂₃ = 0.80 × 0.50 = 0.40
+Efek langsung (Y1→Y3)            = p₁₃              = 0.20
+Total effect (Y1→Y3)              = 0.20 + 0.40       = 0.60</div>
+      <p>Total effects berguna melihat pengaruh kumulatif melalui mediator. Selalu uji signifikansinya via bootstrapping secara terpisah.</p>
+    </div>
+    <div class="ex"><div class="ex-h">Contoh Kasus — Path Coefficients &amp; Signifikansi</div>
+      <table>
+        <thead><tr><th>Hubungan</th><th>β</th><th>t-value</th><th>p-value</th><th>95% BCa CI</th><th>Hipotesis</th></tr></thead>
+        <tbody>
+          <tr><td>LIKE → CUSA</td><td class="cg">0.436</td><td class="cg">7.469</td><td class="cg">0.000</td><td>[0.312, 0.544]</td><td><span class="badge b-g">Didukung ✓</span></td></tr>
+          <tr><td>CUSA → CUSL</td><td class="cg">0.505</td><td class="cg">12.329</td><td class="cg">0.000</td><td>[0.428, 0.580]</td><td><span class="badge b-g">Didukung ✓</span></td></tr>
+          <tr><td>LIKE → CUSL</td><td class="cg">0.344</td><td class="cg">5.989</td><td class="cg">0.000</td><td>[0.241, 0.453]</td><td><span class="badge b-g">Didukung ✓</span></td></tr>
+          <tr><td>QUAL → COMP</td><td class="cg">0.430</td><td class="cg">6.661</td><td class="cg">0.000</td><td>[0.295, 0.560]</td><td><span class="badge b-g">Didukung ✓</span></td></tr>
+          <tr><td>COMP → CUSL</td><td class="cr">0.006</td><td class="cr">0.100</td><td class="cr">0.920</td><td>[−0.111, 0.113]</td><td><span class="badge b-r">Tidak didukung ✗</span></td></tr>
+          <tr><td>ATTR → COMP</td><td class="cr">0.086</td><td class="cr">1.636</td><td class="cr">0.102</td><td>[−0.013, 0.187]</td><td><span class="badge b-r">Tidak didukung ✗</span></td></tr>
+        </tbody>
+      </table>
+      <p><strong>Catatan penting:</strong> meski COMP → CUSL tidak signifikan (p = 0.920), total effect COMP → CUSL melalui CUSA tetap bisa bermakna. Selalu cek total effects secara terpisah.</p>
+    </div>
+
+    <div class="narasi">
+      <div class="narasi-t">Contoh Narasi — Path Signifikan &amp; Bermakna</div>
+      <div class="narasi-body">"Hasil pengujian hipotesis menggunakan bootstrapping (5.000 sampel, BCa, two-tailed, α = 0.05) menunjukkan bahwa hubungan antara <strong>Customer Satisfaction (CUSA) dan Customer Loyalty (CUSL)</strong> adalah signifikan (β = <span class="hl">0.505</span>, t = 12.329, p &lt; 0.001). Bootstrap confidence interval BCa 95% [0.428, 0.580] tidak mencakup angka 0, mengkonfirmasi signifikansi pada tingkat 5%. Temuan ini mengindikasikan bahwa setiap peningkatan satu unit dalam kepuasan pelanggan dikaitkan dengan peningkatan loyalitas sebesar 0.505 unit, dengan asumsi variabel lain tetap konstan. Dengan demikian, <strong>Hipotesis 5 didukung</strong> oleh data."</div>
+    </div>
+    <div class="narasi">
+      <div class="narasi-t">Contoh Narasi — Path Tidak Signifikan (Tetapi Ada Efek Tidak Langsung)</div>
+      <div class="narasi-body">"Hipotesis yang menyatakan bahwa <strong>Competence (COMP) berpengaruh langsung terhadap Customer Loyalty (CUSL)</strong> tidak terdukung (β = <span class="hl">0.006</span>, t = 0.100, p = 0.920). Confidence interval BCa 95% mencakup nilai nol [−0.111, 0.113], mengkonfirmasi ketidaksignifikanan. Hasil ini mengindikasikan bahwa kompetensi yang dipersepsikan tidak memberikan dampak langsung yang berarti terhadap loyalitas pelanggan. Namun demikian, total effect COMP terhadap CUSL melalui CUSA sebagai mediator tetap signifikan (β = 0.079, p = 0.027), menunjukkan bahwa pengaruh kompetensi terhadap loyalitas bersifat <strong>tidak langsung</strong>, tersalurkan sepenuhnya melalui kepuasan pelanggan. Dengan demikian, hipotesis tentang pengaruh langsung COMP → CUSL <strong>tidak didukung</strong>, namun relevansi COMP dalam model tetap terkonfirmasi melalui jalur mediasi."</div>
+    </div>
+    <div class="alt"><div class="alt-t">⚠ Alternatif jika Path Tidak Signifikan</div><ul>
+      <li><strong>Jangan langsung hapus hubungan:</strong> periksa apakah efeknya tersalurkan melalui mediator (cek total effects)</li>
+      <li><strong>Pertimbangkan re-spesifikasi teoritis</strong> jika hipotesis memang tidak terdukung secara konsisten</li>
+      <li><strong>Cek ukuran sampel:</strong> sampel kecil meningkatkan SE → path yang mungkin signifikan di populasi terlihat tidak signifikan</li>
+      <li><strong>Pertimbangkan one-tailed test</strong> jika hipotesis memiliki arah yang jelas dan didukung teori kuat</li>
+    </ul></div>
+    <div class="spath">Calculate → Bootstrapping → Final Results → Path Coefficients</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S6C — R SQUARE                 -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s6c">
+  <div class="sh">
+    <div class="sn">6c</div>
+    <div class="sm"><div class="sp">Fase 4 — Inner Model / Struktural (Stage 6)</div><div class="st">Coefficient of Determination — R² &amp; R² Adjusted</div></div>
+  </div>
+  <div class="sd">
+    <p>R² mengukur proporsi varian konstruk endogen yang dijelaskan oleh semua konstruk eksogen yang terhubung (<em>in-sample predictive power</em>).</p>
+    <div class="tgrid">
+      <div class="tc g"><div class="tv">≥ 0.75</div><div class="tl">Substantial</div><div class="tv2">✓ Prediksi kuat</div></div>
+      <div class="tc a"><div class="tv">≥ 0.50</div><div class="tl">Moderate</div><div class="tv2">⚠ Prediksi sedang</div></div>
+      <div class="tc a"><div class="tv">≥ 0.25</div><div class="tl">Weak</div><div class="tv2">⚠ Prediksi lemah</div></div>
+      <div class="tc r"><div class="tv">&lt; 0.25</div><div class="tl">—</div><div class="tv2">✗ Prediksi sangat rendah</div></div>
+    </div>
+    <div class="note nw"><strong>Konteks menentukan:</strong> R² = 0.20 dianggap tinggi dalam consumer behavior. Dalam studi kepuasan pelanggan, diharapkan R² ≥ 0.75. Jangan gunakan threshold ini secara kaku lintas disiplin.</div>
+    <div class="card">
+      <div class="ct"><span class="dot"></span>R² Adjusted — Untuk Perbandingan Model</div>
+      <div class="formula">R²adj = 1 − (1 − R²) × (n − 1) / (n − k − 1)
+n = jumlah sampel valid
+k = jumlah konstruk eksogen prediktor</div>
+      <p>Gunakan R² adjusted saat membandingkan dua model dengan jumlah prediktor atau sampel berbeda. R² biasa selalu naik jika prediktor ditambahkan — R² adjusted mengkoreksi bias ini.</p>
+    </div>
+    <div class="ex"><div class="ex-h">Contoh Kasus — R² Model Reputasi</div>
+      <table>
+        <thead><tr><th>Konstruk Endogen</th><th>R²</th><th>Interpretasi</th></tr></thead>
+        <tbody>
+          <tr><td>COMP</td><td class="ca">0.631</td><td><span class="badge b-a">Moderate–High</span></td></tr>
+          <tr><td>LIKE</td><td class="ca">0.558</td><td><span class="badge b-a">Moderate</span></td></tr>
+          <tr><td>CUSL</td><td class="ca">0.562</td><td><span class="badge b-a">Moderate</span></td></tr>
+          <tr><td>CUSA</td><td class="cr">0.292</td><td><span class="badge b-r">Weak</span></td></tr>
+        </tbody>
+      </table>
+      <p>CUSA hanya dijelaskan 29.2% oleh COMP dan LIKE — menandakan ada faktor lain yang memengaruhi kepuasan pelanggan di luar model ini.</p>
+    </div>
+    
+
+    <div class="narasi">
+      <div class="narasi-t">Contoh Narasi — R² Terpenuhi</div>
+      <div class="narasi-body">"Kemampuan prediktif model struktural dievaluasi menggunakan koefisien determinasi (R²). Hasil menunjukkan bahwa COMP memiliki R² sebesar <span class="hl">0.631</span>, artinya keempat konstruk formatif eksogen (ATTR, CSOR, PERF, QUAL) mampu menjelaskan sekitar 63.1% varian dalam persepsi kompetensi perusahaan. LIKE dan CUSL masing-masing memperoleh R² sebesar <span class="hl">0.558 dan 0.562</span>, tergolong <em>moderate</em>. Konstruk CUSA memperoleh R² sebesar <span class="hl">0.292</span> yang tergolong lemah, mengindikasikan adanya faktor penjelas tambahan di luar model. Secara keseluruhan, nilai R² berada dalam rentang yang dapat diterima untuk penelitian di bidang pemasaran jasa (Hair et al., 2016)."</div>
+    </div>
+    <div class="narasi">
+      <div class="narasi-t">Contoh Narasi — R² Rendah (Bagaimana Mendiskusikannya)</div>
+      <div class="narasi-body">"Konstruk CUSA memperoleh R² sebesar <span class="hl">0.292</span>, artinya hanya 29.2% varian kepuasan pelanggan yang dapat dijelaskan oleh COMP dan LIKE dalam model ini. Meskipun nilai ini tergolong lemah menurut panduan Hair et al. (2016), hal ini tidak serta-merta berarti model tidak valid. Kepuasan pelanggan dalam industri telekomunikasi dipengaruhi oleh banyak faktor kontekstual — seperti kualitas jaringan, harga, dan pengalaman layanan — yang tidak dimasukkan dalam model reputasi ini. Keterbatasan ini membuka agenda penelitian lanjutan yang dapat mengintegrasikan variabel-variabel tersebut untuk meningkatkan daya prediksi model."</div>
+    </div>
+    <div class="alt"><div class="alt-t">⚠ Alternatif jika R² Rendah</div><ul>
+      <li><strong>Tambahkan konstruk prediktor relevan</strong> secara teoritis (bukan hanya untuk naikkan angka)</li>
+      <li><strong>Tinjau ulang indikator:</strong> loading rendah memperlemah konstruk dan menurunkan R²</li>
+      <li><strong>Pertimbangkan variabel moderator:</strong> mungkin ada kondisi batas (boundary condition) yang membuat hubungan lebih kuat pada kelompok tertentu</li>
+      <li><strong>Akui secara eksplisit:</strong> R² rendah berarti ada faktor lain di luar model — ini lazim dan bisa menjadi agenda penelitian berikutnya</li>
+    </ul></div>
+    <div class="spath">Quality Criteria → R Square</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S6D — F2 EFFECT SIZE           -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s6d">
+  <div class="sh">
+    <div class="sn">6d</div>
+    <div class="sm"><div class="sp">Fase 4 — Inner Model / Struktural (Stage 6)</div><div class="st">Effect Size f² — Kontribusi per Konstruk terhadap R²</div></div>
+  </div>
+  <div class="sd">
+    <p>f² mengukur kontribusi substantif satu konstruk eksogen terhadap R². Penting karena <strong>path yang signifikan belum tentu penting secara substantif</strong> — terutama dengan sampel besar.</p>
+    <div class="formula">f² = (R²_included − R²_excluded) / (1 − R²_included)
+
+R²_included = R² model dengan konstruk tersebut
+R²_excluded = R² model tanpa konstruk tersebut (estimasi ulang)</div>
+    <div class="tgrid">
+      <div class="tc g"><div class="tv">≥ 0.35</div><div class="tl">Efek besar</div><div class="tv2">✓ Sangat berpengaruh</div></div>
+      <div class="tc a"><div class="tv">≥ 0.15</div><div class="tl">Efek sedang</div><div class="tv2">⚠ Kontribusi berarti</div></div>
+      <div class="tc b"><div class="tv">≥ 0.02</div><div class="tl">Efek kecil</div><div class="tv2">⚠ Kontribusi ada tapi kecil</div></div>
+      <div class="tc r"><div class="tv">&lt; 0.02</div><div class="tl">Tidak ada efek</div><div class="tv2">✗ Tidak berkontribusi substantif</div></div>
+    </div>
+    <div class="ex"><div class="ex-h">Contoh Kasus — f² Effect Size Model Reputasi</div>
+      <table>
+        <thead><tr><th>Hubungan</th><th>f²</th><th>Interpretasi</th></tr></thead>
+        <tbody>
+          <tr><td>CUSA → CUSL</td><td class="cg">0.380</td><td><span class="badge b-g">Efek besar ✓</span></td></tr>
+          <tr><td>LIKE → CUSA</td><td class="ca">0.159</td><td><span class="badge b-a">Efek sedang</span></td></tr>
+          <tr><td>LIKE → CUSL</td><td class="ca">0.138</td><td><span class="badge b-a">Efek sedang</span></td></tr>
+          <tr><td>COMP → CUSA</td><td class="cr">0.018</td><td><span class="badge b-r">Tidak ada efek</span></td></tr>
+          <tr><td>COMP → CUSL</td><td class="cr">0.000</td><td><span class="badge b-r">Tidak ada efek</span></td></tr>
+        </tbody>
+      </table>
+      <p><strong>Insight penting:</strong> COMP → CUSA signifikan secara statistik (p = 0.027), namun f² = 0.018 menunjukkan kontribusinya terhadap R² CUSA <em>tidak berarti secara substantif</em>. Ini contoh nyata mengapa f² wajib dilaporkan.</p>
+    </div>
+    
+    <div class="spath">Quality Criteria → f Square</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S6E — Q2 BLINDFOLDING          -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s6e">
+  <div class="sh">
+    <div class="sn">6e</div>
+    <div class="sm"><div class="sp">Fase 4 — Inner Model / Struktural (Stage 6)</div><div class="st">Predictive Relevance Q² — Blindfolding</div></div>
+  </div>
+  <div class="sd">
+    <p>Q² mengukur kemampuan model memprediksi data yang <strong>tidak digunakan saat estimasi</strong> (<em>out-of-sample predictive power</em>). Berbeda dari R² yang hanya mengukur in-sample fit. Diterapkan hanya pada konstruk endogen <strong>reflektif</strong>.</p>
+    <div class="tgrid">
+      <div class="tc g"><div class="tv">Q² &gt; 0</div><div class="tl">Ada predictive relevance</div><div class="tv2">✓ Model mampu memprediksi</div></div>
+      <div class="tc r"><div class="tv">Q² ≤ 0</div><div class="tl">Tidak ada predictive relevance</div><div class="tv2">✗ Model gagal memprediksi</div></div>
+    </div>
+    <div class="card">
+      <div class="ct"><span class="dot"></span>Cara Menentukan Omission Distance (D)</div>
+      <div class="formula">Syarat wajib: (n / D) BUKAN bilangan bulat
+Range direkomendasikan: D = 5 hingga 10
+
+Rumus Q²: Q² = 1 − (SSE / SSO)
+SSE = sum of squared prediction errors
+SSO = sum of squared observations</div>
+      <div class="note ni">Gunakan <strong>cross-validated redundancy</strong> (bukan communality) karena mencakup informasi structural model dalam prediksi — lebih sesuai orientasi PLS-SEM.</div>
+    </div>
+    <div class="ex"><div class="ex-h">Contoh Kasus — Q² Model Reputasi (n = 344, D = 7, 344/7 = 49.14 ✓)</div>
+      <table>
+        <thead><tr><th>Konstruk Endogen</th><th>Q²</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>COMP</td><td class="cg">0.415</td><td><span class="badge b-g">Predictive relevance ✓</span></td></tr>
+          <tr><td>LIKE</td><td class="cg">0.406</td><td><span class="badge b-g">Predictive relevance ✓</span></td></tr>
+          <tr><td>CUSL</td><td class="cg">0.415</td><td><span class="badge b-g">Predictive relevance ✓</span></td></tr>
+          <tr><td>CUSA</td><td class="cg">0.280</td><td><span class="badge b-g">Predictive relevance ✓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    
+
+    <div class="narasi">
+      <div class="narasi-t">Contoh Narasi — Q² Terpenuhi</div>
+      <div class="narasi-body">"Relevansi prediktif model dievaluasi menggunakan prosedur blindfolding dengan omission distance D = 7 (344 / 7 = 49.14, bukan bilangan bulat, memenuhi syarat). Berdasarkan tabel <em>Construct Cross-validated Redundancy</em>, nilai Q² seluruh konstruk endogen reflektif berada di atas nol: COMP dan CUSL masing-masing sebesar <span class="hl">0.415</span>, LIKE sebesar <span class="hl">0.406</span>, dan CUSA sebesar <span class="hl">0.280</span>. Sesuai kriteria Hair et al. (2016), Q² &gt; 0 mengkonfirmasi bahwa model memiliki relevansi prediktif yang memadai. Artinya, model tidak hanya mampu menjelaskan data yang digunakan untuk estimasi (in-sample), tetapi juga mampu memprediksi data yang dikecualikan dari proses tersebut (out-of-sample). Dengan demikian, kemampuan prediktif model secara keseluruhan terkonfirmasi."</div>
+    </div>
+    <div class="alt"><div class="alt-t">⚠ Alternatif jika Q² ≤ 0</div><ul>
+      <li><strong>Tinjau kembali spesifikasi model:</strong> mungkin ada konstruk penting yang terlewat dari model</li>
+      <li><strong>Periksa kualitas data:</strong> data sangat noisy atau tidak konsisten menurunkan Q²</li>
+      <li><strong>Coba omission distance berbeda:</strong> hasil Q² sedikit bervariasi tergantung D yang dipilih</li>
+      <li><strong>Pertimbangkan model yang lebih parsimonious:</strong> terlalu banyak konstruk lemah bisa menurunkan Q²</li>
+    </ul></div>
+    <div class="spath">Calculate → Blindfolding → Construct Cross-validated Redundancy</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- S6F — Q2 EFFECT SIZE           -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="s6f">
+  <div class="sh">
+    <div class="sn">6f</div>
+    <div class="sm"><div class="sp">Fase 4 — Inner Model / Struktural (Stage 6)</div><div class="st">Effect Size q² — Kontribusi per Konstruk terhadap Q²</div></div>
+  </div>
+  <div class="sd">
+    <p>q² mengukur kontribusi satu konstruk eksogen terhadap Q² konstruk endogen. Dihitung <strong>manual</strong> — SmartPLS tidak menyediakan output otomatis. Gunakan D yang sama untuk kedua estimasi.</p>
+    <div class="formula">q² = (Q²_included − Q²_excluded) / (1 − Q²_included)
+
+Q²_included = Q² model penuh
+Q²_excluded = Q² setelah satu konstruk eksogen dihapus dan model diestimasi ulang</div>
+    <div class="tgrid">
+      <div class="tc g"><div class="tv">≥ 0.35</div><div class="tl">Kontribusi prediktif besar</div></div>
+      <div class="tc a"><div class="tv">≥ 0.15</div><div class="tl">Kontribusi prediktif sedang</div></div>
+      <div class="tc b"><div class="tv">≥ 0.02</div><div class="tl">Kontribusi prediktif kecil</div></div>
+      <div class="tc r"><div class="tv">&lt; 0.02</div><div class="tl">Tidak ada kontribusi</div></div>
+    </div>
+    <div class="ex"><div class="ex-h">Contoh Kasus — q² (CUSA → CUSL)</div>
+      <div class="formula">Q²_included (CUSL dengan CUSA) = 0.415
+Q²_excluded (CUSL tanpa CUSA)  = 0.281
+
+q²(CUSA→CUSL) = (0.415 − 0.281) / (1 − 0.415)
+               = 0.134 / 0.585 = 0.229  → Efek sedang</div>
+    </div>
+    <div class="ex"><div class="ex-h">Tabel Lengkap q² Effect Sizes Model Reputasi</div>
+      <table>
+        <thead><tr><th>Prediktor</th><th>→ COMP</th><th>→ LIKE</th><th>→ CUSA</th><th>→ CUSL</th></tr></thead>
+        <tbody>
+          <tr><td>ATTR</td><td>—</td><td class="cr">0.016</td><td>—</td><td class="cr">0.000</td></tr>
+          <tr><td>CSOR</td><td class="cr">0.006</td><td class="cr">0.018</td><td>—</td><td class="cr">−0.002</td></tr>
+          <tr><td>CUSA</td><td>—</td><td>—</td><td>—</td><td class="ca">0.229</td></tr>
+          <tr><td>LIKE</td><td>—</td><td>—</td><td class="ca">0.151</td><td class="cb">0.077</td></tr>
+          <tr><td>QUAL</td><td class="cb">0.052</td><td class="cb">0.050</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- CHECKLIST                       -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="chk">
+  <div class="sh">
+    <div class="sn g">✓</div>
+    <div class="sm"><div class="sp">Referensi</div><div class="st">Checklist Pelaporan PLS-SEM</div></div>
+  </div>
+  <div class="sd">
+    <div class="card">
+      <div class="ct"><span class="dot g"></span>Outer Model Reflektif</div>
+      <ul class="cl">
+        <li><input type="checkbox"> Outer loading semua indikator dilaporkan dan ≥ 0.70 (atau justifikasi retensi jika 0.40–0.70)</li>
+        <li><input type="checkbox"> Composite Reliability (CR) dilaporkan untuk setiap konstruk (target: 0.70–0.90)</li>
+        <li><input type="checkbox"> Cronbach's Alpha dilaporkan untuk setiap konstruk (target: 0.70–0.90)</li>
+        <li><input type="checkbox"> AVE dilaporkan untuk setiap konstruk (≥ 0.50)</li>
+        <li><input type="checkbox"> Cross-loadings diperiksa (loading tertinggi pada konstruknya sendiri)</li>
+        <li><input type="checkbox"> Fornell-Larcker criterion diperiksa (√AVE &gt; korelasi tertinggi)</li>
+        <li><input type="checkbox"> HTMT dilaporkan untuk semua pasang konstruk (&lt; 0.85 atau &lt; 0.90)</li>
+        <li><input type="checkbox"> BCa confidence interval HTMT diuji (tidak mencakup nilai 1)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="ct"><span class="dot a"></span>Outer Model Formatif (jika ada)</div>
+      <ul class="cl">
+        <li><input type="checkbox"> Redundancy analysis dilakukan dan path ≥ 0.70</li>
+        <li><input type="checkbox"> VIF setiap indikator formatif dilaporkan (&lt; 5)</li>
+        <li><input type="checkbox"> Outer weights dan outer loadings dilaporkan dengan t-value dan p-value (bootstrapping 5.000 sampel)</li>
+        <li><input type="checkbox"> Keputusan retensi atau hapus indikator dijustifikasi secara teoritis</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="ct"><span class="dot"></span>Inner Model / Struktural</div>
+      <ul class="cl">
+        <li><input type="checkbox"> VIF inner model diperiksa untuk semua set prediktor (&lt; 5)</li>
+        <li><input type="checkbox"> Path coefficients dilaporkan dengan t-value atau p-value (bootstrapping 5.000 sampel)</li>
+        <li><input type="checkbox"> BCa confidence interval dilaporkan untuk setiap path</li>
+        <li><input type="checkbox"> Total effects dihitung dan diuji signifikansinya via bootstrapping</li>
+        <li><input type="checkbox"> R² setiap konstruk endogen dilaporkan dan diinterpretasikan</li>
+        <li><input type="checkbox"> R² adjusted dilaporkan (terutama saat membandingkan model)</li>
+        <li><input type="checkbox"> f² effect size dihitung dan dilaporkan (0.02 / 0.15 / 0.35 = kecil / sedang / besar)</li>
+        <li><input type="checkbox"> Q² via blindfolding dilaporkan untuk setiap konstruk endogen reflektif (&gt; 0)</li>
+        <li><input type="checkbox"> Omission distance D valid: n/D bukan bilangan bulat, D = 5–10</li>
+        <li><input type="checkbox"> q² effect size dihitung manual dan dilaporkan</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- TABEL RINGKASAN THRESHOLD      -->
+<!-- ═══════════════════════════════ -->
+<div class="section" id="tbl">
+  <div class="sh">
+    <div class="sn">≡</div>
+    <div class="sm"><div class="sp">Referensi</div><div class="st">Tabel Ringkasan Semua Threshold</div></div>
+  </div>
+  <div class="sd">
+    <table>
+      <thead><tr><th>Kriteria</th><th>Minimum</th><th>Ideal / Target</th><th>Keterangan Tambahan</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Outer Loading (reflektif)</strong></td><td class="ca">≥ 0.40</td><td class="cg">≥ 0.708 (≈ 0.70)</td><td>0.40–0.70: pertimbangkan; &lt;0.40: hapus</td></tr>
+        <tr><td><strong>Composite Reliability (CR)</strong></td><td class="ca">≥ 0.60 (eksploratori)</td><td class="cg">0.70 – 0.90</td><td>&gt;0.95 = redundan, tidak diinginkan</td></tr>
+        <tr><td><strong>Cronbach's Alpha</strong></td><td class="ca">≥ 0.60 (eksploratori)</td><td class="cg">0.70 – 0.90</td><td>Batas bawah CR; sensitif jumlah item</td></tr>
+        <tr><td><strong>AVE</strong></td><td class="cg">≥ 0.50</td><td class="cg">≥ 0.50</td><td>Convergent validity reflektif</td></tr>
+        <tr><td><strong>HTMT</strong></td><td class="cg">&lt; 0.90</td><td class="cg">&lt; 0.85 (konservatif)</td><td>BCa CI tidak boleh mencakup nilai 1</td></tr>
+        <tr><td><strong>Redundancy Analysis (path)</strong></td><td class="ca">≥ 0.70</td><td class="cg">≥ 0.80</td><td>Convergent validity formatif</td></tr>
+        <tr><td><strong>VIF (formatif &amp; inner)</strong></td><td class="cg">&lt; 5</td><td class="cg">&lt; 3.3</td><td>Toleransi &gt;0.20; corr &gt;0.60 = risiko</td></tr>
+        <tr><td><strong>t-value (two-tailed, α=5%)</strong></td><td class="cg">&gt; 1.96</td><td class="cg">&gt; 1.96</td><td>Atau p &lt;0.05, atau BCa CI tidak mencakup 0</td></tr>
+        <tr><td><strong>R² (substantial)</strong></td><td class="ca">≥ 0.25 (weak)</td><td class="cg">≥ 0.75</td><td>Sangat bergantung disiplin ilmu</td></tr>
+        <tr><td><strong>f² (kecil/sedang/besar)</strong></td><td class="cb">≥ 0.02</td><td class="cg">≥ 0.35 (besar)</td><td>0.02 / 0.15 / 0.35 — Cohen (1988)</td></tr>
+        <tr><td><strong>Q² (predictive relevance)</strong></td><td class="cg">&gt; 0</td><td class="cg">&gt; 0</td><td>Semakin tinggi semakin baik</td></tr>
+        <tr><td><strong>q² (kecil/sedang/besar)</strong></td><td class="cb">≥ 0.02</td><td class="cg">≥ 0.35 (besar)</td><td>Threshold identik dengan f²</td></tr>
+        <tr><td><strong>SRMR (model fit — opsional)</strong></td><td class="ca">&lt; 0.08</td><td class="cg">&lt; 0.08</td><td>Masih dalam tahap pengembangan; bukan wajib</td></tr>
+      </tbody>
+    </table>
+    <div class="note nw" style="margin-top:14px;"><strong>⚠ Tentang GoF:</strong> Goodness-of-Fit (GoF) index <em>tidak boleh digunakan</em> di PLS-SEM. Henseler &amp; Sarstedt (2013) membuktikan GoF tidak dapat membedakan model valid dari tidak valid, tidak berlaku untuk model formatif, dan tidak memperhitungkan overparametrization.</div>
+    <div style="margin-top:20px;padding:14px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3);">
+      <strong>Referensi Utama:</strong> Hair, J.F., et al. (2016). <em>A Primer on Partial Least Squares Structural Equation Modeling (PLS-SEM)</em>, 2nd Ed. SAGE. — Henseler, J., Ringle, C.M., &amp; Sarstedt, M. (2015). A new criterion for assessing discriminant validity in variance-based SEM. <em>JAMS</em>, 43, 115–135. — Cohen, J. (1988). <em>Statistical Power Analysis for the Behavioral Sciences</em>, 2nd Ed.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- KALKULATOR                      -->
+<!-- ═══════════════════════════════ -->
+
+
+</main>
+
+<script>
+window.addEventListener('scroll',function(){
+  var secs=document.querySelectorAll('.section[id]');
+  var links=document.querySelectorAll('.sidebar a');
+  var cur='';
+  secs.forEach(function(s){if(window.scrollY>=s.offsetTop-80)cur=s.id;});
+  links.forEach(function(a){a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active');});
+});
+</script>
+</body>
+</html>
