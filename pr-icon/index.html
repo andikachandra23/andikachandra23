@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BHAMADA ICON 2026 — Social Media Content Calendar</title>
+<style>
+:root {
+  --hdr: #0C2010;
+  --green: #1C6B38;
+  --green-dk: #134D28;
+  --green-lt: #EAF5EE;
+  --gold: #C98E10;
+  --gold-lt: #FEF5DC;
+  --bg: #F5F3EE;
+  --surface: #FFFFFF;
+  --surface-alt: #F0EDE5;
+  --border: #E0DDD4;
+  --border-strong: #C8C4B8;
+  --txt: #1C2B1C;
+  --txt-2: #546858;
+  --txt-m: #8FA494;
+  --sh: 0 1px 4px rgba(12,32,16,.08);
+  --sh-md: 0 4px 20px rgba(12,32,16,.12);
+  --r: 10px;
+  --r-sm: 6px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;font-size:14px}
+
+/* ── HEADER ── */
+.hdr{background:var(--hdr);background-image:linear-gradient(140deg,#081808 0%,#173220 55%,#0D2412 100%);padding:36px 24px 28px;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;right:-80px;top:-80px;width:340px;height:340px;border-radius:50%;background:rgba(28,107,56,.2)}
+.hdr::after{content:'';position:absolute;left:40%;bottom:-100px;width:280px;height:280px;border-radius:50%;background:rgba(201,142,16,.08)}
+.hdr-wrap{max-width:1100px;margin:0 auto;position:relative;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px}
+.hdr-left{}
+.hdr-eye{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:10px}
+.hdr-title{font-family:Georgia,'Times New Roman',serif;font-size:clamp(28px,4vw,46px);color:#fff;line-height:1.05;margin-bottom:8px}
+.hdr-title em{color:var(--gold);font-style:normal}
+.hdr-sub{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:20px;max-width:520px}
+.hdr-pills{display:flex;gap:7px;flex-wrap:wrap}
+.pill{font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;background:rgba(255,255,255,.10);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.15)}
+.pill.gold{background:rgba(201,142,16,.18);color:#FFCD5A;border-color:rgba(201,142,16,.28)}
+.hdr-right{text-align:right}
+.stat-big{font-family:Georgia,serif;font-size:48px;color:#fff;line-height:1;font-weight:400}
+.stat-big em{color:var(--gold);font-style:normal}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+
+/* ── SEARCH + FILTER BAR ── */
+.toolbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 24px;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.toolbar-inner{max-width:1100px;margin:0 auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:180px}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--txt-m);pointer-events:none}
+.search-input{width:100%;padding:7px 12px 7px 32px;border:1px solid var(--border);border-radius:var(--r-sm);font-size:13px;background:var(--bg);color:var(--txt);outline:none;transition:border-color .15s}
+.search-input:focus{border-color:var(--green);background:#fff}
+.search-input::placeholder{color:var(--txt-m)}
+.flt-group{display:flex;gap:5px;flex-shrink:0}
+.flt{font-size:11px;font-weight:600;padding:5px 11px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--txt-2);cursor:pointer;transition:all .15s;letter-spacing:.02em}
+.flt:hover{border-color:var(--border-strong);color:var(--txt)}
+.flt.on-ig{background:#4039A8;color:#fff;border-color:#4039A8}
+.flt.on-li{background:#185FA5;color:#fff;border-color:#185FA5}
+.flt.on-wa{background:#1A6B35;color:#fff;border-color:#1A6B35}
+
+/* ── PHASE NAV ── */
+.phase-nav{background:var(--surface);border-bottom:2px solid var(--border);position:sticky;top:53px;z-index:190}
+.phase-nav-inner{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.phase-nav-inner::-webkit-scrollbar{display:none}
+.ptab{flex-shrink:0;padding:13px 20px;font-size:12.5px;font-weight:500;color:var(--txt-2);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:7px;margin-bottom:-2px}
+.ptab:hover{color:var(--green);background:var(--green-lt)}
+.ptab.on{color:var(--green);border-bottom-color:var(--green);font-weight:700}
+.ptab .cnt{font-size:9.5px;font-weight:700;padding:1.5px 6px;border-radius:10px;background:var(--green-lt);color:var(--green)}
+.ptab.on .cnt{background:var(--green);color:#fff}
+
+/* ── MAIN ── */
+.main{max-width:1100px;margin:0 auto;padding:28px 24px 72px}
+.panel{display:none}.panel.on{display:block}
+
+/* ── PHASE INFO BAR ── */
+.phase-info{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:10px}
+.phase-info-date{font-size:12px;color:var(--txt-m);display:flex;align-items:center;gap:5px}
+.phase-stats{display:flex;gap:8px}
+.pstat{font-size:11px;padding:3px 9px;border-radius:20px;border:1px solid var(--border);color:var(--txt-2);background:var(--surface)}
+.no-results{text-align:center;padding:48px 24px;color:var(--txt-m);font-size:13px}
+
+/* ── DATE GROUP ── */
+.dg{margin-bottom:28px}
+.dl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--txt-m);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.dl::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ── CARD GRID ── */
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:680px){.card-grid{grid-template-columns:1fr}}
+
+/* ── CARD ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:border-color .15s,box-shadow .15s;display:flex;flex-direction:column}
+.card:hover{border-color:var(--border-strong);box-shadow:var(--sh)}
+.card.open{border-color:var(--green);box-shadow:var(--sh-md);grid-column:1 / -1;cursor:default}
+.card.hidden-card{display:none}
+
+.card-head{padding:12px 14px;display:flex;align-items:flex-start;gap:9px;cursor:pointer}
+.card.open .card-head{border-bottom:1px solid var(--border)}
+.card-badges{display:flex;gap:4px;flex-wrap:wrap;flex-shrink:0;padding-top:2px}
+.bdg{font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;letter-spacing:.03em;text-transform:uppercase}
+.bdg-ig{background:#EEEDFE;color:#3A33A0}
+.bdg-li{background:#E2EDF7;color:#155290}
+.bdg-wa{background:#E0F4E8;color:#165E2C}
+.bdg-fmt{font-size:9px;font-weight:500;padding:2px 7px;border-radius:20px;background:var(--surface-alt);color:var(--txt-2);border:1px solid var(--border);text-transform:none}
+.card-title{font-size:13px;font-weight:500;color:var(--txt);flex:1;line-height:1.4}
+.card-chev{color:var(--txt-m);font-size:14px;flex-shrink:0;padding-top:2px;transition:transform .22s;line-height:1}
+.card.open .card-chev{transform:rotate(180deg)}
+
+/* ── CARD BODY ── */
+.card-body{display:none;padding:14px}
+.card.open .card-body{display:block}
+.cap-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.cap-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--txt-m)}
+.copy-btn{font-size:11px;font-weight:600;padding:4px 13px;border-radius:5px;border:1.5px solid var(--green);background:var(--green-lt);color:var(--green);cursor:pointer;transition:all .15s}
+.copy-btn:hover{background:var(--green);color:#fff}
+.copy-btn.copied{background:var(--green);color:#fff}
+.caption-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-family:'SF Mono',Menlo,Monaco,Consolas,'Courier New',monospace;font-size:11.5px;line-height:1.78;color:var(--txt);white-space:pre-wrap;margin-bottom:10px;max-height:300px;overflow-y:auto}
+.caption-box::-webkit-scrollbar{width:4px}
+.caption-box::-webkit-scrollbar-track{background:transparent}
+.caption-box::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.ht-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--txt-m);margin-bottom:4px}
+.hashtags{font-size:11.5px;color:var(--green-dk);line-height:1.8;margin-bottom:10px;font-weight:500}
+.tip-box{background:var(--gold-lt);border:1px solid rgba(201,142,16,.22);border-radius:8px;padding:9px 13px;font-size:11.5px;color:#6A4800;line-height:1.6}
+.tip-box strong{color:#4A3200;font-weight:600}
+
+/* ── EMPTY STATE ── */
+.empty{text-align:center;padding:64px 24px;color:var(--txt-m)}
+.empty-icon{font-size:36px;margin-bottom:12px}
+.empty-title{font-size:15px;font-weight:500;color:var(--txt-2);margin-bottom:6px}
+
+/* ── FOOTER ── */
+footer{text-align:center;padding:20px 24px;font-size:11px;color:var(--txt-m);border-top:1px solid var(--border)}
+
+/* ── PRINT ── */
+@media print{
+  .toolbar,.phase-nav{position:static}
+  .hdr{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .card{break-inside:avoid;border:1px solid #ccc}
+  .card.open,.card:not(.open){grid-column:auto}
+  .card-body{display:block!important}
+  .copy-btn,.flt-group,.search-wrap{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-wrap">
+    <div class="hdr-left">
+      <div class="hdr-eye">Universitas Bhamada Slawi · Publication, Public Relations & Partnership Committee</div>
+      <h1 class="hdr-title">BHAMADA <em>ICON 2026</em></h1>
+      <p class="hdr-sub">Social Media Content Calendar — Bhamada International Conference on Interdisciplinary Innovation</p>
+      <div class="hdr-pills">
+        <div class="pill gold" id="total-pill">29 posts total</div>
+        <div class="pill">5 phases</div>
+        <div class="pill">July 29 – September 2026</div>
+        <div class="pill">Instagram · LinkedIn · WhatsApp</div>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <div class="stat-big" id="stat-big">29<em>+</em></div>
+      <div class="stat-lbl">ready-to-use posts</div>
+    </div>
+  </div>
+</header>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="search-input" id="search" type="text" placeholder="Search posts by title or content…">
+    </div>
+    <div class="flt-group">
+      <button class="flt" data-plt="IG" onclick="toggleFilter('IG',this)">IG</button>
+      <button class="flt" data-plt="LI" onclick="toggleFilter('LI',this)">LI</button>
+      <button class="flt" data-plt="WA" onclick="toggleFilter('WA',this)">WA</button>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE NAV -->
+<nav class="phase-nav"><div class="phase-nav-inner" id="phase-tabs"></div></nav>
+
+<!-- MAIN -->
+<main class="main" id="panels"></main>
+
+<footer>BHAMADA ICON 2026 &nbsp;·&nbsp; Social Media Content Calendar &nbsp;·&nbsp; Universitas Bhamada Slawi &nbsp;·&nbsp; Publication, PR & Partnership Committee</footer>
+
+<script>
+const D=[
+{id:'cfp',label:'📣 Call for Papers',dates:'July 29 – August 13',groups:[
+  {date:'July 29 — CFP Launch Day',items:[
+    {plt:['IG','LI'],fmt:'Feed Post · Main Visual',title:'Official CFP Launch Announcement',
+cap:`📢 CALL FOR PAPERS | BHAMADA ICON 2026
+
+Bhamada International Conference on Interdisciplinary Innovation
+
+Universitas Bhamada Slawi is proud to open the Call for Papers for BHAMADA ICON 2026!
+
+🎯 Theme: "Advancing Interdisciplinary Research and Innovation for Sustainable Development"
+📅 Conference Date: Thursday, August 27, 2026
+🌐 Mode: Online via Zoom Meeting
+
+5 Conference Tracks:
+📚 Health Sciences & Healthcare Innovation
+💊 Pharmaceutical & Biomedical Research
+💻 Digital Technology, AI & Smart Systems
+💼 Business, Entrepreneurship & Innovation
+🦺 Occupational Health, Safety & Environmental Sustainability
+
+⏰ Abstract Submission Deadline: August 13, 2026
+📥 Submit at: [registration link]
+
+Make your research part of this international conference! 🌍`,
+ht:'#BHAMADAICON2026 #CallForPapers #InternationalConference #UniversitasBhamadaSlawi #InterdisciplinaryResearch #SustainableDevelopment',
+tip:"Your most strategic post — the conference's first visual impression. Design must be professional and include all key info within the visual itself (theme, date, deadline, tracks). Post at 7–9 AM or 6–8 PM for optimal reach."},
+    {plt:['WA'],fmt:'WhatsApp Blast · Formal',title:'Network blast — CFP is now open',
+cap:`Dear All,
+
+We are pleased to announce that Universitas Bhamada Slawi has officially opened the Call for Papers for:
+
+BHAMADA ICON 2026
+Bhamada International Conference on Interdisciplinary Innovation
+
+📌 Theme: "Advancing Interdisciplinary Research and Innovation for Sustainable Development"
+📅 Conference Date: August 27, 2026 (Online)
+⏰ Abstract Deadline: August 13, 2026
+
+5 Conference Tracks:
+1. Health Sciences & Healthcare Innovation
+2. Pharmaceutical & Biomedical Research
+3. Digital Technology, AI & Smart Systems
+4. Business, Entrepreneurship & Innovation
+5. Occupational Health, Safety & Environmental Sustainability
+
+📥 Info & Registration: [link]
+📩 Contact: [committee email]
+
+We kindly ask you to forward this to colleagues who may be interested in participating.
+
+Thank you for your support.
+
+Best regards,
+BHAMADA ICON 2026 Committee
+Universitas Bhamada Slawi`,
+ht:'',
+tip:'Send to your network of lecturers, researchers, postgraduate students, and practitioners. Ask recipients to forward it to their academic communities — the most effective way to extend reach organically.'},
+    {plt:['IG'],fmt:'Story · Link Sticker',title:'CFP teaser Story — quick link to registration',
+cap:`[Eye-catching visual]
+
+📢 CALL FOR PAPERS IS OPEN!
+
+BHAMADA ICON 2026
+📅 August 27, 2026
+
+⏰ Submit your abstract before
+August 13, 2026!
+
+👉 Tap the link in bio!`,
+ht:'',
+tip:'Use a short 5–10 second video or simple animation. Add a "Link" sticker pointing to the registration page. This Story can be reposted every 3–4 days throughout the CFP period.'},
+  ]},
+  {date:'July 30 – August 5 — Promotion & Education',items:[
+    {plt:['IG','LI'],fmt:'Feed Post · Storytelling',title:'Why this theme? — conference theme deep dive',
+cap:`🌱 The story behind BHAMADA ICON 2026's theme...
+
+"Advancing Interdisciplinary Research and Innovation for Sustainable Development"
+
+More than just words.
+
+Today's global challenges — from health crises and digital disruption to environmental change — cannot be solved by a single discipline alone.
+
+It takes collaboration. Research that crosses boundaries. Innovation born from the meeting of diverse perspectives.
+
+That's why BHAMADA ICON 2026 exists: to bring together thinkers from various fields to collectively create real impact.
+
+Could your research be part of the solution? 🤔
+
+⏰ Abstract deadline: August 13, 2026
+📥 [registration link in bio]`,
+ht:'#BHAMADAICON2026 #SustainableDevelopment #InterdisciplinaryResearch #InternationalConference #AcademicResearch',
+tip:"A storytelling approach (not hard-selling) is far more effective for academic audiences, especially on LinkedIn. This post reaches prospective presenters who are still deciding if their research is relevant."},
+    {plt:['IG','LI'],fmt:'Carousel · 5 Slides',title:'Meet the 5 Conference Tracks of BHAMADA ICON 2026',
+cap:`📚 5 Conference Tracks — BHAMADA ICON 2026
+
+Submit your research in the track that best fits your field!
+
+1️⃣ Health Sciences & Healthcare Innovation
+   Nursing, Midwifery, Community Health, Clinical Practice, Health Promotion, Healthcare Innovation
+
+2️⃣ Pharmaceutical & Biomedical Research
+   Pharmaceutical Sciences, Clinical Pharmacy, Drug Discovery, Herbal Medicine, Biomedical Research
+
+3️⃣ Digital Technology, AI & Smart Systems
+   Artificial Intelligence, Data Science, IoT, Software Engineering, Smart Healthcare
+
+4️⃣ Business, Entrepreneurship & Innovation
+   Digital Business, Entrepreneurship, Innovation Management, Digital Economy, Creative Industry
+
+5️⃣ Occupational Health, Safety & Environmental Sustainability
+   Occupational Health & Safety, Environmental Health, Risk Management, Industrial Safety
+
+Which track does your research fall under? Tell us in the comments! 👇
+
+⏰ Deadline: August 13 | 📥 [link]`,
+ht:'#BHAMADAICON2026 #ConferenceTracks #CallForPapers #InterdisciplinaryResearch #UniversitasBhamadaSlawi',
+tip:'Carousel: slide 1 = eye-catching cover, slides 2–6 = one track per slide with icons. The question at the end encourages comments, which algorithmically boosts organic reach.'},
+    {plt:['IG','LI'],fmt:'Feed Post',title:'Who should join BHAMADA ICON 2026?',
+cap:`🤔 Who is BHAMADA ICON 2026 for?
+
+This conference is open to everyone! You're a perfect fit if you are...
+
+🎓 Lecturer / Academic
+→ Disseminate your latest research to an international forum
+
+🔬 Researcher
+→ Get scholarly feedback & expand your collaborative network
+
+👩‍🎓 Student (Undergraduate / Master's / PhD)
+→ Experience international presentation early in your academic career
+
+💼 Industry Practitioner
+→ Share your innovation & connect with the academic world
+
+🏥 Healthcare Professional
+→ Present clinical research and healthcare service innovations
+
+Two ways to participate:
+📊 PRESENTER — submit an abstract & present your research
+👥 GENERAL PARTICIPANT — attend sessions & broaden your knowledge
+
+⏰ Abstract deadline: August 13 | 📥 [link]`,
+ht:"#BHAMADAICON2026 #CallForPapers #InternationalConference #AcademicCommunity #Students #Researchers",
+tip:"Effective for reaching those who don't know if they're eligible to join. Create a Story version with each audience segment as a separate slide."},
+    {plt:['IG','LI'],fmt:'Carousel · Step-by-Step',title:'How to submit your abstract — step-by-step guide',
+cap:`📝 How to Submit Your Abstract — BHAMADA ICON 2026
+
+Simple! Follow these 6 steps:
+
+1️⃣ Prepare your research abstract (150–250 words)
+2️⃣ Choose the most suitable conference track
+3️⃣ Download the official abstract template (link in bio)
+4️⃣ Register via the online registration form
+5️⃣ Upload your abstract as instructed
+6️⃣ Await the review results from the Scientific Committee
+
+📋 The Scientific Committee evaluates based on:
+✓ Relevance to the conference theme & track
+✓ Originality and significance of the research
+✓ Quality and clarity of abstract writing
+
+⏰ Deadline: August 13, 2026
+📥 Start now: [link]
+
+Questions? DM us!`,
+ht:'#BHAMADAICON2026 #HowToSubmit #CallForPapers #InternationalConference #AbstractSubmission',
+tip:'One step per carousel slide. Include a visual checklist on the final slide that prospective presenters can screenshot as a personal reminder.'},
+  ]},
+  {date:'August 5–10 — Mid-Period Engagement',items:[
+    {plt:['IG','LI'],fmt:'Carousel · Tips',title:'5 tips for writing a strong conference abstract',
+cap:`💡 5 Tips for Writing a Strong Conference Abstract
+
+Want your abstract to pass the Scientific Committee's review?
+
+1️⃣ Clear Context
+What problem are you addressing? Why does it matter right now?
+
+2️⃣ Specific Objective
+Get straight to the point — avoid overly generic opening statements.
+
+3️⃣ Brief Methodology
+Qualitative, quantitative, or mixed method? State your main approach.
+
+4️⃣ Concrete Findings
+Don't hide your results — highlight key findings directly in the abstract!
+
+5️⃣ Contribution / Implications
+What is the real-world benefit or scholarly contribution of your research?
+
+Ideal length: 150–250 words
+
+Happy writing! ✍️
+⏰ Deadline: August 13 | 📥 [link]`,
+ht:'#BHAMADAICON2026 #AbstractWritingTips #AcademicTips #CallForPapers #InternationalConference',
+tip:'Tips content is the most shareable in academic communities. Create an infographic version for Instagram and a more elaborate long-form version for LinkedIn for maximum impact.'},
+    {plt:['IG','LI'],fmt:'Feed Post',title:'What do you gain from presenting at BHAMADA ICON 2026?',
+cap:`🎯 What do you gain from BHAMADA ICON 2026?
+
+More than just a certificate!
+
+📜 International Conference Certificate
+Valuable proof of participation for your academic & professional portfolio
+
+📰 Journal Publication Recommendation
+Top papers recommended to BHAMADA ICON 2026's partner journals
+
+🤝 International Academic Network
+Connect with academics, researchers & practitioners from institutions worldwide
+
+💡 Quality Scholarly Feedback
+Your research discussed by peers from diverse academic backgrounds
+
+🌍 Research Exposure & Visibility
+Bring your work to a wider global academic community
+
+⏰ Abstract deadline: August 13, 2026
+📥 Submit now: [link]`,
+ht:'#BHAMADAICON2026 #WhyPresent #AcademicConference #JournalPublication #AcademicNetworking',
+tip:"Post this mid-CFP period when momentum starts to slow. Effective for convincing prospective presenters who are still unsure whether it's worth participating."},
+    {plt:['IG'],fmt:'Story · Poll',title:'Interactive poll — which track is your research in?',
+cap:`[Eye-catching Story visual]
+
+Which field is your research in? 🔬
+
+[Use Instagram Story POLL feature]
+🏥 Health & Pharmacy
+💻 Tech & AI
+💼 Business & Entrepreneurship
+🦺 Occupational Health
+
+BHAMADA ICON 2026 has a track for it!
+📥 Submit your abstract before August 13`,
+ht:'',
+tip:"A Story poll helps identify your most promising audience segments. Reply personally to DMs from poll respondents with their track's specific info — this is the fastest way to convert viewers into registrants."},
+  ]},
+  {date:'August 10–13 — Last Call!',items:[
+    {plt:['IG','WA'],fmt:'Feed Post + WA Reminder',title:'3 days left — abstract deadline reminder',
+cap:`⚠️ 3 DAYS LEFT | Abstract Deadline — BHAMADA ICON 2026
+
+To all prospective presenters,
+
+Only 3 DAYS remain to submit your abstract!
+
+⏰ Deadline: August 13, 2026
+📥 Submit at: [link]
+
+Don't wait! Hundreds of academics & researchers have already taken this step.
+Now it's your turn. 🚀
+
+Questions? DM us or email [committee email]`,
+ht:'#BHAMADAICON2026 #LastCall #AbstractDeadline #3DaysLeft #CallForPapers',
+tip:'Start using a more urgent but still positive and motivating tone. On Stories, add a countdown sticker showing real-time remaining hours until the deadline.'},
+    {plt:['IG','WA'],fmt:'Feed Post · URGENT',title:'Tomorrow is the deadline! — final last call',
+cap:`🔴 LAST CALL! ABSTRACT DEADLINE IS TOMORROW!
+
+To all prospective BHAMADA ICON 2026 presenters,
+
+TOMORROW, August 13, 2026, is the FINAL day for abstract submission!
+
+If you've prepared your research but haven't submitted yet — NOW IS THE TIME! 🚀
+
+⏰ Deadline: Tomorrow, August 13, 2026
+📥 Submission link: [link]
+
+Need help?
+📩 Email: [committee email]
+📱 WhatsApp: [committee number]
+
+Don't let your research stay hidden — bring it to the world! 🌍`,
+ht:'#BHAMADAICON2026 #LastCall #URGENT #AbstractDeadline #SubmitNow',
+tip:'Use a red/orange visual design to convey urgency. Post in the morning and add a Story reminder in the afternoon. This is the peak moment to maximize total submissions.'},
+    {plt:['WA'],fmt:'WhatsApp Blast · Deadline Day',title:'WA blast — abstract deadline is TODAY',
+cap:`Dear All,
+
+⚠️ TODAY IS THE ABSTRACT DEADLINE — BHAMADA ICON 2026!
+
+Today, August 13, 2026, is the last day to submit your abstract.
+
+If you haven't submitted yet, there is still time!
+
+📥 Submission Link: [link]
+📩 Emergency contact: [email / WhatsApp number]
+
+Please act immediately.
+
+Thank you.
+
+Best regards,
+BHAMADA ICON 2026 Committee
+Universitas Bhamada Slawi`,
+ht:'',
+tip:'Send this WA blast in the morning (7–8 AM). Resend a brief reminder in the afternoon (3 PM) if needed. This is the final opportunity to maximize total abstract submissions.'},
+  ]},
+]},
+
+{id:'fp',label:'📋 Abstract & Full Paper',dates:'August 15–22',groups:[
+  {date:'August 15 — Abstract Acceptance Announcement',items:[
+    {plt:['IG','LI'],fmt:'Feed Post · Infographic',title:'Official announcement — abstracts accepted! 🎉',
+cap:`🎉 CONGRATULATIONS! Abstract Selection Results — BHAMADA ICON 2026
+
+To all participants who submitted an abstract,
+
+Thank you for your trust and enthusiasm! The Scientific Committee has completed the review process, and today we are proud to announce the results.
+
+✅ For authors whose abstracts were ACCEPTED:
+Congratulations! You are eligible to proceed to the Full Paper submission stage.
+
+📋 What's next:
+⏰ Full Paper Submission: August 16–22, 2026
+📩 Full instructions have been sent to your registered email
+
+Let's build a truly meaningful scientific forum together! 💪
+
+See you at BHAMADA ICON 2026 — August 27, 2026! 🌟`,
+ht:'#BHAMADAICON2026 #AbstractAccepted #InternationalConference #UniversitasBhamadaSlawi #CongratulationsAuthors',
+tip:'Include concrete numbers if possible: "Out of X abstracts submitted, Y were accepted across 5 tracks." Real data boosts credibility and significantly increases engagement.'},
+    {plt:['WA'],fmt:'WhatsApp Blast · Formal',title:'Participant notification — abstract results via WhatsApp',
+cap:`Dear All,
+
+We are pleased to inform you that the abstract selection results for BHAMADA ICON 2026 have been officially announced.
+
+📌 Presenters whose abstracts were ACCEPTED:
+Congratulations! Please proceed with Full Paper submission:
+📅 August 16 – 22, 2026
+📧 The template & submission guidelines have been sent to your registered email.
+
+📌 General Participants:
+Registration is still open. Please contact us for further information.
+
+Thank you for your attention.
+
+Best regards,
+BHAMADA ICON 2026 Committee
+Universitas Bhamada Slawi`,
+ht:'',
+tip:'Send to all contact databases. For WA groups, set admin-only messaging to prevent reply spam from cluttering the group.'},
+  ]},
+  {date:'August 16–17 — Full Paper Submission Opens',items:[
+    {plt:['IG','LI'],fmt:'Carousel · Step-by-Step',title:'Full paper submission guide — step by step',
+cap:`📝 Full Paper Submission Is Now Open!
+
+Congratulations to all presenters whose abstracts were accepted! Time to submit your Full Paper.
+
+📋 Submission steps:
+1️⃣ Download the official full paper template from the committee's email
+2️⃣ Write your paper following the format & selected conference track
+3️⃣ Ensure a complete structure: abstract, introduction, methods, results, conclusion, references
+4️⃣ Verify alignment with the conference theme and track
+5️⃣ Submit through the designated channel provided by the committee
+
+✅ Pre-submission checklist:
+□ Format follows the official template
+□ References are complete & consistent
+□ Author names & affiliations are correct
+□ Language has been proofread
+
+⏰ Full Paper Deadline: August 22, 2026
+Questions? DM us! ✍️`,
+ht:'#BHAMADAICON2026 #FullPaper #AcademicWriting #InternationalConference #ResearchPaper',
+tip:'Include a visual checklist on the final carousel slide — presenters will screenshot it as a personal reminder before submitting.'},
+  ]},
+  {date:'August 17–19 — Speaker Spotlight',items:[
+    {plt:['IG','LI'],fmt:'Feed Post · Speaker Profile',title:'Keynote Speaker spotlight',
+cap:`🌟 KEYNOTE SPEAKER | BHAMADA ICON 2026
+
+We are proud to introduce the Keynote Speaker of BHAMADA ICON 2026!
+
+[Keynote Speaker Name]
+[Title / Position]
+[Institution / University / Organization]
+
+They will deliver a strategic perspective on:
+"Advancing Interdisciplinary Research and Innovation for Sustainable Development"
+
+Get ready and prepare your best questions! 💡
+
+📅 August 27, 2026 | 🌐 Online via Zoom Meeting
+👉 Register as a participant: [link in bio]`,
+ht:'#BHAMADAICON2026 #KeynoteSpeaker #InternationalConference #UniversitasBhamadaSlawi #AcademicResearch',
+tip:"Tag the speaker's LinkedIn account in the LinkedIn version of this post — this expands reach to their professional network organically at no extra cost."},
+    {plt:['IG','LI'],fmt:'Feed Post · Speaker Profile',title:'Invited Speaker spotlight (duplicate per speaker)',
+cap:`🎤 INVITED SPEAKER | BHAMADA ICON 2026
+
+Meet one of the international speakers of BHAMADA ICON 2026!
+
+[Invited Speaker Name]
+[Title / Position]
+[Institution / University / Organization]
+Area of Expertise: [...]
+
+They will present insightful material aligned with the conference theme and tracks. Don't miss it! 🌟
+
+📅 August 27, 2026 | 🌐 Online via Zoom
+👉 Register as a participant: [link]`,
+ht:'#BHAMADAICON2026 #InvitedSpeaker #InternationalConference #AcademicResearch #UniversitasBhamadaSlawi',
+tip:'Duplicate this post for each invited speaker, scheduling one every 1–2 days. Consistent speaker spotlight posts build audience anticipation leading up to the event day.'},
+  ]},
+  {date:'August 19–22 — Info & Deadline Reminder',items:[
+    {plt:['IG','LI'],fmt:'Carousel · Infographic',title:'5 Conference Tracks infographic — for general participants',
+cap:`📚 5 Conference Tracks — BHAMADA ICON 2026
+
+Which sessions will you be attending?
+
+1️⃣ Health Sciences & Healthcare Innovation
+   Nursing, Midwifery, Community Health, Clinical Practice...
+
+2️⃣ Pharmaceutical & Biomedical Research
+   Pharmaceutical Sciences, Drug Discovery, Herbal Medicine...
+
+3️⃣ Digital Technology, AI & Smart Systems
+   AI, Data Science, IoT, Smart Healthcare, Software Engineering...
+
+4️⃣ Business, Entrepreneurship & Innovation
+   Digital Business, Digital Economy, Creative Industry, Marketing...
+
+5️⃣ Occupational Health, Safety & Environmental Sustainability
+   Occupational Safety, Environmental Health, Risk Management...
+
+📅 August 27, 2026 | 🌐 Online via Zoom
+👉 Register as a general participant: [link]`,
+ht:'#BHAMADAICON2026 #ConferenceTracks #InterdisciplinaryResearch #AcademicConference #InternationalConference',
+tip:"This post also reminds general participants about the variety of topics they'll witness — encouraging last-minute registrations from those who haven't signed up yet."},
+    {plt:['IG','WA'],fmt:'Feed Post + WA Reminder',title:'Full paper deadline reminder — 1 day left',
+cap:`⏰ REMINDER — FULL PAPER DEADLINE IS TOMORROW!
+
+To all BHAMADA ICON 2026 presenters,
+
+Tomorrow, August 22, 2026, is the final deadline for Full Paper submission. Get it done!
+
+✅ Quick pre-submission checklist:
+□ Format follows the official template
+□ Abstract, body, and references are complete
+□ Author names & affiliations are correct
+□ Submitted through the correct channel
+
+Don't miss this opportunity! 💪
+Having issues? Contact the committee immediately.`,
+ht:'#BHAMADAICON2026 #DeadlineAlert #FullPaper #LastCall #ResearchPaper',
+tip:'Send a WA blast specifically to registered presenters. Use red/orange visuals to reinforce the urgency of the approaching deadline.'},
+  ]},
+]},
+
+{id:'cdown',label:'⏳ Countdown',dates:'August 23–26',groups:[
+  {date:'August 23 — Technical Meeting',items:[
+    {plt:['IG','WA'],fmt:'Feed Post + WA Blast',title:'Presenter Technical Meeting invitation',
+cap:`📋 PRESENTER TECHNICAL MEETING | BHAMADA ICON 2026
+
+Dear all BHAMADA ICON 2026 Presenters,
+
+The committee invites all presenters to attend the Technical Meeting:
+
+📅 Sunday, August 23, 2026
+🕐 Time: [TBD]
+🌐 Platform: Zoom Meeting
+
+Agenda:
+• Technical briefing on conference proceedings
+• Guidelines for online presentation
+• Zoom platform tutorial & features
+• Presentation schedule distribution by track
+
+The Zoom link will be sent via your registered email.
+Your attendance is strongly encouraged! 🙏`,
+ht:'#BHAMADAICON2026 #TechnicalMeeting #Presenter #InternationalConference',
+tip:'Send an additional reminder on the morning of the Technical Meeting. Include the Zoom link directly in the WA message for easy access.'},
+  ]},
+  {date:'August 24 — 3 Days to Go',items:[
+    {plt:['IG','LI'],fmt:'Feed Post · Countdown Visual',title:'Countdown — 3 days to go!',
+cap:`🗓️ 3 DAYS TO GO | BHAMADA ICON 2026
+
+Only 3 days left! 🔥
+
+BHAMADA ICON 2026 is almost here — bringing together interdisciplinary research collaboration from around the world! 🌍
+
+What to look forward to:
+🎤 Keynote Speech by a leading expert
+🌟 International Invited Speaker Sessions
+📊 Parallel Presentation Sessions (5 tracks)
+🏆 Best Paper Award
+
+Haven't registered as a general participant yet? There's still time!
+👉 [link in bio]`,
+ht:'#BHAMADAICON2026 #Countdown #3DaysToGo #InternationalConference #UniversitasBhamadaSlawi',
+tip:"Design with a large, prominent '3' as the hero element. One of the last effective opportunities to push registration for general participants — include a clear CTA."},
+  ]},
+  {date:'August 25 — 2 Days to Go',items:[
+    {plt:['IG','LI'],fmt:'Feed Post · Carousel',title:'Countdown — 2 days to go + full agenda preview',
+cap:`🔥 2 DAYS TO GO | BHAMADA ICON 2026
+
+Two days left — get ready!
+
+Here's what's happening on August 27, 2026:
+
+🕐 Opening Ceremony — Official welcome by the Rector of Universitas Bhamada Slawi
+🎤 Keynote Speech — Strategic insights from our keynote speaker
+🌟 Invited Speaker Sessions — Knowledge from international experts
+📊 Parallel Presentation Sessions — 5 conference tracks running simultaneously
+🏆 Closing Ceremony & Best Paper Award
+
+All online — join from anywhere in the world! 🌐
+
+📅 August 27, 2026 | Zoom Meeting`,
+ht:'#BHAMADAICON2026 #Countdown #2DaysToGo #ConferenceAgenda #InternationalConference',
+tip:"Best time to share the full agenda preview. A 'one session per slide' carousel works well — audiences know exactly what they'll get, boosting enthusiasm and last-minute sign-ups."},
+  ]},
+  {date:'August 26 — 1 Day to Go',items:[
+    {plt:['IG','LI'],fmt:'Feed Post · High Energy',title:'1 day to go — see you tomorrow! 🚀',
+cap:`🚀 TOMORROW! 1 DAY TO GO — BHAMADA ICON 2026
+
+We're almost there! Tomorrow, Thursday August 27, 2026 — BHAMADA ICON 2026 officially begins! 🎉
+
+📌 Checklist for PRESENTERS:
+✅ Check your presentation schedule (check your email!)
+✅ Test your internet connection, camera & microphone
+✅ Prepare your presentation file (PPT/PDF)
+✅ Join Zoom at least 15 minutes before your session
+
+📌 Checklist for GENERAL PARTICIPANTS:
+✅ Check your email for the official Zoom link
+✅ Note down the sessions you want to attend
+✅ Prepare questions for the Q&A sessions!
+
+See you tomorrow! 👋
+🔗 Link: [link] | ID: [ID] | Pass: [pass]`,
+ht:'#BHAMADAICON2026 #1DayToGo #SeeYouTomorrow #Countdown #InternationalConference',
+tip:'Most important pre-event post! Must include Zoom access info directly in both the visual and caption so participants do not have to go searching for it.'},
+    {plt:['WA'],fmt:'WhatsApp Blast · Complete + Technical',title:'H-1 WA blast — Zoom access for all participants',
+cap:`Dear All,
+
+🎯 REMINDER — 1 DAY TO GO | BHAMADA ICON 2026
+
+TOMORROW, Thursday August 27, 2026 — BHAMADA ICON 2026 takes place. Please see the important details below:
+
+📌 Zoom Access:
+🔗 Link: [Zoom Link]
+🆔 Meeting ID: [ID]
+🔑 Passcode: [Passcode]
+
+📌 For Presenters:
+- Join Zoom at least 15 minutes before your session
+- Display name: Full Name – Institution
+- Have your PPT/PDF presentation file ready
+
+📌 For General Participants:
+- Join at the opening session time
+- Please mute your microphone and unmute only during Q&A
+
+Full schedule by track → check your email / see attached document.
+
+See you tomorrow! 🎉
+
+Best regards,
+BHAMADA ICON 2026 Committee`,
+ht:'',
+tip:'Send to ALL databases: presenters, participants, moderators, and the full committee. Attach the complete schedule by track as a PDF document.'},
+  ]},
+]},
+
+{id:'dday',label:'🎊 D-Day (Aug 27)',dates:'August 27, 2026',groups:[
+  {date:'Morning — Opening Ceremony',items:[
+    {plt:['IG','LI'],fmt:'Feed Post',title:'"Today is the day!" — official conference opening',
+cap:`🎊 WELCOME TO BHAMADA ICON 2026!
+
+The moment we have all been waiting for has arrived! 🌟
+
+Today, Thursday August 27, 2026 — BHAMADA ICON 2026 is officially open! We warmly welcome all academics, researchers, students, and practitioners joining us from around the world!
+
+📍 Online via Zoom Meeting
+🎓 Opened by: The Rector of Universitas Bhamada Slawi
+
+Together, let us advance interdisciplinary research and innovation for sustainable development! 🌱
+
+#BHAMADAICON2026`,
+ht:'#BHAMADAICON2026 #OpeningCeremony #InternationalConference #UniversitasBhamadaSlawi #TodayIsTheDay',
+tip:'Post the moment the opening begins. Update Instagram Stories in real time every 30–60 minutes throughout the day with screenshots from each session.'},
+  ]},
+  {date:'Afternoon — Sessions Underway',items:[
+    {plt:['IG'],fmt:'Story Series · Real-Time All Day',title:'Live Story updates — keynote, speakers & parallel sessions',
+cap:`[Story 1 — Keynote Speech]
+🎤 LIVE! Keynote Speech with [Speaker Name]
+"[Compelling quote from the speech]"
+#BHAMADAICON2026 #LiveUpdate
+
+---
+
+[Story 2 — Invited Speaker]
+🌟 Invited Speaker Session is underway!
+[Speaker Name] shares insights on [brief topic]
+#BHAMADAICON2026
+
+---
+
+[Story 3 — Parallel Sessions]
+📊 Parallel Presentation Sessions have kicked off!
+Presenters from all 5 conference tracks are sharing their research live.
+#BHAMADAICON2026 #LiveScience`,
+ht:'#BHAMADAICON2026 #LiveUpdate #InternationalConference #ResearchPresentation',
+tip:'Screenshots of speaker presentations (with permission) are far more engaging than text-only Stories. Save all Stories as a "BHAMADA ICON 2026" Highlight after the event for long-term visibility.'},
+  ]},
+  {date:'Evening — Closing & Best Paper Award',items:[
+    {plt:['IG','LI'],fmt:'Feed Post · Announcement Visual',title:'Best Paper Award — winner announcement 🏆',
+cap:`🏆 BEST PAPER AWARD — BHAMADA ICON 2026
+
+Congratulations to the recipient of the Best Paper Award at BHAMADA ICON 2026!
+
+🥇 Paper Title: [Full Title]
+✍️ Author(s): [Name(s)]
+🏛️ Institution: [Institution Name]
+📂 Conference Track: [Track Name]
+
+An outstanding piece of work that makes a real contribution to the advancement of knowledge and innovation! Congratulations! 🌟
+
+Thank you to all presenters who shared their remarkable research today. You are all stars! ⭐`,
+ht:'#BHAMADAICON2026 #BestPaperAward #InternationalConference #AcademicExcellence #Congratulations',
+tip:'KEY: Prepare the "Best Paper Award" visual template BEFORE the event starts. When the winner is announced, just fill in the name and post immediately. Speed of posting makes the moment feel alive.'},
+    {plt:['IG','LI'],fmt:'Feed Post · Warm Closing',title:'Thank you — closing BHAMADA ICON 2026',
+cap:`🙏 THANK YOU — BHAMADA ICON 2026
+
+BHAMADA ICON 2026 has officially come to a close — full of energy, collaboration, and inspiration! 🎉
+
+Our deepest gratitude to:
+🎤 The Keynote Speaker & Invited Speakers for their outstanding contributions
+📊 All presenters for sharing your finest research
+👥 All participants for joining and engaging actively
+🛠️ The entire committee for their hard work behind the scenes
+🏛️ Universitas Bhamada Slawi for their trust and full support
+
+This is only the beginning — our research collaboration will continue! 🌱
+
+See you at the next BHAMADA ICON! 👋`,
+ht:'#BHAMADAICON2026 #ThankYou #InternationalConference #UniversitasBhamadaSlawi #SustainableResearch',
+tip:'Complement this with a collage of the best screenshots from throughout the day. Save all photos and screenshots during the event — these are primary material for all post-event content.'},
+  ]},
+]},
+
+{id:'post',label:'📢 Post-Event',dates:'August 28 – September',groups:[
+  {date:'August 28–29 — Recap & Appreciation',items:[
+    {plt:['IG','LI'],fmt:'Carousel · Reels',title:'Event highlights & recap — BHAMADA ICON 2026',
+cap:`📸 HIGHLIGHTS | BHAMADA ICON 2026
+
+BHAMADA ICON 2026 was an extraordinary success! Here are the best moments:
+
+✨ A vibrant Opening Ceremony
+🎤 An inspiring Keynote Speech by [Speaker Name]
+🌟 Insightful Invited Speaker Sessions
+📊 Parallel Presentation Sessions across all 5 conference tracks
+🏆 The awarding of the Best Paper Award to [Winner's Name]
+
+Thank you to [X] presenters and [X] participants from across regions and countries!
+
+This conference proves: interdisciplinary collaboration is the key to innovation for sustainable development. 🌱
+
+#BHAMADAICON2026`,
+ht:'#BHAMADAICON2026 #EventHighlights #Recap #InternationalConference #UniversitasBhamadaSlawi',
+tip:'A Reels highlight reel has the highest organic reach on Instagram post-event. Edit to 30–60 seconds with short narration and energetic music for maximum engagement.'},
+    {plt:['IG','LI'],fmt:'Feed Post',title:'Special thank you to our speakers',
+cap:`💐 THANK YOU, SPEAKERS! | BHAMADA ICON 2026
+
+Our deepest gratitude to the outstanding speakers of BHAMADA ICON 2026!
+
+🎤 Keynote Speaker: [Name]
+🌟 Invited Speaker: [Name 1]
+🌟 Invited Speaker: [Name 2]
+🌟 Invited Speaker: [Name 3]
+
+Your insights, expertise, and dedication provided immense value to all participants.
+
+We hope this academic collaboration continues well into the future! 🤝`,
+ht:"#BHAMADAICON2026 #ThankYou #KeynoteSpeaker #InvitedSpeaker #AcademicCollaboration",
+tip:"Tag speakers' social media accounts — genuine appreciation that also expands your content's organic reach to their professional networks."},
+  ]},
+  {date:'August–September — Publication',items:[
+    {plt:['IG','LI'],fmt:'Feed Post',title:'Book of Abstract — now officially published! 📖',
+cap:`📖 BOOK OF ABSTRACT | BHAMADA ICON 2026 IS NOW PUBLISHED!
+
+We are proud to announce that the Book of Abstract for BHAMADA ICON 2026 has been officially published! 🎉
+
+Containing research abstracts from all our presenters across 5 conference tracks:
+📚 Health Sciences & Healthcare Innovation
+💊 Pharmaceutical & Biomedical Research
+💻 Digital Technology, AI & Smart Systems
+💼 Business, Entrepreneurship & Innovation
+🦺 Occupational Health, Safety & Environmental Sustainability
+
+📥 Download: [Link]
+ISBN: [Number, if available]
+
+Thank you to all authors for your valuable research contributions! 🙏`,
+ht:'#BHAMADAICON2026 #BookOfAbstract #AcademicPublication #UniversitasBhamadaSlawi #OpenAccess',
+tip:'Design a professional Book of Abstract cover visual in advance. Include the download link directly in the caption and update the link in your Instagram/LinkedIn bio.'},
+    {plt:['IG','LI'],fmt:'Feed Post',title:'Journal publication recommendation — great news for presenters!',
+cap:`📰 PUBLICATION UPDATE | BHAMADA ICON 2026
+
+Great news for all BHAMADA ICON 2026 presenters! 🎉
+
+High-quality papers that meet the requirements will be recommended for publication in BHAMADA ICON 2026's partner journals, in accordance with each journal's scope and submission guidelines.
+
+Details on the publication recommendation process will be sent via email to eligible presenters.
+
+This is a golden opportunity to share your research with a wider global academic community! 🌍
+
+Stay tuned to your email and our social media channels for updates!`,
+ht:'#BHAMADAICON2026 #AcademicPublication #PartnerJournals #Research #UniversitasBhamadaSlawi',
+tip:'Explicitly name the partner journals if they can be disclosed. This content is highly effective for attracting new presenters to the next edition of BHAMADA ICON.'},
+  ]},
+]},
+];
+
+/* ─── STATE ─── */
+let activePhase=0;
+let activePlt=null;
+let searchTerm='';
+
+/* ─── COUNT ─── */
+let total=0;
+D.forEach(p=>p.groups.forEach(g=>total+=g.items.length));
+document.getElementById('total-pill').textContent=total+' posts total';
+document.getElementById('stat-big').innerHTML=total+'<em>+</em>';
+
+/* ─── RENDER ─── */
+function render(){
+  const tabsEl=document.getElementById('phase-tabs');
+  const panelsEl=document.getElementById('panels');
+  tabsEl.innerHTML='';panelsEl.innerHTML='';
+
+  D.forEach((phase,pi)=>{
+    let cnt=0;phase.groups.forEach(g=>cnt+=g.items.length);
+
+    /* TAB */
+    const tb=document.createElement('button');
+    tb.className='ptab'+(pi===0?' on':'');
+    tb.innerHTML=`${phase.label} <span class="cnt">${cnt}</span>`;
+    tb.onclick=()=>switchPhase(pi);
+    tabsEl.appendChild(tb);
+
+    /* PANEL */
+    const panel=document.createElement('div');
+    panel.className='panel'+(pi===0?' on':'');
+    panel.id='panel-'+pi;
+
+    /* PHASE INFO */
+    const info=document.createElement('div');
+    info.className='phase-info';
+    let ig=0,li=0,wa=0;
+    phase.groups.forEach(g=>g.items.forEach(it=>{
+      if(it.plt.includes('IG'))ig++;
+      if(it.plt.includes('LI'))li++;
+      if(it.plt.includes('WA'))wa++;
+    }));
+    info.innerHTML=`
+      <div class="phase-info-date">${phase.dates}</div>
+      <div class="phase-stats">
+        <span class="pstat">📸 IG: ${ig}</span>
+        <span class="pstat">💼 LI: ${li}</span>
+        <span class="pstat">💬 WA: ${wa}</span>
+      </div>`;
+    panel.appendChild(info);
+
+    /* SEARCH ROW */
+    const sr=document.createElement('div');
+    sr.className='search-row';
+    panel.appendChild(sr);
+
+    /* GROUPS */
+    phase.groups.forEach(grp=>{
+      const dg=document.createElement('div');
+      dg.className='dg';
+      const dl=document.createElement('div');
+      dl.className='dl';
+      dl.textContent=grp.date;
+      dg.appendChild(dl);
+
+      const grid=document.createElement('div');
+      grid.className='card-grid';
+
+      grp.items.forEach((item,ii)=>{
+        const card=document.createElement('div');
+        card.className='card';
+        card.dataset.plt=item.plt.join(',');
+        card.dataset.text=(item.title+' '+item.cap+' '+item.fmt).toLowerCase();
+
+        /* CARD HEAD */
+        const head=document.createElement('div');
+        head.className='card-head';
+        head.onclick=()=>toggleCard(card,item);
+
+        const badges=document.createElement('div');
+        badges.className='card-badges';
+        item.plt.forEach(p=>{
+          const b=document.createElement('span');
+          b.className='bdg bdg-'+p.toLowerCase();
+          b.textContent=p;
+          badges.appendChild(b);
+        });
+        const fm=document.createElement('span');
+        fm.className='bdg-fmt';fm.textContent=item.fmt;
+        badges.appendChild(fm);
+
+        const tit=document.createElement('span');
+        tit.className='card-title';tit.textContent=item.title;
+
+        const chev=document.createElement('span');
+        chev.className='card-chev';chev.textContent='▾';
+
+        head.appendChild(badges);head.appendChild(tit);head.appendChild(chev);
+
+        /* CARD BODY */
+        const body=document.createElement('div');
+        body.className='card-body';
+
+        const capHdr=document.createElement('div');
+        capHdr.className='cap-header';
+        const capLbl=document.createElement('span');
+        capLbl.className='cap-lbl';capLbl.textContent='Caption';
+        const cpBtn=document.createElement('button');
+        cpBtn.className='copy-btn';cpBtn.textContent='Copy';
+        cpBtn.onclick=e=>{
+          e.stopPropagation();
+          const txt=item.cap+(item.ht?'\n\n'+item.ht:'');
+          navigator.clipboard.writeText(txt).then(()=>{
+            cpBtn.textContent='✓ Copied!';cpBtn.classList.add('copied');
+            setTimeout(()=>{cpBtn.textContent='Copy';cpBtn.classList.remove('copied');},2200);
+          });
+        };
+        capHdr.appendChild(capLbl);capHdr.appendChild(cpBtn);
+
+        const capBox=document.createElement('div');
+        capBox.className='caption-box';capBox.textContent=item.cap;
+
+        body.appendChild(capHdr);body.appendChild(capBox);
+
+        if(item.ht){
+          const htL=document.createElement('div');htL.className='ht-lbl';htL.textContent='Hashtags';
+          const htV=document.createElement('div');htV.className='hashtags';htV.textContent=item.ht;
+          body.appendChild(htL);body.appendChild(htV);
+        }
+        if(item.tip){
+          const tipBox=document.createElement('div');tipBox.className='tip-box';
+          tipBox.innerHTML='<strong>💡 Tip:</strong> '+item.tip;
+          body.appendChild(tipBox);
+        }
+
+        card.appendChild(head);card.appendChild(body);
+        grid.appendChild(card);
+      });
+
+      dg.appendChild(grid);
+      panel.appendChild(dg);
+    });
+
+    panelsEl.appendChild(panel);
+  });
+}
+
+function switchPhase(pi){
+  activePhase=pi;
+  document.querySelectorAll('.ptab').forEach((t,i)=>t.classList.toggle('on',i===pi));
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('on',i===pi));
+  window.scrollTo({top:0,behavior:'smooth'});
+  applyFilters();
+}
+
+function toggleCard(card,item){
+  const wasOpen=card.classList.contains('open');
+  /* close all in same grid */
+  card.closest('.card-grid').querySelectorAll('.card.open').forEach(c=>{
+    c.classList.remove('open');
+  });
+  if(!wasOpen) card.classList.add('open');
+}
+
+/* ─── FILTER ─── */
+function toggleFilter(plt,btn){
+  if(activePlt===plt){activePlt=null;btn.className='flt';}
+  else{
+    document.querySelectorAll('.flt').forEach(b=>b.className='flt');
+    activePlt=plt;btn.className='flt on-'+plt.toLowerCase();
+  }
+  applyFilters();
+}
+
+function applyFilters(){
+  const q=searchTerm.trim().toLowerCase();
+  const panel=document.querySelector('.panel.on');
+  if(!panel)return;
+  let anyVisible=false;
+  panel.querySelectorAll('.card').forEach(card=>{
+    const pltOk=!activePlt||card.dataset.plt.includes(activePlt);
+    const searchOk=!q||card.dataset.text.includes(q)||card.querySelector('.card-title').textContent.toLowerCase().includes(q);
+    const hide=!pltOk||!searchOk;
+    card.classList.toggle('hidden-card',hide);
+    if(!hide)anyVisible=true;
+  });
+  /* show/hide date groups */
+  panel.querySelectorAll('.dg').forEach(dg=>{
+    const visible=dg.querySelectorAll('.card:not(.hidden-card)').length>0;
+    dg.style.display=visible?'':'none';
+  });
+}
+
+/* ─── SEARCH ─── */
+document.getElementById('search').addEventListener('input',function(){
+  searchTerm=this.value;
+  applyFilters();
+});
+
+render();
+</script>
+</body>
+</html>
