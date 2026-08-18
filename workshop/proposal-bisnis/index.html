@@ -1,1 +1,1124 @@
-html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workshop Kit — Proposal Bisnis, Lean Canvas & Pitch Deck</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:     #0F2D5E;
+      --navy2:    #1B3D7A;
+      --gold:     #F59E0B;
+      --gold-bg:  #FEF3C7;
+      --bg:       #EFF4FF;
+      --white:    #FFFFFF;
+      --text:     #1E293B;
+      --muted:    #64748B;
+      --border:   #E2E8F0;
+      --green:    #059669;
+      --green-bg: #ECFDF5;
+      --orange:   #EA580C;
+      --orange-bg:#FFF7ED;
+      --purple:   #7C3AED;
+      --purple-bg:#F5F3FF;
+      --red:      #DC2626;
+      --red-bg:   #FEE2E2;
+      --teal:     #0891B2;
+      --teal-bg:  #ECFEFF;
+    }
+    body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
+
+    /* ── HERO ───────────── */
+    .hero { background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 55%,#1E40AF 100%); color:#fff; padding:1.75rem 1.25rem 1.25rem; position:relative; overflow:hidden; }
+    .hero::before { content:''; position:absolute; top:-50px; right:-50px; width:220px; height:220px; background:var(--gold); opacity:.07; border-radius:50%; }
+    .hero::after  { content:''; position:absolute; bottom:-80px; left:25%; width:280px; height:280px; background:#60A5FA; opacity:.05; border-radius:50%; }
+    .eyebrow { font-size:.62rem; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:.4rem; }
+    .hero-title { font-family:'Lora',serif; font-size:1.55rem; font-weight:700; line-height:1.2; margin-bottom:.3rem; }
+    .hero-sub { font-size:.75rem; color:#93C5FD; margin-bottom:1.4rem; }
+    .tl-bar { display:flex; gap:2px; height:28px; border-radius:7px; overflow:hidden; }
+    .tl-seg { display:flex; align-items:center; justify-content:center; font-size:.56rem; font-weight:700; color:rgba(255,255,255,.9); white-space:nowrap; overflow:hidden; padding:0 3px; }
+    .tl-s1{background:#3B82F6;flex:10}.tl-s2{background:#D97706;flex:70}.tl-s3{background:#7C3AED;flex:15}.tl-s4{background:#059669;flex:60}.tl-s5{background:#DC2626;flex:25}
+    .tl-meta { display:flex; gap:2px; margin-top:5px; }
+    .tl-lbl { font-size:.5rem; color:#93C5FD; overflow:hidden; }
+    .tl-lbl.s1{flex:10}.tl-lbl.s2{flex:70}.tl-lbl.s3{flex:15}.tl-lbl.s4{flex:60}.tl-lbl.s5{flex:25}
+
+    /* ── TABS ───────────── */
+    .tabs { display:flex; background:var(--white); border-bottom:1px solid var(--border); overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; position:sticky; top:0; z-index:20; box-shadow:0 1px 6px rgba(0,0,0,.06); }
+    .tabs::-webkit-scrollbar { display:none; }
+    .tab { flex-shrink:0; padding:.75rem .9rem; font-size:.76rem; font-weight:600; color:var(--muted); cursor:pointer; border-bottom:2.5px solid transparent; white-space:nowrap; transition:all .18s; }
+    .tab.active { color:var(--navy); border-bottom-color:var(--gold); }
+
+    /* ── PANELS ──────────── */
+    .panel { display:none; padding:1.1rem; max-width:860px; margin:0 auto; }
+    .panel.active { display:block; }
+
+    /* ── CARD ────────────── */
+    .card { background:var(--white); border:1px solid var(--border); border-radius:14px; padding:1.15rem; margin-bottom:.9rem; }
+    .card-hd { display:flex; align-items:center; gap:.7rem; margin-bottom:.9rem; padding-bottom:.75rem; border-bottom:1px solid var(--border); }
+    .badge { width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:800; flex-shrink:0; }
+    .b-blue   {background:#DBEAFE;color:#1D4ED8}.b-gold{background:var(--gold-bg);color:#92400E}
+    .b-green  {background:var(--green-bg);color:#065F46}.b-purple{background:var(--purple-bg);color:#5B21B6}
+    .b-red    {background:var(--red-bg);color:#991B1B}.b-teal{background:var(--teal-bg);color:#0E7490}
+    .b-navy   {background:#DBEAFE;color:var(--navy)}.b-orange{background:var(--orange-bg);color:#9A3412}
+    .card-title { font-family:'Lora',serif; font-size:.98rem; font-weight:700; color:var(--navy); }
+    .card-sub   { font-size:.68rem; color:var(--muted); margin-top:1px; }
+
+    /* ── TYPOGRAPHY ──────── */
+    .sh { font-size:.65rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin:1rem 0 .45rem; }
+    .sh:first-child { margin-top:0; }
+    p.body { font-size:.8rem; line-height:1.65; color:var(--text); margin-bottom:.5rem; }
+
+    /* ── LISTS ───────────── */
+    .alist { list-style:none; }
+    .alist li { display:flex; gap:.45rem; padding:.38rem 0; font-size:.78rem; border-bottom:1px solid #F8FAFC; line-height:1.5; }
+    .alist li:last-child { border-bottom:none; padding-bottom:0; }
+    .alist li::before { content:'→'; color:var(--gold); font-weight:800; flex-shrink:0; margin-top:1px; }
+
+    /* ── CALLOUTS ─────────── */
+    .tip,.note,.info,.warn { border-radius:0 8px 8px 0; padding:.65rem .9rem; font-size:.76rem; line-height:1.55; margin:.65rem 0; }
+    .tip  { background:var(--green-bg);  border-left:3px solid var(--green);  color:#064E3B; }
+    .note { background:var(--orange-bg); border-left:3px solid var(--orange); color:#7C2D12; }
+    .info { background:#EFF6FF; border-left:3px solid #3B82F6; color:#1E40AF; }
+    .warn { background:var(--purple-bg); border-left:3px solid var(--purple); color:#4C1D95; }
+    .tip strong,.note strong,.info strong,.warn strong { font-weight:700; }
+
+    /* ── FRAMEWORK BOX ────── */
+    .fw-box { background:linear-gradient(135deg,#F0F9FF,#EEF2FF); border:1px solid #C7D2FE; border-radius:10px; padding:.9rem; margin:.65rem 0; }
+    .fw-row { display:flex; align-items:flex-start; gap:.45rem; margin-bottom:.4rem; }
+    .fw-row:last-child { margin-bottom:0; }
+    .fw-label { font-size:.65rem; font-weight:800; min-width:90px; color:#3730A3; padding-top:2px; }
+    .fw-arrow { color:var(--gold); font-weight:700; font-size:.8rem; margin-top:2px; flex-shrink:0; }
+    .fw-val { font-size:.76rem; color:var(--text); flex:1; line-height:1.5; }
+
+    /* ── PILLS ───────────── */
+    .pill { display:inline-block; font-size:.63rem; font-weight:700; padding:2px 8px; border-radius:99px; margin:2px 2px 2px 0; }
+    .p-blue   {background:#DBEAFE;color:#1E40AF}.p-gold{background:var(--gold-bg);color:#92400E}
+    .p-green  {background:#D1FAE5;color:#065F46}.p-purple{background:var(--purple-bg);color:#5B21B6}
+    .p-red    {background:var(--red-bg);color:#991B1B}.p-teal{background:var(--teal-bg);color:#0E7490}
+    .p-orange {background:var(--orange-bg);color:#9A3412}
+
+    /* ── RUNDOWN ──────────── */
+    .run-row { display:flex; gap:.7rem; padding:.85rem 0; border-bottom:1px solid #F1F5F9; align-items:flex-start; }
+    .run-row:last-child { border-bottom:none; padding-bottom:0; }
+    .run-row:first-child { padding-top:0; }
+    .run-time { font-size:.67rem; font-weight:700; color:var(--navy); min-width:66px; flex-shrink:0; line-height:1.4; padding-top:2px; }
+    .run-dot  { width:10px; height:10px; border-radius:50%; margin-top:4px; flex-shrink:0; }
+    .run-body { flex:1; }
+    .run-name { font-size:.83rem; font-weight:700; margin-bottom:.22rem; }
+    .run-detail { font-size:.73rem; color:var(--muted); line-height:1.6; }
+    .run-detail strong { color:var(--text); }
+    .run-pill { font-size:.64rem; font-weight:700; padding:2px 9px; border-radius:99px; flex-shrink:0; margin-top:2px; }
+    .rubrik { width:100%; border-collapse:collapse; font-size:.74rem; }
+    .rubrik th { background:var(--navy); color:white; padding:.45rem .7rem; text-align:left; font-size:.66rem; font-weight:700; }
+    .rubrik td { padding:.45rem .7rem; border-bottom:1px solid var(--border); vertical-align:top; }
+    .rubrik tr:last-child td { border-bottom:none; }
+    .rubrik tr:nth-child(even) td { background:#F8FAFC; }
+    .rubrik .pct { font-weight:800; color:var(--navy); white-space:nowrap; }
+
+    /* ── LEAN CANVAS GRID ─── */
+    .lc-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .lc-grid { display:grid; grid-template-columns:1fr 1fr 1.2fr 1fr 1fr; grid-template-rows:auto auto auto; gap:3px; background:#C7D2FE; border-radius:10px; overflow:hidden; min-width:480px; }
+    .lc-cell { background:var(--white); padding:.55rem .6rem; }
+    .lc-cell-title { font-size:.6rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.3rem; display:flex; align-items:center; gap:.3rem; }
+    .lc-cell-num { width:16px; height:16px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:.55rem; font-weight:900; color:white; flex-shrink:0; }
+    .lc-content { font-size:.68rem; color:var(--muted); line-height:1.5; }
+    .lc-hint { font-size:.6rem; color:#94A3B8; font-style:italic; margin-top:.25rem; }
+    .lc-problem      { grid-column:1; grid-row:1; }
+    .lc-keymetrics   { grid-column:1; grid-row:2; }
+    .lc-solution     { grid-column:2; grid-row:1; }
+    .lc-channels     { grid-column:2; grid-row:2; }
+    .lc-uvp          { grid-column:3; grid-row:1/3; }
+    .lc-unfair       { grid-column:4; grid-row:1; }
+    .lc-segments     { grid-column:5; grid-row:1/3; }
+    .lc-early        { grid-column:4; grid-row:2; }
+    .lc-cost         { grid-column:1/3; grid-row:3; }
+    .lc-revenue      { grid-column:3/6; grid-row:3; }
+
+    /* ── FILL ORDER ──────── */
+    .fill-order { display:flex; flex-wrap:wrap; gap:.4rem; margin:.6rem 0; }
+    .fo-step { display:flex; align-items:center; gap:.3rem; background:var(--white); border:1px solid var(--border); border-radius:7px; padding:.35rem .6rem; font-size:.72rem; }
+    .fo-num { width:18px; height:18px; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:.6rem; font-weight:900; color:white; flex-shrink:0; }
+
+    /* ── BLOCK DETAIL ─────── */
+    .block-detail { border:1px solid var(--border); border-radius:10px; margin-bottom:.6rem; overflow:hidden; }
+    .block-hd { display:flex; align-items:center; gap:.5rem; padding:.55rem .75rem; border-bottom:1px solid var(--border); cursor:pointer; }
+    .block-hd-num { width:22px; height:22px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:.6rem; font-weight:900; color:white; flex-shrink:0; }
+    .block-hd-name { font-size:.8rem; font-weight:700; flex:1; }
+    .block-hd-eng  { font-size:.65rem; color:var(--muted); }
+    .block-body { padding:.7rem .75rem; background:#FAFCFF; font-size:.77rem; line-height:1.6; }
+    .block-body ul { list-style:none; padding:0; }
+    .block-body ul li { padding:.2rem 0; padding-left:1rem; position:relative; color:var(--text); }
+    .block-body ul li::before { content:'·'; position:absolute; left:0; color:var(--gold); font-size:1.1rem; line-height:1.3; }
+    .block-formula { background:#F0F9FF; border:1px solid #BAE6FD; border-radius:7px; padding:.5rem .7rem; margin-top:.5rem; font-size:.73rem; color:#0369A1; font-weight:600; }
+
+    /* ── TEMPLATE ─────────── */
+    .tpl-section { border:1.5px dashed #CBD5E1; border-radius:10px; padding:.95rem; margin-bottom:.7rem; background:#FAFCFF; }
+    .tpl-label { font-size:.63rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--navy); margin-bottom:.55rem; display:flex; align-items:center; gap:.35rem; }
+    .tpl-field { background:var(--white); border:1px solid var(--border); border-radius:7px; padding:.45rem .7rem; font-size:.76rem; color:#94A3B8; margin-bottom:.38rem; min-height:32px; line-height:1.5; }
+    .tpl-field.tall { min-height:60px; }
+    .tpl-field strong { color:var(--text); }
+    .vp-tpl { background:var(--white); border:1px solid #C7D2FE; border-radius:8px; padding:.8rem; font-size:.79rem; line-height:2.2; color:var(--text); }
+    .vp-blank { border-bottom:1.5px solid #94A3B8; display:inline-block; min-width:70px; color:#CBD5E1; }
+
+    /* ── LEAN CANVAS TEMPLATE ─ */
+    .lc-tpl-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:.4rem; }
+    .lc-tpl-cell { border:1.5px dashed #CBD5E1; border-radius:8px; padding:.55rem; background:var(--white); }
+    .lc-tpl-label { font-size:.58rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; color:var(--navy); margin-bottom:.3rem; }
+    .lc-tpl-field { font-size:.68rem; color:#94A3B8; border-bottom:1px dashed #E2E8F0; padding:.25rem 0; margin-bottom:.2rem; min-height:22px; }
+    .lc-tpl-cell.full-w { grid-column:1/4; }
+    .lc-tpl-cell.half-w { grid-column:span 1; }
+
+    /* ── PITCH DECK ───────── */
+    .principle-card { border:1px solid var(--border); border-radius:12px; margin-bottom:.75rem; overflow:hidden; }
+    .pc-hd { padding:.65rem .9rem; display:flex; align-items:center; gap:.6rem; border-bottom:1px solid var(--border); }
+    .pc-num { width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:800; color:white; flex-shrink:0; }
+    .pc-title { font-size:.88rem; font-weight:700; }
+    .pc-sub   { font-size:.65rem; color:var(--muted); }
+    .pc-body  { padding:.75rem .9rem; background:#FAFCFF; font-size:.77rem; line-height:1.65; }
+
+    /* SCQA box */
+    .scqa-grid { display:grid; grid-template-columns:1fr 1fr; gap:.4rem; margin:.6rem 0; }
+    .scqa-block { border-radius:9px; padding:.6rem .75rem; }
+    .scqa-block .scqa-letter { font-size:1.4rem; font-weight:800; line-height:1; margin-bottom:.15rem; }
+    .scqa-block .scqa-word   { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:.25rem; }
+    .scqa-block p { font-size:.74rem; line-height:1.5; }
+
+    /* MECE */
+    .mece-compare { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; margin:.6rem 0; }
+    .mc-bad  { background:var(--red-bg);  border:1px solid #FCA5A5; border-radius:9px; padding:.6rem; }
+    .mc-good { background:var(--green-bg); border:1px solid #6EE7B7; border-radius:9px; padding:.6rem; }
+    .mc-label { font-size:.62rem; font-weight:800; margin-bottom:.35rem; text-transform:uppercase; letter-spacing:.06em; }
+    .mc-bad .mc-label  { color:var(--red); }
+    .mc-good .mc-label { color:var(--green); }
+    .mc-item { font-size:.72rem; margin-bottom:.2rem; line-height:1.4; }
+
+    /* Action title compare */
+    .at-compare { margin:.6rem 0; }
+    .at-row { display:grid; grid-template-columns:.65fr 1fr; gap:.4rem; margin-bottom:.4rem; }
+    .at-bad  { background:var(--red-bg); border-radius:8px; padding:.5rem .65rem; }
+    .at-good { background:var(--green-bg); border-radius:8px; padding:.5rem .65rem; }
+    .at-label { font-size:.58rem; font-weight:800; text-transform:uppercase; margin-bottom:.2rem; }
+    .at-bad .at-label  { color:var(--red); }
+    .at-good .at-label { color:var(--green); }
+    .at-text { font-size:.73rem; line-height:1.4; color:var(--text); }
+
+    /* Slide cards */
+    .slide-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:.65rem; }
+    .slide-card { background:var(--white); border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+    .slide-hd  { padding:.42rem .7rem; display:flex; align-items:center; gap:.35rem; }
+    .slide-num { width:20px; height:20px; background:rgba(255,255,255,.25); border-radius:5px; font-size:.58rem; font-weight:800; color:white; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .slide-tag { font-size:.56rem; font-weight:700; color:rgba(255,255,255,.85); text-transform:uppercase; letter-spacing:.07em; }
+    .slide-body { padding:.6rem .7rem; }
+    .slide-action { font-size:.73rem; font-weight:700; color:var(--navy); margin-bottom:.35rem; font-style:italic; line-height:1.4; border-left:2px solid var(--gold); padding-left:.4rem; }
+    .slide-pts { list-style:none; font-size:.66rem; color:var(--muted); line-height:1.65; }
+    .slide-pts li::before { content:'• '; }
+    .slide-framework { font-size:.58rem; font-weight:700; color:var(--muted); margin-top:.3rem; }
+
+    @media(max-width:520px){ .slide-grid{grid-template-columns:1fr}; .scqa-grid{grid-template-columns:1fr}; .mece-compare{grid-template-columns:1fr}; .at-row{grid-template-columns:1fr}; .lc-tpl-grid{grid-template-columns:1fr}; .lc-tpl-cell.full-w{grid-column:1/2}; .lc-tpl-cell.half-w{grid-column:1/2}; }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">Workshop Kit · Fasilitator</div>
+  <div class="hero-title">Dari Ide ke Bisnis:<br>Proposal, Lean Canvas & Pitch Deck</div>
+  <div class="hero-sub">3 Jam · 5 Sesi · Mahasiswa · Semua Bidang · McKinsey Framework</div>
+  <div class="tl-bar">
+    <div class="tl-seg tl-s1">Buka</div>
+    <div class="tl-seg tl-s2">Proposal + Lean Canvas</div>
+    <div class="tl-seg tl-s3">Proto</div>
+    <div class="tl-seg tl-s4">Workshop Praktik</div>
+    <div class="tl-seg tl-s5">Pitching</div>
+  </div>
+  <div class="tl-meta">
+    <div class="tl-lbl s1">10'</div>
+    <div class="tl-lbl s2">70'</div>
+    <div class="tl-lbl s3">15'</div>
+    <div class="tl-lbl s4">60'</div>
+    <div class="tl-lbl s5">25'</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="go('rundown',this)">⏱ Rundown</div>
+  <div class="tab"        onclick="go('materi',this)">📚 Materi</div>
+  <div class="tab"        onclick="go('canvas',this)">🗂 Lean Canvas</div>
+  <div class="tab"        onclick="go('template',this)">📝 Template</div>
+  <div class="tab"        onclick="go('pitch',this)">🎯 Pitch Deck</div>
+</div>
+
+<!-- ══════════════════════════════
+     PANEL 1: RUNDOWN
+══════════════════════════════ -->
+<div class="panel active" id="tab-rundown">
+
+  <div class="card">
+    <div class="card-hd">
+      <div class="badge b-blue">📋</div>
+      <div><div class="card-title">Rundown Detail Workshop</div><div class="card-sub">Total 180 menit · 5 Sesi</div></div>
+    </div>
+
+    <div class="run-row">
+      <div class="run-time">0:00–0:10</div>
+      <div class="run-dot" style="background:#3B82F6"></div>
+      <div class="run-body">
+        <div class="run-name">Sesi 1 · Pembukaan &amp; Orientasi</div>
+        <div class="run-detail">→ Sambutan &amp; perkenalan fasilitator<br>→ Penjelasan alur, output yang diharapkan &amp; aturan kelompok<br>→ Pembentukan kelompok 3–4 orang (±5–8 kelompok)<br>→ Ice breaking: nama + masalah nyata yang ingin dipecahkan (1 kalimat)</div>
+      </div>
+      <div class="run-pill" style="background:#DBEAFE;color:#1D4ED8">10'</div>
+    </div>
+
+    <div class="run-row">
+      <div class="run-time">0:10–1:20</div>
+      <div class="run-dot" style="background:#D97706"></div>
+      <div class="run-body">
+        <div class="run-name">Sesi 2 · Materi: Proposal Bisnis + Lean Canvas</div>
+        <div class="run-detail">
+          → Anatomi proposal bisnis <strong>(10 mnt)</strong><br>
+          → Validasi ide cepat: framework Problem→Solution + value proposition <strong>(10 mnt)</strong><br>
+          → <strong>Lean Canvas</strong> — 9 blok, urutan pengisian, koneksi ke proposal <strong>(25 mnt)</strong><br>
+          → Analisis pasar: TAM / SAM / SOM <strong>(10 mnt)</strong><br>
+          → Proyeksi keuangan: modal, HPP, BEP, unit economics <strong>(15 mnt)</strong>
+        </div>
+      </div>
+      <div class="run-pill" style="background:#FEF3C7;color:#92400E">70'</div>
+    </div>
+
+    <div class="run-row">
+      <div class="run-time">1:20–1:35</div>
+      <div class="run-dot" style="background:#7C3AED"></div>
+      <div class="run-body">
+        <div class="run-name">Sesi 3 · Materi: Prototype Produk</div>
+        <div class="run-detail">
+          → Definisi, fungsi &amp; jenis prototype <strong>(7 mnt)</strong><br>
+          → Demonstrasi singkat prototype sederhana <strong>(5 mnt)</strong><br>
+          → Checklist prototype yang layak pitching <strong>(3 mnt)</strong>
+        </div>
+      </div>
+      <div class="run-pill" style="background:#EDE9FE;color:#5B21B6">15'</div>
+    </div>
+
+    <div class="run-row">
+      <div class="run-time">1:35–2:35</div>
+      <div class="run-dot" style="background:#059669"></div>
+      <div class="run-body">
+        <div class="run-name">Sesi 4 · Workshop Praktik</div>
+        <div class="run-detail">
+          → <strong>[0–30 mnt]</strong> Isi Lean Canvas + draft proposal (dimulai dari blok Problem &amp; Customer Segments)<br>
+          → <strong>[30–55 mnt]</strong> Membuat prototype produk / layanan<br>
+          → <strong>[55–60 mnt]</strong> Finalisasi, susun narasi pitching (SCQA)<br>
+          → Fasilitator keliling — kunjungi tiap kelompok minimal 1×
+        </div>
+      </div>
+      <div class="run-pill" style="background:#D1FAE5;color:#065F46">60'</div>
+    </div>
+
+    <div class="run-row">
+      <div class="run-time">2:35–3:00</div>
+      <div class="run-dot" style="background:#DC2626"></div>
+      <div class="run-body">
+        <div class="run-name">Sesi 5 · Pitching &amp; Evaluasi</div>
+        <div class="run-detail">
+          → Tiap kelompok pitching <strong>3 menit</strong> — paparkan Lean Canvas + proposal + prototype<br>
+          → Tanya jawab singkat &amp; feedback berbasis rubrik<br>
+          → Pengumuman kelompok terbaik <em>(opsional)</em><br>
+          → Penutup, motivasi, &amp; informasi tindak lanjut
+        </div>
+      </div>
+      <div class="run-pill" style="background:#FEE2E2;color:#991B1B">25'</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hd">
+      <div class="badge b-green">💡</div>
+      <div><div class="card-title">Catatan Fasilitator</div><div class="card-sub">Panduan teknis &amp; antisipasi kendala</div></div>
+    </div>
+    <div class="tip"><strong>Kelola waktu Sesi 4 secara ketat.</strong> Pasang timer yang terlihat semua peserta. Ingatkan saat tersisa 30, 10, dan 5 menit.</div>
+    <div class="tip"><strong>Lean Canvas dulu, proposal kemudian.</strong> Instruksikan peserta mengisi Lean Canvas di 15 menit pertama Sesi 4 sebelum mulai menulis proposal narasi.</div>
+    <div class="note"><strong>Jika peserta &gt;25 orang,</strong> batasi pitching hanya 3–4 kelompok terpilih (vote cepat) agar Sesi 5 tidak overtime.</div>
+    <div class="note"><strong>Siapkan bahan prototype sebelum acara:</strong> kardus bekas, gunting, lem tembak, spidol warna, kertas HVS, post-it, selotip. Taruh di tengah meja tiap kelompok.</div>
+    <div class="sh">Rubrik Penilaian Pitching</div>
+    <table class="rubrik">
+      <tr><th>Aspek</th><th>Bobot</th><th>Indikator Penilaian</th></tr>
+      <tr><td>Validasi Masalah &amp; Ide</td><td class="pct">25%</td><td>Masalah nyata, Lean Canvas terisi logis, target segmen jelas</td></tr>
+      <tr><td>Kualitas Proposal Bisnis</td><td class="pct">25%</td><td>Kelengkapan bagian, alur logis, proyeksi keuangan realistis</td></tr>
+      <tr><td>Prototype</td><td class="pct">25%</td><td>Merepresentasikan produk/layanan, bisa dijelaskan &lt;60 detik</td></tr>
+      <tr><td>Presentasi &amp; Q&amp;A</td><td class="pct">25%</td><td>Struktur SCQA, kepercayaan diri, kemampuan menjawab pertanyaan</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════
+     PANEL 2: MATERI
+══════════════════════════════ -->
+<div class="panel" id="tab-materi">
+
+  <!-- Sesi 2 -->
+  <div class="card">
+    <div class="card-hd">
+      <div class="badge b-gold">S2</div>
+      <div><div class="card-title">Materi: Proposal Bisnis &amp; Lean Canvas</div><div class="card-sub">70 menit · 5 Sub-topik</div></div>
+    </div>
+
+    <div class="sh">1 · Anatomi Proposal Bisnis</div>
+    <p class="body">Proposal bisnis adalah dokumen terstruktur yang menjelaskan ide bisnis, validasi masalah, rencana eksekusi, dan proyeksi keuangan kepada pembaca (investor, juri, mitra). Berbeda dengan business plan yang lebih panjang dan detail, proposal bisnis harus mampu meyakinkan dalam waktu singkat.</p>
+    <ul class="alist">
+      <li><strong>Cover</strong> — nama bisnis, tagline satu kalimat, logo/visual, nama tim, tanggal. Kesan pertama dimulai di sini.</li>
+      <li><strong>Executive Summary</strong> — ringkasan seluruh proposal dalam ½–1 halaman. Gunakan struktur <em>Situation → Complication → Resolution</em> (SCR). Ditulis terakhir, diletakkan pertama.</li>
+      <li><strong>Latar Belakang &amp; Masalah</strong> — konteks pasar/sosial, identifikasi masalah spesifik dengan data pendukung (statistik, hasil observasi, kutipan wawancara). Jawab: siapa yang terdampak, seberapa besar, mengapa sekarang penting?</li>
+      <li><strong>Deskripsi Produk/Layanan</strong> — apa yang ditawarkan, fitur/manfaat utama (maks 3), cara kerja singkat, dan keunggulan dibanding alternatif yang sudah ada.</li>
+      <li><strong>Analisis Pasar</strong> — TAM/SAM/SOM (lihat sub-topik 4), profil target segmen, tren relevan, dan lanskap kompetitif.</li>
+      <li><strong>Strategi Pemasaran (4P)</strong> — Product (apa yang dijual), Price (strategi harga), Place (channel distribusi), Promotion (cara menjangkau pelanggan). Setiap P harus saling konsisten.</li>
+      <li><strong>Rencana Operasional</strong> — alur produksi/layanan step-by-step, kebutuhan SDM dan peran masing-masing, peralatan/teknologi utama, timeline peluncuran.</li>
+      <li><strong>Proyeksi Keuangan</strong> — modal awal, HPP, harga jual, BEP, estimasi pendapatan dan laba untuk 6–12 bulan ke depan. Harus realistis dan bisa dipertanggungjawabkan.</li>
+      <li><strong>Penutup &amp; Lampiran</strong> — kesimpulan singkat, ajakan bertindak (apa yang diminta dari pembaca), dan lampiran pendukung (Lean Canvas, foto prototype, data riset).</li>
+    </ul>
+    <div class="tip">💡 <strong>Action Title pada Executive Summary:</strong> Jangan tulis "Pendahuluan" atau "Latar Belakang" — tulis langsung kesimpulan bisnismu, seperti: <em>"Platform ini menyelesaikan masalah X yang dialami Y juta mahasiswa dan dapat mencapai profitabilitas dalam 6 bulan."</em></div>
+
+    <div class="sh">2 · Validasi Ide Cepat</div>
+    <p class="body">Sebelum menulis proposal panjang, validasi dulu bahwa ide bisnis kalian menjawab masalah nyata. Gunakan dua framework berikut:</p>
+    <div class="fw-box">
+      <div class="fw-row"><div class="fw-label">🔴 Problem</div><div class="fw-arrow">→</div><div class="fw-val">Masalah nyata yang dialami orang — bukan asumsi atau "kalau ada pasti mau". Harus bisa dibuktikan dengan observasi atau wawancara.</div></div>
+      <div class="fw-row"><div class="fw-label">🟡 Solution</div><div class="fw-arrow">→</div><div class="fw-val">Produk/layanan yang secara spesifik menjawab masalah di atas. Bukan solusi general — tunjukkan mekanisme konkretnya.</div></div>
+      <div class="fw-row"><div class="fw-label">🟢 Who</div><div class="fw-arrow">→</div><div class="fw-val">Target pengguna spesifik: usia, profesi, lokasi, perilaku. Bukan "semua orang" — semakin spesifik, semakin kuat proposalnya.</div></div>
+      <div class="fw-row"><div class="fw-label">🔵 Why Now</div><div class="fw-arrow">→</div><div class="fw-val">Mengapa ini adalah waktu yang tepat? Tren apa, perubahan teknologi/sosial/regulasi apa yang menciptakan momentum sekarang?</div></div>
+    </div>
+    <div class="note">📌 <strong>Contoh lengkap:</strong> Mahasiswa baru sulit menemukan kost yang sesuai budget dalam waktu cepat (Problem) → Aplikasi listing kost real-time berbasis peta dengan filter harga &amp; jarak (Solution) → Mahasiswa semester 1–2 di kota universitas besar (Who) → Lonjakan 40% mahasiswa baru pasca perluasan kampus 2025 (Why Now)</div>
+
+    <p class="body" style="margin-top:.5rem"><strong>Value Proposition Template:</strong></p>
+    <div class="fw-box" style="font-size:.8rem;line-height:2.1;">
+      "Kami membantu <span class="pill p-blue">[target pengguna]</span> yang <span class="pill p-gold">[masalah spesifik mereka]</span> dengan <span class="pill p-purple">[produk/layanan kami]</span> sehingga <span class="pill p-green">[manfaat konkret yang dirasakan]</span>."
+    </div>
+    <div class="tip">💡 UVP yang baik harus: (1) spesifik bukan generik, (2) bicara dari sisi pelanggan bukan dari sisi produk, (3) dapat diuji kebenarannya.</div>
+
+    <div class="sh">3 · Lean Canvas — Pengantar</div>
+    <p class="body"><strong>Lean Canvas</strong> diciptakan oleh Ash Maurya (2010) dalam buku <em>Running Lean</em> sebagai adaptasi dari Business Model Canvas milik Alexander Osterwalder. Lean Canvas dirancang khusus untuk startup awal yang belum memiliki pelanggan dan perlu memvalidasi asumsi sebelum membangun produk secara penuh.</p>
+    <p class="body">Lean Canvas mengubah 4 blok BMC yang berorientasi "perusahaan mapan" (<em>Key Partners, Key Activities, Key Resources, Customer Relationships</em>) menjadi 4 blok yang lebih relevan untuk startup: <strong>Problem, Solution, Key Metrics, dan Unfair Advantage</strong>.</p>
+    <div class="info"><strong>Lean Canvas = Hipotesis, bukan rencana.</strong> Setiap blok adalah asumsi yang perlu divalidasi melalui wawancara pelanggan dan eksperimen kecil. Canvas bisa dan harus diperbarui setiap minggu ketika ada temuan baru.</div>
+    <div class="fw-box">
+      <div class="fw-row"><div class="fw-label">9 Blok Lean Canvas</div><div class="fw-arrow"></div><div class="fw-val"><span class="pill p-red">1 Problem</span><span class="pill p-gold">2 Customer Segments</span><span class="pill p-purple">3 Unique Value Proposition</span><span class="pill p-blue">4 Solution</span><span class="pill p-teal">5 Channels</span><span class="pill p-green">6 Revenue Streams</span><span class="pill p-orange">7 Cost Structure</span><span class="pill p-blue">8 Key Metrics</span><span class="pill p-gold">9 Unfair Advantage</span></div></div>
+      <div class="fw-row"><div class="fw-label">Urutan Pengisian</div><div class="fw-arrow">→</div><div class="fw-val">Problem + Customer Segments → UVP → Solution → Channels → Revenue → Cost → Key Metrics → Unfair Advantage (detail di tab Lean Canvas)</div></div>
+      <div class="fw-row"><div class="fw-label">Waktu Pengisian</div><div class="fw-arrow">→</div><div class="fw-val">Target: selesai dalam 20–30 menit. Canvas yang terisi dalam satu sesi lebih bernilai daripada yang dipoles berhari-hari tanpa validasi.</div></div>
+    </div>
+    <p class="body">→ Lihat <strong>Tab Lean Canvas</strong> untuk visual interaktif dan panduan detail per blok.</p>
+
+    <div class="sh">4 · Analisis Pasar: TAM / SAM / SOM</div>
+    <p class="body">Market sizing adalah cara untuk menunjukkan seberapa besar peluang bisnis yang kalian masuki. Investor dan juri menggunakan ini untuk menilai apakah bisnis kalian memiliki potensi pertumbuhan yang signifikan.</p>
+    <div class="fw-box">
+      <div class="fw-row"><div class="fw-label">🟦 TAM</div><div class="fw-arrow">→</div><div class="fw-val"><strong>Total Addressable Market</strong> — Total pasar jika semua orang di dunia yang memiliki masalah ini menggunakan produkmu. Ini adalah "langit-langit" peluang. Contoh: seluruh mahasiswa Indonesia = 9 juta orang.</div></div>
+      <div class="fw-row"><div class="fw-label">🟩 SAM</div><div class="fw-arrow">→</div><div class="fw-val"><strong>Serviceable Addressable Market</strong> — Bagian TAM yang bisa kamu jangkau dengan model bisnis dan kapabilitas saat ini. Contoh: mahasiswa di 10 kota besar yang aktif menggunakan smartphone = 3 juta orang.</div></div>
+      <div class="fw-row"><div class="fw-label">🟨 SOM</div><div class="fw-arrow">→</div><div class="fw-val"><strong>Serviceable Obtainable Market</strong> — Pasar realistis yang bisa kamu rebut dalam 2–3 tahun pertama (biasanya 5–15% dari SAM). Contoh: 150.000 mahasiswa aktif dalam 3 tahun pertama.</div></div>
+    </div>
+    <div class="info"><strong>Dua pendekatan perhitungan market size:</strong><br>
+    • <em>Top-down</em>: Mulai dari total industri → persentase yang bisa kamu raih<br>
+    • <em>Bottom-up</em> (lebih dipercaya): Jumlah pelanggan target × harga per unit/tahun = SAM atau SOM<br>
+    Contoh bottom-up: 150.000 pengguna × Rp 50.000/bulan × 12 bulan = Rp 90 miliar/tahun SAM</div>
+    <div class="tip">💡 Investor/juri lebih percaya pendekatan <strong>bottom-up</strong> karena berdasarkan asumsi yang konkret dan bisa di-crosscheck.</div>
+
+    <div class="sh">5 · Proyeksi Keuangan Dasar</div>
+    <p class="body">Proyeksi keuangan tidak perlu rumit, tapi harus <strong>logis, konsisten, dan bisa dipertanggungjawabkan</strong>. Gunakan angka yang realistis, bukan angka impian.</p>
+    <ul class="alist">
+      <li><strong>Modal Awal</strong> = Peralatan + Bahan Baku Awal + Biaya Operasional Bulan 1 (sewa, gaji awal, marketing, dll)</li>
+      <li><strong>HPP (Harga Pokok Produksi)</strong> = Total biaya langsung untuk memproduksi 1 unit ÷ jumlah unit. Termasuk bahan, tenaga kerja langsung, dan kemasan.</li>
+      <li><strong>Harga Jual</strong> = HPP × (1 + margin %). Margin wajar 20–50% untuk produk fisik, 60–80%+ untuk produk digital.</li>
+      <li><strong>Gross Margin</strong> = (Harga Jual − HPP) ÷ Harga Jual × 100%. Ini ukuran efisiensi bisnis per unit.</li>
+      <li><strong>BEP (Break Even Point)</strong> = Total Modal Awal ÷ (Harga Jual − HPP per unit). Berapa unit yang harus terjual untuk balik modal?</li>
+      <li><strong>CAC (Customer Acquisition Cost)</strong> = Total biaya marketing ÷ jumlah pelanggan baru. Harus lebih kecil dari LTV.</li>
+      <li><strong>LTV (Lifetime Value)</strong> = Rata-rata pembelian per bulan × rata-rata durasi pelanggan (bulan). LTV minimal harus 3× CAC untuk bisnis yang sehat.</li>
+    </ul>
+    <div class="block-formula">📐 Aturan emas: LTV ≥ 3× CAC &nbsp;|&nbsp; BEP sebaiknya tercapai dalam ≤ 12 bulan &nbsp;|&nbsp; Gross margin &gt; 40% lebih menarik bagi investor</div>
+    <div class="note">⚠️ Jangan "memaksa" angka agar terlihat bagus. Juri dan investor berpengalaman akan langsung mendeteksi asumsi yang tidak masuk akal. <strong>Lebih baik konservatif dan dapat dipertanggungjawabkan.</strong></div>
+  </div>
+
+  <!-- Sesi 3 -->
+  <div class="card">
+    <div class="card-hd">
+      <div class="badge b-purple">S3</div>
+      <div><div class="card-title">Materi: Prototype Produk</div><div class="card-sub">15 menit · 3 Sub-topik</div></div>
+    </div>
+
+    <div class="sh">1 · Apa itu Prototype dan Mengapa Penting?</div>
+    <p class="body">Prototype adalah <strong>representasi awal dan sederhana</strong> dari produk atau layanan yang ingin kalian bangun. Tujuan utamanya bukan tampil sempurna, melainkan untuk: (1) memvalidasi asumsi solusi sebelum investasi besar, (2) mendapatkan feedback nyata dari calon pengguna, dan (3) meyakinkan investor/juri bahwa konsepnya konkret, bukan sekadar ide abstrak.</p>
+    <div class="info"><strong>Prinsip utama:</strong> <em>"Good enough to show, not perfect to ship."</em> — Juri menilai kemampuan kalian memvisualisasikan dan menjelaskan ide, bukan kualitas bahan prototype.</div>
+
+    <div class="sh">2 · Jenis Prototype Sesuai Bidang</div>
+    <ul class="alist">
+      <li><strong>Produk Fisik</strong> — Mockup dari bahan mudah didapat: kardus, clay, kertas, botol bekas. Tunjukkan bentuk, ukuran, mekanisme penggunaan. Beri label pada setiap bagian.</li>
+      <li><strong>Aplikasi / Digital</strong> — <em>Paper prototype</em>: gambar layar demi layar di kertas seperti tampilan HP. Ceritakan alur penggunaan. Alternatif: wireframe kasar di Figma, Canva, atau bahkan slide PowerPoint.</li>
+      <li><strong>Jasa / Layanan</strong> — <em>Storyboard</em>: komik 4–6 panel yang menggambarkan interaksi pelanggan ↔ penyedia jasa dari awal hingga selesai. Atau <em>service blueprint</em>: diagram yang menampilkan semua touchpoint layanan.</li>
+    </ul>
+
+    <div class="sh">3 · Checklist Prototype yang Layak Pitching</div>
+    <ul class="alist">
+      <li>Menunjukkan <strong>wujud/alur</strong> produk secara visual — bukan hanya diceritakan</li>
+      <li>Bisa dijelaskan dalam <strong>60 detik tanpa kalimat panjang</strong></li>
+      <li>Merepresentasikan <strong>1–3 fitur/fungsi utama</strong> yang menjawab masalah</li>
+      <li>Diberi <strong>label atau keterangan</strong> pada elemen penting</li>
+      <li>Relevan dengan Lean Canvas — prototype harus merepresentasikan <strong>solusi yang tertulis di blok Solution</strong></li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════
+     PANEL 3: LEAN CANVAS VISUAL
+══════════════════════════════ -->
+<div class="panel" id="tab-canvas">
+
+  <div class="card">
+    <div class="card-hd">
+      <div class="badge b-teal">🗂</div>
+      <div><div class="card-title">Lean Canvas — Visual &amp; Panduan</div><div class="card-sub">Ash Maurya (2010) · Running Lean · 9 Blok · 20–30 Menit Pengisian</div></div>
+    </div>
+    <div class="info"><strong>Lean Canvas bukan business plan.</strong> Ini adalah lembar hipotesis satu halaman yang merangkum seluruh asumsi bisnis kalian — agar bisa divalidasi sebelum sumber daya dihabiskan untuk membangun sesuatu yang tidak diinginkan pasar.</div>
+
+    <!-- Canvas Grid -->
+    <div class="sh">Visual Canvas (Geser jika perlu →)</div>
+    <div class="lc-wrap">
+      <div class="lc-grid">
+        <!-- Problem -->
+        <div class="lc-cell lc-problem">
+          <div class="lc-cell-title"><div class="lc-cell-num" style="background:#DC2626">1</div> PROBLEM</div>
+          <div class="lc-content">Top 3 masalah pelanggan (urut prioritas):<br><br>1. _______________<br>2. _______________<br>3. _______________</div>
+          <div class="lc-hint">Existing Alternatives:<br>(Bagaimana pelanggan menyelesaikan ini sekarang?)</div>
+        </div>
+        <!-- Solution -->
+        <div class="lc-cell lc-solution">
+          <div class="lc-cell-title"><div class="lc-cell-num" style="background:#3B82F6">4</div> SOLUTION</div>
+          <div class="lc-content">Fitur utama yang menjawab tiap masalah:<br><br>1. _______________<br>2. _______________<br>3. _______________</div>
+        </div>
+        <!-- UVP -->
+        <div class="lc-cell lc-uvp" style="border-left:3px solid var(--gold);">
+          <div class="lc-cell-title"><div class="lc-cell-num" style="background:#D97706">3</div> UNIQUE VALUE PROPOSITION</div>
+          <div class="lc-content" style="margin-top:.4rem;">
+            <strong>High-concept pitch (1 kalimat):</strong><br>
+            <div style="border:1.5px dashed #FDE68A;border-radius:6px;padding:.4rem;margin:.4rem 0;min-height:36px;color:#92400E;font-style:italic;font-size:.7rem;">_______________________________________________</div>
+            <br><strong>3 Manfaat Utama:</strong><br>
+            1. _______________<br>2. _______________<br>3. _______________
+          </div>
+        </div>
+        <!-- Unfair Advantage -->
+        <div class="lc-cell lc-unfair">
+          <div class="lc-cell-title"><div class="lc-cell-num" style="background:#7C3AED">9</div> UNFAIR ADVANTAGE</div>
+          <div class="lc-content">Apa yang tidak bisa mudah ditiru atau dibeli kompetitor?<br><br>_______________<br>_______________<br>_______________</div>
+        </div>
+        <!-- Customer Segments -->
+        <div class="lc-cell lc-segments">
+          <div class="lc-cell-title"><div class="lc-cell-num" style="background:#D97706">2</div> CUSTOMER SEGMENTS</div>
+          <div class="lc-content">Target pengguna utama:<br>_______________<br>_______________<br><br><strong style="font-size:.6rem;color:#92400E;">Early Adopters:</strong><br>Siapa yang paling mendesak butuh solusi ini?<br>_______________</div>
+        </div>
+        <!-- Key Metrics -->
+        <div class="lc-cell lc-keymetrics">
+          <div class="lc-cell-title"><div class="lc-cell-num" style="background:#0891B2">8</div> KEY METRICS</div>
+          <div class="lc-content">1–2 angka yang mendefinisikan sukses:<br><br>Metrik utama:<br>_______________<br><br>OMTM saat ini:<br>_______________</div>
+        </div>
+        <!-- Channels -->
+        <div class="lc-cell lc-channels">
+          <div class="lc-cell-title"><div class="lc-cell-num" style="background:#0891B2">5</div> CHANNELS</div>
+          <div class="lc-content">Jalur menjangkau pelanggan:<br><br>Free: ___________<br>Paid: ___________</div>
+        </div>
+        <!-- Early Adopters / subtext -->
+        <div class="lc-cell lc-early" style="background:#FFFBEB;">
+          <div class="lc-cell-title" style="color:#92400E;">💡 TIPS PENGISIAN</div>
+          <div class="lc-content" style="font-size:.62rem;">Mulai dari blok yang paling mungkin membunuh bisnis (biasanya Problem &amp; Customer Segments). Validasi tiap blok dengan wawancara minimal 5 orang.</div>
+        </div>
+        <!-- Cost Structure -->
+        <div class="lc-cell lc-cost">
+          <div class="lc-cell-title"><div class="lc-cell-num" style="background:#DC2626">7</div> COST STRUCTURE</div>
+          <div class="lc-content">Biaya utama:<br>CAC: Rp _______  |  Fix cost/bulan: Rp _______  |  Variable cost/unit: Rp _______</div>
+        </div>
+        <!-- Revenue Streams -->
+        <div class="lc-cell lc-revenue">
+          <div class="lc-cell-title"><div class="lc-cell-num" style="background:#059669">6</div> REVENUE STREAMS</div>
+          <div class="lc-content">Model pendapatan: _______ (subscription / one-time / freemium / komisi)<br>Harga: Rp _______  |  LTV: Rp _______  |  Gross margin: _______%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fill order -->
+    <div class="sh" style="margin-top:1rem;">Urutan Pengisian yang Direkomendasikan Ash Maurya</div>
+    <div class="fill-order">
+      <div class="fo-step"><div class="fo-num" style="background:#DC2626">1</div><span>Problem</span></div>
+      <div class="fo-step"><div class="fo-num" style="background:#D97706">2</div><span>Customer Segments</span></div>
+      <div class="fo-step"><div class="fo-num" style="background:#D97706">3</div><span>Unique Value Proposition</span></div>
+      <div class="fo-step"><div class="fo-num" style="background:#3B82F6">4</div><span>Solution</span></div>
+      <div class="fo-step"><div class="fo-num" style="background:#0891B2">5</div><span>Channels</span></div>
+      <div class="fo-step"><div class="fo-num" style="background:#059669">6</div><span>Revenue Streams</span></div>
+      <div class="fo-step"><div class="fo-num" style="background:#DC2626">7</div><span>Cost Structure</span></div>
+      <div class="fo-step"><div class="fo-num" style="background:#0891B2">8</div><span>Key Metrics</span></div>
+      <div class="fo-step"><div class="fo-num" style="background:#7C3AED">9</div><span>Unfair Advantage</span></div>
+    </div>
+    <div class="note">⚠️ Jangan isi urutan yang tercetak di canvas. Mulai dari Problem dan Customer Segments karena keduanya paling berisiko salah asumsi dan akan memengaruhi semua blok lainnya.</div>
+  </div>
+
+  <!-- 9 Blok Detail -->
+  <div class="card">
+    <div class="card-hd">
+      <div class="badge b-teal">🔍</div>
+      <div><div class="card-title">Penjelasan Detail 9 Blok Lean Canvas</div><div class="card-sub">Panduan isi, contoh, dan pertanyaan kunci tiap blok</div></div>
+    </div>
+
+    <!-- 1. Problem -->
+    <div class="block-detail">
+      <div class="block-hd"><div class="block-hd-num" style="background:#DC2626">1</div><div class="block-hd-name">Problem</div><div class="block-hd-eng">Masalah Pelanggan</div></div>
+      <div class="block-body">
+        <p style="margin-bottom:.5rem">List maksimal <strong>3 masalah utama</strong> yang dialami segmen pelangganmu, urut dari yang paling kritis. Ini bukan fitur produkmu — ini kesakitan nyata pelanggan.</p>
+        <ul><li>Masalah harus dapat <strong>diverifikasi</strong> melalui wawancara/observasi langsung</li><li>Sertakan <strong>Existing Alternatives</strong>: bagaimana orang menyelesaikan ini sekarang? (spreadsheet, cara manual, produk lain). Ini juga kompetitor tidak langsung.</li><li>Hindari masalah yang terlalu generik ("kurang waktu") — spesifikan ke konteks bisnis kalian</li></ul>
+        <div class="block-formula">❓ Pertanyaan kunci: "Apakah ada orang yang saat ini bersedia membayar untuk menyelesaikan masalah ini?"</div>
+      </div>
+    </div>
+
+    <!-- 2. Customer Segments -->
+    <div class="block-detail">
+      <div class="block-hd"><div class="block-hd-num" style="background:#D97706">2</div><div class="block-hd-name">Customer Segments</div><div class="block-hd-eng">Segmen Pelanggan</div></div>
+      <div class="block-body">
+        <p style="margin-bottom:.5rem">Identifikasi <strong>siapa spesifik</strong> yang mengalami masalah di blok 1. Semakin spesifik semakin baik — bukan "semua orang" atau "generasi muda".</p>
+        <ul><li><strong>Early Adopters</strong> adalah sub-set segmen yang paling mendesak butuh solusimu sekarang. Ini target pertamamu — bukan target akhir.</li><li>Bedakan B2C (pengguna langsung) dan B2B (bisnis sebagai pelanggan) jika relevan</li><li>Karakterisasikan dengan: usia, profesi, lokasi, kebiasaan, pendapatan, atau situasi spesifik</li></ul>
+        <div class="block-formula">❓ Pertanyaan kunci: "Siapa yang paling menangis jika solusi ini tiba-tiba hilang?"</div>
+      </div>
+    </div>
+
+    <!-- 3. UVP -->
+    <div class="block-detail">
+      <div class="block-hd"><div class="block-hd-num" style="background:#D97706">3</div><div class="block-hd-name">Unique Value Proposition</div><div class="block-hd-eng">Proposisi Nilai Unik</div></div>
+      <div class="block-body">
+        <p style="margin-bottom:.5rem">Satu pesan yang jelas dan meyakinkan tentang <strong>mengapa kamu berbeda dan layak diperhatikan</strong>. UVP yang baik menghubungkan Problem (kiri) dengan Customer Segments (kanan).</p>
+        <ul><li><em>High-concept pitch</em>: analogikan bisnis kalian dengan sesuatu yang sudah dikenal. Contoh: "Gojek-nya layanan laundry kilat" atau "Airbnb-nya laboratorium penelitian"</li><li>Fokus pada <strong>manfaat akhir</strong>, bukan fitur teknis</li><li>Hindari klaim tidak terukur seperti "terbaik", "terlengkap", "termurah" — spesifikan</li></ul>
+        <div class="block-formula">❓ Pertanyaan kunci: "Jika kamu harus menjelaskan bisnismu kepada orang asing di lift dalam 30 detik, apa yang kamu katakan?"</div>
+      </div>
+    </div>
+
+    <!-- 4. Solution -->
+    <div class="block-detail">
+      <div class="block-hd"><div class="block-hd-num" style="background:#3B82F6">4</div><div class="block-hd-name">Solution</div><div class="block-hd-eng">Solusi / Produk</div></div>
+      <div class="block-body">
+        <p style="margin-bottom:.5rem">Pasangkan setiap Problem di blok 1 dengan fitur/solusi spesifik. Ini adalah <strong>Minimum Viable Product (MVP)</strong> — fitur paling minimal yang memvalidasi hipotesis bisnismu.</p>
+        <ul><li>Batasi di <strong>3 fitur/solusi utama</strong> — resist godaan untuk menambah semua yang terpikirkan</li><li>Jelaskan <strong>mekanisme konkret</strong> cara solusi menjawab masalah, bukan hanya nama fitur</li><li>Ingat: solusi yang dipilih harus realistis dibangun sebagai prototype dalam workshop ini</li></ul>
+        <div class="block-formula">❓ Pertanyaan kunci: "Fitur mana yang kalau dihilangkan, produk ini tidak lagi berguna bagi pelanggan?"</div>
+      </div>
+    </div>
+
+    <!-- 5. Channels -->
+    <div class="block-detail">
+      <div class="block-hd"><div class="block-hd-num" style="background:#0891B2">5</div><div class="block-hd-name">Channels</div><div class="block-hd-eng">Saluran Distribusi</div></div>
+      <div class="block-body">
+        <p style="margin-bottom:.5rem">Bagaimana produk/layananmu sampai ke tangan pelanggan? Channels mencakup cara menjangkau, menjual, dan mengirimkan nilai ke pelanggan.</p>
+        <ul><li><strong>Free / Inbound</strong>: SEO, media sosial organik, word-of-mouth, referral, content marketing</li><li><strong>Paid / Outbound</strong>: iklan berbayar, influencer, partnership, event, cold outreach</li><li>Untuk startup awal: mulai dari 1–2 channel yang paling efisien dan ukur CAC-nya sebelum memperluas</li></ul>
+        <div class="block-formula">❓ Pertanyaan kunci: "Melalui jalur mana pelanggan pertama kami akan menemukan dan membeli produk ini?"</div>
+      </div>
+    </div>
+
+    <!-- 6. Revenue -->
+    <div class="block-detail">
+      <div class="block-hd"><div class="block-hd-num" style="background:#059669">6</div><div class="block-hd-name">Revenue Streams</div><div class="block-hd-eng">Aliran Pendapatan</div></div>
+      <div class="block-body">
+        <p style="margin-bottom:.5rem">Bagaimana bisnismu menghasilkan uang? Ini bukan sekadar "jual produk" — harus jelas model, harga, dan metrik ekonominya.</p>
+        <ul><li>Model pendapatan: subscription/langganan, one-time purchase, freemium, marketplace commission, advertising, licensing</li><li>Tentukan <strong>strategi harga</strong>: cost-plus (HPP + margin), value-based (seberapa besar nilai bagi pelanggan), atau competitive (menyesuaikan pasar)</li><li>Hitung <strong>LTV (Lifetime Value)</strong>: rata-rata pendapatan per pelanggan selama mereka menjadi pelangganmu</li></ul>
+        <div class="block-formula">❓ Pertanyaan kunci: "Apakah pelanggan bersedia membayar sebesar ini, atau ini hanya asumsi kita?"</div>
+      </div>
+    </div>
+
+    <!-- 7. Cost -->
+    <div class="block-detail">
+      <div class="block-hd"><div class="block-hd-num" style="background:#DC2626">7</div><div class="block-hd-name">Cost Structure</div><div class="block-hd-eng">Struktur Biaya</div></div>
+      <div class="block-body">
+        <p style="margin-bottom:.5rem">Semua biaya utama yang diperlukan untuk menjalankan bisnis ini. Fokus pada biaya yang paling signifikan dan berpengaruh pada profitabilitas.</p>
+        <ul><li><strong>Fixed Cost</strong>: biaya yang tidak berubah terlepas dari volume penjualan (sewa, gaji tim inti, langganan tools)</li><li><strong>Variable Cost</strong>: biaya yang berubah sesuai volume (bahan baku per unit, komisi, biaya pengiriman)</li><li><strong>CAC (Customer Acquisition Cost)</strong>: total biaya marketing ÷ jumlah pelanggan baru yang diperoleh</li></ul>
+        <div class="block-formula">⚠️ Aturan kritis: LTV harus ≥ 3× CAC agar bisnis memiliki unit economics yang sehat</div>
+      </div>
+    </div>
+
+    <!-- 8. Key Metrics -->
+    <div class="block-detail">
+      <div class="block-hd"><div class="block-hd-num" style="background:#0891B2">8</div><div class="block-hd-name">Key Metrics</div><div class="block-hd-eng">Metrik Kunci</div></div>
+      <div class="block-body">
+        <p style="margin-bottom:.5rem">Angka kunci yang mengukur kesehatan bisnis di setiap tahap. Maurya merekomendasikan menggunakan kerangka <strong>AARRR (Pirate Metrics)</strong> oleh Dave McClure:</p>
+        <ul>
+          <li><strong>Acquisition</strong>: berapa orang yang menemukan kita? (website visitors, app downloads)</li>
+          <li><strong>Activation</strong>: berapa yang benar-benar menggunakan fitur inti? (first meaningful action)</li>
+          <li><strong>Retention</strong>: berapa yang kembali menggunakan? (DAU/MAU ratio, churn rate)</li>
+          <li><strong>Referral</strong>: berapa yang merekomendasikan ke orang lain? (NPS, referral rate)</li>
+          <li><strong>Revenue</strong>: berapa yang membayar? (conversion rate, ARR, MRR)</li>
+        </ul>
+        <div class="block-formula">💡 OMTM (One Metric That Matters): pilih 1 metrik yang paling kritis di tahap bisnismu saat ini dan fokus di sana. Untuk workshop ini: pilih 1 metrik yang akan diukur pertama kali.</div>
+      </div>
+    </div>
+
+    <!-- 9. Unfair Advantage -->
+    <div class="block-detail">
+      <div class="block-hd"><div class="block-hd-num" style="background:#7C3AED">9</div><div class="block-hd-name">Unfair Advantage</div><div class="block-hd-eng">Keunggulan yang Sulit Ditiru</div></div>
+      <div class="block-body">
+        <p style="margin-bottom:.5rem">Ini adalah blok paling sulit diisi — dan yang paling membedakan bisnis yang bertahan dari yang tidak. <strong>Unfair advantage bukan sekadar keunggulan kompetitif biasa.</strong></p>
+        <ul>
+          <li>Contoh yang valid: insider information / domain expertise yang sangat dalam, komunitas/network yang sudah dibangun, data eksklusif, patent, perjanjian kemitraan eksklusif, brand yang kuat</li>
+          <li>Yang <strong>BUKAN</strong> unfair advantage: "kami passionate", "kami kerja keras", "kami first mover" (bisa disalip kapan saja)</li>
+          <li>Untuk mahasiswa: keahlian teknis langka, akses ke komunitas eksklusif, atau relasi unik dengan supplier/mitra</li>
+        </ul>
+        <div class="block-formula">❓ Pertanyaan kunci: "Jika startup lain dengan modal 10× lebih besar masuk ke pasar yang sama besok, apa yang membuat kami tetap relevan?"</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PANEL 4: TEMPLATE
+══════════════════════════════ -->
+<div class="panel" id="tab-template">
+
+  <div class="card">
+    <div class="card-hd">
+      <div class="badge b-blue">📝</div>
+      <div><div class="card-title">Template: Lean Canvas + Proposal Bisnis</div><div class="card-sub">Diisi oleh peserta · Mulai dari Lean Canvas, lanjut ke Proposal</div></div>
+    </div>
+    <div class="tip"><strong>Alur yang disarankan:</strong> Isi Lean Canvas dulu (20 menit) → gunakan hasilnya sebagai fondasi mengisi bagian proposal di bawah ini.</div>
+  </div>
+
+  <!-- Lean Canvas Quick Fill -->
+  <div class="tpl-section">
+    <div class="tpl-label">🗂 LEAN CANVAS (isi urutan: 1→2→3→4→5→6→7→8→9)</div>
+    <div class="lc-tpl-grid">
+      <div class="lc-tpl-cell">
+        <div class="lc-tpl-label" style="color:#DC2626">1 · Problem (Top 3)</div>
+        <div class="lc-tpl-field">1. _______________________</div>
+        <div class="lc-tpl-field">2. _______________________</div>
+        <div class="lc-tpl-field">3. _______________________</div>
+        <div class="lc-tpl-label" style="margin-top:.4rem;color:#64748B">Existing Alternatives:</div>
+        <div class="lc-tpl-field">_______________________</div>
+      </div>
+      <div class="lc-tpl-cell">
+        <div class="lc-tpl-label" style="color:#D97706">2 · Customer Segments</div>
+        <div class="lc-tpl-field">Target utama: _______________________</div>
+        <div class="lc-tpl-field">Early Adopters: _______________________</div>
+      </div>
+      <div class="lc-tpl-cell">
+        <div class="lc-tpl-label" style="color:#D97706">3 · Unique Value Proposition</div>
+        <div class="lc-tpl-field" style="min-height:48px;">High-concept pitch:<br>_______________________</div>
+        <div class="lc-tpl-field">Manfaat utama: _______________________</div>
+      </div>
+      <div class="lc-tpl-cell">
+        <div class="lc-tpl-label" style="color:#3B82F6">4 · Solution (Fitur MVP)</div>
+        <div class="lc-tpl-field">1. _______________________</div>
+        <div class="lc-tpl-field">2. _______________________</div>
+        <div class="lc-tpl-field">3. _______________________</div>
+      </div>
+      <div class="lc-tpl-cell">
+        <div class="lc-tpl-label" style="color:#0891B2">5 · Channels</div>
+        <div class="lc-tpl-field">Free: _______________________</div>
+        <div class="lc-tpl-field">Paid: _______________________</div>
+      </div>
+      <div class="lc-tpl-cell">
+        <div class="lc-tpl-label" style="color:#059669">6 · Revenue Streams</div>
+        <div class="lc-tpl-field">Model: _______________________</div>
+        <div class="lc-tpl-field">Harga: Rp _______ / LTV: Rp _______</div>
+      </div>
+      <div class="lc-tpl-cell">
+        <div class="lc-tpl-label" style="color:#DC2626">7 · Cost Structure</div>
+        <div class="lc-tpl-field">CAC: Rp _______ / Fixed: Rp _______</div>
+        <div class="lc-tpl-field">Variable/unit: Rp _______</div>
+      </div>
+      <div class="lc-tpl-cell">
+        <div class="lc-tpl-label" style="color:#0891B2">8 · Key Metrics (OMTM)</div>
+        <div class="lc-tpl-field">Metrik utama: _______________________</div>
+        <div class="lc-tpl-field">Target bulan 1: _______________________</div>
+      </div>
+      <div class="lc-tpl-cell">
+        <div class="lc-tpl-label" style="color:#7C3AED">9 · Unfair Advantage</div>
+        <div class="lc-tpl-field" style="min-height:48px;">_______________________<br>_______________________</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cover -->
+  <div class="tpl-section">
+    <div class="tpl-label">📌 Cover Bisnis</div>
+    <div class="tpl-field">Nama Bisnis / Brand: ________________________________________________</div>
+    <div class="tpl-field">Tagline (1 kalimat — dari UVP Lean Canvas): ________________________________________________</div>
+    <div class="tpl-field">Nama Tim: __________  ·  __________  ·  __________  ·  __________</div>
+    <div class="tpl-field">Tanggal: ________________________________________________</div>
+  </div>
+
+  <!-- Executive Summary -->
+  <div class="tpl-section">
+    <div class="tpl-label">🔑 Executive Summary <span style="font-size:.58rem;color:var(--muted);font-weight:400;">(gunakan struktur SCR — tulis terakhir, letakkan pertama)</span></div>
+    <div class="tpl-field" style="font-size:.72rem;color:var(--muted)"><strong>Situation</strong> (fakta pasar/konteks): ________________________________________________</div>
+    <div class="tpl-field" style="font-size:.72rem;color:var(--muted)"><strong>Complication</strong> (masalah yang belum terjawab): ________________________________________________</div>
+    <div class="tpl-field" style="font-size:.72rem;color:var(--muted)"><strong>Resolution</strong> (bisnis kami sebagai jawaban): ________________________________________________</div>
+  </div>
+
+  <!-- Latar Belakang -->
+  <div class="tpl-section">
+    <div class="tpl-label">📖 Latar Belakang &amp; Identifikasi Masalah</div>
+    <div class="tpl-field tall">Konteks pasar / sosial, data atau fakta yang mendukung urgensi masalah, siapa yang terdampak dan seberapa besar dampaknya:</div>
+    <div class="tpl-field">Sumber data / referensi (jika ada): ________________________________________________</div>
+  </div>
+
+  <!-- Produk -->
+  <div class="tpl-section">
+    <div class="tpl-label">🚀 Deskripsi Produk / Layanan</div>
+    <div class="tpl-field">Nama: _______________ · Jenis: ☐ Produk Fisik &nbsp; ☐ Aplikasi/Digital &nbsp; ☐ Jasa/Layanan</div>
+    <div class="tpl-field tall">Deskripsi, fitur utama (maks 3), dan cara kerja singkat:</div>
+    <div class="tpl-field">Keunggulan vs solusi yang sudah ada: ________________________________________________</div>
+  </div>
+
+  <!-- Value Prop -->
+  <div class="tpl-section">
+    <div class="tpl-label">💎 Value Proposition</div>
+    <div class="vp-tpl">"Kami membantu <span class="vp-blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> yang <span class="vp-blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> dengan <span class="vp-blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> sehingga <span class="vp-blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>."</div>
+  </div>
+
+  <!-- Pasar -->
+  <div class="tpl-section">
+    <div class="tpl-label">🎯 Analisis Pasar (TAM / SAM / SOM)</div>
+    <div class="tpl-field">TAM — Total pasar jika semua yang mengalami masalah ini menggunakan produkmu: Rp _______________ / ___________ orang</div>
+    <div class="tpl-field">SAM — Pasar yang bisa kamu jangkau dengan model bisnis saat ini: Rp _______________ / ___________ orang</div>
+    <div class="tpl-field">SOM — Target realistis 2–3 tahun: Rp _______________ / ___________ orang · Dasar asumsi: _______________</div>
+    <div class="tpl-field">Kompetitor utama: _______________ · Keunggulan kami: _______________</div>
+  </div>
+
+  <!-- Pemasaran -->
+  <div class="tpl-section">
+    <div class="tpl-label">📣 Strategi Pemasaran (4P)</div>
+    <div class="tpl-field"><strong>Product:</strong> ________________________________________________</div>
+    <div class="tpl-field"><strong>Price:</strong> Harga Rp _______________ · Strategi: ☐ Cost-plus &nbsp; ☐ Value-based &nbsp; ☐ Competitive</div>
+    <div class="tpl-field"><strong>Place:</strong> Channel distribusi: ________________________________________________</div>
+    <div class="tpl-field"><strong>Promotion:</strong> Rencana akuisisi: ________________________________________________</div>
+  </div>
+
+  <!-- Operasional -->
+  <div class="tpl-section">
+    <div class="tpl-label">⚙️ Rencana Operasional</div>
+    <div class="tpl-field tall">Alur produksi / layanan step by step:</div>
+    <div class="tpl-field">SDM &amp; peran: _______________ · Peralatan/teknologi: _______________</div>
+    <div class="tpl-field">Timeline peluncuran: Bulan 1 _______________ · Bulan 2 _______________ · Bulan 3 _______________</div>
+  </div>
+
+  <!-- Keuangan -->
+  <div class="tpl-section">
+    <div class="tpl-label">💰 Proyeksi Keuangan</div>
+    <div class="tpl-field">Modal Awal: Rp _______________ · HPP/unit: Rp _______________ · Harga Jual/unit: Rp _______________</div>
+    <div class="tpl-field">Gross Margin: _______% · BEP: _______unit · Target BEP tercapai: Bulan ke- _______</div>
+    <div class="tpl-field">CAC: Rp _______________ · LTV: Rp _______________ · Rasio LTV/CAC: _______× (target ≥ 3×)</div>
+    <div class="tpl-field">Estimasi Pendapatan Bulan 1: Rp _______________ · Bulan 6: Rp _______________</div>
+  </div>
+
+  <!-- Prototype -->
+  <div class="tpl-section">
+    <div class="tpl-label">🔧 Deskripsi Prototype</div>
+    <div class="tpl-field">Jenis: ☐ Produk Fisik &nbsp; ☐ Paper Prototype &nbsp; ☐ Storyboard/Service Blueprint</div>
+    <div class="tpl-field tall">Apa yang ditampilkan prototype ini dan bagaimana menjelaskannya saat pitching (maks 60 detik):</div>
+  </div>
+
+  <!-- Penutup -->
+  <div class="tpl-section">
+    <div class="tpl-label">🎯 Penutup &amp; Ask</div>
+    <div class="tpl-field tall">Kesimpulan singkat mengapa bisnis ini layak didukung:</div>
+    <div class="tpl-field">Yang kami butuhkan: ☐ Mentoring &nbsp; ☐ Modal Rp _______________ &nbsp; ☐ Akses jaringan/mitra &nbsp; ☐ Lainnya: _______________</div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════
+     PANEL 5: PITCH DECK McKINSEY
+══════════════════════════════ -->
+<div class="panel" id="tab-pitch">
+
+  <div class="card">
+    <div class="card-hd">
+      <div class="badge b-navy">🎯</div>
+      <div><div class="card-title">Pitch Deck — McKinsey / Big-4 Framework</div><div class="card-sub">Pyramid Principle · SCQA · MECE · Action Titles · 14 Slide</div></div>
+    </div>
+    <div class="info"><strong>Mengapa framework konsultan?</strong> McKinsey, Deloitte, EY, dan PwC telah mengembangkan metodologi presentasi selama puluhan tahun berdasarkan satu tujuan: membuat pembuat keputusan sibuk memahami, menyetujui, dan bertindak secepat mungkin. Prinsip ini sama kuatnya untuk pitch bisnis mahasiswa.</div>
+  </div>
+
+  <!-- 4 Prinsip Utama -->
+  <div class="card">
+    <div class="card-hd">
+      <div class="badge b-navy">4️⃣</div>
+      <div><div class="card-title">4 Prinsip Inti McKinsey</div></div>
+    </div>
+
+    <!-- 1. Pyramid Principle -->
+    <div class="principle-card">
+      <div class="pc-hd">
+        <div class="pc-num" style="background:var(--navy)">1</div>
+        <div><div class="pc-title">Pyramid Principle (Barbara Minto, McKinsey 1960s)</div><div class="pc-sub">Lead with your answer first — always</div></div>
+      </div>
+      <div class="pc-body">
+        <p style="margin-bottom:.6rem">Kebanyakan orang berkomunikasi dengan cara membangun cerita menuju kesimpulan (deduktif). McKinsey membaliknya: <strong>mulai dari kesimpulan/rekomendasi, baru dukung dengan argumen, lalu buktikan dengan data.</strong></p>
+        <div class="fw-box">
+          <div class="fw-row"><div class="fw-label">🔺 Top Level</div><div class="fw-arrow">→</div><div class="fw-val"><strong>Governing Thought / Kesimpulan Utama</strong>: rekomendasi atau keputusan yang ingin disampaikan. "Bisnis ini layak dijalankan dan akan menghasilkan BEP dalam 4 bulan."</div></div>
+          <div class="fw-row"><div class="fw-label">🔸 Level 2</div><div class="fw-arrow">→</div><div class="fw-val"><strong>3 Argumen Pendukung</strong> (MECE): "Masalah nyata tervalidasi · Model bisnis menguntungkan · Tim memiliki keahlian yang tepat"</div></div>
+          <div class="fw-row"><div class="fw-label">🔹 Level 3</div><div class="fw-arrow">→</div><div class="fw-val"><strong>Data &amp; Bukti</strong>: fakta, angka, hasil wawancara, prototype, Lean Canvas — semua ini hanya mendukung argumen level 2</div></div>
+        </div>
+        <div class="tip">💡 Uji dengan "Reading Titles Test": jika kamu membaca hanya judul setiap slide dari atas ke bawah, alur argumen harus sudah terbentuk lengkap dan meyakinkan.</div>
+      </div>
+    </div>
+
+    <!-- 2. SCQA -->
+    <div class="principle-card">
+      <div class="pc-hd">
+        <div class="pc-num" style="background:#1D4ED8">2</div>
+        <div><div class="pc-title">SCQA Framework — Struktur Narasi Pembuka</div><div class="pc-sub">Situation · Complication · Question · Answer</div></div>
+      </div>
+      <div class="pc-body">
+        <p style="margin-bottom:.6rem">SCQA adalah struktur yang digunakan McKinsey, Bain, dan BCG untuk membangun pembukaan presentasi yang memikat dan logis. Digunakan di 3 slide pertama pitch deck.</p>
+        <div class="scqa-grid">
+          <div class="scqa-block" style="background:#EFF6FF;">
+            <div class="scqa-letter" style="color:#1D4ED8">S</div>
+            <div class="scqa-word" style="color:#1D4ED8">Situation</div>
+            <p>Fakta atau konteks yang semua orang setujui. Tidak ada konflik di sini — ini adalah "ground truth".<br><br><em>Contoh: "Pasar kuliner Indonesia bernilai Rp 300 triliun dengan 15 juta UMKM aktif."</em></p>
+          </div>
+          <div class="scqa-block" style="background:#FFF7ED;">
+            <div class="scqa-letter" style="color:#EA580C">C</div>
+            <div class="scqa-word" style="color:#EA580C">Complication</div>
+            <p>Gangguan atau masalah yang muncul dari situasi tersebut. Ini menciptakan ketegangan naratif.<br><br><em>Contoh: "Namun 60% UMKM kuliner tutup dalam 2 tahun pertama karena tidak memiliki sistem manajemen yang terjangkau."</em></p>
+          </div>
+          <div class="scqa-block" style="background:#F5F3FF;">
+            <div class="scqa-letter" style="color:#7C3AED">Q</div>
+            <div class="scqa-word" style="color:#7C3AED">Question</div>
+            <p>Pertanyaan yang secara logis muncul dari komplication. Sering kali tersirat, tidak perlu diucapkan eksplisit.<br><br><em>Contoh: "Bagaimana UMKM kuliner bisa bertahan dan berkembang di era digital?"</em></p>
+          </div>
+          <div class="scqa-block" style="background:#ECFDF5;">
+            <div class="scqa-letter" style="color:#059669">A</div>
+            <div class="scqa-word" style="color:#059669">Answer</div>
+            <p>Jawaban kalian — yaitu bisnis/produk yang kalian tawarkan. Ini adalah Pyramid Principle dalam tindakan.<br><br><em>Contoh: "Kami menghadirkan platform manajemen UMKM kuliner all-in-one seharga Rp 49.000/bulan."</em></p>
+          </div>
+        </div>
+        <div class="tip">💡 Versi simpel: gunakan <strong>SCR (Situation-Complication-Resolution)</strong> — hilangkan Q jika jawaban sudah cukup jelas dari komplikasinya. Ini cocok untuk pitch 3 menit.</div>
+      </div>
+    </div>
+
+    <!-- 3. MECE -->
+    <div class="principle-card">
+      <div class="pc-hd">
+        <div class="pc-num" style="background:#059669">3</div>
+        <div><div class="pc-title">MECE — Mutually Exclusive, Collectively Exhaustive</div><div class="pc-sub">Setiap poin tidak tumpang tindih dan bersama-sama mencakup semua hal penting</div></div>
+      </div>
+      <div class="pc-body">
+        <p style="margin-bottom:.6rem">MECE (dibaca "mi-si") adalah cara mengorganisasi argumen agar tidak ada overlap (kebingungan) dan tidak ada gap (keberatan yang belum dijawab).</p>
+        <div class="mece-compare">
+          <div class="mc-bad">
+            <div class="mc-label">❌ Tidak MECE (Ada Overlap)</div>
+            <div class="mc-item">• "Menghemat waktu"</div>
+            <div class="mc-item">• "Lebih efisien"</div>
+            <div class="mc-item">• "Meningkatkan produktivitas"</div>
+            <div style="font-size:.66rem;color:#991B1B;margin-top:.3rem;">→ Ketiganya hampir berarti sama. Tumpang tindih = membingungkan audiens.</div>
+          </div>
+          <div class="mc-good">
+            <div class="mc-label">✅ MECE (Tidak Overlap, Komprehensif)</div>
+            <div class="mc-item">• Menghemat waktu 40%</div>
+            <div class="mc-item">• Mengurangi biaya operasional 30%</div>
+            <div class="mc-item">• Meningkatkan kepuasan pelanggan</div>
+            <div style="font-size:.66rem;color:#065F46;margin-top:.3rem;">→ Tiga dimensi yang berbeda: waktu, biaya, kualitas. Komprehensif dan tidak overlap.</div>
+          </div>
+        </div>
+        <p style="font-size:.77rem;margin-top:.5rem">Terapkan MECE pada: segmentasi pasar, daftar keunggulan kompetitif, analisis kompetitor, dan setiap daftar poin dalam slide.</p>
+      </div>
+    </div>
+
+    <!-- 4. Action Titles -->
+    <div class="principle-card">
+      <div class="pc-hd">
+        <div class="pc-num" style="background:#D97706">4</div>
+        <div><div class="pc-title">Action Titles — Judul Slide = Kesimpulan</div><div class="pc-sub">Setiap judul slide adalah kalimat lengkap yang menyatakan insight, bukan topik</div></div>
+      </div>
+      <div class="pc-body">
+        <p style="margin-bottom:.6rem">Dalam slide McKinsey, judul bukan label topik — melainkan <strong>pernyataan kesimpulan yang berdiri sendiri</strong>. Pembaca harus memahami argumen hanya dari membaca judul-judul.</p>
+        <div class="at-compare">
+          <div class="at-row">
+            <div class="at-bad"><div class="at-label">❌ Topic Title</div><div class="at-text">"Analisis Pasar"</div></div>
+            <div class="at-good"><div class="at-label">✅ Action Title</div><div class="at-text">"Pasar kuliner digital Indonesia tumbuh 38%/tahun dan belum memiliki pemimpin yang dominan"</div></div>
+          </div>
+          <div class="at-row">
+            <div class="at-bad"><div class="at-label">❌ Topic Title</div><div class="at-text">"Proyeksi Keuangan"</div></div>
+            <div class="at-good"><div class="at-label">✅ Action Title</div><div class="at-text">"Modal Rp 15 juta menghasilkan break-even dalam 4 bulan dengan margin bersih 35%"</div></div>
+          </div>
+          <div class="at-row">
+            <div class="at-bad"><div class="at-label">❌ Topic Title</div><div class="at-text">"Kompetitor"</div></div>
+            <div class="at-good"><div class="at-label">✅ Action Title</div><div class="at-text">"Kami satu-satunya yang menawarkan harga terjangkau DAN kualitas premium secara bersamaan"</div></div>
+          </div>
+        </div>
+        <div class="tip">💡 <strong>Ghost Deck Test</strong>: sebelum membuka PowerPoint/Canva, tulis dulu semua action titles di kertas atau notes. Baca dari atas ke bawah — apakah sudah membentuk argumen yang meyakinkan? Jika ya, baru mulai desain.</div>
+        <div class="tip">💡 <strong>"So What?" Test</strong>: setelah setiap data atau klaim di slide, tanyakan "So what? Mengapa ini penting bagi juri/investor?" Jika tidak ada jawaban jelas, hapus konten tersebut.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 14 Slides -->
+  <div class="card">
+    <div class="card-hd">
+      <div class="badge b-purple">🖼</div>
+      <div><div class="card-title">14 Slide Pitch Deck — Action Titles &amp; Panduan</div><div class="card-sub">Setiap slide memiliki Action Title, framework yang digunakan, dan poin kunci</div></div>
+    </div>
+    <div class="warn">📌 Action Titles di bawah adalah <em>template dengan placeholder [ ]</em> — ganti dengan data bisnis kelompok kalian. Pilih font yang bersih, warna konsisten per sesi narasi, dan satu visual/chart per slide maksimal.</div>
+
+    <div class="slide-grid">
+
+      <div class="slide-card">
+        <div class="slide-hd" style="background:#0F2D5E"><div class="slide-num">1</div><div class="slide-tag">Cover</div></div>
+        <div class="slide-body">
+          <div class="slide-action">[Nama Bisnis] — [Tagline satu kalimat yang mencerminkan UVP]</div>
+          <ul class="slide-pts"><li>Logo / visual brand</li><li>Nama lengkap tim</li><li>Tanggal &amp; acara</li></ul>
+          <div class="slide-framework">Framework: Identitas Visual</div>
+        </div>
+      </div>
+
+      <div class="slide-card">
+        <div class="slide-hd" style="background:#1D4ED8"><div class="slide-num">2</div><div class="slide-tag">Exec Summary</div></div>
+        <div class="slide-body">
+          <div class="slide-action">"[Bisnis kami] menyelesaikan [masalah X] untuk [segmen Y] dan berpotensi mencapai [outcome Z] dalam [N bulan]"</div>
+          <ul class="slide-pts"><li>Ringkasan SCR dalam 3–5 poin</li><li>Boleh berupa tabel 2 kolom: masalah ↔ solusi</li><li>Ditulis terakhir, tampil pertama</li></ul>
+          <div class="slide-framework">Framework: SCR + Pyramid Principle</div>
+        </div>
+      </div>
+
+      <div class="slide-card">
+        <div class="slide-hd" style="background:#EA580C"><div class="slide-num">3</div><div class="slide-tag">Situation</div></div>
+        <div class="slide-body">
+          <div class="slide-action">"[Data/fakta] menunjukkan bahwa [konteks pasar] menciptakan peluang yang besar dan mendesak"</div>
+          <ul class="slide-pts"><li>1 statistik pasar yang kuat + sumber</li><li>Tren yang mendukung timing bisnis (Why Now)</li><li>Semua orang harus setuju dengan fakta ini</li></ul>
+          <div class="slide-framework">Framework: SCQA → S</div>
+        </div>
+      </div>
+
+      <div class="slide-card">
+        <div class="slide-hd" style="background:#DC2626"><div class="slide-num">4</div><div class="slide-tag">Complication</div></div>
+        <div class="slide-body">
+          <div class="slide-action">"[Jumlah] orang di [segmen] menderita [masalah spesifik] namun solusi yang ada gagal karena [3 alasan MECE]"</div>
+          <ul class="slide-pts"><li>Validasi masalah: data atau wawancara</li><li>Gap analysis: mengapa existing solutions tidak cukup</li><li>Gunakan MECE untuk 3 kelemahan solusi lama</li></ul>
+          <div class="slide-framework">Framework: SCQA → C · MECE</div>
+        </div>
+      </div>
+
+      <div class="slide-card">
+        <div class="slide-hd" style="background:#059669"><div class="slide-num">5</div><div class="slide-tag">Resolution</div></div>
+        <div class="slide-body">
+          <div class="slide-action">"[Nama produk] menyelesaikan [masalah] melalui [pendekatan unik] sehingga [manfaat konkret bagi pelanggan]"</div>
+          <ul class="slide-pts"><li>Deskripsi solusi + 3 fitur utama (MECE)</li><li>Visual produk atau screenshot prototype</li><li>Satu kalimat UVP yang jelas</li></ul>
+          <div class="slide-framework">Framework: SCQA → A · Pyramid</div>
+        </div>
+      </div>
+
+      <div class="slide-card">
+        <div class="slide-hd" style="background:#0891B2"><div class="slide-num">6</div><div class="slide-tag">Lean Canvas</div></div>
+        <div class="slide-body">
+          <div class="slide-action">"Model bisnis kami tervalidasi di 9 dimensi kritis sebelum satu pun rupiah digunakan untuk produksi"</div>
+          <ul class="slide-pts"><li>Tampilkan Lean Canvas yang sudah terisi</li><li>Highlight 3 blok terkuat dengan warna</li><li>Jelaskan asumsi mana yang sudah divalidasi</li></ul>
+          <div class="slide-framework">Framework: Lean Canvas — Ash Maurya</div>
+        </div>
+      </div>
+
+      <div class="slide-card">
+        <div class="slide-hd" style="background:#7C3AED"><div class="slide-num">7</div><div class="slide-tag">Market Size</div></div>
+        <div class="slide-body">
+          <div class="slide-action">"TAM Rp [X] dengan SAM Rp [Y] yang tumbuh [Z]%/tahun memberi kami SOM Rp [W] yang realistis dalam 3 tahun"</div>
+          <ul class="slide-pts"><li>Visual 3 lingkaran TAM/SAM/SOM bersarang</li><li>Angka berbasis bottom-up calculation</li><li>Sumber data untuk setiap angka</li></ul>
+          <div class="slide-framework">Framework: TAM/SAM/SOM Bottom-Up</div>
+        </div>
+      </div>
+
+      <div class="slide-card">
+        <div class="slide-hd" style="background:#D97706"><div class="slide-num">8</div><div class="slide-tag">Business Model</div></div>
+        <div class="slide-body">
+          <div class="slide-action">"Model [subscription/one-time/freemium] kami menghasilkan LTV Rp [X] dengan CAC Rp [Y] — rasio [Z]× di atas threshold sehat"</div>
+          <ul class="slide-pts"><li>Revenue model + harga</li><li>LTV, CAC, LTV/CAC ratio</li><li>Gross margin dan BEP</li></ul>
+          <div class="slide-framework">Framework: Unit Economics</div>
+        </div>
+      </div>
+
+      <div class="slide-card">
+        <div class="slide-hd" style="background:#059669"><div class="slide-num">9</div><div class="slide-tag">Go-to-Market</div></div>
+        <div class="slide-body">
+          <div class="slide-action">"Tiga fase akuisisi pelanggan kami mengoptimalkan biaya sambil membangun efek jaringan yang berkelanjutan"</div>
+          <ul class="slide-pts"><li>Fase 1: Early Adopters (channel A)</li><li>Fase 2: Scale (channel B + referral)</li><li>Fase 3: Expansion (channel C)</li></ul>
+          <div class="slide-framework">Framework: GTM · MECE per fase</div>
+        </div>
+      </div>
+
+      <div class="slide-card">
+        <div class="slide-hd" style="background:#1D4ED8"><div class="slide-num">10</div><div class="slide-tag">Competitive</div></div>
+        <div class="slide-body">
+          <div class="slide-action">"Kami satu-satunya di [pasar] yang unggul di [dimensi A] dan [dimensi B] secara bersamaan — dua hal yang diabaikan semua kompetitor"</div>
+          <ul class="slide-pts"><li>Matrix 2×2 atau positioning map</li><li>2 dimensi yang paling diinginkan pelanggan (sumbu X dan Y)</li><li>Tunjukkan posisi kami vs kompetitor</li></ul>
+          <div class="slide-framework">Framework: Competitive Positioning · MECE</div>
+        </div>
+      </div>
+
+      <div class="slide-card">
+        <div class="slide-hd" style="background:#DC2626"><div class="slide-num">11</div><div class="slide-tag">Financials</div></div>
+        <div class="slide-body">
+          <div class="slide-action">"Dengan modal Rp [X], proyeksi konservatif menunjukkan profitabilitas bulan ke-[N] dengan kumulatif laba Rp [Y] di tahun pertama"</div>
+          <ul class="slide-pts"><li>Bar chart: revenue vs cost per bulan (6–12 bulan)</li><li>Highlight titik BEP dengan panah</li><li>Tabel: modal awal, HPP, harga jual, margin</li></ul>
+          <div class="slide-framework">Framework: Financial Projection</div>
+        </div>
+      </div>
+
+      <div class="slide-card">
+        <div class="slide-hd" style="background:#7C3AED"><div class="slide-num">12</div><div class="slide-tag">Prototype</div></div>
+        <div class="slide-body">
+          <div class="slide-action">"Prototype ini membuktikan bahwa [masalah] dapat diselesaikan dengan [solusi kami] — dan telah mendapat respons positif dari [N] calon pengguna"</div>
+          <ul class="slide-pts"><li>Foto / visual prototype yang jelas</li><li>Keterangan label pada setiap bagian</li><li>Demonstrasi langsung saat pitching</li></ul>
+          <div class="slide-framework">Framework: Solution Validation</div>
+        </div>
+      </div>
+
+      <div class="slide-card">
+        <div class="slide-hd" style="background:#0F2D5E"><div class="slide-num">13</div><div class="slide-tag">Team</div></div>
+        <div class="slide-body">
+          <div class="slide-action">"Kombinasi keahlian tim kami mencakup [teknis + bisnis + domain] — persis yang dibutuhkan untuk mengeksekusi visi ini"</div>
+          <ul class="slide-pts"><li>Foto + nama + peran tiap anggota</li><li>1 keahlian relevan per orang (bukan CV lengkap)</li><li>Tunjukkan mengapa tim ini MECE (tidak ada gap)</li></ul>
+          <div class="slide-framework">Framework: Team Fit · MECE</div>
+        </div>
+      </div>
+
+      <div class="slide-card">
+        <div class="slide-hd" style="background:#059669"><div class="slide-num">14</div><div class="slide-tag">Ask / Next Steps</div></div>
+        <div class="slide-body">
+          <div class="slide-action">"Dengan [X] yang kami butuhkan, kami akan mencapai [milestone] dalam [N bulan] dan membuka peluang [outcome besar]"</div>
+          <ul class="slide-pts"><li>Apa yang diminta: modal / mentoring / akses jaringan</li><li>Milestone spesifik yang akan dicapai</li><li>Ajakan bertindak yang jelas: kontak, langkah berikutnya</li></ul>
+          <div class="slide-framework">Framework: Pyramid → Call to Action</div>
+        </div>
+      </div>
+
+    </div><!-- /slide-grid -->
+  </div>
+
+  <!-- Design Rules -->
+  <div class="card">
+    <div class="card-hd">
+      <div class="badge b-gold">🎨</div>
+      <div><div class="card-title">Aturan Desain McKinsey / Big-4</div></div>
+    </div>
+    <ul class="alist">
+      <li><strong>Maks 30 kata per slide</strong> — judul adalah kalimat, body adalah poin pendek. Audiens tidak bisa membaca &amp; mendengarkan sekaligus.</li>
+      <li><strong>Satu insight per slide</strong> — jika ada dua pesan, buat dua slide. Lebih banyak slide yang jelas &gt; sedikit slide yang penuh.</li>
+      <li><strong>Setiap data harus bersumber</strong> — tulis sumber kecil di pojok slide. Ini membangun kredibilitas instan.</li>
+      <li><strong>Pilih chart yang tepat</strong> — tren waktu → line chart; perbandingan kategori → bar chart; komposisi → pie/treemap; hubungan → scatter. Jangan gunakan chart yang salah jenis.</li>
+      <li><strong>Judul chart = insight, bukan label</strong> — bukan "Grafik Pendapatan Bulanan", melainkan "Pendapatan tumbuh 3× lebih cepat dari biaya sejak bulan ke-2".</li>
+      <li><strong>Konsistensi warna per narasi</strong> — Biru = situasi, Merah = masalah, Hijau = solusi/positif, Kuning/Emas = peluang. Gunakan max 3–4 warna.</li>
+      <li><strong>White space adalah teman</strong> — slide yang penuh terasa panik, bukan profesional. Biarkan ruang kosong.</li>
+      <li><strong>Font tunggal, 2 ukuran saja</strong> — judul lebih besar, body lebih kecil. Satu jenis font sans-serif yang bersih (Plus Jakarta Sans, Inter, Poppins).</li>
+    </ul>
+  </div>
+
+</div><!-- /pitch panel -->
+
+<script>
+  function go(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    el.classList.add('active');
+    window.scrollTo({ top: 90, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
