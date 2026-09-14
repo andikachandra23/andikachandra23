@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pertemuan 1 — Hakikat Data Warehouse | MSIM4315</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d2240;
+  --blue-dk: #1a3a6c;
+  --blue: #1e5ba8;
+  --blue-md: #3b7dd8;
+  --blue-lt: #c8def8;
+  --blue-xs: #edf4fd;
+  --teal: #0e8a80;
+  --teal-lt: #d0f0ed;
+  --teal-xs: #eaf8f6;
+  --amber: #c47d0f;
+  --amber-lt: #fde8b4;
+  --amber-xs: #fef7e6;
+  --purple: #6d3ab5;
+  --purple-lt: #e8defc;
+  --purple-xs: #f4f0fe;
+  --green: #16803c;
+  --green-lt: #d1fae5;
+  --red: #dc2626;
+  --red-lt: #fee2e2;
+  --gray-9: #111827;
+  --gray-7: #374151;
+  --gray-5: #6b7280;
+  --gray-3: #d1d5db;
+  --gray-2: #e5e7eb;
+  --gray-1: #f3f4f6;
+  --gray-0: #f9fafb;
+  --white: #ffffff;
+  --fh: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --fb: 'Inter', system-ui, sans-serif;
+  --r: 8px;
+  --r-lg: 14px;
+  --shadow: 0 2px 10px rgba(0,0,0,0.07);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--fb);
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--gray-9);
+  background: var(--gray-0);
+}
+
+/* PROGRESS BAR */
+#progress-bar {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, var(--blue) 0%, var(--teal) 100%);
+  width: 0%; z-index: 1000; transition: width .1s;
+}
+
+/* TOP NAV */
+.top-nav {
+  position: sticky; top: 0; z-index: 900;
+  background: var(--navy); color: var(--white);
+  box-shadow: 0 2px 12px rgba(0,0,0,.25);
+}
+.top-nav-inner {
+  max-width: 1100px; margin: 0 auto; padding: 0 1.5rem;
+  display: flex; align-items: center; gap: 1rem; height: 56px;
+}
+.nav-brand { font-family: var(--fh); font-weight: 700; font-size: 14px; white-space: nowrap; }
+.nav-brand span { font-weight: 400; opacity: .65; font-size: 12px; display: block; }
+.nav-tabs { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; flex: 1; }
+.nav-tabs::-webkit-scrollbar { display: none; }
+.nav-tab {
+  background: none; border: none; color: rgba(255,255,255,.6);
+  font-family: var(--fb); font-size: 13px; padding: 6px 12px;
+  border-radius: var(--r); cursor: pointer; white-space: nowrap;
+  transition: background .15s, color .15s;
+}
+.nav-tab:hover { background: rgba(255,255,255,.1); color: var(--white); }
+.nav-tab.active { background: rgba(255,255,255,.15); color: var(--white); }
+
+/* MAIN LAYOUT */
+.page { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+.page-wide { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue-dk) 100%);
+  color: var(--white); padding: 3rem 2rem 2.5rem;
+  border-radius: var(--r-lg); margin-bottom: 2.5rem;
+}
+.hero-badge {
+  display: inline-block; background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2); border-radius: 20px;
+  font-size: 12px; padding: 4px 12px; margin-bottom: 1rem; letter-spacing: .02em;
+}
+.hero h1 { font-family: var(--fh); font-size: 28px; font-weight: 700; line-height: 1.3; margin-bottom: .5rem; }
+.hero p { opacity: .75; font-size: 15px; margin-bottom: 1.5rem; }
+.hero-meta { display: flex; gap: 1rem; flex-wrap: wrap; }
+.hero-chip {
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+  border-radius: 6px; font-size: 13px; padding: 5px 12px;
+}
+.cpk-box {
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--r); padding: 1.25rem 1.5rem; margin-top: 1.5rem;
+}
+.cpk-box h3 { font-family: var(--fh); font-size: 13px; font-weight: 600; opacity: .7; margin-bottom: .75rem; letter-spacing: .04em; }
+.cpk-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: .4rem .75rem; }
+.cpk-list li { font-size: 13px; opacity: .85; padding-left: 1.2rem; position: relative; }
+.cpk-list li::before { content: "✓"; position: absolute; left: 0; color: #4ade80; font-weight: 700; font-size: 11px; top: 3px; }
+
+/* SECTIONS */
+.section { margin-bottom: 3rem; }
+.section-title {
+  font-family: var(--fh); font-size: 22px; font-weight: 700;
+  color: var(--navy); margin-bottom: 1.5rem;
+  padding-bottom: .75rem; border-bottom: 2px solid var(--blue-lt);
+  display: flex; align-items: center; gap: .75rem;
+}
+.section-num {
+  background: var(--blue); color: var(--white);
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; flex-shrink: 0;
+}
+.subsection-title {
+  font-family: var(--fh); font-size: 18px; font-weight: 600;
+  color: var(--blue-dk); margin: 1.75rem 0 .75rem;
+}
+.sub2-title {
+  font-family: var(--fh); font-size: 15px; font-weight: 600;
+  color: var(--gray-7); margin: 1.25rem 0 .5rem;
+}
+
+p { margin-bottom: 1rem; color: var(--gray-7); }
+p:last-child { margin-bottom: 0; }
+
+/* CALLOUT BOX */
+.callout {
+  border-radius: var(--r); padding: 1rem 1.25rem;
+  margin: 1.25rem 0; border-left: 4px solid;
+}
+.callout-blue { background: var(--blue-xs); border-color: var(--blue); }
+.callout-amber { background: var(--amber-xs); border-color: var(--amber); }
+.callout-teal { background: var(--teal-xs); border-color: var(--teal); }
+.callout-purple { background: var(--purple-xs); border-color: var(--purple); }
+.callout-title { font-family: var(--fh); font-weight: 600; font-size: 14px; margin-bottom: .4rem; }
+.callout-blue .callout-title { color: var(--blue); }
+.callout-amber .callout-title { color: var(--amber); }
+.callout-teal .callout-title { color: var(--teal); }
+.callout-purple .callout-title { color: var(--purple); }
+.callout p { font-size: 14px; margin-bottom: 0; }
+
+/* ANALOGY CARD */
+.analogy-card {
+  background: var(--white); border: 1px solid var(--gray-2);
+  border-radius: var(--r-lg); padding: 1.5rem;
+  box-shadow: var(--shadow); margin: 1.5rem 0;
+  display: flex; gap: 1.25rem; align-items: flex-start;
+}
+.analogy-icon { font-size: 2rem; flex-shrink: 0; }
+.analogy-card h4 { font-family: var(--fh); font-weight: 600; font-size: 15px; margin-bottom: .4rem; }
+.analogy-card p { font-size: 14px; color: var(--gray-5); }
+
+/* TABS (OLTP/OLAP) */
+.tab-nav { display: flex; gap: 4px; margin-bottom: 1rem; background: var(--gray-1); padding: 4px; border-radius: var(--r); }
+.tab-btn {
+  flex: 1; background: none; border: none; padding: 8px 12px;
+  border-radius: 6px; font-family: var(--fb); font-size: 14px;
+  font-weight: 500; cursor: pointer; color: var(--gray-5);
+  transition: all .15s;
+}
+.tab-btn.active { background: var(--white); color: var(--blue-dk); box-shadow: var(--shadow); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* CARDS GRID */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1rem 0; }
+.card {
+  background: var(--white); border: 1px solid var(--gray-2);
+  border-radius: var(--r-lg); padding: 1.25rem;
+  box-shadow: var(--shadow);
+}
+.card-icon { font-size: 1.5rem; margin-bottom: .6rem; }
+.card h4 { font-family: var(--fh); font-weight: 600; font-size: 14px; margin-bottom: .4rem; color: var(--gray-9); }
+.card p { font-size: 13px; color: var(--gray-5); margin: 0; }
+.card.c-blue { border-top: 3px solid var(--blue); }
+.card.c-teal { border-top: 3px solid var(--teal); }
+.card.c-amber { border-top: 3px solid var(--amber); }
+.card.c-purple { border-top: 3px solid var(--purple); }
+
+/* COMPARISON TABLE */
+.comp-table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--white); border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow); }
+.comp-table th { background: var(--navy); color: var(--white); padding: 10px 14px; font-family: var(--fh); font-weight: 600; text-align: left; }
+.comp-table td { padding: 9px 14px; border-bottom: 1px solid var(--gray-2); vertical-align: top; }
+.comp-table tr:last-child td { border-bottom: none; }
+.comp-table tr:nth-child(even) td { background: var(--gray-0); }
+.comp-table .col-label { font-weight: 600; color: var(--gray-9); }
+.comp-table .col-oltp { color: var(--blue-dk); }
+.comp-table .col-olap { color: var(--teal); }
+
+/* TIMELINE */
+.timeline { position: relative; padding-left: 2rem; margin: 1.5rem 0; }
+.timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--blue-lt); }
+.timeline-item { position: relative; margin-bottom: 1rem; }
+.timeline-item::before {
+  content: ''; position: absolute; left: -2rem; top: 6px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--white); border: 2px solid var(--blue);
+}
+.timeline-item.milestone::before { background: var(--blue); border-color: var(--navy); }
+.timeline-header {
+  background: var(--white); border: 1px solid var(--gray-2);
+  border-radius: var(--r); padding: .75rem 1rem;
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  box-shadow: var(--shadow); transition: border-color .15s;
+}
+.timeline-header:hover { border-color: var(--blue-md); }
+.timeline-era { font-family: var(--fh); font-weight: 700; font-size: 14px; color: var(--navy); }
+.timeline-label { font-size: 12px; color: var(--gray-5); margin-top: 2px; }
+.timeline-toggle { color: var(--gray-5); transition: transform .2s; font-size: 18px; line-height: 1; }
+.timeline-item.open .timeline-toggle { transform: rotate(90deg); }
+.timeline-body {
+  background: var(--blue-xs); border: 1px solid var(--blue-lt);
+  border-radius: var(--r); padding: 1rem; margin-top: 6px;
+  font-size: 14px; color: var(--gray-7); display: none;
+}
+.timeline-item.open .timeline-body { display: block; }
+.milestone .timeline-header { border-color: var(--blue); background: var(--blue-xs); }
+.milestone .timeline-era { color: var(--blue-dk); }
+
+/* FLIP CARDS */
+.flip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.flip-card { perspective: 1000px; height: 240px; cursor: pointer; }
+.flip-card-inner {
+  position: relative; width: 100%; height: 100%;
+  transition: transform .5s ease; transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+.flip-front, .flip-back {
+  position: absolute; inset: 0; border-radius: var(--r-lg);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 1.5rem; box-shadow: var(--shadow);
+}
+.flip-front {
+  background: var(--navy); color: var(--white);
+  align-items: center; text-align: center;
+}
+.flip-back { background: var(--white); border: 1px solid var(--gray-2); transform: rotateY(180deg); }
+.flip-front .fc-num { font-size: 2.5rem; font-weight: 800; opacity: .15; line-height: 1; }
+.flip-front .fc-name { font-family: var(--fh); font-weight: 700; font-size: 17px; margin: .5rem 0 .4rem; }
+.flip-front .fc-en { font-size: 12px; opacity: .6; }
+.flip-front .fc-hint { margin-top: 1rem; font-size: 11px; opacity: .45; letter-spacing: .02em; }
+.flip-back .fc-label {
+  font-family: var(--fh); font-weight: 700; font-size: 13px;
+  color: var(--white); background: var(--blue); border-radius: 5px;
+  padding: 3px 10px; display: inline-block; margin-bottom: .75rem;
+}
+.flip-back .fc-def { font-size: 13px; color: var(--gray-7); margin-bottom: .75rem; }
+.flip-back .fc-ex { font-size: 12px; color: var(--gray-5); background: var(--gray-1); border-radius: 6px; padding: .6rem .8rem; }
+.flip-back .fc-ex strong { color: var(--gray-9); }
+.fc-1 .flip-front { background: linear-gradient(135deg, #1a3a6c, #1e5ba8); }
+.fc-2 .flip-front { background: linear-gradient(135deg, #0b6e65, #0e8a80); }
+.fc-3 .flip-front { background: linear-gradient(135deg, #6d3ab5, #9b6de0); }
+.fc-4 .flip-front { background: linear-gradient(135deg, #b35a0a, #e07a20); }
+.fc-2 .flip-back .fc-label { background: var(--teal); }
+.fc-3 .flip-back .fc-label { background: var(--purple); }
+.fc-4 .flip-back .fc-label { background: var(--amber); }
+
+/* ETL DIAGRAM */
+.etl-flow { display: flex; align-items: stretch; gap: 0; margin: 1.5rem 0; overflow-x: auto; }
+.etl-step {
+  flex: 1; min-width: 120px; background: var(--white); border: 1px solid var(--gray-2);
+  border-radius: 0; padding: 1rem .75rem; text-align: center;
+  cursor: pointer; transition: all .15s; position: relative;
+}
+.etl-step:first-child { border-radius: var(--r) 0 0 var(--r); }
+.etl-step:last-child { border-radius: 0 var(--r) var(--r) 0; }
+.etl-step.active { background: var(--blue-xs); border-color: var(--blue); z-index: 1; }
+.etl-arrow { display: flex; align-items: center; color: var(--blue-md); font-size: 20px; padding: 0 2px; }
+.etl-step h4 { font-family: var(--fh); font-weight: 700; font-size: 14px; color: var(--navy); margin-bottom: .3rem; }
+.etl-step p { font-size: 12px; color: var(--gray-5); margin: 0; }
+.etl-detail {
+  background: var(--blue-xs); border: 1px solid var(--blue-lt);
+  border-radius: var(--r); padding: 1rem 1.25rem; margin-top: .5rem;
+  display: none;
+}
+.etl-detail.active { display: block; }
+.etl-detail h5 { font-family: var(--fh); font-weight: 600; font-size: 14px; color: var(--blue-dk); margin-bottom: .5rem; }
+.etl-detail ul { padding-left: 1.1rem; font-size: 14px; color: var(--gray-7); }
+.etl-detail li { margin-bottom: .3rem; }
+
+/* STUDI KASUS TABS */
+.case-tabs { margin: 1.5rem 0; }
+.case-tab-nav { display: flex; gap: 4px; border-bottom: 2px solid var(--gray-2); margin-bottom: 1.25rem; }
+.case-tab-btn {
+  background: none; border: none; font-family: var(--fh); font-weight: 600;
+  font-size: 14px; padding: .6rem 1rem; cursor: pointer; color: var(--gray-5);
+  border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all .15s;
+}
+.case-tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
+.case-panel { display: none; }
+.case-panel.active { display: block; }
+.problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .75rem; margin: 1rem 0; }
+.problem-card {
+  background: var(--red-lt); border-radius: var(--r); padding: 1rem;
+  border-left: 3px solid var(--red);
+}
+.problem-card h5 { font-family: var(--fh); font-weight: 600; font-size: 13px; color: var(--red); margin-bottom: .3rem; }
+.problem-card p { font-size: 13px; color: var(--gray-7); margin: 0; }
+.result-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.result-table th { background: var(--teal); color: var(--white); padding: 9px 12px; text-align: left; font-family: var(--fh); font-weight: 600; }
+.result-table td { padding: 8px 12px; border-bottom: 1px solid var(--gray-2); }
+.result-table .before { color: var(--red); }
+.result-table .after { color: var(--green); font-weight: 500; }
+.result-table tr:nth-child(even) td { background: var(--gray-0); }
+.disc-q { counter-reset: disc-counter; }
+.disc-item { counter-increment: disc-counter; background: var(--white); border: 1px solid var(--gray-2); border-radius: var(--r); padding: 1rem 1.25rem; margin-bottom: .75rem; display: flex; gap: 1rem; }
+.disc-num { background: var(--blue); color: var(--white); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+.disc-text { font-size: 14px; color: var(--gray-7); }
+
+/* QUIZ */
+.quiz-container { margin: 1.5rem 0; }
+.quiz-q {
+  background: var(--white); border: 1px solid var(--gray-2);
+  border-radius: var(--r-lg); padding: 1.25rem;
+  margin-bottom: 1rem; box-shadow: var(--shadow);
+}
+.quiz-q .q-num { font-size: 12px; color: var(--gray-5); margin-bottom: .5rem; }
+.quiz-q .q-text { font-family: var(--fh); font-weight: 600; font-size: 15px; margin-bottom: 1rem; color: var(--gray-9); }
+.quiz-options { display: flex; flex-direction: column; gap: .5rem; }
+.quiz-opt {
+  display: flex; align-items: flex-start; gap: .75rem;
+  padding: .7rem .9rem; border-radius: var(--r);
+  border: 1px solid var(--gray-2); cursor: pointer; transition: all .15s;
+  font-size: 14px; color: var(--gray-7); background: var(--gray-0);
+}
+.quiz-opt:hover { border-color: var(--blue-md); background: var(--blue-xs); color: var(--gray-9); }
+.quiz-opt.selected { border-color: var(--blue); background: var(--blue-xs); color: var(--blue-dk); }
+.quiz-opt.correct { border-color: var(--green); background: var(--green-lt); color: var(--green); }
+.quiz-opt.wrong { border-color: var(--red); background: var(--red-lt); color: var(--red); }
+.quiz-opt input[type=radio] { display: none; }
+.opt-marker { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--gray-3); flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+.selected .opt-marker { border-color: var(--blue); background: var(--blue); color: var(--white); }
+.correct .opt-marker { border-color: var(--green); background: var(--green); color: var(--white); }
+.wrong .opt-marker { border-color: var(--red); background: var(--red); color: var(--white); }
+.quiz-explanation {
+  display: none; margin-top: .75rem; padding: .75rem 1rem;
+  border-radius: var(--r); font-size: 13px; color: var(--gray-7);
+}
+.quiz-explanation.correct-exp { background: var(--green-lt); border-left: 3px solid var(--green); }
+.quiz-explanation.wrong-exp { background: var(--red-lt); border-left: 3px solid var(--red); }
+.quiz-actions { display: flex; gap: .75rem; margin-top: 1.25rem; align-items: center; }
+.btn-primary {
+  background: var(--blue); color: var(--white); border: none;
+  padding: 10px 22px; border-radius: var(--r); font-family: var(--fh);
+  font-weight: 600; font-size: 14px; cursor: pointer; transition: background .15s;
+}
+.btn-primary:hover { background: var(--blue-dk); }
+.btn-secondary {
+  background: var(--white); color: var(--blue); border: 1px solid var(--blue-md);
+  padding: 10px 22px; border-radius: var(--r); font-family: var(--fh);
+  font-weight: 600; font-size: 14px; cursor: pointer; transition: all .15s;
+}
+.btn-secondary:hover { background: var(--blue-xs); }
+.quiz-score {
+  display: none; background: var(--navy); color: var(--white);
+  border-radius: var(--r-lg); padding: 1.5rem; text-align: center; margin-top: 1.5rem;
+}
+.quiz-score .score-num { font-size: 48px; font-weight: 800; font-family: var(--fh); }
+.quiz-score .score-label { opacity: .7; font-size: 14px; }
+.quiz-score .score-msg { margin-top: .75rem; font-family: var(--fh); font-size: 16px; font-weight: 600; }
+.quiz-err { color: var(--red); font-size: 13px; display: none; }
+
+/* ACCORDION (RANGKUMAN) */
+.accordion { margin: 1rem 0; }
+.acc-item { border: 1px solid var(--gray-2); border-radius: var(--r); margin-bottom: .5rem; overflow: hidden; }
+.acc-trigger {
+  width: 100%; background: var(--white); border: none; padding: .9rem 1.1rem;
+  display: flex; justify-content: space-between; align-items: center;
+  cursor: pointer; font-family: var(--fh); font-weight: 600; font-size: 15px;
+  color: var(--gray-9); text-align: left; transition: background .15s;
+}
+.acc-trigger:hover { background: var(--gray-0); }
+.acc-trigger.open { background: var(--blue-xs); color: var(--blue-dk); }
+.acc-chevron { font-size: 18px; color: var(--gray-5); transition: transform .2s; line-height: 1; }
+.acc-trigger.open .acc-chevron { transform: rotate(180deg); color: var(--blue); }
+.acc-body { display: none; padding: 0 1.1rem 1rem; background: var(--white); font-size: 14px; color: var(--gray-7); }
+.acc-item.open .acc-body { display: block; }
+.acc-body ul { padding-left: 1.2rem; }
+.acc-body li { margin-bottom: .3rem; }
+
+/* REFERENCES */
+.ref-list { list-style: none; }
+.ref-list li { padding: .6rem 0; border-bottom: 1px solid var(--gray-2); font-size: 14px; color: var(--gray-7); padding-left: 1.75rem; position: relative; }
+.ref-list li::before { content: '[' counter(ref) ']'; counter-increment: ref; position: absolute; left: 0; font-weight: 600; color: var(--blue); font-size: 13px; }
+.ref-list { counter-reset: ref; }
+.ref-list li:last-child { border-bottom: none; }
+
+/* BACK TO TOP */
+#back-top {
+  position: fixed; bottom: 1.5rem; right: 1.5rem;
+  background: var(--navy); color: var(--white); border: none;
+  width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+  font-size: 20px; display: none; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,.25); z-index: 800; transition: background .15s;
+}
+#back-top:hover { background: var(--blue-dk); }
+#back-top.visible { display: flex; }
+
+/* READING TIME BADGE */
+.reading-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+  border-radius: 20px; font-size: 12px; padding: 4px 12px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .cpk-list { grid-template-columns: 1fr; }
+  .flip-grid { grid-template-columns: 1fr 1fr; }
+  .hero h1 { font-size: 22px; }
+  .nav-brand span { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <div class="nav-brand">
+      MSIM4315
+      <span>Data Warehouse</span>
+    </div>
+    <div class="nav-tabs" role="tablist">
+      <button class="nav-tab active" onclick="scrollTo('#intro')">Pendahuluan</button>
+      <button class="nav-tab" onclick="scrollTo('#s1')">OLTP vs OLAP</button>
+      <button class="nav-tab" onclick="scrollTo('#s2')">Sejarah</button>
+      <button class="nav-tab" onclick="scrollTo('#s3')">Definisi</button>
+      <button class="nav-tab" onclick="scrollTo('#s4')">Manfaat</button>
+      <button class="nav-tab" onclick="scrollTo('#s5')">Karakteristik</button>
+      <button class="nav-tab" onclick="scrollTo('#s6')">Prinsip Kerja</button>
+      <button class="nav-tab" onclick="scrollTo('#sc')">Studi Kasus</button>
+      <button class="nav-tab" onclick="scrollTo('#quiz')">Kuis</button>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">Pertemuan 1 dari 8</div>
+    <h1>Hakikat Data Warehouse</h1>
+    <p>Konsep dasar, sejarah, karakteristik, dan prinsip kerja Data Warehouse sebagai fondasi pengambilan keputusan bisnis.</p>
+    <div class="hero-meta">
+      <div class="hero-chip">MSIM4315 — Data Warehouse</div>
+      <div class="hero-chip">3 SKS</div>
+      <div class="reading-badge">⏱ ~35 menit</div>
+    </div>
+    <div class="cpk-box">
+      <h3>Capaian Pembelajaran Khusus</h3>
+      <ul class="cpk-list">
+        <li>Menjelaskan konsep sistem operasional dan informasional</li>
+        <li>Membedakan OLTP dan OLAP</li>
+        <li>Menjelaskan sejarah data warehouse</li>
+        <li>Menjelaskan definisi data warehouse</li>
+        <li>Menjelaskan manfaat data warehouse</li>
+        <li>Menjelaskan tujuan implementasi</li>
+        <li>Menjelaskan karakteristik data warehouse</li>
+        <li>Menjelaskan prinsip kerja data warehouse</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PENDAHULUAN -->
+  <section class="section" id="intro">
+    <h2 class="section-title"><span class="section-num">0</span>Pendahuluan</h2>
+    <p>Bayangkan Anda adalah Direktur Utama sebuah perusahaan retail dengan 200 gerai di seluruh Indonesia. Di akhir bulan, Anda ingin mengetahui: <em>"Produk apa yang paling laku di gerai Jawa Tengah selama dua tahun terakhir, dibandingkan gerai di Sumatera?"</em></p>
+    <p>Pertanyaan sederhana itu ternyata tidak mudah dijawab. Tim IT harus mengumpulkan data dari ratusan sistem kasir, merekonsiliasi dengan data keuangan, lalu mengolahnya manual di spreadsheet selama berhari-hari. Ketika laporan selesai, datanya sudah tidak relevan.</p>
+    <div class="callout callout-amber">
+      <div class="callout-title">Inilah masalah nyata yang melahirkan Data Warehouse</div>
+      <p>Sebuah sistem yang dirancang khusus untuk menjawab pertanyaan bisnis—dengan cepat, akurat, dan berbasis data historis terintegrasi dari seluruh organisasi.</p>
+    </div>
+  </section>
+
+  <!-- OLTP VS OLAP -->
+  <section class="section" id="s1">
+    <h2 class="section-title"><span class="section-num">1</span>Sistem Operasional &amp; Sistem Informasional</h2>
+
+    <div class="tab-nav" role="tablist">
+      <button class="tab-btn active" onclick="showTab('sys', 'oltp', this)" role="tab">OLTP (Operasional)</button>
+      <button class="tab-btn" onclick="showTab('sys', 'olap', this)" role="tab">OLAP (Informasional)</button>
+      <button class="tab-btn" onclick="showTab('sys', 'cmp', this)" role="tab">Perbandingan</button>
+    </div>
+
+    <!-- OLTP Panel -->
+    <div class="tab-panel active" id="sys-oltp">
+      <div class="callout callout-blue">
+        <div class="callout-title">Apa itu OLTP?</div>
+        <p><strong>Online Transaction Processing (OLTP)</strong> adalah sistem yang dirancang untuk memproses transaksi bisnis sehari-hari secara cepat dan real-time. Setiap kali Anda menggesek kartu debit, memesan tiket, atau transfer bank — sistem OLTP yang bekerja.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card c-blue">
+          <div class="card-icon">⚡</div>
+          <h4>Berorientasi Transaksi</h4>
+          <p>Setiap operasi bersifat atomik: semua langkah harus selesai bersamaan atau tidak sama sekali.</p>
+        </div>
+        <div class="card c-blue">
+          <div class="card-icon">🕐</div>
+          <h4>Data Terkini (Current)</h4>
+          <p>Hanya menyimpan kondisi data saat ini. Nilai lama langsung tertimpa ketika ada pembaruan.</p>
+        </div>
+        <div class="card c-blue">
+          <div class="card-icon">👥</div>
+          <h4>Banyak Pengguna</h4>
+          <p>Ribuan pengguna mengakses bersamaan dengan query sederhana dan frekuensi sangat tinggi.</p>
+        </div>
+        <div class="card c-blue">
+          <div class="card-icon">💾</div>
+          <h4>Database Kecil</h4>
+          <p>Karena hanya menyimpan data terkini, ukurannya berkisar dari MB hingga GB.</p>
+        </div>
+      </div>
+      <h3 class="subsection-title">Contoh Sistem OLTP</h3>
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon">🛒</div><h4>Sistem POS</h4><p>Mencatat transaksi kasir di retail, stok, dan metode pembayaran.</p></div>
+        <div class="card"><div class="card-icon">🏦</div><h4>Core Banking</h4><p>Memproses transfer, tarik tunai, dan menjaga saldo rekening real-time.</p></div>
+        <div class="card"><div class="card-icon">🎫</div><h4>Booking Online</h4><p>Mengelola ketersediaan kursi dan transaksi tiket secara real-time.</p></div>
+        <div class="card"><div class="card-icon">🏭</div><h4>Sistem ERP</h4><p>SAP, Oracle yang mengelola produksi, pengadaan, dan SDM harian.</p></div>
+      </div>
+      <div class="callout callout-amber">
+        <div class="callout-title">Mengapa OLTP Tidak Cocok untuk Analisis?</div>
+        <p>Query analitik berat <em>mengganggu kinerja transaksi</em>. Data tersebar di banyak sistem. Tidak ada data historis. Setiap sistem menggunakan format yang berbeda-beda. Tidak ada integrasi antar departemen.</p>
+      </div>
+    </div>
+
+    <!-- OLAP Panel -->
+    <div class="tab-panel" id="sys-olap">
+      <div class="callout callout-teal">
+        <div class="callout-title">Apa itu OLAP?</div>
+        <p><strong>Online Analytical Processing (OLAP)</strong> memungkinkan analis dan pengambil keputusan menganalisis data dari berbagai perspektif secara interaktif. Alih-alih memproses satu transaksi, OLAP memproses jutaan record sekaligus untuk menemukan pola, tren, dan wawasan bisnis.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card c-teal">
+          <div class="card-icon">🔍</div>
+          <h4>Berorientasi Analisis</h4>
+          <p>Menjawab pertanyaan bisnis kompleks seperti "tren penjualan per kategori per wilayah selama 5 tahun."</p>
+        </div>
+        <div class="card c-teal">
+          <div class="card-icon">📅</div>
+          <h4>Data Historis &amp; Stabil</h4>
+          <p>Menyimpan data historis 5–10 tahun. Data yang tersimpan tidak diubah.</p>
+        </div>
+        <div class="card c-teal">
+          <div class="card-icon">👤</div>
+          <h4>Sedikit Pengguna</h4>
+          <p>Puluhan hingga ratusan pengguna dengan query sangat kompleks dan ad-hoc.</p>
+        </div>
+        <div class="card c-teal">
+          <div class="card-icon">🗄️</div>
+          <h4>Database Sangat Besar</h4>
+          <p>Menyimpan data historis dari berbagai sumber: GB hingga PB (Petabyte).</p>
+        </div>
+      </div>
+      <h3 class="subsection-title">Contoh Sistem Informasional</h3>
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon">📊</div><h4>Dashboard Eksekutif</h4><p>KPI bisnis disajikan secara visual kepada direksi.</p></div>
+        <div class="card"><div class="card-icon">💼</div><h4>BI Platform</h4><p>Tableau, Power BI, QlikSense untuk eksplorasi data mandiri.</p></div>
+        <div class="card"><div class="card-icon">📈</div><h4>Laporan Konsolidasi</h4><p>Menggabungkan data seluruh anak perusahaan untuk analisis grup.</p></div>
+        <div class="card"><div class="card-icon">🎯</div><h4>Analisis Pemasaran</h4><p>Menganalisis efektivitas kampanye berdasarkan data historis.</p></div>
+      </div>
+    </div>
+
+    <!-- COMPARISON Panel -->
+    <div class="tab-panel" id="sys-cmp">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Aspek</th>
+            <th>OLTP (Operasional)</th>
+            <th>OLAP (Informasional)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="col-label">Tujuan</td><td class="col-oltp">Memproses transaksi operasional</td><td class="col-olap">Mendukung pengambilan keputusan</td></tr>
+          <tr><td class="col-label">Pengguna</td><td class="col-oltp">Staf operasional, kasir</td><td class="col-olap">Manajer, analis, eksekutif</td></tr>
+          <tr><td class="col-label">Jenis Query</td><td class="col-oltp">Sederhana, repetitif, prediktabel</td><td class="col-olap">Kompleks, ad-hoc, multi-dimensi</td></tr>
+          <tr><td class="col-label">Volume per Query</td><td class="col-oltp">Beberapa baris (1–100 record)</td><td class="col-olap">Jutaan hingga miliaran baris</td></tr>
+          <tr><td class="col-label">Frekuensi Update</td><td class="col-oltp">Sangat sering (detik ke detik)</td><td class="col-olap">Periodik (harian/mingguan/bulanan)</td></tr>
+          <tr><td class="col-label">Orientasi Data</td><td class="col-oltp">Berdasarkan fungsi aplikasi</td><td class="col-olap">Berdasarkan subjek bisnis</td></tr>
+          <tr><td class="col-label">Horizon Waktu</td><td class="col-oltp">Data terkini saja</td><td class="col-olap">Historis 5–10 tahun</td></tr>
+          <tr><td class="col-label">Struktur Data</td><td class="col-oltp">Normalisasi tinggi (3NF)</td><td class="col-olap">Denormalisasi (Star/Snowflake)</td></tr>
+          <tr><td class="col-label">Ukuran Database</td><td class="col-oltp">MB – GB</td><td class="col-olap">GB – PB (Petabyte)</td></tr>
+          <tr><td class="col-label">Respons Waktu</td><td class="col-oltp">Milidetik</td><td class="col-olap">Detik hingga menit</td></tr>
+        </tbody>
+      </table>
+      <div class="analogy-card" style="margin-top:1.25rem">
+        <div class="analogy-icon">🍽️</div>
+        <div>
+          <h4>Analogi: Dapur vs Kantor Manajer Restoran</h4>
+          <p><strong>OLTP</strong> adalah dapur restoran: sibuk, cepat, memproses ratusan pesanan per jam, dan hanya peduli pesanan yang sedang berjalan. <strong>OLAP</strong> adalah kantor manajer: menganalisis penjualan bulanan, mengidentifikasi menu paling menguntungkan, dan merencanakan strategi. Dapur tidak dirancang untuk analisis, dan kantor tidak dirancang untuk memasak.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEJARAH -->
+  <section class="section" id="s2">
+    <h2 class="section-title"><span class="section-num">2</span>Sejarah Data Warehouse</h2>
+    <p>Data warehouse adalah hasil evolusi panjang selama lebih dari 5 dekade. Klik setiap era untuk melihat detail perkembangannya.</p>
+    <div class="timeline">
+      <div class="timeline-item" onclick="toggleTimeline(this)">
+        <div class="timeline-header">
+          <div><div class="timeline-era">1960-an</div><div class="timeline-label">Era Pemrosesan Batch</div></div>
+          <div class="timeline-toggle">›</div>
+        </div>
+        <div class="timeline-body">Komputer pertama kali memasuki bisnis sebagai alat administratif. Data disimpan dalam flat files dan pita magnetik. Pemrosesan dilakukan secara batch. Tidak ada konsep analisis data; komputer hanya digunakan untuk efisiensi administratif seperti penggajian dan pembukuan.</div>
+      </div>
+      <div class="timeline-item" onclick="toggleTimeline(this)">
+        <div class="timeline-header">
+          <div><div class="timeline-era">1970-an</div><div class="timeline-label">Database Relasional &amp; MIS</div></div>
+          <div class="timeline-toggle">›</div>
+        </div>
+        <div class="timeline-body">Edgar Codd dari IBM menerbitkan makalah revolusioner tentang model relasional (1970) — fondasi database modern. Konsep MIS (Management Information System) mulai berkembang sebagai upaya awal menggunakan komputer untuk mendukung keputusan manajemen. Namun laporan hanya bisa dibuat oleh programmer dan tidak fleksibel.</div>
+      </div>
+      <div class="timeline-item" onclick="toggleTimeline(this)">
+        <div class="timeline-header">
+          <div><div class="timeline-era">1980-an</div><div class="timeline-label">DSS, EIS, dan "Information Silo"</div></div>
+          <div class="timeline-toggle">›</div>
+        </div>
+        <div class="timeline-body">Lahirnya DSS (Decision Support System) dan EIS (Executive Information System). Namun masalah fundamental tetap ada: data tersimpan dalam "silo" terpisah di tiap departemen. Data keuangan tidak bicara dengan data pemasaran. Muncul istilah <strong>"islands of information"</strong> — pulau informasi yang terisolasi satu sama lain.</div>
+      </div>
+      <div class="timeline-item milestone" onclick="toggleTimeline(this)">
+        <div class="timeline-header">
+          <div><div class="timeline-era">1988–1992</div><div class="timeline-label">🌟 Kelahiran Data Warehouse</div></div>
+          <div class="timeline-toggle">›</div>
+        </div>
+        <div class="timeline-body"><strong>1988:</strong> Barry Devlin &amp; Paul Murphy (IBM) memperkenalkan konsep "Information Warehouse" — repositori terpusat yang mengintegrasikan data dari berbagai sistem.<br><br><strong>1990:</strong> W.H. Bill Inmon — dikenal sebagai <em>"Father of Data Warehouse"</em> — mulai mempopulerkan istilah "Data Warehouse".<br><br><strong>1992:</strong> Inmon menerbitkan <em>"Building the Data Warehouse"</em>, buku yang secara resmi mendefinisikan konsep, arsitektur, dan metodologi data warehouse modern.</div>
+      </div>
+      <div class="timeline-item milestone" onclick="toggleTimeline(this)">
+        <div class="timeline-header">
+          <div><div class="timeline-era">1990-an</div><div class="timeline-label">🌟 Era Keemasan</div></div>
+          <div class="timeline-toggle">›</div>
+        </div>
+        <div class="timeline-body"><strong>1996:</strong> Ralph Kimball menerbitkan <em>"The Data Warehouse Toolkit"</em>, memperkenalkan pendekatan <strong>dimensional modeling</strong>. Lahirlah perdebatan terkenal antara pendekatan Inmon (top-down) vs Kimball (bottom-up).<br><br>Munculnya platform komersial: Teradata, Oracle Data Warehouse, IBM DB2. Data Mart mulai populer. OLAP tools (Hyperion, Cognos, MicroStrategy) berkembang pesat.</div>
+      </div>
+      <div class="timeline-item" onclick="toggleTimeline(this)">
+        <div class="timeline-header">
+          <div><div class="timeline-era">2012–Sekarang</div><div class="timeline-label">Era Cloud &amp; Big Data</div></div>
+          <div class="timeline-toggle">›</div>
+        </div>
+        <div class="timeline-body"><strong>2012:</strong> Amazon Redshift — data warehouse cloud pertama — mengubah paradigma dari "bangun sendiri" menjadi "sewa dari cloud".<br><br>Google BigQuery, Microsoft Azure Synapse, dan <strong>Snowflake</strong> mempopulerkan konsep cloud-native data warehouse: elastis, scalable, pay-per-use.<br><br>Tren terkini: Real-time data warehouse, Data Lakehouse, integrasi Machine Learning dan AI.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEFINISI -->
+  <section class="section" id="s3">
+    <h2 class="section-title"><span class="section-num">3</span>Definisi Data Warehouse</h2>
+    <div class="callout callout-purple">
+      <div class="callout-title">Definisi W.H. Inmon (1992) — Definisi Paling Berpengaruh</div>
+      <p style="font-style:italic; font-size:15px; color:var(--gray-7);">"A data warehouse is a <strong>subject-oriented</strong>, <strong>integrated</strong>, <strong>time-variant</strong>, and <strong>nonvolatile</strong> collection of data in support of management's decision-making process."</p>
+      <p style="margin-top:.5rem; font-size:13px; color:var(--gray-5);">— W.H. Inmon, Building the Data Warehouse, 2005, hal. 29</p>
+    </div>
+    <div class="callout callout-teal">
+      <div class="callout-title">Definisi Ralph Kimball — Perspektif Pragmatis</div>
+      <p style="font-style:italic; font-size:15px; color:var(--gray-7);">"A data warehouse is a copy of transaction data specifically structured for query and analysis."</p>
+      <p style="margin-top:.5rem; font-size:13px; color:var(--gray-5);">— Kimball &amp; Ross, The Data Warehouse Toolkit, 2013, hal. 4</p>
+    </div>
+    <h3 class="subsection-title">Sintesis Definisi</h3>
+    <p>Dari berbagai definisi, data warehouse dapat dipahami sebagai sistem penyimpanan data yang:</p>
+    <div class="cards-grid">
+      <div class="card c-blue"><div class="card-icon">🔗</div><h4>Mengumpulkan dari Berbagai Sumber</h4><p>ERP, CRM, POS, file eksternal, dan sistem lainnya.</p></div>
+      <div class="card c-blue"><div class="card-icon">🧹</div><h4>Membersihkan &amp; Mengintegrasikan</h4><p>Data distandarisasi menjadi satu format yang konsisten.</p></div>
+      <div class="card c-blue"><div class="card-icon">📋</div><h4>Menyimpan Histori Jangka Panjang</h4><p>Data historis tersimpan dalam rentang 5–10 tahun.</p></div>
+      <div class="card c-blue"><div class="card-icon">🎯</div><h4>Mendukung Pengambilan Keputusan</h4><p>Dirancang khusus untuk analisis bisnis, bukan transaksi.</p></div>
+    </div>
+  </section>
+
+  <!-- MANFAAT & TUJUAN -->
+  <section class="section" id="s4">
+    <h2 class="section-title"><span class="section-num">4</span>Manfaat &amp; Tujuan Implementasi</h2>
+    <div class="accordion">
+      <div class="acc-item open" onclick="toggleAcc(this)">
+        <button class="acc-trigger open">📊 Pengambilan Keputusan Berbasis Data <span class="acc-chevron">▾</span></button>
+        <div class="acc-body"><p>Data warehouse menyediakan satu sumber data yang akurat dan terpercaya bagi seluruh pengambil keputusan. Ketika semua manajer menggunakan data yang sama, keputusan lebih terkoordinasi dan berbasis fakta.</p><p><strong>Contoh:</strong> Direktur Marketing dan Direktur Keuangan PT. Maju Bersama sebelumnya sering berdebat karena laporan penjualan mereka berbeda. Setelah implementasi data warehouse, keduanya menggunakan laporan yang sama sehingga diskusi lebih produktif.</p></div>
+      </div>
+      <div class="acc-item" onclick="toggleAcc(this)">
+        <button class="acc-trigger">⚡ Peningkatan Efisiensi Pelaporan <span class="acc-chevron">▾</span></button>
+        <div class="acc-body"><p>Sebelum data warehouse, tim IT menghabiskan 60–70% waktunya hanya untuk mengumpulkan dan membersihkan data. Dengan data warehouse, laporan tersedia secara otomatis setiap pagi.</p><p><strong>Contoh:</strong> Sebuah bank melaporkan implementasi data warehouse mengurangi waktu pembuatan laporan bulanan dari 5 hari menjadi kurang dari 4 jam.</p></div>
+      </div>
+      <div class="acc-item" onclick="toggleAcc(this)">
+        <button class="acc-trigger">📅 Analisis Historis &amp; Tren <span class="acc-chevron">▾</span></button>
+        <div class="acc-body"><p>Data warehouse menyimpan data historis jangka panjang, memungkinkan analisis tren yang tidak mungkin dilakukan dengan sistem OLTP biasa.</p><p><strong>Contoh:</strong> Sebuah perusahaan asuransi menganalisis tren klaim selama 10 tahun terakhir untuk memprediksi risiko dan menyesuaikan premi di masa depan.</p></div>
+      </div>
+      <div class="acc-item" onclick="toggleAcc(this)">
+        <button class="acc-trigger">✅ Satu Versi Kebenaran (Single Version of Truth) <span class="acc-chevron">▾</span></button>
+        <div class="acc-body"><p>Salah satu masalah klasik organisasi besar adalah "angka yang berbeda-beda" antar departemen. Data warehouse menciptakan satu versi data yang disepakati seluruh organisasi.</p><p><strong>Contoh:</strong> Ketika CEO bertanya "berapa total pendapatan kita bulan lalu?", semua tim memberikan angka yang sama karena semuanya mengacu pada data warehouse yang sama.</p></div>
+      </div>
+      <div class="acc-item" onclick="toggleAcc(this)">
+        <button class="acc-trigger">🔀 Analisis Lintas Departemen <span class="acc-chevron">▾</span></button>
+        <div class="acc-body"><p>Data warehouse memungkinkan analisis yang menggabungkan data dari berbagai departemen—sesuatu yang tidak mungkin ketika data masih dalam silo.</p><p><strong>Contoh:</strong> Tim strategi menganalisis korelasi antara biaya pemasaran (Marketing), konversi penjualan (Sales), dan profitabilitas produk (Keuangan) dalam satu analisis terpadu.</p></div>
+      </div>
+      <div class="acc-item" onclick="toggleAcc(this)">
+        <button class="acc-trigger">🚀 Fondasi untuk Inovasi &amp; Kepatuhan <span class="acc-chevron">▾</span></button>
+        <div class="acc-body"><p>Data warehouse menjadi fondasi yang dibutuhkan untuk aplikasi analitik modern: prediksi churn pelanggan, rekomendasi berbasis AI, deteksi fraud, dan kepatuhan regulasi (menyimpan data historis untuk audit).</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KARAKTERISTIK (FLIP CARDS) -->
+  <section class="section" id="s5">
+    <h2 class="section-title"><span class="section-num">5</span>Karakteristik Data Warehouse</h2>
+    <p>Inmon (2005) mendefinisikan empat karakteristik utama data warehouse. Klik setiap kartu untuk melihat penjelasan dan contohnya.</p>
+    <div class="flip-grid">
+      <!-- Card 1 -->
+      <div class="flip-card fc-1" onclick="this.classList.toggle('flipped')" role="button" aria-label="Subject-Oriented">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div class="fc-num">1</div>
+            <div class="fc-name">Subject-Oriented</div>
+            <div class="fc-en">Berorientasi Subjek</div>
+            <div class="fc-hint">Ketuk untuk penjelasan</div>
+          </div>
+          <div class="flip-back">
+            <div class="fc-label">Subject-Oriented</div>
+            <div class="fc-def">Data diorganisasikan berdasarkan <strong>subjek bisnis utama</strong> — Pelanggan, Produk, Penjualan — bukan berdasarkan fungsi aplikasi (modul POS, modul ERP).</div>
+            <div class="fc-ex"><strong>Contoh:</strong> Di sistem OLTP, data pelanggan tersebar di modul penjualan, kredit, dan layanan. Di data warehouse, semua disatukan dalam satu subjek "CUSTOMER" yang lengkap.</div>
+          </div>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="flip-card fc-2" onclick="this.classList.toggle('flipped')" role="button" aria-label="Integrated">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div class="fc-num">2</div>
+            <div class="fc-name">Integrated</div>
+            <div class="fc-en">Terintegrasi</div>
+            <div class="fc-hint">Ketuk untuk penjelasan</div>
+          </div>
+          <div class="flip-back">
+            <div class="fc-label" style="background:var(--teal)">Integrated</div>
+            <div class="fc-def">Data dari berbagai sumber yang memiliki format berbeda <strong>diseragamkan</strong> sebelum masuk ke data warehouse. Kode, satuan, dan format disestandarisasi.</div>
+            <div class="fc-ex"><strong>Contoh:</strong> Sistem A kode gender "L/P", Sistem B "1/0" → di DW distandarkan menjadi "Laki-laki/Perempuan". Format tanggal berbeda → disamakan ke ISO 8601.</div>
+          </div>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="flip-card fc-3" onclick="this.classList.toggle('flipped')" role="button" aria-label="Time-Variant">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div class="fc-num">3</div>
+            <div class="fc-name">Time-Variant</div>
+            <div class="fc-en">Bervariasi Terhadap Waktu</div>
+            <div class="fc-hint">Ketuk untuk penjelasan</div>
+          </div>
+          <div class="flip-back">
+            <div class="fc-label" style="background:var(--purple)">Time-Variant</div>
+            <div class="fc-def">Setiap data selalu dikaitkan dengan <strong>dimensi waktu</strong>. Perubahan historis tetap tersimpan — bukan hanya nilai terkini saja.</div>
+            <div class="fc-ex"><strong>Contoh:</strong> OLTP: harga produk A = Rp 150.000 (nilai lama tertimpa). DW: Rp 120.000 (Jan–Jun 2024), Rp 150.000 (Jul 2024–sekarang). Keduanya tersimpan.</div>
+          </div>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="flip-card fc-4" onclick="this.classList.toggle('flipped')" role="button" aria-label="Non-Volatile">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div class="fc-num">4</div>
+            <div class="fc-name">Non-Volatile</div>
+            <div class="fc-en">Tidak Mudah Berubah</div>
+            <div class="fc-hint">Ketuk untuk penjelasan</div>
+          </div>
+          <div class="flip-back">
+            <div class="fc-label" style="background:var(--amber)">Non-Volatile</div>
+            <div class="fc-def">Data yang sudah masuk <strong>tidak dihapus atau diubah</strong>. Hanya dua operasi: LOAD (tambah data baru) dan ACCESS (baca data). Tidak ada UPDATE atau DELETE.</div>
+            <div class="fc-ex"><strong>Contoh:</strong> Retur produk tidak menghapus transaksi asli. Retur dicatat sebagai <em>transaksi baru</em> dengan tanggal tersendiri. Histori penjualan asli tetap utuh.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINSIP KERJA -->
+  <section class="section" id="s6">
+    <h2 class="section-title"><span class="section-num">6</span>Prinsip Kerja Data Warehouse</h2>
+    <p>Data warehouse bekerja melalui alur yang terdiri dari beberapa komponen. Klik setiap tahapan untuk melihat detailnya.</p>
+    <div class="etl-flow">
+      <div class="etl-step active" onclick="showEtl(0, this)">
+        <div class="card-icon">🗃️</div>
+        <h4>Sumber Data</h4>
+        <p>ERP, CRM, POS, File</p>
+      </div>
+      <div class="etl-arrow">›</div>
+      <div class="etl-step" onclick="showEtl(1, this)">
+        <div class="card-icon">📦</div>
+        <h4>Staging Area</h4>
+        <p>Penyimpanan sementara</p>
+      </div>
+      <div class="etl-arrow">›</div>
+      <div class="etl-step" onclick="showEtl(2, this)">
+        <div class="card-icon">⚙️</div>
+        <h4>Extract</h4>
+        <p>Ambil data dari sumber</p>
+      </div>
+      <div class="etl-arrow">›</div>
+      <div class="etl-step" onclick="showEtl(3, this)">
+        <div class="card-icon">🔧</div>
+        <h4>Transform</h4>
+        <p>Bersihkan &amp; standarisasi</p>
+      </div>
+      <div class="etl-arrow">›</div>
+      <div class="etl-step" onclick="showEtl(4, this)">
+        <div class="card-icon">📥</div>
+        <h4>Load</h4>
+        <p>Muat ke Data Warehouse</p>
+      </div>
+      <div class="etl-arrow">›</div>
+      <div class="etl-step" onclick="showEtl(5, this)">
+        <div class="card-icon">📊</div>
+        <h4>Analisis</h4>
+        <p>BI, Dashboard, OLAP</p>
+      </div>
+    </div>
+    <div id="etl-details">
+      <div class="etl-detail active">
+        <h5>Sumber Data (Source Systems)</h5>
+        <ul>
+          <li><strong>Sistem internal:</strong> ERP, CRM, sistem POS, sistem akuntansi, sistem SDM</li>
+          <li><strong>File terstruktur:</strong> Excel, CSV, XML, JSON</li>
+          <li><strong>Database legacy:</strong> sistem lama yang masih berjalan paralel</li>
+          <li><strong>Sumber eksternal:</strong> data demografi BPS, data pasar Nielsen, kurs mata uang</li>
+          <li><strong>Tantangan utama:</strong> heterogenitas — setiap sumber memiliki struktur dan format berbeda</li>
+        </ul>
+      </div>
+      <div class="etl-detail">
+        <h5>Staging Area</h5>
+        <ul>
+          <li>Area "ruang tunggu" sementara sebelum data diproses lebih lanjut</li>
+          <li>Memisahkan proses ekstraksi dari transformasi (tidak membebani sistem sumber)</li>
+          <li>Berfungsi sebagai <em>checkpoint</em>: jika ETL gagal, proses bisa diulang dari staging</li>
+          <li>Menyimpan data asli sebelum ditransformasi (audit trail)</li>
+          <li>Data staging bersifat <strong>sementara</strong> dan biasanya dihapus setelah ETL selesai</li>
+        </ul>
+      </div>
+      <div class="etl-detail">
+        <h5>Extract — Mengambil Data dari Sumber</h5>
+        <ul>
+          <li><strong>Full extraction:</strong> semua data diambil setiap kali proses berjalan</li>
+          <li><strong>Incremental extraction:</strong> hanya data baru atau berubah yang diambil (lebih efisien)</li>
+          <li><strong>Change Data Capture (CDC):</strong> teknik mendeteksi perubahan data secara otomatis</li>
+          <li><strong>Contoh:</strong> Setiap malam pukul 23.00, sistem otomatis mengambil semua transaksi penjualan hari itu dari 50 sistem kasir di seluruh Indonesia</li>
+        </ul>
+      </div>
+      <div class="etl-detail">
+        <h5>Transform — Membersihkan &amp; Standarisasi Data</h5>
+        <ul>
+          <li><strong>Pembersihan data:</strong> menghapus duplikat, mengisi nilai null, memperbaiki format</li>
+          <li><strong>Integrasi:</strong> menyamakan kode, format, dan satuan dari berbagai sumber</li>
+          <li><strong>Kalkulasi bisnis:</strong> menghitung margin, agregasi, derivasi metrik</li>
+          <li><strong>Business rules:</strong> menerapkan aturan bisnis yang disepakati organisasi</li>
+          <li><strong>Contoh:</strong> "PRD-001" (Sistem A) dan "P001" (Sistem B) diidentifikasi sebagai produk yang sama dan distandarkan menjadi "PRD-001"</li>
+        </ul>
+      </div>
+      <div class="etl-detail">
+        <h5>Load — Memasukkan Data ke Data Warehouse</h5>
+        <ul>
+          <li><strong>Full load:</strong> seluruh data dimuat ulang dari awal</li>
+          <li><strong>Incremental load:</strong> hanya data baru yang ditambahkan (lebih umum dan efisien)</li>
+          <li>Proses load biasanya dijadwalkan pada waktu off-peak (dini hari)</li>
+          <li><strong>Contoh:</strong> 847.293 record transaksi dimuat ke tabel SALES_FACT, selesai sebelum pukul 06.00 pagi</li>
+          <li>Data yang dimuat bersifat <strong>non-volatile</strong> — tidak bisa diubah atau dihapus</li>
+        </ul>
+      </div>
+      <div class="etl-detail">
+        <h5>Lapisan Analisis &amp; Akses</h5>
+        <ul>
+          <li><strong>OLAP Tools:</strong> analisis multidimensi dengan drill-down, roll-up, slice, dice</li>
+          <li><strong>BI Platforms:</strong> Tableau, Power BI, QlikSense untuk visualisasi dan dashboard</li>
+          <li><strong>SQL Query Tools:</strong> untuk analis yang menulis query langsung</li>
+          <li><strong>Data Mart:</strong> subset data warehouse per departemen (Marketing, Finance, Operations)</li>
+          <li><strong>Self-service analytics:</strong> pengguna bisnis bisa mengakses data secara mandiri</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout callout-blue" style="margin-top:1.25rem">
+      <div class="callout-title">Kapan Data Warehouse Diperbarui?</div>
+      <p>Data warehouse umumnya diperbarui secara periodik, bukan real-time: <strong>Harian (Nightly Batch)</strong> — paling umum, data setiap hari diproses malam hari dan tersedia keesokan pagi. <strong>Mingguan/Bulanan</strong> — untuk data yang perubahannya lambat. <strong>Near Real-Time</strong> — khusus untuk use case yang membutuhkan data segar setiap beberapa menit.</p>
+    </div>
+  </section>
+
+  <!-- STUDI KASUS -->
+  <section class="section" id="sc">
+    <h2 class="section-title"><span class="section-num">7</span>Studi Kasus</h2>
+    <div class="callout callout-amber">
+      <div class="callout-title">PT. Nusantara Retail Group — Transformasi Berbasis Data Warehouse</div>
+      <p>250 gerai di 25 provinsi &bull; Omzet Rp 8,5 triliun/tahun &bull; 12.000 karyawan</p>
+    </div>
+    <div class="case-tabs">
+      <div class="case-tab-nav">
+        <button class="case-tab-btn active" onclick="showCaseTab('sit', this)">Situasi &amp; Masalah</button>
+        <button class="case-tab-btn" onclick="showCaseTab('sol', this)">Solusi DW</button>
+        <button class="case-tab-btn" onclick="showCaseTab('res', this)">Hasil &amp; Dampak</button>
+        <button class="case-tab-btn" onclick="showCaseTab('dsc', this)">Diskusi</button>
+      </div>
+      <div class="case-panel active" id="case-sit">
+        <p>PT. NRG memiliki tiga divisi yang menggunakan sistem berbeda: <strong>Sistem POS</strong> (penjualan), <strong>SAP Finance</strong> (keuangan), dan <strong>Oracle HCM</strong> (SDM). Setiap akhir bulan, manajemen membutuhkan laporan terpadu. Inilah yang terjadi:</p>
+        <div style="background:var(--amber-xs); border-radius:var(--r); padding:1rem 1.25rem; margin:1rem 0; border-left:4px solid var(--amber);">
+          <strong style="color:var(--amber)">Kisah Nyata: "5 Hari Menunggu Angka"</strong>
+          <p style="font-size:14px; margin-top:.5rem; color:var(--gray-7);">Hari 1–2: Tim IT mengekstrak data dari 250 gerai secara manual. Hari 2–3: Finance menggabungkan dengan SAP (kode produk tidak cocok). Hari 3–4: Tim Analitik merekonsiliasi dan membuat pivot di Excel. Hari 4–5: Laporan PowerPoint dibuat manual. Ketika rapat hari ke-7, datanya sudah tidak relevan.</p>
+        </div>
+        <h3 class="sub2-title">Masalah yang Dihadapi</h3>
+        <div class="problem-grid">
+          <div class="problem-card"><h5>Inkonsistensi Data</h5><p>Laporan Finance dan Sales sering menunjukkan angka berbeda untuk periode yang sama.</p></div>
+          <div class="problem-card"><h5>Proses Lambat</h5><p>3–5 hari kerja hanya untuk mengumpulkan data. Keputusan sudah terlambat.</p></div>
+          <div class="problem-card"><h5>Tidak Ada Histori</h5><p>Tidak bisa menjawab "performa gerai Surabaya 2 tahun lalu dibanding sekarang?"</p></div>
+          <div class="problem-card"><h5>Keputusan Intuitif</h5><p>Karena data sulit didapat, 70% keputusan strategis dibuat berdasarkan intuisi, bukan data.</p></div>
+        </div>
+      </div>
+      <div class="case-panel" id="case-sol">
+        <p>Direksi NRG memutuskan membangun data warehouse untuk mengintegrasikan ketiga sistem.</p>
+        <div style="background:var(--blue-xs); border:1px solid var(--blue-lt); border-radius:var(--r); padding:1rem 1.25rem; font-family:monospace; font-size:13px; color:var(--blue-dk); margin:1rem 0;">
+          [POS Retail Pro] ─┐<br>
+          [SAP Finance]&nbsp;&nbsp;&nbsp;&nbsp; ─┼─→ [ETL 22.00–04.00] → [Data Warehouse] → [Dashboard BI]<br>
+          [Oracle HCM]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ─┘
+        </div>
+        <h3 class="sub2-title">Struktur Data Warehouse</h3>
+        <table class="comp-table">
+          <thead><tr><th>Jenis Tabel</th><th>Nama</th><th>Berisi</th></tr></thead>
+          <tbody>
+            <tr><td>Fakta</td><td>FACT_PENJUALAN</td><td>id_transaksi, tanggal, id_produk, id_gerai, jumlah, nilai, HPP</td></tr>
+            <tr><td>Dimensi</td><td>DIM_WAKTU</td><td>tanggal, hari, minggu, bulan, kuartal, tahun, hari_libur</td></tr>
+            <tr><td>Dimensi</td><td>DIM_PRODUK</td><td>id, nama, merek, kategori, subkategori, supplier</td></tr>
+            <tr><td>Dimensi</td><td>DIM_GERAI</td><td>id, nama, kota, provinsi, pulau, tipe, luas_m2</td></tr>
+            <tr><td>Dimensi</td><td>DIM_PELANGGAN</td><td>id, segmen, jenis_kelamin, usia, kota, wilayah</td></tr>
+          </tbody>
+        </table>
+        <h3 class="sub2-title" style="margin-top:1.25rem">Contoh Analisis yang Kini Bisa Dilakukan</h3>
+        <div class="cards-grid">
+          <div class="card c-teal"><div class="card-icon">💰</div><h4>Produk Paling Menguntungkan</h4><p>Health &amp; Beauty punya margin 3× lebih tinggi dari Elektronik, ditemukan dalam 30 detik.</p></div>
+          <div class="card c-teal"><div class="card-icon">📅</div><h4>Pola Musiman 5 Tahun</h4><p>Fashion naik 340% di minggu ke-3 Ramadan — konsisten selama 5 tahun.</p></div>
+          <div class="card c-teal"><div class="card-icon">🔍</div><h4>Gerai Underperforming</h4><p>12 gerai teridentifikasi, dan berkorelasi kuat dengan turnover karyawan tinggi (data HRD + Sales).</p></div>
+        </div>
+      </div>
+      <div class="case-panel" id="case-res">
+        <p>Hasil implementasi data warehouse PT. NRG selama 18 bulan:</p>
+        <table class="result-table">
+          <thead><tr><th>Metrik</th><th>Sebelum DW</th><th>Sesudah DW (18 bulan)</th></tr></thead>
+          <tbody>
+            <tr><td>Waktu laporan bulanan</td><td class="before">5–7 hari kerja</td><td class="after">Otomatis setiap pagi</td></tr>
+            <tr><td>Inkonsistensi data antar departemen</td><td class="before">Terjadi setiap bulan</td><td class="after">Hampir nol</td></tr>
+            <tr><td>Kemampuan analisis historis</td><td class="before">Tidak ada</td><td class="after">7 tahun data tersedia</td></tr>
+            <tr><td>Keputusan berbasis data</td><td class="before">30%</td><td class="after">85%</td></tr>
+            <tr><td>Peningkatan margin keuntungan</td><td class="before">—</td><td class="after">+18% (year-over-year)</td></tr>
+            <tr><td>Efisiensi manajemen inventory</td><td class="before">—</td><td class="after">Overstock berkurang 35%</td></tr>
+            <tr><td>Kepuasan manajer terhadap data</td><td class="before">3,2/10</td><td class="after">8,7/10</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="case-panel" id="case-dsc">
+        <p>Diskusikan pertanyaan-pertanyaan berikut berdasarkan kasus PT. NRG:</p>
+        <div class="disc-q">
+          <div class="disc-item"><div class="disc-num">1</div><div class="disc-text">Identifikasi minimal <strong>tiga masalah</strong> di PT. NRG dan kaitkan dengan kelemahan sistem OLTP untuk keperluan analisis bisnis!</div></div>
+          <div class="disc-item"><div class="disc-num">2</div><div class="disc-text">Proses ETL berjalan pukul 22.00–04.00 WIB. Mengapa tidak dijalankan siang hari? Kaitkan dengan konsep perbedaan OLTP dan OLAP!</div></div>
+          <div class="disc-item"><div class="disc-num">3</div><div class="disc-text">NRG membuat <strong>tiga data mart</strong> terpisah (Sales, Finance, Supply Chain). Apa keuntungan dan kerugian pendekatan ini?</div></div>
+          <div class="disc-item"><div class="disc-num">4</div><div class="disc-text">Korelasi data Sales + HRD tidak mungkin ditemukan sebelum data warehouse ada. Jelaskan mengapa, kaitkan dengan karakteristik <em>Subject-Oriented</em> dan <em>Integrated</em>!</div></div>
+          <div class="disc-item"><div class="disc-num">5</div><div class="disc-text">Sebagai Chief Data Officer NRG, langkah inovasi apa yang akan Anda rekomendasikan selanjutnya? (Petunjuk: machine learning, real-time analytics, external data.)</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KUIS -->
+  <section class="section" id="quiz">
+    <h2 class="section-title"><span class="section-num">8</span>Kuis Interaktif</h2>
+    <p>Uji pemahaman Anda dengan 5 soal pilihan ganda berikut. Pilih jawaban Anda, lalu klik <strong>Periksa Jawaban</strong>.</p>
+    <div class="quiz-container" id="quiz-form">
+      <!-- Q1 -->
+      <div class="quiz-q" data-q="1" data-correct="b">
+        <div class="q-num">Soal 1 dari 5</div>
+        <div class="q-text">Sistem yang dirancang untuk memproses transaksi bisnis sehari-hari secara cepat dan real-time disebut...</div>
+        <div class="quiz-options">
+          <label class="quiz-opt" data-opt="a"><input type="radio" name="q1" value="a"><div class="opt-marker"></div>OLAP — Online Analytical Processing</label>
+          <label class="quiz-opt" data-opt="b"><input type="radio" name="q1" value="b"><div class="opt-marker">✓</div>OLTP — Online Transaction Processing</label>
+          <label class="quiz-opt" data-opt="c"><input type="radio" name="q1" value="c"><div class="opt-marker"></div>Data Warehouse</label>
+          <label class="quiz-opt" data-opt="d"><input type="radio" name="q1" value="d"><div class="opt-marker"></div>Business Intelligence</label>
+        </div>
+        <div class="quiz-explanation correct-exp" id="q1-exp-c">Benar! OLTP (Online Transaction Processing) adalah sistem yang dioptimalkan untuk memproses transaksi bisnis operasional secara cepat, real-time, dengan banyak pengguna bersamaan.</div>
+        <div class="quiz-explanation wrong-exp" id="q1-exp-w">Kurang tepat. Jawaban yang benar adalah <strong>OLTP (Online Transaction Processing)</strong> — sistem yang dioptimalkan untuk transaksi bisnis sehari-hari. OLAP justru digunakan untuk analisis.</div>
+      </div>
+      <!-- Q2 -->
+      <div class="quiz-q" data-q="2" data-correct="c">
+        <div class="q-num">Soal 2 dari 5</div>
+        <div class="q-text">Siapakah yang pertama kali mendefinisikan data warehouse secara formal dan dikenal sebagai "Father of Data Warehouse"?</div>
+        <div class="quiz-options">
+          <label class="quiz-opt" data-opt="a"><input type="radio" name="q2" value="a"><div class="opt-marker"></div>Ralph Kimball</label>
+          <label class="quiz-opt" data-opt="b"><input type="radio" name="q2" value="b"><div class="opt-marker"></div>Edgar Codd</label>
+          <label class="quiz-opt" data-opt="c"><input type="radio" name="q2" value="c"><div class="opt-marker"></div>W.H. Inmon</label>
+          <label class="quiz-opt" data-opt="d"><input type="radio" name="q2" value="d"><div class="opt-marker"></div>Barry Devlin</label>
+        </div>
+        <div class="quiz-explanation correct-exp" id="q2-exp-c">Tepat! W.H. Bill Inmon mendefinisikan data warehouse pada tahun 1992 melalui buku "Building the Data Warehouse" dan dikenal sebagai "Father of Data Warehouse."</div>
+        <div class="quiz-explanation wrong-exp" id="q2-exp-w">Kurang tepat. <strong>W.H. Inmon</strong> adalah yang pertama kali mendefinisikan data warehouse secara formal (1992). Ralph Kimball mengembangkan pendekatan dimensional modeling (1996). Barry Devlin memperkenalkan konsep "Information Warehouse" di IBM (1988).</div>
+      </div>
+      <!-- Q3 -->
+      <div class="quiz-q" data-q="3" data-correct="d">
+        <div class="q-num">Soal 3 dari 5</div>
+        <div class="q-text">Karakteristik data warehouse yang berarti data dari berbagai sumber diseragamkan formatnya — kode, satuan, dan standar — sebelum masuk ke data warehouse adalah...</div>
+        <div class="quiz-options">
+          <label class="quiz-opt" data-opt="a"><input type="radio" name="q3" value="a"><div class="opt-marker"></div>Subject-Oriented</label>
+          <label class="quiz-opt" data-opt="b"><input type="radio" name="q3" value="b"><div class="opt-marker"></div>Non-Volatile</label>
+          <label class="quiz-opt" data-opt="c"><input type="radio" name="q3" value="c"><div class="opt-marker"></div>Time-Variant</label>
+          <label class="quiz-opt" data-opt="d"><input type="radio" name="q3" value="d"><div class="opt-marker"></div>Integrated</label>
+        </div>
+        <div class="quiz-explanation correct-exp" id="q3-exp-c">Tepat! <strong>Integrated</strong> berarti data dari berbagai sumber yang memiliki format berbeda distandarisasi menjadi konsisten. Misalnya, kode gender "L/P", "1/0", "M/F" disamakan menjadi satu format standar.</div>
+        <div class="quiz-explanation wrong-exp" id="q3-exp-w">Kurang tepat. Jawaban yang benar adalah <strong>Integrated</strong>. Subject-Oriented = data diorganisasikan per subjek bisnis. Non-Volatile = data tidak berubah setelah dimuat. Time-Variant = data memiliki dimensi waktu historis.</div>
+      </div>
+      <!-- Q4 -->
+      <div class="quiz-q" data-q="4" data-correct="c">
+        <div class="q-num">Soal 4 dari 5</div>
+        <div class="q-text">Dalam data warehouse, ketika ada retur produk, bagaimana kejadian ini idealnya direpresentasikan?</div>
+        <div class="quiz-options">
+          <label class="quiz-opt" data-opt="a"><input type="radio" name="q4" value="a"><div class="opt-marker"></div>Record penjualan aslinya dihapus</label>
+          <label class="quiz-opt" data-opt="b"><input type="radio" name="q4" value="b"><div class="opt-marker"></div>Record penjualan aslinya diperbarui dengan nilai 0</label>
+          <label class="quiz-opt" data-opt="c"><input type="radio" name="q4" value="c"><div class="opt-marker"></div>Dicatat sebagai transaksi retur baru, record asli tetap utuh</label>
+          <label class="quiz-opt" data-opt="d"><input type="radio" name="q4" value="d"><div class="opt-marker"></div>Data retur diabaikan karena tidak relevan untuk analisis</label>
+        </div>
+        <div class="quiz-explanation correct-exp" id="q4-exp-c">Benar! Ini mencerminkan karakteristik <strong>Non-Volatile</strong> — data yang sudah masuk ke DW tidak diubah atau dihapus. Retur direpresentasikan sebagai transaksi baru tersendiri sehingga histori penjualan asli tetap terjaga.</div>
+        <div class="quiz-explanation wrong-exp" id="q4-exp-w">Kurang tepat. Karena data warehouse bersifat <strong>Non-Volatile</strong>, record penjualan asli tidak boleh diubah atau dihapus. Retur dicatat sebagai <em>transaksi baru</em> dengan tanggal dan detail tersendiri.</div>
+      </div>
+      <!-- Q5 -->
+      <div class="quiz-q" data-q="5" data-correct="b">
+        <div class="q-num">Soal 5 dari 5</div>
+        <div class="q-text">Urutan proses ETL yang benar dalam data warehouse adalah...</div>
+        <div class="quiz-options">
+          <label class="quiz-opt" data-opt="a"><input type="radio" name="q5" value="a"><div class="opt-marker"></div>Load → Transform → Extract</label>
+          <label class="quiz-opt" data-opt="b"><input type="radio" name="q5" value="b"><div class="opt-marker"></div>Extract → Transform → Load</label>
+          <label class="quiz-opt" data-opt="c"><input type="radio" name="q5" value="c"><div class="opt-marker"></div>Transform → Extract → Load</label>
+          <label class="quiz-opt" data-opt="d"><input type="radio" name="q5" value="d"><div class="opt-marker"></div>Extract → Load → Transform</label>
+        </div>
+        <div class="quiz-explanation correct-exp" id="q5-exp-c">Tepat! <strong>ETL</strong>: (1) <em>Extract</em> — ambil data dari sumber, (2) <em>Transform</em> — bersihkan dan standarisasi, (3) <em>Load</em> — muat ke data warehouse. Urutan ini penting karena data harus dibersihkan sebelum disimpan.</div>
+        <div class="quiz-explanation wrong-exp" id="q5-exp-w">Kurang tepat. Urutan yang benar adalah <strong>Extract → Transform → Load</strong>. Pertama ambil data dari sumber, lalu bersihkan dan standarisasi, baru kemudian muat ke data warehouse.</div>
+      </div>
+      <div class="quiz-actions">
+        <button class="btn-primary" onclick="checkQuiz()">Periksa Jawaban</button>
+        <button class="btn-secondary" onclick="resetQuiz()" id="reset-btn" style="display:none">Ulangi Kuis</button>
+        <span class="quiz-err" id="quiz-err">Harap pilih semua jawaban sebelum memeriksa.</span>
+      </div>
+    </div>
+    <div class="quiz-score" id="quiz-score">
+      <div class="score-num" id="score-num">0/5</div>
+      <div class="score-label">Jawaban benar</div>
+      <div class="score-msg" id="score-msg"></div>
+    </div>
+  </section>
+
+  <!-- RANGKUMAN -->
+  <section class="section" id="rangkuman">
+    <h2 class="section-title"><span class="section-num">✓</span>Rangkuman</h2>
+    <div class="accordion">
+      <div class="acc-item open" onclick="toggleAcc(this)">
+        <button class="acc-trigger open">1. Sistem Operasional vs Informasional <span class="acc-chevron">▾</span></button>
+        <div class="acc-body"><p>OLTP dirancang untuk transaksi bisnis harian (cepat, real-time, data terkini). OLAP dirancang untuk analisis dan pengambilan keputusan (data historis, query kompleks). Keduanya saling melengkapi, bukan menggantikan.</p></div>
+      </div>
+      <div class="acc-item" onclick="toggleAcc(this)">
+        <button class="acc-trigger">2. Sejarah Data Warehouse <span class="acc-chevron">▾</span></button>
+        <div class="acc-body"><ul><li>1960-an: pemrosesan batch, flat files</li><li>1970-an: database relasional, MIS</li><li>1980-an: DSS, EIS, information silo</li><li>1988: Devlin &amp; Murphy (IBM) — "Information Warehouse"</li><li>1992: W.H. Inmon — "Building the Data Warehouse"</li><li>1996: Ralph Kimball — dimensional modeling</li><li>2012+: era cloud (Redshift, BigQuery, Snowflake)</li></ul></div>
+      </div>
+      <div class="acc-item" onclick="toggleAcc(this)">
+        <button class="acc-trigger">3. Definisi Data Warehouse <span class="acc-chevron">▾</span></button>
+        <div class="acc-body"><p>Menurut Inmon (2005): <em>"Kumpulan data yang subject-oriented, integrated, time-variant, dan nonvolatile untuk mendukung pengambilan keputusan manajemen."</em></p></div>
+      </div>
+      <div class="acc-item" onclick="toggleAcc(this)">
+        <button class="acc-trigger">4. Empat Karakteristik Utama <span class="acc-chevron">▾</span></button>
+        <div class="acc-body"><ul><li><strong>Subject-Oriented:</strong> data diorganisasikan berdasarkan subjek bisnis (Pelanggan, Produk), bukan fungsi aplikasi</li><li><strong>Integrated:</strong> data dari berbagai sumber distandarisasi formatnya</li><li><strong>Time-Variant:</strong> data memiliki konteks waktu; riwayat perubahan tetap tersimpan</li><li><strong>Non-Volatile:</strong> data yang sudah masuk tidak diubah atau dihapus</li></ul></div>
+      </div>
+      <div class="acc-item" onclick="toggleAcc(this)">
+        <button class="acc-trigger">5. Prinsip Kerja Data Warehouse <span class="acc-chevron">▾</span></button>
+        <div class="acc-body"><p>Alur: <strong>Sumber Data → Staging Area → ETL (Extract, Transform, Load) → Data Warehouse → Data Mart → Analisis</strong>. Data diperbarui secara periodik (biasanya nightly batch) dan bersifat non-volatile setelah dimuat.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFERENSI -->
+  <section class="section">
+    <h2 class="section-title">Daftar Pustaka</h2>
+    <ol class="ref-list">
+      <li>Tim Pengembang. (2022). <em>BMP MSIM4315 – Data Warehouse – Edisi 1</em>. Tangerang Selatan: Universitas Terbuka.</li>
+      <li>Inmon, W.H. (2005). <em>Building the Data Warehouse</em> (4th ed.). Indianapolis: Wiley Publishing.</li>
+      <li>Kimball, R., &amp; Ross, M. (2013). <em>The Data Warehouse Toolkit: The Definitive Guide to Dimensional Modeling</em> (3rd ed.). Hoboken: John Wiley &amp; Sons.</li>
+      <li>Connolly, T., &amp; Begg, C. (2015). <em>Database Systems: A Practical Approach to Design, Implementation, and Management</em> (6th ed.). Harlow: Pearson Education.</li>
+      <li>Ponniah, P. (2010). <em>Data Warehousing Fundamentals for IT Professionals</em> (2nd ed.). Hoboken: John Wiley &amp; Sons.</li>
+      <li>Rainardi, V. (2008). <em>Building a Data Warehouse: With Examples in SQL Server</em>. New York: Apress.</li>
+      <li>Devlin, B., &amp; Murphy, P. (1988). An Architecture for a Business and Information System. <em>IBM Systems Journal</em>, 27(1), 60–80.</li>
+    </ol>
+  </section>
+
+</div><!-- end .page -->
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Kembali ke atas">↑</button>
+
+<script>
+/* PROGRESS BAR */
+const pb = document.getElementById('progress-bar');
+const bt = document.getElementById('back-top');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  pb.style.width = pct + '%';
+  bt.classList.toggle('visible', h.scrollTop > 400);
+  updateNav();
+});
+
+/* SCROLL TO SECTION */
+function scrollTo(sel) {
+  const el = document.querySelector(sel);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ACTIVE NAV */
+const sections = ['#intro','#s1','#s2','#s3','#s4','#s5','#s6','#sc','#quiz'];
+const navTabs = document.querySelectorAll('.nav-tab');
+function updateNav() {
+  let cur = 0;
+  sections.forEach((s, i) => {
+    const el = document.querySelector(s);
+    if (el && el.getBoundingClientRect().top < 100) cur = i;
+  });
+  navTabs.forEach((t, i) => t.classList.toggle('active', i === cur));
+}
+
+/* TABS (OLTP/OLAP) */
+function showTab(group, id, btn) {
+  document.querySelectorAll('[id^="' + group + '-"]').forEach(p => p.classList.remove('active'));
+  btn.parentElement.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(group + '-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* TIMELINE */
+function toggleTimeline(item) {
+  item.classList.toggle('open');
+}
+
+/* ETL STEPS */
+const etlDetails = document.querySelectorAll('.etl-detail');
+const etlSteps = document.querySelectorAll('.etl-step');
+function showEtl(idx, el) {
+  etlSteps.forEach(s => s.classList.remove('active'));
+  etlDetails.forEach(d => d.classList.remove('active'));
+  el.classList.add('active');
+  if (etlDetails[idx]) etlDetails[idx].classList.add('active');
+}
+
+/* CASE STUDY TABS */
+function showCaseTab(id, btn) {
+  document.querySelectorAll('[id^="case-"]').forEach(p => p.classList.remove('active'));
+  btn.parentElement.querySelectorAll('.case-tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('case-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ACCORDION */
+function toggleAcc(item) {
+  item.classList.toggle('open');
+  const trigger = item.querySelector('.acc-trigger');
+  trigger.classList.toggle('open');
+}
+
+/* QUIZ OPTIONS */
+document.querySelectorAll('.quiz-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    const qEl = opt.closest('.quiz-q');
+    if (qEl.dataset.answered) return;
+    qEl.querySelectorAll('.quiz-opt').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+    const radio = opt.querySelector('input[type=radio]');
+    if (radio) radio.checked = true;
+    document.getElementById('quiz-err').style.display = 'none';
+  });
+});
+
+/* CHECK QUIZ */
+function checkQuiz() {
+  const questions = document.querySelectorAll('.quiz-q');
+  let allAnswered = true;
+  questions.forEach(q => {
+    if (!q.querySelector('.quiz-opt.selected')) allAnswered = false;
+  });
+  if (!allAnswered) {
+    const errEl = document.getElementById('quiz-err');
+    errEl.style.display = 'inline';
+    return;
+  }
+  let score = 0;
+  questions.forEach(q => {
+    const correct = q.dataset.correct;
+    const selected = q.querySelector('.quiz-opt.selected');
+    const selOpt = selected ? selected.dataset.opt : null;
+    const isCorrect = selOpt === correct;
+    if (isCorrect) score++;
+    q.querySelectorAll('.quiz-opt').forEach(o => {
+      o.style.cursor = 'default';
+      if (o.dataset.opt === correct) o.classList.add('correct');
+      else if (o === selected && !isCorrect) o.classList.add('wrong');
+    });
+    const cExp = document.getElementById('q' + q.dataset.q + '-exp-c');
+    const wExp = document.getElementById('q' + q.dataset.q + '-exp-w');
+    if (cExp) cExp.style.display = isCorrect ? 'block' : 'none';
+    if (wExp) wExp.style.display = isCorrect ? 'none' : 'block';
+    q.dataset.answered = '1';
+  });
+  const scoreEl = document.getElementById('quiz-score');
+  scoreEl.style.display = 'block';
+  document.getElementById('score-num').textContent = score + '/5';
+  const msgs = ['Pelajari kembali materinya ya!', 'Cukup baik, ada beberapa yang perlu dipelajari lagi.', 'Bagus! Anda menguasai sebagian besar materi.', 'Sangat baik! Hampir sempurna.', 'Sempurna! Anda menguasai materi pertemuan 1 dengan baik.'];
+  document.getElementById('score-msg').textContent = msgs[score] || '';
+  document.getElementById('reset-btn').style.display = 'inline-block';
+  document.querySelector('.btn-primary').style.display = 'none';
+  scoreEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+/* RESET QUIZ */
+function resetQuiz() {
+  document.querySelectorAll('.quiz-q').forEach(q => {
+    delete q.dataset.answered;
+    q.querySelectorAll('.quiz-opt').forEach(o => {
+      o.className = 'quiz-opt';
+      o.style.cursor = '';
+      const r = o.querySelector('input[type=radio]');
+      if (r) r.checked = false;
+    });
+    const cExp = document.getElementById('q' + q.dataset.q + '-exp-c');
+    const wExp = document.getElementById('q' + q.dataset.q + '-exp-w');
+    if (cExp) cExp.style.display = 'none';
+    if (wExp) wExp.style.display = 'none';
+  });
+  document.getElementById('quiz-score').style.display = 'none';
+  document.getElementById('reset-btn').style.display = 'none';
+  document.querySelector('.btn-primary').style.display = 'inline-block';
+  document.getElementById('quiz-err').style.display = 'none';
+}
+
+/* Init: open first timeline item */
+document.querySelectorAll('.timeline-item')[3]?.classList.add('open');
+</script>
+</body>
+</html>
