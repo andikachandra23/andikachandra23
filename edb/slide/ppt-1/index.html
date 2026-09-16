@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ekonomi Digital Baru — Pertemuan 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:#F5F5F7;}
+
+#deck{position:relative;width:100vw;height:100vh;}
+
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;
+  transition:opacity .55s cubic-bezier(.4,0,.2,1);
+  padding:80px 96px;
+  overflow:hidden;
+}
+.slide.active{opacity:1;pointer-events:all;}
+
+/* BG variants */
+.bg-black{background:#000;}
+.bg-dark{background:#0D0D0D;}
+.bg-pmt{background:#060F09;}   /* pemantik — very dark green */
+
+/* Align helpers */
+.c{align-items:center;justify-content:center;text-align:center;}
+.vc{justify-content:center;}
+
+/* Type scale */
+.t-giga{font-size:clamp(100px,15vw,200px);font-weight:800;letter-spacing:-6px;line-height:1;}
+.t-mega{font-size:clamp(72px,10vw,140px);font-weight:800;letter-spacing:-4px;line-height:1.0;}
+.t-hero{font-size:clamp(48px,7vw,96px);font-weight:700;letter-spacing:-2.5px;line-height:1.05;}
+.t-title{font-size:clamp(36px,5vw,64px);font-weight:700;letter-spacing:-1.5px;line-height:1.1;}
+.t-sub{font-size:clamp(22px,3vw,40px);font-weight:300;letter-spacing:-.5px;line-height:1.3;}
+.t-body{font-size:clamp(16px,2vw,26px);font-weight:300;line-height:1.55;}
+.t-caption{font-size:clamp(13px,1.2vw,18px);font-weight:400;color:#86868B;}
+.t-label{font-size:clamp(11px,1vw,14px);font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#6E6E73;}
+
+/* Colors */
+.c-white{color:#F5F5F7;}
+.c-blue{color:#2997FF;}
+.c-gray{color:#86868B;}
+.c-muted{color:#48484A;}
+.c-green{color:#30D158;}
+.c-red{color:#FF453A;}
+.c-amber{color:#FFD60A;}
+
+/* Spacing */
+.mt8{margin-top:8px;}.mt12{margin-top:12px;}.mt16{margin-top:16px;}
+.mt24{margin-top:24px;}.mt32{margin-top:32px;}.mt40{margin-top:40px;}
+.mt48{margin-top:48px;}.mt64{margin-top:64px;}
+
+/* Ghost bg text */
+.ghost{
+  position:absolute;font-size:28vw;font-weight:900;
+  color:rgba(255,255,255,.03);letter-spacing:-10px;line-height:1;
+  user-select:none;pointer-events:none;right:-40px;bottom:-60px;
+}
+
+/* Divider */
+.line{width:48px;height:1.5px;background:#2997FF;margin:20px 0;}
+.line-green{width:48px;height:2px;background:#30D158;margin:0 0 28px;}
+
+/* Badge */
+.badge{
+  display:inline-block;border:1px solid #2C2C2E;
+  border-radius:40px;padding:5px 16px;
+  font-size:13px;font-weight:500;color:#6E6E73;letter-spacing:.3px;
+}
+
+/* ─── PEMANTIK SLIDE DESIGN ─────────────────── */
+.pmt-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(48,209,88,.12);
+  border:1px solid rgba(48,209,88,.25);
+  border-radius:40px;padding:6px 18px;
+  font-size:13px;font-weight:600;color:#30D158;letter-spacing:.5px;
+  margin-bottom:36px;
+}
+.pmt-q{
+  font-size:clamp(26px,3.8vw,54px);
+  font-weight:600;
+  color:#F5F5F7;
+  line-height:1.25;
+  letter-spacing:-1px;
+  max-width:700px;
+}
+.pmt-hint{
+  display:flex;align-items:center;gap:10px;
+  margin-top:36px;
+  font-size:14px;font-weight:400;color:#3A3A3C;
+}
+.pmt-hint-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:#30D158;flex-shrink:0;
+}
+/* Green left rule */
+.pmt-rule{
+  position:absolute;left:0;top:0;bottom:0;
+  width:3px;background:#30D158;opacity:.6;
+}
+/* ─────────────────────────────────────────────── */
+
+/* Comparison table */
+.cmp-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;padding:14px 0;border-bottom:1px solid #1C1C1E;}
+.cmp-row.hd{border-bottom:1px solid #2C2C2E;padding-bottom:10px;}
+.cmp-cell{font-size:16px;color:#86868B;font-weight:300;}
+.cmp-cell.label{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#3A3A3C;}
+.cmp-cell.pos{color:#30D158;}
+.cmp-cell.hi{color:#F5F5F7;font-weight:500;}
+
+/* 5 chars */
+.char-list{width:100%;max-width:760px;}
+.char-item{display:flex;align-items:center;gap:24px;padding:18px 0;border-bottom:1px solid #1C1C1E;}
+.char-item:first-child{border-top:1px solid #2C2C2E;}
+.char-num{font-size:13px;font-weight:600;color:#2997FF;width:20px;flex-shrink:0;}
+.char-name{font-size:26px;font-weight:600;color:#F5F5F7;flex:1;}
+.char-desc{font-size:14px;font-weight:300;color:#6E6E73;max-width:340px;text-align:right;line-height:1.4;}
+
+/* 3 layers */
+.lv-stack{display:flex;flex-direction:column;gap:10px;width:100%;max-width:680px;}
+.lv{border-radius:10px;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;}
+.lv.l1{background:#1C1C1E;border:1px solid #2C2C2E;}
+.lv.l2{background:#2C2C2E;border:1px solid #3A3A3C;}
+.lv.l3{background:#0071E3;}
+.lv-name{font-size:20px;font-weight:600;color:#F5F5F7;}
+.lv-ex{font-size:13px;color:#6E6E73;}
+.lv.l3 .lv-ex{color:rgba(255,255,255,.65);}
+.lv-tag{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.lv.l1 .lv-tag{color:#3A3A3C;}.lv.l2 .lv-tag{color:#48484A;}.lv.l3 .lv-tag{color:rgba(255,255,255,.5);}
+
+/* Three cols */
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:60px;width:100%;}
+.tcol{border-top:1px solid #2C2C2E;padding-top:20px;}
+
+/* Disrupted */
+.dis-row{display:grid;grid-template-columns:2fr 2fr 2.5fr;padding:13px 0;border-bottom:1px solid #1C1C1E;}
+.dis-row.hd{border-bottom:1px solid #2C2C2E;}
+.dis-cell{font-size:15px;color:#6E6E73;font-weight:300;}
+.dis-cell.lbl{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#3A3A3C;}
+.dis-cell.dead{color:#FF453A;}
+
+/* 3 dimensi */
+.dim-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;max-width:820px;}
+.dim-box{border:1px solid #2C2C2E;border-radius:10px;padding:28px 24px;text-align:center;}
+.dim-ico{font-size:36px;margin-bottom:12px;}
+.dim-nm{font-size:20px;font-weight:600;color:#F5F5F7;margin-bottom:8px;}
+.dim-q{font-size:13px;color:#6E6E73;line-height:1.45;}
+
+/* Split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:80px;width:100%;}
+
+/* Nav */
+#controls{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:6px;z-index:1000;
+}
+.dot{width:5px;height:5px;border-radius:50%;background:#2C2C2E;cursor:pointer;transition:all .3s;}
+.dot.active{background:#F5F5F7;width:20px;border-radius:3px;}
+.dot.pmt-dot.active{background:#30D158;}
+.dot:hover:not(.active){background:#48484A;}
+#slide-n{position:fixed;bottom:28px;right:36px;font-size:12px;color:#3A3A3C;z-index:1000;font-weight:500;letter-spacing:.5px;}
+.nav-btn{
+  position:fixed;top:50%;transform:translateY(-50%);
+  width:40px;height:40px;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);border-radius:50%;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .25s;z-index:100;
+  color:#F5F5F7;font-size:15px;
+}
+#btn-p{left:20px;}#btn-n{right:20px;}
+body:hover .nav-btn{opacity:1;}
+.nav-btn:hover{background:rgba(255,255,255,.09);}
+.nav-btn:disabled{opacity:0!important;pointer-events:none;}
+
+/* Slide type tag top-right */
+.slide-type{
+  position:absolute;top:28px;right:36px;
+  font-size:11px;font-weight:600;letter-spacing:1.5px;
+  text-transform:uppercase;color:#2C2C2E;
+}
+.slide-type.is-pmt{color:rgba(48,209,88,.4);}
+</style>
+</head>
+<body>
+<div id="deck">
+
+<!-- ══════════ 1 — TITLE ══════════ -->
+<div class="slide bg-black active" id="s1">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div class="badge">BSD304 · Pertemuan 1 · 2025/2026</div>
+    <div class="mt32">
+      <div class="t-mega c-white" style="max-width:640px;line-height:1.0;">Ekonomi<br>Digital Baru</div>
+    </div>
+    <div class="mt24">
+      <div class="t-sub c-gray" style="max-width:520px;line-height:1.4;">Pendahuluan, Sekilas Ekonomi Digital,<br>Dampak Internet & Kesenjangan Digital</div>
+    </div>
+    <div class="mt48">
+      <div class="t-caption c-muted">Andika Chandra Prasetyo, S.Kom., M.T.I &nbsp;·&nbsp; Universitas Bhamada Slawi</div>
+    </div>
+  </div>
+  <div class="ghost">EDB</div>
+  <div class="slide-type">Pertemuan 1</div>
+</div>
+
+<!-- ══════════ 2 — HOOK: 7.8 jam ══════════ -->
+<div class="slide bg-black c" id="s2">
+  <div class="t-label c-gray">Orang Indonesia rata-rata</div>
+  <div class="mt16">
+    <span class="t-giga c-white">7.8</span>
+    <span style="font-size:clamp(32px,5vw,72px);font-weight:300;color:#86868B;margin-left:12px;letter-spacing:-1px;">jam</span>
+  </div>
+  <div class="mt16 t-sub c-gray">online setiap hari</div>
+  <div class="mt24 t-caption c-muted">We Are Social, Digital 2024</div>
+</div>
+
+<!-- ══════════ 3 — HOOK: 215 juta ══════════ -->
+<div class="slide bg-black c" id="s3">
+  <div class="t-label c-gray">Pengguna internet Indonesia</div>
+  <div class="mt16">
+    <span class="t-giga c-white">215</span>
+    <span style="font-size:clamp(32px,5vw,72px);font-weight:300;color:#86868B;margin-left:12px;">juta</span>
+  </div>
+  <div class="mt16 t-sub c-gray">Terbesar ke-4 di dunia</div>
+  <div class="mt24 t-caption c-muted">Kemkominfo, 2024</div>
+</div>
+
+<!-- ══════════ 4 — HOOK: $77 miliar ══════════ -->
+<div class="slide bg-black c" id="s4">
+  <div class="t-label c-gray">Nilai ekonomi digital Indonesia 2023</div>
+  <div class="mt16">
+    <span class="t-giga c-blue">$77</span>
+    <span style="font-size:clamp(32px,5vw,72px);font-weight:300;color:#86868B;margin-left:12px;">miliar</span>
+  </div>
+  <div class="mt16 t-sub c-gray">Proyeksi 2030: <span class="c-white">$220–360 miliar</span></div>
+  <div class="mt24 t-caption c-muted">Google, Temasek & Bain — e-Conomy SEA 2023</div>
+</div>
+
+<!-- ══════════ 5 — HOOK QUESTION ══════════ -->
+<div class="slide bg-black c" id="s5">
+  <div class="t-hero c-white" style="max-width:700px;line-height:1.1;">Siapa yang<br>diuntungkan?</div>
+  <div class="mt24 t-sub c-gray">...dan siapa yang tertinggal?</div>
+</div>
+
+<!-- ══════════ 6 — SECTION 01 ══════════ -->
+<div class="slide bg-dark" id="s6">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div class="t-label c-blue">Bagian</div>
+    <div class="mt16 t-mega c-white" style="line-height:1;">01</div>
+    <div class="mt12"><div class="line"></div></div>
+    <div class="t-hero c-white" style="line-height:1.1;">Ekonomi<br>Digital</div>
+  </div>
+</div>
+
+<!-- ══════════ 7 — JORDAN ══════════ -->
+<div class="slide bg-black vc" id="s7">
+  <div class="t-label c-muted">Jordan, 2020</div>
+  <div class="mt24">
+    <div class="t-title c-white" style="max-width:680px;line-height:1.2;">"Bukan sekadar<br>jualan online."</div>
+  </div>
+  <div class="mt32">
+    <div class="t-body c-gray" style="max-width:580px;line-height:1.6;">
+      Keseluruhan aktivitas ekonomi yang dimediasi jaringan digital — mencakup infrastruktur, platform, data, dan seluruh interaksi yang berlangsung di atasnya.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 8 — KASALI ══════════ -->
+<div class="slide bg-black c" id="s8">
+  <div class="t-label c-muted">Kasali, 2018</div>
+  <div class="mt24">
+    <div class="t-mega c-white" style="letter-spacing:-3px;line-height:1.05;">The Great<br>Shifting</div>
+  </div>
+  <div class="mt24">
+    <div class="t-body c-gray" style="max-width:500px;line-height:1.6;">Pergeseran besar cara manusia bekerja,<br>bertransaksi, dan menciptakan nilai.</div>
+  </div>
+</div>
+
+<!-- ══════════ 9 — ANALOGY PASAR ══════════ -->
+<div class="slide bg-dark c" id="s9">
+  <div class="t-label c-muted" style="margin-bottom:32px;">Analogi</div>
+  <div class="t-title c-white" style="max-width:660px;line-height:1.2;font-weight:300;">
+    Pasar tanpa atap.<br>Tanpa jam tutup.<br>
+    <span class="c-white" style="font-weight:700;">Tanpa batas kota.</span>
+  </div>
+  <div class="mt32 t-body c-gray">Itulah ekonomi digital.</div>
+</div>
+
+<!-- ══════════ 10 — COMPARISON ══════════ -->
+<div class="slide bg-black vc" id="s10">
+  <div class="t-label c-muted" style="margin-bottom:28px;">Konvensional vs. Digital</div>
+  <div>
+    <div class="cmp-row hd">
+      <div class="cmp-cell label">Dimensi</div>
+      <div class="cmp-cell label">Konvensional</div>
+      <div class="cmp-cell label">Digital</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell hi">Aset utama</div>
+      <div class="cmp-cell">Tanah, mesin, gedung</div>
+      <div class="cmp-cell pos">Data & algoritma</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell hi">Batas pasar</div>
+      <div class="cmp-cell">Geografis</div>
+      <div class="cmp-cell pos">Borderless</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell hi">Biaya marginal</div>
+      <div class="cmp-cell">Tinggi</div>
+      <div class="cmp-cell pos">≈ Nol</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell hi">Perantara</div>
+      <div class="cmp-cell">Berlapis</div>
+      <div class="cmp-cell pos">Terpangkas</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell hi">Kecepatan</div>
+      <div class="cmp-cell">Lambat</div>
+      <div class="cmp-cell pos">Real-time, 24/7</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 11 — PEMANTIK 1A ══════════ -->
+<div class="slide bg-pmt vc" id="s11">
+  <div class="pmt-rule"></div>
+  <div class="pmt-tag">💬 Diskusi &nbsp;·&nbsp; Berpasangan &nbsp;·&nbsp; 2 menit</div>
+  <div class="pmt-q">
+    Kalian punya teman atau anggota keluarga yang berjualan secara konvensional.
+    <br><br>
+    Apakah mereka sudah masuk ke ekonomi digital? Apa yang berubah? Apa yang menghalangi?
+  </div>
+  <div class="pmt-hint">
+    <div class="pmt-hint-dot"></div>
+    <span>2–3 orang berbagi jawaban ke kelas</span>
+  </div>
+  <div class="slide-type is-pmt">Pemantik 1A</div>
+</div>
+
+<!-- ══════════ 12 — SECTION 02 ══════════ -->
+<div class="slide bg-dark" id="s12">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div class="t-label c-blue">Bagian</div>
+    <div class="mt16 t-mega c-white" style="line-height:1;">02</div>
+    <div class="mt12"><div class="line"></div></div>
+    <div class="t-hero c-white" style="line-height:1.1;">Lima<br>Karakteristik</div>
+  </div>
+</div>
+
+<!-- ══════════ 13 — 5 CHARS ══════════ -->
+<div class="slide bg-black vc" id="s13">
+  <div class="t-label c-muted" style="margin-bottom:24px;">Jordan, 2020 — 5 Karakteristik Ekonomi Digital</div>
+  <div class="char-list">
+    <div class="char-item">
+      <div class="char-num">01</div>
+      <div class="char-name">Digitization</div>
+      <div class="char-desc">Segala sesuatu dikonversi menjadi data</div>
+    </div>
+    <div class="char-item">
+      <div class="char-num">02</div>
+      <div class="char-name">Connectivity</div>
+      <div class="char-desc">Semua aktor saling terhubung real-time</div>
+    </div>
+    <div class="char-item">
+      <div class="char-num">03</div>
+      <div class="char-name">Platformization</div>
+      <div class="char-desc">Bisnis bergeser dari produk ke platform</div>
+    </div>
+    <div class="char-item">
+      <div class="char-num">04</div>
+      <div class="char-name">Datafication</div>
+      <div class="char-desc">Data sebagai bahan bakar keputusan bisnis</div>
+    </div>
+    <div class="char-item">
+      <div class="char-num">05</div>
+      <div class="char-name">Automation</div>
+      <div class="char-desc">Algoritma & AI menjalankan proses bisnis</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 14 — DATA IS OIL ══════════ -->
+<div class="slide bg-black c" id="s14">
+  <div class="t-title c-white" style="line-height:1.15;max-width:620px;">
+    Data adalah<br><span class="c-blue">minyak baru.</span>
+  </div>
+  <div class="mt32">
+    <div class="t-body c-gray" style="max-width:480px;line-height:1.6;">
+      Minyak: semakin dipakai, semakin habis.<br>
+      Data: semakin dikumpulkan,<br>
+      semakin <span class="c-white">bernilai.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 15 — 3 LAYERS ══════════ -->
+<div class="slide bg-black vc" id="s15">
+  <div class="t-label c-muted" style="margin-bottom:28px;">Tiga Lapisan Ekonomi Digital</div>
+  <div class="lv-stack">
+    <div class="lv l3">
+      <div><div class="lv-tag">Lapisan 3</div><div class="lv-name" style="margin-top:4px;">Aplikasi & Layanan</div></div>
+      <div class="lv-ex" style="text-align:right;">GoFood · GoPay · Ruangguru · Alodokter</div>
+    </div>
+    <div class="lv l2">
+      <div><div class="lv-tag">Lapisan 2</div><div class="lv-name" style="margin-top:4px;">Platform</div></div>
+      <div class="lv-ex" style="text-align:right;">Tokopedia · Shopee · Google · Instagram</div>
+    </div>
+    <div class="lv l1">
+      <div><div class="lv-tag">Lapisan 1</div><div class="lv-name" style="margin-top:4px;">Infrastruktur</div></div>
+      <div class="lv-ex" style="text-align:right;">Palapa Ring · Cloud · Data Center · 4G/5G</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 16 — PEMANTIK 1B ══════════ -->
+<div class="slide bg-pmt vc" id="s16">
+  <div class="pmt-rule"></div>
+  <div class="pmt-tag">💬 Diskusi &nbsp;·&nbsp; Kelas &nbsp;·&nbsp; 3 menit</div>
+  <div class="pmt-q">
+    Dari tiga lapisan ekonomi digital, Indonesia <span style="color:#30D158;">paling kuat</span> di lapisan mana?
+    <br><br>
+    Dan <span style="color:#FF453A;">paling lemah</span> di mana? Apa buktinya?
+  </div>
+  <div class="pmt-hint">
+    <div class="pmt-hint-dot"></div>
+    <span>Pikirkan: siapa yang menguasai infrastruktur & platform di Indonesia?</span>
+  </div>
+  <div class="slide-type is-pmt">Pemantik 1B</div>
+</div>
+
+<!-- ══════════ 17 — SECTION 03 ══════════ -->
+<div class="slide bg-dark" id="s17">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div class="t-label c-blue">Bagian</div>
+    <div class="mt16 t-mega c-white" style="line-height:1;">03</div>
+    <div class="mt12"><div class="line"></div></div>
+    <div class="t-hero c-white" style="line-height:1.1;">Dampak<br>Internet</div>
+  </div>
+</div>
+
+<!-- ══════════ 18 — THREE STATS ══════════ -->
+<div class="slide bg-black vc" id="s18">
+  <div class="t-label c-muted" style="margin-bottom:48px;text-align:center;width:100%;">Skala dampak internet di Indonesia</div>
+  <div class="three-col" style="text-align:center;">
+    <div class="tcol c">
+      <div style="font-size:clamp(52px,7vw,90px);font-weight:800;color:#F5F5F7;letter-spacing:-3px;line-height:1;">215<span style="font-size:.45em;font-weight:300;color:#86868B;">juta</span></div>
+      <div class="mt12 t-caption c-gray">pengguna internet</div>
+    </div>
+    <div class="tcol c">
+      <div style="font-size:clamp(52px,7vw,90px);font-weight:800;color:#2997FF;letter-spacing:-3px;line-height:1;">7.8<span style="font-size:.45em;font-weight:300;color:#86868B;">jam</span></div>
+      <div class="mt12 t-caption c-gray">online per hari</div>
+    </div>
+    <div class="tcol c">
+      <div style="font-size:clamp(52px,7vw,90px);font-weight:800;color:#30D158;letter-spacing:-3px;line-height:1;">$77<span style="font-size:.45em;font-weight:300;color:#86868B;">M</span></div>
+      <div class="mt12 t-caption c-gray">nilai ekonomi digital 2023</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 19 — PLATFORM BEATS PRODUCT ══════════ -->
+<div class="slide bg-black vc" id="s19">
+  <div class="t-label c-muted" style="margin-bottom:32px;">The Great Shifting — Kasali, 2018</div>
+  <div class="t-title c-white" style="max-width:660px;line-height:1.2;">
+    <span class="c-blue">Platform</span> beats product.
+  </div>
+  <div class="mt32">
+    <div class="t-body c-gray" style="line-height:1.7;max-width:560px;">
+      Gojek tidak punya satu pun kendaraan.<br>
+      Tokopedia tidak punya satu pun produk di gudang.<br>
+      Airbnb tidak punya satu pun kamar hotel.<br>
+      <span class="c-white" style="font-weight:500;">Tapi ketiganya bernilai miliaran dolar.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 20 — DARI MEMILIKI KE MENGAKSES ══════════ -->
+<div class="slide bg-black vc" id="s20">
+  <div class="split">
+    <div>
+      <div class="t-label c-muted" style="margin-bottom:20px;">Dulu</div>
+      <div class="t-title c-muted" style="font-weight:300;line-height:1.3;font-size:clamp(28px,3.5vw,48px);">Beli CD<br>Beli DVD<br>Beli buku<br>Bayar lunas, miliki</div>
+    </div>
+    <div style="border-left:1px solid #2C2C2E;padding-left:60px;">
+      <div class="t-label c-blue" style="margin-bottom:20px;">Sekarang</div>
+      <div class="t-title c-white" style="font-weight:600;line-height:1.3;font-size:clamp(28px,3.5vw,48px);">Spotify<br>Netflix<br>Kindle<br>Berlangganan, akses</div>
+    </div>
+  </div>
+  <div class="mt48 t-body c-gray">Kepemilikan → Akses. <span class="c-white">Ini bukan tren. Ini pergeseran struktural.</span></div>
+</div>
+
+<!-- ══════════ 21 — DISRUPTED ══════════ -->
+<div class="slide bg-black vc" id="s21">
+  <div class="t-label c-muted" style="margin-bottom:24px;">Bisnis yang terdisrupsi</div>
+  <div>
+    <div class="dis-row hd">
+      <div class="dis-cell lbl">Bisnis Lama</div>
+      <div class="dis-cell lbl">Nasib</div>
+      <div class="dis-cell lbl">Disruptor</div>
+    </div>
+    <div class="dis-row">
+      <div class="dis-cell">Rental video (Blockbuster)</div>
+      <div class="dis-cell dead">Bangkrut 2010</div>
+      <div class="dis-cell" style="color:#6E6E73;">Netflix & streaming</div>
+    </div>
+    <div class="dis-row">
+      <div class="dis-cell">Nokia (ponsel)</div>
+      <div class="dis-cell dead">Jatuh drastis</div>
+      <div class="dis-cell" style="color:#6E6E73;">iPhone & App Store</div>
+    </div>
+    <div class="dis-row">
+      <div class="dis-cell">Toko buku kecil</div>
+      <div class="dis-cell dead">Banyak tutup</div>
+      <div class="dis-cell" style="color:#6E6E73;">E-book & marketplace</div>
+    </div>
+    <div class="dis-row">
+      <div class="dis-cell">Taksi konvensional</div>
+      <div class="dis-cell dead">Tersaingi berat</div>
+      <div class="dis-cell" style="color:#6E6E73;">Gojek & Grab</div>
+    </div>
+    <div class="dis-row">
+      <div class="dis-cell">Studio foto tradisional</div>
+      <div class="dis-cell dead">Banyak gulung tikar</div>
+      <div class="dis-cell" style="color:#6E6E73;">Smartphone + mini lab</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 22 — PEMANTIK 2A ══════════ -->
+<div class="slide bg-pmt vc" id="s22">
+  <div class="pmt-rule"></div>
+  <div class="pmt-tag">💬 Diskusi &nbsp;·&nbsp; Tulis singkat &nbsp;·&nbsp; 2 menit</div>
+  <div class="pmt-q">
+    Sebutkan satu pekerjaan yang dilakukan orang tua atau keluargamu.
+    <br><br>
+    Apakah pekerjaan itu berisiko tergantikan teknologi digital dalam 10 tahun ke depan? Mengapa?
+  </div>
+  <div class="pmt-hint">
+    <div class="pmt-hint-dot"></div>
+    <span>Tuliskan jawabanmu dulu, baru 2–3 orang berbagi ke kelas</span>
+  </div>
+  <div class="slide-type is-pmt">Pemantik 2A</div>
+</div>
+
+<!-- ══════════ 23 — PEMANTIK 2B ══════════ -->
+<div class="slide bg-pmt vc" id="s23">
+  <div class="pmt-rule"></div>
+  <div class="pmt-tag">💬 Diskusi &nbsp;·&nbsp; Kelas &nbsp;·&nbsp; 2 menit</div>
+  <div class="pmt-q">
+    Kasali menyebut era ini <em style="color:#F5F5F7;">"The Great Shifting."</em>
+    <br><br>
+    Tapi siapa yang <span style="color:#30D158;">paling diuntungkan</span> dari pergeseran ini? Dan siapa yang <span style="color:#FF453A;">paling dirugikan</span>?
+  </div>
+  <div class="pmt-hint">
+    <div class="pmt-hint-dot"></div>
+    <span>Jembatan menuju topik berikutnya: Kesenjangan Digital</span>
+  </div>
+  <div class="slide-type is-pmt">Pemantik 2B</div>
+</div>
+
+<!-- ══════════ 24 — SECTION 04 ══════════ -->
+<div class="slide bg-dark" id="s24">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div class="t-label c-blue">Bagian</div>
+    <div class="mt16 t-mega c-white" style="line-height:1;">04</div>
+    <div class="mt12"><div class="line"></div></div>
+    <div class="t-hero c-white" style="line-height:1.1;">Kesenjangan<br>Digital</div>
+  </div>
+</div>
+
+<!-- ══════════ 25 — 3 DIMENSI ══════════ -->
+<div class="slide bg-black vc" id="s25">
+  <div class="t-label c-muted" style="margin-bottom:28px;">Tiga dimensi kesenjangan digital</div>
+  <div class="dim-grid">
+    <div class="dim-box">
+      <div class="dim-ico">📶</div>
+      <div class="dim-nm">Akses</div>
+      <div class="dim-q">Apakah infrastruktur & perangkat tersedia dan terjangkau?</div>
+    </div>
+    <div class="dim-box">
+      <div class="dim-ico">🎓</div>
+      <div class="dim-nm">Literasi</div>
+      <div class="dim-q">Apakah masyarakat memiliki kemampuan menggunakannya?</div>
+    </div>
+    <div class="dim-box">
+      <div class="dim-ico">💼</div>
+      <div class="dim-nm">Pemanfaatan</div>
+      <div class="dim-q">Apakah digunakan untuk aktivitas produktif & bernilai ekonomi?</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 26 — 57% STAT ══════════ -->
+<div class="slide bg-black c" id="s26">
+  <div class="t-label c-muted">Pengguna internet Indonesia yang berlokasi di Pulau Jawa</div>
+  <div class="mt16">
+    <span class="t-giga c-amber">57</span>
+    <span style="font-size:clamp(60px,9vw,130px);font-weight:800;color:#86868B;margin-left:4px;">%</span>
+  </div>
+  <div class="mt24 t-sub c-gray" style="max-width:500px;">dari 17.000+ pulau<br>yang ada di Indonesia</div>
+  <div class="mt24 t-caption c-muted">APJII, 2023</div>
+</div>
+
+<!-- ══════════ 27 — TOL ANALOGY ══════════ -->
+<div class="slide bg-dark c" id="s27">
+  <div class="t-label c-muted" style="margin-bottom:32px;">Analogi</div>
+  <div class="t-title c-white" style="max-width:640px;font-weight:300;line-height:1.3;">
+    Yang punya kendaraan<br>melaju di <span style="font-weight:700;color:#2997FF;">tol digital</span>.
+  </div>
+  <div class="mt32">
+    <div class="t-title c-gray" style="max-width:580px;font-weight:300;line-height:1.3;">
+      Yang tidak punya —<br>tetap di <span style="font-weight:700;color:#FF453A;">jalan berlubang</span>.
+    </div>
+  </div>
+  <div class="mt32 t-body c-muted">Dan jarak di antara mereka terus melebar.</div>
+</div>
+
+<!-- ══════════ 28 — PEMANTIK 3A ══════════ -->
+<div class="slide bg-pmt vc" id="s28">
+  <div class="pmt-rule"></div>
+  <div class="pmt-tag">💬 Diskusi &nbsp;·&nbsp; Debat Mini &nbsp;·&nbsp; 3 menit</div>
+  <div class="pmt-q">
+    "Kesenjangan digital akan hilang dengan sendirinya — teknologi pasti makin murah dan mudah diakses."
+    <br><br>
+    <span style="color:#F5F5F7;font-weight:600;">Setuju atau tidak?</span> Berikan alasanmu.
+  </div>
+  <div class="pmt-hint">
+    <div class="pmt-hint-dot"></div>
+    <span>Pertimbangkan: apakah masalahnya hanya soal harga perangkat?</span>
+  </div>
+  <div class="slide-type is-pmt">Pemantik 3A</div>
+</div>
+
+<!-- ══════════ 29 — PEMANTIK 3B ══════════ -->
+<div class="slide bg-pmt vc" id="s29">
+  <div class="pmt-rule"></div>
+  <div class="pmt-tag">💬 Diskusi &nbsp;·&nbsp; Individu &nbsp;·&nbsp; 2 menit</div>
+  <div class="pmt-q">
+    Bayangkan kamu adalah <span style="color:#F5F5F7;font-weight:600;">pembuat kebijakan</span>.
+    <br><br>
+    Apa <em>satu langkah paling konkret</em> untuk mengurangi kesenjangan digital di daerahmu? Jelaskan dalam dua kalimat.
+  </div>
+  <div class="pmt-hint">
+    <div class="pmt-hint-dot"></div>
+    <span>Tuliskan dulu, lalu 2–3 orang presentasikan ide mereka</span>
+  </div>
+  <div class="slide-type is-pmt">Pemantik 3B</div>
+</div>
+
+<!-- ══════════ 30 — SECTION 05 ══════════ -->
+<div class="slide bg-dark" id="s30">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div class="t-label c-blue">Bagian</div>
+    <div class="mt16 t-mega c-white" style="line-height:1;">05</div>
+    <div class="mt12"><div class="line"></div></div>
+    <div class="t-hero c-white" style="line-height:1.1;">Studi<br>Kasus</div>
+  </div>
+</div>
+
+<!-- ══════════ 31 — BU SARI ══════════ -->
+<div class="slide bg-black vc" id="s31">
+  <div class="t-label c-muted" style="margin-bottom:16px;">Kasus 1 · Tegal, Jawa Tengah</div>
+  <div class="t-title c-white" style="font-size:clamp(28px,4vw,56px);">Warteg Bu Sari</div>
+  <div class="mt8 t-caption c-gray">Masuk GoFood & GrabFood saat pandemi 2020</div>
+  <div class="mt40" style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;width:100%;">
+    <div style="border-top:1px solid #30D158;padding-top:16px;">
+      <div style="font-size:clamp(36px,5vw,64px);font-weight:800;color:#30D158;letter-spacing:-2px;">+54%</div>
+      <div class="mt8 t-caption c-gray">Kenaikan omzet</div>
+      <div class="t-caption c-muted">Rp 1.2jt → Rp 1.85jt/hari</div>
+    </div>
+    <div style="border-top:1px solid #2997FF;padding-top:16px;">
+      <div style="font-size:clamp(36px,5vw,64px);font-weight:800;color:#2997FF;letter-spacing:-2px;">4.6⭐</div>
+      <div class="mt8 t-caption c-gray">Rating di platform</div>
+      <div class="t-caption c-muted">dari 3.8 bintang</div>
+    </div>
+    <div style="border-top:1px solid #FF9F0A;padding-top:16px;">
+      <div style="font-size:clamp(36px,5vw,64px);font-weight:800;color:#FF9F0A;letter-spacing:-2px;">40%</div>
+      <div class="mt8 t-caption c-gray">Penjualan online</div>
+      <div class="t-caption c-muted">dari semula 0%</div>
+    </div>
+  </div>
+  <div class="mt32 t-body c-gray" style="line-height:1.6;max-width:680px;">
+    Kunci: transfer literasi digital dari <span class="c-white">anak ke ibu</span>. Kesenjangan pemanfaatan dijembatani antar generasi.
+  </div>
+</div>
+
+<!-- ══════════ 32 — PAK SLAMET ══════════ -->
+<div class="slide bg-black vc" id="s32">
+  <div class="t-label c-muted" style="margin-bottom:16px;">Kasus 2 · Pekalongan, Jawa Tengah</div>
+  <div class="t-title c-white" style="font-size:clamp(28px,4vw,56px);">Batik Pak Slamet</div>
+  <div class="mt8 t-caption c-gray">Dari tengkulak ke Tokopedia + Instagram</div>
+  <div class="mt40 split">
+    <div>
+      <div class="t-label c-muted" style="margin-bottom:16px;">Sebelum Digital</div>
+      <div style="font-size:clamp(32px,4.5vw,60px);font-weight:800;color:#86868B;letter-spacing:-2px;">25%</div>
+      <div class="mt8 t-caption c-gray">margin dari harga akhir</div>
+      <div class="mt16 t-body c-muted">Rp 200.000 ke tengkulak</div>
+    </div>
+    <div style="border-left:1px solid #2C2C2E;padding-left:60px;">
+      <div class="t-label c-blue" style="margin-bottom:16px;">Sesudah Digital</div>
+      <div style="font-size:clamp(32px,4.5vw,60px);font-weight:800;color:#30D158;letter-spacing:-2px;">80%</div>
+      <div class="mt8 t-caption c-gray">margin langsung ke konsumen</div>
+      <div class="mt16 t-body c-white">Rp 600.000 ke konsumen</div>
+    </div>
+  </div>
+  <div class="mt32 t-body c-gray">Disintermediation: tengkulak <span style="color:#FF453A;">terpotong</span>. Produsen <span style="color:#30D158;">untung 3×</span>.</div>
+</div>
+
+<!-- ══════════ 33 — STUDIO FOTO ══════════ -->
+<div class="slide bg-black vc" id="s33">
+  <div class="t-label c-muted" style="margin-bottom:16px;">Kasus 3 · Jawa Tengah</div>
+  <div class="t-title c-white" style="font-size:clamp(28px,4vw,56px);">Studio Foto Cahaya</div>
+  <div class="mt8 t-caption c-red">Berdiri 1992 &nbsp;·&nbsp; Tutup Maret 2023</div>
+  <div class="mt40 split">
+    <div>
+      <div class="t-label c-muted" style="margin-bottom:16px;">Studio Foto Cahaya</div>
+      <div class="t-body c-gray" style="line-height:1.7;">
+        31 tahun beroperasi<br>
+        Puncak: Rp 30jt/bulan (2008)<br>
+        Penutupan: Rp 3jt/bulan (2022)<br>
+        Tidak ada kehadiran digital.<br>
+        <span class="c-red" style="font-weight:500;">"Foto digital bukan seni."</span>
+      </div>
+    </div>
+    <div style="border-left:1px solid #2C2C2E;padding-left:60px;">
+      <div class="t-label c-blue" style="margin-bottom:16px;">Studio Digital Muda — tetangganya</div>
+      <div class="t-body c-gray" style="line-height:1.7;">
+        Berdiri 2019 (5 tahun)<br>
+        Omzet: <span class="c-green">Rp 35jt/bulan (2023)</span><br>
+        Foto produk e-commerce<br>
+        Studio konten kreator<br>
+        <span class="c-white" style="font-weight:500;">Google Maps ⭐⭐⭐⭐⭐</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 34 — TAKEAWAY 1 ══════════ -->
+<div class="slide bg-black c" id="s34">
+  <div class="t-label c-blue" style="margin-bottom:24px;">Pelajaran 1</div>
+  <div class="t-hero c-white" style="max-width:660px;line-height:1.15;">
+    Disruption tidak<br>menunggu kesiapan.
+  </div>
+</div>
+
+<!-- ══════════ 35 — TAKEAWAY 2 ══════════ -->
+<div class="slide bg-black c" id="s35">
+  <div class="t-label c-blue" style="margin-bottom:24px;">Pelajaran 2</div>
+  <div class="t-hero c-white" style="max-width:640px;line-height:1.15;">
+    Akses ≠ Literasi<br>≠ Pemanfaatan
+  </div>
+  <div class="mt32 t-sub c-gray" style="max-width:500px;line-height:1.5;">Tiga masalah berbeda.<br>Tiga solusi yang berbeda pula.</div>
+</div>
+
+<!-- ══════════ 36 — TAKEAWAY 3 ══════════ -->
+<div class="slide bg-black c" id="s36">
+  <div class="t-label c-blue" style="margin-bottom:24px;">Pelajaran 3</div>
+  <div class="t-hero c-white" style="max-width:680px;line-height:1.15;font-weight:300;">
+    The Great Shifting<br>sudah terjadi.
+  </div>
+  <div class="mt32">
+    <div class="t-title c-white" style="font-weight:700;font-size:clamp(28px,4vw,56px);">Yang bergerak duluan, menang.</div>
+  </div>
+</div>
+
+<!-- ══════════ 37 — END ══════════ -->
+<div class="slide bg-black c" id="s37">
+  <div class="t-mega c-white" style="line-height:1.05;letter-spacing:-3px;">Terima<br>Kasih.</div>
+  <div class="mt40 t-sub c-gray">Pertanyaan? Diskusi?</div>
+  <div class="mt48">
+    <div class="t-label c-muted" style="margin-bottom:8px;">Referensi Utama</div>
+    <div class="t-caption c-muted" style="line-height:2.2;">
+      Kasali, R. (2018). The Great Shifting. Gramedia.<br>
+      Jordan, T. (2020). The Digital Economy. Wiley.<br>
+      Google, Temasek & Bain. e-Conomy SEA 2023.
+    </div>
+  </div>
+  <div class="ghost">?</div>
+</div>
+
+</div><!-- #deck -->
+
+<div id="controls"></div>
+<div id="slide-n">1 / 37</div>
+<button class="nav-btn" id="btn-p" onclick="go(-1)" disabled>‹</button>
+<button class="nav-btn" id="btn-n" onclick="go(1)">›</button>
+
+<script>
+const TOTAL = 37;
+// slides that are pemantik (green dot)
+const PMT = [11, 16, 22, 23, 28, 29];
+let cur = 1;
+
+const ctrlDiv = document.getElementById('controls');
+for(let i = 1; i <= TOTAL; i++){
+  const d = document.createElement('div');
+  d.className = 'dot' + (PMT.includes(i) ? ' pmt-dot' : '') + (i===1 ? ' active' : '');
+  d.title = PMT.includes(i) ? 'Pemantik Diskusi' : 'Slide ' + i;
+  d.onclick = () => goto(i);
+  ctrlDiv.appendChild(d);
+}
+
+function goto(n){
+  if(n < 1 || n > TOTAL) return;
+  document.getElementById('s' + cur).classList.remove('active');
+  ctrlDiv.children[cur-1].classList.remove('active');
+  cur = n;
+  document.getElementById('s' + cur).classList.add('active');
+  ctrlDiv.children[cur-1].classList.add('active');
+  document.getElementById('slide-n').textContent = cur + ' / ' + TOTAL;
+  document.getElementById('btn-p').disabled = cur === 1;
+  document.getElementById('btn-n').disabled = cur === TOTAL;
+}
+
+function go(d){ goto(cur + d); }
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(1); }
+  if(e.key === 'ArrowLeft'  || e.key === 'ArrowUp') { e.preventDefault(); go(-1); }
+  if(e.key === 'Home') goto(1);
+  if(e.key === 'End')  goto(TOTAL);
+});
+
+let tx = 0;
+document.addEventListener('touchstart', e => tx = e.changedTouches[0].clientX, {passive:true});
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if(Math.abs(dx) > 50){ dx < 0 ? go(1) : go(-1); }
+}, {passive:true});
+
+document.getElementById('deck').addEventListener('click', e => {
+  const mid = window.innerWidth / 2;
+  if(e.clientX > mid + 100) go(1);
+  else if(e.clientX < mid - 100) go(-1);
+});
+</script>
+</body>
+</html>

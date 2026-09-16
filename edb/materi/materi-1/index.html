@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pertemuan 1 — Ekonomi Digital Baru | BSD304</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pri: #1A3575;
+  --pri-lt: #2D55CC;
+  --pri-pale: #EDF0FF;
+  --acc: #00A878;
+  --acc-lt: #E4F7F2;
+  --warm: #E08D16;
+  --warm-lt: #FEF8EC;
+  --red: #DC2626;
+  --green: #16A34A;
+  --bg: #F2F5FC;
+  --card: #FFFFFF;
+  --txt: #1C2B4A;
+  --txt-lt: #5A6A85;
+  --bdr: #DDE4F0;
+  --shd: 0 1px 10px rgba(26,53,117,0.07);
+  --r: 10px;
+  --r-sm: 6px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);line-height:1.72;font-size:15px;}
+
+/* PROGRESS */
+#pgbar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--acc),var(--pri-lt));z-index:9999;width:0%;transition:width .15s linear;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:var(--pri);display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none;box-shadow:0 2px 12px rgba(26,53,117,.35);}
+nav::-webkit-scrollbar{display:none;}
+.nav-brand{display:flex;align-items:center;gap:8px;padding:0 18px;border-right:1px solid rgba(255,255,255,.15);flex-shrink:0;}
+.nav-brand .nb-badge{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;}
+.nav-brand .nb-name{color:rgba(255,255,255,.85);font-size:12px;font-weight:600;}
+.nav-links{display:flex;align-items:stretch;}
+.nl{color:rgba(255,255,255,.6);text-decoration:none;font-size:12.5px;font-weight:500;padding:14px 13px;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;flex-shrink:0;}
+.nl:hover,.nl.active{color:#fff;border-bottom-color:var(--acc);}
+
+/* LAYOUT */
+main{max-width:840px;margin:0 auto;padding:28px 18px 80px;}
+
+/* PAGE HEADER */
+.ph{background:linear-gradient(140deg,var(--pri) 0%,#2646B8 100%);border-radius:var(--r);padding:36px 36px 32px;color:#fff;margin-bottom:28px;position:relative;overflow:hidden;}
+.ph::before{content:'';position:absolute;top:-50px;right:-50px;width:210px;height:210px;border-radius:50%;background:rgba(255,255,255,.05);}
+.ph::after{content:'';position:absolute;bottom:-70px;right:80px;width:150px;height:150px;border-radius:50%;background:rgba(0,168,120,.12);}
+.ph-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,168,120,.22);border:1px solid rgba(0,168,120,.4);color:#6FFFD8;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:14px;letter-spacing:.3px;}
+.ph h1{font-size:24px;font-weight:800;line-height:1.25;margin-bottom:6px;position:relative;}
+.ph .ph-sub{color:rgba(255,255,255,.65);font-size:13.5px;margin-bottom:22px;}
+.ph-meta{display:flex;flex-wrap:wrap;gap:18px;}
+.ph-mi{display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(255,255,255,.7);}
+.ph-mi .ico{font-size:15px;}
+
+/* OBJECTIVES */
+.obj-box{background:var(--card);border-radius:var(--r);border-left:4px solid var(--acc);padding:22px 26px;margin-bottom:28px;box-shadow:var(--shd);}
+.obj-box .obj-title{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--acc);margin-bottom:12px;}
+.obj-box ol{padding-left:18px;}
+.obj-box li{margin-bottom:8px;font-size:14px;}
+.obj-box li:last-child{margin-bottom:0;}
+
+/* SECTION */
+.sec{margin-bottom:38px;}
+.sec-hd{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--bdr);}
+.sec-num{background:var(--pri);color:#fff;font-size:12.5px;font-weight:700;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sec-hd h2{font-size:19px;font-weight:700;color:var(--pri);}
+.sec-hd .sec-dur{margin-left:auto;font-size:11.5px;color:var(--txt-lt);background:var(--bg);padding:3px 10px;border-radius:20px;flex-shrink:0;white-space:nowrap;}
+
+/* CARD */
+.card{background:var(--card);border-radius:var(--r);padding:22px;margin-bottom:14px;box-shadow:var(--shd);border:1px solid rgba(221,228,240,.6);}
+.card h3{font-size:15.5px;font-weight:700;color:var(--pri);margin-bottom:10px;}
+.card h4{font-size:14px;font-weight:700;color:var(--txt);margin:14px 0 7px;}
+.card h4:first-child{margin-top:0;}
+.card p{font-size:14px;color:var(--txt);margin-bottom:10px;line-height:1.72;}
+.card p:last-child{margin-bottom:0;}
+
+/* DEFINITION */
+.def{background:var(--pri-pale);border-left:3px solid var(--pri);padding:13px 16px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin:10px 0;}
+.def p{font-size:13.5px;color:var(--txt);margin-bottom:3px;}
+.def .dsrc{font-size:11.5px;color:var(--txt-lt);font-style:italic;}
+
+/* ANALOGY */
+.anl{background:var(--warm-lt);border:1px solid rgba(224,141,22,.25);border-radius:var(--r-sm);padding:14px 17px;margin:12px 0;}
+.anl-lbl{font-size:11px;font-weight:700;color:var(--warm);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;display:flex;align-items:center;gap:5px;}
+.anl p{font-size:13.5px;color:#78350F;font-style:italic;line-height:1.6;margin:0;}
+
+/* PEMANTIK */
+.pmt{background:var(--acc-lt);border:1px solid rgba(0,168,120,.25);border-radius:var(--r-sm);padding:16px 18px;margin:14px 0;}
+.pmt-lbl{font-size:11px;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px;display:flex;align-items:center;gap:5px;}
+.pmt .pmt-q{font-size:14.5px;color:#064E3B;font-weight:600;margin-bottom:6px;}
+.pmt .pmt-t{font-size:12.5px;color:#047857;font-style:italic;margin:0;}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0;border-radius:var(--r-sm);overflow:hidden;}
+.tbl th{background:var(--pri);color:#fff;padding:9px 13px;text-align:left;font-weight:600;}
+.tbl td{padding:9px 13px;border-bottom:1px solid var(--bdr);vertical-align:top;}
+.tbl tr:nth-child(even) td{background:#F8FAFF;}
+.tbl tr:last-child td{border-bottom:none;}
+
+/* TIMELINE */
+.tl{position:relative;padding-left:22px;}
+.tl::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--bdr);}
+.tl-item{position:relative;margin-bottom:18px;}
+.tl-item:last-child{margin-bottom:0;}
+.tl-item::before{content:'';position:absolute;left:-19px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--acc);border:2px solid white;box-shadow:0 0 0 2px var(--acc);}
+.tl-yr{font-size:11.5px;font-weight:700;color:var(--acc);margin-bottom:2px;}
+.tl-cnt{font-size:13.5px;color:var(--txt);}
+.tl-cnt strong{color:var(--pri);}
+
+/* FLIP CARDS */
+.flip-hint{text-align:center;font-size:11.5px;color:var(--txt-lt);margin-bottom:9px;}
+.flip-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:10px 0;}
+.fc{height:116px;perspective:1000px;cursor:pointer;}
+.fc-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .45s ease;}
+.fc.flipped .fc-inner{transform:rotateY(180deg);}
+.fc-f,.fc-b{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--r-sm);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center;}
+.fc-f{background:var(--pri);}
+.fc-f .fi{font-size:22px;margin-bottom:7px;}
+.fc-f .ft{font-size:12px;font-weight:700;color:#fff;line-height:1.3;}
+.fc-b{background:var(--acc);transform:rotateY(180deg);}
+.fc-b .fd{font-size:11.5px;color:#fff;line-height:1.4;}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0;}
+.stat{background:var(--pri);border-radius:var(--r-sm);padding:16px 12px;text-align:center;}
+.stat-n{font-size:26px;font-weight:800;color:#6FFFD8;display:block;line-height:1.1;}
+.stat-l{font-size:11px;color:rgba(255,255,255,.65);margin-top:4px;display:block;line-height:1.4;}
+
+/* LAYERS */
+.layers{display:flex;flex-direction:column;gap:8px;margin:12px 0;}
+.layer{display:flex;align-items:flex-start;gap:13px;background:var(--bg);border-radius:var(--r-sm);padding:13px 16px;border:1px solid var(--bdr);}
+.layer-ico{font-size:22px;flex-shrink:0;margin-top:2px;}
+.layer-txt h4{font-size:13.5px;font-weight:700;color:var(--pri);margin-bottom:2px;}
+.layer-txt p{font-size:12.5px;color:var(--txt-lt);margin:0;}
+
+/* DIMENSION CARDS */
+.dim-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0;}
+.dim{border-radius:var(--r-sm);padding:16px;text-align:center;}
+.dim:nth-child(1){background:#EEF2FF;}
+.dim:nth-child(2){background:#F0FDF4;}
+.dim:nth-child(3){background:#FEF9EC;}
+.dim .d-ico{font-size:28px;margin-bottom:6px;}
+.dim h4{font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px;}
+.dim p{font-size:12px;color:var(--txt-lt);margin:0;line-height:1.4;}
+
+/* CAUSE GRID */
+.cause-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0;}
+.cause{background:var(--bg);border:1px solid var(--bdr);border-radius:var(--r-sm);padding:14px 16px;}
+.cause h4{font-size:13px;font-weight:700;color:var(--pri);margin-bottom:5px;}
+.cause p{font-size:12.5px;color:var(--txt-lt);margin:0;line-height:1.4;}
+
+/* TABS */
+.tabs-wrap{background:var(--card);border-radius:var(--r);box-shadow:var(--shd);border:1px solid rgba(221,228,240,.6);overflow:hidden;}
+.tab-nav{display:flex;border-bottom:2px solid var(--bdr);overflow-x:auto;scrollbar-width:none;background:#F8FAFF;}
+.tab-nav::-webkit-scrollbar{display:none;}
+.tab-btn{background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;padding:13px 18px;font-size:13px;font-weight:600;color:var(--txt-lt);cursor:pointer;white-space:nowrap;font-family:inherit;transition:color .2s;}
+.tab-btn:hover{color:var(--pri);}
+.tab-btn.active{color:var(--pri);border-bottom-color:var(--pri);background:var(--card);}
+.tab-pane{display:none;padding:24px;}
+.tab-pane.active{display:block;}
+
+/* CASE */
+.cs-badge{display:inline-block;background:var(--pri-pale);color:var(--pri);font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:8px;}
+.cs-title{font-size:17px;font-weight:700;margin-bottom:3px;}
+.cs-sub{font-size:12.5px;color:var(--txt-lt);margin-bottom:14px;}
+.cs-body p{font-size:14px;line-height:1.72;margin-bottom:10px;}
+.cs-data{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0;border-radius:var(--r-sm);overflow:hidden;}
+.cs-data th{background:var(--bg);color:var(--txt);font-weight:700;padding:8px 12px;text-align:left;border-bottom:2px solid var(--bdr);}
+.cs-data td{padding:8px 12px;border-bottom:1px solid var(--bdr);}
+.cs-data tr:last-child td{border-bottom:none;}
+.up{color:var(--green);font-weight:600;}
+.down{color:var(--red);font-weight:600;}
+
+/* DISCUSSION Q */
+.dq-box{background:var(--bg);border-radius:var(--r-sm);padding:16px 18px;margin-top:16px;}
+.dq-box h4{font-size:12px;font-weight:700;color:var(--pri);text-transform:uppercase;letter-spacing:.4px;margin-bottom:12px;}
+.dq{display:flex;gap:10px;margin-bottom:10px;}
+.dq:last-child{margin-bottom:0;}
+.dq-n{background:var(--pri);color:#fff;font-size:11px;font-weight:700;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.dq p{font-size:13.5px;margin:0;line-height:1.55;}
+
+/* PELAJARAN */
+.lesson{background:linear-gradient(135deg,#0F2044,#1B3A8C);border-radius:var(--r-sm);padding:16px 18px;margin-top:14px;color:#fff;}
+.lesson h4{font-size:12.5px;font-weight:700;margin-bottom:8px;color:var(--acc);}
+.lesson p{font-size:13px;color:rgba(255,255,255,.8);line-height:1.6;margin:0;}
+
+/* QUIZ */
+.quiz-wrap{background:var(--card);border-radius:var(--r);box-shadow:var(--shd);overflow:hidden;border:1px solid rgba(221,228,240,.6);}
+.quiz-hd{background:linear-gradient(135deg,var(--pri),#2646B8);padding:24px 26px;color:#fff;}
+.quiz-hd h2{font-size:17px;font-weight:700;margin-bottom:3px;}
+.quiz-hd p{font-size:12.5px;color:rgba(255,255,255,.65);}
+.quiz-pgbar{height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin-top:14px;}
+.quiz-pgfill{height:100%;background:var(--acc);border-radius:2px;transition:width .3s ease;width:0%;}
+.quiz-q{padding:26px;display:none;}
+.quiz-q.active{display:block;}
+.q-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.q-num{font-size:12px;color:var(--txt-lt);font-weight:600;}
+.q-cat{font-size:11px;background:var(--pri-pale);color:var(--pri);padding:2px 8px;border-radius:20px;font-weight:600;}
+.q-text{font-size:15px;font-weight:600;color:var(--txt);margin-bottom:18px;line-height:1.5;}
+.q-opts{display:flex;flex-direction:column;gap:9px;}
+.q-opt{padding:11px 15px;border:1.5px solid var(--bdr);border-radius:var(--r-sm);cursor:pointer;font-size:13.5px;color:var(--txt);transition:all .18s;background:var(--card);display:flex;align-items:center;gap:10px;font-family:inherit;text-align:left;width:100%;}
+.q-opt:hover:not([disabled]){border-color:var(--pri);background:var(--pri-pale);}
+.q-opt.correct{border-color:var(--green);background:#F0FDF4;color:#14532D;}
+.q-opt.wrong{border-color:var(--red);background:#FEF2F2;color:#7F1D1D;}
+.opt-ltr{width:23px;height:23px;border-radius:50%;background:var(--bg);border:1.5px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;color:var(--txt-lt);}
+.q-opt.correct .opt-ltr{background:var(--green);border-color:var(--green);color:#fff;}
+.q-opt.wrong .opt-ltr{background:var(--red);border-color:var(--red);color:#fff;}
+.q-fb{margin-top:13px;padding:11px 15px;border-radius:var(--r-sm);font-size:13.5px;display:none;line-height:1.55;}
+.q-fb.show{display:block;}
+.q-fb.correct{background:#F0FDF4;color:#14532D;border:1px solid #BBF7D0;}
+.q-fb.wrong{background:#FEF2F2;color:#7F1D1D;border:1px solid #FECACA;}
+.q-next{margin-top:14px;display:none;background:var(--pri);color:#fff;border:none;padding:10px 22px;border-radius:var(--r-sm);font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s;}
+.q-next:hover{background:var(--pri-lt);}
+.q-next.show{display:inline-block;}
+
+/* RESULT */
+.q-result{display:none;padding:36px 26px;text-align:center;}
+.q-result.show{display:block;}
+.res-score{font-size:60px;font-weight:800;color:var(--pri);line-height:1;}
+.res-max{font-size:18px;color:var(--txt-lt);margin-bottom:6px;}
+.res-stars{font-size:28px;margin-bottom:12px;}
+.res-msg{font-size:17px;font-weight:700;color:var(--txt);margin-bottom:6px;}
+.res-sub{font-size:13.5px;color:var(--txt-lt);margin-bottom:22px;max-width:400px;margin-left:auto;margin-right:auto;}
+.res-detail{background:var(--bg);border-radius:var(--r-sm);padding:14px;margin-bottom:20px;text-align:left;}
+.res-detail h4{font-size:12px;font-weight:700;color:var(--txt-lt);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px;}
+.rd-item{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:6px;}
+.rd-item:last-child{margin-bottom:0;}
+.rd-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.rd-dot.c{background:var(--green);}
+.rd-dot.w{background:var(--red);}
+.retry-btn{background:var(--pri);color:#fff;border:none;padding:12px 28px;border-radius:var(--r-sm);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s;}
+.retry-btn:hover{background:var(--pri-lt);}
+
+/* REFERENCE */
+.ref-list{list-style:none;}
+.ref-item{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--bdr);}
+.ref-item:last-child{border-bottom:none;}
+.ref-n{background:var(--pri);color:#fff;font-size:11px;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.ref-c{font-size:13.5px;color:var(--txt);line-height:1.5;}
+.rbdg{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:6px;vertical-align:middle;}
+.rbdg.u{background:var(--pri-pale);color:var(--pri);}
+.rbdg.s{background:#FFF7ED;color:#9A3412;}
+
+/* ACCORDION */
+.acc-btn{width:100%;background:none;border:none;padding:13px 0;font-size:14px;font-weight:600;color:var(--pri);cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-family:inherit;border-bottom:1px solid var(--bdr);}
+.acc-btn .chv{transition:transform .25s;font-size:11px;color:var(--txt-lt);}
+.acc-btn.open .chv{transform:rotate(180deg);}
+.acc-body{display:none;padding:14px 0;}
+.acc-body.open{display:block;}
+
+/* INFO BOX */
+.info{background:#F0F4FF;border:1px solid #C7D2FE;border-radius:var(--r-sm);padding:12px 15px;margin:10px 0;}
+.info p{font-size:13.5px;color:#3730A3;margin:0;}
+
+/* CALLOUT */
+.callout{background:var(--bg);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;border:1px solid var(--bdr);}
+.callout h4{font-size:13px;font-weight:700;color:var(--txt);margin-bottom:6px;}
+.callout ul{padding-left:18px;}
+.callout li{font-size:13.5px;margin-bottom:5px;}
+.callout li:last-child{margin-bottom:0;}
+
+/* LABEL CHIP */
+.chip{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--bg);color:var(--txt-lt);border:1px solid var(--bdr);margin:2px;}
+.chip.pri{background:var(--pri-pale);color:var(--pri);border-color:transparent;}
+.chip.acc{background:var(--acc-lt);color:var(--acc);border-color:transparent;}
+
+/* FOOTER */
+footer{text-align:center;padding:20px;font-size:12px;color:var(--txt-lt);}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  main{padding:18px 12px 60px;}
+  .ph{padding:24px 20px 20px;}
+  .ph h1{font-size:19px;}
+  .flip-grid{grid-template-columns:repeat(3,1fr);}
+  .stats{grid-template-columns:1fr;}
+  .dim-grid{grid-template-columns:1fr;}
+  .cause-grid{grid-template-columns:1fr;}
+  .tab-btn{font-size:12px;padding:10px 12px;}
+  .quiz-q{padding:18px;}
+  .quiz-hd{padding:18px 20px;}
+  .sec-hd h2{font-size:16px;}
+}
+</style>
+</head>
+<body>
+
+<div id="pgbar"></div>
+
+<nav>
+  <div class="nav-brand">
+    <span class="nb-badge">BSD304</span>
+    <span class="nb-name">Ekonomi Digital Baru</span>
+  </div>
+  <div class="nav-links">
+    <a class="nl" href="#sec1">① Ekonomi Digital</a>
+    <a class="nl" href="#sec2">② Dampak Internet</a>
+    <a class="nl" href="#sec3">③ Kesenjangan Digital</a>
+    <a class="nl" href="#sec4">④ Studi Kasus</a>
+    <a class="nl" href="#sec5">⑤ Kuis</a>
+    <a class="nl" href="#ref">Referensi</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- PAGE HEADER -->
+<div class="ph">
+  <div class="ph-badge">📖 Handout Pertemuan 1</div>
+  <h1>Pendahuluan & Sekilas Ekonomi Digital</h1>
+  <div class="ph-sub">Ekonomi Digital Baru — Program Studi Bisnis Digital, Universitas Bhamada Slawi</div>
+  <div class="ph-meta">
+    <div class="ph-mi"><span class="ico">🕐</span> 100 menit (2 SKS)</div>
+    <div class="ph-mi"><span class="ico">📚</span> Buku 1 (Kasali) & Buku 3 (Jordan)</div>
+    <div class="ph-mi"><span class="ico">👨‍🏫</span> Andika Chandra Prasetyo, S.Kom., M.T.I</div>
+  </div>
+</div>
+
+<!-- OBJECTIVES -->
+<div class="obj-box">
+  <div class="obj-title">🎯 Capaian Pertemuan Ini</div>
+  <ol>
+    <li>Mahasiswa mampu menjelaskan <strong>pengertian dan ruang lingkup ekonomi digital</strong> secara komprehensif.</li>
+    <li>Mahasiswa mampu menganalisis <strong>dampak internet terhadap kehidupan ekonomi dan sosial</strong> di Indonesia.</li>
+    <li>Mahasiswa mampu menghubungkan konsep <strong>kesenjangan digital</strong> dengan realita yang ada di lingkungan terdekat.</li>
+  </ol>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 1: EKONOMI DIGITAL -->
+<!-- ============================================================ -->
+<div class="sec" id="sec1">
+  <div class="sec-hd">
+    <div class="sec-num">1</div>
+    <h2>Sekilas tentang Ekonomi Digital</h2>
+    <div class="sec-dur">⏱ 25 menit</div>
+  </div>
+
+  <div class="card">
+    <h3>1.1 Apa Itu Ekonomi Digital?</h3>
+    <p>Ekonomi digital bukanlah sekadar "jualan online" atau "pakai internet untuk bisnis." Ia adalah perubahan mendasar dalam cara nilai ekonomi diciptakan, didistribusikan, dan dikonsumsi — perubahan yang dipicu oleh digitalisasi hampir seluruh aspek kehidupan manusia.</p>
+
+    <div class="def">
+      <p><strong>Definisi Jordan (2020):</strong> Ekonomi digital adalah keseluruhan aktivitas ekonomi yang dimediasi oleh jaringan digital, mencakup infrastruktur teknologi, platform, data, dan seluruh interaksi ekonomi yang berlangsung di atasnya.</p>
+      <div class="dsrc">Sumber: Jordan, T. (2020). The Digital Economy. Wiley Publishers. Chapter 1.</div>
+    </div>
+
+    <div class="def">
+      <p><strong>Definisi Kasali (2018):</strong> Ekonomi digital adalah konsekuensi dari <em>The Great Shifting</em> — pergeseran besar-besaran cara manusia bekerja, bertransaksi, dan menciptakan nilai yang dipicu oleh gelombang digitalisasi.</p>
+      <div class="dsrc">Sumber: Kasali, R. (2018). The Great Shifting Series on Disruption. PT. Gramedia, Jakarta.</div>
+    </div>
+
+    <div class="anl">
+      <div class="anl-lbl">💡 Analogi</div>
+      <p>"Jika ekonomi konvensional ibarat pasar tradisional — berbatas tempat, berbatas waktu, berbatas jangkauan — maka ekonomi digital adalah pasar yang tidak pernah tutup, tidak mengenal batas geografis, dan bisa diakses oleh jutaan penjual dan pembeli secara bersamaan dari mana pun di dunia."</p>
+    </div>
+
+    <h4>Perbedaan Ekonomi Konvensional vs. Ekonomi Digital</h4>
+    <table class="tbl">
+      <thead><tr><th>Dimensi</th><th>Ekonomi Konvensional</th><th>Ekonomi Digital</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Aset utama</strong></td><td>Fisik: tanah, mesin, gedung</td><td>Data, konektivitas, algoritma</td></tr>
+        <tr><td><strong>Batas pasar</strong></td><td>Terbatas geografis</td><td>Tanpa batas (borderless)</td></tr>
+        <tr><td><strong>Biaya marginal</strong></td><td>Tinggi (cetak buku = biaya kertas)</td><td>Mendekati nol (e-book = hampir gratis)</td></tr>
+        <tr><td><strong>Perantara</strong></td><td>Berlapis (produsen→distributor→retailer→konsumen)</td><td>Terpangkas (disintermediation)</td></tr>
+        <tr><td><strong>Kecepatan transaksi</strong></td><td>Lambat (butuh pertemuan fisik)</td><td>Real-time, 24/7</td></tr>
+        <tr><td><strong>Skala bisnis</strong></td><td>Terbatas kapasitas fisik</td><td>Bisa masif tanpa infrastruktur fisik proporsional</td></tr>
+      </tbody>
+    </table>
+
+    <div class="anl">
+      <div class="anl-lbl">💡 Analogi — Biaya Marginal Nol</div>
+      <p>"Penerbit buku fisik harus mengeluarkan biaya kertas, cetak, dan distribusi untuk setiap satu buku tambahan. Tapi ketika Tokopedia menambahkan satu produk baru ke katalognya yang sudah memiliki jutaan produk — biaya tambahannya hampir nol. Inilah mengapa platform digital bisa tumbuh sangat cepat tanpa perlu investasi fisik yang proporsional."</p>
+    </div>
+
+    <div class="pmt">
+      <div class="pmt-lbl">🗣 Pemantik Diskusi 1A <span style="font-weight:400;font-style:italic;">— berpasangan, 2 menit</span></div>
+      <p class="pmt-q">"Kalian punya teman atau anggota keluarga yang berjualan secara konvensional. Apakah mereka sudah masuk ke ekonomi digital? Apa yang berubah? Apa yang menghalangi?"</p>
+      <p class="pmt-t">Tujuan: membangun jembatan antara teori dan realita terdekat mahasiswa, sekaligus memperkenalkan isu digital divide secara organik.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>1.2 Sejarah Singkat Perkembangan Ekonomi Digital</h3>
+    <p>Ekonomi digital tidak muncul tiba-tiba. Ia berkembang melalui beberapa gelombang teknologi yang saling memperkuat:</p>
+    <div class="tl">
+      <div class="tl-item">
+        <div class="tl-yr">1990-an — Kelahiran Internet Komersial</div>
+        <div class="tl-cnt">Website pertama, e-mail mulai dipakai bisnis. <strong>Amazon & eBay</strong> lahir (1994–1995). Era "dot-com" penuh optimisme.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-yr">2000–2001 — Dot-Com Bubble & Crash</div>
+        <div class="tl-cnt">Ribuan perusahaan internet bangkrut karena model bisnis yang belum matang. Pelajaran: teknologi saja tidak cukup tanpa value proposition yang kuat.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-yr">2004–2008 — Web 2.0 & Media Sosial</div>
+        <div class="tl-cnt">Facebook (2004), YouTube (2005), Twitter (2006). Internet berubah dari media satu arah menjadi platform interaksi. <strong>Konten yang diciptakan pengguna</strong> menjadi aset ekonomi.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-yr">2007–2010 — Revolusi Smartphone</div>
+        <div class="tl-cnt">iPhone (2007) mengubah segalanya. Internet ada di saku semua orang. Platform mobile economy lahir. Di Indonesia: <strong>Kaskus</strong> mulai dominan, BlackBerry merajalela.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-yr">2010-an — Era Platform & Sharing Economy</div>
+        <div class="tl-cnt"><strong>Gojek</strong> (2009→2015 super-app), <strong>Tokopedia</strong> (2009), <strong>Bukalapak</strong> (2010). Big data, cloud computing, dan IoT mulai diterapkan di bisnis. Sharing economy (Airbnb, Uber) mengubah kepemilikan menjadi akses.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-yr">2020-an — AI, Creator Economy & Super-App</div>
+        <div class="tl-cnt">AI masuk ke arus utama bisnis. Ekonomi kreator tumbuh pesat (TikTok Shop, YouTube). <strong>GoTo merger</strong> (Gojek + Tokopedia). Web3 dan aset digital mulai dibicarakan.</div>
+      </div>
+    </div>
+    <div class="info">
+      <p>📍 <strong>Konteks Indonesia:</strong> Gojek lahir 2009 sebagai call center ojek dengan 20 pengemudi. Pada 2021, nilainya diperkirakan USD 10 miliar dan merger dengan Tokopedia menjadi GoTo — perusahaan teknologi terbesar di Asia Tenggara. Ini bukan hanya kisah sukses startup, ini adalah bukti bahwa Indonesia bukan sekadar penonton ekonomi digital global.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>1.3 Lima Karakteristik Utama Ekonomi Digital</h3>
+    <p>Jordan (2020) mengidentifikasi lima karakteristik fundamental yang membedakan ekonomi digital dari ekonomi konvensional. Klik setiap kartu untuk melihat penjelasannya.</p>
+    <div class="flip-hint">👆 Klik kartu untuk membalik</div>
+    <div class="flip-grid">
+      <div class="fc" onclick="this.classList.toggle('flipped')">
+        <div class="fc-inner">
+          <div class="fc-f"><div class="fi">💾</div><div class="ft">Digitization</div></div>
+          <div class="fc-b"><div class="fd">Segala sesuatu dikonversi menjadi data digital — dari musik, buku, foto, hingga transaksi keuangan.</div></div>
+        </div>
+      </div>
+      <div class="fc" onclick="this.classList.toggle('flipped')">
+        <div class="fc-inner">
+          <div class="fc-f"><div class="fi">🔗</div><div class="ft">Connectivity</div></div>
+          <div class="fc-b"><div class="fd">Semua aktor — manusia, mesin, dan bisnis — terhubung dalam jaringan yang saling berinteraksi secara real-time.</div></div>
+        </div>
+      </div>
+      <div class="fc" onclick="this.classList.toggle('flipped')">
+        <div class="fc-inner">
+          <div class="fc-f"><div class="fi">🏗️</div><div class="ft">Platformization</div></div>
+          <div class="fc-b"><div class="fd">Bisnis bergeser dari menjual produk ke membangun platform yang mempertemukan banyak pihak (produsen, konsumen, mitra).</div></div>
+        </div>
+      </div>
+      <div class="fc" onclick="this.classList.toggle('flipped')">
+        <div class="fc-inner">
+          <div class="fc-f"><div class="fi">📊</div><div class="ft">Datafication</div></div>
+          <div class="fc-b"><div class="fd">Data menjadi bahan bakar utama pengambilan keputusan bisnis — dari rekomendasi produk hingga penetapan harga dinamis.</div></div>
+        </div>
+      </div>
+      <div class="fc" onclick="this.classList.toggle('flipped')">
+        <div class="fc-inner">
+          <div class="fc-f"><div class="fi">🤖</div><div class="ft">Automation</div></div>
+          <div class="fc-b"><div class="fd">Proses bisnis dijalankan oleh algoritma dan AI — dari chatbot layanan pelanggan hingga sistem pengelolaan inventaris otomatis.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="anl">
+      <div class="anl-lbl">💡 Analogi — Data sebagai Minyak Baru</div>
+      <p>"Data di era digital ibarat minyak bumi di era industri. Mentah, tidak bernilai sendiri. Tapi setelah 'diolah' — dianalisis, dimodelkan, diterapkan — ia menggerakkan seluruh mesin ekonomi digital. Bedanya: minyak habis jika dipakai, data justru semakin bernilai jika semakin banyak dikumpulkan dan diproses."</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>1.4 Ruang Lingkup: Tiga Lapisan Ekonomi Digital</h3>
+    <p>Jordan (2020) membagi ekosistem ekonomi digital menjadi tiga lapisan yang saling bergantung. Tanpa lapisan bawah, lapisan atas tidak bisa berfungsi.</p>
+    <div class="layers">
+      <div class="layer">
+        <div class="layer-ico">🏗️</div>
+        <div class="layer-txt">
+          <h4>Lapisan 1 — Infrastruktur</h4>
+          <p>Fondasi fisik dan teknis: jaringan telekomunikasi (4G/5G), kabel serat optik, data center, cloud computing. Contoh di Indonesia: Palapa Ring, Telkom, jaringan XL/Indosat/Telkomsel.</p>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="layer-ico">🏪</div>
+        <div class="layer-txt">
+          <h4>Lapisan 2 — Platform</h4>
+          <p>Sistem yang mempertemukan banyak pengguna dan menciptakan nilai melalui interaksi: marketplace (Tokopedia, Shopee), media sosial (Instagram, TikTok), mesin pencari (Google). Platform tidak memproduksi barang — ia menyediakan "tempat bertemu."</p>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="layer-ico">📱</div>
+        <div class="layer-txt">
+          <h4>Lapisan 3 — Aplikasi & Layanan</h4>
+          <p>Produk dan layanan yang dibangun di atas platform: e-commerce, fintech (GoPay, OVO), edutech (Ruangguru), healthtech (Alodokter), logistik digital (Sicepat, JNE digital). Ini lapisan yang paling langsung dirasakan konsumen.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pmt">
+      <div class="pmt-lbl">🗣 Pemantik Diskusi 1B <span style="font-weight:400;font-style:italic;">— diskusi kelas, 3 menit</span></div>
+      <p class="pmt-q">"Dari tiga lapisan ini, Indonesia paling kuat di lapisan mana? Dan paling lemah di mana? Apa buktinya?"</p>
+      <p class="pmt-t">Jawaban yang diharapkan: Indonesia kuat di lapisan aplikasi & layanan (banyak startup unicorn), namun masih bergantung pada infrastruktur asing (cloud AWS/Google) dan didominasi platform global di lapisan menengah.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: DAMPAK INTERNET -->
+<!-- ============================================================ -->
+<div class="sec" id="sec2">
+  <div class="sec-hd">
+    <div class="sec-num">2</div>
+    <h2>Dampak Internet pada Kehidupan</h2>
+    <div class="sec-dur">⏱ 20 menit</div>
+  </div>
+
+  <div class="card">
+    <h3>2.1 Skala Dampak: Angka yang Berbicara</h3>
+    <p>Untuk memahami mengapa ekonomi digital begitu penting bagi Indonesia, kita perlu melihat skalanya terlebih dahulu:</p>
+    <div class="stats">
+      <div class="stat"><span class="stat-n" data-target="215">0</span><span class="stat-l">juta pengguna internet di Indonesia (2024) — terbesar ke-4 dunia</span></div>
+      <div class="stat"><span class="stat-n" data-target="7.8">0</span><span class="stat-l">jam rata-rata penggunaan internet per hari per orang Indonesia</span></div>
+      <div class="stat"><span class="stat-n" data-target="77">0</span><span class="stat-l">miliar USD nilai ekonomi digital Indonesia 2023 (Google-Temasek)</span></div>
+    </div>
+    <div class="info">
+      <p>💡 <strong>Proyeksi:</strong> Nilai ekonomi digital Indonesia diproyeksikan mencapai USD 220–360 miliar pada 2030, menjadikannya yang terbesar di Asia Tenggara. (Sumber: Google, Temasek & Bain — e-Conomy SEA Report 2023)</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>2.2 The Great Shifting — Pergeseran yang Tidak Bisa Dihindari</h3>
+    <p>Kasali (2018) menggunakan istilah <em>The Great Shifting</em> untuk menggambarkan bukan sekadar adopsi teknologi, melainkan pergeseran struktural yang mempengaruhi hampir semua aspek kehidupan ekonomi.</p>
+
+    <div class="anl">
+      <div class="anl-lbl">💡 Analogi Kasali — Tsunami Digital</div>
+      <p>"Kasali mengibaratkan era ini seperti gempa bumi bawah laut. Di permukaan, laut terlihat tenang — bisnis kita masih berjalan, pelanggan masih datang. Tapi jauh di bawah, sudah terjadi pergeseran tektonik yang besar. Dan tsunami perubahan itu sudah dalam perjalanan menuju pantai. Yang siap akan memanfaatkannya. Yang tidak siap akan terseret."</p>
+    </div>
+
+    <button class="acc-btn" onclick="toggleAcc(this)">
+      📊 a. Pergeseran Pola Konsumsi <span class="chv">▼</span>
+    </button>
+    <div class="acc-body">
+      <p><strong>Dari memiliki → mengakses:</strong> Generasi sebelumnya membeli CD musik, kaset VHS, koran harian. Generasi sekarang berlangganan Spotify, Netflix, dan membaca berita di media online. Nilai ekonominya berpindah dari produk fisik ke layanan berlangganan.</p>
+      <p><strong>Dari loyal merek → loyal pengalaman:</strong> Konsumen digital tidak setia pada merek tertentu — mereka setia pada pengalaman terbaik. Itulah mengapa ulasan dan rating di Tokopedia atau GoFood begitu powerful.</p>
+      <p><strong>Dari toko fisik → omnichannel:</strong> Konsumen modern tidak memilih antara online atau offline — mereka menginginkan keduanya. "Lihat di toko, beli online" atau "pesan online, ambil di toko" sudah menjadi perilaku umum.</p>
+      <div class="callout">
+        <h4>Contoh Konkret di Indonesia</h4>
+        <ul>
+          <li>Minimarket Alfamart/Indomaret sekarang punya aplikasi belanja online</li>
+          <li>Toko buku Gramedia buka toko online di berbagai marketplace</li>
+          <li>Warung kopi "kekinian" di Tegal sudah ramai di GrabFood & GoFood</li>
+        </ul>
+      </div>
+    </div>
+
+    <button class="acc-btn" onclick="toggleAcc(this)">
+      💼 b. Pergeseran Dunia Kerja <span class="chv">▼</span>
+    </button>
+    <div class="acc-body">
+      <p><strong>Pekerjaan yang lahir baru:</strong> Content creator, data analyst, digital marketer, UI/UX designer, social media manager, cybersecurity specialist — pekerjaan-pekerjaan ini belum ada 20 tahun lalu.</p>
+      <p><strong>Pekerjaan yang terkikis:</strong> Kasir (diganti self-checkout & QRIS), teller bank (diganti m-banking & ATM), agen perjalanan konvensional (diganti Traveloka & Tiket.com), operator telepon (diganti chatbot AI).</p>
+      <p><strong>Gig Economy:</strong> Platform digital menciptakan model kerja baru yang fleksibel — pengemudi ojol, freelancer digital, reseller online. Di Indonesia, lebih dari 4 juta mitra driver terdaftar di Gojek dan Grab.</p>
+      <div class="pmt">
+        <div class="pmt-lbl">🗣 Pemantik Diskusi 2A <span style="font-weight:400;font-style:italic;">— tulis singkat, 2 menit</span></div>
+        <p class="pmt-q">"Sebutkan satu pekerjaan yang dilakukan orang tua atau keluargamu. Apakah pekerjaan itu ada risikonya tergantikan teknologi digital dalam 10 tahun ke depan? Mengapa?"</p>
+        <p class="pmt-t">Tujuan: membuat dampak terasa personal dan konkret, bukan abstrak.</p>
+      </div>
+    </div>
+
+    <button class="acc-btn" onclick="toggleAcc(this)">
+      🏢 c. Pergeseran Model Bisnis <span class="chv">▼</span>
+    </button>
+    <div class="acc-body">
+      <p><strong>Platform beats product:</strong> Gojek lebih bernilai dari banyak perusahaan transportasi besar, tanpa memiliki satu pun kendaraan. Tokopedia menjadi retailer terbesar tanpa menyimpan satu pun produk di gudangnya. Airbnb adalah perusahaan hotel terbesar tanpa memiliki satu pun kamar hotel.</p>
+
+      <div class="anl">
+        <div class="anl-lbl">💡 Analogi — Rantai Distribusi</div>
+        <p>"Bayangkan rantai distribusi seperti seekor ular panjang dengan banyak ruas — produsen, agen besar, agen kecil, toko grosir, toko retail. Setiap ruas mengambil margin. E-commerce dan platform digital memotong sebagian besar ruas itu, menghubungkan langsung kepala (produsen/UMKM) ke ekor (konsumen). Margin yang tadinya tersebar di banyak ruas, kini bisa dinikmati langsung oleh produsen atau dihemat oleh konsumen."</p>
+      </div>
+
+      <table class="tbl">
+        <thead><tr><th>Bisnis Lama</th><th>Nasib</th><th>Penyebab Disrupsi</th></tr></thead>
+        <tbody>
+          <tr><td>Blockbuster (rental video)</td><td>Bangkrut 2010</td><td>Netflix & streaming</td></tr>
+          <tr><td>Nokia (ponsel)</td><td>Jatuh drastis</td><td>Smartphone & App Store</td></tr>
+          <tr><td>Toko buku fisik kecil</td><td>Banyak tutup</td><td>E-book & marketplace</td></tr>
+          <tr><td>Taksi konvensional</td><td>Tersaingi berat</td><td>Gojek & Grab</td></tr>
+          <tr><td>Studio foto konvensional</td><td>Banyak gulung tikar</td><td>Smartphone + mini lab instan</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pmt" style="margin-top:14px;">
+      <div class="pmt-lbl">🗣 Pemantik Diskusi 2B <span style="font-weight:400;font-style:italic;">— diskusi bebas, 2 menit</span></div>
+      <p class="pmt-q">"Kasali menyebut era ini 'The Great Shifting'. Tapi siapa yang paling diuntungkan dari pergeseran ini, dan siapa yang paling dirugikan?"</p>
+      <p class="pmt-t">Tujuan: memperkenalkan dimensi ketidakadilan dalam ekonomi digital secara natural — jembatan menuju Bagian 3.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: KESENJANGAN DIGITAL -->
+<!-- ============================================================ -->
+<div class="sec" id="sec3">
+  <div class="sec-hd">
+    <div class="sec-num">3</div>
+    <h2>Kesenjangan Digital</h2>
+    <div class="sec-dur">⏱ 20 menit</div>
+  </div>
+
+  <div class="card">
+    <h3>3.1 Apa Itu Kesenjangan Digital (<em>Digital Divide</em>)?</h3>
+    <p>Kesenjangan digital adalah ketimpangan dalam akses, kemampuan, dan pemanfaatan teknologi digital antar individu, kelompok, atau wilayah. Ini bukan hanya soal "punya HP atau tidak" — ada tiga dimensi yang lebih dalam.</p>
+
+    <div class="anl">
+      <div class="anl-lbl">💡 Analogi — Tol Digital</div>
+      <p>"Bayangkan ekonomi digital sebagai jalan tol modern yang cepat dan efisien. Yang punya kendaraan (akses internet & literasi digital) bisa melaju kencang menuju peluang ekonomi. Yang tidak punya — terpaksa tetap di jalan desa yang berlubang, dengan kecepatan yang jauh tertinggal. Dan jarak antar mereka terus melebar setiap harinya."</p>
+    </div>
+
+    <div class="dim-grid">
+      <div class="dim">
+        <div class="d-ico">📶</div>
+        <h4>Dimensi Akses</h4>
+        <p>Apakah infrastruktur & perangkat tersedia dan terjangkau?</p>
+      </div>
+      <div class="dim">
+        <div class="d-ico">🎓</div>
+        <h4>Dimensi Literasi</h4>
+        <p>Apakah masyarakat memiliki kemampuan menggunakannya?</p>
+      </div>
+      <div class="dim">
+        <div class="d-ico">💼</div>
+        <h4>Dimensi Pemanfaatan</h4>
+        <p>Apakah digunakan untuk aktivitas yang produktif & bernilai ekonomi?</p>
+      </div>
+    </div>
+
+    <div class="anl">
+      <div class="anl-lbl">💡 Analogi — Kunci tapi Tidak Bisa Mengemudi</div>
+      <p>"Memiliki smartphone tapi hanya digunakan untuk menonton hiburan atau bermain game — dan tidak untuk berjualan, belajar, atau bertransaksi produktif — itu seperti memiliki kunci mobil tapi tidak tahu cara mengemudi. Aksesnya ada, kemampuannya belum. Dan tanpa pemanfaatan yang tepat, akses itu tidak menghasilkan nilai ekonomi apa pun."</p>
+    </div>
+
+    <table class="tbl">
+      <thead><tr><th>Dimensi</th><th>Indikator Konkret</th><th>Contoh di Indonesia</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Akses</strong></td><td>Kepemilikan perangkat, sinyal tersedia, harga paket data terjangkau</td><td>Daerah 3T vs. Jakarta; blank spot di pedalaman Kalimantan</td></tr>
+        <tr><td><strong>Literasi</strong></td><td>Kemampuan menggunakan perangkat & internet secara fungsional</td><td>Perbedaan kemampuan digital lintas generasi; petani vs. mahasiswa</td></tr>
+        <tr><td><strong>Pemanfaatan</strong></td><td>Penggunaan internet untuk ekonomi produktif bukan sekadar hiburan</td><td>Petani yang punya HP tapi belum berjualan online; UMKM yang belum punya rekening digital</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>3.2 Kondisi Nyata di Indonesia</h3>
+    <p>Indonesia adalah negara kepulauan dengan lebih dari 17.000 pulau dan 270 juta penduduk yang tersebar di berbagai tingkat akses teknologi. Ketimpangan ini nyata dan berlapis:</p>
+    <div class="cause-grid">
+      <div class="cause">
+        <h4>📡 Kesenjangan Geografis</h4>
+        <p>Penetrasi internet di Jawa >80%, sementara Papua & Maluku masih di bawah 50%. Kecepatan internet di daerah terpencil jauh di bawah standar untuk e-commerce.</p>
+      </div>
+      <div class="cause">
+        <h4>👥 Kesenjangan Generasi</h4>
+        <p>Digital native (lahir setelah 1995) vs. digital immigrant (generasi lebih tua). Literasi digital lansia dan penduduk pedesaan jauh di bawah rata-rata.</p>
+      </div>
+      <div class="cause">
+        <h4>👩 Kesenjangan Gender</h4>
+        <p>Perempuan di daerah pedesaan memiliki akses dan literasi digital lebih rendah dibanding laki-laki, memperparah ketimpangan ekonomi berbasis gender.</p>
+      </div>
+      <div class="cause">
+        <h4>💰 Kesenjangan Ekonomi</h4>
+        <p>Kelompok bawah kesulitan membeli smartphone berkualitas dan paket data yang memadai untuk aktivitas produktif, bukan sekadar chatting.</p>
+      </div>
+    </div>
+
+    <div class="info">
+      <p>📊 <strong>Data APJII 2023:</strong> Dari total pengguna internet Indonesia, 57% berlokasi di Pulau Jawa. Papua hanya menyumbang 1,2% pengguna internet nasional meski luasnya jauh melebihi Jawa. Ini menggambarkan betapa timpangnya distribusi akses digital di Indonesia.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>3.3 Empat Faktor Penyebab Kesenjangan Digital</h3>
+    <div class="cause-grid">
+      <div class="cause">
+        <h4>1️⃣ Infrastruktur</h4>
+        <p>Jaringan telekomunikasi belum merata — terutama di daerah terpencil, kepulauan, dan perbatasan. Butuh investasi besar yang tidak selalu menguntungkan secara komersial bagi operator swasta.</p>
+      </div>
+      <div class="cause">
+        <h4>2️⃣ Ekonomi</h4>
+        <p>Harga perangkat smartphone berkualitas dan paket data masih memberatkan kelompok berpenghasilan rendah. Untuk berjualan online, butuh smartphone yang lebih canggih dari sekadar WhatsApp.</p>
+      </div>
+      <div class="cause">
+        <h4>3️⃣ Pendidikan</h4>
+        <p>Literasi digital belum merata di semua jenjang pendidikan dan wilayah. Banyak guru pun belum melek digital sepenuhnya untuk mentransfer kemampuan ini ke murid.</p>
+      </div>
+      <div class="cause">
+        <h4>4️⃣ Budaya</h4>
+        <p>Resistensi terhadap teknologi baru di sebagian kelompok masyarakat — baik karena ketidakpercayaan, nilai tradisi, maupun ketakutan akan penipuan digital yang memang masih marak.</p>
+      </div>
+    </div>
+
+    <h4>Respons: Apa yang Sedang Dilakukan?</h4>
+    <table class="tbl">
+      <thead><tr><th>Aktor</th><th>Inisiatif</th><th>Target</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Pemerintah</strong></td><td>Palapa Ring — jaringan serat optik nasional 3 ring (Barat, Tengah, Timur)</td><td>Konektivitas daerah 3T</td></tr>
+        <tr><td><strong>Pemerintah</strong></td><td>Program Literasi Digital Nasional (Kominfo) — target 50 juta orang 2021–2024</td><td>Peningkatan literasi</td></tr>
+        <tr><td><strong>Pemerintah</strong></td><td>BUMDes Digital, Desa Pintar, Prukades berbasis e-commerce</td><td>Pemanfaatan produktif</td></tr>
+        <tr><td><strong>Swasta</strong></td><td>Tokopedia "Hyperlocal" — prioritaskan produk UMKM lokal di hasil pencarian</td><td>Inklusi UMKM daerah</td></tr>
+        <tr><td><strong>Swasta</strong></td><td>GoTo Impact — pelatihan digital untuk mitra dan UMKM</td><td>Peningkatan kapasitas</td></tr>
+      </tbody>
+    </table>
+
+    <div class="pmt">
+      <div class="pmt-lbl">🗣 Pemantik Diskusi 3A <span style="font-weight:400;font-style:italic;">— provokasi intelektual, 3 menit</span></div>
+      <p class="pmt-q">"Ada yang berpendapat: 'Kesenjangan digital akan hilang dengan sendirinya seiring waktu, karena teknologi pasti makin murah dan makin mudah diakses.' Setuju atau tidak? Berikan alasanmu."</p>
+      <p class="pmt-t">Tujuan: mendorong berpikir kritis — kesenjangan bukan hanya soal harga perangkat, tapi literasi dan konteks sosial-ekonomi yang lebih dalam.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: STUDI KASUS -->
+<!-- ============================================================ -->
+<div class="sec" id="sec4">
+  <div class="sec-hd">
+    <div class="sec-num">4</div>
+    <h2>Studi Kasus Diskusi Kelompok</h2>
+    <div class="sec-dur">⏱ 20 menit</div>
+  </div>
+
+  <div class="info" style="margin-bottom:14px;">
+    <p>📋 <strong>Format:</strong> Kelompok 4–5 orang | <strong>Alokasi:</strong> Baca kasus (2 menit) → Diskusi (10 menit) → Siapkan paparan (2 menit) → Presentasi mini 2 menit/kelompok</p>
+  </div>
+
+  <div class="tabs-wrap">
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab(this,'cs1')">📦 Kasus 1: Warteg Bu Sari</button>
+      <button class="tab-btn" onclick="switchTab(this,'cs2')">🎨 Kasus 2: Batik Pak Slamet</button>
+      <button class="tab-btn" onclick="switchTab(this,'cs3')">📷 Kasus 3: Studio Foto Cahaya</button>
+    </div>
+
+    <!-- KASUS 1 -->
+    <div class="tab-pane active" id="cs1">
+      <div class="cs-badge">Kasus 1 — UMKM Kuliner Masuk Platform Digital</div>
+      <div class="cs-title">"Warteg Bu Sari di Persimpangan Digital"</div>
+      <p class="cs-sub">Tegal, Jawa Tengah — 2019 hingga 2024</p>
+      <div class="cs-body">
+        <p>Bu Sari (52 tahun) menjalankan Warung Tegal di kawasan kos-kosan dekat sebuah universitas di Tegal. Selama 15 tahun, ia melayani pelanggan secara langsung — mahasiswa dan pekerja yang makan di tempat atau membungkus makanan. Pendapatan stabil, rata-rata <strong>Rp 1,2 juta per hari</strong>.</p>
+        <p>Saat pandemi COVID-19 menghantam 2020, pelanggan hilang hampir sepenuhnya. Seorang tetangganya menyarankan Bu Sari mendaftar ke GoFood dan GrabFood. Dengan bantuan anaknya yang kuliah, Bu Sari pun mencoba. <strong>Hasilnya tidak langsung mulus.</strong></p>
+        <p>Tiga bulan pertama, pesanan online hanya 5–8 per hari. Foto makanan diambil seadanya dengan HP lama. Nama menu pun tidak menarik: "nasi campur biasa". Bu Sari juga belum paham cara merespons ulasan pelanggan.</p>
+        <p>Anaknya mulai membantu: menata foto makanan dengan pencahayaan yang lebih baik, mengganti nama menu menjadi lebih deskriptif seperti <em>"Nasi Pecel Komplit + Tempe Bacem Khas Tegal"</em>, dan aktif membalas ulasan. Perlahan, rating warteg naik dari 3,8 → <strong>4,6 bintang</strong>.</p>
+        <p>Pada 2024, omzet Bu Sari mencapai rata-rata <strong>Rp 1,85 juta per hari</strong> — naik lebih dari 50% dari sebelum pandemi. Kini 40% omzetnya dari pesanan online. Ia bahkan menerima pesanan prasmanan via WhatsApp Business dan berencana membuka cabang kedua.</p>
+        <p>Namun Bu Sari menghadapi <strong>tantangan baru:</strong> komisi platform 20–25% per transaksi, ketergantungan pada algoritma aplikasi, persaingan dengan ratusan warteg lain di platform yang sama, dan ia masih belum bisa membaca dasbor performa (jumlah klik, jam puncak, conversion rate) di aplikasi mitra.</p>
+      </div>
+      <table class="cs-data">
+        <thead><tr><th>Indikator</th><th>Sebelum Digital (2019)</th><th>Sesudah Digital (2024)</th></tr></thead>
+        <tbody>
+          <tr><td>Rata-rata omzet/hari</td><td>Rp 1.200.000</td><td class="up">Rp 1.850.000 (+54%)</td></tr>
+          <tr><td>Porsi penjualan online</td><td>0%</td><td class="up">40%</td></tr>
+          <tr><td>Jangkauan pelanggan</td><td>Radius ±500 meter</td><td class="up">Radius 5–8 km</td></tr>
+          <tr><td>Rating di platform</td><td>—</td><td class="up">4,6 / 5 bintang</td></tr>
+          <tr><td>Komisi yang dibayar ke platform</td><td>Rp 0</td><td class="down">Rp 1,85–2,3 juta/bulan (est.)</td></tr>
+          <tr><td>Jumlah karyawan</td><td>2 orang</td><td class="up">3 orang</td></tr>
+        </tbody>
+      </table>
+      <div class="dq-box">
+        <h4>❓ Pertanyaan Diskusi</h4>
+        <div class="dq"><div class="dq-n">1</div><p><strong>Identifikasi Lapisan:</strong> Di lapisan mana dari ekonomi digital Bu Sari beroperasi? Jelaskan peran GoFood (sebagai platform) dan jaringan internet (sebagai infrastruktur) dalam kisahnya.</p></div>
+        <div class="dq"><div class="dq-n">2</div><p><strong>Great Shifting:</strong> Gunakan konsep Kasali — pergeseran apa saja yang dialami Bu Sari dalam cara berjualan, menjangkau pelanggan, dan bersaing? Apakah semua pergeseran itu menguntungkan?</p></div>
+        <div class="dq"><div class="dq-n">3</div><p><strong>Kesenjangan Digital:</strong> Apa yang membuat Bu Sari berhasil beradaptasi, sementara banyak pedagang lain gagal? Faktor kesenjangan dimensi mana yang paling berperan?</p></div>
+        <div class="dq"><div class="dq-n">4</div><p><strong>Rekomendasi:</strong> Jika kalian konsultan digital Bu Sari, apa <em>satu</em> langkah paling konkret untuk mengatasi tantangan yang ia hadapi sekarang?</p></div>
+      </div>
+      <div class="lesson">
+        <h4>💡 Pelajaran dari Kasus Ini</h4>
+        <p>Keberhasilan Bu Sari bukan murni soal teknologi, melainkan soal transfer literasi digital antar generasi — dari anak ke ibu. Ini contoh nyata bahwa dimensi <em>pemanfaatan</em> dalam kesenjangan digital jauh lebih dalam dari sekadar memiliki akses internet.</p>
+      </div>
+    </div>
+
+    <!-- KASUS 2 -->
+    <div class="tab-pane" id="cs2">
+      <div class="cs-badge">Kasus 2 — Industri Kreatif Tradisional Masuk Ekonomi Digital</div>
+      <div class="cs-title">"Batik Tulis Pak Slamet: Dari Tengkulak ke Tokopedia"</div>
+      <p class="cs-sub">Pekalongan, Jawa Tengah — 2017 hingga 2024</p>
+      <div class="cs-body">
+        <p>Pak Slamet (48 tahun) adalah pengrajin batik tulis generasi ketiga di Pekalongan. Ia menghasilkan 15–20 lembar kain batik tulis per bulan, dengan harga jual ke tengkulak (pengepul) Rp 180.000–250.000 per lembar. Tengkulak kemudian menjualnya ke toko batik dengan harga Rp 450.000–600.000, dan ke konsumen akhir bisa mencapai Rp 750.000–1.000.000.</p>
+        <p><strong>Pak Slamet hanya mendapat 25–33% dari harga konsumen akhir.</strong> Sisanya diambil oleh rantai distribusi.</p>
+        <p>Pada 2018, putrinya yang baru lulus SMK membuatkan toko di Tokopedia dan akun Instagram. Awalnya sulit: foto batik diambil di lantai rumah, deskripsi produk hanya "batik tulis halus". Tidak ada yang membeli selama 2 bulan pertama.</p>
+        <p>Perubahan besar terjadi saat putrinya mulai: memotret batik dengan kain latar berwarna kontras, membuat konten Instagram Reels yang memperlihatkan proses pembuatan batik tulis secara tradisional, dan menulis deskripsi produk yang menceritakan asal-usul motif serta filosofi batik. Konten "behind the scene" pembuatan batik itu viral di Instagram — dan pesanan mulai masuk dari Surabaya, Jakarta, bahkan Kalimantan.</p>
+        <p>Pada 2024, Pak Slamet menjual langsung ke konsumen dengan harga Rp 550.000–850.000 per lembar — dua hingga tiga kali lipat dari harga tengkulak. Permintaan bahkan melebihi kapasitas produksinya, sehingga ia merekrut dua pengrajin tambahan.</p>
+      </div>
+      <table class="cs-data">
+        <thead><tr><th>Indikator</th><th>Model Konvensional (tengkulak)</th><th>Model Digital (Tokopedia + IG)</th></tr></thead>
+        <tbody>
+          <tr><td>Harga jual per lembar</td><td>Rp 200.000 (ke tengkulak)</td><td class="up">Rp 600.000 (ke konsumen)</td></tr>
+          <tr><td>Margin yang diterima</td><td>~28% dari harga akhir konsumen</td><td class="up">~80% dari harga jual</td></tr>
+          <tr><td>Jangkauan pasar</td><td>Pekalongan & sekitarnya</td><td class="up">Seluruh Indonesia</td></tr>
+          <tr><td>Waktu bayar</td><td>30–60 hari (sistem bon)</td><td class="up">1–3 hari (transfer langsung)</td></tr>
+          <tr><td>Jumlah pengrajin</td><td>Hanya Pak Slamet sendiri</td><td class="up">3 orang (Pak Slamet + 2 rekrutan)</td></tr>
+          <tr><td>Risiko stok tidak laku</td><td>Tinggi (jika tengkulak tidak pesan)</td><td class="down">Tetap ada (jika produk tidak viral)</td></tr>
+        </tbody>
+      </table>
+      <div class="dq-box">
+        <h4>❓ Pertanyaan Diskusi</h4>
+        <div class="dq"><div class="dq-n">1</div><p><strong>Disintermediation:</strong> Konsep apa dalam ekonomi digital yang paling menjelaskan perubahan yang dialami Pak Slamet? Siapa yang "kalah" dari transformasi ini?</p></div>
+        <div class="dq"><div class="dq-n">2</div><p><strong>Datafication & Content:</strong> Mengapa konten "behind the scene" pembuatan batik tulis bisa menjadi aset ekonomi yang berharga? Kaitkan dengan karakteristik ekonomi digital.</p></div>
+        <div class="dq"><div class="dq-n">3</div><p><strong>Risiko Baru:</strong> Model bisnis digital Pak Slamet juga membawa risiko baru. Identifikasikan minimal 3 risiko yang belum pernah ia hadapi sebelumnya di model konvensional.</p></div>
+        <div class="dq"><div class="dq-n">4</div><p><strong>Skalabilitas:</strong> Pak Slamet ingin menaikkan produksi 3 kali lipat. Apa tantangan utama yang akan ia hadapi? Bagaimana solusi digital bisa membantu?</p></div>
+      </div>
+      <div class="lesson">
+        <h4>💡 Pelajaran dari Kasus Ini</h4>
+        <p>Disintermediation bukan hanya menghilangkan perantara — ia memindahkan kekuatan negosiasi dari rantai distribusi ke tangan produsen. Tapi ini hanya bisa terjadi jika produsen memiliki literasi digital dan koneksi langsung dengan konsumen. Tanpa itu, tengkulak tetap menjadi pemegang kendali.</p>
+      </div>
+    </div>
+
+    <!-- KASUS 3 -->
+    <div class="tab-pane" id="cs3">
+      <div class="cs-badge">Kasus 3 — Bisnis Lama Terdisrupsi: Pelajaran dari Kegagalan Adaptasi</div>
+      <div class="cs-title">"Studio Foto Cahaya: Ketika Tidak Mau Bergeser"</div>
+      <p class="cs-sub">Kota kecil, Jawa Tengah — 2008 hingga 2023</p>
+      <div class="cs-body">
+        <p>Studio Foto Cahaya berdiri sejak 1992 di pusat kota. Dikelola oleh Pak Hendra (55 tahun), studio ini pernah menjadi salah satu tempat terpercaya untuk foto wisuda, foto keluarga, dan cetak foto. Pada puncaknya (2005–2008), omzet bulanan mencapai <strong>Rp 25–30 juta</strong> dengan 4 karyawan.</p>
+        <p>Perubahan mulai terasa sekitar 2010–2012, ketika smartphone dengan kamera yang semakin baik mulai tersebar luas. Pelanggan mulai berkurang untuk sesi foto kasual. Pak Hendra tidak khawatir: <em>"Foto digital itu tidak bisa menggantikan kualitas foto studio profesional. Pelanggan setia akan tetap datang."</em></p>
+        <p>Tahun 2015, mesin cetak foto instan mulai muncul di minimarket Alfamart dan Indomaret. Cetak foto yang dulu perlu ke studio kini bisa dilakukan dalam 5 menit. Omzet turun ke Rp 15 juta per bulan. Pak Hendra merumahkan 2 karyawan.</p>
+        <p>Tahun 2019, layanan foto produk untuk e-commerce mulai dibutuhkan pedagang online. Beberapa studio lain di kota yang sama mulai menawarkan layanan foto produk, studio konten kreator, dan jasa edit foto profesional untuk Instagram. Pak Hendra menolak: <em>"Itu bukan fotografi seni. Studio saya untuk foto yang benar-benar bermakna."</em></p>
+        <p>Pandemi 2020 menjadi pukulan terakhir. Tanpa layanan online dan tanpa diversifikasi ke segmen baru, omzet anjlok hingga Rp 3–4 juta per bulan. Pada <strong>Maret 2023</strong>, Studio Foto Cahaya resmi tutup setelah 31 tahun beroperasi.</p>
+        <p><strong>Ironinya:</strong> Satu blok dari bekas studionya, berdiri Studio Digital Muda yang dibuka 2019 oleh anak muda berusia 24 tahun. Studio itu menawarkan foto produk e-commerce, studio konten kreator dengan ring light dan backdrop kekinian, serta layanan retouch foto untuk media sosial. Omzetnya pada 2023: Rp 35 juta per bulan.</p>
+      </div>
+      <table class="cs-data">
+        <thead><tr><th>Indikator</th><th>Studio Foto Cahaya (Pak Hendra)</th><th>Studio Digital Muda (pesaing baru)</th></tr></thead>
+        <tbody>
+          <tr><td>Tahun berdiri</td><td>1992</td><td>2019</td></tr>
+          <tr><td>Layanan utama</td><td>Foto portrait, cetak foto</td><td>Foto produk, konten kreator, retouch</td></tr>
+          <tr><td>Omzet puncak</td><td class="up">Rp 30 juta/bulan (2008)</td><td class="up">Rp 35 juta/bulan (2023)</td></tr>
+          <tr><td>Omzet akhir</td><td class="down">Rp 3–4 juta/bulan (2022)</td><td class="up">Masih tumbuh</td></tr>
+          <tr><td>Kehadiran digital</td><td>Tidak ada sama sekali</td><td>Instagram aktif, Google My Business</td></tr>
+          <tr><td>Nasib</td><td class="down">Tutup Maret 2023</td><td class="up">Ekspansi ke kota kedua</td></tr>
+        </tbody>
+      </table>
+      <div class="dq-box">
+        <h4>❓ Pertanyaan Diskusi</h4>
+        <div class="dq"><div class="dq-n">1</div><p><strong>Great Shifting:</strong> Kapan sebenarnya titik kritis pergeseran terjadi bagi Studio Foto Cahaya? Apakah Pak Hendra memiliki cukup waktu untuk beradaptasi? Jelaskan.</p></div>
+        <div class="dq"><div class="dq-n">2</div><p><strong>Faktor Kegagalan:</strong> Dari empat faktor penyebab kesenjangan digital (infrastruktur, ekonomi, pendidikan, budaya) — faktor mana yang paling dominan menjelaskan kegagalan Pak Hendra? Argumentasikan.</p></div>
+        <div class="dq"><div class="dq-n">3</div><p><strong>Perbandingan:</strong> Apa perbedaan mendasar dalam mindset antara Pak Hendra dan pengelola Studio Digital Muda? Bagaimana perbedaan mindset ini menentukan nasib bisnis mereka?</p></div>
+        <div class="dq"><div class="dq-n">4</div><p><strong>Pelajaran untuk Bisnis Kalian:</strong> Jika kalian memiliki bisnis konvensional yang sudah berjalan 10 tahun, apa tanda-tanda awal bahwa bisnis itu sedang menghadapi risiko disruption? Dan langkah apa yang akan kalian ambil?</p></div>
+      </div>
+      <div class="lesson">
+        <h4>💡 Pelajaran dari Kasus Ini</h4>
+        <p>Disruption tidak menunggu kesiapan kita. "The Great Shifting" Kasali tidak bisa dihentikan — hanya bisa diantisipasi dan direspons. Bisnis yang bertahan bukan yang paling kuat secara konvensional, melainkan yang paling adaptif terhadap perubahan. Pak Hendra punya 10+ tahun untuk beradaptasi — tapi pilihan untuk tidak bergerak adalah keputusan strategis, meski terasa bukan seperti keputusan apa pun.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: KUIS -->
+<!-- ============================================================ -->
+<div class="sec" id="sec5">
+  <div class="sec-hd">
+    <div class="sec-num">5</div>
+    <h2>Kuis Formatif Pertemuan 1</h2>
+    <div class="sec-dur">⏱ Mandiri</div>
+  </div>
+
+  <div class="quiz-wrap">
+    <div class="quiz-hd">
+      <h2>🧠 Uji Pemahamanmu</h2>
+      <p>10 soal pilihan ganda — mencakup seluruh materi Pertemuan 1</p>
+      <div class="quiz-pgbar"><div class="quiz-pgfill" id="qpg"></div></div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="quiz-q active" id="q1">
+      <div class="q-info"><span class="q-num">Soal 1 dari 10</span><span class="q-cat">Definisi</span></div>
+      <div class="q-text">Menurut Jordan (2020), ekonomi digital paling tepat didefinisikan sebagai...</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,'wrong','cs1','Kurang tepat. Jawaban ini terlalu sempit — ekonomi digital lebih dari sekadar jual-beli online.')"><span class="opt-ltr">A</span>Sistem jual beli barang dan jasa secara online melalui internet</button>
+        <button class="q-opt" onclick="answer(this,'correct','cs1','Benar! Jordan mendefinisikan ekonomi digital sebagai keseluruhan aktivitas ekonomi yang dimediasi jaringan digital — mencakup infrastruktur, platform, data, dan semua interaksi yang berlangsung di atasnya.')"><span class="opt-ltr">B</span>Keseluruhan aktivitas ekonomi yang dimediasi oleh jaringan digital, mencakup infrastruktur, platform, dan data</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs1','Kurang tepat. Penggunaan internet untuk bisnis adalah bagian kecil dari definisi yang jauh lebih luas.')"><span class="opt-ltr">C</span>Penggunaan internet dan aplikasi digital untuk keperluan bisnis dan perdagangan</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs1','Kurang tepat. Teknologi informasi adalah bagian dari infrastruktur, tapi ekonomi digital lebih luas dari sekadar infrastruktur TI.')"><span class="opt-ltr">D</span>Pemanfaatan teknologi informasi dan komunikasi untuk meningkatkan efisiensi operasi bisnis</button>
+      </div>
+      <div class="q-fb" id="fb1"></div>
+      <button class="q-next" id="nx1" onclick="nextQ(2)">Soal Berikutnya →</button>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q" id="q2">
+      <div class="q-info"><span class="q-num">Soal 2 dari 10</span><span class="q-cat">Konsep Kasali</span></div>
+      <div class="q-text">Istilah yang digunakan Rhenald Kasali (2018) untuk menggambarkan pergeseran besar-besaran akibat digitalisasi — yang mengubah cara manusia bekerja, bertransaksi, dan menciptakan nilai — adalah...</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,'wrong','cs2','Digital Disruption adalah istilah umum, bukan spesifik dari Kasali dalam konteks ini.')"><span class="opt-ltr">A</span>Digital Disruption</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs2','Creative Destruction adalah istilah dari ekonom Schumpeter, bukan Kasali dalam konteks ini.')"><span class="opt-ltr">B</span>Creative Destruction</button>
+        <button class="q-opt" onclick="answer(this,'correct','cs2','Tepat! "The Great Shifting" adalah judul seri buku Kasali dan istilah utama yang ia gunakan untuk menggambarkan pergeseran struktural besar-besaran di era digital.')"><span class="opt-ltr">C</span>The Great Shifting</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs2','The Digital Wave bukan istilah dari Kasali.')"><span class="opt-ltr">D</span>The Digital Wave</button>
+      </div>
+      <div class="q-fb" id="fb2"></div>
+      <button class="q-next" id="nx2" onclick="nextQ(3)">Soal Berikutnya →</button>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q" id="q3">
+      <div class="q-info"><span class="q-num">Soal 3 dari 10</span><span class="q-cat">Karakteristik</span></div>
+      <div class="q-text">Manakah yang BUKAN merupakan salah satu dari lima karakteristik utama ekonomi digital menurut Jordan (2020)?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,'wrong','cs3','Digitization adalah salah satu karakteristik yang benar.')"><span class="opt-ltr">A</span>Digitization — konversi segala sesuatu menjadi data digital</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs3','Connectivity adalah karakteristik yang benar.')"><span class="opt-ltr">B</span>Connectivity — semua aktor saling terhubung dalam jaringan</button>
+        <button class="q-opt" onclick="answer(this,'correct','cs3','Tepat! Monopolization bukan karakteristik yang disebutkan Jordan. Lima karakteristik yang benar adalah: Digitization, Connectivity, Platformization, Datafication, dan Automation.')"><span class="opt-ltr">C</span>Monopolization — penguasaan pasar oleh satu platform dominan</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs3','Automation adalah karakteristik yang benar — proses bisnis dijalankan oleh algoritma dan AI.')"><span class="opt-ltr">D</span>Automation — proses bisnis dijalankan oleh algoritma dan AI</button>
+      </div>
+      <div class="q-fb" id="fb3"></div>
+      <button class="q-next" id="nx3" onclick="nextQ(4)">Soal Berikutnya →</button>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q" id="q4">
+      <div class="q-info"><span class="q-num">Soal 4 dari 10</span><span class="q-cat">Tiga Lapisan</span></div>
+      <div class="q-text">Dalam model tiga lapisan ekonomi digital (Jordan, 2020), aplikasi pesan antar makanan seperti GoFood berada di lapisan...</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,'wrong','cs4','Lapisan infrastruktur mencakup jaringan telekomunikasi dan data center — bukan aplikasi.')"><span class="opt-ltr">A</span>Lapisan Infrastruktur</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs4','GoFood adalah aplikasi layanan akhir yang dibangun di atas platform (Gojek) — bukan platform itu sendiri dalam konteks tiga lapisan Jordan.')"><span class="opt-ltr">B</span>Lapisan Platform</button>
+        <button class="q-opt" onclick="answer(this,'correct','cs4','Tepat! GoFood adalah layanan/aplikasi yang langsung dirasakan konsumen — termasuk lapisan Aplikasi & Layanan yang dibangun di atas infrastruktur dan platform yang ada.')"><span class="opt-ltr">C</span>Lapisan Aplikasi & Layanan</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs4','Lapisan jaringan adalah bagian dari infrastruktur — bukan lapisan aplikasi.')"><span class="opt-ltr">D</span>Lapisan Jaringan Telekomunikasi</button>
+      </div>
+      <div class="q-fb" id="fb4"></div>
+      <button class="q-next" id="nx4" onclick="nextQ(5)">Soal Berikutnya →</button>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-q" id="q5">
+      <div class="q-info"><span class="q-num">Soal 5 dari 10</span><span class="q-cat">Karakteristik Digital</span></div>
+      <div class="q-text">Konsep "biaya marginal mendekati nol" (near-zero marginal cost) dalam ekonomi digital paling tepat menjelaskan fenomena berikut...</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,'wrong','cs5','Produk digital tetap memiliki harga — biaya marjinal nol tidak berarti gratis.')"><span class="opt-ltr">A</span>Semua produk digital tersedia gratis untuk konsumen</button>
+        <button class="q-opt" onclick="answer(this,'correct','cs5','Tepat! Inilah inti konsep biaya marginal mendekati nol — menambah satu pengguna atau satu unit produk digital ke dalam sistem yang sudah ada hampir tidak memerlukan biaya tambahan. Ini mengapa platform digital bisa tumbuh sangat cepat.')"><span class="opt-ltr">B</span>Menambah satu pengguna atau satu unit produk digital ke sistem yang sudah ada hampir tidak memerlukan biaya tambahan</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs5','Tidak ada biaya infrastruktur bukan pernyataan yang benar — infrastruktur tetap membutuhkan investasi besar.')"><span class="opt-ltr">C</span>Perusahaan digital tidak memerlukan investasi infrastruktur sama sekali</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs5','Harga produk digital ditentukan oleh berbagai faktor — ini bukan yang dimaksud biaya marginal.')"><span class="opt-ltr">D</span>Harga produk digital selalu lebih rendah dari produk fisik</button>
+      </div>
+      <div class="q-fb" id="fb5"></div>
+      <button class="q-next" id="nx5" onclick="nextQ(6)">Soal Berikutnya →</button>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quiz-q" id="q6">
+      <div class="q-info"><span class="q-num">Soal 6 dari 10</span><span class="q-cat">Great Shifting</span></div>
+      <div class="q-text">Dalam kasus Pak Slamet (pengrajin batik), manakah pernyataan yang paling tepat menggambarkan konsep "disintermediation" yang terjadi?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,'wrong','cs6','Ini justru kebalikan dari disintermediation — menambah perantara.')"><span class="opt-ltr">A</span>Pak Slamet menambahkan agen pemasaran digital sebagai perantara baru antara dirinya dan konsumen</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs6','Disintermediation bukan tentang harga, melainkan tentang hilangnya lapisan perantara.')"><span class="opt-ltr">B</span>Pak Slamet menurunkan harga batik agar lebih kompetitif di pasar digital</button>
+        <button class="q-opt" onclick="answer(this,'correct','cs6','Tepat! Disintermediation adalah penghilangan lapisan perantara. Dengan berjualan langsung di Tokopedia, Pak Slamet memotong tengkulak dan distributor — menghubungkan dirinya langsung ke konsumen akhir, sehingga margin yang ia terima jauh lebih besar.')"><span class="opt-ltr">C</span>Pak Slamet memotong rantai tengkulak dan berjualan langsung ke konsumen, sehingga margin yang ia terima meningkat drastis</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs6','Ini bukan disintermediation — ini lebih ke perubahan media pemasaran.')"><span class="opt-ltr">D</span>Pak Slamet mengganti media promosi dari mulut ke mulut menjadi media sosial digital</button>
+      </div>
+      <div class="q-fb" id="fb6"></div>
+      <button class="q-next" id="nx6" onclick="nextQ(7)">Soal Berikutnya →</button>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quiz-q" id="q7">
+      <div class="q-info"><span class="q-num">Soal 7 dari 10</span><span class="q-cat">Kesenjangan Digital</span></div>
+      <div class="q-text">Seorang petani di Jawa Tengah sudah memiliki smartphone dan koneksi internet 4G, namun hanya menggunakannya untuk menonton YouTube dan WhatsApp keluarga — tidak untuk memasarkan hasil panen secara digital. Ia mengalami kesenjangan digital pada dimensi...</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,'wrong','cs7','Dimensi Akses sudah terpenuhi — ia sudah punya smartphone dan koneksi 4G.')"><span class="opt-ltr">A</span>Dimensi Akses</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs7','Dimensi Infrastruktur adalah bagian dari dimensi akses — ia sudah memiliki akses jaringan.')"><span class="opt-ltr">B</span>Dimensi Infrastruktur</button>
+        <button class="q-opt" onclick="answer(this,'correct','cs7','Tepat! Ini adalah kesenjangan dimensi Pemanfaatan. Ia memiliki akses dan kemampuan dasar menggunakan smartphone, tapi belum memanfaatkan internet untuk aktivitas ekonomi yang produktif. Dimensi pemanfaatan sering menjadi bottleneck yang paling sulit diatasi.')"><span class="opt-ltr">C</span>Dimensi Pemanfaatan</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs7','Ia bisa mengoperasikan smartphone (YouTube, WhatsApp) — literasi dasar sudah ada. Masalahnya lebih pada pemanfaatan produktif.')"><span class="opt-ltr">D</span>Dimensi Literasi</button>
+      </div>
+      <div class="q-fb" id="fb7"></div>
+      <button class="q-next" id="nx7" onclick="nextQ(8)">Soal Berikutnya →</button>
+    </div>
+
+    <!-- Q8 -->
+    <div class="quiz-q" id="q8">
+      <div class="q-info"><span class="q-num">Soal 8 dari 10</span><span class="q-cat">Kesenjangan Digital</span></div>
+      <div class="q-text">Program Palapa Ring yang diluncurkan pemerintah Indonesia — membangun jaringan serat optik nasional ke seluruh wilayah termasuk daerah 3T — adalah respons terhadap kesenjangan digital pada dimensi...</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,'correct','cs8','Tepat! Palapa Ring adalah program infrastruktur yang secara langsung menyasar dimensi Akses — memastikan jaringan internet tersedia di seluruh wilayah Indonesia, termasuk yang selama ini blank spot.')"><span class="opt-ltr">A</span>Dimensi Akses — memastikan infrastruktur internet tersedia di seluruh wilayah</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs8','Program Literasi Digital Nasional (Kominfo) yang menyasar dimensi ini — bukan Palapa Ring.')"><span class="opt-ltr">B</span>Dimensi Literasi — meningkatkan kemampuan digital masyarakat</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs8','Program BUMDes dan Desa Digital lebih menyasar dimensi pemanfaatan — bukan Palapa Ring.')"><span class="opt-ltr">C</span>Dimensi Pemanfaatan — mendorong penggunaan internet untuk ekonomi produktif</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs8','Palapa Ring tidak secara langsung menyasar faktor budaya.')"><span class="opt-ltr">D</span>Dimensi Budaya — mengubah sikap masyarakat terhadap teknologi</button>
+      </div>
+      <div class="q-fb" id="fb8"></div>
+      <button class="q-next" id="nx8" onclick="nextQ(9)">Soal Berikutnya →</button>
+    </div>
+
+    <!-- Q9 -->
+    <div class="quiz-q" id="q9">
+      <div class="q-info"><span class="q-num">Soal 9 dari 10</span><span class="q-cat">Studi Kasus</span></div>
+      <div class="q-text">Dari kasus Studio Foto Cahaya (Pak Hendra), pelajaran utama yang paling tepat sesuai konsep "The Great Shifting" Kasali adalah...</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,'wrong','cs9','Ini terlalu absolut dan tidak benar — banyak bisnis lama yang berhasil bertransformasi digital.')"><span class="opt-ltr">A</span>Teknologi digital selalu menghancurkan bisnis lama tanpa pengecualian</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs9','Pengalaman dan reputasi adalah aset, tapi tidak menjamin kelangsungan jika tidak disertai adaptasi terhadap perubahan.')"><span class="opt-ltr">B</span>Bisnis dengan pengalaman dan reputasi panjang pasti akan bertahan dari disruption</button>
+        <button class="q-opt" onclick="answer(this,'correct','cs9','Tepat! Pak Hendra memiliki lebih dari satu dekade untuk beradaptasi — perubahan tidak terjadi tiba-tiba. "The Great Shifting" menunjukkan bahwa gelombang perubahan bisa diantisipasi jika kita mau melihat sinyal-sinyal awal dan bersedia beradaptasi.')"><span class="opt-ltr">C</span>Disruption memberikan waktu yang cukup untuk adaptasi — kegagalan beradaptasi adalah pilihan strategis, bukan takdir</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs9','Usia muda memang membantu adaptasi, tapi bukan faktor penentu utama — yang lebih penting adalah mindset dan kemauan untuk belajar.')"><span class="opt-ltr">D</span>Hanya pelaku bisnis muda yang mampu beradaptasi dengan perubahan digital</button>
+      </div>
+      <div class="q-fb" id="fb9"></div>
+      <button class="q-next" id="nx9" onclick="nextQ(10)">Soal Berikutnya →</button>
+    </div>
+
+    <!-- Q10 -->
+    <div class="quiz-q" id="q10">
+      <div class="q-info"><span class="q-num">Soal 10 dari 10</span><span class="q-cat">Sintesis</span></div>
+      <div class="q-text">Bu Sari berhasil beradaptasi ke ekonomi digital, sementara banyak pedagang lain gagal. Faktor yang paling tepat menjelaskan keberhasilannya dari perspektif dimensi kesenjangan digital adalah...</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,'wrong','cs10','Modal awal yang besar bukan faktor utama — Bu Sari justru memulai dengan resources yang terbatas.')"><span class="opt-ltr">A</span>Ia memiliki modal awal yang lebih besar dibanding pedagang lain</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs10','GoFood tersedia untuk semua orang — bukan keuntungan eksklusif Bu Sari.')"><span class="opt-ltr">B</span>Ia mendapat akses eksklusif ke platform GoFood lebih awal dari pedagang lain</button>
+        <button class="q-opt" onclick="answer(this,'correct','cs10','Tepat! Transfer literasi digital dari anak Bu Sari adalah kunci keberhasilan. Ini menunjukkan bahwa kesenjangan digital bisa dijembatani melalui transfer pengetahuan antar generasi — anaknya yang merupakan digital native membantu ibunya mengatasi keterbatasan di dimensi literasi dan pemanfaatan.')"><span class="opt-ltr">C</span>Ia mendapat transfer literasi digital dari anaknya — menjembatani kesenjangan dimensi literasi dan pemanfaatan</button>
+        <button class="q-opt" onclick="answer(this,'wrong','cs10','Lokasinya bukan faktor kunci yang membedakannya dari pedagang lain di area yang sama.')"><span class="opt-ltr">D</span>Lokasi warungnya sangat strategis di dekat kampus sehingga mudah ditemukan secara digital</button>
+      </div>
+      <div class="q-fb" id="fb10"></div>
+      <button class="q-next" id="nx10" onclick="showResult()">Lihat Hasil →</button>
+    </div>
+
+    <!-- RESULT -->
+    <div class="q-result" id="qresult">
+      <div class="res-score" id="res-score">0</div>
+      <div class="res-max">dari 10 soal benar</div>
+      <div class="res-stars" id="res-stars"></div>
+      <div class="res-msg" id="res-msg"></div>
+      <div class="res-sub" id="res-sub"></div>
+      <div class="res-detail" id="res-detail"></div>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 Coba Lagi</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- REFERENSI -->
+<!-- ============================================================ -->
+<div class="sec" id="ref">
+  <div class="sec-hd">
+    <div class="sec-num">📚</div>
+    <h2>Referensi</h2>
+  </div>
+  <div class="card">
+    <ul class="ref-list">
+      <li class="ref-item">
+        <div class="ref-n">1</div>
+        <div class="ref-c">Kasali, Rhenald. (2018). <em>The Great Shifting Series on Disruption.</em> Jakarta: PT. Gramedia Pustaka Utama. <span class="rbdg u">Utama</span><br><small style="color:var(--txt-lt);">→ Rujukan utama untuk konsep Great Shifting, disruption, dan perubahan perilaku konsumen di era digital. Konteks Indonesia sangat kuat.</small></div>
+      </li>
+      <li class="ref-item">
+        <div class="ref-n">2</div>
+        <div class="ref-c">Jordan, Tim. (2020). <em>The Digital Economy.</em> Cambridge: Polity Press (Wiley Publishers). <span class="rbdg u">Utama</span><br><small style="color:var(--txt-lt);">→ Kerangka teoretis tiga lapisan ekonomi digital, lima karakteristik, dan analisis kritis terhadap kekuatan dan ketimpangan dalam ekonomi digital global.</small></div>
+      </li>
+      <li class="ref-item">
+        <div class="ref-n">3</div>
+        <div class="ref-c">Wood, J.B., Hewlin, T., & Lah, T. (2011). <em>Consumption Economics: The New Rules of Tech.</em> Aiken: Bookmasters. <span class="rbdg u">Utama</span><br><small style="color:var(--txt-lt);">→ Model bisnis berbasis langganan dan pergeseran dari kepemilikan ke akses dalam ekonomi digital.</small></div>
+      </li>
+      <li class="ref-item">
+        <div class="ref-n">4</div>
+        <div class="ref-c">Parker, G.G., Van Alstyne, M.W., & Choudary, S.P. (2016). <em>Platform Revolution: How Networked Markets Are Transforming the Economy.</em> New York: W.W. Norton & Company. <span class="rbdg s">Pendukung</span><br><small style="color:var(--txt-lt);">→ Analisis mendalam tentang model bisnis platform — relevan untuk memahami Gojek, Tokopedia, dan ekosistem platform Indonesia.</small></div>
+      </li>
+      <li class="ref-item">
+        <div class="ref-n">5</div>
+        <div class="ref-c">Schmarzo, B. & Borne, K. (2020). <em>The Economics of Data, Analytics and Digital Transformation.</em> Birmingham: Packt Publishers. <span class="rbdg s">Pendukung</span><br><small style="color:var(--txt-lt);">→ Penjelasan tentang nilai data sebagai aset ekonomi utama di era digital — relevan untuk karakteristik Datafication.</small></div>
+      </li>
+      <li class="ref-item">
+        <div class="ref-n">6</div>
+        <div class="ref-c">Diamandis, P.H. & Kotler, S. (2020). <em>The Future is Faster Than You Think.</em> New York: Simon & Schuster. <span class="rbdg s">Pendukung</span><br><small style="color:var(--txt-lt);">→ Akselerasi teknologi dan dampaknya terhadap berbagai sektor — memperkuat pemahaman tentang disruption dan skala perubahan ekonomi digital.</small></div>
+      </li>
+      <li class="ref-item">
+        <div class="ref-n">7</div>
+        <div class="ref-c">APJII. (2023). <em>Laporan Survei Internet Indonesia 2023.</em> Jakarta: Asosiasi Penyelenggara Jasa Internet Indonesia.<br><small style="color:var(--txt-lt);">→ Data statistik penetrasi internet Indonesia, distribusi wilayah, dan profil pengguna. Sumber data primer untuk konteks Indonesia.</small></div>
+      </li>
+      <li class="ref-item">
+        <div class="ref-n">8</div>
+        <div class="ref-c">Google, Temasek & Bain. (2023). <em>e-Conomy SEA 2023 Report.</em> Singapore: Google Asia Pacific.<br><small style="color:var(--txt-lt);">→ Data nilai ekonomi digital Indonesia dan proyeksi 2030. Laporan tahunan paling komprehensif tentang ekonomi digital Asia Tenggara.</small></div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Handout Pertemuan 1 — BSD304 Ekonomi Digital Baru | Program Studi Bisnis Digital | Universitas Bhamada Slawi | TA 2025/2026
+</footer>
+
+<script>
+// PROGRESS BAR
+window.addEventListener('scroll', () => {
+  const d = document.documentElement;
+  const pct = (d.scrollTop / (d.scrollHeight - d.clientHeight)) * 100;
+  document.getElementById('pgbar').style.width = pct + '%';
+});
+
+// NAV HIGHLIGHT
+const sections = ['sec1','sec2','sec3','sec4','sec5','ref'];
+const links = document.querySelectorAll('.nl');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 80) cur = id;
+  });
+  links.forEach(l => {
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + cur) l.classList.add('active');
+  });
+});
+
+// ACCORDION
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+
+// TABS
+function switchTab(btn, paneId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
+}
+
+// STAT COUNTERS
+function animateCounters() {
+  document.querySelectorAll('.stat-n[data-target]').forEach(el => {
+    const target = parseFloat(el.dataset.target);
+    const isDecimal = target % 1 !== 0;
+    let start = 0;
+    const step = target / 60;
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { start = target; clearInterval(timer); }
+      el.textContent = isDecimal ? start.toFixed(1) : Math.floor(start);
+    }, 16);
+  });
+}
+const statsEl = document.querySelector('.stats');
+if (statsEl) {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCounters(); obs.unobserve(e.target); }});
+  }, {threshold: 0.3});
+  obs.observe(statsEl);
+}
+
+// QUIZ
+let score = 0;
+let answered = new Array(10).fill(false);
+let results = [];
+
+function answer(btn, result, qId, explanation) {
+  const qNum = qId.replace('cs','');
+  if (answered[parseInt(qNum)-1]) return;
+  answered[parseInt(qNum)-1] = true;
+  results.push({q: qNum, correct: result === 'correct'});
+
+  const opts = btn.parentElement.querySelectorAll('.q-opt');
+  opts.forEach(o => { o.disabled = true; o.style.cursor = 'default'; });
+  btn.classList.add(result);
+
+  const fb = document.getElementById('fb' + qNum);
+  fb.className = 'q-fb show ' + result;
+  fb.innerHTML = (result === 'correct' ? '✅ ' : '❌ ') + explanation;
+
+  const nx = document.getElementById('nx' + qNum);
+  nx.classList.add('show');
+
+  if (result === 'correct') score++;
+
+  const filled = answered.filter(Boolean).length;
+  document.getElementById('qpg').style.width = (filled / 10 * 100) + '%';
+}
+
+function nextQ(num) {
+  document.querySelector('.quiz-q.active').classList.remove('active');
+  document.getElementById('q' + num).classList.add('active');
+}
+
+function showResult() {
+  document.querySelector('.quiz-q.active').classList.remove('active');
+  const res = document.getElementById('qresult');
+  res.classList.add('show');
+  document.getElementById('qpg').style.width = '100%';
+
+  document.getElementById('res-score').textContent = score;
+
+  let stars = '', msg = '', sub = '';
+  if (score >= 9) { stars='⭐⭐⭐⭐⭐'; msg='Luar Biasa! Pemahaman sempurna.'; sub='Kamu menguasai seluruh konsep dasar Ekonomi Digital. Siap melanjutkan ke materi berikutnya!'; }
+  else if (score >= 7) { stars='⭐⭐⭐⭐'; msg='Sangat Baik! Hampir sempurna.'; sub='Beberapa konsep perlu sedikit diperdalam — coba baca kembali bagian yang jawabannya kurang tepat.'; }
+  else if (score >= 5) { stars='⭐⭐⭐'; msg='Cukup Baik. Terus belajar!'; sub='Fondasi sudah ada, tapi beberapa konsep kunci perlu diperkuat. Baca ulang bagian yang relevan ya.'; }
+  else { stars='⭐⭐'; msg='Perlu Lebih Banyak Belajar.'; sub='Jangan menyerah! Baca ulang handout ini dan coba kuis lagi. Konsep dasar ini penting untuk materi selanjutnya.'; }
+
+  document.getElementById('res-stars').textContent = stars;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('res-sub').textContent = sub;
+
+  let detailHtml = '<h4>Ringkasan Jawaban</h4>';
+  const topics = ['Definisi Jordan','Kasali & Great Shifting','Karakteristik Digital','Tiga Lapisan','Biaya Marginal','Disintermediation','Dimensi Pemanfaatan','Program Palapa Ring','Pelajaran Disruption','Sintesis Kasus'];
+  results.forEach((r, i) => {
+    detailHtml += `<div class="rd-item"><div class="rd-dot ${r.correct?'c':'w'}"></div>Soal ${r.q}: ${topics[i]} — <strong>${r.correct?'Benar ✓':'Salah ✗'}</strong></div>`;
+  });
+  document.getElementById('res-detail').innerHTML = detailHtml;
+}
+
+function resetQuiz() {
+  score = 0;
+  answered = new Array(10).fill(false);
+  results = [];
+  document.getElementById('qresult').classList.remove('show');
+  document.querySelectorAll('.quiz-q').forEach(q => q.classList.remove('active'));
+  document.getElementById('q1').classList.add('active');
+  document.getElementById('qpg').style.width = '0%';
+  document.querySelectorAll('.q-opt').forEach(o => {
+    o.classList.remove('correct','wrong');
+    o.disabled = false;
+    o.style.cursor = 'pointer';
+  });
+  document.querySelectorAll('.q-fb').forEach(f => f.className = 'q-fb');
+  document.querySelectorAll('.q-next').forEach(n => n.classList.remove('show'));
+}
+</script>
+</body>
+</html>
