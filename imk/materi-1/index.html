@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bahan Ajar IMK – Pertemuan 1: Fondasi IMK & Human-Centered Design</title>
+<style>
+  :root {
+    --navy:    #1A2744;
+    --navy-mid:#253558;
+    --gold:    #C9922A;
+    --gold-lt: #F0C96A;
+    --cream:   #F7F5F0;
+    --white:   #FFFFFF;
+    --text:    #1E2027;
+    --muted:   #5A5F70;
+    --border:  #D8D4CB;
+    --accent:  #3B7DD8;
+    --accent-lt:#EBF2FD;
+    --success: #2E7D5E;
+    --warn:    #B84C18;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 16px;
+  }
+
+  /* ── COVER ────────────────────────────────────── */
+  .cover {
+    background: var(--navy);
+    color: var(--white);
+    padding: 60px 40px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute; top: -40px; right: -60px;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: rgba(201,146,42,0.15);
+  }
+  .cover .kode {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    letter-spacing: .12em;
+    color: var(--gold-lt);
+    margin-bottom: 14px;
+  }
+  .cover h1 {
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: normal;
+    line-height: 1.3;
+    max-width: 680px;
+    margin-bottom: 10px;
+  }
+  .cover h1 strong { color: var(--gold-lt); }
+  .cover p.subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,.65);
+    max-width: 560px;
+    margin-bottom: 32px;
+    font-style: italic;
+  }
+  .cover-meta {
+    display: flex; flex-wrap: wrap; gap: 24px;
+  }
+  .cover-meta .chip {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-family: system-ui, sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .cover-meta .chip strong {
+    display: block;
+    color: var(--gold-lt);
+    font-size: 11px;
+    letter-spacing: .08em;
+    font-weight: 600;
+  }
+
+  /* ── WRAPPER ───────────────────────────────────── */
+  .page { max-width: 900px; margin: 0 auto; padding: 40px 32px 80px; }
+
+  /* ── TOC ────────────────────────────────────────── */
+  .toc {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 6px 6px 0;
+    padding: 24px 28px;
+    margin-bottom: 48px;
+  }
+  .toc h2 { font-size: 13px; letter-spacing: .12em; color: var(--muted);
+             font-family: system-ui, sans-serif; margin-bottom: 12px; }
+  .toc ol { padding-left: 20px; }
+  .toc ol li { margin: 5px 0; }
+  .toc a { color: var(--navy); text-decoration: none; font-size: 14px; font-family: system-ui, sans-serif; }
+  .toc a:hover { color: var(--gold); text-decoration: underline; }
+
+  /* ── SECTIONS ────────────────────────────────────── */
+  section { margin-bottom: 60px; }
+
+  .sec-header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sec-num {
+    background: var(--navy);
+    color: var(--gold-lt);
+    font-family: system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .sec-header h2 {
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: normal;
+    color: var(--navy);
+    line-height: 1.25;
+  }
+  .sec-header h2 em {
+    display: block;
+    font-size: 12px;
+    letter-spacing: .1em;
+    color: var(--muted);
+    font-style: normal;
+    font-family: system-ui, sans-serif;
+    margin-bottom: 2px;
+  }
+
+  p { margin-bottom: 16px; max-width: 72ch; }
+
+  h3 { font-size: 18px; color: var(--navy); margin: 28px 0 10px; font-weight: 600; }
+  h4 { font-size: 15px; color: var(--navy-mid); margin: 20px 0 8px; font-weight: 600; font-family: system-ui, sans-serif; }
+
+  /* ── CALLOUT BOXES ────────────────────────────────── */
+  .callout {
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-family: system-ui, sans-serif;
+    font-size: 14.5px;
+  }
+  .callout-header {
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .1em;
+    margin-bottom: 8px;
+  }
+  .callout.info   { background: var(--accent-lt); border-left: 4px solid var(--accent); }
+  .callout.info   .callout-header { color: var(--accent); }
+  .callout.gold   { background: #FDF6E8; border-left: 4px solid var(--gold); }
+  .callout.gold   .callout-header { color: var(--gold); }
+  .callout.warn   { background: #FFF0EB; border-left: 4px solid var(--warn); }
+  .callout.warn   .callout-header { color: var(--warn); }
+  .callout.success{ background: #EBF6F2; border-left: 4px solid var(--success); }
+  .callout.success .callout-header { color: var(--success); }
+  .callout.dark   { background: var(--navy); color: var(--white); border-left: 4px solid var(--gold); }
+  .callout.dark   .callout-header { color: var(--gold-lt); }
+
+  /* ── ANALOGY BOX ──────────────────────────────────── */
+  .analogy {
+    background: var(--white);
+    border: 1px dashed var(--gold);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin: 20px 0;
+    font-style: italic;
+    font-size: 15px;
+    color: #3B3520;
+    position: relative;
+  }
+  .analogy::before {
+    content: '💡 Analogi';
+    font-style: normal;
+    font-family: system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ── CYCLE / STAGES DIAGRAM ─────────────────────────── */
+  .stages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .stage-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-family: system-ui, sans-serif;
+    font-size: 13.5px;
+  }
+  .stage-card .num {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stage-card .label {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--navy-mid);
+    margin-bottom: 6px;
+  }
+  .stage-card .desc { color: var(--muted); font-size: 13px; line-height: 1.5; }
+  .stage-card.execution { border-top: 3px solid var(--accent); }
+  .stage-card.evaluation { border-top: 3px solid var(--success); }
+  .stage-card.goal-card { border-top: 3px solid var(--gold); }
+
+  /* ── GULF COMPARISON ─────────────────────────────────── */
+  .gulf-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .gulf-box {
+    border-radius: 6px;
+    padding: 20px;
+    font-family: system-ui, sans-serif;
+  }
+  .gulf-box h4 { margin-top: 0; font-size: 14px; }
+  .gulf-box ul { padding-left: 16px; font-size: 13.5px; }
+  .gulf-box ul li { margin: 6px 0; }
+  .gulf-exec { background: #EBF2FD; }
+  .gulf-exec h4 { color: var(--accent); }
+  .gulf-eval { background: #EBF6F2; }
+  .gulf-eval h4 { color: var(--success); }
+
+  @media (max-width: 600px) {
+    .gulf-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── PRINCIPLES TABLE ─────────────────────────────────── */
+  .principle-list { list-style: none; padding: 0; margin: 16px 0; }
+  .principle-list li {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+  }
+  .principle-list li .icon-col {
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    padding: 16px;
+  }
+  .principle-list li .content-col { padding: 14px 18px; font-size: 14px; font-family: system-ui, sans-serif; }
+  .principle-list li .content-col strong { color: var(--navy); font-size: 15px; display: block; margin-bottom: 4px; }
+  .principle-list li .content-col .tag {
+    display: inline-block;
+    background: var(--accent-lt);
+    color: var(--accent);
+    font-size: 10px; font-weight: 700; letter-spacing: .08em;
+    padding: 2px 7px; border-radius: 3px;
+    margin-bottom: 6px;
+  }
+
+  /* ── CASE STUDY ──────────────────────────────────── */
+  .case {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .case-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 18px 24px;
+    font-family: system-ui, sans-serif;
+  }
+  .case-header .tag {
+    font-size: 10px; letter-spacing: .12em; color: var(--gold-lt);
+    font-weight: 700; margin-bottom: 6px;
+  }
+  .case-header h3 { font-size: 17px; color: var(--white); margin: 0; }
+  .case-body { padding: 24px; font-size: 15px; font-family: system-ui, sans-serif; }
+  .case-body p { max-width: none; font-family: system-ui, sans-serif; font-size: 15px; }
+  .case-analysis {
+    background: #F7F5F0;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-top: 16px;
+  }
+  .case-analysis h4 { margin-top: 0; color: var(--navy); }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .badge {
+    font-family: system-ui, sans-serif;
+    font-size: 11.5px; font-weight: 700;
+    padding: 4px 10px; border-radius: 20px;
+    letter-spacing: .04em;
+  }
+  .badge.red   { background: #FEE2E2; color: #991B1B; }
+  .badge.blue  { background: #DBEAFE; color: #1E3A8A; }
+  .badge.green { background: #D1FAE5; color: #065F46; }
+  .badge.amber { background: #FEF3C7; color: #92400E; }
+
+  /* ── QUIZ ────────────────────────────────────────── */
+  .quiz-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    font-family: system-ui, sans-serif;
+  }
+  .quiz-item .q { font-weight: 600; font-size: 15px; margin-bottom: 12px; color: var(--navy); }
+  .quiz-item .q span {
+    display: inline-block;
+    background: var(--navy);
+    color: var(--gold-lt);
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    font-size: 12px; font-weight: 700;
+    text-align: center; line-height: 26px;
+    margin-right: 8px; flex-shrink: 0;
+  }
+  .options { list-style: none; padding: 0; }
+  .options li {
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin: 4px 0;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background .15s;
+  }
+  .options li:hover { background: var(--cream); border-color: var(--border); }
+  .options li.correct { background: #D1FAE5; border-color: #10B981; color: #065F46; font-weight: 600; }
+  .options li.wrong   { background: #FEE2E2; border-color: #EF4444; color: #991B1B; }
+  .answer-box {
+    background: #EBF6F2;
+    border-left: 3px solid var(--success);
+    border-radius: 0 4px 4px 0;
+    padding: 12px 16px;
+    margin-top: 12px;
+    font-size: 13.5px;
+    display: none;
+  }
+  .answer-box strong { color: var(--success); }
+  .show-btn {
+    background: none; border: 1px solid var(--border);
+    color: var(--muted); font-size: 12px;
+    padding: 5px 14px; border-radius: 4px; cursor: pointer;
+    font-family: system-ui, sans-serif; margin-top: 10px;
+  }
+  .show-btn:hover { border-color: var(--navy); color: var(--navy); }
+
+  /* ── TABLE ───────────────────────────────────────── */
+  .data-table {
+    width: 100%; border-collapse: collapse;
+    font-family: system-ui, sans-serif;
+    font-size: 14px; margin: 16px 0 24px;
+  }
+  .data-table th {
+    background: var(--navy); color: var(--gold-lt);
+    padding: 11px 14px; text-align: left; font-weight: 600;
+    font-size: 12px; letter-spacing: .06em;
+  }
+  .data-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:nth-child(even) td { background: rgba(0,0,0,.02); }
+
+  /* ── CHECKLIST ───────────────────────────────────── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    font-family: system-ui, sans-serif; font-size: 14.5px;
+    padding: 8px 0; border-bottom: 1px solid var(--border);
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .checklist li::before { content: '☐'; font-size: 18px; color: var(--navy); flex-shrink: 0; line-height: 1; }
+  .checklist li:last-child { border-bottom: none; }
+
+  /* ── TASK BOX ─────────────────────────────────────── */
+  .task {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .task-header {
+    background: #F0F4FF;
+    padding: 12px 20px;
+    display: flex; align-items: center; gap: 12px;
+    font-family: system-ui, sans-serif;
+  }
+  .task-num {
+    background: var(--navy); color: var(--gold-lt);
+    font-size: 12px; font-weight: 700;
+    padding: 4px 10px; border-radius: 3px;
+  }
+  .task-header h4 { margin: 0; color: var(--navy-mid); font-size: 14px; }
+  .task-body { padding: 18px 20px; font-family: system-ui, sans-serif; font-size: 14.5px; }
+  .task-body p { font-family: system-ui, sans-serif; font-size: 14.5px; }
+  .task-steps { padding-left: 20px; margin-top: 10px; }
+  .task-steps li { margin: 6px 0; }
+
+  /* ── FOOTER ─────────────────────────────────────── */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,.5);
+    padding: 24px 40px;
+    font-family: system-ui, sans-serif;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.8;
+  }
+  footer strong { color: rgba(255,255,255,.8); }
+
+  /* ── VISUAL DIAGRAM: GULF ────────────────────────── */
+  .gulf-diagram {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px 24px;
+    margin: 20px 0;
+    text-align: center;
+    font-family: system-ui, sans-serif;
+  }
+  .gulf-diagram .row {
+    display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap;
+  }
+  .gulf-box-small {
+    background: var(--navy);
+    color: var(--white);
+    padding: 12px 18px; border-radius: 6px;
+    font-size: 13px; font-weight: 600;
+    min-width: 100px;
+  }
+  .gulf-arrow {
+    display: flex; align-items: center; flex-direction: column;
+    padding: 0 8px; font-size: 12px; color: var(--muted);
+  }
+  .gulf-arrow .label { font-size: 11px; color: var(--warn); font-weight: 700; margin-top: 4px; }
+  .gulf-arrow .line { width: 80px; height: 2px; background: var(--border); position: relative; }
+  .gulf-arrow .line::after { content: '▶'; position: absolute; right: -6px; top: -9px; font-size: 14px; color: var(--border); }
+
+  @media print {
+    .cover { break-after: page; }
+    section { break-inside: avoid; }
+  }
+  @media (max-width: 640px) {
+    .page { padding: 24px 16px 60px; }
+    .cover { padding: 40px 20px 36px; }
+    .stages-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ═══════════════════════════════════════════ -->
+<div class="cover">
+  <div class="kode">INTERAKSI MANUSIA DAN KOMPUTER · IMK-2024-01 · PERTEMUAN 1</div>
+  <h1>Fondasi IMK &amp;<br><strong>Human-Centered Design</strong></h1>
+  <p class="subtitle">"Merancang tanpa memahami mekanisme tindakan manusia ibarat menjelajahi kota asing tanpa peta." — Don Norman</p>
+  <div class="cover-meta">
+    <div class="chip"><strong>SKS</strong>3 SKS</div>
+    <div class="chip"><strong>Pertemuan</strong>1 dari 14</div>
+    <div class="chip"><strong>Referensi Utama</strong>The Design of Everyday Things · Don Norman</div>
+    <div class="chip"><strong>Metode</strong>Lecture, Case Study, Active Quiz</div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ══ TOC ════════════════════════════════════════════ -->
+<div class="toc">
+  <h2>DAFTAR ISI</h2>
+  <ol>
+    <li><a href="#cpmk">Capaian Pembelajaran (CPMK)</a></li>
+    <li><a href="#hcd">Filosofi Human-Centered Design (HCD)</a></li>
+    <li><a href="#action">The Action Cycle: 7 Tahapan Aksi &amp; Dua Jurang Kognitif</a></li>
+    <li><a href="#prinsip">Enam Prinsip Fundamental Interaksi</a></li>
+    <li><a href="#kasus">Studi Kasus Industri &amp; Digital</a></li>
+    <li><a href="#kuis">Kuis Interaktif</a></li>
+    <li><a href="#tugas">Tugas Mandiri</a></li>
+  </ol>
+</div>
+
+<!-- ══ SECTION 1: CPMK ════════════════════════════════ -->
+<section id="cpmk">
+  <div class="sec-header">
+    <div class="sec-num">1</div>
+    <h2><em>CAPAIAN PEMBELAJARAN</em>Mengapa Pertemuan Ini Penting?</h2>
+  </div>
+
+  <p>Sebagian besar sistem digital yang gagal bukan disebabkan oleh bug teknis, melainkan karena sistem tersebut dirancang tanpa pemahaman mendalam tentang bagaimana manusia berpikir, merasakan, dan bertindak. Kegagalan adopsi produk, tingginya tingkat bounce rate, dan frustrasi pengguna semuanya berakar pada satu masalah: <strong>desain tidak selaras dengan psikologi manusia.</strong></p>
+
+  <p>Pertemuan pertama ini membangun fondasi berpikir Anda sebagai seorang perancang yang berwawasan manusia — bukan sekadar pengembang fitur.</p>
+
+  <div class="callout gold">
+    <div class="callout-header">CPMK — CAPAIAN PERTEMUAN INI</div>
+    Setelah menyelesaikan pertemuan ini, Anda mampu:
+    <ul style="padding-left:18px; margin-top:8px; font-size:14.5px;">
+      <li style="margin:5px 0"><strong>Analisis Teoretis:</strong> Menjelaskan siklus aksi manusia (Action Cycle) dan mengidentifikasi hambatan kognitif pada Gulf of Execution dan Gulf of Evaluation.</li>
+      <li style="margin:5px 0"><strong>Identifikasi Kegagalan:</strong> Mengevaluasi objek fisik maupun digital untuk menemukan kesalahan desain berbasis prinsip affordance, mapping, dan feedback.</li>
+      <li style="margin:5px 0"><strong>Aplikasi HCD:</strong> Menginternalisasi filosofi perancangan yang berfokus pada manusia sebagai metode pemecahan masalah desain yang iteratif.</li>
+    </ul>
+  </div>
+
+  <h3>Apa Itu IMK?</h3>
+  <p>Interaksi Manusia dan Komputer (IMK) adalah disiplin ilmu yang mempelajari desain, evaluasi, dan implementasi sistem komputasi interaktif yang digunakan oleh manusia, beserta fenomena-fenomena yang muncul di sekitarnya. IMK berada di persimpangan antara ilmu komputer, psikologi kognitif, desain komunikasi visual, dan ergonomi.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Aspek</th><th>Pandangan Lama (Feature-Driven)</th><th>Pandangan IMK (Human-Centered)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Prioritas</td><td>Menambah fitur sebanyak mungkin</td><td>Memastikan fitur yang ada dapat digunakan</td></tr>
+      <tr><td>Ukuran Keberhasilan</td><td>Jumlah fitur, performa teknis</td><td>Kepuasan pengguna, kemudahan penggunaan</td></tr>
+      <tr><td>Pengguna</td><td>Diharapkan belajar sistem</td><td>Sistem yang belajar dari pengguna</td></tr>
+      <tr><td>Kesalahan</td><td>Kesalahan pengguna (user error)</td><td>Kesalahan desain (design error)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ SECTION 2: HCD ════════════════════════════════ -->
+<section id="hcd">
+  <div class="sec-header">
+    <div class="sec-num">2</div>
+    <h2><em>FILOSOFI</em>Human-Centered Design (HCD)</h2>
+  </div>
+
+  <p>Don Norman mendefinisikan HCD sebagai proses yang memastikan kebutuhan manusia terpenuhi, produk yang dihasilkan dapat dipahami dan digunakan, serta pengalaman penggunaannya terasa positif dan menyenangkan. Filosofi ini bukan sekadar metode — ia adalah cara berpikir yang menempatkan manusia di pusat setiap keputusan desain.</p>
+
+  <div class="analogy">
+    Bayangkan Anda memasak makan malam untuk tamu. Desainer yang berfokus pada fitur akan memasak hidangan paling kompleks yang bisa mereka buat — karena mereka ingin memamerkan kemampuan. Desainer yang berfokus pada manusia akan terlebih dahulu bertanya: "Adakah yang alergi kacang? Siapa yang vegetarian? Apakah ada anak kecil?" Baru kemudian mereka memasak. HCD adalah seni memasak untuk tamu, bukan untuk ego koki.
+  </div>
+
+  <h3>Empat Aktivitas Iteratif HCD</h3>
+  <p>HCD bukan proses linier yang berakhir di satu titik. Ia adalah siklus yang terus berputar hingga produk benar-benar memenuhi kebutuhan pengguna. Norman menggambarkan empat tahap utamanya sebagai berikut:</p>
+
+  <div class="stages-grid">
+    <div class="stage-card goal-card">
+      <div class="num">1</div>
+      <div class="label">Observasi</div>
+      <div class="desc">Mengamati pengguna di konteks nyata. Bukan sekadar bertanya apa yang mereka inginkan, tetapi melihat apa yang <em>benar-benar</em> mereka lakukan. Pengguna sering tidak sadar akan kesulitan mereka sendiri.</div>
+    </div>
+    <div class="stage-card execution">
+      <div class="num">2</div>
+      <div class="label">Ideasi</div>
+      <div class="desc">Menghasilkan solusi kreatif berdasarkan temuan observasi. Fase divergen: sebanyak mungkin ide dikumpulkan tanpa menghakimi. Kuantitas dulu, kualitas kemudian.</div>
+    </div>
+    <div class="stage-card execution">
+      <div class="num">3</div>
+      <div class="label">Prototyping</div>
+      <div class="desc">Mewujudkan ide ke dalam bentuk yang bisa diuji — dari sketsa kertas, wireframe, hingga prototipe interaktif. Prinsipnya: <em>"Fail fast, fail cheap."</em></div>
+    </div>
+    <div class="stage-card evaluation">
+      <div class="num">4</div>
+      <div class="label">Pengujian</div>
+      <div class="desc">Mengevaluasi prototipe bersama pengguna nyata. Hasilnya menjadi input untuk siklus berikutnya. Iterasi berlanjut hingga desain dianggap cukup baik.</div>
+    </div>
+  </div>
+
+  <h3>Dua Aspek Krusial: Discoverability &amp; Understanding</h3>
+  <p>Ketika seseorang pertama kali berhadapan dengan sebuah produk, ada dua pertanyaan yang (secara bawah sadar) langsung muncul di benak mereka:</p>
+
+  <div class="gulf-grid">
+    <div class="gulf-box gulf-exec">
+      <h4>Discoverability — "Apa yang bisa saya lakukan?"</h4>
+      <p style="font-size:13.5px;">Apakah mungkin bagi pengguna untuk <em>menemukan</em> tindakan apa yang tersedia? Apakah kontrol dan opsi cukup terlihat tanpa perlu membaca manual?</p>
+      <ul>
+        <li>Tombol terlihat jelas</li>
+        <li>Aksi yang mungkin terbaca dari tampilan</li>
+        <li>Tidak membutuhkan instruksi eksternal</li>
+      </ul>
+    </div>
+    <div class="gulf-box gulf-eval">
+      <h4>Understanding — "Apa artinya ini?"</h4>
+      <p style="font-size:13.5px;">Apakah sistem mengkomunikasikan cara kerjanya secara efektif? Apakah pengguna membangun model mental yang benar tentang sistem?</p>
+      <ul>
+        <li>Ikon dan label bermakna</li>
+        <li>Alur kerja terasa logis</li>
+        <li>Kesalahan memberikan penjelasan</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-header">⚠ FENOMENA USER SELF-BLAME</div>
+    Riset Norman menunjukkan bahwa ketika pengguna gagal menggunakan sebuah sistem, reaksi pertama mereka hampir selalu adalah: <em>"Saya bodoh, saya yang salah."</em> Padahal, kegagalan tersebut hampir selalu merupakan kegagalan desainer dalam mengkomunikasikan cara kerja sistem. <strong>Desain yang baik tidak membutuhkan pembelaan diri dari penggunanya.</strong>
+  </div>
+
+  <h3>Model Double Diamond</h3>
+  <p>British Design Council memperkenalkan model Double Diamond untuk menggambarkan proses desain. Dua intan tersebut merepresentasikan dua fase utama: menemukan masalah yang tepat, dan menemukan solusi yang tepat. Masing-masing fase dimulai dengan divergensi (memperluas kemungkinan) lalu diakhiri dengan konvergensi (memilih satu jalur).</p>
+
+  <div class="callout info">
+    <div class="callout-header">MODEL DOUBLE DIAMOND</div>
+    <strong>Intan Pertama — "Masalah apa yang harus dipecahkan?"</strong><br>
+    Diverge: Riset luas, observasi, pengumpulan data pengguna.<br>
+    Converge: Mendefinisikan masalah yang tepat (problem framing).<br><br>
+    <strong>Intan Kedua — "Bagaimana kita memecahkannya?"</strong><br>
+    Diverge: Ideasi, brainstorming, prototyping banyak solusi.<br>
+    Converge: Memilih, mempoles, dan menguji satu solusi terbaik.
+  </div>
+</section>
+
+<!-- ══ SECTION 3: ACTION CYCLE ═════════════════════════ -->
+<section id="action">
+  <div class="sec-header">
+    <div class="sec-num">3</div>
+    <h2><em>PSIKOLOGI AKSI</em>The Action Cycle: 7 Tahapan &amp; Dua Jurang Kognitif</h2>
+  </div>
+
+  <p>Setiap kali manusia berinteraksi dengan sebuah sistem — apakah itu pintu, mesin ATM, atau aplikasi mobile — mereka melewati serangkaian proses kognitif yang dapat dipetakan. Norman menyebutnya sebagai <strong>Action Cycle</strong>. Memahami siklus ini adalah kunci untuk mendiagnosis di mana desain gagal.</p>
+
+  <h3>Dua Jurang Kognitif (The Two Gulfs)</h3>
+  <p>Sebelum masuk ke tujuh tahap, kita perlu memahami dua hambatan utama yang ada di antara pengguna dan sistem:</p>
+
+  <div class="gulf-diagram">
+    <div class="row">
+      <div class="gulf-box-small">PENGGUNA<br><small style="opacity:.7">Tujuan &amp; Keinginan</small></div>
+      <div class="gulf-arrow">
+        <div class="line"></div>
+        <div class="label">Gulf of<br>Execution</div>
+      </div>
+      <div class="gulf-box-small" style="background:var(--accent)">SISTEM<br><small style="opacity:.7">Tombol &amp; Fungsi</small></div>
+      <div class="gulf-arrow">
+        <div class="line"></div>
+        <div class="label">Gulf of<br>Evaluation</div>
+      </div>
+      <div class="gulf-box-small">PENGGUNA<br><small style="opacity:.7">Interpretasi Hasil</small></div>
+    </div>
+  </div>
+
+  <div class="gulf-grid">
+    <div class="gulf-box gulf-exec">
+      <h4>🧭 Gulf of Execution — "Apa yang harus saya lakukan?"</h4>
+      <p style="font-size:13.5px; margin-bottom:10px;">Jurang yang terjadi ketika pengguna <em>tidak tahu langkah fisik apa</em> yang harus dilakukan untuk mencapai tujuan mereka. Ini adalah sisi <strong>aksi</strong>.</p>
+      <ul>
+        <li>Tidak ada tombol yang terlihat jelas</li>
+        <li>Label yang membingungkan</li>
+        <li>Alur kerja yang tidak intuitif</li>
+        <li>Terlalu banyak pilihan (paradox of choice)</li>
+      </ul>
+      <p style="font-size:13px; margin-top:10px; color:var(--accent)"><strong>Dijembatani oleh:</strong> Signifier, Constraint, Mapping, Conceptual Model</p>
+    </div>
+    <div class="gulf-box gulf-eval">
+      <h4>🔍 Gulf of Evaluation — "Apakah berhasil?"</h4>
+      <p style="font-size:13.5px; margin-bottom:10px;">Jurang yang terjadi ketika pengguna <em>tidak dapat menginterpretasikan</em> apakah tindakan mereka memberikan hasil yang diinginkan. Ini adalah sisi <strong>evaluasi</strong>.</p>
+      <ul>
+        <li>Tidak ada konfirmasi setelah klik</li>
+        <li>Pesan error yang tidak jelas</li>
+        <li>Status sistem tidak terlihat</li>
+        <li>Loading tanpa indikator kemajuan</li>
+      </ul>
+      <p style="font-size:13px; margin-top:10px; color:var(--success)"><strong>Dijembatani oleh:</strong> Feedback, Conceptual Model</p>
+    </div>
+  </div>
+
+  <h3>7 Tahapan Aksi (Seven Stages of Action)</h3>
+  <p>Norman membagi siklus aksi manusia menjadi tujuh tahap: satu tahap pembentukan tujuan, tiga tahap eksekusi, dan tiga tahap evaluasi. Tahapan ini bisa berlangsung secara sadar maupun bawah sadar.</p>
+
+  <div class="stages-grid">
+    <div class="stage-card goal-card">
+      <div class="num">1</div>
+      <div class="label">Goal — Tujuan</div>
+      <div class="desc">Membentuk tujuan internal. Bisa dipicu oleh kebutuhan internal ("Saya lapar") atau stimulus eksternal (notifikasi muncul). <em>Contoh: "Saya ingin mengirim laporan ini."</em></div>
+    </div>
+    <div class="stage-card execution">
+      <div class="num">2</div>
+      <div class="label">Plan — Rencana</div>
+      <div class="desc">Merencanakan urutan tindakan umum untuk mencapai tujuan. Bisa ada banyak rencana alternatif. <em>Contoh: "Saya akan attach file lalu klik Send."</em></div>
+    </div>
+    <div class="stage-card execution">
+      <div class="num">3</div>
+      <div class="label">Specify — Tentukan</div>
+      <div class="desc">Menentukan gerakan spesifik yang akan dilakukan. <em>Contoh: "Saya akan klik ikon paperclip di pojok kiri bawah."</em></div>
+    </div>
+    <div class="stage-card execution">
+      <div class="num">4</div>
+      <div class="label">Perform — Lakukan</div>
+      <div class="desc">Melakukan aksi fisik aktual — klik, ketik, swipe, atau tekan. Ini adalah satu-satunya tahap yang bisa dilihat dari luar. <em>Contoh: Mengklik ikon attachment.</em></div>
+    </div>
+    <div class="stage-card evaluation">
+      <div class="num">5</div>
+      <div class="label">Perceive — Amati</div>
+      <div class="desc">Mengamati perubahan pada sistem setelah aksi. <em>Contoh: Melihat jendela file explorer terbuka atau... tidak terbuka.</em></div>
+    </div>
+    <div class="stage-card evaluation">
+      <div class="num">6</div>
+      <div class="label">Interpret — Tafsirkan</div>
+      <div class="desc">Menginterpretasikan apa yang diamati. Tahap kritis — di sinilah sering terjadi miskomunikasi antara sistem dan pengguna. <em>Contoh: "Apakah loading indicator ini berarti berhasil atau sedang memproses?"</em></div>
+    </div>
+    <div class="stage-card evaluation">
+      <div class="num">7</div>
+      <div class="label">Compare — Bandingkan</div>
+      <div class="desc">Membandingkan hasil yang diperoleh dengan tujuan awal. Apakah tujuan tercapai? Jika ya, siklus selesai. Jika tidak, siklus dimulai kembali. <em>Contoh: "File sudah ter-attach? Ya. Tujuan tercapai."</em></div>
+    </div>
+  </div>
+
+  <div class="analogy">
+    Ilustrasikan ini dengan skenario sederhana: Anda ingin "meredupkan lampu kamar" menggunakan aplikasi smart home yang baru. Tujuan (Tahap 1) jelas. Rencana (Tahap 2): buka aplikasi. Tapi di Tahap 3, Anda bingung — apakah mengeser slider atau menekan angka? Di Tahap 5, lampu memang berubah, tapi di Tahap 6 Anda tidak yakin apakah perubahan itu terjadi karena geser slider atau karena sensor otomatis. Ketidakpastian ini adalah produk langsung dari desain yang buruk.
+  </div>
+
+  <h3>Goal-Driven vs. Event-Driven Behavior</h3>
+  <p>Tidak semua perilaku manusia dimulai dari tujuan internal yang sadar. Norman membedakan dua jenis pemicu perilaku:</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Aspek</th><th>Goal-Driven</th><th>Event-Driven</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Pemicu</td>
+        <td>Niat internal yang terbentuk sebelumnya ("Saya perlu transfer uang hari ini")</td>
+        <td>Stimuli eksternal yang tiba-tiba ("Notifikasi promo flash sale muncul")</td>
+      </tr>
+      <tr>
+        <td>Upaya Kognitif</td>
+        <td>Tinggi — memerlukan perencanaan sadar</td>
+        <td>Rendah — reaksi hampir otomatis</td>
+      </tr>
+      <tr>
+        <td>Implikasi Desain</td>
+        <td>Sediakan navigasi yang jelas dan linear untuk tugas yang sudah direncanakan pengguna</td>
+        <td>Pastikan notifikasi dan pop-up mudah diproses dan tidak menyesatkan</td>
+      </tr>
+      <tr>
+        <td>Analogi</td>
+        <td>Melempar bola ke ring basket — ada target yang sudah ditetapkan sebelumnya</td>
+        <td>Bereaksi saat bola tiba-tiba dilempar ke arah Anda — respons refleks</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout dark">
+    <div class="callout-header">📌 CATATAN DOSEN</div>
+    Tanyakan kepada mahasiswa: "Terakhir kali Anda kehilangan data karena tidak sengaja menutup jendela aplikasi — di tahap mana siklus aksi Anda gagal?" <br><br>Biasanya jawabannya adalah Tahap 3 (Specify) — mereka secara otomatis menekan Ctrl+W padahal bermaksud Ctrl+S. Ini disebut <strong>slip</strong> — kesalahan eksekusi bukan pada level niat, tetapi pada level spesifikasi aksi.
+  </div>
+</section>
+
+<!-- ══ SECTION 4: 6 PRINSIP ════════════════════════════ -->
+<section id="prinsip">
+  <div class="sec-header">
+    <div class="sec-num">4</div>
+    <h2><em>PRINSIP DESAIN</em>Enam Prinsip Fundamental Interaksi Norman</h2>
+  </div>
+
+  <p>Keenam prinsip ini adalah instrumen yang digunakan desainer untuk menjembatani Gulf of Execution dan Gulf of Evaluation. Mereka berfungsi sebagai <em>bahasa visual dan fisik</em> yang memungkinkan sistem "berbicara" kepada penggunanya tanpa kata-kata.</p>
+
+  <ul class="principle-list">
+
+    <li>
+      <div class="icon-col">🖐</div>
+      <div class="content-col">
+        <span class="tag">PRINSIP 1</span>
+        <strong>Affordances — "Apa yang bisa dilakukan?"</strong>
+        Affordance adalah hubungan relasional antara suatu objek dan agen (manusia) yang menentukan <em>kemungkinan interaksi</em> yang dapat terjadi. Bukan sifat objek semata, melainkan potensi yang muncul dari kombinasi objek dan kemampuan pengguna.<br><br>
+        <strong>Contoh:</strong> Kursi mengandung affordance untuk diduduki bagi manusia, tetapi bisa menjadi palu bagi pembuat keputusan yang kreatif. Tombol pada antarmuka web mengandung affordance untuk diklik.<br><br>
+        <strong>Perhatian:</strong> Affordance bisa tidak terlihat (invisible affordance). Kaca mengandung anti-affordance terhadap passage of air, namun karena tidak terlihat, burung menabrak jendela — dan manusia menabrak pintu kaca.
+      </div>
+    </li>
+
+    <li>
+      <div class="icon-col">📌</div>
+      <div class="content-col">
+        <span class="tag">PRINSIP 2</span>
+        <strong>Signifiers — "Di mana dan bagaimana melakukannya?"</strong>
+        Jika affordance menjawab "apa yang bisa dilakukan", signifier menjawab "di mana dan bagaimana melakukannya." Signifier adalah penanda visual, auditori, atau fisik yang mengkomunikasikan aksi yang sesuai kepada pengguna.<br><br>
+        <strong>Contoh disengaja:</strong> Tanda "PUSH" atau "TARIK" pada pintu; garis bawah biru pada hyperlink; placeholder text pada field formulir.<br>
+        <strong>Contoh tidak disengaja:</strong> Jalur yang terbentuk di lapangan rumput karena orang sering berjalan di sana — meskipun bukan desain resmi, ia menjadi signifier alamiah tentang rute yang paling efisien.<br><br>
+        <strong>Perbedaan kunci dengan affordance:</strong> Affordance menentukan <em>apa yang mungkin</em>; signifier mengkomunikasikan <em>apa yang sebaiknya dilakukan</em>.
+      </div>
+    </li>
+
+    <li>
+      <div class="icon-col">🗺</div>
+      <div class="content-col">
+        <span class="tag">PRINSIP 3</span>
+        <strong>Mapping — "Hubungan kontrol dan hasil"</strong>
+        Mapping adalah hubungan antara kontrol dan efek yang dihasilkannya. Semakin alami hubungan ini, semakin mudah pengguna belajar dan mengingatnya. <strong>Natural mapping</strong> memanfaatkan analogi spasial yang sudah dipahami secara universal.<br><br>
+        <strong>Contoh natural mapping terbaik:</strong> Kontrol kursi mobil Mercedes-Benz berbentuk kursi miniatur — menggeser bagian depan kontrol ke atas akan mengangkat bagian depan kursi nyata.<br>
+        <strong>Contoh mapping buruk:</strong> Kompor dengan empat tungku tersusun persegi, tetapi keempat kenopnya tersusun dalam satu baris horizontal — pengguna harus menebak mana yang mengontrol mana.<br><br>
+        <strong>Natural Mapping &amp; Budaya:</strong> Mapping yang "alami" untuk satu budaya bisa tidak alami untuk budaya lain. Arah membaca teks (kiri-ke-kanan vs. kanan-ke-kiri) memengaruhi ekspektasi arah alur antarmuka.
+      </div>
+    </li>
+
+    <li>
+      <div class="icon-col">🔔</div>
+      <div class="content-col">
+        <span class="tag">PRINSIP 4</span>
+        <strong>Feedback — "Apa yang sedang terjadi?"</strong>
+        Feedback adalah informasi yang dikirim kembali ke pengguna tentang aksi yang telah dilakukan dan state sistem saat ini. Feedback menjembatani Gulf of Evaluation.<br><br>
+        <strong>Jenis-jenis feedback:</strong><br>
+        • <em>Visual:</em> Loading spinner, progress bar, perubahan warna tombol saat diklik, angka counter yang berubah.<br>
+        • <em>Auditori:</em> Suara klik saat tombol ditekan, notifikasi ding saat pesan terkirim, bunyi error.<br>
+        • <em>Haptic:</em> Getaran pada smartphone saat menerima pesan, sensasi klik fisik pada trackpad MacBook.<br><br>
+        <strong>Excess Feedback — Bahaya Terlalu Banyak Feedback:</strong> Sistem yang memberikan terlalu banyak notifikasi, pop-up, dan alert akan menciptakan "information overload." Pengguna pada akhirnya akan mengabaikan semua feedback — termasuk yang penting — karena kehilangan kemampuan untuk membedakan signal dari noise. Ini mirip dengan "alarm fatigue" di rumah sakit di mana perawat mengabaikan alarm karena terlalu banyak alarm palsu.
+      </div>
+    </li>
+
+    <li>
+      <div class="icon-col">🚧</div>
+      <div class="content-col">
+        <span class="tag">PRINSIP 5</span>
+        <strong>Constraints — "Apa yang tidak boleh dilakukan?"</strong>
+        Constraint membatasi ruang kemungkinan aksi sehingga pengguna diarahkan untuk melakukan tindakan yang benar dan kesalahan diminimalkan. Ada empat jenis constraint:<br><br>
+        <strong>Fisik:</strong> USB Type-A tidak bisa dimasukkan terbalik. Baterai AA tidak bisa dipasang berlawanan arah. Ini adalah pembatasan fisik-geometris.<br>
+        <strong>Logis:</strong> Saat merakit furnitur IKEA, jika masih ada satu sekrup yang tersisa di akhir, secara logis Anda tahu ada yang terlewat. Ini adalah pembatasan berbasis penalaran.<br>
+        <strong>Semantik:</strong> Menggunakan konteks dan makna. Pengemudi di kursi belakang simulator tidak harus diberikan kemudi — secara semantik, mereka adalah penumpang.<br>
+        <strong>Budaya/Konvensional:</strong> Warna merah untuk bahaya/stop, hijau untuk aman/go. Ikon X untuk menutup jendela. Ini adalah constraint berbasis kesepakatan sosial — sangat efektif, tetapi harus dipelajari terlebih dahulu.
+      </div>
+    </li>
+
+    <li>
+      <div class="icon-col">🧠</div>
+      <div class="content-col">
+        <span class="tag">PRINSIP 6</span>
+        <strong>Conceptual Models — "Bagaimana sistem ini bekerja?"</strong>
+        Conceptual model adalah pemahaman seseorang tentang cara kerja sebuah sistem. Ada tiga model yang saling berinteraksi:<br><br>
+        <strong>Design Model:</strong> Model yang ada di kepala desainer — bagaimana seharusnya sistem bekerja.<br>
+        <strong>System Image:</strong> Representasi sistem yang "terlihat" oleh pengguna melalui antarmuka, manual, dan label.<br>
+        <strong>Mental Model (User's Model):</strong> Model yang dibangun pengguna berdasarkan apa yang mereka lihat dari system image.<br><br>
+        <strong>Kunci:</strong> Desainer tidak bisa langsung menanamkan model mereka ke kepala pengguna. Satu-satunya jembatannya adalah System Image. Jika system image tidak mengkomunikasikan design model dengan tepat, pengguna akan membangun mental model yang salah — dan interaksi akan gagal.<br><br>
+        <strong>Analogi Termostat:</strong> Banyak orang meyakini bahwa menyetel termostat ke suhu paling tinggi akan mempercepat pemanasan ruangan. Padahal, termostat hanya on/off — ia tidak mengatur kecepatan. Ini adalah mental model yang salah, lahir dari system image yang tidak mengkomunikasikan cara kerjanya dengan jelas.
+      </div>
+    </li>
+
+  </ul>
+
+  <div class="callout success">
+    <div class="callout-header">✅ CHECKLIST IDENTIFIKASI KEGAGALAN DESAIN</div>
+    Gunakan checklist ini saat menganalisis desain antarmuka apapun:
+    <ul style="padding-left:18px; margin-top:8px;">
+      <li style="margin:5px 0">Apakah pengguna tahu tindakan apa yang <em>mungkin</em> dilakukan? <strong>(Affordance + Signifier)</strong></li>
+      <li style="margin:5px 0">Apakah lokasi kontrol sesuai dengan hasilnya secara spasial/logis? <strong>(Mapping)</strong></li>
+      <li style="margin:5px 0">Apakah sistem segera memberitahu apa yang sedang terjadi? <strong>(Feedback)</strong></li>
+      <li style="margin:5px 0">Apakah desain meminimalkan kemungkinan kesalahan langkah? <strong>(Constraints)</strong></li>
+      <li style="margin:5px 0">Apakah pengguna bisa membangun model mental yang benar? <strong>(Conceptual Model)</strong></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══ SECTION 5: STUDI KASUS ══════════════════════════ -->
+<section id="kasus">
+  <div class="sec-header">
+    <div class="sec-num">5</div>
+    <h2><em>STUDI KASUS</em>Kegagalan &amp; Keberhasilan Desain Nyata</h2>
+  </div>
+
+  <p>Teori desain memiliki konsekuensi nyata. Berikut adalah studi kasus yang membedah kegagalan dan keberhasilan desain menggunakan kerangka prinsip yang telah kita pelajari — mulai dari objek fisik hingga antarmuka digital yang Anda gunakan sehari-hari.</p>
+
+  <!-- KASUS 1 -->
+  <div class="case">
+    <div class="case-header">
+      <div class="tag">KASUS 1 · OBJEK FISIK · KEGAGALAN SIGNIFIER</div>
+      <h3>Norman Doors: Pintu yang "Berbohong"</h3>
+    </div>
+    <div class="case-body">
+      <p>Di Departemen Ilmu Komputer KAIST University, Korea Selatan, terdapat serangkaian pintu kaca yang secara estetis sangat elegan. Namun pintu-pintu ini secara konsisten menyebabkan pengguna menabrak kaca atau beberapa kali mencoba sebelum berhasil membukanya.</p>
+      <p>Masalahnya: kedua sisi pintu memiliki gagang vertikal identik. Gagang vertikal secara universal diinterpretasikan sebagai "tarik" — ini adalah signifier yang kuat dan telah dipelajari bertahun-tahun. Namun, salah satu sisi pintu harus <em>didorong</em>. Signifier memberikan isyarat yang berlawanan dengan fungsi sebenarnya.</p>
+      <p>Norman sendiri mendokumentasikan banyak pintu serupa di seluruh dunia — pintu-pintu yang memerlukan tanda "PUSH" atau "PULL" tambahan justru karena desain fisiknya gagal mengkomunikasikan cara operasinya. Ia menyebut pintu-pintu ini sebagai <strong>"Norman Doors"</strong> — ironi dari namanya sendiri.</p>
+      <div class="case-analysis">
+        <h4>Analisis Prinsip</h4>
+        <p style="font-size:14px;">Gagang vertikal memiliki <em>affordance</em> untuk digenggam dan ditarik — tidak salah secara teknis. Tetapi sebagai <em>signifier</em>, ia memberikan isyarat palsu pada satu sisi. Tidak ada <em>constraint</em> fisik yang mencegah aksi salah. Tidak ada <em>feedback</em> yang membantu pengguna belajar dari kesalahan. <em>Mental model</em> pengguna ("gagang = tarik") bertentangan dengan <em>design model</em> yang sebenarnya.</p>
+        <div class="badge-row">
+          <span class="badge red">Signifier — GAGAL</span>
+          <span class="badge red">Mental Model — MISMATCH</span>
+          <span class="badge amber">Affordance — Ambigu</span>
+          <span class="badge green">Estetika — Berhasil (tapi tidak relevan)</span>
+        </div>
+        <p style="font-size:13.5px; margin-top:12px;"><strong>Solusi:</strong> Gunakan gagang (handle) di sisi yang ditarik, dan flat push-plate di sisi yang didorong. Desain fisik sudah cukup mengkomunikasikan aksi tanpa tanda tambahan apapun.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- KASUS 2 -->
+  <div class="case">
+    <div class="case-header">
+      <div class="tag">KASUS 2 · PERALATAN RUMAH TANGGA · KEGAGALAN MAPPING & CONCEPTUAL MODEL</div>
+      <h3>Kontroler Kulkas: Dua Kenop yang Saling "Misterius"</h3>
+    </div>
+    <div class="case-body">
+      <p>Sebuah kulkas dengan dua kompartemen memiliki dua kenop kontrol: satu untuk "Freezer" (A) dan satu untuk "Refrigerator" (B). Pengguna yang ingin mendinginkan freezer memutar kenop A ke angka yang lebih tinggi. Beberapa jam kemudian, makanan di kulkas utama mulai membusuk — bukan karena kulkas rusak, melainkan karena dua kenop tersebut sebenarnya mengontrol <em>aliran udara</em> yang sama dengan cara yang saling bergantung dan berlawanan.</p>
+      <p>Mental model pengguna: "Kenop A = suhu freezer, Kenop B = suhu kulkas, keduanya independen."<br>
+      Reality (Design Model): "Kenop A mengatur pembagian aliran udara dingin — semakin tinggi A, semakin banyak udara ke freezer, semakin <em>sedikit</em> ke kulkas."</p>
+      <p>System image (dua kenop terpisah dengan label berbeda) menciptakan mental model yang sepenuhnya salah tentang cara kerja sistem. Norman menyebut ini sebagai contoh klasik kegagalan dalam mengkomunikasikan conceptual model melalui system image.</p>
+      <div class="case-analysis">
+        <h4>Analisis Prinsip</h4>
+        <p style="font-size:14px;">Kegagalan utama ada pada <em>conceptual model</em>: sistem image (dua kenop terpisah) menyiratkan dua sistem independen, padahal realitanya satu sistem terpadu. <em>Mapping</em> antara gerakan kenop dan efeknya sangat tidak intuitif dan tidak ada penjelasan visual yang membantu.</p>
+        <div class="badge-row">
+          <span class="badge red">Conceptual Model — GAGAL TOTAL</span>
+          <span class="badge red">Mapping — Tidak Intuitif</span>
+          <span class="badge red">Feedback — Tidak Ada (delayed consequence)</span>
+        </div>
+        <p style="font-size:13.5px; margin-top:12px;"><strong>Solusi:</strong> Tampilkan diagram hubungan aliran udara di panel kontrol. Atau ganti ke kontrol suhu digital yang langsung menampilkan suhu aktual — feedback yang jelas mengkomunikasikan realitas sistem.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- KASUS 3 -->
+  <div class="case">
+    <div class="case-header">
+      <div class="tag">KASUS 3 · ANTARMUKA DIGITAL · KEGAGALAN FEEDBACK & GULF OF EVALUATION</div>
+      <h3>Formulir Upload: "Apakah File Saya Sudah Terkirim?"</h3>
+    </div>
+    <div class="case-body">
+      <p>Skenario yang sangat umum: Seorang mahasiswa mengupload tugas di portal akademik kampus. Ia memilih file, mengklik tombol "Submit," dan... tidak ada yang terjadi. Halaman tetap sama. Tidak ada loading indicator, tidak ada pesan sukses, tidak ada perubahan apapun.</p>
+      <p>Pertanyaan yang langsung muncul: "Apakah berhasil? Apakah tombolnya berfungsi? Haruskah saya klik lagi?" Kebanyakan pengguna akan mengklik lagi — dan seringkali mengirim duplikat. Atau sebaliknya, mereka mengasumsikan sudah berhasil padahal sebenarnya gagal karena file terlalu besar.</p>
+      <p>Ini adalah kegagalan klasik <strong>Gulf of Evaluation</strong>: pengguna berhasil melakukan aksi (Perform, Tahap 4), tetapi sistem gagal memberikan informasi yang bisa diinterpretasikan (Perceive &amp; Interpret, Tahap 5-6). Pengguna terjebak di Tahap 7 (Compare) tanpa bisa mengonfirmasi apakah tujuan tercapai.</p>
+      <div class="case-analysis">
+        <h4>Analisis 7 Stages of Action</h4>
+        <table class="data-table" style="margin:0;">
+          <thead><tr><th>Tahap</th><th>Yang Terjadi</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>1. Goal</td><td>"Upload tugas sebelum deadline"</td><td>✅ Jelas</td></tr>
+            <tr><td>2-3. Plan + Specify</td><td>"Pilih file → klik Submit"</td><td>✅ Jelas</td></tr>
+            <tr><td>4. Perform</td><td>Klik tombol Submit</td><td>✅ Berhasil</td></tr>
+            <tr><td>5. Perceive</td><td>Halaman tidak berubah</td><td>❌ Ambiguitas</td></tr>
+            <tr><td>6. Interpret</td><td>"Berhasil? Gagal? Menunggu?"</td><td>❌ Tidak bisa diinterpretasi</td></tr>
+            <tr><td>7. Compare</td><td>Tidak bisa dibandingkan</td><td>❌ Gulf of Evaluation</td></tr>
+          </tbody>
+        </table>
+        <div class="badge-row" style="margin-top:12px;">
+          <span class="badge red">Feedback — TIDAK ADA</span>
+          <span class="badge red">Gulf of Evaluation — Terbuka Lebar</span>
+        </div>
+        <p style="font-size:13.5px; margin-top:12px;"><strong>Solusi:</strong> (1) Tampilkan loading bar saat upload berlangsung. (2) Tampilkan pesan sukses yang jelas dengan nama file dan timestamp. (3) Jika gagal, tampilkan pesan error yang spesifik ("File terlalu besar. Maksimum 10MB.") bukan hanya "Error."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- KASUS 4 -->
+  <div class="case">
+    <div class="case-header">
+      <div class="tag">KASUS 4 · KEBERHASILAN DESAIN · NATURAL MAPPING YANG BRILIAN</div>
+      <h3>Kontrol Kursi Mercedes-Benz: Mapping yang Melampaui Kata-Kata</h3>
+    </div>
+    <div class="case-body">
+      <p>Berbeda dari ketiga kasus sebelumnya, ini adalah contoh keberhasilan. Kontrol penyesuaian kursi pada mobil Mercedes-Benz dirancang dalam bentuk kursi miniatur itu sendiri. Ingin menaikkan bagian depan kursi? Angkat bagian depan tombol kursi. Ingin merebahkan sandaran kursi? Dorong bagian atas tombol ke belakang.</p>
+      <p>Tidak ada label. Tidak ada manual yang perlu dibaca. Natural mapping yang sempurna antara kontrol dan fungsinya menciptakan <em>zero learning curve</em>. Pengguna pertama kali pun dapat menggunakannya dengan benar dalam hitungan detik.</p>
+      <p>Norman menyebut ini sebagai salah satu contoh terbaik natural mapping dalam desain produk konsumer. Prinsip yang sama kemudian diadopsi oleh banyak produsen otomotif lainnya.</p>
+      <div class="case-analysis">
+        <h4>Mengapa Berhasil?</h4>
+        <div class="badge-row">
+          <span class="badge green">Natural Mapping — SEMPURNA</span>
+          <span class="badge green">Affordance — Terlihat Jelas</span>
+          <span class="badge green">Signifier — Bentuk Fisik sebagai Signifier</span>
+          <span class="badge green">Mental Model — Langsung Terbentuk</span>
+        </div>
+        <p style="font-size:13.5px; margin-top:12px;"><strong>Pelajaran:</strong> Desain yang paling baik adalah desain yang terasa seperti bukan desain sama sekali — ia begitu intuitif sehingga pengguna tidak perlu berpikir.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- KASUS 5 -->
+  <div class="case">
+    <div class="case-header">
+      <div class="tag">KASUS 5 · ANTARMUKA DIGITAL · KEGAGALAN AFFORDANCE & DISCOVERABILITY</div>
+      <h3>Aplikasi KRS Mahasiswa: Labirin Kognitif</h3>
+    </div>
+    <div class="case-body">
+      <p>Setiap semester, jutaan mahasiswa Indonesia menghadapi pengalaman yang sama: mendaftarkan mata kuliah melalui sistem KRS (Kartu Rencana Studi) yang terasa seperti teka-teki. Tombol "Tambah MK" tersembunyi di bawah tabel yang harus di-scroll dahulu. Kode mata kuliah harus diketikkan manual karena tidak ada autocomplete. Konflik jadwal baru terdeteksi setelah klik "Simpan" — dan pesan errornya hanya berbunyi "Gagal. Coba lagi."</p>
+      <p>Seorang mahasiswa baru yang menggunakan sistem ini untuk pertama kali mengalami putus di hampir setiap tahap Action Cycle: ia tidak tahu langkah apa yang harus dilakukan (Gulf of Execution), dan setelah melakukan sesuatu, ia tidak tahu apakah berhasil atau gagal (Gulf of Evaluation).</p>
+      <div class="case-analysis">
+        <h4>Bedah 6 Prinsip Norman</h4>
+        <table class="data-table" style="margin:0;">
+          <thead><tr><th>Prinsip</th><th>Kondisi pada Sistem KRS Khas</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Affordance</td><td>Banyak elemen yang "tampak bisa diklik" padahal tidak, dan sebaliknya</td><td>❌ Buruk</td></tr>
+            <tr><td>Signifier</td><td>Ikon tanpa label; label tanpa makna jelas</td><td>❌ Buruk</td></tr>
+            <tr><td>Mapping</td><td>Alur daftar MK tidak mengikuti mental model mahasiswa tentang cara mendaftar kuliah</td><td>❌ Buruk</td></tr>
+            <tr><td>Feedback</td><td>Tidak ada konfirmasi real-time; error muncul di akhir saja</td><td>❌ Buruk</td></tr>
+            <tr><td>Constraints</td><td>Tidak ada pencegahan konflik jadwal secara proaktif</td><td>❌ Buruk</td></tr>
+            <tr><td>Conceptual Model</td><td>Tidak ada onboarding; mahasiswa baru harus bertanya ke kakak tingkat</td><td>❌ Buruk</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:13.5px; margin-top:12px;"><strong>Refleksi:</strong> Sistem ini mungkin dibuat oleh programmer yang sangat memahami database dan logika bisnis, tetapi tidak memiliki pemahaman tentang psikologi pengguna. Ini adalah contoh nyata mengapa IMK penting dalam pendidikan IT.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ SECTION 6: KUIS ══════════════════════════════════ -->
+<section id="kuis">
+  <div class="sec-header">
+    <div class="sec-num">6</div>
+    <h2><em>EVALUASI</em>Kuis Formatif Pertemuan 1</h2>
+  </div>
+
+  <p>Jawab setiap soal, lalu klik <strong>"Lihat Jawaban"</strong> untuk memeriksa pemahaman Anda. Tujuan kuis ini bukan nilai — melainkan melatih Anda mengaplikasikan konsep yang baru dipelajari.</p>
+
+  <!-- Q1 -->
+  <div class="quiz-item">
+    <div class="q"><span>1</span>Seorang pengguna baru mencoba mencetak dokumen di printer kantor, tetapi tidak menemukan tombol "Print" di aplikasi. Hambatan ini paling tepat dikategorikan sebagai...</div>
+    <ul class="options">
+      <li onclick="reveal(this,'wrong')">A. Gulf of Evaluation — ia tidak bisa menginterpretasikan hasil</li>
+      <li onclick="reveal(this,'correct')">B. Gulf of Execution — ia tidak tahu langkah apa yang harus dilakukan</li>
+      <li onclick="reveal(this,'wrong')">C. Memory Overload — terlalu banyak menu yang harus diingat</li>
+      <li onclick="reveal(this,'wrong')">D. Feedback Failure — sistem tidak memberikan konfirmasi</li>
+    </ul>
+    <button class="show-btn" onclick="toggleAnswer(this)">Lihat Penjelasan</button>
+    <div class="answer-box"><strong>✅ Jawaban: B.</strong> Gulf of Execution terjadi pada sisi aksi — pengguna tidak dapat menentukan langkah yang harus diambil untuk mencapai tujuannya. Ia belum sampai ke tahap evaluasi karena masih tersangkut di tahap Plan dan Specify.</div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="quiz-item">
+    <div class="q"><span>2</span>Garis bawah biru pada teks sebuah halaman web adalah contoh dari...</div>
+    <ul class="options">
+      <li onclick="reveal(this,'wrong')">A. Affordance — kemampuan teks untuk menyimpan informasi</li>
+      <li onclick="reveal(this,'correct')">B. Signifier — penanda visual yang mengkomunikasikan bahwa teks tersebut bisa diklik</li>
+      <li onclick="reveal(this,'wrong')">C. Constraint — pembatasan agar pengguna tidak mengubah teks</li>
+      <li onclick="reveal(this,'wrong')">D. Mapping — hubungan antara teks dan halaman tujuan</li>
+    </ul>
+    <button class="show-btn" onclick="toggleAnswer(this)">Lihat Penjelasan</button>
+    <div class="answer-box"><strong>✅ Jawaban: B.</strong> Signifier mengkomunikasikan di mana dan bagaimana aksi dilakukan. Garis bawah biru secara konvensional diterima sebagai penanda "ini adalah hyperlink, klik untuk pindah halaman." Affordance-nya (kemampuan untuk diklik) tetap ada tanpa garis bawah, tetapi signifier membuatnya <em>discoverable</em>.</div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="quiz-item">
+    <div class="q"><span>3</span>Mengapa berlebihnya jumlah notifikasi dan pop-up dalam sebuah aplikasi justru dapat berbahaya bagi pengalaman pengguna?</div>
+    <ul class="options">
+      <li onclick="reveal(this,'wrong')">A. Karena notifikasi memperlambat performa sistem</li>
+      <li onclick="reveal(this,'correct')">B. Karena excess feedback menciptakan "noise" yang membuat pengguna tidak bisa membedakan informasi penting dari yang tidak penting</li>
+      <li onclick="reveal(this,'wrong')">C. Karena pengguna lebih suka antarmuka yang diam</li>
+      <li onclick="reveal(this,'wrong')">D. Karena feedback memerlukan bandwidth jaringan yang besar</li>
+    </ul>
+    <button class="show-btn" onclick="toggleAnswer(this)">Lihat Penjelasan</button>
+    <div class="answer-box"><strong>✅ Jawaban: B.</strong> Fenomena ini disebut "alarm fatigue" atau "notification blindness." Ketika setiap aksi kecil menghasilkan feedback berlebih, pengguna belajar untuk mengabaikan semua feedback — termasuk yang kritis. Feedback yang baik harus proporsional dengan signifikansi kejadian.</div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="quiz-item">
+    <div class="q"><span>4</span>Seorang pengguna merakit meja dari IKEA dan di akhir proses masih ada 4 sekrup yang tersisa. Ia langsung sadar ada yang salah. Jenis constraint apa yang bekerja di sini?</div>
+    <ul class="options">
+      <li onclick="reveal(this,'wrong')">A. Constraint Fisik — sekrup tidak bisa masuk ke lubang yang salah</li>
+      <li onclick="reveal(this,'wrong')">B. Constraint Budaya — ada norma bahwa meja harus kokoh</li>
+      <li onclick="reveal(this,'correct')">C. Constraint Logis — secara logis, jika ada komponen yang tersisa, ada langkah yang terlewat</li>
+      <li onclick="reveal(this,'wrong')">D. Constraint Semantik — makna "rakitan lengkap" menyiratkan tidak ada sisa</li>
+    </ul>
+    <button class="show-btn" onclick="toggleAnswer(this)">Lihat Penjelasan</button>
+    <div class="answer-box"><strong>✅ Jawaban: C.</strong> Constraint logis bekerja melalui penalaran tentang situasi — "jika semua langkah benar, tidak ada komponen yang tersisa." Pengguna menggunakan pemikiran deduktif untuk mendeteksi kesalahan, bukan lewat hambatan fisik atau aturan budaya.</div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="quiz-item">
+    <div class="q"><span>5</span>Desainer membuat termostat digital yang menampilkan animasi nyala api semakin besar ketika suhu disetel lebih tinggi, meskipun pemanas bekerja secara on/off (tidak proporsional dengan suhu). Apa masalah desain yang paling fundamental di sini?</div>
+    <ul class="options">
+      <li onclick="reveal(this,'wrong')">A. Masalah estetika — animasi api tidak menarik secara visual</li>
+      <li onclick="reveal(this,'wrong')">B. Masalah feedback — sistem tidak memberikan cukup informasi</li>
+      <li onclick="reveal(this,'correct')">C. Masalah conceptual model — system image menciptakan mental model yang salah tentang cara kerja pemanas</li>
+      <li onclick="reveal(this,'wrong')">D. Masalah mapping — posisi kontrol tidak sesuai dengan fungsinya</li>
+    </ul>
+    <button class="show-btn" onclick="toggleAnswer(this)">Lihat Penjelasan</button>
+    <div class="answer-box"><strong>✅ Jawaban: C.</strong> Animasi nyala api yang proporsional menyiratkan bahwa semakin tinggi suhu yang disetel, semakin besar "kapasitas pemanasan." Ini menciptakan mental model yang salah dan mendorong perilaku yang tidak efisien (menyetel ke maksimum agar cepat panas, padahal tidak berpengaruh pada kecepatan). System image harus akurat merepresentasikan design model.</div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="quiz-item">
+    <div class="q"><span>6</span>Dalam 7 Stages of Action, tahap manakah yang merupakan satu-satunya tahap yang "terlihat dari luar" (observable dari pihak ketiga)?</div>
+    <ul class="options">
+      <li onclick="reveal(this,'wrong')">A. Goal — pembentukan tujuan internal</li>
+      <li onclick="reveal(this,'wrong')">B. Plan — perencanaan urutan aksi</li>
+      <li onclick="reveal(this,'correct')">C. Perform — pelaksanaan aksi fisik aktual</li>
+      <li onclick="reveal(this,'wrong')">D. Compare — pembandingan hasil dengan tujuan</li>
+    </ul>
+    <button class="show-btn" onclick="toggleAnswer(this)">Lihat Penjelasan</button>
+    <div class="answer-box"><strong>✅ Jawaban: C.</strong> Tahap Goal, Plan, Specify adalah proses kognitif internal. Tahap Perceive, Interpret, dan Compare juga merupakan proses kognitif internal. Hanya tahap Perform — klik, ketik, tekan, swipe — yang dapat diamati secara eksternal. Ini mengapa user testing harus melibatkan observasi langsung, bukan hanya survei.</div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="quiz-item">
+    <div class="q"><span>7</span>Manakah dari berikut ini yang paling tepat menggambarkan perbedaan antara Affordance dan Signifier?</div>
+    <ul class="options">
+      <li onclick="reveal(this,'wrong')">A. Affordance adalah untuk objek digital, signifier untuk objek fisik</li>
+      <li onclick="reveal(this,'wrong')">B. Keduanya adalah sinonim yang digunakan secara bergantian oleh Norman</li>
+      <li onclick="reveal(this,'correct')">C. Affordance adalah kemungkinan interaksi yang ada; Signifier adalah penanda yang mengkomunikasikan di mana dan bagaimana interaksi itu dilakukan</li>
+      <li onclick="reveal(this,'wrong')">D. Affordance dibuat oleh pengguna; signifier dibuat oleh desainer</li>
+    </ul>
+    <button class="show-btn" onclick="toggleAnswer(this)">Lihat Penjelasan</button>
+    <div class="answer-box"><strong>✅ Jawaban: C.</strong> Seluruh permukaan layar sentuh memiliki affordance untuk disentuh (potensi interaksi ada di mana-mana). Tetapi ikon tombol, area yang ter-highlight, dan label adalah signifier yang mengkomunikasikan di mana dan bagaimana interaksi yang bermakna dilakukan. Tanpa signifier, affordance menjadi tidak discoverable.</div>
+  </div>
+
+</section>
+
+<!-- ══ SECTION 7: TUGAS ════════════════════════════════ -->
+<section id="tugas">
+  <div class="sec-header">
+    <div class="sec-num">7</div>
+    <h2><em>PENUGASAN</em>Latihan Praktis &amp; Tugas Mandiri</h2>
+  </div>
+
+  <p>Tugas-tugas berikut dirancang untuk membangun kepekaan desain melalui observasi langsung — bukan teori semata. Kerjakan secara individual atau kelompok kecil (2-3 orang) dan siapkan untuk dipresentasikan pada pertemuan berikutnya.</p>
+
+  <div class="task">
+    <div class="task-header">
+      <div class="task-num">TUGAS 1</div>
+      <h4>Norman Object Hunting — Investigasi Lapangan</h4>
+    </div>
+    <div class="task-body">
+      <p><strong>Deskripsi:</strong> Temukan <em>tiga objek fisik</em> di sekitar Anda (pintu, keran, lift, saklar lampu, alat elektronik, dll.) yang membuat Anda salah menggunakannya pada percobaan pertama, atau yang terasa membingungkan.</p>
+      <ol class="task-steps">
+        <li>Foto atau gambar sketsa objek tersebut</li>
+        <li>Identifikasi: Prinsip Norman mana yang dilanggar? (Affordance? Signifier? Mapping? dll.)</li>
+        <li>Jelaskan di tahap mana Action Cycle pengguna terganggu</li>
+        <li>Usulkan satu perbaikan spesifik (bisa berupa sketsa)</li>
+      </ol>
+      <p style="margin-top:12px;"><strong>Output:</strong> Laporan pendek 300–400 kata dengan dokumentasi foto + diagram analisis.</p>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-header">
+      <div class="task-num">TUGAS 2</div>
+      <h4>Digital Interface Audit — Aplikasi Sehari-Hari</h4>
+    </div>
+    <div class="task-body">
+      <p><strong>Deskripsi:</strong> Pilih satu aplikasi mobile yang sering Anda gunakan (bisa: aplikasi bank, KRS kampus, transportasi online, e-commerce, dll.) dan lakukan audit desain menggunakan checklist 6 Prinsip Norman.</p>
+      <ol class="task-steps">
+        <li>Screenshot minimal 3 layar/state yang berbeda dari aplikasi tersebut</li>
+        <li>Isi tabel audit: beri rating 1-5 untuk setiap prinsip (1=buruk, 5=sangat baik) beserta alasan</li>
+        <li>Identifikasi <em>satu</em> Gulf of Execution dan <em>satu</em> Gulf of Evaluation yang Anda temukan</li>
+        <li>Bedah satu tugas spesifik (misal: "transfer uang") menggunakan 7 Stages of Action — di tahap mana pengguna sering terputus?</li>
+      </ol>
+      <p style="margin-top:12px;"><strong>Output:</strong> Slide presentasi 5-7 halaman atau dokumen Word dengan screenshot.</p>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-header">
+      <div class="task-num">TUGAS 3</div>
+      <h4>Redesign Proposal — Dari Identifikasi ke Solusi</h4>
+    </div>
+    <div class="task-body">
+      <p><strong>Deskripsi:</strong> Berdasarkan temuan Tugas 2, pilih <em>satu masalah desain</em> yang paling kritis dan buat proposal redesain sederhana.</p>
+      <ol class="task-steps">
+        <li>Nyatakan masalah secara spesifik: "Pengguna gagal di [Tahap X] ketika mencoba [Y] karena [Z]"</li>
+        <li>Buat wireframe/sketsa desain alternatif (bisa gambar tangan)</li>
+        <li>Jelaskan bagaimana desain baru Anda memperbaiki prinsip yang dilanggar</li>
+        <li>Pikirkan: adakah trade-off dari solusi Anda? (Memperbaiki satu prinsip bisa melanggar prinsip lain)</li>
+      </ol>
+      <p style="margin-top:12px;"><strong>Output:</strong> 1 halaman deskripsi masalah + sketsa wireframe annotated.</p>
+    </div>
+  </div>
+
+  <div class="callout dark">
+    <div class="callout-header">💬 REFLEKSI PENUTUP</div>
+    Sebelum mengakhiri pertemuan, renungkan pertanyaan ini:<br><br>
+    "Jika Anda diminta untuk membangun sistem informasi untuk digunakan oleh mahasiswa kampus ini, prinsip mana yang menurut Anda paling sering diabaikan oleh pengembang — dan mengapa?"<br><br>
+    Tidak ada jawaban benar atau salah. Yang penting adalah Anda mulai melihat teknologi dari perspektif manusia yang menggunakannya, bukan dari perspektif sistem yang membangunnya.
+  </div>
+
+</section>
+
+</div><!-- end .page -->
+
+<footer>
+  <strong>Bahan Ajar IMK · Pertemuan 1 · Fondasi IMK &amp; Human-Centered Design</strong><br>
+  Referensi Utama: Norman, D.A. (2013). <em>The Design of Everyday Things.</em> Revised Edition. Basic Books. ·
+  Krug, S. (2014). <em>Don't Make Me Think, Revisited.</em> New Riders. ·
+  Weinschenk, S. (2011). <em>100 Things Every Designer Needs to Know About People.</em><br>
+  Dokumen ini hanya untuk keperluan akademik.
+</footer>
+
+<script>
+function reveal(el, type) {
+  const parent = el.closest('.quiz-item');
+  parent.querySelectorAll('.options li').forEach(li => {
+    li.style.pointerEvents = 'none';
+    li.style.opacity = '.6';
+  });
+  el.style.opacity = '1';
+  el.classList.add(type);
+  const answerBox = parent.querySelector('.answer-box');
+  if (answerBox) { answerBox.style.display = 'block'; }
+  const btn = parent.querySelector('.show-btn');
+  if (btn) btn.style.display = 'none';
+}
+function toggleAnswer(btn) {
+  const box = btn.nextElementSibling;
+  if (box.style.display === 'block') {
+    box.style.display = 'none';
+    btn.textContent = 'Lihat Penjelasan';
+  } else {
+    box.style.display = 'block';
+    btn.textContent = 'Sembunyikan';
+  }
+}
+</script>
+</body>
+</html>
