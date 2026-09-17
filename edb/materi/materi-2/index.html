@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pertemuan 2 — Startup dalam Ekosistem Ekonomi Digital | BSD304</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --ink:       #16213e;
+  --ink-2:     #4a5670;
+  --ink-3:     #8594ad;
+  --bg:        #ffffff;
+  --surface:   #f0f4fc;
+  --surface-2: #e4eaf6;
+  --border:    #d4dbe8;
+  --blue:      #1d4ed8;
+  --blue-dim:  #dbeafe;
+  --blue-dk:   #1e3a8a;
+  --violet:    #6d28d9;
+  --violet-dim:#ede9fe;
+  --ember:     #c2410c;
+  --ember-dim: #ffedd5;
+  --jade:      #047857;
+  --jade-dim:  #d1fae5;
+  --ruby:      #be123c;
+  --ruby-dim:  #ffe4e6;
+  --teal:      #0e7490;
+  --teal-dim:  #cffafe;
+  --r-sm: 6px; --r-md: 10px; --r-lg: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink:       #e2e8f4;
+    --ink-2:     #94a3b8;
+    --ink-3:     #64748b;
+    --bg:        #080f1f;
+    --surface:   #111827;
+    --surface-2: #1e2d45;
+    --border:    #1e2d45;
+    --blue-dim:  #1e3a8a;
+    --violet-dim:#3b0764;
+    --ember-dim: #7c2d12;
+    --jade-dim:  #064e3b;
+    --ruby-dim:  #881337;
+    --teal-dim:  #164e63;
+  }
+}
+:root[data-theme="dark"] {
+  --ink:#e2e8f4; --ink-2:#94a3b8; --ink-3:#64748b;
+  --bg:#080f1f; --surface:#111827; --surface-2:#1e2d45;
+  --border:#1e2d45; --blue-dim:#1e3a8a; --violet-dim:#3b0764;
+  --ember-dim:#7c2d12; --jade-dim:#064e3b; --ruby-dim:#881337; --teal-dim:#164e63;
+}
+
+/* ─── RESET & BASE ────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+  background:var(--bg); color:var(--ink);
+  font-size:15px; line-height:1.75;
+}
+p{color:var(--ink);margin-bottom:.9rem}
+strong{font-weight:700}
+em{font-style:italic}
+ol,ul{padding-left:1.4rem}
+li{margin-bottom:.4rem;color:var(--ink-2)}
+
+/* ─── PROGRESS BAR ────────────────────────────────────────── */
+#pbar{
+  position:fixed;top:0;left:0;height:3px;width:0;z-index:999;
+  background:linear-gradient(90deg,var(--blue),var(--violet),var(--teal));
+  transition:width .1s linear;
+}
+
+/* ─── NAV ─────────────────────────────────────────────────── */
+nav{
+  position:fixed;top:3px;left:0;right:0;z-index:900;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  max-width:940px;margin:0 auto;padding:0 1.25rem;
+  display:flex;align-items:center;gap:2px;height:50px;
+  overflow-x:auto;scrollbar-width:none;
+}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-brand{
+  font-size:12px;font-weight:700;color:var(--blue);
+  white-space:nowrap;margin-right:.5rem;
+  padding-right:.75rem;border-right:1px solid var(--border);flex-shrink:0;
+}
+.nav-link{
+  padding:4px 10px;border-radius:20px;font-size:12px;font-weight:500;
+  color:var(--ink-2);text-decoration:none;white-space:nowrap;transition:all .15s;
+}
+.nav-link:hover{color:var(--blue);background:var(--blue-dim)}
+.nav-link.active{color:var(--blue);background:var(--blue-dim);font-weight:600}
+.theme-btn{
+  margin-left:auto;flex-shrink:0;border:1px solid var(--border);background:transparent;
+  color:var(--ink-2);border-radius:6px;padding:4px 8px;cursor:pointer;font-size:13px;
+}
+
+/* ─── HERO ────────────────────────────────────────────────── */
+.hero{
+  background:var(--blue-dk);
+  padding:80px 1.25rem 56px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 10% 60%,rgba(109,40,217,.22),transparent),
+             radial-gradient(ellipse 50% 60% at 85% 20%,rgba(14,116,144,.18),transparent);
+}
+.hero::after{
+  content:'';position:absolute;inset:0;
+  background:
+    linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+.hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  border:1px solid rgba(255,255,255,.18);border-radius:30px;
+  padding:4px 14px;font-size:11.5px;color:rgba(255,255,255,.75);
+  margin-bottom:1.25rem;font-weight:500;background:rgba(255,255,255,.07);
+}
+.hero h1{
+  font-size:clamp(1.75rem,4vw,2.75rem);font-weight:800;
+  color:#fff;line-height:1.2;margin-bottom:.75rem;
+}
+.hero h1 span{
+  background:linear-gradient(90deg,#93c5fd,#c4b5fd);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{font-size:.95rem;color:rgba(255,255,255,.6);max-width:580px;margin-bottom:2rem}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.hero-tag{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  border-radius:7px;padding:5px 11px;font-size:11.5px;color:rgba(255,255,255,.7);
+}
+
+/* ─── MAIN LAYOUT ─────────────────────────────────────────── */
+main{max-width:940px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+
+/* ─── SECTION ─────────────────────────────────────────────── */
+.sec{margin-bottom:3.5rem;scroll-margin-top:68px}
+.sec-hd{
+  display:flex;align-items:center;gap:.9rem;
+  margin-bottom:1.75rem;padding-bottom:1rem;
+  border-bottom:1px solid var(--border);
+}
+.sec-num{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;color:#fff;flex-shrink:0;
+}
+.sec-hd h2{font-size:1.35rem;font-weight:800;line-height:1.25}
+
+/* ─── SUBSECTION ──────────────────────────────────────────── */
+.sub{margin-bottom:2rem}
+.sub-title{
+  font-size:1rem;font-weight:700;
+  margin-bottom:.9rem;display:flex;align-items:center;gap:.6rem;
+}
+.sub-title::before{
+  content:'';display:block;width:4px;height:17px;
+  background:var(--blue);border-radius:2px;flex-shrink:0;
+}
+
+/* ─── QUOTE ────────────────────────────────────────────────── */
+.quote{
+  border-left:4px solid var(--blue);background:var(--blue-dim);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+  padding:1rem 1.35rem;margin-bottom:1rem;
+}
+.quote blockquote{font-style:italic;font-size:.925rem;color:var(--ink);margin-bottom:.35rem;line-height:1.7}
+.quote cite{font-size:.775rem;font-weight:700;color:var(--blue);font-style:normal}
+
+/* ─── ANALOGY ─────────────────────────────────────────────── */
+.analogy{
+  background:var(--ember-dim);border:1px solid rgba(194,65,12,.18);
+  border-radius:var(--r-lg);padding:1.1rem 1.35rem;margin-bottom:1rem;
+}
+.analogy-lbl{
+  font-size:11px;font-weight:700;color:var(--ember);
+  margin-bottom:.5rem;display:flex;align-items:center;gap:5px;
+}
+.analogy p{font-size:.875rem;color:var(--ink-2);margin-bottom:0}
+
+/* ─── INFO CARDS ──────────────────────────────────────────── */
+.icard{
+  border-radius:var(--r-md);padding:1rem 1.2rem;
+  margin-bottom:1rem;border:1px solid var(--border);
+  background:var(--surface);
+}
+.icard.blue{border-left:4px solid var(--blue);background:var(--blue-dim)}
+.icard.violet{border-left:4px solid var(--violet);background:var(--violet-dim)}
+.icard.jade{border-left:4px solid var(--jade);background:var(--jade-dim)}
+.icard.ember{border-left:4px solid var(--ember);background:var(--ember-dim)}
+.icard.ruby{border-left:4px solid var(--ruby);background:var(--ruby-dim)}
+.icard.teal{border-left:4px solid var(--teal);background:var(--teal-dim)}
+.icard p{font-size:.875rem;margin-bottom:.5rem}
+.icard p:last-child{margin-bottom:0}
+
+/* ─── BADGE / PILL ────────────────────────────────────────── */
+.badge{
+  display:inline-flex;align-items:center;gap:3px;
+  border-radius:20px;padding:2px 9px;
+  font-size:10.5px;font-weight:700;
+}
+.badge.blue{background:var(--blue-dim);color:var(--blue)}
+.badge.jade{background:var(--jade-dim);color:var(--jade)}
+.badge.ruby{background:var(--ruby-dim);color:var(--ruby)}
+.badge.ember{background:var(--ember-dim);color:var(--ember)}
+.badge.violet{background:var(--violet-dim);color:var(--violet)}
+.badge.teal{background:var(--teal-dim);color:var(--teal)}
+.badge.ink{background:var(--surface-2);color:var(--ink-2)}
+
+/* ─── ACCORDION ───────────────────────────────────────────── */
+.accordion{border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;margin-bottom:1.25rem}
+.acc-item{border-bottom:1px solid var(--border)}
+.acc-item:last-child{border-bottom:none}
+.acc-btn{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:.85rem 1.1rem;background:var(--surface);border:none;
+  text-align:left;font-family:inherit;font-size:.875rem;font-weight:600;
+  color:var(--ink);cursor:pointer;gap:.75rem;transition:background .15s;
+}
+.acc-btn:hover{background:var(--surface-2)}
+.acc-btn.open{background:var(--blue-dim);color:var(--blue)}
+.acc-btn .acc-icon{flex-shrink:0;font-size:.9rem;transition:transform .3s;color:var(--ink-3)}
+.acc-btn.open .acc-icon{transform:rotate(180deg);color:var(--blue)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .35s ease;background:var(--bg)}
+.acc-inner{padding:1rem 1.2rem;font-size:.875rem;color:var(--ink-2);line-height:1.75}
+.acc-inner p{margin-bottom:.6rem}
+.acc-inner p:last-child{margin-bottom:0}
+
+/* ─── STATS ROW ───────────────────────────────────────────── */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.75rem;margin-bottom:1.25rem}
+.stat-box{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-md);padding:.9rem 1rem;text-align:center;
+}
+.stat-n{font-size:2rem;font-weight:800;color:var(--blue);line-height:1;margin-bottom:4px}
+.stat-l{font-size:.75rem;color:var(--ink-2);line-height:1.4}
+
+/* ─── FLIP CARDS ──────────────────────────────────────────── */
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:.75rem;margin-bottom:1.25rem}
+.flip-wrap{height:165px;perspective:900px;cursor:pointer}
+.flip-card{
+  width:100%;height:100%;position:relative;
+  transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);
+}
+.flip-card.flipped{transform:rotateY(180deg)}
+.flip-f,.flip-b{
+  position:absolute;inset:0;border-radius:var(--r-md);
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  display:flex;flex-direction:column;padding:1rem;
+}
+.flip-f{
+  background:linear-gradient(135deg,var(--blue-dk),var(--blue));
+  color:#fff;justify-content:center;align-items:center;text-align:center;
+}
+.flip-f .asp{font-size:10px;font-weight:600;opacity:.65;margin-bottom:6px;letter-spacing:.04em}
+.flip-f h4{font-size:1rem;font-weight:700;margin-bottom:8px}
+.flip-f .hint{font-size:10.5px;opacity:.5;margin-top:auto}
+.flip-b{
+  background:var(--surface);border:1px solid var(--border);
+  transform:rotateY(180deg);gap:6px;justify-content:center;
+}
+.cmp-row{display:flex;gap:6px}
+.cmp-col{
+  flex:1;background:var(--surface-2);border-radius:var(--r-sm);
+  padding:8px;font-size:10.5px;line-height:1.45;
+}
+.cmp-col .lbl{font-size:9.5px;font-weight:700;margin-bottom:3px;letter-spacing:.04em}
+.cmp-col.s .lbl{color:var(--blue)}
+.cmp-col.u .lbl{color:var(--jade)}
+
+/* ─── TIMELINE ────────────────────────────────────────────── */
+.tl{position:relative;padding-left:2rem;margin-bottom:1.25rem}
+.tl::before{content:'';position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:1.35rem}
+.tl-dot{
+  position:absolute;left:-1.65rem;top:3px;
+  width:20px;height:20px;border-radius:50%;border:2px solid var(--bg);
+  background:var(--blue);flex-shrink:0;
+}
+.tl-dot.r{background:var(--ruby)} .tl-dot.e{background:var(--ember)} .tl-dot.j{background:var(--jade)}
+.tl-yr{font-size:10.5px;font-weight:700;color:var(--ink-3);margin-bottom:2px;letter-spacing:.05em}
+.tl-title{font-size:.925rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.tl-body{font-size:.85rem;color:var(--ink-2);line-height:1.65}
+.tl-body p{margin-bottom:.4rem}
+.tl-body p:last-child{margin-bottom:0}
+
+/* ─── TABLE ───────────────────────────────────────────────── */
+.tbl-wrap{overflow-x:auto;margin-bottom:1.25rem}
+table{
+  width:100%;border-collapse:collapse;font-size:.85rem;
+  background:var(--surface);border-radius:var(--r-md);
+  overflow:hidden;border:1px solid var(--border);
+}
+th{
+  padding:.65rem .9rem;text-align:left;font-weight:700;font-size:11.5px;
+  background:var(--surface-2);color:var(--ink-2);border-bottom:1px solid var(--border);
+}
+td{padding:.6rem .9rem;color:var(--ink);border-bottom:1px solid var(--border);line-height:1.5;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--surface-2)}
+td.dim{color:var(--ink-2);font-weight:600;font-size:.8rem}
+
+/* ─── INNOVATION CARDS ────────────────────────────────────── */
+.innov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:.75rem;margin-bottom:1.25rem}
+.innov-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-md);padding:1.1rem;
+}
+.innov-card .ico{font-size:1.75rem;margin-bottom:.5rem}
+.innov-card h4{font-size:.9rem;font-weight:700;margin-bottom:.45rem}
+.innov-card p{font-size:.82rem;color:var(--ink-2);margin-bottom:.6rem}
+
+/* ─── ECOSYSTEM GRID ──────────────────────────────────────── */
+.eco-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.75rem;margin-bottom:1.25rem}
+.eco-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-md);padding:1rem 1.1rem;
+  transition:transform .2s,box-shadow .2s;
+}
+.eco-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.08)}
+.eco-ico{font-size:1.4rem;margin-bottom:5px}
+.eco-card h4{font-size:.875rem;font-weight:700;margin-bottom:4px}
+.eco-card p{font-size:.8rem;color:var(--ink-2);margin-bottom:0;line-height:1.55}
+
+/* ─── FUNDING STEPS ───────────────────────────────────────── */
+.fund-list{margin-bottom:1.25rem}
+.fund-step{display:flex;gap:.85rem;margin-bottom:.85rem;align-items:flex-start}
+.fund-num{
+  width:36px;height:36px;border-radius:50%;background:var(--blue);
+  color:#fff;font-size:12px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.fund-body{flex:1;padding-top:4px}
+.fund-body h4{font-size:.875rem;font-weight:700;margin-bottom:3px}
+.fund-body p{font-size:.82rem;color:var(--ink-2);margin-bottom:4px}
+
+/* ─── TABS ────────────────────────────────────────────────── */
+.tab-nav{
+  display:flex;gap:3px;overflow-x:auto;scrollbar-width:none;
+  border-bottom:2px solid var(--border);margin-bottom:1.5rem;padding-bottom:2px;
+}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{
+  padding:7px 16px;border:none;background:transparent;border-bottom:2px solid transparent;
+  font-family:inherit;font-size:.85rem;font-weight:600;color:var(--ink-2);
+  cursor:pointer;white-space:nowrap;margin-bottom:-2px;
+  border-radius:var(--r-sm) var(--r-sm) 0 0;transition:all .15s;
+}
+.tab-btn:hover{color:var(--blue);background:var(--blue-dim)}
+.tab-btn.on{color:var(--blue);border-bottom-color:var(--blue)}
+.tab-panel{display:none}
+.tab-panel.on{display:block;animation:fadeUp .25s ease}
+
+/* ─── CASE STUDY ──────────────────────────────────────────── */
+.case-factors{margin-bottom:1.25rem}
+.cf{
+  display:grid;grid-template-columns:130px 1fr;gap:.75rem;
+  align-items:start;padding:.75rem .9rem;
+  background:var(--surface);border-radius:var(--r-sm);
+  margin-bottom:.4rem;font-size:.85rem;
+}
+.cf .cf-key{font-weight:700;color:var(--ink-2);font-size:.8rem;padding-top:2px}
+.cf .cf-val{color:var(--ink);line-height:1.6}
+
+/* ─── PEMANTIK ────────────────────────────────────────────── */
+.pm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:.75rem;margin-bottom:1.25rem}
+.pm-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-md);padding:1.1rem;
+  transition:border-color .15s,transform .15s;cursor:default;
+}
+.pm-card:hover{border-color:var(--blue);transform:translateY(-2px)}
+.pm-idx{font-size:10.5px;font-weight:700;color:var(--ink-3);margin-bottom:.5rem}
+.pm-q{font-size:.875rem;font-weight:600;color:var(--ink);line-height:1.6;margin-bottom:.6rem}
+.pm-why{
+  font-size:.775rem;color:var(--ink-3);line-height:1.5;
+  padding-top:.6rem;border-top:1px solid var(--border);
+}
+
+/* ─── QUIZ ────────────────────────────────────────────────── */
+.quiz-box{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:1.75rem;margin-bottom:1.25rem;
+}
+.quiz-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.quiz-hd span{font-size:.8rem;font-weight:500;color:var(--ink-2)}
+.qpbar-track{height:4px;background:var(--border);border-radius:2px;margin-bottom:1.25rem;overflow:hidden}
+.qpbar-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--violet));border-radius:2px;transition:width .35s ease}
+.q-num{font-size:11px;font-weight:700;color:var(--ink-3);margin-bottom:.4rem;letter-spacing:.05em}
+.q-text{font-size:.975rem;font-weight:600;color:var(--ink);margin-bottom:1.25rem;line-height:1.6}
+.q-opts{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.1rem}
+.q-opt{
+  padding:.8rem 1rem;border:2px solid var(--border);border-radius:var(--r-md);
+  font-family:inherit;font-size:.875rem;font-weight:500;color:var(--ink);
+  background:var(--bg);text-align:left;cursor:pointer;line-height:1.5;
+  transition:border-color .12s,background .12s,color .12s;
+}
+.q-opt:hover:not(:disabled){border-color:var(--blue);background:var(--blue-dim);color:var(--blue)}
+.q-opt.correct{border-color:var(--jade)!important;background:var(--jade-dim)!important;color:var(--jade)!important}
+.q-opt.wrong{border-color:var(--ruby)!important;background:var(--ruby-dim)!important;color:var(--ruby)!important}
+.q-opt:disabled{cursor:not-allowed}
+.q-fb{display:none;padding:.75rem 1rem;border-radius:var(--r-sm);font-size:.85rem;margin-bottom:.9rem;line-height:1.6}
+.q-fb.show{display:block;animation:fadeUp .25s ease}
+.q-fb.ok{background:var(--jade-dim);color:var(--jade)}
+.q-fb.no{background:var(--ruby-dim);color:var(--ruby)}
+.quiz-btn{
+  padding:9px 22px;background:var(--blue);color:#fff;border:none;
+  border-radius:var(--r-md);font-family:inherit;font-size:.875rem;
+  font-weight:700;cursor:pointer;transition:background .15s;
+}
+.quiz-btn:hover{background:var(--blue-dk)}
+.quiz-btn:disabled{opacity:.45;cursor:not-allowed}
+.quiz-result{display:none;text-align:center;padding:2rem 1rem;animation:fadeUp .35s ease}
+.quiz-result.show{display:block}
+.score-big{font-size:4rem;font-weight:800;line-height:1;color:var(--blue);margin-bottom:.4rem}
+.score-label{font-size:1.05rem;color:var(--ink-2);margin-bottom:1.5rem}
+.score-msg{font-size:.9rem;color:var(--ink-2);margin-bottom:1.75rem;max-width:400px;margin-left:auto;margin-right:auto}
+
+/* ─── REFERENCES ──────────────────────────────────────────── */
+.ref-list{list-style:none}
+.ref-item{padding:.75rem 0;border-bottom:1px solid var(--border);font-size:.85rem;color:var(--ink-2);line-height:1.65}
+.ref-item:last-child{border-bottom:none}
+.ref-tag{
+  display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.05em;
+  padding:2px 6px;border-radius:4px;margin-right:5px;vertical-align:middle;
+}
+
+/* ─── ANIMATIONS ──────────────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .45s ease,transform .45s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ─── FOOTER ──────────────────────────────────────────────── */
+footer{
+  background:var(--surface);border-top:1px solid var(--border);
+  padding:1.5rem 1.25rem;text-align:center;color:var(--ink-3);font-size:.8rem;
+}
+footer p+p{margin-top:4px;margin-bottom:0}
+
+/* ─── RESPONSIVE ──────────────────────────────────────────── */
+@media(max-width:600px){
+  .flip-grid{grid-template-columns:1fr 1fr}
+  .flip-wrap{height:175px}
+  .cf{grid-template-columns:1fr}
+  .fund-step{align-items:flex-start}
+  .stats-row{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="pbar"></div>
+
+<!-- ═══ NAV ═══════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">🚀 BSD304 · P2</span>
+    <a class="nav-link" href="#s1">① Mengenal Startup</a>
+    <a class="nav-link" href="#s2">② Startup Bubble</a>
+    <a class="nav-link" href="#s3">③ Disrupsi</a>
+    <a class="nav-link" href="#s4">④ Environment</a>
+    <a class="nav-link" href="#s5">⑤ Studi Kasus</a>
+    <a class="nav-link" href="#s6">⑥ Pemantik</a>
+    <a class="nav-link" href="#s7">⑦ Kuis</a>
+    <a class="nav-link" href="#s8">⑧ Referensi</a>
+    <button class="theme-btn" id="themeBtn" title="Ganti tema">🌙</button>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══════════════════════════════════════════════ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-pill">📚 Bahan Ajar · Pertemuan 2 · Ekonomi Digital Baru (BSD304)</div>
+    <h1>Startup dalam<br><span>Ekosistem Ekonomi Digital</span></h1>
+    <p class="hero-sub">Memahami apa itu startup, mengapa bubble terjadi, bagaimana disrupsi bekerja, dan ekosistem apa yang menentukan keberhasilan atau kegagalannya.</p>
+    <div class="hero-tags">
+      <div class="hero-tag">🏛️ Universitas Bhamada Slawi</div>
+      <div class="hero-tag">📘 Referensi: Buku 2 &amp; 5</div>
+      <div class="hero-tag">🎯 CPL-PP1 · KU1 · PP5</div>
+      <div class="hero-tag">⏱️ 100 menit</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 1 — MENGENAL STARTUP
+════════════════════════════════════════════════════════ -->
+<section class="sec reveal" id="s1">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:var(--blue)">1</div>
+    <h2>Mengenal Startup</h2>
+  </div>
+
+  <!-- 1.1 Definisi -->
+  <div class="sub">
+    <div class="sub-title">Apa Itu Startup?</div>
+    <p>Kata <strong>"startup"</strong> sering disalahartikan sebagai sinonim dari "bisnis kecil yang baru berdiri." Padahal keduanya adalah entitas yang sangat berbeda dalam tujuan, cara kerja, dan ukuran keberhasilan. Memahami perbedaan ini adalah kunci untuk memahami mengapa startup mampu mengubah industri secara fundamental dalam waktu yang sangat singkat.</p>
+
+    <div class="quote">
+      <blockquote>"A startup is a temporary organization designed to search for a repeatable and scalable business model."</blockquote>
+      <cite>— Steve Blank, The Startup Owner's Manual (2012)</cite>
+    </div>
+    <div class="quote">
+      <blockquote>"A startup is a human institution designed to create a new product or service under conditions of extreme uncertainty."</blockquote>
+      <cite>— Eric Ries, The Lean Startup (2011)</cite>
+    </div>
+    <p>Dua definisi di atas menekankan dua kata kunci yang sama: <strong>scalable</strong> (bisa tumbuh besar tanpa biaya tumbuh yang proporsional) dan <strong>uncertainty</strong> (dijalankan di tengah ketidakpastian yang tinggi). Ini yang membedakan startup dari warung makan baru atau toko online baru — semuanya bisnis baru, tapi tidak semuanya startup.</p>
+
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-n" data-target="90">0</div><div class="stat-l">% startup gagal dalam 5 tahun pertama</div></div>
+      <div class="stat-box"><div class="stat-n" data-target="278">0</div><div class="stat-l">juta penduduk Indonesia — pasar potensial startup</div></div>
+      <div class="stat-box"><div class="stat-n" data-target="5">0</div><div class="stat-l">unicorn startup Indonesia (per 2024)</div></div>
+      <div class="stat-box"><div class="stat-n" data-target="220">0</div><div class="stat-l">juta pengguna internet Indonesia (APJII, 2023)</div></div>
+    </div>
+  </div>
+
+  <!-- 1.2 Lima Karakteristik -->
+  <div class="sub">
+    <div class="sub-title">Lima Karakteristik Utama Startup</div>
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          <span>📈 &nbsp;1. Skalabilitas (Scalability)</span>
+          <span class="acc-icon">▾</span>
+        </button>
+        <div class="acc-body"><div class="acc-inner">
+          <p>Startup dirancang untuk tumbuh <strong>secara eksponensial</strong>, bukan linear. Saat sebuah warung makan membuka cabang kedua, biayanya hampir sama dengan membuka cabang pertama. Sebaliknya, ketika Tokopedia menambah satu juta penjual baru ke platformnya, biaya tambahan itu sangat kecil dibandingkan nilai yang dihasilkan.</p>
+          <div class="analogy">
+            <div class="analogy-lbl">💡 Analogi</div>
+            <p>Startup seperti benih tanaman eksotis — bukan pohon yang sudah besar, tapi punya potensi tumbuh sangat tinggi jika mendapat tanah (pasar), air (modal), dan cahaya yang tepat (talent). Satu benih bisa menjadi hutan; satu toko hanya bisa menjadi banyak toko.</p>
+          </div>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          <span>❓ &nbsp;2. Ketidakpastian Tinggi (High Uncertainty)</span>
+          <span class="acc-icon">▾</span>
+        </button>
+        <div class="acc-body"><div class="acc-inner">
+          <p>Startup beroperasi dalam kondisi di mana <strong>tidak ada kepastian bahwa model bisnisnya akan berhasil</strong>. Riset pasar saja tidak cukup — startup harus terus bereksperimen, mengukur, dan belajar (build–measure–learn).</p>
+          <p>Mayoritas startup gagal bukan karena produknya buruk, tapi karena membangun sesuatu yang tidak cukup diinginkan pasar. Wood, Hewlin & Lah (2011) mengingatkan: dalam teknologi, sangat mudah mengacaukan pertumbuhan pengguna dengan pertumbuhan bisnis — keduanya hal yang berbeda.</p>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          <span>💻 &nbsp;3. Berbasis Teknologi (Technology-Driven)</span>
+          <span class="acc-icon">▾</span>
+        </button>
+        <div class="acc-body"><div class="acc-inner">
+          <p>Teknologi bukan hanya alat bantu bagi startup — <strong>teknologi adalah inti dari layanan atau produknya</strong>. Platform Gojek tanpa teknologi hanyalah jasa penitipan motor. Tokopedia tanpa teknologi hanyalah brosur produk. Teknologi yang memungkinkan keduanya tumbuh dari nol menjadi bernilai miliaran dolar.</p>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          <span>💰 &nbsp;4. Didanai Investor (Investor-Funded)</span>
+          <span class="acc-icon">▾</span>
+        </button>
+        <div class="acc-body"><div class="acc-inner">
+          <p>Karena tumbuh lebih cepat dari kemampuannya menghasilkan profit, startup umumnya membutuhkan <strong>suntikan modal eksternal</strong> dari angel investor atau venture capital (VC). Modal ini adalah bahan bakar untuk tumbuh cepat — tapi juga menciptakan tekanan ekspektasi pertumbuhan yang sangat tinggi dari investor. Diamandis & Kotler (2020) mencatat: di era percepatan teknologi, modal yang tepat bisa membuat startup global dalam hitungan tahun, bukan dekade.</p>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          <span>⚡ &nbsp;5. Berniat Mendisrupsi (Disruptive Intent)</span>
+          <span class="acc-icon">▾</span>
+        </button>
+        <div class="acc-body"><div class="acc-inner">
+          <p>Startup tidak bertujuan sekadar ikut bermain di pasar yang sudah ada. Sebagian besar startup lahir dari <strong>keinginan mengubah cara sesuatu bekerja</strong> — membuat sesuatu yang lebih murah, lebih cepat, lebih mudah, atau menghadirkan solusi yang belum pernah ada. Bukan tentang menjadi lebih baik dari yang sudah ada, tapi tentang membuat yang sudah ada tidak lagi relevan.</p>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.3 Flip Cards -->
+  <div class="sub">
+    <div class="sub-title">Startup vs UKM — Ketuk kartu untuk membandingkan</div>
+    <p style="font-size:.82rem;color:var(--ink-3);margin-bottom:.85rem">Klik/ketuk setiap kartu untuk melihat perbedaan Startup dan UKM pada masing-masing aspek.</p>
+    <div class="flip-grid">
+      <div class="flip-wrap" onclick="this.querySelector('.flip-card').classList.toggle('flipped')"><div class="flip-card">
+        <div class="flip-f"><div class="asp">Aspek 1</div><h4>🎯 Tujuan Utama</h4><div class="hint">Ketuk untuk membandingkan</div></div>
+        <div class="flip-b"><div class="cmp-row"><div class="cmp-col s"><div class="lbl">Startup</div>Menemukan model bisnis scalable &amp; mendisrupsi pasar</div><div class="cmp-col u"><div class="lbl">UKM</div>Menghasilkan keuntungan stabil &amp; berkelanjutan</div></div></div>
+      </div></div>
+      <div class="flip-wrap" onclick="this.querySelector('.flip-card').classList.toggle('flipped')"><div class="flip-card">
+        <div class="flip-f"><div class="asp">Aspek 2</div><h4>📋 Model Bisnis</h4><div class="hint">Ketuk untuk membandingkan</div></div>
+        <div class="flip-b"><div class="cmp-row"><div class="cmp-col s"><div class="lbl">Startup</div>Eksperimental — masih dicari &amp; terus diuji melalui iterasi</div><div class="cmp-col u"><div class="lbl">UKM</div>Sudah terbukti &amp; mapan, mengikuti pola bisnis yang familiar</div></div></div>
+      </div></div>
+      <div class="flip-wrap" onclick="this.querySelector('.flip-card').classList.toggle('flipped')"><div class="flip-card">
+        <div class="flip-f"><div class="asp">Aspek 3</div><h4>💵 Sumber Dana</h4><div class="hint">Ketuk untuk membandingkan</div></div>
+        <div class="flip-b"><div class="cmp-row"><div class="cmp-col s"><div class="lbl">Startup</div>Investor, Venture Capital, Angel Investor, program pemerintah</div><div class="cmp-col u"><div class="lbl">UKM</div>Modal sendiri, pinjaman bank, KUR, koperasi</div></div></div>
+      </div></div>
+      <div class="flip-wrap" onclick="this.querySelector('.flip-card').classList.toggle('flipped')"><div class="flip-card">
+        <div class="flip-f"><div class="asp">Aspek 4</div><h4>📊 Pola Pertumbuhan</h4><div class="hint">Ketuk untuk membandingkan</div></div>
+        <div class="flip-b"><div class="cmp-row"><div class="cmp-col s"><div class="lbl">Startup</div>Eksponensial — bisa 10× dalam setahun jika model bisnis terbukti</div><div class="cmp-col u"><div class="lbl">UKM</div>Linear &amp; stabil — tumbuh proporsional dengan usaha &amp; modal</div></div></div>
+      </div></div>
+      <div class="flip-wrap" onclick="this.querySelector('.flip-card').classList.toggle('flipped')"><div class="flip-card">
+        <div class="flip-f"><div class="asp">Aspek 5</div><h4>✅ Ukuran Sukses</h4><div class="hint">Ketuk untuk membandingkan</div></div>
+        <div class="flip-b"><div class="cmp-row"><div class="cmp-col s"><div class="lbl">Startup</div>Market share, pengguna aktif, valuasi perusahaan</div><div class="cmp-col u"><div class="lbl">UKM</div>Keuntungan bersih, arus kas positif, loyalitas pelanggan lokal</div></div></div>
+      </div></div>
+      <div class="flip-wrap" onclick="this.querySelector('.flip-card').classList.toggle('flipped')"><div class="flip-card">
+        <div class="flip-f"><div class="asp">Aspek 6</div><h4>⚠️ Toleransi Risiko</h4><div class="hint">Ketuk untuk membandingkan</div></div>
+        <div class="flip-b"><div class="cmp-row"><div class="cmp-col s"><div class="lbl">Startup</div>Sangat tinggi — "fail fast, learn fast" adalah prinsip operasional</div><div class="cmp-col u"><div class="lbl">UKM</div>Rendah — mengutamakan keberlanjutan &amp; menghindari kerugian besar</div></div></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- 1.4 Ekosistem Indonesia -->
+  <div class="sub">
+    <div class="sub-title">Ekosistem Startup Indonesia</div>
+    <p>Indonesia adalah salah satu ekosistem startup paling dinamis di Asia Tenggara. Diamandis &amp; Kotler (2020) menyebut negara-negara berkembang dengan populasi besar dan penetrasi internet cepat sebagai <em>"leapfrog economies"</em> — yang bisa melompati tahapan pembangunan konvensional dan langsung masuk era digital.</p>
+    <div class="icard blue">
+      <p><span class="badge blue">Decacorn &gt;$10 M</span> &nbsp;<strong>GoTo</strong> (Gojek + Tokopedia merger 2021, IPO BEI 2022)</p>
+      <p><span class="badge jade">Unicorn &gt;$1 M</span> &nbsp;<strong>Traveloka</strong> · <strong>OVO</strong> · <strong>Xendit</strong> · <strong>Kopi Kenangan</strong></p>
+      <p><span class="badge ember">Soonicorn</span> &nbsp;<strong>eFishery</strong> (agritech) · <strong>Gredu</strong> (edtech manajemen sekolah)</p>
+    </div>
+    <div class="icard teal">
+      <p><strong>Konteks Jawa Tengah:</strong> Ekosistem startup Jateng masih tahap awal namun potensial. Inkubasi aktif di UNDIP (Semarang) dan UNS (Solo). Peluang besar yang belum tergarap: digitalisasi UMKM batik Pekalongan, agritech Tegal-Brebes, platform logistik UMKM, dan healthtech pedesaan.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 2 — STARTUP BUBBLE
+════════════════════════════════════════════════════════ -->
+<section class="sec reveal" id="s2">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:var(--ruby)">2</div>
+    <h2>Startup Bubble</h2>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">Apa Itu Startup Bubble?</div>
+    <p>Startup bubble adalah fenomena ekonomi di mana <strong>valuasi startup jauh melampaui nilai bisnis riilnya</strong> karena didorong euphoria investor, sentimen pasar yang berlebihan, dan narasi pertumbuhan yang tidak selalu didukung fundamental bisnis yang kuat.</p>
+    <div class="analogy">
+      <div class="analogy-lbl">💡 Analogi — Balon di Pasar Malam</div>
+      <p>Startup bubble seperti balon helium yang dijual di pasar malam. Semakin banyak orang tertarik (investor yang takut ketinggalan/FOMO), semakin besar dan mengkilap balon itu kelihatannya. Tapi tanpa isi yang nyata — tanpa model bisnis yang sehat — satu jarum kecil sudah cukup untuk memecahnya. Dan yang berbahaya: saat balon meledak, orang-orang di sekitarnya pun ikut terkena.</p>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">Empat Tanda Startup Bubble</div>
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)"><span>💸 &nbsp;1. Valuasi Tanpa Fondasi Revenue</span><span class="acc-icon">▾</span></button>
+        <div class="acc-body"><div class="acc-inner"><p>Perusahaan dinilai berdasarkan ekspektasi pertumbuhan masa depan yang sangat optimistis, bukan pendapatan atau profit saat ini. Investor berlomba masuk karena takut ketinggalan tren, bukan karena analisis bisnis yang matang. Ini menciptakan spiral self-fulfilling yang tidak berkelanjutan.</p></div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)"><span>🔥 &nbsp;2. "Bakar Uang" (Cash Burning) Massal</span><span class="acc-icon">▾</span></button>
+        <div class="acc-body"><div class="acc-inner"><p>Startup memberikan subsidi besar-besaran — ongkos kirim gratis, cashback, diskon habis-habisan — bukan untuk membangun loyalitas jangka panjang, melainkan untuk <strong>membeli pengguna</strong> agar angka pertumbuhan terlihat mengesankan. Saat subsidi berhenti, pengguna pun pergi. Wood et al. (2011) mengingatkan: konsumsi yang dibeli dengan subsidi bukan bukti validasi produk.</p></div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)"><span>😨 &nbsp;3. Investor FOMO (Fear of Missing Out)</span><span class="acc-icon">▾</span></button>
+        <div class="acc-body"><div class="acc-inner"><p>Siklus bubble menghasilkan kondisi di mana investor berinvestasi karena takut ketinggalan tren, bukan karena keyakinan pada fundamental bisnis. Ini menciptakan efek bola salju: semakin banyak investasi masuk → semakin tinggi valuasi → semakin banyak investor yang ingin ikut → valuasi makin tidak realistis.</p></div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)"><span>📈 &nbsp;4. IPO Prematur</span><span class="acc-icon">▾</span></button>
+        <div class="acc-body"><div class="acc-inner"><p>Startup melantai di bursa saham sebelum model bisnisnya stabil atau menguntungkan, dengan harapan mendapatkan likuiditas sebelum investor kehilangan kepercayaan. Ketika investor publik akhirnya membaca laporan keuangan yang sebenarnya, kejatuhan bisa sangat cepat dan dramatis — seperti yang terjadi pada WeWork.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">Tiga Gelombang Bubble Besar</div>
+    <div class="tl">
+      <div class="tl-item">
+        <div class="tl-dot r"></div>
+        <div class="tl-yr">1995–2001</div>
+        <div class="tl-title">Dot-Com Bubble — Induk dari Semua Bubble</div>
+        <div class="tl-body">
+          <p>Kemunculan internet komersial menciptakan euforia luar biasa. Ribuan perusahaan internet (dot-com) melantai di NASDAQ dengan valuasi fantastis tanpa pernah menghasilkan profit. Puncak: Maret 2000 (NASDAQ 5.048). Kehancuran: Oktober 2002 (NASDAQ 1.114) — kehilangan <strong>78% nilainya</strong> dalam 2 tahun. Kerugian total ~$5 triliun (Diamandis &amp; Kotler, 2020).</p>
+          <p>Yang selamat: Amazon (infrastruktur logistik nyata) dan Google (model iklan berbasis relevansi). <em>Pelajaran: teknologi bukan jaminan bisnis. Model bisnisnya yang harus masuk akal.</em></p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot e"></div>
+        <div class="tl-yr">2019</div>
+        <div class="tl-title">WeWork — Bubble Paling Dramatis Abad Ini</div>
+        <div class="tl-body">
+          <p>WeWork menyewakan co-working space, namun CEO-nya menyebut mereka "perusahaan teknologi berbasis komunitas." Valuasi sempat mencapai <strong>$47 miliar</strong> — melampaui nilai pasar Marriott yang memiliki ratusan ribu kamar hotel di seluruh dunia.</p>
+          <p>Ketika investor publik membaca prospektus IPO-nya, mereka menemukan kerugian $1,9 miliar (2018) tanpa jalur profitabilitas yang jelas. IPO dibatalkan. Valuasi jatuh ke $8 miliar dalam hitungan minggu. <em>Pelajaran: narasi menarik tidak bisa menggantikan angka yang sehat.</em></p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-yr">2022–2023</div>
+        <div class="tl-title">"Funding Winter" Indonesia</div>
+        <div class="tl-body">
+          <p>Setelah booming pandemi, suku bunga global naik drastis → investor beralih ke instrumen aman → dana VC mengering. Dampak: PHK massal di Zenius, LinkAja, Mamikos, Lummo. JD.id — anak usaha raksasa e-commerce China — bahkan menutup operasinya di Indonesia (Maret 2023).</p>
+          <p><em>Pelajaran: startup yang tumbuh dari subsidi investor, bukan dari kebutuhan nyata pengguna, paling rentan saat musim dingin pendanaan tiba.</em></p>
+        </div>
+      </div>
+    </div>
+    <div class="icard jade">
+      <p><strong>Apakah bubble selalu buruk?</strong> Ekonom Carlota Perez (2002) berargumen bahwa bubble teknologi, meski menyakitkan, seringkali meninggalkan infrastruktur yang berguna bagi generasi berikutnya. Dot-com bubble meninggalkan kabel fiber optik dan data center yang kemudian dimanfaatkan Google dan Amazon. Funding winter Indonesia meninggalkan jutaan UMKM yang kini terbiasa berjualan digital — warisan yang tidak hilang meski banyak startup yang membangunnya sudah tutup.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 3 — DISRUPSI
+════════════════════════════════════════════════════════ -->
+<section class="sec reveal" id="s3">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:var(--violet)">3</div>
+    <h2>Startup dan Disrupsinya</h2>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">Disruptive Innovation — Dari Bawah, Bukan dari Atas</div>
+    <p>Konsep <em>disruptive innovation</em> diperkenalkan Clayton Christensen (Harvard) dalam <em>The Innovator's Dilemma</em> (1997). Kasali (2018) mengadaptasinya dalam konteks Indonesia, menunjukkan bagaimana gelombang disrupsi sedang mengubah lanskap bisnis nasional.</p>
+    <p>Pemahaman yang keliru: inovasi disruptif pasti berupa teknologi yang spektakuler. Kenyataannya, <strong>inovasi disruptif biasanya dimulai dari yang lebih sederhana, lebih murah, dan melayani segmen yang selama ini diabaikan pemain lama.</strong></p>
+
+    <div class="analogy">
+      <div class="analogy-lbl">💡 Analogi Lokal — Wartel → HP → WhatsApp</div>
+      <p>Generasi sebelum tahun 2000 pasti ingat wartel. Di Tegal, orang harus keluar rumah, antri, dan bayar per menit untuk menelepon keluarga perantau. Telepon genggam datang bukan dari inovasi wartel — dari industri yang berbeda. Wartel pun sepi.</p><br>
+      <p>Kemudian WhatsApp datang. Tiba-tiba mengirim pesan atau video call gratis — hanya butuh paket data. Operator telekomunikasi yang meraih triliunan dari SMS kini berlomba menjual paket data. <strong>Setiap gelombang disrupsi tidak pernah datang dari arah yang diwaspadai pemain yang sedang nyaman.</strong></p>
+    </div>
+
+    <div class="sub-title" style="margin-top:1.5rem">Pola Disruptive Innovation</div>
+    <div class="icard blue">
+      <ol style="padding-left:1.2rem;line-height:2.1">
+        <li><strong>Pemain lama</strong> fokus melayani pelanggan premium yang paling menguntungkan</li>
+        <li><strong>Startup disruptor</strong> masuk dari segmen bawah — lebih murah/lebih mudah — awalnya dianggap tidak mengancam</li>
+        <li>Startup terus berinovasi dan membaik, sementara <strong>pemain lama terlena</strong> dengan profitnya</li>
+        <li>Startup naik ke pasar yang lebih luas dan mulai <strong>mengancam pemain lama</strong> secara serius</li>
+        <li>Saat pemain lama sadar, <strong>seringkali sudah terlambat untuk bereaksi</strong> secara efektif</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">Tiga Tipe Inovasi</div>
+    <div class="innov-grid">
+      <div class="innov-card" style="border-top:3px solid var(--violet)">
+        <div class="ico">⚡</div>
+        <h4>Disruptive Innovation</h4>
+        <p>Mengubah total cara kerja industri, dimulai dari bawah. Membuat pemain lama tidak relevan, bukan sekadar memperbaiki mereka.</p>
+        <span class="badge violet">Gojek vs ojek pangkalan</span>
+      </div>
+      <div class="innov-card" style="border-top:3px solid var(--blue)">
+        <div class="ico">🔧</div>
+        <h4>Sustaining Innovation</h4>
+        <p>Mempertahankan pemain yang sudah ada dengan terus meningkatkan produk untuk pelanggan mereka yang sudah ada.</p>
+        <span class="badge blue">iPhone versi baru tiap tahun</span>
+      </div>
+      <div class="innov-card" style="border-top:3px solid var(--ember)">
+        <div class="ico">♻️</div>
+        <h4>Creative Destruction</h4>
+        <p>Schumpeter (1942): yang lama harus runtuh agar yang baru bisa tumbuh. Bukan kejam — hukum alam evolusi ekonomi.</p>
+        <span class="badge ember">Toko kaset → iTunes → Spotify</span>
+      </div>
+    </div>
+    <div class="analogy">
+      <div class="analogy-lbl">💡 Analogi Creative Destruction</div>
+      <p>Seperti pergantian musim. Daun gugur bukan karena pohon gagal, tapi karena pohon mempersiapkan diri untuk tumbuh baru. Taxi konvensional yang kehilangan penumpang ke Gojek bukan "mati sia-sia" — pasar transportasi secara keseluruhan justru tumbuh karena lebih banyak orang kini bisa menjangkau layanan transportasi terjangkau.</p>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">Pola Disrupsi Startup di Indonesia</div>
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Industri yang Terdisrupsi</th><th>Pemain Lama</th><th>Startup Disruptor</th><th>Mekanisme Utama</th></tr></thead>
+      <tbody>
+        <tr><td>Transportasi</td><td class="dim">Taksi, ojek pangkalan</td><td>Gojek, Grab</td><td>Platform + harga transparan</td></tr>
+        <tr><td>Perjalanan</td><td class="dim">Agen travel fisik</td><td>Traveloka, Tiket.com</td><td>Aggregasi + bandingkan real-time</td></tr>
+        <tr><td>Keuangan</td><td class="dim">Bank, koperasi</td><td>GoPay, OVO, Kredivo</td><td>Dompet digital + kredit berbasis data</td></tr>
+        <tr><td>Pendidikan</td><td class="dim">Bimbingan belajar fisik</td><td>Ruangguru, Zenius*</td><td>Video on-demand + gamifikasi</td></tr>
+        <tr><td>Ritel</td><td class="dim">Toko fisik, pasar tradisional</td><td>Tokopedia, Shopee</td><td>Long-tail marketplace</td></tr>
+        <tr><td>Logistik</td><td class="dim">JNE, TIKI ekspedisi tradisional</td><td>J&amp;T, SiCepat</td><td>Network effect + real-time tracking</td></tr>
+        <tr><td>Media &amp; Hiburan</td><td class="dim">TV, radio, koran</td><td>YouTube, Spotify, podcast</td><td>User-generated content + algoritma</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:.78rem;color:var(--ink-3)">*Zenius berhasil mendisrupsi bimbel konvensional namun kemudian gagal karena faktor internal — dibahas di Studi Kasus.</p>
+    <div class="icard ember">
+      <p><strong>The Innovator's Dilemma — Mengapa Pemain Lama Selalu Terlambat?</strong></p>
+      <p>Christensen (1997) menjelaskan paradoks: perusahaan yang paling baik pun sering gagal merespons disrupsi, justru karena mereka <em>terlalu baik</em> melayani pelanggan yang sudah ada. Taksi tidak mengembangkan ride-hailing karena pelanggan premium mereka tidak memintanya. Koran tidak bergerak cepat ke digital karena iklan cetak masih menghasilkan lebih banyak uang. Keputusan yang masuk akal jangka pendek — inilah yang membuat mereka rentan jangka panjang.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 4 — STARTUP ENVIRONMENT
+════════════════════════════════════════════════════════ -->
+<section class="sec reveal" id="s4">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:var(--teal)">4</div>
+    <h2>Startup Environment</h2>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">Ekosistem — Lebih dari Sekadar Foundernya</div>
+    <p>Salah satu kesalahpahaman paling umum: keberhasilan startup hanya tergantung pada foundernya. Padahal startup adalah produk dari sebuah <strong>ekosistem</strong> — jaringan kompleks berbagai aktor yang saling berinteraksi. Parker, Van Alstyne &amp; Choudary (2016) menegaskan: dalam ekonomi platform, nilai tercipta bukan dari satu entitas tunggal, melainkan dari interaksi antar pelaku dalam ekosistem.</p>
+    <div class="analogy">
+      <div class="analogy-lbl">💡 Analogi — Ekosistem Sawah</div>
+      <p>Startup tidak bisa tumbuh sendirian, seperti padi yang butuh lebih dari sekadar benih bagus. Padi butuh tanah subur (pasar yang siap), air (modal), pupuk (mentor/inkubator), cahaya matahari (regulasi kondusif), dan petani terampil (talent &amp; tim). Jika satu komponen hilang, panen gagal meski benihnya unggul.</p>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">Enam Komponen Ekosistem Startup</div>
+    <div class="eco-grid">
+      <div class="eco-card">
+        <div class="eco-ico">👤</div>
+        <h4>Founders &amp; Tim</h4>
+        <p>Tim ideal: Techie (membangun produk) + Hustler (menjual &amp; kemitraan) + Domain Expert (memahami pengguna &amp; masalah). Tim yang tidak komplemen = faktor kegagalan terbesar startup.</p>
+      </div>
+      <div class="eco-card">
+        <div class="eco-ico">💰</div>
+        <h4>Investor</h4>
+        <p>Angel Investor (individu, early stage) · VC (lembaga, growth stage) · Corporate Venture (BRI Ventures, MDI Telkom) · Hibah pemerintah (Kominfo) · Crowdfunding equity.</p>
+      </div>
+      <div class="eco-card">
+        <div class="eco-ico">👥</div>
+        <h4>Talent</h4>
+        <p>Developer, data scientist, UI/UX designer, digital marketer, product manager. Kekurangan talent berkualitas adalah hambatan terbesar ekosistem di luar Jakarta.</p>
+      </div>
+      <div class="eco-card">
+        <div class="eco-ico">🏛️</div>
+        <h4>Regulator &amp; Pemerintah</h4>
+        <p>Bisa menjadi akselerator (kebijakan pro-startup) atau rem (regulasi yang belum siap). Program: Startup Studio Indonesia, NEXTICORN, HUB.ID Kemenparekraf.</p>
+      </div>
+      <div class="eco-card">
+        <div class="eco-ico">🏗️</div>
+        <h4>Support System</h4>
+        <p>Inkubator (pendampingan awal) · Akselerator (program intensif 3–6 bulan) · Co-working space · Komunitas founders dan investor lokal.</p>
+      </div>
+      <div class="eco-card">
+        <div class="eco-ico">🛒</div>
+        <h4>Market (Pasar)</h4>
+        <p>Tanpa pasar yang cukup besar, startup tidak bisa scalable. Indonesia: 278 juta penduduk, kelas menengah tumbuh pesat, penetrasi smartphone terus meningkat di kota kecil.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-title">Tahapan Pendanaan Startup</div>
+    <div class="analogy" style="margin-bottom:1rem">
+      <div class="analogy-lbl">💡 Analogi — Warung yang Jadi Restoran Franchise</div>
+      <p>Mulai dari tabungan sendiri (bootstrapping). Lalu pinjam dari saudara untuk peralatan lebih baik (angel). Investor franchise masuk untuk buka 5 cabang (VC Series A). Setelah 50 cabang sukses, melantai di bursa atau diakuisisi (IPO/exit). Setiap tahap membawa modal lebih besar tapi ekspektasi pertumbuhan yang lebih tinggi pula.</p>
+    </div>
+    <div class="fund-list">
+      <div class="fund-step"><div class="fund-num">1</div><div class="fund-body"><h4>Bootstrapping / Pre-seed</h4><p>Modal dari tabungan sendiri, keluarga, atau teman dekat. Startup baru punya ide atau prototipe awal (MVP). Tujuan: buktikan bahwa konsepnya bisa bekerja.</p><span class="badge ink">Kondisi: Baru ada ide / MVP</span></div></div>
+      <div class="fund-step"><div class="fund-num">2</div><div class="fund-body"><h4>Seed Stage</h4><p>Suntikan dari Angel Investor atau program hibah pemerintah. Ada MVP, mulai ada pengguna awal. Tujuan: validasi pasar dan rekrut tim inti.</p><span class="badge blue">Kondisi: Ada pengguna awal</span></div></div>
+      <div class="fund-step"><div class="fund-num">3</div><div class="fund-body"><h4>Series A</h4><p>Venture Capital masuk. Model bisnis mulai terbukti. Fokus: scaling produk, memperluas tim, menembus pasar yang lebih luas secara agresif.</p><span class="badge jade">Kondisi: Model bisnis terbukti</span></div></div>
+      <div class="fund-step"><div class="fund-num">4</div><div class="fund-body"><h4>Series B, C, D+</h4><p>VC yang lebih besar atau Private Equity masuk. Ekspansi ke kota/negara baru, akuisisi kompetitor kecil, diversifikasi lini produk. Tumbuh cepat di pasar yang sudah terbukti.</p><span class="badge violet">Kondisi: Ekspansi agresif</span></div></div>
+      <div class="fund-step"><div class="fund-num">5</div><div class="fund-body"><h4>IPO / Exit</h4><p>Melantai di bursa saham atau diakuisisi perusahaan besar. Investor awal merealisasikan keuntungan. Contoh: GoTo IPO di BEI (2022), Bukalapak IPO (2021).</p><span class="badge ember">Kondisi: Valuasi matang</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 5 — STUDI KASUS
+════════════════════════════════════════════════════════ -->
+<section class="sec reveal" id="s5">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:var(--jade)">5</div>
+    <h2>Studi Kasus</h2>
+  </div>
+  <p style="margin-bottom:1.5rem">Dua kasus kontrastif berikut memperlihatkan bagaimana startup Indonesia menghadapi kondisi yang serupa — namun dengan hasil yang sangat berbeda. Identifikasi faktor-faktor yang membedakan nasib keduanya.</p>
+
+  <div class="tab-nav">
+    <button class="tab-btn on" onclick="switchTab(this,'tc-zenius')">❌ Zenius — Kegagalan</button>
+    <button class="tab-btn" onclick="switchTab(this,'tc-traveloka')">✅ Traveloka — Keberhasilan</button>
+    <button class="tab-btn" onclick="switchTab(this,'tc-compare')">⚖️ Perbandingan Langsung</button>
+  </div>
+
+  <!-- Zenius -->
+  <div class="tab-panel on" id="tc-zenius">
+    <div class="icard ruby"><p><span class="badge ruby">Kegagalan</span> &nbsp;<strong>Zenius Education (2004–2023)</strong></p></div>
+    <div class="tl" style="margin-top:1.25rem">
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-yr">2004</div><div class="tl-title">Berdiri dengan visi visioner</div><div class="tl-body"><p>Zenius didirikan oleh Sabda PS jauh sebelum EdTech jadi tren. Visinya sederhana namun ambisius: belajar dengan benar-benar memahami, bukan sekadar menghafal untuk ujian. Selama lebih dari satu dekade, Zenius tumbuh organik dan tenang.</p></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-yr">2020–2021</div><div class="tl-title">Pandemi — momen emas yang jadi perangkap</div><div class="tl-body"><p>Sekolah tutup, semua pelajar online. Zenius mendapat suntikan dana besar, ekspansi agresif: ribuan karyawan baru, puluhan produk diluncurkan, jangkauan diperluas masif. Tampak seperti era emas bagi EdTech Indonesia.</p></div></div>
+      <div class="tl-item"><div class="tl-dot r"></div><div class="tl-yr">2022</div><div class="tl-title">PHK massal 800 karyawan</div><div class="tl-body"><p>~25% total staf di-PHK dalam satu pengumuman. Burn rate tidak terkontrol, pendapatan tidak mengejar pengeluaran. Pengguna mulai kembali ke cara belajar konvensional begitu sekolah dibuka.</p></div></div>
+      <div class="tl-item"><div class="tl-dot r"></div><div class="tl-yr">2023</div><div class="tl-title">Operasional dihentikan sepenuhnya</div><div class="tl-body"><p>Zenius menghentikan seluruh operasionalnya. Platform yang pernah menjadi kebanggaan EdTech Indonesia resmi tutup.</p></div></div>
+    </div>
+    <div class="sub-title" style="margin-bottom:.75rem">Analisis Faktor Kegagalan</div>
+    <div class="case-factors">
+      <div class="cf"><div class="cf-key">Pertumbuhan Artifisial</div><div class="cf-val">Pertumbuhan pengguna saat pandemi terjadi karena keterpaksaan (sekolah tutup), bukan karena kecintaan pada produk. Begitu sekolah buka, pengguna pergi.</div></div>
+      <div class="cf"><div class="cf-key">Burn Rate Tak Terkontrol</div><div class="cf-val">Ekspansi masif menciptakan biaya operasional yang jauh melampaui pendapatan. Tidak ada runway yang cukup untuk bertahan saat funding mengering.</div></div>
+      <div class="cf"><div class="cf-key">Salah Baca Pasar</div><div class="cf-val">Asumsi bahwa kebiasaan belajar online akan permanen terbukti salah. Sekolah fisik masih jadi preferensi dominan mayoritas pelajar Indonesia.</div></div>
+      <div class="cf"><div class="cf-key">Kompetisi Gratis</div><div class="cf-val">YouTube, Google, bahkan TikTok menawarkan konten edukatif gratis dan makin berkualitas. Nilai proposisi Zenius menjadi kurang terdiferensiasi.</div></div>
+    </div>
+    <div class="icard ruby"><p><strong>Pelajaran:</strong> Startup yang tumbuh karena momentum eksternal yang tidak permanen harus selalu bertanya: <em>"Bagaimana kita tetap relevan ketika keadaan darurat ini berakhir?"</em></p></div>
+  </div>
+
+  <!-- Traveloka -->
+  <div class="tab-panel" id="tc-traveloka">
+    <div class="icard jade"><p><span class="badge jade">Keberhasilan</span> &nbsp;<strong>Traveloka (2012–sekarang)</strong></p></div>
+    <div class="tl" style="margin-top:1.25rem">
+      <div class="tl-item"><div class="tl-dot j"></div><div class="tl-yr">2012</div><div class="tl-title">Lahir dari masalah nyata</div><div class="tl-body"><p>Ferry Unardi, insinyur Indonesia di Amazon Seattle, pulang ke Padang dan membantu ibunya memesan tiket pesawat. Proses yang berbelit memicu insight: masalah nyata yang dialami jutaan orang Indonesia setiap harinya. Traveloka didirikan — fokus komparasi tiket pesawat.</p></div></div>
+      <div class="tl-item"><div class="tl-dot j"></div><div class="tl-yr">2014–2016</div><div class="tl-title">Ekspansi bertahap, validasi kuat</div><div class="tl-body"><p>Ekspansi ke pemesanan hotel (2014). Mencapai status unicorn (2016). Basis pengguna tumbuh pesat karena memecahkan masalah yang nyata dan dirasakan setiap hari oleh jutaan orang.</p></div></div>
+      <div class="tl-item"><div class="tl-dot j"></div><div class="tl-yr">2017–2019</div><div class="tl-title">Ekspansi regional Asia Tenggara</div><div class="tl-body"><p>Masuk ke Thailand, Filipina, Vietnam, Malaysia, Singapura, dan Australia. Menjadi super app travel terkemuka di kawasan dengan pendekatan yang disesuaikan untuk setiap pasar.</p></div></div>
+      <div class="tl-item"><div class="tl-dot j"></div><div class="tl-yr">2020–2021</div><div class="tl-title">Pandemi — pivot cepat, bukan menunggu</div><div class="tl-body"><p>Pandemi = ancaman eksistensial bagi bisnis travel. Traveloka merespons: pivot ke Xperience (aktivitas lokal), Traveloka Pay (fintech), dan layanan kesehatan (booking vaksin, telemedisin). Valuasi tetap stabil ~$3 miliar.</p></div></div>
+    </div>
+    <div class="sub-title" style="margin-bottom:.75rem">Analisis Faktor Keberhasilan</div>
+    <div class="case-factors">
+      <div class="cf"><div class="cf-key">Masalah Nyata</div><div class="cf-val">Bukan ide yang keren di atas kertas — masalah pemesanan tiket memang nyata dan dirasakan jutaan orang setiap harinya. Ini bukan momentum sementara.</div></div>
+      <div class="cf"><div class="cf-key">Eksekusi Bertahap</div><div class="cf-val">Mulai dari satu fitur (tiket pesawat), perlahan expand ke hotel, aktivitas, kesehatan. Tidak terlalu banyak hal sekaligus — eksekusi tetap terjaga.</div></div>
+      <div class="cf"><div class="cf-key">Adaptasi Cepat</div><div class="cf-val">Pandemi membunuh bisnis travel, tapi Traveloka tidak menunggu — langsung pivot ke produk relevan dengan kondisi baru dalam hitungan bulan.</div></div>
+      <div class="cf"><div class="cf-key">UX Unggul</div><div class="cf-val">Antarmuka yang lebih mudah dari kompetitor menjadi keunggulan awal. Pengguna yang sudah nyaman dengan satu platform jarang berpindah ke platform lain.</div></div>
+    </div>
+    <div class="icard jade"><p><strong>Pelajaran:</strong> Startup yang bertahan bukan selalu yang punya teknologi paling canggih, tapi yang paling jelas <em>memecahkan masalah yang benar-benar ada</em> dan <em>cukup fleksibel untuk berevolusi</em> saat situasi berubah.</p></div>
+  </div>
+
+  <!-- Perbandingan -->
+  <div class="tab-panel" id="tc-compare">
+    <div class="sub-title" style="margin-bottom:.9rem">Zenius vs Traveloka — Perbandingan Langsung</div>
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Dimensi</th><th>❌ Zenius</th><th>✅ Traveloka</th></tr></thead>
+      <tbody>
+        <tr><td class="dim">Sumber pertumbuhan</td><td>Pandemi — darurat sementara</td><td>Masalah permanen jutaan orang</td></tr>
+        <tr><td class="dim">Model monetisasi</td><td>Langganan; sulit dipertahankan post-pandemi</td><td>Komisi transaksi; nilai langsung terasa</td></tr>
+        <tr><td class="dim">Respons saat krisis</td><td>Ekspansi masif saat pertumbuhan tidak organik</td><td>Pivot cepat ke produk relevan baru</td></tr>
+        <tr><td class="dim">Kompetisi</td><td>Konten gratis sangat banyak (YouTube, TikTok)</td><td>Aggregasi harga; sulit direplikasi tanpa skala</td></tr>
+        <tr><td class="dim">Relevansi pasca-krisis</td><td>Menurun drastis setelah sekolah buka</td><td>Tetap relevan dengan ekspansi vertikal baru</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="icard ember"><p><strong>Pertanyaan Refleksi:</strong> Dari dua kasus ini, apa satu hal yang paling membedakan Zenius dan Traveloka dalam menghadapi krisis? Apakah perbedaannya terletak pada kualitas tim, model bisnis, timing, atau faktor lainnya?</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 6 — PEMANTIK
+════════════════════════════════════════════════════════ -->
+<section class="sec reveal" id="s6">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:var(--ember)">6</div>
+    <h2>Pertanyaan Pemantik Diskusi</h2>
+  </div>
+  <p style="margin-bottom:1.25rem">Pilih satu atau dua pertanyaan untuk mendorong diskusi kelas yang kritis. Tidak ada satu jawaban yang "benar" — mahasiswa didorong berargumentasi dengan logika dan data.</p>
+  <div class="pm-grid">
+    <div class="pm-card">
+      <div class="pm-idx">Pemantik 01 — Definisi</div>
+      <div class="pm-q">"Kalau kamu punya ide aplikasi yang bagus tapi tidak punya modal, tidak punya tim, dan belum ada satu pengguna pun — apakah itu sudah bisa disebut startup?"</div>
+      <div class="pm-why">🎯 Membangun definisi dari pemahaman awal mahasiswa sebelum diarahkan ke definisi formal.</div>
+    </div>
+    <div class="pm-card">
+      <div class="pm-idx">Pemantik 02 — Kegagalan</div>
+      <div class="pm-q">"Bukalapak pernah jadi unicorn kebanggaan Indonesia. Kini mereka PHK massal dan pivot besar-besaran. Menurut kamu, salah siapa — foundernya, investornya, regulatornya, atau pasarnya?"</div>
+      <div class="pm-why">🎯 Analisis multi-perspektif tentang kegagalan startup dan memahami ekosistem sebagai faktor penentu.</div>
+    </div>
+    <div class="pm-card">
+      <div class="pm-idx">Pemantik 03 — Empati &amp; Strategi</div>
+      <div class="pm-q">"Ojek pangkalan di depan kampus — apakah mereka korban Gojek, atau justru bisa memanfaatkan Gojek? Bagaimana caranya?"</div>
+      <div class="pm-why">🎯 Membangun empati sekaligus melatih pemikiran strategis — bagaimana merespons disrupsi bukan sebagai korban pasif.</div>
+    </div>
+    <div class="pm-card">
+      <div class="pm-idx">Pemantik 04 — Konteks Lokal</div>
+      <div class="pm-q">"Di Slawi atau Tegal, masalah sehari-hari apa yang paling mengganggu yang belum ada solusi digitalnya? Apakah masalah itu cukup besar untuk menjadi startup?"</div>
+      <div class="pm-why">🎯 Mendorong mahasiswa mengidentifikasi peluang dari lingkungan sendiri — mindset entrepreneur berakar lokal.</div>
+    </div>
+    <div class="pm-card">
+      <div class="pm-idx">Pemantik 05 — Perspektif Investor</div>
+      <div class="pm-q">"Kamu punya Rp500 juta untuk diinvestasikan ke startup. Mana yang lebih menarik: startup yang tumbuh 300% saat pandemi tapi tidak jelas setelahnya, atau startup yang tumbuh stabil 30% per tahun?"</div>
+      <div class="pm-why">🎯 Melatih logika investasi dan kemampuan mengevaluasi kelayakan bisnis jangka panjang vs pertumbuhan jangka pendek.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 7 — KUIS FORMATIF
+════════════════════════════════════════════════════════ -->
+<section class="sec reveal" id="s7">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:var(--violet)">7</div>
+    <h2>Kuis Formatif</h2>
+  </div>
+  <p style="margin-bottom:1.25rem">Uji pemahaman kamu tentang materi Pertemuan 2. 10 soal pilihan ganda — tidak ada nilai negatif, jadi jawab semua pertanyaan!</p>
+
+  <div class="quiz-box" id="quiz-wrap">
+    <!-- Question area -->
+    <div id="q-area">
+      <div class="quiz-hd">
+        <span id="q-prog">Soal 1 dari 10</span>
+        <span class="badge violet" id="q-live-score">Skor: 0</span>
+      </div>
+      <div class="qpbar-track"><div class="qpbar-fill" id="q-bar" style="width:10%"></div></div>
+      <div class="q-num" id="q-num">Soal 1</div>
+      <div class="q-text" id="q-text"></div>
+      <div class="q-opts" id="q-opts"></div>
+      <div class="q-fb" id="q-fb"></div>
+      <button class="quiz-btn" id="q-next" onclick="nextQ()" disabled>Soal Berikutnya →</button>
+    </div>
+    <!-- Result area -->
+    <div class="quiz-result" id="q-result">
+      <div class="score-big" id="q-score-big">0/10</div>
+      <div class="score-label" id="q-grade">—</div>
+      <div class="score-msg" id="q-msg"></div>
+      <button class="quiz-btn" onclick="restartQuiz()">🔄 Ulangi Kuis</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 8 — REFERENSI
+════════════════════════════════════════════════════════ -->
+<section class="sec reveal" id="s8">
+  <div class="sec-hd">
+    <div class="sec-num" style="background:var(--ink-2)">8</div>
+    <h2>Daftar Pustaka</h2>
+  </div>
+  <div class="icard blue" style="margin-bottom:1.25rem">
+    <p>Referensi utama pertemuan ini sesuai RPS BSD304: <strong>Buku 2</strong> (Wood, Hewlin &amp; Lah, 2011) dan <strong>Buku 5</strong> (Diamandis &amp; Kotler, 2020). Referensi tambahan disertakan untuk memperkaya konteks akademis.</p>
+  </div>
+  <ul class="ref-list">
+    <li class="ref-item"><span class="ref-tag" style="background:var(--blue-dim);color:var(--blue)">Utama</span> Wood, J. B., Hewlin, T., &amp; Lah, T. (2011). <em>Consumption economics: The new rules of tech</em>. Bookmasters.</li>
+    <li class="ref-item"><span class="ref-tag" style="background:var(--blue-dim);color:var(--blue)">Utama</span> Diamandis, P. H., &amp; Kotler, S. (2020). <em>The future is faster than you think</em>. Simon &amp; Schuster.</li>
+    <li class="ref-item"><span class="ref-tag" style="background:var(--violet-dim);color:var(--violet)">Pendukung</span> Kasali, R. (2018). <em>The great shifting: Seri on disruption</em>. PT. Gramedia Pustaka Utama.</li>
+    <li class="ref-item"><span class="ref-tag" style="background:var(--violet-dim);color:var(--violet)">Pendukung</span> Parker, G. G., Van Alstyne, M. W., &amp; Choudary, S. P. (2016). <em>Platform revolution</em>. W. W. Norton &amp; Company.</li>
+    <li class="ref-item"><span class="ref-tag" style="background:var(--teal-dim);color:var(--teal)">Akademis</span> Christensen, C. M. (1997). <em>The innovator's dilemma</em>. Harvard Business School Press.</li>
+    <li class="ref-item"><span class="ref-tag" style="background:var(--teal-dim);color:var(--teal)">Akademis</span> Ries, E. (2011). <em>The lean startup</em>. Crown Business.</li>
+    <li class="ref-item"><span class="ref-tag" style="background:var(--teal-dim);color:var(--teal)">Akademis</span> Blank, S. (2013). Why the lean start-up changes everything. <em>Harvard Business Review, 91</em>(5), 63–72.</li>
+    <li class="ref-item"><span class="ref-tag" style="background:var(--teal-dim);color:var(--teal)">Akademis</span> Schumpeter, J. A. (1942). <em>Capitalism, socialism and democracy</em>. Harper &amp; Brothers.</li>
+    <li class="ref-item"><span class="ref-tag" style="background:var(--teal-dim);color:var(--teal)">Akademis</span> Perez, C. (2002). <em>Technological revolutions and financial capital</em>. Edward Elgar Publishing.</li>
+    <li class="ref-item"><span class="ref-tag" style="background:var(--jade-dim);color:var(--jade)">Data</span> APJII. (2023). <em>Laporan survei internet Indonesia 2023</em>. Asosiasi Penyelenggara Jasa Internet Indonesia.</li>
+    <li class="ref-item"><span class="ref-tag" style="background:var(--jade-dim);color:var(--jade)">Data</span> Google, Temasek &amp; Bain &amp; Company. (2023). <em>e-Conomy SEA 2023</em>. Google.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <p>Bahan Ajar BSD304 Ekonomi Digital Baru · Pertemuan 2 · Startup dalam Ekosistem Ekonomi Digital</p>
+  <p>Program Studi Bisnis Digital · Universitas Bhamada Slawi · TA 2026/2027</p>
+</footer>
+
+<script>
+/* ─── PROGRESS BAR ──────────────────────────────────── */
+window.addEventListener('scroll',()=>{
+  const s=document.documentElement,scrolled=s.scrollTop||document.body.scrollTop;
+  document.getElementById('pbar').style.width=(scrolled/(s.scrollHeight-s.clientHeight)*100)+'%';
+});
+
+/* ─── NAV ACTIVE ────────────────────────────────────── */
+const allSecs=document.querySelectorAll('.sec');
+const allLinks=document.querySelectorAll('.nav-link[href]');
+new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      allLinks.forEach(l=>l.classList.remove('active'));
+      const a=document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if(a)a.classList.add('active');
+    }
+  });
+},{threshold:.25}).observe&&allSecs.forEach(s=>new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){allLinks.forEach(l=>l.classList.remove('active'));const a=document.querySelector(`.nav-link[href="#${e.target.id}"]`);if(a)a.classList.add('active');}});
+},{threshold:.25}).observe(s));
+
+/* ─── SCROLL REVEAL ─────────────────────────────────── */
+new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');}});
+},{threshold:.08}).observe&&document.querySelectorAll('.reveal').forEach(el=>{
+  new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');}});},{threshold:.08}).observe(el);
+});
+
+/* ─── COUNT-UP ──────────────────────────────────────── */
+document.querySelectorAll('.stat-n[data-target]').forEach(el=>{
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting)return;
+      const target=+el.dataset.target;let cur=0;
+      const step=Math.max(1,Math.ceil(target/50));
+      const t=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=cur;if(cur>=target)clearInterval(t);},28);
+      e.target._counted=true;
+    });
+  },{threshold:.6}).observe(el);
+});
+
+/* ─── ACCORDION ─────────────────────────────────────── */
+function toggleAcc(btn){
+  const item=btn.closest('.acc-item'),body=item.querySelector('.acc-body');
+  const isOpen=btn.classList.contains('open');
+  btn.closest('.accordion').querySelectorAll('.acc-btn.open').forEach(b=>{
+    b.classList.remove('open');
+    b.closest('.acc-item').querySelector('.acc-body').style.maxHeight='0';
+  });
+  if(!isOpen){btn.classList.add('open');body.style.maxHeight=body.scrollHeight+'px';}
+}
+
+/* ─── TABS ──────────────────────────────────────────── */
+function switchTab(btn,panelId){
+  const wrap=btn.closest('section');
+  wrap.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));
+  wrap.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById(panelId).classList.add('on');
+}
+
+/* ─── THEME TOGGLE ──────────────────────────────────── */
+const themeBtn=document.getElementById('themeBtn');
+let darkMode=window.matchMedia('(prefers-color-scheme: dark)').matches;
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme',darkMode?'dark':'light');
+  themeBtn.textContent=darkMode?'☀️':'🌙';
+}
+themeBtn.addEventListener('click',()=>{darkMode=!darkMode;applyTheme();});
+
+/* ─── QUIZ ──────────────────────────────────────────── */
+const Qs=[
+  {q:"Menurut Steve Blank, startup adalah...",
+   opts:["Bisnis kecil yang baru saja berdiri dan belum menghasilkan profit","Organisasi sementara yang dirancang untuk mencari model bisnis yang dapat diulang dan dapat diskalakan","Perusahaan teknologi yang sudah menerima investasi dari Venture Capital","Usaha kecil menengah berbasis aplikasi mobile"],
+   ans:1,expl:"Steve Blank mendefinisikan startup sebagai 'a temporary organization designed to search for a repeatable and scalable business model' — bukan tentang ukuran, tapi tentang misi menemukan model bisnis yang scalable."},
+  {q:"Manakah yang BUKAN merupakan karakteristik utama startup?",
+   opts:["Skalabilitas tinggi","Ketidakpastian tinggi","Model bisnis yang sudah terbukti dan mapan","Berbasis teknologi"],
+   ans:2,expl:"Model bisnis yang 'sudah terbukti dan mapan' adalah karakteristik UKM, bukan startup. Startup justru masih dalam fase mencari model bisnis yang tepat — inilah yang membedakannya secara fundamental."},
+  {q:"Dot-com bubble di Amerika terjadi pada periode...",
+   opts:["1985–1990","1995–2001","2005–2010","2015–2020"],
+   ans:1,expl:"Dot-com bubble terjadi antara 1995-2001. Puncaknya Maret 2000 (NASDAQ 5.048), kemudian collapse ke Oktober 2002 (NASDAQ 1.114) — kehilangan 78% nilainya. Kerugian total ~$5 triliun."},
+  {q:"Apa yang dimaksud dengan 'bakar uang' (cash burning) dalam konteks startup?",
+   opts:["Membakar dokumen keuangan yang tidak diperlukan perusahaan","Berinvestasi besar di aset fisik seperti gedung dan peralatan","Memberikan subsidi besar kepada pengguna untuk menarik pertumbuhan yang terlihat masif","Membayar pajak dan kewajiban keuangan dalam jumlah sangat besar"],
+   ans:2,expl:"'Bakar uang' mengacu pada praktik memberikan subsidi besar (ongkos gratis, cashback, diskon) bukan untuk membangun loyalitas, melainkan untuk membeli pengguna agar angka pertumbuhan tampak mengesankan di mata investor."},
+  {q:"Menurut Clayton Christensen, disruptive innovation biasanya dimulai dari...",
+   opts:["Segmen pasar premium yang paling menguntungkan","Segmen bawah atau pasar yang selama ini diabaikan pemain lama","Pasar internasional yang lebih maju dari pasar lokal","Komunitas akademis dan riset di universitas ternama"],
+   ans:1,expl:"Disruptive innovation biasanya dimulai dari segmen bawah yang diabaikan pemain lama. Pemain lama terlalu fokus melayani pelanggan premium sehingga tidak memperhatikan ancaman dari bawah — inilah inti dari 'The Innovator's Dilemma'."},
+  {q:"Manakah yang merupakan contoh paling tepat dari 'creative destruction' di Indonesia?",
+   opts:["GoTo mengakuisisi startup pesaing yang lebih kecil","Bank BRI membuka lebih banyak cabang di daerah pedesaan","Munculnya Tokopedia yang membuat model bisnis toko fisik menjadi kurang relevan","Pemerintah membangun infrastruktur jalan tol Trans-Jawa baru"],
+   ans:2,expl:"Creative destruction (Schumpeter, 1942) menggambarkan bagaimana yang lama harus runtuh agar yang baru bisa tumbuh. Tokopedia mendisrupsi model bisnis toko fisik, membuat cara lama berdagang tidak lagi relevan sambil menciptakan ekosistem perdagangan yang baru."},
+  {q:"Dalam ekosistem startup, 'Angel Investor' adalah...",
+   opts:["Lembaga pemerintah yang memberikan hibah kepada startup terpilih","Investor yang mendanai startup tepat sebelum IPO di bursa saham","Individu dengan kekayaan pribadi yang berinvestasi dari kantong sendiri di tahap awal startup","Perusahaan besar yang mengakuisisi startup untuk memperluas bisnis mereka"],
+   ans:2,expl:"Angel Investor adalah individu kaya yang menggunakan modal pribadi mereka untuk berinvestasi di startup tahap awal (pre-seed/seed). Berbeda dengan VC yang mengelola dana dari Limited Partners, angel investor bertaruh dengan uang mereka sendiri."},
+  {q:"Apa faktor utama yang menyebabkan kegagalan Zenius Education?",
+   opts:["Kualitas konten pendidikannya buruk dan tidak sesuai kurikulum nasional","Pertumbuhan yang didorong pandemi tidak permanen, diikuti burn rate yang tidak terkontrol","Kalah bersaing langsung dengan startup EdTech asing yang masuk ke Indonesia","Masalah hukum dan regulasi dengan pemerintah Indonesia"],
+   ans:1,expl:"Zenius tumbuh karena pandemi memaksa semua pelajar ke online — bukan karena kecintaan pada produk. Begitu sekolah buka kembali, pengguna pergi. Ditambah burn rate yang tidak terkontrol selama ekspansi masif, Zenius tidak punya runway yang cukup."},
+  {q:"Kunci utama keberhasilan Traveloka dalam menghadapi krisis pandemi adalah...",
+   opts:["Mendapatkan bailout finansial dari pemerintah Indonesia","Menutup operasional sementara dan menunggu pandemi berakhir total","Pivot cepat ke produk-produk relevan seperti staycation dan layanan kesehatan","Merger dengan kompetitor untuk menggabungkan kekuatan pasar"],
+   ans:2,expl:"Traveloka merespons pandemi dengan pivot cepat: dari bisnis travel yang kolaps, mereka beralih ke Xperience (aktivitas lokal), Traveloka Pay (fintech), dan layanan kesehatan. Kemampuan adaptasi inilah kunci bertahan."},
+  {q:"Manakah yang paling tepat menggambarkan perbedaan mendasar antara startup dan UKM?",
+   opts:["Startup selalu lebih besar dari UKM dalam hal jumlah karyawan dan aset","Startup menggunakan teknologi sedangkan UKM tidak menggunakan teknologi","Startup sedang mencari model bisnis yang scalable sedangkan UKM fokus pada profitabilitas yang stabil","UKM mendapatkan investasi dari Venture Capital sedangkan startup menggunakan modal sendiri"],
+   ans:2,expl:"Perbedaan fundamental bukan pada ukuran atau penggunaan teknologi, melainkan pada tujuan: startup mencari model bisnis yang repeatable dan scalable (masih eksperimental), sedangkan UKM menggunakan model bisnis yang sudah terbukti untuk profitabilitas stabil."}
+];
+
+let qIdx=0,score=0,answered=false;
+
+function loadQ(){
+  const d=Qs[qIdx];
+  document.getElementById('q-num').textContent=`Soal ${qIdx+1}`;
+  document.getElementById('q-prog').textContent=`Soal ${qIdx+1} dari ${Qs.length}`;
+  document.getElementById('q-bar').style.width=`${((qIdx+1)/Qs.length)*100}%`;
+  document.getElementById('q-text').textContent=d.q;
+  const opts=document.getElementById('q-opts');
+  opts.innerHTML='';
+  d.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='q-opt';b.textContent=o;
+    b.onclick=()=>pick(i);opts.appendChild(b);
+  });
+  const fb=document.getElementById('q-fb');
+  fb.className='q-fb';fb.textContent='';
+  document.getElementById('q-next').disabled=true;
+  document.getElementById('q-next').textContent=qIdx<Qs.length-1?'Soal Berikutnya →':'Lihat Hasil';
+  answered=false;
+}
+
+function pick(i){
+  if(answered)return;answered=true;
+  const d=Qs[qIdx];
+  document.querySelectorAll('.q-opt').forEach((b,j)=>{
+    b.disabled=true;
+    if(j===d.ans)b.classList.add('correct');
+    else if(j===i&&i!==d.ans)b.classList.add('wrong');
+  });
+  const ok=i===d.ans;if(ok)score++;
+  const fb=document.getElementById('q-fb');
+  fb.className=`q-fb ${ok?'ok':'no'} show`;
+  fb.innerHTML=`<strong>${ok?'✅ Benar!':'❌ Belum tepat.'}</strong> ${d.expl}`;
+  document.getElementById('q-live-score').textContent=`Skor: ${score}`;
+  document.getElementById('q-next').disabled=false;
+}
+
+function nextQ(){
+  qIdx++;
+  if(qIdx<Qs.length)loadQ();
+  else showResult();
+}
+
+function showResult(){
+  document.getElementById('q-area').style.display='none';
+  const r=document.getElementById('q-result');r.classList.add('show');
+  const pct=score/Qs.length;
+  let grade,msg,color;
+  if(pct>=.9){grade='Sangat Baik 🎉';color='var(--jade)';msg='Luar biasa! Pemahaman kamu tentang ekosistem startup sangat kuat. Siap untuk diskusi yang lebih mendalam!';}
+  else if(pct>=.7){grade='Baik 👍';color='var(--blue)';msg='Bagus! Kamu memahami konsep-konsep utama dengan baik. Tinjau kembali beberapa poin yang belum tepat.';}
+  else if(pct>=.5){grade='Cukup 📚';color='var(--ember)';msg='Kamu menguasai setengah materi. Baca ulang bagian yang belum dipahami, terutama definisi dan studi kasus.';}
+  else{grade='Perlu Belajar Lagi 💪';color='var(--ruby)';msg='Jangan menyerah! Baca ulang materi dari awal, fokus pada perbedaan startup-UKM dan konsep disrupsi.';}
+  const big=document.getElementById('q-score-big');
+  big.textContent=`${score}/${Qs.length}`;big.style.color=color;
+  document.getElementById('q-grade').textContent=grade;
+  document.getElementById('q-msg').textContent=msg;
+}
+
+function restartQuiz(){
+  qIdx=0;score=0;answered=false;
+  document.getElementById('q-area').style.display='block';
+  document.getElementById('q-result').classList.remove('show');
+  document.getElementById('q-live-score').textContent='Skor: 0';
+  loadQ();
+}
+
+loadQ();
+</script>
+</body>
+</html>

@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ekonomi Digital Baru — Pertemuan 2: Startup</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:#F5F5F7;}
+
+#deck{position:relative;width:100vw;height:100vh;}
+
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;
+  transition:opacity .55s cubic-bezier(.4,0,.2,1);
+  padding:80px 96px;
+  overflow:hidden;
+}
+.slide.active{opacity:1;pointer-events:all;}
+
+/* BG variants */
+.bg-black{background:#000;}
+.bg-dark{background:#0D0D0D;}
+.bg-card{background:#1C1C1E;}
+.bg-green{background:#071A0F;}
+.bg-bubble{background:#1A0700;}
+.bg-violet{background:#0D0715;}
+.bg-teal{background:#071218;}
+
+/* Align helpers */
+.c{align-items:center;justify-content:center;text-align:center;}
+.vc{justify-content:center;}
+.bot{justify-content:flex-end;}
+.top{justify-content:flex-start;}
+
+/* Type scale */
+.t-giga{font-size:clamp(100px,15vw,200px);font-weight:800;letter-spacing:-6px;line-height:1;}
+.t-mega{font-size:clamp(72px,10vw,140px);font-weight:800;letter-spacing:-4px;line-height:1.0;}
+.t-hero{font-size:clamp(48px,7vw,96px);font-weight:700;letter-spacing:-2.5px;line-height:1.05;}
+.t-title{font-size:clamp(36px,5vw,64px);font-weight:700;letter-spacing:-1.5px;line-height:1.1;}
+.t-sub{font-size:clamp(22px,3vw,40px);font-weight:300;letter-spacing:-.5px;line-height:1.3;}
+.t-body{font-size:clamp(16px,2vw,26px);font-weight:300;line-height:1.55;}
+.t-caption{font-size:clamp(13px,1.2vw,18px);font-weight:400;color:#86868B;}
+.t-label{font-size:clamp(11px,1vw,14px);font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#6E6E73;}
+
+/* Colors */
+.c-white{color:#F5F5F7;}
+.c-blue{color:#2997FF;}
+.c-gray{color:#86868B;}
+.c-muted{color:#48484A;}
+.c-green{color:#30D158;}
+.c-red{color:#FF453A;}
+.c-dark{color:#1D1D1F;}
+.c-amber{color:#FFD60A;}
+.c-orange{color:#FF9F0A;}
+.c-violet{color:#BF5AF2;}
+.c-teal{color:#5AC8FA;}
+
+/* Spacing */
+.mt8{margin-top:8px;} .mt12{margin-top:12px;} .mt16{margin-top:16px;}
+.mt24{margin-top:24px;} .mt32{margin-top:32px;} .mt40{margin-top:40px;}
+.mt48{margin-top:48px;} .mt64{margin-top:64px;} .mt80{margin-top:80px;}
+
+/* Ghost number bg */
+.ghost{
+  position:absolute;font-size:28vw;font-weight:900;
+  color:rgba(255,255,255,.03);letter-spacing:-10px;line-height:1;
+  user-select:none;pointer-events:none;
+  right:-40px;bottom:-60px;
+}
+.ghost-green{color:rgba(48,209,88,.04);}
+.ghost-red{color:rgba(255,69,58,.04);}
+
+/* Lines */
+.line{width:48px;height:1.5px;background:#2997FF;margin:20px 0;}
+.line-green{width:48px;height:1.5px;background:#30D158;margin:20px 0;}
+.line-red{width:48px;height:1.5px;background:#FF453A;margin:20px 0;}
+.line-violet{width:48px;height:1.5px;background:#BF5AF2;margin:20px 0;}
+
+/* Badge */
+.badge{
+  display:inline-block;border:1px solid #2C2C2E;
+  border-radius:40px;padding:5px 16px;
+  font-size:13px;font-weight:500;color:#6E6E73;letter-spacing:.3px;
+}
+.badge-green{border-color:rgba(48,209,88,.3);color:#30D158;}
+
+/* Comparison / List rows */
+.cmp-row{display:grid;grid-template-columns:1.6fr 1fr 1fr;padding:14px 0;border-bottom:1px solid #1C1C1E;}
+.cmp-row.hd{border-bottom:1px solid #2C2C2E;padding-bottom:10px;}
+.cmp-cell{font-size:clamp(13px,1.5vw,17px);color:#86868B;font-weight:300;}
+.cmp-cell.lbl{color:#3A3A3C;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;}
+.cmp-cell.pos{color:#30D158;}
+.cmp-cell.neg{color:#FF453A;}
+.cmp-cell.hi{color:#F5F5F7;font-weight:500;}
+
+/* Char list (5 characteristics) */
+.char-list{width:100%;max-width:780px;}
+.char-item{
+  display:flex;align-items:center;gap:24px;
+  padding:16px 0;border-bottom:1px solid #1C1C1E;
+}
+.char-item:first-child{border-top:1px solid #2C2C2E;}
+.char-num{font-size:12px;font-weight:700;color:#2997FF;width:20px;flex-shrink:0;}
+.char-name{font-size:clamp(20px,2.5vw,30px);font-weight:600;color:#F5F5F7;flex:1;}
+.char-desc{font-size:clamp(12px,1.2vw,15px);font-weight:300;color:#6E6E73;max-width:340px;text-align:right;line-height:1.4;}
+
+/* Ecosystem grid */
+.eco-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  width:100%;max-width:820px;
+}
+.eco-box{
+  border:1px solid #2C2C2E;border-radius:10px;
+  padding:20px 18px;
+}
+.eco-ico{font-size:28px;margin-bottom:8px;}
+.eco-nm{font-size:clamp(16px,1.8vw,20px);font-weight:600;color:#F5F5F7;margin-bottom:5px;}
+.eco-desc{font-size:clamp(11px,1.1vw,13px);color:#6E6E73;line-height:1.45;}
+
+/* Disruption table */
+.dis-row{display:grid;grid-template-columns:1.8fr 1.8fr 2.2fr;padding:11px 0;border-bottom:1px solid #1C1C1E;}
+.dis-row.hd{border-bottom:1px solid #2C2C2E;}
+.dis-cell{font-size:clamp(12px,1.4vw,16px);color:#6E6E73;font-weight:300;}
+.dis-cell.lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#3A3A3C;}
+.dis-cell.hi{color:#F5F5F7;}
+.dis-cell.hot{color:#30D158;}
+
+/* Split layout */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:80px;width:100%;}
+
+/* Three col */
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:60px;width:100%;}
+.tcol{border-top:1px solid #2C2C2E;padding-top:20px;}
+
+/* Innovation cards */
+.innov-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;width:100%;max-width:820px;}
+.innov-card{border:1px solid #2C2C2E;border-radius:10px;padding:22px 20px;}
+.innov-ico{font-size:32px;margin-bottom:10px;}
+.innov-title{font-size:clamp(16px,1.8vw,22px);font-weight:700;color:#F5F5F7;margin-bottom:8px;}
+.innov-desc{font-size:clamp(11px,1.1vw,14px);color:#6E6E73;line-height:1.45;margin-bottom:10px;}
+
+/* Funding steps */
+.fund-steps{display:flex;flex-direction:column;gap:12px;width:100%;max-width:760px;}
+.fund-step{
+  display:flex;align-items:center;gap:20px;
+  border:1px solid #2C2C2E;border-radius:10px;padding:14px 20px;
+}
+.fund-n{
+  width:32px;height:32px;border-radius:50%;background:#2997FF;
+  color:#fff;font-size:13px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.fund-name{font-size:clamp(14px,1.6vw,18px);font-weight:600;color:#F5F5F7;flex:1;}
+.fund-src{font-size:clamp(11px,1.1vw,13px);color:#6E6E73;}
+
+/* Pemantik */
+.pm-q{
+  font-size:clamp(28px,4vw,56px);font-weight:300;
+  color:#F5F5F7;max-width:700px;line-height:1.25;
+  font-style:italic;
+}
+.pm-purpose{
+  margin-top:32px;
+  border-top:1px solid rgba(48,209,88,.25);
+  padding-top:20px;
+  font-size:clamp(12px,1.2vw,16px);color:#30D158;
+  max-width:600px;line-height:1.5;
+}
+
+/* Bubble warning */
+.bub-list{width:100%;max-width:720px;}
+.bub-item{
+  display:flex;align-items:flex-start;gap:20px;
+  padding:14px 0;border-bottom:1px solid #1C1C1E;
+}
+.bub-item:first-child{border-top:1px solid #2C2C2E;}
+.bub-ico{font-size:20px;flex-shrink:0;width:28px;text-align:center;margin-top:2px;}
+.bub-text{font-size:clamp(15px,1.6vw,20px);color:#F5F5F7;font-weight:400;line-height:1.45;}
+.bub-text span{color:#86868B;font-weight:300;font-size:.82em;display:block;margin-top:3px;}
+
+/* Case study */
+.case-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;width:100%;}
+.case-col{border-top:2px solid;padding-top:20px;}
+.case-col.fail{border-color:#FF453A;}
+.case-col.win{border-color:#30D158;}
+.case-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
+.case-col.fail .case-label{color:#FF453A;}
+.case-col.win .case-label{color:#30D158;}
+.case-title{font-size:clamp(22px,2.8vw,36px);font-weight:700;color:#F5F5F7;margin-bottom:12px;}
+.case-list{list-style:none;}
+.case-list li{
+  font-size:clamp(13px,1.4vw,17px);color:#86868B;
+  padding:7px 0;border-bottom:1px solid #1C1C1E;
+  font-weight:300;line-height:1.45;
+}
+.case-list li:last-child{border-bottom:none;}
+.case-list li strong{color:#F5F5F7;}
+
+/* Navigation */
+#controls{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:5px;z-index:1000;
+}
+.dot{
+  width:5px;height:5px;border-radius:50%;
+  background:#2C2C2E;cursor:pointer;transition:all .3s;
+}
+.dot.active{background:#F5F5F7;width:20px;border-radius:3px;}
+.dot:hover:not(.active){background:#48484A;}
+.dot.pm{background:#1D3A26;}
+.dot.pm.active{background:#30D158;}
+#slide-n{
+  position:fixed;bottom:28px;right:36px;
+  font-size:12px;color:#3A3A3C;z-index:1000;font-weight:500;letter-spacing:.5px;
+}
+.nav-btn{
+  position:fixed;top:50%;transform:translateY(-50%);
+  width:40px;height:40px;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);border-radius:50%;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .25s;z-index:100;
+  color:#F5F5F7;font-size:15px;
+}
+#btn-p{left:20px;}
+#btn-n{right:20px;}
+body:hover .nav-btn{opacity:1;}
+.nav-btn:hover{background:rgba(255,255,255,.09);}
+.nav-btn:disabled{opacity:0!important;pointer-events:none;}
+
+/* Section indicator badge top-right */
+.sec-badge{
+  position:absolute;top:32px;right:96px;
+  font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:#2C2C2E;
+}
+</style>
+</head>
+<body>
+<div id="deck">
+
+<!-- ══ S1 TITLE ════════════════════════════════════════════ -->
+<div class="slide bg-black active" id="s1">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div class="badge">BSD304 · Pertemuan 2 · 2026/2027</div>
+    <div class="mt32">
+      <div class="t-mega c-white" style="max-width:680px;line-height:.95;">Startup<br><span style="font-weight:200;">dalam Ekonomi Digital</span></div>
+    </div>
+    <div class="mt24">
+      <div class="t-sub c-gray" style="max-width:540px;line-height:1.4;">Mengenal Startup · Startup Bubble · Disruptive Innovation · Startup Environment</div>
+    </div>
+    <div class="mt48">
+      <div class="t-caption c-muted">Andika Chandra Prasetyo, S.Kom., M.T.I &nbsp;·&nbsp; Universitas Bhamada Slawi</div>
+    </div>
+  </div>
+  <div class="ghost">🚀</div>
+</div>
+
+<!-- ══ S2 HOOK — 90% ════════════════════════════════════════ -->
+<div class="slide bg-black c" id="s2">
+  <div class="t-label c-gray">Startup yang gagal dalam 5 tahun pertama</div>
+  <div class="mt16">
+    <span class="t-giga" style="color:#FF453A;">90</span>
+    <span style="font-size:clamp(60px,9vw,130px);font-weight:800;color:#86868B;margin-left:4px;">%</span>
+  </div>
+  <div class="mt24 t-sub c-gray">Tapi kenapa ribuan orang tetap<br>mencoba membangun startup?</div>
+  <div class="mt24 t-caption c-muted">Sumber: Ries, The Lean Startup (2011)</div>
+</div>
+
+<!-- ══ S3 HOOK — GoTo ═══════════════════════════════════════ -->
+<div class="slide bg-black c" id="s3">
+  <div class="t-label c-gray">Gojek — didirikan 2010 dengan</div>
+  <div class="mt16">
+    <span class="t-giga c-white">20</span>
+    <span style="font-size:clamp(32px,5vw,72px);font-weight:300;color:#86868B;margin-left:12px;">driver</span>
+  </div>
+  <div class="mt24">
+    <div class="t-title" style="font-weight:300;color:#86868B;">Kini: &nbsp;<span class="c-green" style="font-weight:700;">GoTo Decacorn</span></div>
+  </div>
+  <div class="mt16 t-body c-muted">Dari call center ojek di Jakarta → super app dengan<br>jutaan mitra di Asia Tenggara.</div>
+</div>
+
+<!-- ══ S4 HOOK QUESTION ═════════════════════════════════════ -->
+<div class="slide bg-black c" id="s4">
+  <div class="t-hero c-white" style="max-width:680px;line-height:1.1;font-weight:300;">
+    Apa yang membedakan<br><span style="font-weight:800;">startup</span><br>dari bisnis biasa?
+  </div>
+</div>
+
+<!-- ══ S5 SECTION 01 ════════════════════════════════════════ -->
+<div class="slide bg-dark" id="s5">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div class="t-label c-blue">Bagian</div>
+    <div class="mt16 t-mega c-white" style="line-height:1;">01</div>
+    <div class="mt12"><div class="line"></div></div>
+    <div class="t-hero c-white" style="line-height:1.1;">Mengenal<br>Startup</div>
+  </div>
+</div>
+
+<!-- ══ S6 DEFINISI BLANK ════════════════════════════════════ -->
+<div class="slide bg-black vc" id="s6">
+  <div class="t-label c-muted">Steve Blank, The Startup Owner's Manual (2012)</div>
+  <div class="mt32">
+    <div class="t-title c-white" style="max-width:700px;line-height:1.2;font-weight:300;">
+      "A startup is a <span style="font-weight:700;">temporary organization</span><br>designed to search for a<br><span class="c-blue" style="font-weight:700;">repeatable and scalable</span><br>business model."
+    </div>
+  </div>
+  <div class="mt40 t-body c-gray" style="max-width:560px;line-height:1.6;">
+    Bukan tentang ukuran. Bukan tentang usia.&nbsp;<span class="c-white" style="font-weight:500;">Tentang misi.</span>
+  </div>
+</div>
+
+<!-- ══ S7 STARTUP ≠ BISNIS KECIL ══════════════════════════ -->
+<div class="slide bg-black vc" id="s7">
+  <div class="t-label c-muted" style="margin-bottom:28px;">Startup vs UKM — Bukan soal ukuran</div>
+  <div class="cmp-row hd">
+    <div class="cmp-cell lbl">Aspek</div>
+    <div class="cmp-cell lbl">Startup</div>
+    <div class="cmp-cell lbl">UKM</div>
+  </div>
+  <div class="cmp-row">
+    <div class="cmp-cell hi">Tujuan</div>
+    <div class="cmp-cell pos">Model bisnis scalable</div>
+    <div class="cmp-cell">Profitabilitas stabil</div>
+  </div>
+  <div class="cmp-row">
+    <div class="cmp-cell hi">Model Bisnis</div>
+    <div class="cmp-cell pos">Eksperimental</div>
+    <div class="cmp-cell">Sudah terbukti</div>
+  </div>
+  <div class="cmp-row">
+    <div class="cmp-cell hi">Dana</div>
+    <div class="cmp-cell pos">Investor / VC</div>
+    <div class="cmp-cell">Modal sendiri / bank</div>
+  </div>
+  <div class="cmp-row">
+    <div class="cmp-cell hi">Pertumbuhan</div>
+    <div class="cmp-cell pos">Eksponensial (10×/tahun)</div>
+    <div class="cmp-cell">Linear & stabil</div>
+  </div>
+  <div class="cmp-row">
+    <div class="cmp-cell hi">Risiko</div>
+    <div class="cmp-cell pos" style="color:#FFD60A;">Sangat tinggi</div>
+    <div class="cmp-cell">Rendah, terkontrol</div>
+  </div>
+</div>
+
+<!-- ══ S8 ANALOGY BIBIT ═════════════════════════════════════ -->
+<div class="slide bg-dark c" id="s8">
+  <div class="t-label c-muted" style="margin-bottom:32px;">Analogi</div>
+  <div class="t-title c-white" style="max-width:660px;line-height:1.25;font-weight:300;">
+    Bisnis biasa: pohon mangga.<br>Sudah terbukti, berbuah, bisa diprediksi.
+  </div>
+  <div class="mt32">
+    <div class="t-title c-white" style="max-width:660px;line-height:1.25;font-weight:300;">
+      Startup: <span style="font-weight:700;color:#2997FF;">benih tanaman eksotis.</span><br>Belum jelas jadi apa — tapi punya potensi<br>tumbuh menjadi hutan.
+    </div>
+  </div>
+</div>
+
+<!-- ══ S9 5 KARAKTERISTIK ═══════════════════════════════════ -->
+<div class="slide bg-black vc" id="s9">
+  <div class="t-label c-muted" style="margin-bottom:24px;">Lima Karakteristik Startup (Wood et al., 2011)</div>
+  <div class="char-list">
+    <div class="char-item">
+      <div class="char-num">01</div>
+      <div class="char-name">Skalabilitas</div>
+      <div class="char-desc">Tumbuh 10× tanpa biaya 10×</div>
+    </div>
+    <div class="char-item">
+      <div class="char-num">02</div>
+      <div class="char-name">High Uncertainty</div>
+      <div class="char-desc">Model bisnis belum terbukti — masih dicari</div>
+    </div>
+    <div class="char-item">
+      <div class="char-num">03</div>
+      <div class="char-name">Technology-Driven</div>
+      <div class="char-desc">Teknologi = inti produk, bukan alat bantu</div>
+    </div>
+    <div class="char-item">
+      <div class="char-num">04</div>
+      <div class="char-name">Investor-Funded</div>
+      <div class="char-desc">Butuh modal luar untuk tumbuh lebih cepat</div>
+    </div>
+    <div class="char-item">
+      <div class="char-num">05</div>
+      <div class="char-name">Disruptive Intent</div>
+      <div class="char-desc">Ingin mengubah cara industri bekerja</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S10 EKOSISTEM INDONESIA ════════════════════════════ -->
+<div class="slide bg-black vc" id="s10">
+  <div class="t-label c-muted" style="margin-bottom:28px;">Ekosistem Startup Indonesia — Dari Warung Digital ke Decacorn</div>
+  <div style="width:100%;max-width:720px;">
+    <div class="cmp-row hd">
+      <div class="cmp-cell lbl">Kategori</div>
+      <div class="cmp-cell lbl">Startup</div>
+      <div class="cmp-cell lbl">Catatan</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell" style="color:#FFD60A;font-weight:600;">Decacorn &gt;$10M</div>
+      <div class="cmp-cell hi">GoTo (Gojek+Tokopedia)</div>
+      <div class="cmp-cell">IPO BEI 2022</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell pos">Unicorn &gt;$1M</div>
+      <div class="cmp-cell hi">Traveloka · OVO · Xendit</div>
+      <div class="cmp-cell">Kopi Kenangan</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell c-teal">Soonicorn</div>
+      <div class="cmp-cell hi">eFishery · Gredu</div>
+      <div class="cmp-cell">Agritech, EdTech</div>
+    </div>
+  </div>
+  <div class="mt32 t-body c-gray" style="max-width:600px;line-height:1.6;">
+    Indonesia: <span class="c-white" style="font-weight:500;">278 juta penduduk, 220 juta pengguna internet.</span><br>
+    Salah satu pasar startup terbesar di Asia Tenggara.
+  </div>
+</div>
+
+<!-- ══ S11 PEMANTIK 1 ════════════════════════════════════════ -->
+<div class="slide bg-green c" id="s11" data-pm="true">
+  <div class="badge badge-green" style="margin-bottom:32px;">💬 Pemantik Diskusi — 01</div>
+  <div class="pm-q">
+    "Kalau punya ide aplikasi yang bagus tapi tidak punya modal, tidak punya tim, dan belum ada satu pengguna pun — apakah itu sudah bisa disebut startup?"
+  </div>
+  <div class="pm-purpose">
+    🎯 Tujuan: Membangun definisi dari pemahaman awal mahasiswa, sebelum diarahkan ke definisi formal.
+  </div>
+  <div class="ghost ghost-green">P1</div>
+</div>
+
+<!-- ══ S12 SECTION 02 ═══════════════════════════════════════ -->
+<div class="slide bg-dark" id="s12">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div class="t-label" style="color:#FF453A;letter-spacing:2px;font-size:12px;font-weight:700;text-transform:uppercase;">Bahaya</div>
+    <div class="mt16 t-mega c-white" style="line-height:1;">02</div>
+    <div class="mt12"><div class="line-red"></div></div>
+    <div class="t-hero c-white" style="line-height:1.1;">Startup<br>Bubble</div>
+  </div>
+</div>
+
+<!-- ══ S13 BUBBLE DEFINITION ══════════════════════════════ -->
+<div class="slide bg-black vc" id="s13">
+  <div class="t-label c-muted" style="margin-bottom:24px;">Startup Bubble</div>
+  <div class="t-title c-white" style="max-width:680px;line-height:1.2;font-weight:300;">
+    Valuasi startup yang jauh melampaui<br>nilai bisnis riilnya — didorong<br><span style="font-weight:700;color:#FF9F0A;">euforia investor</span>, bukan fundamental.
+  </div>
+  <div class="mt40">
+    <div class="t-body c-gray" style="max-width:580px;line-height:1.65;border-left:2px solid #FF453A;padding-left:20px;">
+      <span class="c-white" style="font-weight:500;">Analogi:</span> Balon helium. Semakin banyak investor meniupnya (FOMO), semakin besar kelihatannya. Tapi tanpa isi yang nyata — satu jarum kecil sudah cukup untuk memecahnya.
+    </div>
+  </div>
+</div>
+
+<!-- ══ S14 4 TANDA BUBBLE ══════════════════════════════════ -->
+<div class="slide bg-bubble vc" id="s14">
+  <div class="t-label" style="color:#FF453A;letter-spacing:2px;text-transform:uppercase;font-size:12px;margin-bottom:24px;">Empat Tanda Startup Bubble</div>
+  <div class="bub-list">
+    <div class="bub-item">
+      <div class="bub-ico">💸</div>
+      <div class="bub-text">Valuasi tanpa fondasi revenue yang jelas<span>Perusahaan dinilai dari ekspektasi, bukan fakta bisnis</span></div>
+    </div>
+    <div class="bub-item">
+      <div class="bub-ico">🔥</div>
+      <div class="bub-text">Bakar uang massal <em>(cash burning)</em><span>Subsidi besar untuk "membeli" pengguna, bukan membangun loyalitas</span></div>
+    </div>
+    <div class="bub-item">
+      <div class="bub-ico">😨</div>
+      <div class="bub-text">Investor FOMO — Fear of Missing Out<span>Berinvestasi karena takut ketinggalan tren, bukan analisis bisnis</span></div>
+    </div>
+    <div class="bub-item">
+      <div class="bub-ico">📈</div>
+      <div class="bub-text">IPO prematur sebelum model bisnis stabil<span>Melantai di bursa untuk likuiditas sebelum investor kehilangan kepercayaan</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S15 DOT-COM ════════════════════════════════════════ -->
+<div class="slide bg-black c" id="s15">
+  <div class="t-label c-gray">NASDAQ jatuh dalam 2 tahun — Dot-com bubble 2001</div>
+  <div class="mt16">
+    <span class="t-giga" style="color:#FF453A;">78</span>
+    <span style="font-size:clamp(60px,9vw,130px);font-weight:800;color:#86868B;margin-left:4px;">%</span>
+  </div>
+  <div class="mt24 t-sub c-gray">Kerugian total: <span class="c-white" style="font-weight:600;">~$5 Triliun</span></div>
+  <div class="mt24 t-body c-muted">Yang selamat: Amazon, Google — karena punya <span class="c-white">model bisnis yang fundamental.</span></div>
+  <div class="mt16 t-caption c-muted">Sumber: Diamandis & Kotler, The Future is Faster Than You Think (2020)</div>
+</div>
+
+<!-- ══ S16 WEWORK ═════════════════════════════════════════ -->
+<div class="slide bg-black vc" id="s16">
+  <div class="t-label c-muted" style="margin-bottom:16px;">WeWork, 2019 — Bubble paling dramatis abad ini</div>
+  <div class="split">
+    <div>
+      <div class="t-label" style="color:#FF453A;margin-bottom:16px;">Puncak Valuasi</div>
+      <div style="font-size:clamp(48px,7vw,90px);font-weight:800;color:#F5F5F7;letter-spacing:-3px;line-height:1;">$47</div>
+      <div class="mt8 t-caption c-gray">miliar — melampaui nilai pasar Marriott</div>
+      <div class="mt16 t-body c-muted" style="line-height:1.6;">CEO menyebut WeWork<br>"perusahaan teknologi berbasis komunitas"</div>
+    </div>
+    <div style="border-left:1px solid #2C2C2E;padding-left:60px;">
+      <div class="t-label c-muted" style="margin-bottom:16px;">Setelah Investor Baca Prospektus IPO</div>
+      <div style="font-size:clamp(48px,7vw,90px);font-weight:800;color:#FF453A;letter-spacing:-3px;line-height:1;">$8</div>
+      <div class="mt8 t-caption c-gray">miliar — dalam hitungan minggu</div>
+      <div class="mt16 t-body c-muted" style="line-height:1.6;">IPO dibatalkan.<br>CEO mundur. Ribuan karyawan di-PHK.</div>
+    </div>
+  </div>
+  <div class="mt40 t-body c-gray" style="border-left:2px solid #FF453A;padding-left:20px;max-width:600px;">
+    Pelajaran: <span class="c-white" style="font-weight:500;">Narasi yang menarik tidak bisa menggantikan angka yang sehat.</span>
+  </div>
+</div>
+
+<!-- ══ S17 FUNDING WINTER INDONESIA ══════════════════════ -->
+<div class="slide bg-black vc" id="s17">
+  <div class="t-label c-muted" style="margin-bottom:24px;">"Funding Winter" Indonesia 2022–2023</div>
+  <div style="width:100%;max-width:720px;">
+    <div class="cmp-row hd">
+      <div class="cmp-cell lbl">Startup</div>
+      <div class="cmp-cell lbl">Dampak</div>
+      <div class="cmp-cell lbl">Faktor</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell hi">Zenius</div>
+      <div class="cmp-cell neg">PHK ~800 orang (2022) → Tutup (2023)</div>
+      <div class="cmp-cell">Burn rate + post-pandemi</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell hi">LinkAja</div>
+      <div class="cmp-cell neg">PHK massal, restrukturisasi</div>
+      <div class="cmp-cell">Kompetisi fintech ketat</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell hi">Mamikos</div>
+      <div class="cmp-cell neg">PHK signifikan</div>
+      <div class="cmp-cell">Pasar kos-kosan stagnan</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell hi">JD.id</div>
+      <div class="cmp-cell neg">Tutup operasional Maret 2023</div>
+      <div class="cmp-cell">Raksasa China pun gagal di RI</div>
+    </div>
+  </div>
+  <div class="mt32 t-body c-gray" style="max-width:620px;line-height:1.6;">
+    Penyebab: suku bunga global naik → investor lari ke instrumen aman →<br><span class="c-white" style="font-weight:500;">dana VC mengering dari startup.</span>
+  </div>
+</div>
+
+<!-- ══ S18 SILVER LINING ═══════════════════════════════════ -->
+<div class="slide bg-dark c" id="s18">
+  <div class="t-label c-muted" style="margin-bottom:32px;">Tapi tunggu —</div>
+  <div class="t-title c-white" style="max-width:660px;font-weight:300;line-height:1.3;">
+    Apakah bubble<br><span style="font-weight:700;">selalu buruk</span>?
+  </div>
+  <div class="mt40 t-body c-gray" style="max-width:600px;line-height:1.7;">
+    Dot-com bubble meninggalkan kabel fiber optik dan data center<br>yang kemudian dipakai Google dan Amazon.<br><br>
+    Funding winter Indonesia meninggalkan jutaan UMKM<br>yang kini terbiasa <span class="c-white" style="font-weight:500;">berjualan digital.</span>
+  </div>
+  <div class="mt24 t-caption c-muted">Carlota Perez, Technological Revolutions and Financial Capital (2002)</div>
+</div>
+
+<!-- ══ S19 PEMANTIK 2 ════════════════════════════════════════ -->
+<div class="slide bg-green c" id="s19" data-pm="true">
+  <div class="badge badge-green" style="margin-bottom:32px;">💬 Pemantik Diskusi — 02</div>
+  <div class="pm-q">
+    "Bukalapak pernah jadi unicorn kebanggaan Indonesia. Kini PHK massal dan pivot besar-besaran. Menurut kamu — salah siapa? Foundernya, investornya, regulatornya, atau pasarnya?"
+  </div>
+  <div class="pm-purpose">
+    🎯 Tujuan: Analisis multi-perspektif tentang kegagalan startup dan memahami ekosistem sebagai faktor penentu.
+  </div>
+  <div class="ghost ghost-green">P2</div>
+</div>
+
+<!-- ══ S20 SECTION 03 ═══════════════════════════════════════ -->
+<div class="slide bg-dark" id="s20">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div class="t-label" style="color:#BF5AF2;letter-spacing:2px;font-size:12px;font-weight:700;text-transform:uppercase;">Perubahan</div>
+    <div class="mt16 t-mega c-white" style="line-height:1;">03</div>
+    <div class="mt12"><div class="line-violet"></div></div>
+    <div class="t-hero c-white" style="line-height:1.1;">Startup &<br>Disrupsinya</div>
+  </div>
+</div>
+
+<!-- ══ S21 DISRUPTIVE INNOVATION ══════════════════════════ -->
+<div class="slide bg-black vc" id="s21">
+  <div class="t-label c-muted" style="margin-bottom:24px;">Clayton Christensen, The Innovator's Dilemma (1997)</div>
+  <div class="t-title c-white" style="max-width:700px;line-height:1.2;font-weight:300;">
+    Disrupsi tidak datang dari yang<br>sudah besar melayani pelanggan premium.
+  </div>
+  <div class="mt32">
+    <div class="t-title" style="font-weight:700;color:#BF5AF2;max-width:700px;line-height:1.2;font-size:clamp(28px,3.5vw,52px);">
+      Disrupsi selalu datang dari bawah — dari segmen yang selama ini diabaikan.
+    </div>
+  </div>
+</div>
+
+<!-- ══ S22 WARTEL ANALOGY ══════════════════════════════════ -->
+<div class="slide bg-dark c" id="s22">
+  <div class="t-label c-muted" style="margin-bottom:36px;">Analogi Lokal</div>
+  <div style="display:flex;align-items:center;gap:32px;max-width:760px;flex-wrap:wrap;justify-content:center;">
+    <div style="text-align:center;">
+      <div style="font-size:48px;">📞</div>
+      <div class="t-body c-muted" style="margin-top:8px;">Wartel</div>
+      <div class="t-caption" style="color:#3A3A3C;">Antri, bayar per menit</div>
+    </div>
+    <div class="t-title c-muted" style="font-weight:200;">→</div>
+    <div style="text-align:center;">
+      <div style="font-size:48px;">📱</div>
+      <div class="t-body c-white" style="margin-top:8px;font-weight:500;">HP</div>
+      <div class="t-caption c-gray">Wartel sepi</div>
+    </div>
+    <div class="t-title c-muted" style="font-weight:200;">→</div>
+    <div style="text-align:center;">
+      <div style="font-size:48px;">💬</div>
+      <div class="t-body c-green" style="margin-top:8px;font-weight:700;">WhatsApp</div>
+      <div class="t-caption c-gray">SMS pun tersaingi</div>
+    </div>
+  </div>
+  <div class="mt40 t-body c-gray" style="max-width:580px;line-height:1.65;text-align:center;">
+    Setiap gelombang tidak pernah datang dari arah yang<br>
+    <span class="c-white" style="font-weight:500;">diwaspadai pemain yang sedang nyaman.</span>
+  </div>
+</div>
+
+<!-- ══ S23 3 TYPES ════════════════════════════════════════ -->
+<div class="slide bg-black vc" id="s23">
+  <div class="t-label c-muted" style="margin-bottom:24px;">Tiga Tipe Inovasi</div>
+  <div class="innov-grid">
+    <div class="innov-card" style="border-top:3px solid #BF5AF2;">
+      <div class="innov-ico">⚡</div>
+      <div class="innov-title">Disruptive Innovation</div>
+      <div class="innov-desc">Mengubah total cara industri bekerja, dimulai dari segmen bawah. Membuat pemain lama tidak relevan.</div>
+      <div style="font-size:11px;font-weight:700;color:#BF5AF2;letter-spacing:1px;text-transform:uppercase;">Gojek vs ojek pangkalan</div>
+    </div>
+    <div class="innov-card" style="border-top:3px solid #2997FF;">
+      <div class="innov-ico">🔧</div>
+      <div class="innov-title">Sustaining Innovation</div>
+      <div class="innov-desc">Mempertahankan pemain yang sudah ada dengan terus meningkatkan produk untuk pelanggan mereka.</div>
+      <div style="font-size:11px;font-weight:700;color:#2997FF;letter-spacing:1px;text-transform:uppercase;">iPhone baru tiap tahun</div>
+    </div>
+    <div class="innov-card" style="border-top:3px solid #FF9F0A;">
+      <div class="innov-ico">♻️</div>
+      <div class="innov-title">Creative Destruction</div>
+      <div class="innov-desc">Schumpeter (1942): yang lama harus runtuh agar yang baru bisa tumbuh. Bukan kejam — hukum alam.</div>
+      <div style="font-size:11px;font-weight:700;color:#FF9F0A;letter-spacing:1px;text-transform:uppercase;">Kaset → iTunes → Spotify</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S24 DISRUPTION TABLE ════════════════════════════════ -->
+<div class="slide bg-black vc" id="s24">
+  <div class="t-label c-muted" style="margin-bottom:20px;">Pola Disrupsi Startup di Indonesia</div>
+  <div style="width:100%;max-width:760px;">
+    <div class="dis-row hd">
+      <div class="dis-cell lbl">Industri</div>
+      <div class="dis-cell lbl">Pemain Lama</div>
+      <div class="dis-cell lbl">Startup Disruptor</div>
+    </div>
+    <div class="dis-row">
+      <div class="dis-cell hi">Transportasi</div>
+      <div class="dis-cell">Taksi, ojek pangkalan</div>
+      <div class="dis-cell hot">Gojek, Grab</div>
+    </div>
+    <div class="dis-row">
+      <div class="dis-cell hi">Travel</div>
+      <div class="dis-cell">Agen perjalanan fisik</div>
+      <div class="dis-cell hot">Traveloka, Tiket.com</div>
+    </div>
+    <div class="dis-row">
+      <div class="dis-cell hi">Keuangan</div>
+      <div class="dis-cell">Bank, koperasi</div>
+      <div class="dis-cell hot">GoPay, OVO, Kredivo</div>
+    </div>
+    <div class="dis-row">
+      <div class="dis-cell hi">Ritel</div>
+      <div class="dis-cell">Toko fisik, pasar tradisional</div>
+      <div class="dis-cell hot">Tokopedia, Shopee</div>
+    </div>
+    <div class="dis-row">
+      <div class="dis-cell hi">Logistik</div>
+      <div class="dis-cell">JNE, TIKI ekspedisi lama</div>
+      <div class="dis-cell hot">J&T, SiCepat</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S25 INNOVATOR'S DILEMMA ════════════════════════════ -->
+<div class="slide bg-black c" id="s25">
+  <div class="t-label c-muted" style="margin-bottom:28px;">The Innovator's Dilemma — Christensen</div>
+  <div class="t-title c-white" style="max-width:660px;font-weight:300;line-height:1.3;">
+    Pemain lama gagal bukan karena<br>mereka <em>bodoh</em> atau <em>lalai.</em>
+  </div>
+  <div class="mt32">
+    <div class="t-title c-white" style="max-width:660px;line-height:1.2;">
+      Mereka gagal justru karena terlalu <span style="color:#BF5AF2;font-weight:700;">baik</span> melayani pelanggan yang sudah ada.
+    </div>
+  </div>
+  <div class="mt32 t-body c-gray" style="max-width:540px;line-height:1.6;">
+    Keputusan yang masuk akal jangka pendek — itulah yang membuat mereka rentan jangka panjang.
+  </div>
+</div>
+
+<!-- ══ S26 PEMANTIK 3 ════════════════════════════════════════ -->
+<div class="slide bg-green c" id="s26" data-pm="true">
+  <div class="badge badge-green" style="margin-bottom:32px;">💬 Pemantik Diskusi — 03</div>
+  <div class="pm-q">
+    "Ojek pangkalan di depan kampus — apakah mereka korban Gojek, atau justru bisa memanfaatkan Gojek? Bagaimana caranya?"
+  </div>
+  <div class="pm-purpose">
+    🎯 Tujuan: Membangun empati sekaligus melatih pemikiran strategis — bagaimana merespons disrupsi bukan sebagai korban pasif.
+  </div>
+  <div class="ghost ghost-green">P3</div>
+</div>
+
+<!-- ══ S27 SECTION 04 ═══════════════════════════════════════ -->
+<div class="slide bg-dark" id="s27">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div class="t-label c-teal" style="letter-spacing:2px;font-size:12px;font-weight:700;text-transform:uppercase;">Ekosistem</div>
+    <div class="mt16 t-mega c-white" style="line-height:1;">04</div>
+    <div class="mt12"><div style="width:48px;height:1.5px;background:#5AC8FA;margin:20px 0;"></div></div>
+    <div class="t-hero c-white" style="line-height:1.1;">Startup<br>Environment</div>
+  </div>
+</div>
+
+<!-- ══ S28 ECOSYSTEM ANALOGY ══════════════════════════════ -->
+<div class="slide bg-dark c" id="s28">
+  <div class="t-label c-muted" style="margin-bottom:32px;">Analogi</div>
+  <div class="t-title c-white" style="max-width:700px;font-weight:300;line-height:1.3;">
+    Startup tidak bisa tumbuh sendirian —<br>seperti padi yang butuh lebih dari sekadar <span style="font-weight:700;">benih yang bagus.</span>
+  </div>
+  <div class="mt32 three-col" style="max-width:720px;text-align:center;">
+    <div class="tcol" style="border-color:#2C2C2E;">
+      <div style="font-size:32px;margin-bottom:8px;">🌾</div>
+      <div class="t-caption c-gray">Tanah subur<br><span class="c-white" style="font-weight:600;">Pasar</span></div>
+    </div>
+    <div class="tcol" style="border-color:#2C2C2E;">
+      <div style="font-size:32px;margin-bottom:8px;">💧</div>
+      <div class="t-caption c-gray">Air<br><span class="c-white" style="font-weight:600;">Modal</span></div>
+    </div>
+    <div class="tcol" style="border-color:#2C2C2E;">
+      <div style="font-size:32px;margin-bottom:8px;">☀️</div>
+      <div class="t-caption c-gray">Cahaya matahari<br><span class="c-white" style="font-weight:600;">Regulasi</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S29 6 KOMPONEN ═════════════════════════════════════ -->
+<div class="slide bg-black vc" id="s29">
+  <div class="t-label c-muted" style="margin-bottom:24px;">Enam Komponen Ekosistem Startup</div>
+  <div class="eco-grid">
+    <div class="eco-box">
+      <div class="eco-ico">👤</div>
+      <div class="eco-nm">Founders & Tim</div>
+      <div class="eco-desc">Techie + Hustler + Domain Expert — harus komplemen</div>
+    </div>
+    <div class="eco-box">
+      <div class="eco-ico">💰</div>
+      <div class="eco-nm">Investor</div>
+      <div class="eco-desc">Angel, VC, Corporate Venture, Hibah pemerintah</div>
+    </div>
+    <div class="eco-box">
+      <div class="eco-ico">👥</div>
+      <div class="eco-nm">Talent</div>
+      <div class="eco-desc">Developer, designer, data scientist, digital marketer</div>
+    </div>
+    <div class="eco-box">
+      <div class="eco-ico">🏛️</div>
+      <div class="eco-nm">Regulator</div>
+      <div class="eco-desc">Bisa jadi akselerator (pro-startup) atau rem (lambat adaptasi)</div>
+    </div>
+    <div class="eco-box">
+      <div class="eco-ico">🏗️</div>
+      <div class="eco-nm">Support System</div>
+      <div class="eco-desc">Inkubator · Akselerator · Co-working · Komunitas</div>
+    </div>
+    <div class="eco-box">
+      <div class="eco-ico">🛒</div>
+      <div class="eco-nm">Market</div>
+      <div class="eco-desc">Tanpa pasar yang besar, startup tidak bisa scalable</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S30 FUNDING STAGES ═════════════════════════════════ -->
+<div class="slide bg-black vc" id="s30">
+  <div class="t-label c-muted" style="margin-bottom:24px;">Tahapan Pendanaan Startup</div>
+  <div class="fund-steps">
+    <div class="fund-step">
+      <div class="fund-n">1</div>
+      <div class="fund-name">Bootstrapping / Pre-seed</div>
+      <div class="fund-src" style="text-align:right;">Tabungan sendiri · Proof of concept</div>
+    </div>
+    <div class="fund-step">
+      <div class="fund-n">2</div>
+      <div class="fund-name">Seed Stage</div>
+      <div class="fund-src" style="text-align:right;">Angel Investor · Validasi pasar · Rekrut tim awal</div>
+    </div>
+    <div class="fund-step" style="border-color:#2997FF;">
+      <div class="fund-n">3</div>
+      <div class="fund-name">Series A</div>
+      <div class="fund-src" style="text-align:right;">VC masuk · Model bisnis terbukti · Scale produk</div>
+    </div>
+    <div class="fund-step">
+      <div class="fund-n">4</div>
+      <div class="fund-name">Series B, C, D+</div>
+      <div class="fund-src" style="text-align:right;">Ekspansi kota/negara · Akuisisi kompetitor</div>
+    </div>
+    <div class="fund-step" style="border-color:#30D158;">
+      <div class="fund-n" style="background:#30D158;">5</div>
+      <div class="fund-name" style="color:#30D158;">IPO / Exit</div>
+      <div class="fund-src" style="text-align:right;">Bursa saham / Akuisisi · Investor early exit</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S31 SECTION 05 ═══════════════════════════════════════ -->
+<div class="slide bg-dark" id="s31">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div class="t-label c-blue">Studi Kasus</div>
+    <div class="mt16 t-mega c-white" style="line-height:1;">05</div>
+    <div class="mt12"><div class="line"></div></div>
+    <div class="t-hero c-white" style="line-height:1.1;">Zenius<br>vs Traveloka</div>
+  </div>
+</div>
+
+<!-- ══ S32 ZENIUS ════════════════════════════════════════ -->
+<div class="slide bg-black vc" id="s32">
+  <div class="t-label" style="color:#FF453A;margin-bottom:16px;">Kasus Kegagalan · Zenius Education (2004–2023)</div>
+  <div class="case-grid">
+    <div>
+      <div style="font-size:clamp(28px,3.5vw,44px);font-weight:700;color:#F5F5F7;margin-bottom:16px;">Naik Karena Pandemi</div>
+      <ul class="case-list">
+        <li>Didirikan 2004 dengan visi belajar mendalam</li>
+        <li>Pandemi 2020: sekolah tutup, semua online</li>
+        <li>Dana besar masuk → ekspansi masif</li>
+        <li>Ribuan karyawan baru, puluhan produk baru</li>
+      </ul>
+    </div>
+    <div style="border-left:1px solid #2C2C2E;padding-left:48px;">
+      <div style="font-size:clamp(28px,3.5vw,44px);font-weight:700;color:#FF453A;margin-bottom:16px;">Jatuh Setelahnya</div>
+      <ul class="case-list">
+        <li><strong>2022:</strong> PHK ~800 orang (25% staf)</li>
+        <li>Sekolah buka → pengguna kembali ke offline</li>
+        <li>Burn rate tidak terkontrol</li>
+        <li>YouTube & TikTok: konten gratis, sama bagusnya</li>
+        <li><strong>2023:</strong> Tutup operasional sepenuhnya</li>
+      </ul>
+    </div>
+  </div>
+  <div class="mt28 t-body c-gray" style="border-left:2px solid #FF453A;padding-left:16px;max-width:660px;line-height:1.6;margin-top:28px;">
+    Pelajaran: Pertumbuhan yang didorong <span class="c-white" style="font-weight:500;">keadaan darurat sementara</span> bukanlah validasi bisnis yang sesungguhnya.
+  </div>
+</div>
+
+<!-- ══ S33 TRAVELOKA ═════════════════════════════════════ -->
+<div class="slide bg-black vc" id="s33">
+  <div class="t-label" style="color:#30D158;margin-bottom:16px;">Kasus Keberhasilan · Traveloka (2012–sekarang)</div>
+  <div class="split">
+    <div>
+      <div style="font-size:clamp(22px,2.8vw,36px);font-weight:700;color:#F5F5F7;margin-bottom:16px;">Lahir dari Masalah Nyata</div>
+      <ul class="case-list">
+        <li>Ferry Unardi: insinyur Indonesia di Amazon</li>
+        <li>Membantu ibu pesan tiket pesawat — prosesnya berbelit</li>
+        <li>2012: Traveloka berdiri — komparasi tiket</li>
+        <li>2014: Ekspansi ke hotel</li>
+        <li>2016: Unicorn</li>
+        <li>2017: 6 negara Asia Tenggara</li>
+      </ul>
+    </div>
+    <div style="border-left:1px solid #2C2C2E;padding-left:48px;">
+      <div style="font-size:clamp(22px,2.8vw,36px);font-weight:700;color:#30D158;margin-bottom:16px;">Pivot Saat Pandemi Menyerang</div>
+      <ul class="case-list">
+        <li>2020: Bisnis travel = kolaps total</li>
+        <li>Pivot ke <strong>Xperience</strong> (aktivitas lokal)</li>
+        <li>Pivot ke <strong>Traveloka Pay</strong> (fintech)</li>
+        <li>Pivot ke <strong>layanan kesehatan</strong></li>
+        <li>Valuasi tetap stabil ~$3 miliar</li>
+      </ul>
+    </div>
+  </div>
+  <div class="mt24 t-body c-gray" style="border-left:2px solid #30D158;padding-left:16px;max-width:660px;line-height:1.6;">
+    Pelajaran: Startup yang bertahan bukan yang paling canggih teknologinya, tapi yang paling jelas <span class="c-white" style="font-weight:500;">memecahkan masalah nyata</span> dan cukup <span class="c-white" style="font-weight:500;">fleksibel untuk berevolusi.</span>
+  </div>
+</div>
+
+<!-- ══ S34 COMPARISON ════════════════════════════════════ -->
+<div class="slide bg-black vc" id="s34">
+  <div class="t-label c-muted" style="margin-bottom:24px;">Zenius vs Traveloka — Perbedaan Kunci</div>
+  <div style="width:100%;max-width:760px;">
+    <div class="cmp-row hd">
+      <div class="cmp-cell lbl">Dimensi</div>
+      <div class="cmp-cell lbl" style="color:#FF453A;">❌ Zenius</div>
+      <div class="cmp-cell lbl" style="color:#30D158;">✅ Traveloka</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell hi">Sumber pertumbuhan</div>
+      <div class="cmp-cell neg">Pandemi — sementara</div>
+      <div class="cmp-cell pos">Masalah permanen jutaan orang</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell hi">Monetisasi</div>
+      <div class="cmp-cell neg">Langganan — sulit dipertahankan</div>
+      <div class="cmp-cell pos">Komisi transaksi — nilai langsung terasa</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell hi">Respons krisis</div>
+      <div class="cmp-cell neg">Ekspansi masif saat tidak organik</div>
+      <div class="cmp-cell pos">Pivot cepat ke produk relevan baru</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell hi">Kompetisi</div>
+      <div class="cmp-cell neg">YouTube & TikTok: gratis & bagus</div>
+      <div class="cmp-cell pos">Aggregasi harga — susah direplikasi</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S35 PEMANTIK 4 ════════════════════════════════════════ -->
+<div class="slide bg-green c" id="s35" data-pm="true">
+  <div class="badge badge-green" style="margin-bottom:32px;">💬 Pemantik Diskusi — 04</div>
+  <div class="pm-q">
+    "Kamu punya Rp500 juta untuk diinvestasikan ke startup. Mana yang lebih menarik: startup yang tumbuh 300% saat pandemi tapi tidak jelas setelahnya — atau startup yang tumbuh stabil 30% per tahun?"
+  </div>
+  <div class="pm-purpose">
+    🎯 Tujuan: Melatih logika investasi dan kemampuan mengevaluasi kelayakan bisnis jangka panjang vs pertumbuhan jangka pendek.
+  </div>
+  <div class="ghost ghost-green">P4</div>
+</div>
+
+<!-- ══ S36 TAKEAWAY 1 ════════════════════════════════════ -->
+<div class="slide bg-black c" id="s36">
+  <div class="t-label c-blue" style="margin-bottom:24px;">Pelajaran 1</div>
+  <div class="t-hero c-white" style="max-width:680px;line-height:1.1;font-weight:300;">
+    Startup adalah <span style="font-weight:800;">misi.</span><br>Bukan ukuran.
+  </div>
+  <div class="mt32 t-sub c-gray" style="max-width:500px;line-height:1.4;">
+    Yang membedakannya dari bisnis biasa adalah tujuannya: mencari model bisnis yang scalable dalam ketidakpastian.
+  </div>
+</div>
+
+<!-- ══ S37 TAKEAWAY 2 ════════════════════════════════════ -->
+<div class="slide bg-black c" id="s37">
+  <div class="t-label c-blue" style="margin-bottom:24px;">Pelajaran 2</div>
+  <div class="t-hero c-white" style="max-width:680px;line-height:1.1;font-weight:300;">
+    Bubble terjadi saat<br><span style="font-weight:800;color:#FF453A;">hype &gt; fundamental.</span>
+  </div>
+  <div class="mt32 t-sub c-gray" style="max-width:500px;line-height:1.4;">
+    Valuasi tinggi bukan bukti keberhasilan. Pertumbuhan yang dibeli bukan pertumbuhan yang dibangun.
+  </div>
+</div>
+
+<!-- ══ S38 TAKEAWAY 3 ════════════════════════════════════ -->
+<div class="slide bg-black c" id="s38">
+  <div class="t-label c-blue" style="margin-bottom:24px;">Pelajaran 3</div>
+  <div class="t-hero c-white" style="max-width:700px;line-height:1.1;font-weight:300;">
+    Disrupsi selalu datang dari<br><span style="font-weight:800;color:#BF5AF2;">arah yang tak diwaspadai.</span>
+  </div>
+  <div class="mt32 t-sub c-gray" style="max-width:540px;line-height:1.4;">
+    Pemain lama gagal bukan karena bodoh — tapi karena terlalu fokus pada yang sudah ada.
+  </div>
+</div>
+
+<!-- ══ S39 END ════════════════════════════════════════════ -->
+<div class="slide bg-black c" id="s39">
+  <div class="t-mega c-white" style="line-height:1.05;letter-spacing:-3px;">Terima<br>Kasih.</div>
+  <div class="mt40">
+    <div class="t-sub c-gray">Pertanyaan? Diskusi?</div>
+  </div>
+  <div class="mt48">
+    <div class="t-label c-muted" style="margin-bottom:10px;">Referensi Utama Pertemuan 2</div>
+    <div class="t-caption c-muted" style="line-height:2.2;">
+      Wood, J. B., Hewlin, T., & Lah, T. (2011). Consumption Economics. Bookmasters.<br>
+      Diamandis, P. H., & Kotler, S. (2020). The Future is Faster Than You Think. Simon & Schuster.<br>
+      Christensen, C. M. (1997). The Innovator's Dilemma. Harvard Business School Press.
+    </div>
+  </div>
+  <div class="mt32 t-caption c-muted">Pertemuan 3 → Disruptive Innovation, Creative Destruction, Sustaining Innovation</div>
+  <div class="ghost">EDB</div>
+</div>
+
+</div><!-- #deck -->
+
+<!-- Controls -->
+<div id="controls"></div>
+<div id="slide-n">1 / 39</div>
+<button class="nav-btn" id="btn-p" onclick="go(-1)" disabled>‹</button>
+<button class="nav-btn" id="btn-n" onclick="go(1)">›</button>
+
+<script>
+const TOTAL = 39;
+let cur = 1;
+
+// Build dots — mark pemantik slides green
+const pmSlides = [11, 19, 26, 35];
+const ctrlDiv = document.getElementById('controls');
+for(let i = 1; i <= TOTAL; i++){
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 1 ? ' active' : '') + (pmSlides.includes(i) ? ' pm' : '');
+  d.onclick = () => goto(i);
+  ctrlDiv.appendChild(d);
+}
+
+function goto(n){
+  if(n < 1 || n > TOTAL) return;
+  document.getElementById('s' + cur).classList.remove('active');
+  document.querySelectorAll('.dot')[cur - 1].classList.remove('active');
+  cur = n;
+  document.getElementById('s' + cur).classList.add('active');
+  document.querySelectorAll('.dot')[cur - 1].classList.add('active');
+  document.getElementById('slide-n').textContent = cur + ' / ' + TOTAL;
+  document.getElementById('btn-p').disabled = cur === 1;
+  document.getElementById('btn-n').disabled = cur === TOTAL;
+}
+
+function go(d){ goto(cur + d); }
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(1); }
+  if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); go(-1); }
+  if(e.key === 'Home') goto(1);
+  if(e.key === 'End') goto(TOTAL);
+});
+
+// Touch swipe
+let tx = 0;
+document.addEventListener('touchstart', e => tx = e.changedTouches[0].clientX, {passive: true});
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if(Math.abs(dx) > 50){ dx < 0 ? go(1) : go(-1); }
+}, {passive: true});
+
+// Click zones (left/right 30% of screen)
+document.getElementById('deck').addEventListener('click', e => {
+  const w = window.innerWidth;
+  if(e.clientX > w * 0.7) go(1);
+  else if(e.clientX < w * 0.3) go(-1);
+});
+</script>
+</body>
+</html>
