@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Data dalam Konteks Bisnis — Bahan Ajar Interaktif</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1A2E4A;--navy2:#253E5A;--teal:#0D7A6E;--tl:#E0F2EF;
+  --orange:#E07020;--amber:#FEF3C7;--red:#DC2626;--rel:#FEE2E2;
+  --green:#15803D;--gel:#DCFCE7;--blue:#1D4ED8;--bel:#DBEAFE;
+  --white:#fff;--off:#F8FAFC;--border:#E2E8F0;
+  --text:#1E293B;--muted:#64748B;--light:#F0F4F8;
+  --sidebar:260px;--hdr:58px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--hdr) + 12px)}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--off);color:var(--text);line-height:1.6;font-size:15px}
+
+/* ─ Progress bar ─ */
+#prog-bar{position:fixed;top:0;left:0;height:3px;background:var(--teal);width:0%;z-index:9999;transition:width .2s}
+
+/* ─ Header ─ */
+header{position:fixed;top:0;left:0;right:0;height:var(--hdr);background:var(--navy);display:flex;align-items:center;gap:16px;padding:0 20px;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-badge{background:var(--teal);color:var(--white);font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:.08em}
+.logo-title{color:var(--white);font-weight:700;font-size:15px;line-height:1.2}
+.logo-title small{display:block;font-size:10px;color:#94A3B8;font-weight:400}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.prog-text{color:#94A3B8;font-size:12px}
+#menu-btn{display:none;background:none;border:none;color:var(--white);cursor:pointer;padding:6px;border-radius:6px}
+@media(max-width:900px){#menu-btn{display:flex;align-items:center;justify-content:center}}
+
+/* ─ Layout ─ */
+.layout{display:grid;grid-template-columns:var(--sidebar) 1fr;margin-top:var(--hdr);min-height:calc(100vh - var(--hdr))}
+@media(max-width:900px){.layout{grid-template-columns:1fr}}
+
+/* ─ Sidebar ─ */
+aside{position:sticky;top:var(--hdr);height:calc(100vh - var(--hdr));overflow-y:auto;background:var(--white);border-right:1px solid var(--border);padding:20px 0}
+@media(max-width:900px){
+  aside{position:fixed;top:var(--hdr);left:-100%;height:calc(100vh - var(--hdr));width:var(--sidebar);z-index:90;transition:left .3s;box-shadow:2px 0 20px rgba(0,0,0,.2)}
+  aside.open{left:0}
+  .overlay{display:none;position:fixed;inset:0;top:var(--hdr);background:rgba(0,0,0,.4);z-index:89}
+  .overlay.show{display:block}
+}
+.nav-label{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.1em;padding:0 16px 8px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;transition:background .15s;border-left:3px solid transparent;text-decoration:none;color:var(--text)}
+.nav-item:hover{background:var(--off)}
+.nav-item.active{background:var(--tl);border-left-color:var(--teal);color:var(--teal)}
+.nav-item.done{color:var(--green)}
+.nav-num{width:24px;height:24px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;color:var(--muted)}
+.nav-item.active .nav-num{background:var(--teal);color:var(--white)}
+.nav-item.done .nav-num{background:var(--gel);color:var(--green)}
+.nav-text{font-size:13px;font-weight:500;line-height:1.3}
+
+/* ─ Main ─ */
+main{padding:32px 28px 80px;max-width:860px}
+@media(max-width:600px){main{padding:20px 16px 60px}}
+
+/* ─ Hero ─ */
+.hero{background:var(--navy);border-radius:14px;padding:36px;margin-bottom:36px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:var(--navy2);opacity:.7}
+.hero::after{content:'';position:absolute;bottom:-80px;left:-40px;width:180px;height:180px;border-radius:50%;background:#0A5E56;opacity:.5}
+.hero-inner{position:relative;z-index:1}
+.hero-badge{display:inline-block;background:var(--teal);color:var(--white);font-size:10px;font-weight:700;letter-spacing:.1em;padding:4px 10px;border-radius:4px;margin-bottom:14px}
+.hero h1{font-size:clamp(20px,3.5vw,30px);font-weight:800;color:var(--white);line-height:1.15;margin-bottom:10px}
+.hero p{color:#94A3B8;font-size:14px;max-width:520px;margin-bottom:20px}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap}
+.hero-pill{background:rgba(255,255,255,.1);color:#CBD5E0;font-size:12px;padding:4px 12px;border-radius:99px;border:1px solid rgba(255,255,255,.15)}
+.hero-pill strong{color:var(--white)}
+
+/* ─ Module section ─ */
+.module{margin-bottom:48px;scroll-margin-top:calc(var(--hdr) + 16px)}
+.mod-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+.mod-num{width:48px;height:48px;border-radius:12px;background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0}
+.mod-title h2{font-size:clamp(18px,2.5vw,22px);font-weight:800;color:var(--navy);line-height:1.2}
+.mod-title p{font-size:13px;color:var(--muted);margin-top:3px}
+
+/* ─ Cards ─ */
+.card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px}
+.card-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+h3.sec{font-size:16px;font-weight:700;color:var(--navy);margin:24px 0 12px;display:flex;align-items:center;gap:8px}
+h3.sec::before{content:'';width:4px;height:18px;background:var(--teal);border-radius:2px;flex-shrink:0}
+h4.sub{font-size:14px;font-weight:600;color:var(--navy2);margin:16px 0 8px}
+
+/* ─ Callouts ─ */
+.callout{border-radius:8px;padding:14px 16px;margin:16px 0;font-size:14px;line-height:1.6}
+.callout-analogy{background:#FFFBEB;border-left:4px solid var(--orange)}
+.callout-analogy strong{color:var(--orange)}
+.callout-tip{background:var(--tl);border-left:4px solid var(--teal)}
+.callout-tip strong{color:var(--teal)}
+.callout-warn{background:var(--rel);border-left:4px solid var(--red)}
+.callout-warn strong{color:var(--red)}
+.callout-case{background:var(--bel);border-left:4px solid var(--blue)}
+.callout-case strong{color:var(--blue)}
+
+/* ─ Tables ─ */
+.tbl-wrap{overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--navy);color:var(--white);padding:9px 12px;text-align:left;font-weight:600;font-size:12px}
+td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:var(--off)}
+
+/* ─ Lists ─ */
+.list{list-style:none;padding:0}
+.list li{padding:6px 0 6px 24px;position:relative;font-size:14px;border-bottom:1px solid var(--border)}
+.list li:last-child{border-bottom:none}
+.list li::before{content:'›';position:absolute;left:6px;color:var(--teal);font-weight:700;font-size:16px}
+
+/* ─ Two-col ─ */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:560px){.two-col{grid-template-columns:1fr}}
+.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:700px){.four-col{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:400px){.four-col{grid-template-columns:1fr}}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:650px){.three-col{grid-template-columns:1fr}}
+
+/* ─ DIKW Explorer ─ */
+.dikw-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+@media(max-width:650px){.dikw-row{grid-template-columns:repeat(2,1fr)}}
+.dikw-card{border-radius:10px;padding:16px;cursor:pointer;transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden}
+.dikw-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.dikw-card.active{box-shadow:0 0 0 3px rgba(255,255,255,.6),0 4px 20px rgba(0,0,0,.2)}
+.dikw-card h4{font-size:12px;font-weight:800;letter-spacing:.1em;color:rgba(255,255,255,.9);margin-bottom:6px}
+.dikw-card .dikw-q{font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px}
+.dikw-detail{display:none;font-size:12px;color:rgba(255,255,255,.85);line-height:1.5;margin-top:8px;border-top:1px solid rgba(255,255,255,.3);padding-top:8px}
+.dikw-card.active .dikw-detail{display:block}
+
+/* ─ Tabs ─ */
+.tabs{margin:16px 0}
+.tab-btns{display:flex;gap:4px;flex-wrap:wrap;border-bottom:2px solid var(--border);margin-bottom:0}
+.tab-btn{padding:8px 16px;font-size:13px;font-weight:500;border:none;background:none;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-2px;border-radius:6px 6px 0 0;transition:all .15s}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);background:var(--tl);font-weight:600}
+.tab-btn:hover:not(.active){background:var(--off);color:var(--text)}
+.tab-panel{display:none;padding:16px 0}
+.tab-panel.active{display:block}
+
+/* ─ Analytics cards ─ */
+.analytics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+@media(max-width:700px){.analytics-grid{grid-template-columns:repeat(2,1fr)}}
+.analytics-card{border-radius:10px;padding:16px;cursor:pointer;border:2px solid transparent;transition:all .15s}
+.analytics-card:hover{transform:translateY(-2px)}
+.analytics-card.selected{border-color:currentColor}
+.analytics-card h4{font-size:11px;font-weight:800;letter-spacing:.08em;margin-bottom:6px}
+.analytics-card .a-q{font-size:13px;font-weight:600;margin-bottom:8px}
+.analytics-card .a-ex{font-size:11px;line-height:1.5}
+.analytics-detail{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px;margin-top:8px;display:none}
+.analytics-detail.show{display:block}
+
+/* ─ SMART ─ */
+.smart-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:16px 0}
+@media(max-width:600px){.smart-grid{grid-template-columns:1fr}}
+.smart-card{border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .15s}
+.smart-card .s-letter{font-size:28px;font-weight:800;line-height:1;margin-bottom:4px}
+.smart-card .s-word{font-size:11px;font-weight:700;letter-spacing:.05em}
+.smart-card .s-detail{display:none;margin-top:10px;text-align:left;font-size:11px;line-height:1.5}
+.smart-card.open .s-detail{display:block}
+
+/* ─ Vanity vs Actionable ─ */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+@media(max-width:560px){.compare{grid-template-columns:1fr}}
+.compare-side{border-radius:10px;padding:20px;border:2px solid}
+.compare-side.v{background:#FFF5F5;border-color:#FCA5A5}
+.compare-side.a{background:#F0FDF4;border-color:#6EE7B7}
+.compare-side h3{font-size:13px;font-weight:700;margin-bottom:4px}
+.compare-side.v h3{color:var(--red)}
+.compare-side.a h3{color:var(--green)}
+.compare-side .c-sub{font-size:11px;color:var(--muted);margin-bottom:12px}
+.compare-row{padding:8px 0;border-bottom:1px solid rgba(0,0,0,.06)}
+.compare-row:last-child{border-bottom:none}
+.compare-row .c-name{font-size:12px;font-weight:600;color:var(--text)}
+.compare-row .c-val{font-size:13px;font-weight:700}
+.compare-side.v .c-val{color:#B91C1C}
+.compare-side.a .c-val{color:var(--green)}
+.compare-row .c-why{font-size:10.5px;color:var(--muted);margin-top:2px;line-height:1.4}
+
+/* ─ RFM ─ */
+.rfm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0}
+@media(max-width:540px){.rfm-grid{grid-template-columns:1fr}}
+.rfm-card{border-radius:10px;padding:16px;border:1px solid var(--border);background:var(--white)}
+.rfm-card h4{font-size:12px;font-weight:700;margin-bottom:4px}
+.rfm-card p{font-size:12px;color:var(--muted);line-height:1.5}
+.rfm-action{background:var(--off);border-radius:6px;padding:8px 10px;margin-top:10px;font-size:11.5px;line-height:1.5}
+.rfm-action strong{color:var(--navy)}
+
+/* ─ Roadmap ─ */
+.roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+@media(max-width:650px){.roadmap{grid-template-columns:repeat(2,1fr)}}
+.rm-card{border-radius:10px;padding:14px;position:relative}
+.rm-num{font-size:28px;font-weight:800;line-height:1;margin-bottom:4px}
+.rm-title{font-size:11px;font-weight:700;letter-spacing:.08em;margin-bottom:4px}
+.rm-time{font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px;display:inline-block;margin-bottom:8px}
+.rm-list{font-size:11px;line-height:1.7;list-style:none;padding:0}
+.rm-list li::before{content:'· ';font-weight:700}
+
+/* ─ Literacy levels ─ */
+.lit-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.lit-row:last-child{border-bottom:none}
+.lit-badge{padding:4px 10px;border-radius:99px;font-size:10px;font-weight:700;white-space:nowrap}
+.lit-bar-wrap{flex:1;background:var(--light);border-radius:99px;height:6px}
+.lit-bar{height:6px;border-radius:99px}
+
+/* ─ 10 principles ─ */
+.principles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0}
+@media(max-width:540px){.principles{grid-template-columns:1fr}}
+.p-card{display:flex;gap:10px;align-items:flex-start;padding:12px;border-radius:8px;background:var(--white);border:1px solid var(--border)}
+.p-num{width:26px;height:26px;border-radius:50%;background:var(--teal);color:var(--white);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.p-card p{font-size:12.5px;line-height:1.5;color:var(--text)}
+
+/* ─ Action plan ─ */
+.action-rows .a-row{padding:12px;border-radius:8px;margin-bottom:8px;cursor:pointer;border:1px solid var(--border);transition:all .15s}
+.action-rows .a-row:hover{border-color:var(--teal);background:var(--tl)}
+.action-rows .a-row.picked{border-color:var(--teal);background:var(--tl)}
+.a-row .a-cond{font-size:12px;color:var(--muted);margin-bottom:4px}
+.a-row .a-step{font-size:13px;font-weight:600;color:var(--navy)}
+.a-row .a-expand{display:none;margin-top:10px;font-size:12px;color:var(--text);background:var(--white);border-radius:6px;padding:10px;border:1px solid var(--border)}
+.a-row.picked .a-expand{display:block}
+
+/* ─ Progress dots ─ */
+.mod-done-badge{display:inline-flex;align-items:center;gap:4px;background:var(--gel);color:var(--green);font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;margin-left:8px}
+
+/* ─ Scroll reveal ─ */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .4s,transform .4s}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* ─ Footer ─ */
+footer{text-align:center;padding:24px;font-size:11px;color:var(--muted);border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<div id="prog-bar"></div>
+
+<header>
+  <div class="logo">
+    <div>
+      <div class="logo-badge">BAHAN AJAR</div>
+      <div class="logo-title">Data dalam Konteks Bisnis<small>8 Modul · Interaktif</small></div>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="prog-text" id="prog-text">Modul 1 dari 8</div>
+    <button id="menu-btn" onclick="toggleMenu()" aria-label="Menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<div class="layout">
+<aside id="sidebar">
+  <div class="nav-label">Navigasi Modul</div>
+  <a class="nav-item" href="#intro" onclick="closeMobile()">
+    <div class="nav-num">◎</div><div class="nav-text">Pendahuluan</div>
+  </a>
+  <a class="nav-item" href="#m1" onclick="closeMobile()"><div class="nav-num" id="n1">01</div><div class="nav-text">Fondasi: Mengapa Data Penting</div></a>
+  <a class="nav-item" href="#m2" onclick="closeMobile()"><div class="nav-num" id="n2">02</div><div class="nav-text">Jenis-Jenis Data dalam Bisnis</div></a>
+  <a class="nav-item" href="#m3" onclick="closeMobile()"><div class="nav-num" id="n3">03</div><div class="nav-text">Siklus Data dalam Bisnis</div></a>
+  <a class="nav-item" href="#m4" onclick="closeMobile()"><div class="nav-num" id="n4">04</div><div class="nav-text">Metrik & KPI</div></a>
+  <a class="nav-item" href="#m5" onclick="closeMobile()"><div class="nav-num" id="n5">05</div><div class="nav-text">Analisis untuk Keputusan</div></a>
+  <a class="nav-item" href="#m6" onclick="closeMobile()"><div class="nav-num" id="n6">06</div><div class="nav-text">Data untuk Strategi</div></a>
+  <a class="nav-item" href="#m7" onclick="closeMobile()"><div class="nav-num" id="n7">07</div><div class="nav-text">Tantangan & Risiko</div></a>
+  <a class="nav-item" href="#m8" onclick="closeMobile()"><div class="nav-num" id="n8">08</div><div class="nav-text">Membangun Budaya Data</div></a>
+  <a class="nav-item" href="#closing" onclick="closeMobile()"><div class="nav-num" id="n9">✦</div><div class="nav-text">Penutup & Action Plan</div></a>
+</aside>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="reveal">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">BAHAN AJAR PROFESIONAL</div>
+      <h1>Data dalam Konteks Bisnis</h1>
+      <p>Dari data mentah ke keputusan strategis — panduan praktis untuk manajer dan profesional bisnis, tanpa perlu menjadi data scientist.</p>
+      <div class="hero-pills">
+        <div class="hero-pill"><strong>8</strong> Modul</div>
+        <div class="hero-pill"><strong>Teori</strong> & Praktis</div>
+        <div class="hero-pill"><strong>Studi Kasus</strong> Bisnis Indonesia</div>
+        <div class="hero-pill"><strong>Interaktif</strong> & Mandiri</div>
+      </div>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="card"><div class="card-title">🎯 Target Peserta</div><p style="font-size:13.5px;color:var(--text)">Manajer, eksekutif, dan profesional bisnis yang ingin memahami dan memanfaatkan data dalam pekerjaan sehari-hari — <em>tanpa harus menjadi data scientist.</em></p></div>
+    <div class="card"><div class="card-title">📌 Tujuan Pembelajaran</div><p style="font-size:13.5px;color:var(--text)">Setelah modul ini, peserta mampu memahami konsep data fundamental, membaca data bisnis, dan mulai mengambil keputusan berbasis data di organisasi masing-masing.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 1 ═══════════ -->
+<section id="m1" class="module reveal" data-module="1">
+  <div class="mod-header">
+    <div class="mod-num">01</div>
+    <div class="mod-title"><h2>Fondasi: Mengapa Data Penting untuk Bisnis</h2><p>Paradigma baru, Hierarki DIKW, dan organisasi berbasis data</p></div>
+  </div>
+
+  <h3 class="sec">1.1 Pergeseran dari Intuisi ke Data</h3>
+  <div class="callout callout-analogy">
+    <strong>🚗 Analogi — Mengemudi di Malam Hari:</strong> Mengandalkan intuisi tanpa data ibarat mengemudi di jalan gelap hanya dengan mengandalkan memori. Mungkin berhasil kalau kondisinya sama. Tapi kalau ada jalan baru, lubang baru, atau percabangan yang belum ada? <strong>Data adalah lampu depan</strong> yang menerangi jalan nyata di depan Anda.
+  </div>
+  <div class="two-col" style="margin-top:14px">
+    <div class="card" style="border-top:3px solid var(--muted)"><div class="card-title" style="color:var(--muted)">⏳ Era Intuisi</div>
+      <ul class="list"><li>Keputusan dari pengalaman & naluri</li><li>Cocok untuk pasar sederhana & stabil</li><li>Cepat tapi sulit dievaluasi & direplikasi</li><li>Pengetahuan bergantung pada 1–2 orang kunci</li></ul>
+    </div>
+    <div class="card" style="border-top:3px solid var(--teal)"><div class="card-title" style="color:var(--teal)">🚀 Era Data-Driven</div>
+      <ul class="list"><li>Keputusan didukung bukti & angka nyata</li><li>Cocok untuk pasar kompleks & kompetitif</li><li>Terukur, bisa dievaluasi & dioptimalkan</li><li>Pengetahuan tersimpan dalam sistem & proses</li></ul>
+    </div>
+  </div>
+
+  <h3 class="sec">1.2 Hierarki DIKW — Dari Data ke Wisdom</h3>
+  <p style="font-size:13.5px;color:var(--muted);margin-bottom:12px">Klik setiap level untuk melihat penjelasan lengkapnya.</p>
+  <div class="dikw-row">
+    <div class="dikw-card" style="background:#1A2E4A" onclick="toggleDikw(0)">
+      <h4>DATA</h4><div class="dikw-q">Apa yang terjadi?</div>
+      <div class="dikw-detail">
+        <strong>Definisi:</strong> Fakta mentah, belum diproses, belum bermakna.<br><br>
+        <strong>Sifat:</strong> Objektif, mentah<br>
+        <strong>Contoh:</strong> "500 transaksi hari ini" — angka ini saja tidak memberitahu apa-apa.<br><br>
+        <strong>Pelaku:</strong> Sistem, sensor, database
+      </div>
+    </div>
+    <div class="dikw-card" style="background:#1565C0" onclick="toggleDikw(1)">
+      <h4>INFORMATION</h4><div class="dikw-q">Apa artinya?</div>
+      <div class="dikw-detail">
+        <strong>Definisi:</strong> Data + Konteks = Makna.<br><br>
+        <strong>Sifat:</strong> Sudah diproses & diorganisir<br>
+        <strong>Contoh:</strong> "Penjualan naik 20% vs kemarin. Hari Selasa selalu paling sepi."<br><br>
+        <strong>Pelaku:</strong> Analyst, laporan otomatis
+      </div>
+    </div>
+    <div class="dikw-card" style="background:#0D7A6E" onclick="toggleDikw(2)">
+      <h4>KNOWLEDGE</h4><div class="dikw-q">Mengapa terjadi?</div>
+      <div class="dikw-detail">
+        <strong>Definisi:</strong> Informasi + Pengalaman = Pemahaman.<br><br>
+        <strong>Sifat:</strong> Kontekstual, sebab-akibat<br>
+        <strong>Contoh:</strong> "Selasa sepi karena pasar tradisional di dekat toko buka & menyedot traffic."<br><br>
+        <strong>Pelaku:</strong> Manajer berpengalaman
+      </div>
+    </div>
+    <div class="dikw-card" style="background:#E07020" onclick="toggleDikw(3)">
+      <h4>WISDOM</h4><div class="dikw-q">Apa yang harus dilakukan?</div>
+      <div class="dikw-detail">
+        <strong>Definisi:</strong> Knowledge + Penilaian = Tindakan Tepat.<br><br>
+        <strong>Sifat:</strong> Mempertimbangkan nilai & konsekuensi<br>
+        <strong>Contoh:</strong> "Kurangi jam buka Selasa siang, alihkan staf ke shift Jumat-Sabtu."<br><br>
+        <strong>Pelaku:</strong> Pemimpin bisnis
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-case" style="margin-top:20px">
+    <strong>📖 Studi Kasus — Warung Pak Budi (3 Cabang):</strong><br>
+    <strong>Data:</strong> Cabang A: Rp 45 jt · B: Rp 28 jt · C: Rp 52 jt. Total turun dari Rp 145 jt → Rp 125 jt.<br>
+    <strong>Information:</strong> Penurunan besar di Cabang B (−30%). Hanya terjadi di weekday.<br>
+    <strong>Knowledge:</strong> Cabang B di kawasan perkantoran. Gedung seberang sedang renovasi → karyawan WFH.<br>
+    <strong>Wisdom:</strong> Buka katering & delivery ke perumahan sekitar. Jangan buka cabang baru di kawasan perkantoran tanpa memahami stabilitas demand-nya.
+  </div>
+
+  <h3 class="sec">1.3 Data sebagai Aset Bisnis</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Paradigma Lama</th><th>Paradigma Baru</th></tr>
+      <tr><td>Data = catatan administrasi</td><td>Data = aset strategis bisnis</td></tr>
+      <tr><td>Disimpan untuk keperluan audit</td><td>Digunakan untuk keputusan harian</td></tr>
+      <tr><td>Data "milik" divisi IT</td><td>Data "milik" seluruh organisasi</td></tr>
+      <tr><td>Berguna kalau ada masalah</td><td>Digunakan proaktif untuk peluang</td></tr>
+    </table>
+  </div>
+  <div class="callout callout-analogy">
+    <strong>🌱 Analogi — Tanah yang Tidak Diolah:</strong> Data yang hanya disimpan tapi tidak dianalisis seperti tanah subur yang dijadikan tempat parkir. Nilainya ada, tapi tidak menghasilkan apapun.
+  </div>
+
+  <h3 class="sec">1.4 Belajar dari Netflix & Blockbuster</h3>
+  <div class="two-col">
+    <div class="card" style="border-top:3px solid var(--teal)">
+      <div class="card-title" style="color:var(--teal)">🏆 Netflix — Menang</div>
+      <p style="font-size:13px;line-height:1.6">Menggunakan data tontonan 200+ juta subscriber untuk memutuskan konten yang diproduksi. <strong>"House of Cards"</strong> lahir dari data — bukan intuisi semata. Segmen yang menyukai drama politik + aktor tertentu ternyata sangat besar dan belum terlayani.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--red)">
+      <div class="card-title" style="color:var(--red)">❌ Blockbuster — Kalah</div>
+      <p style="font-size:13px;line-height:1.6">Punya jutaan data transaksi pelanggan tapi hanya digunakan untuk operasional. Tidak melihat pola bahwa pelanggan frustrasi dengan denda & antrian. Netflix melihat celah itu dan mengubahnya menjadi model bisnis baru. <strong>Pelajaran:</strong> data yang ada hari ini mungkin sudah cukup untuk menemukan peluang besar — jika tahu cara membacanya.</p>
+    </div>
+  </div>
+
+  <h3 class="sec">1.5 Ciri Organisasi Data-Driven</h3>
+  <div class="card">
+    <ul class="list">
+      <li>Setiap keputusan disertai bukti data, bukan hanya opini</li>
+      <li>Ada sistem pengumpulan dan pelaporan data yang berjalan otomatis</li>
+      <li>Semua departemen punya akses ke data yang relevan bagi mereka</li>
+      <li>Ada budaya bertanya <em>"apa datanya?"</em> sebelum membuat asumsi</li>
+      <li>Kesalahan dipelajari dari data, bukan disembunyikan</li>
+    </ul>
+    <div class="callout callout-warn" style="margin-top:12px;margin-bottom:0">
+      <strong>🚫 Jebakan Umum:</strong> (1) <em>Data Paralysis</em> — terlalu banyak data, tidak ada keputusan · (2) <em>Salah Level</em> — keputusan besar dari data mentah tanpa dianalisis · (3) <em>Confirmation Bias</em> — hanya mencari data yang mendukung keyakinan yang sudah ada.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 2 ═══════════ -->
+<section id="m2" class="module reveal" data-module="2">
+  <div class="mod-header">
+    <div class="mod-num">02</div>
+    <div class="mod-title"><h2>Jenis-Jenis Data dalam Bisnis</h2><p>Klasifikasi data berdasarkan fungsi, struktur, waktu, dan sifat</p></div>
+  </div>
+
+  <h3 class="sec">2.1 Berdasarkan Fungsi Bisnis</h3>
+  <div class="four-col">
+    <div class="card" style="border-top:3px solid var(--navy)">
+      <div class="card-title" style="color:var(--navy);font-size:12px">⚙️ OPERASIONAL</div>
+      <p style="font-size:12.5px;line-height:1.6"><strong>Contoh:</strong> Order masuk, stok gudang, absensi, log produksi<br><strong>Tujuan:</strong> Memantau efisiensi harian<br><strong>Sumber:</strong> ERP, sistem POS, mesin sensor</p>
+    </div>
+    <div class="card" style="border-top:3px solid #1565C0">
+      <div class="card-title" style="color:#1565C0;font-size:12px">💰 FINANSIAL</div>
+      <p style="font-size:12.5px;line-height:1.6"><strong>Contoh:</strong> Pendapatan, biaya, margin, arus kas, piutang<br><strong>Tujuan:</strong> Perencanaan & profitabilitas<br><strong>Sumber:</strong> Software akuntansi</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--teal)">
+      <div class="card-title" style="color:var(--teal);font-size:12px">👥 PELANGGAN</div>
+      <p style="font-size:12.5px;line-height:1.6"><strong>Contoh:</strong> Demografi, histori beli, CTR, churn rate, NPS<br><strong>Tujuan:</strong> Segmentasi & kampanye<br><strong>Sumber:</strong> CRM, Google Analytics</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--orange)">
+      <div class="card-title" style="color:var(--orange);font-size:12px">🌐 EKSTERNAL</div>
+      <p style="font-size:12.5px;line-height:1.6"><strong>Contoh:</strong> Google Trends, data BPS, harga kompetitor<br><strong>Tujuan:</strong> Analisis pasar & risiko<br><strong>Sumber:</strong> BPS, social listening tools</p>
+    </div>
+  </div>
+
+  <h3 class="sec">2.2 Berdasarkan Struktur</h3>
+  <div class="two-col">
+    <div class="card" style="border-top:3px solid var(--navy)">
+      <div class="card-title">📊 Structured Data</div>
+      <p style="font-size:13px;line-height:1.6">Format & organisasi yang jelas — umumnya dalam tabel (baris & kolom).<br><br>
+      ✓ Tabel transaksi pelanggan<br>✓ Database karyawan & gaji<br>✓ Laporan keuangan<br><br>
+      <em>+ Mudah diproses komputer dan difilter</em></p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--teal)">
+      <div class="card-title">🌊 Unstructured Data</div>
+      <p style="font-size:13px;line-height:1.6">Tidak ada format baku — kaya informasi, butuh teknologi khusus.<br><br>
+      ✓ Ulasan pelanggan di marketplace<br>✓ Rekaman customer service<br>✓ Foto, video, email, postingan sosmed<br><br>
+      <em>80–90% data di dunia berbentuk unstructured — tambang emas yang belum dioptimalkan!</em></p>
+    </div>
+  </div>
+
+  <h3 class="sec">2.3 Berdasarkan Waktu & Sifat</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Jenis</th><th>Penjelasan</th><th>Contoh</th></tr>
+      <tr><td><strong>Real-time</strong></td><td>Diperbarui setiap detik/menit</td><td>Pengunjung website saat ini, harga saham</td></tr>
+      <tr><td><strong>Near-real-time</strong></td><td>Diperbarui setiap beberapa menit</td><td>Notifikasi order baru, alert stok menipis</td></tr>
+      <tr><td><strong>Batch</strong></td><td>Dikumpulkan dan diproses berkala</td><td>Laporan penjualan harian, rekap absensi</td></tr>
+      <tr><td><strong>Historical</strong></td><td>Data masa lalu untuk analisis tren</td><td>Data penjualan 5 tahun, histori harga</td></tr>
+    </table>
+  </div>
+  <div class="tbl-wrap" style="margin-top:12px">
+    <table>
+      <tr><th>Sifat</th><th>Penjelasan</th><th>Contoh</th></tr>
+      <tr><td><strong>Kuantitatif</strong></td><td>Bisa diukur dengan angka</td><td>Revenue, jumlah pelanggan, konversi</td></tr>
+      <tr><td><strong>Kualitatif</strong></td><td>Menggambarkan kualitas/persepsi</td><td>Kepuasan pelanggan, persepsi brand</td></tr>
+      <tr><td><strong>Nominal</strong></td><td>Kategori tanpa urutan</td><td>Jenis kelamin, kota, kategori produk</td></tr>
+      <tr><td><strong>Ordinal</strong></td><td>Kategori dengan urutan</td><td>Rating 1–5, level kepuasan</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 3 ═══════════ -->
+<section id="m3" class="module reveal" data-module="3">
+  <div class="mod-header">
+    <div class="mod-num">03</div>
+    <div class="mod-title"><h2>Siklus Data dalam Bisnis</h2><p>5 tahap dari pengumpulan hingga pengambilan keputusan</p></div>
+  </div>
+
+  <div class="callout callout-analogy">
+    <strong>🌊 Analogi — Siklus Air:</strong> Data mengikuti siklus seperti air di alam. Air menguap dari laut (pengumpulan), membentuk awan (penyimpanan), turun hujan (pembersihan), mengalir ke sungai (analisis), dimanfaatkan manusia (keputusan). Kalau satu tahap rusak, seluruh siklus terganggu.
+  </div>
+
+  <div class="four-col" style="margin:16px 0">
+    <div class="card" style="border-top:3px solid var(--navy);text-align:center">
+      <div style="font-size:24px;font-weight:800;color:var(--navy)">1</div>
+      <div style="font-size:12px;font-weight:700;color:var(--navy);margin:4px 0">PENGUMPULAN</div>
+      <p style="font-size:11px;color:var(--muted)">Sumber internal & eksternal</p>
+    </div>
+    <div class="card" style="border-top:3px solid #1565C0;text-align:center">
+      <div style="font-size:24px;font-weight:800;color:#1565C0">2</div>
+      <div style="font-size:12px;font-weight:700;color:#1565C0;margin:4px 0">PENYIMPANAN</div>
+      <p style="font-size:11px;color:var(--muted)">Database, cloud, warehouse</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--orange);text-align:center">
+      <div style="font-size:24px;font-weight:800;color:var(--orange)">3</div>
+      <div style="font-size:12px;font-weight:700;color:var(--orange);margin:4px 0">PEMBERSIHAN</div>
+      <p style="font-size:11px;color:var(--muted)">Validasi & standarisasi</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--teal);text-align:center">
+      <div style="font-size:24px;font-weight:800;color:var(--teal)">4</div>
+      <div style="font-size:12px;font-weight:700;color:var(--teal);margin:4px 0">ANALISIS</div>
+      <p style="font-size:11px;color:var(--muted)">Insight & visualisasi</p>
+    </div>
+  </div>
+  <div class="card" style="border-top:3px solid var(--green);text-align:center;margin-bottom:20px">
+    <div style="font-size:24px;font-weight:800;color:var(--green)">5</div>
+    <div style="font-size:12px;font-weight:700;color:var(--green);margin:4px 0">KEPUTUSAN & EKSEKUSI</div>
+    <p style="font-size:11px;color:var(--muted)">Tindakan bisnis → data baru terbentuk → siklus berulang</p>
+  </div>
+
+  <h3 class="sec">3.3 Pembersihan Data: "Garbage In, Garbage Out"</h3>
+  <div class="callout callout-warn">
+    <strong>🚨 Hukum Besi Dunia Data:</strong> Analisis secanggih apapun tidak akan menghasilkan insight yang benar jika datanya kotor.
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Masalah</th><th>Contoh</th><th>Dampak</th></tr>
+      <tr><td><strong>Data kosong</strong></td><td>Email pelanggan banyak yang kosong</td><td>Kampanye email tidak bisa dijalankan</td></tr>
+      <tr><td><strong>Duplikat</strong></td><td>Satu pelanggan tercatat dua kali</td><td>Laporan jumlah pelanggan tidak akurat</td></tr>
+      <tr><td><strong>Format tidak konsisten</strong></td><td>"01/01/2024" vs "1 Jan 2024"</td><td>Analisis tren waktu gagal</td></tr>
+      <tr><td><strong>Outlier ekstrem</strong></td><td>Transaksi Rp 1 miliar karena salah input</td><td>Rata-rata menjadi menyesatkan</td></tr>
+      <tr><td><strong>Data usang</strong></td><td>Nomor telepon sudah tidak aktif</td><td>Biaya pemasaran terbuang sia-sia</td></tr>
+    </table>
+  </div>
+  <h4 class="sub">Langkah Pembersihan Data</h4>
+  <div class="card"><ul class="list">
+    <li><strong>Audit</strong> — Periksa kondisi data: berapa persen yang lengkap? Ada duplikat?</li>
+    <li><strong>Standarisasi</strong> — Seragamkan format: tanggal, nama kota, kategori</li>
+    <li><strong>Deduplikasi</strong> — Hapus atau gabungkan data yang ganda</li>
+    <li><strong>Imputasi</strong> — Isi data kosong dengan nilai yang logis (rata-rata, median, default)</li>
+    <li><strong>Validasi</strong> — Pastikan data masuk akal (usia tidak bisa 200 tahun, harga tidak negatif)</li>
+  </ul></div>
+</section>
+
+<!-- ═══════════ MODULE 4 ═══════════ -->
+<section id="m4" class="module reveal" data-module="4">
+  <div class="mod-header">
+    <div class="mod-num">04</div>
+    <div class="mod-title"><h2>Metrik & KPI: Mengukur yang Tepat</h2><p>Framework SMART, KPI per fungsi, dan vanity vs actionable</p></div>
+  </div>
+
+  <div class="callout callout-analogy">
+    <strong>🚗 Analogi — Speedometer vs Dashboard Lengkap:</strong> Di mobil ada banyak indikator: speedometer, bensin, suhu mesin, RPM. Tapi kalau sedang tes kecepatan, yang paling penting hanya speedometer. KPI adalah indikator yang paling penting untuk <em>tujuan saat ini</em>.
+  </div>
+
+  <h3 class="sec">4.2 Framework SMART</h3>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Klik setiap huruf untuk melihat penjelasannya.</p>
+  <div class="smart-grid">
+    <div class="smart-card" style="background:#E8F4FD;cursor:pointer" onclick="toggleSmart(this)">
+      <div class="s-letter" style="color:#1565C0">S</div>
+      <div class="s-word" style="color:#1565C0">Specific</div>
+      <div class="s-detail"><strong>Jelas & tidak ambigu</strong><br><br>✓ "Tingkat konversi website"<br>✗ "Performa digital"</div>
+    </div>
+    <div class="smart-card" style="background:#E8F5E9;cursor:pointer" onclick="toggleSmart(this)">
+      <div class="s-letter" style="color:var(--green)">M</div>
+      <div class="s-word" style="color:var(--green)">Measurable</div>
+      <div class="s-detail"><strong>Bisa diukur dengan angka</strong><br><br>✓ "Meningkat 15%"<br>✗ "Meningkat signifikan"</div>
+    </div>
+    <div class="smart-card" style="background:var(--tl);cursor:pointer" onclick="toggleSmart(this)">
+      <div class="s-letter" style="color:var(--teal)">A</div>
+      <div class="s-word" style="color:var(--teal)">Achievable</div>
+      <div class="s-detail"><strong>Realistis dicapai</strong><br><br>✓ "Naik dari 2% ke 3%"<br>✗ "Naik dari 2% ke 50%"</div>
+    </div>
+    <div class="smart-card" style="background:var(--amber);cursor:pointer" onclick="toggleSmart(this)">
+      <div class="s-letter" style="color:var(--orange)">R</div>
+      <div class="s-word" style="color:var(--orange)">Relevant</div>
+      <div class="s-detail"><strong>Relevan dengan tujuan bisnis</strong><br><br>✓ "Churn rate" → tujuan retensi<br>✗ "Followers IG" → tujuan penjualan</div>
+    </div>
+    <div class="smart-card" style="background:var(--rel);cursor:pointer" onclick="toggleSmart(this)">
+      <div class="s-letter" style="color:var(--red)">T</div>
+      <div class="s-word" style="color:var(--red)">Time-bound</div>
+      <div class="s-detail"><strong>Punya batas waktu</strong><br><br>✓ "Dalam Q3 2024"<br>✗ "Dalam waktu dekat"</div>
+    </div>
+  </div>
+
+  <h3 class="sec">4.3 KPI per Fungsi Bisnis</h3>
+  <div class="tabs">
+    <div class="tab-btns">
+      <button class="tab-btn active" onclick="switchTab('kpi','sales',this)">💼 Sales</button>
+      <button class="tab-btn" onclick="switchTab('kpi','mkt',this)">📣 Marketing</button>
+      <button class="tab-btn" onclick="switchTab('kpi','ops',this)">⚙️ Operasional</button>
+      <button class="tab-btn" onclick="switchTab('kpi','fin',this)">💰 Keuangan</button>
+      <button class="tab-btn" onclick="switchTab('kpi','hr',this)">👥 HR</button>
+    </div>
+    <div id="kpi-sales" class="tab-panel active">
+      <div class="tbl-wrap"><table>
+        <tr><th>KPI</th><th>Definisi</th><th>Formula</th></tr>
+        <tr><td><strong>Revenue</strong></td><td>Total pendapatan dalam periode</td><td>Σ (Harga × Kuantitas)</td></tr>
+        <tr><td><strong>Conversion Rate</strong></td><td>% prospek yang menjadi pembeli</td><td>(Pembeli / Prospek) × 100%</td></tr>
+        <tr><td><strong>AOV</strong></td><td>Rata-rata nilai per transaksi</td><td>Revenue / Jumlah Transaksi</td></tr>
+        <tr><td><strong>Win Rate</strong></td><td>% proposal yang berhasil ditutup</td><td>(Deal menang / Total proposal) × 100%</td></tr>
+        <tr><td><strong>Sales Cycle</strong></td><td>Rata-rata waktu prospek → deal</td><td>Total hari / Jumlah deal</td></tr>
+      </table></div>
+    </div>
+    <div id="kpi-mkt" class="tab-panel">
+      <div class="tbl-wrap"><table>
+        <tr><th>KPI</th><th>Definisi</th><th>Formula</th></tr>
+        <tr><td><strong>CAC</strong></td><td>Biaya mendapatkan 1 pelanggan baru</td><td>Total biaya / Pelanggan baru</td></tr>
+        <tr><td><strong>ROAS</strong></td><td>Revenue per rupiah iklan</td><td>Revenue iklan / Biaya iklan</td></tr>
+        <tr><td><strong>CTR</strong></td><td>% yang mengklik iklan/email</td><td>(Klik / Tayangan) × 100%</td></tr>
+        <tr><td><strong>Bounce Rate</strong></td><td>% pengunjung yang langsung pergi</td><td>Kunjungan 1 hal / Total kunjungan × 100%</td></tr>
+        <tr><td><strong>NPS</strong></td><td>Seberapa besar pelanggan merekomendasikan</td><td>% Promoter − % Detractor</td></tr>
+      </table></div>
+    </div>
+    <div id="kpi-ops" class="tab-panel">
+      <div class="tbl-wrap"><table>
+        <tr><th>KPI</th><th>Definisi</th></tr>
+        <tr><td><strong>On-Time Delivery Rate</strong></td><td>% pengiriman yang tepat waktu sesuai janji</td></tr>
+        <tr><td><strong>Order Fulfillment Time</strong></td><td>Rata-rata waktu dari order masuk ke barang dikirim</td></tr>
+        <tr><td><strong>Defect Rate</strong></td><td>% produk/layanan yang tidak memenuhi standar</td></tr>
+        <tr><td><strong>Inventory Turnover</strong></td><td>Seberapa cepat stok habis terjual dalam periode tertentu</td></tr>
+      </table></div>
+    </div>
+    <div id="kpi-fin" class="tab-panel">
+      <div class="tbl-wrap"><table>
+        <tr><th>KPI</th><th>Definisi</th><th>Formula</th></tr>
+        <tr><td><strong>Gross Profit Margin</strong></td><td>Profitabilitas setelah biaya produksi</td><td>(Revenue − COGS) / Revenue × 100%</td></tr>
+        <tr><td><strong>Net Profit Margin</strong></td><td>Profitabilitas setelah semua biaya</td><td>Net Profit / Revenue × 100%</td></tr>
+        <tr><td><strong>Burn Rate</strong></td><td>Kecepatan perusahaan menggunakan kas</td><td>Total pengeluaran per bulan</td></tr>
+        <tr><td><strong>Runway</strong></td><td>Berapa bulan kas bisa bertahan</td><td>Saldo kas / Burn rate</td></tr>
+      </table></div>
+    </div>
+    <div id="kpi-hr" class="tab-panel">
+      <div class="tbl-wrap"><table>
+        <tr><th>KPI</th><th>Definisi</th></tr>
+        <tr><td><strong>Employee Turnover Rate</strong></td><td>% karyawan yang keluar dalam periode tertentu</td></tr>
+        <tr><td><strong>Time to Hire</strong></td><td>Rata-rata hari dari lowongan dibuka ke kandidat bergabung</td></tr>
+        <tr><td><strong>Absenteeism Rate</strong></td><td>% hari kerja yang tidak dihadiri tanpa alasan</td></tr>
+        <tr><td><strong>Training Completion Rate</strong></td><td>% karyawan yang menyelesaikan pelatihan wajib</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <h3 class="sec">4.4 Vanity Metrics vs. Actionable Metrics</h3>
+  <div class="compare">
+    <div class="compare-side v">
+      <h3>🎭 Vanity Metrics</h3>
+      <div class="c-sub">Terlihat impressive, tapi tidak memandu keputusan</div>
+      <div class="compare-row"><div class="c-name">Jumlah followers sosmed</div><div class="c-val">❌ Menyesatkan</div><div class="c-why">Bisa dibeli; tidak menjamin penjualan apapun.</div></div>
+      <div class="compare-row"><div class="c-name">Jumlah download aplikasi</div><div class="c-val">❌ Menyesatkan</div><div class="c-why">Bisa tinggi tapi pengguna aktif sangat sedikit.</div></div>
+      <div class="compare-row"><div class="c-name">Total email yang terkirim</div><div class="c-val">❌ Menyesatkan</div><div class="c-why">Tidak relevan kalau tidak ada yang membaca.</div></div>
+      <div class="compare-row"><div class="c-name">Jumlah meeting dalam sehari</div><div class="c-val">❌ Menyesatkan</div><div class="c-why">Meeting banyak bisa justru tanda inefisiensi.</div></div>
+    </div>
+    <div class="compare-side a">
+      <h3>⚡ Actionable Metrics</h3>
+      <div class="c-sub">Setiap angka mengarah pada keputusan yang jelas</div>
+      <div class="compare-row"><div class="c-name">Engagement rate + konversi sosmed</div><div class="c-val">✓ Actionable</div><div class="c-why">Menunjukkan apakah audiens benar-benar terlibat.</div></div>
+      <div class="compare-row"><div class="c-name">Daily Active Users + Retention 30 hari</div><div class="c-val">✓ Actionable</div><div class="c-why">Menunjukkan apakah produk memang dipakai.</div></div>
+      <div class="compare-row"><div class="c-name">Open rate + Click rate + Revenue/email</div><div class="c-val">✓ Actionable</div><div class="c-why">Menunjukkan apakah kampanye benar-benar menghasilkan.</div></div>
+      <div class="compare-row"><div class="c-name">Output & keputusan dari meeting</div><div class="c-val">✓ Actionable</div><div class="c-why">Meeting yang baik = keputusan yang jelas.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 5 ═══════════ -->
+<section id="m5" class="module reveal" data-module="5">
+  <div class="mod-header">
+    <div class="mod-num">05</div>
+    <div class="mod-title"><h2>Analisis Data untuk Keputusan Bisnis</h2><p>4 jenis analisis, segmentasi RFM, dan A/B Testing</p></div>
+  </div>
+
+  <h3 class="sec">5.1 Empat Jenis Analisis Data</h3>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Klik setiap jenis untuk melihat studi kasus konkret.</p>
+  <div class="analytics-grid">
+    <div class="analytics-card" style="background:#EFF4FB;color:var(--navy)" onclick="selectAnalytics(this,'a-desc')">
+      <h4>DESCRIPTIVE</h4><div class="a-q">Apa yang terjadi?</div>
+      <div class="a-ex" style="color:var(--navy2)">Tools: Laporan, dashboard, grafik tren<br>Kompleksitas: Rendah</div>
+    </div>
+    <div class="analytics-card" style="background:#EFF3FD;color:#1565C0" onclick="selectAnalytics(this,'a-diag')">
+      <h4>DIAGNOSTIC</h4><div class="a-q">Mengapa terjadi?</div>
+      <div class="a-ex" style="color:#1565C0">Tools: Drill-down, segmentasi, kohorte<br>Kompleksitas: Sedang</div>
+    </div>
+    <div class="analytics-card" style="background:var(--tl);color:var(--teal)" onclick="selectAnalytics(this,'a-pred')">
+      <h4>PREDICTIVE</h4><div class="a-q">Apa yang akan terjadi?</div>
+      <div class="a-ex">Tools: Regresi, ML, forecasting<br>Kompleksitas: Tinggi</div>
+    </div>
+    <div class="analytics-card" style="background:var(--amber);color:var(--orange)" onclick="selectAnalytics(this,'a-pres')">
+      <h4>PRESCRIPTIVE</h4><div class="a-q">Apa yang harus dilakukan?</div>
+      <div class="a-ex">Tools: Optimization, simulasi, AI<br>Kompleksitas: Sangat Tinggi</div>
+    </div>
+  </div>
+  <div id="a-desc" class="analytics-detail show">
+    <strong style="color:var(--navy)">Descriptive Analytics — Studi Kasus PT Maju Bersama:</strong><br>
+    Direktur Sales melihat penjualan bulan ini turun 18% dari bulan lalu.<br><br>
+    📊 <em>Temuan Deskriptif:</em> Total penjualan Rp 410 juta (bulan lalu Rp 500 juta). Semua channel turun: offline −20%, online −15%. Semua kategori turun kecuali premium yang justru naik 5%.
+  </div>
+  <div id="a-diag" class="analytics-detail">
+    <strong style="color:#1565C0">Diagnostic Analytics — Melanjutkan Kasus di Atas:</strong><br><br>
+    🔍 <em>Temuan Diagnostik:</em> (1) Bulan ini ada 4 hari libur nasional → hari kerja efektif berkurang. (2) Kompetitor meluncurkan produk baru harga lebih rendah di kategori mid-range. (3) Pengiriman ke Kalimantan terganggu karena masalah logistik mitra.
+  </div>
+  <div id="a-pred" class="analytics-detail">
+    <strong style="color:var(--teal)">Predictive Analytics — Proyeksi Ke Depan:</strong><br><br>
+    🔮 <em>Prediksi:</em> Tanpa intervensi, bulan depan penjualan akan kembali normal karena tidak ada libur panjang. Tapi market share di kategori mid-range akan terus tergerus jika kompetitor tidak segera direspons.
+  </div>
+  <div id="a-pres" class="analytics-detail">
+    <strong style="color:var(--orange)">Prescriptive Analytics — Rekomendasi Tindakan:</strong><br><br>
+    ⚡ <em>Rekomendasi:</em> (1) Negosiasikan ulang dengan mitra logistik Kalimantan. (2) Luncurkan promo bundle di kategori mid-range untuk counter kompetitor. (3) Evaluasi positioning produk mid-range dan pertimbangkan reformulasi harga.
+  </div>
+
+  <h3 class="sec">5.3 Segmentasi Pelanggan — Framework RFM</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Dimensi</th><th>Pertanyaan</th><th>Contoh Pengukuran</th></tr>
+      <tr><td><strong>Recency (R)</strong></td><td>Kapan terakhir mereka membeli?</td><td>7 hari lalu vs. 6 bulan lalu</td></tr>
+      <tr><td><strong>Frequency (F)</strong></td><td>Seberapa sering mereka membeli?</td><td>12× setahun vs. 1× setahun</td></tr>
+      <tr><td><strong>Monetary (M)</strong></td><td>Berapa total uang yang mereka belanjakan?</td><td>Rp 5 juta vs. Rp 200 ribu</td></tr>
+    </table>
+  </div>
+  <div class="rfm-grid">
+    <div class="rfm-card"><h4 style="color:var(--teal)">🏆 Champions (R↑ F↑ M↑)</h4><p>Pelanggan terbaik. Loyal, belanja besar, baru-baru ini.</p><div class="rfm-action"><strong>Aksi:</strong> Program loyalitas eksklusif, minta jadi referral, berikan akses produk baru lebih awal.</div></div>
+    <div class="rfm-card"><h4 style="color:var(--orange)">⚠️ At Risk (R↓ F↑ M↑)</h4><p>Pernah loyal tapi mulai pergi. Dulu belanja rutin dan besar.</p><div class="rfm-action"><strong>Aksi:</strong> Hubungi segera via personal message. Tawarkan penawaran khusus atau diskon win-back.</div></div>
+    <div class="rfm-card"><h4 style="color:var(--red)">💤 Lost (R sangat rendah)</h4><p>Sudah sangat lama tidak membeli. Kemungkinan sudah beralih ke kompetitor.</p><div class="rfm-action"><strong>Aksi:</strong> Kampanye re-engagement. Jika tidak respons, pertimbangkan hapus dari database aktif.</div></div>
+    <div class="rfm-card"><h4 style="color:var(--blue)">🌱 Potential Loyalists (R↑ F↓)</h4><p>Baru beli beberapa kali tapi potensial besar. Masih baru mengenal produk kita.</p><div class="rfm-action"><strong>Aksi:</strong> Nurture dengan konten & penawaran yang relevan. Dorong menuju pembelian ke-2 dan ke-3.</div></div>
+  </div>
+
+  <h3 class="sec">5.4 A/B Testing dalam Bisnis</h3>
+  <div class="card">
+    <div class="card-title">📐 Cara Kerja A/B Testing</div>
+    <ol style="padding-left:20px;font-size:13.5px;line-height:2">
+      <li>Tentukan hipotesis yang ingin diuji</li>
+      <li>Bagi audiens secara acak: 50% versi A, 50% versi B</li>
+      <li>Jalankan minimal 2 minggu (hindari bias waktu)</li>
+      <li>Analisis hasilnya secara statistik</li>
+    </ol>
+    <div class="tbl-wrap" style="margin-top:12px">
+      <table>
+        <tr><th>Konteks</th><th>Versi A</th><th>Versi B</th><th>Metrik Diukur</th></tr>
+        <tr><td>Email</td><td>Subject line lama</td><td>Subject line baru</td><td>Open rate</td></tr>
+        <tr><td>Website</td><td>Layout halaman lama</td><td>Layout halaman baru</td><td>Conversion rate</td></tr>
+        <tr><td>Harga</td><td>Rp 99.000</td><td>Rp 95.000</td><td>Volume × Revenue</td></tr>
+        <tr><td>Promo</td><td>Diskon 20%</td><td>Free shipping</td><td>Jumlah transaksi</td></tr>
+      </table>
+    </div>
+    <div class="callout callout-warn" style="margin-top:12px;margin-bottom:0">
+      <strong>⚠️ Penting:</strong> Jangan ubah dua hal sekaligus. Kalau ganti warna tombol DAN teks tombol bersamaan, kita tidak bisa tahu mana yang menyebabkan perubahan hasil.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 6 ═══════════ -->
+<section id="m6" class="module reveal" data-module="6">
+  <div class="mod-header">
+    <div class="mod-num">06</div>
+    <div class="mod-title"><h2>Data untuk Strategi Bisnis</h2><p>Peluang pasar, analisis kompetitor, forecasting & pricing</p></div>
+  </div>
+
+  <h3 class="sec">6.1 Identifikasi Peluang Pasar</h3>
+  <div class="two-col">
+    <div class="card"><div class="card-title">🔍 1. Analisis Gap</div><p style="font-size:13px">Gunakan Google Trends atau keyword research untuk melihat apa yang dicari pelanggan tapi belum banyak pemainnya di pasar.</p></div>
+    <div class="card"><div class="card-title">💬 2. Analisis Keluhan Kompetitor</div><p style="font-size:13px">Review negatif terhadap kompetitor adalah <strong>peta peluang</strong>. Keluhan = unmet need = celah bisnis yang bisa diisi.</p></div>
+    <div class="card"><div class="card-title">📊 3. Produk Margin Tinggi</div><p style="font-size:13px">Dari data finansial internal: produk mana yang margin-nya paling tinggi? Investasi lebih besar ke sana menghasilkan return lebih baik.</p></div>
+    <div class="card"><div class="card-title">🚪 4. Analisis Churn</div><p style="font-size:13px">Alasan pelanggan pergi = kebutuhan yang tidak terpenuhi. Ini bisa menjadi ide produk atau fitur baru.</p></div>
+  </div>
+
+  <h3 class="sec">6.2 Analisis Kompetitor Berbasis Data (Legal & Etis)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Sumber</th><th>Informasi yang Bisa Didapat</th></tr>
+      <tr><td><strong>Website & harga publik</strong></td><td>Produk, harga, positioning pasar</td></tr>
+      <tr><td><strong>Review marketplace/Google</strong></td><td>Kekuatan & kelemahan dari perspektif pelanggan</td></tr>
+      <tr><td><strong>Media sosial kompetitor</strong></td><td>Strategi konten, engagement, respons terhadap keluhan</td></tr>
+      <tr><td><strong>Laporan keuangan (Tbk)</strong></td><td>Revenue, margin, arah ekspansi</td></tr>
+      <tr><td><strong>Job posting / lowongan</strong></td><td>Arah strategis: banyak hire engineer = mau bangun teknologi baru</td></tr>
+      <tr><td><strong>Google Trends</strong></td><td>Perbandingan tren pencarian brand kita vs. kompetitor</td></tr>
+      <tr><td><strong>SimilarWeb</strong></td><td>Estimasi traffic website kompetitor</td></tr>
+    </table>
+  </div>
+
+  <h3 class="sec">6.3 Forecasting & Pricing Berbasis Data</h3>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">📈 Jenis Forecasting</div>
+      <ul class="list">
+        <li><strong>Sales Forecasting</strong> — Prediksi penjualan periode mendatang → perencanaan produksi & stok</li>
+        <li><strong>Demand Forecasting</strong> — Prediksi permintaan pasar total</li>
+        <li><strong>Cash Flow Forecasting</strong> — Prediksi arus kas → manajemen likuiditas</li>
+      </ul>
+      <div class="callout callout-tip" style="margin-top:12px;margin-bottom:0">
+        <strong>💡 Cara Sederhana:</strong> Moving Average — rata-rata penjualan 3 bulan terakhir sebagai estimasi kasar bulan berikutnya.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">💲 Data untuk Pricing</div>
+      <ul class="list">
+        <li><strong>Price Elasticity</strong> — Kalau harga naik 10%, berapa persen penjualan turun?</li>
+        <li><strong>Willingness to Pay</strong> — Segmen premium bersedia bayar lebih untuk kenyamanan</li>
+        <li><strong>Competitor Pricing</strong> — Posisi harga kita relatif terhadap pasar</li>
+        <li><strong>Cost Data</strong> — Pastikan margin tetap sehat</li>
+      </ul>
+      <div class="callout callout-case" style="margin-top:12px;margin-bottom:0">
+        <strong>🏍️ Contoh Advanced:</strong> Gojek/Grab menyesuaikan harga secara real-time berdasarkan demand & supply driver saat itu — ini Dynamic Pricing berbasis data.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 7 ═══════════ -->
+<section id="m7" class="module reveal" data-module="7">
+  <div class="mod-header">
+    <div class="mod-num">07</div>
+    <div class="mod-title"><h2>Tantangan & Risiko Data dalam Bisnis</h2><p>Kualitas data, silos, privasi & regulasi, dan bias</p></div>
+  </div>
+
+  <h3 class="sec">7.1 Dimensi Kualitas Data</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Dimensi</th><th>Pertanyaan Kunci</th><th>Contoh Masalah</th></tr>
+      <tr><td><strong>Akurasi</strong></td><td>Apakah data mencerminkan realitas?</td><td>Alamat pelanggan yang sudah tidak valid</td></tr>
+      <tr><td><strong>Kelengkapan</strong></td><td>Apakah semua field terisi?</td><td>30% data pelanggan tidak ada nomor teleponnya</td></tr>
+      <tr><td><strong>Konsistensi</strong></td><td>Apakah format sama di semua sumber?</td><td>"Jakarta" vs. "JKT" vs. "Jakarta Pusat"</td></tr>
+      <tr><td><strong>Ketepatan Waktu</strong></td><td>Apakah data masih up-to-date?</td><td>Harga produk di sistem belum diperbarui 3 bulan</td></tr>
+      <tr><td><strong>Relevansi</strong></td><td>Apakah data yang dikumpulkan memang dibutuhkan?</td><td>Mengumpulkan hobi pelanggan tapi tidak pernah digunakan</td></tr>
+    </table>
+  </div>
+
+  <h3 class="sec">7.2 Data Silos — Problem & Solution</h3>
+  <div class="two-col">
+    <div class="card" style="border-top:3px solid var(--red)">
+      <div class="card-title" style="color:var(--red)">❌ Masalah: Data Silos</div>
+      <p style="font-size:13px;line-height:1.6">Setiap departemen menyimpan data sendiri:<br>
+      • Sales: database prospek di spreadsheet sendiri<br>
+      • Marketing: daftar email di platform email marketing<br>
+      • Finance: data di sistem akuntansi<br>
+      • CS: catatan keluhan di helpdesk<br><br>
+      <strong>Hasilnya:</strong> CS tidak tahu bahwa pelanggan yang mengeluh adalah VIP dengan pembelian Rp 50 juta/tahun!</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--teal)">
+      <div class="card-title" style="color:var(--teal)">✓ Solusi</div>
+      <ul class="list">
+        <li>Investasikan dalam sistem terintegrasi (ERP/CRM yang terhubung semua departemen)</li>
+        <li>Bangun data warehouse sebagai <em>single source of truth</em></li>
+        <li>Buat kebijakan sharing data antar departemen secara formal</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sec">7.3 Privasi & Regulasi — UU PDP Indonesia</h3>
+  <div class="card">
+    <div class="card-title">⚖️ UU Perlindungan Data Pribadi (UU No. 27/2022)</div>
+    <div class="four-col" style="gap:10px;margin-top:12px">
+      <div style="background:var(--bel);border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:18px;margin-bottom:4px">🤝</div>
+        <div style="font-size:11px;font-weight:700;color:var(--blue)">CONSENT</div>
+        <p style="font-size:11px;color:var(--text);margin-top:4px">Data pribadi harus dikumpulkan dengan persetujuan eksplisit</p>
+      </div>
+      <div style="background:var(--tl);border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:18px;margin-bottom:4px">🎯</div>
+        <div style="font-size:11px;font-weight:700;color:var(--teal)">TUJUAN JELAS</div>
+        <p style="font-size:11px;color:var(--text);margin-top:4px">Data hanya boleh digunakan sesuai tujuan yang diinformasikan</p>
+      </div>
+      <div style="background:var(--amber);border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:18px;margin-bottom:4px">👤</div>
+        <div style="font-size:11px;font-weight:700;color:var(--orange)">HAK SUBJEK DATA</div>
+        <p style="font-size:11px;color:var(--text);margin-top:4px">Pelanggan berhak minta data dihapus, dikoreksi, atau diakses</p>
+      </div>
+      <div style="background:var(--rel);border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:18px;margin-bottom:4px">🚨</div>
+        <div style="font-size:11px;font-weight:700;color:var(--red)">NOTIFIKASI BREACH</div>
+        <p style="font-size:11px;color:var(--text);margin-top:4px">Wajib lapor dalam <strong>14 hari</strong> jika terjadi kebocoran data</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sec">7.4 Jenis Bias dalam Data</h3>
+  <div class="two-col">
+    <div class="card"><div class="card-title">🎯 Sampling Bias</div><p style="font-size:13px">Data hanya dari sebagian populasi yang tidak mewakili keseluruhan.<br><br><em>Contoh:</em> Survei kepuasan hanya online → tidak mewakili pelanggan lansia yang tidak aktif digital.</p></div>
+    <div class="card"><div class="card-title">🔍 Confirmation Bias</div><p style="font-size:13px">Cenderung mencari data yang mendukung keyakinan yang sudah ada.<br><br><em>Contoh:</em> Manajer yang yakin kampanye berhasil hanya melihat angka yang mendukung, mengabaikan metrik yang menunjukkan masalah.</p></div>
+    <div class="card"><div class="card-title">🏆 Survivorship Bias</div><p style="font-size:13px">Hanya menganalisis "yang selamat", mengabaikan yang gagal.<br><br><em>Contoh:</em> Mempelajari bisnis sukses tanpa mempertimbangkan banyak bisnis serupa yang gagal dengan cara yang sama.</p></div>
+    <div class="card"><div class="card-title">📜 Historical Bias</div><p style="font-size:13px">Data historis mengandung pola diskriminasi masa lalu.<br><br><em>Contoh:</em> Model kredit yang mewarisi bias dari keputusan pinjaman masa lalu terhadap kelompok tertentu.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 8 ═══════════ -->
+<section id="m8" class="module reveal" data-module="8">
+  <div class="mod-header">
+    <div class="mod-num">08</div>
+    <div class="mod-title"><h2>Membangun Budaya Data di Organisasi</h2><p>Data literacy, peran ekosistem, tools, dan roadmap</p></div>
+  </div>
+
+  <h3 class="sec">8.1 Level Data Literacy</h3>
+  <div class="card">
+    <div class="lit-row"><span class="lit-badge" style="background:var(--light);color:var(--muted)">Basic</span><div style="flex:1"><div class="lit-bar-wrap"><div class="lit-bar" style="width:25%;background:var(--muted)"></div></div></div><span style="font-size:12px;color:var(--muted)">Semua karyawan</span></div>
+    <div class="lit-row"><span class="lit-badge" style="background:var(--bel);color:var(--blue)">Intermediate</span><div style="flex:1"><div class="lit-bar-wrap"><div class="lit-bar" style="width:50%;background:var(--blue)"></div></div></div><span style="font-size:12px;color:var(--muted)">Semua manajer</span></div>
+    <div class="lit-row"><span class="lit-badge" style="background:var(--tl);color:var(--teal)">Advanced</span><div style="flex:1"><div class="lit-bar-wrap"><div class="lit-bar" style="width:75%;background:var(--teal)"></div></div></div><span style="font-size:12px;color:var(--muted)">Analis bisnis, kepala dept</span></div>
+    <div class="lit-row"><span class="lit-badge" style="background:var(--amber);color:var(--orange)">Expert</span><div style="flex:1"><div class="lit-bar-wrap"><div class="lit-bar" style="width:100%;background:var(--orange)"></div></div></div><span style="font-size:12px;color:var(--muted)">Data analyst/scientist/engineer</span></div>
+  </div>
+
+  <h3 class="sec">8.2 Peran dalam Ekosistem Data</h3>
+  <div class="two-col">
+    <div class="card" style="border-top:3px solid var(--navy)"><div class="card-title" style="color:var(--navy)">📊 Data Analyst</div><p style="font-size:13px"><strong>Tugas:</strong> Menganalisis data untuk menjawab pertanyaan bisnis spesifik.<br><strong>Skills:</strong> SQL, Excel, Tableau/Power BI, statistik dasar<br><strong>Analogi:</strong> Dokter yang membaca & menginterpretasikan hasil lab</p></div>
+    <div class="card" style="border-top:3px solid #1565C0"><div class="card-title" style="color:#1565C0">🔧 Data Engineer</div><p style="font-size:13px"><strong>Tugas:</strong> Membangun & memelihara infrastruktur data.<br><strong>Skills:</strong> Python, SQL, cloud platforms, pipeline tools<br><strong>Analogi:</strong> Plumber yang memastikan pipa data mengalir benar</p></div>
+    <div class="card" style="border-top:3px solid var(--teal)"><div class="card-title" style="color:var(--teal)">🔬 Data Scientist</div><p style="font-size:13px"><strong>Tugas:</strong> Membangun model prediktif & machine learning.<br><strong>Skills:</strong> Python/R, ML, statistik lanjutan<br><strong>Analogi:</strong> Ilmuwan yang membangun teori baru dari eksperimen</p></div>
+    <div class="card" style="border-top:3px solid var(--orange)"><div class="card-title" style="color:var(--orange)">👑 Chief Data Officer</div><p style="font-size:13px"><strong>Tugas:</strong> Memimpin strategi data organisasi secara keseluruhan.<br><strong>Skills:</strong> Leadership, strategy, domain expertise<br><strong>Analogi:</strong> Seperti CFO — tapi untuk aset data organisasi</p></div>
+  </div>
+
+  <h3 class="sec">8.3 Tools Tanpa Harus Jadi Programmer</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Tool</th><th>Kegunaan Utama</th><th>Kemudahan</th></tr>
+      <tr><td><strong>Google Sheets / Excel</strong></td><td>Analisis data sederhana, pivot table, grafik dasar</td><td>⭐⭐⭐⭐⭐ Sangat Mudah</td></tr>
+      <tr><td><strong>Looker Studio (Google)</strong></td><td>Dashboard interaktif gratis, terhubung ke Google Analytics & Sheets</td><td>⭐⭐⭐⭐</td></tr>
+      <tr><td><strong>Tableau Public</strong></td><td>Visualisasi data yang kuat, bisa dibuat tanpa coding</td><td>⭐⭐⭐</td></tr>
+      <tr><td><strong>Power BI</strong></td><td>Platform BI Microsoft, integrasi ekosistem Office</td><td>⭐⭐⭐</td></tr>
+      <tr><td><strong>Metabase</strong></td><td>BI tool untuk non-teknis dengan antarmuka SQL otomatis</td><td>⭐⭐⭐</td></tr>
+    </table>
+  </div>
+
+  <h3 class="sec">8.4 Roadmap 4 Tahap Menuju Organisasi Berbasis Data</h3>
+  <div class="roadmap">
+    <div class="rm-card" style="background:var(--light)">
+      <div class="rm-num" style="color:var(--muted)">01</div>
+      <div class="rm-title" style="color:var(--muted)">FONDASI</div>
+      <div class="rm-time" style="background:var(--light);color:var(--muted)">0–6 Bulan</div>
+      <ul class="rm-list"><li>Audit data yang ada</li><li>Standarisasi definisi metrik</li><li>Pilih 5–10 KPI utama</li><li>Buat laporan terstandardisasi</li></ul>
+    </div>
+    <div class="rm-card" style="background:#EFF4FB">
+      <div class="rm-num" style="color:var(--navy)">02</div>
+      <div class="rm-title" style="color:var(--navy)">VISIBILITAS</div>
+      <div class="rm-time" style="background:#DAE8FD;color:var(--navy)">6–18 Bulan</div>
+      <ul class="rm-list"><li>Dashboard mudah diakses manajer</li><li>Integrasi 2–3 sistem</li><li>Pelatihan data literacy</li><li>Assign penanggung jawab data</li></ul>
+    </div>
+    <div class="rm-card" style="background:var(--tl)">
+      <div class="rm-num" style="color:var(--teal)">03</div>
+      <div class="rm-title" style="color:var(--teal)">INSIGHT</div>
+      <div class="rm-time" style="background:#B2DFDB;color:var(--teal)">18–36 Bulan</div>
+      <ul class="rm-list"><li>Semua keputusan didukung data</li><li>Segmentasi & forecasting</li><li>A/B testing formal</li><li>Data agenda tetap rapat</li></ul>
+    </div>
+    <div class="rm-card" style="background:var(--amber)">
+      <div class="rm-num" style="color:var(--orange)">04</div>
+      <div class="rm-title" style="color:var(--orange)">PREDIKTIF</div>
+      <div class="rm-time" style="background:#FDE68A;color:var(--orange)">36+ Bulan</div>
+      <ul class="rm-list"><li>Model prediktif forecasting</li><li>Personalisasi layanan pelanggan</li><li>Infrastruktur data robust</li><li>Self-service analytics semua tim</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CLOSING ═══════════ -->
+<section id="closing" class="module reveal" data-module="9">
+  <div class="mod-header">
+    <div class="mod-num" style="background:var(--orange)">✦</div>
+    <div class="mod-title"><h2>Penutup — Studi Kasus & Action Plan</h2><p>Nusantara Mart · 10 Prinsip · Langkah Pertama untuk Organisasi Anda</p></div>
+  </div>
+
+  <div class="callout callout-case">
+    <strong>📖 Studi Kasus: Nusantara Mart — Toko Online Produk UMKM Lokal</strong><br>
+    50.000 pelanggan · 1.500 transaksi/bulan · AOV Rp 180.000 · Tim 15 orang · Belum ada data analyst.<br><br>
+    <strong>Masalah:</strong> Pertumbuhan melambat tapi tidak tahu persis di mana masalahnya.<br><br>
+    <strong>Temuan setelah audit data:</strong> 12% data duplikat, 8% kota kosong. Pertumbuhan turun dari 8%/bulan → 2%. 70% revenue dari 15% pelanggan. 60% pelanggan baru hanya beli 1× dan tidak kembali.<br><br>
+    <strong>Diagnosis:</strong> 40% pelanggan yang tidak kembali mengatakan pengiriman terlalu lama. 35% tidak ada program loyalitas. Retensi luar Jawa jauh lebih rendah karena pengiriman 5–7 hari.<br><br>
+    <strong>Keputusan:</strong> (1) Buat program loyalitas poin reward. (2) Negosiasikan SLA pengiriman 2–3 hari untuk Jawa. (3) Hentikan iklan ke daerah pengiriman > 5 hari. (4) Segmentasi email: setia vs baru.<br><br>
+    <strong>Hasil 6 bulan:</strong> Repeat purchase rate naik 40% → 58%. AOV meningkat 12%. CAC turun karena fokus ke daerah dengan retensi tinggi.
+  </div>
+
+  <h3 class="sec">10 Prinsip Data dalam Bisnis</h3>
+  <div class="principles">
+    <div class="p-card"><div class="p-num">1</div><p><strong>Data bukan tujuan, keputusan adalah tujuannya.</strong> Kumpulkan data yang bisa membantu Anda memutuskan sesuatu.</p></div>
+    <div class="p-card"><div class="p-num">2</div><p><strong>Mulai dari pertanyaan bisnis, bukan dari data.</strong> "Mengapa churn meningkat?" lebih berguna dari "analisis semua data."</p></div>
+    <div class="p-card"><div class="p-num">3</div><p><strong>Data sedikit tapi bersih lebih baik</strong> dari data banyak tapi kotor dan menyesatkan.</p></div>
+    <div class="p-card"><div class="p-num">4</div><p><strong>Pastikan semua orang punya definisi yang sama</strong> sebelum membahas angka bersama-sama.</p></div>
+    <div class="p-card"><div class="p-num">5</div><p><strong>Visualisasi yang baik mengungkap</strong> apa yang tabel tidak bisa tunjukkan. Gunakan grafik dengan bijak.</p></div>
+    <div class="p-card"><div class="p-num">6</div><p><strong>Angka tanpa konteks bisa menyesatkan.</strong> Selalu bandingkan dengan target, periode lalu, atau benchmark.</p></div>
+    <div class="p-card"><div class="p-num">7</div><p><strong>Jangan biarkan data membuat Anda lumpuh.</strong> Analisis secukupnya, lalu putuskan dan eksekusi.</p></div>
+    <div class="p-card"><div class="p-num">8</div><p><strong>Test sebelum commit besar.</strong> A/B test skala kecil sebelum investasi besar apapun.</p></div>
+    <div class="p-card"><div class="p-num">9</div><p><strong>Hormati privasi pelanggan.</strong> Data adalah kepercayaan yang diberikan dan harus dijaga.</p></div>
+    <div class="p-card"><div class="p-num">10</div><p><strong>Budaya lebih penting dari tools.</strong> Dashboard tercanggih tidak berguna di organisasi yang tidak mau menggunakannya.</p></div>
+  </div>
+
+  <h3 class="sec">Action Plan — Pilih Langkah Pertama Anda</h3>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Klik kondisi yang paling sesuai dengan organisasi Anda saat ini.</p>
+  <div class="action-rows">
+    <div class="a-row" onclick="pickAction(this)">
+      <div class="a-cond">Kondisi: "Kami bahkan tidak punya laporan yang konsisten"</div>
+      <div class="a-step">→ Buat 5 KPI utama dan laporan sederhana yang dikirim ke semua manajer setiap Senin</div>
+      <div class="a-expand">Mulai dari laporan paling sederhana yang bisa dibuat dalam 1 hari: total transaksi, total revenue, dan 3 metrik utama per departemen. Konsistensi adalah kuncinya — lebih baik laporan sederhana yang selalu ada daripada laporan canggih yang jarang dibuat.</div>
+    </div>
+    <div class="a-row" onclick="pickAction(this)">
+      <div class="a-cond">Kondisi: "Kami punya data tapi tidak tahu harus mulai dari mana"</div>
+      <div class="a-step">→ Pilih SATU pertanyaan bisnis yang paling penting dan cari jawabannya dari data yang ada</div>
+      <div class="a-expand">Contoh pertanyaan yang baik: "Mengapa pelanggan yang beli pertama kali tidak kembali?" atau "Dari mana pelanggan terbaik kita berasal?" Fokus pada satu pertanyaan dulu — selesaikan, lalu lanjut ke pertanyaan berikutnya.</div>
+    </div>
+    <div class="a-row" onclick="pickAction(this)">
+      <div class="a-cond">Kondisi: "Kami sudah ada laporan tapi keputusan masih sering intuitif"</div>
+      <div class="a-step">→ Mulai setiap rapat strategis dengan 5 menit review data — jadikan ini ritual tetap</div>
+      <div class="a-expand">Buat aturan sederhana: setiap agenda rapat strategis harus disertai satu slide data pendukung. Tidak harus canggih — bisa hanya satu angka yang relevan. Konsistensi ritual ini yang membangun budaya data-driven.</div>
+    </div>
+    <div class="a-row" onclick="pickAction(this)">
+      <div class="a-cond">Kondisi: "Data kami berantakan dan tersebar di mana-mana"</div>
+      <div class="a-step">→ Audit data: inventarisasi semua sumber data, format, dan siapa yang bertanggung jawab</div>
+      <div class="a-expand">Buat spreadsheet inventaris: kolom (sumber data, format, siapa yang punya, seberapa sering diperbarui, masalah utama). Ini akan menunjukkan gambaran besar dan membantu memprioritaskan mana yang paling perlu diperbaiki dulu.</div>
+    </div>
+    <div class="a-row" onclick="pickAction(this)">
+      <div class="a-cond">Kondisi: "Kami sudah oke dengan data operasional tapi mau lebih strategic"</div>
+      <div class="a-step">→ Coba segmentasi pelanggan dengan RFM dan buat strategi berbeda per segmen</div>
+      <div class="a-expand">Ambil data transaksi 12 bulan terakhir. Hitung R, F, M untuk setiap pelanggan. Identifikasi Champions, At Risk, dan Potential Loyalists. Buat satu kampanye yang berbeda untuk masing-masing segmen dan ukur hasilnya.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Data dalam Konteks Bisnis · Bahan Ajar Interaktif · 8 Modul</p>
+  <p style="margin-top:4px"><em>"Data tanpa aksi adalah biaya. Aksi tanpa data adalah judi."</em></p>
+</footer>
+</main>
+</div>
+
+<script>
+// Progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
+  document.getElementById('prog-bar').style.width=pct+'%';
+  updateNav();
+});
+
+// Mobile menu
+function toggleMenu(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+function closeMobile(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+// Active nav
+function updateNav(){
+  const mods=document.querySelectorAll('[data-module]');
+  let active=null;
+  mods.forEach(m=>{
+    const rect=m.getBoundingClientRect();
+    if(rect.top<=100) active=m;
+  });
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(active){
+    const num=active.dataset.module;
+    const link=document.querySelector(`[href="#${active.id}"]`);
+    if(link) link.classList.add('active');
+    const n=active.dataset.module;
+    document.getElementById('prog-text').textContent=
+      n=='9'?'Penutup':'Modul '+n+' dari 8';
+  }
+}
+
+// DIKW explorer
+function toggleDikw(idx){
+  const cards=document.querySelectorAll('.dikw-card');
+  cards[idx].classList.toggle('active');
+}
+
+// SMART accordion
+function toggleSmart(el){
+  el.classList.toggle('open');
+}
+
+// Tabs (namespaced)
+function switchTab(ns, id, btn){
+  // panels
+  document.querySelectorAll(`[id^="${ns}-"]`).forEach(p=>p.classList.remove('active'));
+  document.getElementById(ns+'-'+id).classList.add('active');
+  // buttons
+  btn.closest('.tab-btns').querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// Analytics cards
+function selectAnalytics(card, detailId){
+  document.querySelectorAll('.analytics-card').forEach(c=>c.classList.remove('selected'));
+  document.querySelectorAll('.analytics-detail').forEach(d=>d.classList.remove('show'));
+  card.classList.add('selected');
+  document.getElementById(detailId).classList.add('show');
+}
+
+// Action plan
+function pickAction(row){
+  document.querySelectorAll('.a-row').forEach(r=>{
+    if(r!==row) r.classList.remove('picked');
+  });
+  row.classList.toggle('picked');
+}
+
+// Scroll reveal
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('in')});
+},{threshold:0.05});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Initial nav update
+updateNav();
+</script>
+</body>
+</html>
