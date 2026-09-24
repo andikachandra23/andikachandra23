@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IMK Pertemuan 3 — Laws of UX (Bagian 1)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F7FA; --surface:#FFFFFF; --surface-2:#EEF1F6; --ink:#1B2230; --ink-2:#4A5466; --line:#D9DEE7;
+  --amber:#B97A06; --amber-bg:#FDF3DC;
+  --blue:#2A63C9;  --blue-bg:#E4EDFC;
+  --teal:#0F7F78;  --teal-bg:#DDF3F1;
+  --purple:#6D44C4;--purple-bg:#EEE7FB;
+  --coral:#D2553E; --coral-bg:#FCE7E2;
+  --gray:#667085;  --gray-bg:#EDEFF3;
+  --ok:#1C8A4B; --ok-bg:#E0F4E8;
+  --shadow:0 1px 2px rgba(20,30,50,.06),0 6px 20px rgba(20,30,50,.06);
+  --serif:"Literata",Georgia,"Times New Roman",serif;
+  --sans:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151D; --surface:#181E29; --surface-2:#212938; --ink:#E8ECF3; --ink-2:#A9B3C4; --line:#2E3747;
+    --amber:#F0B43C; --amber-bg:#3A2E12; --blue:#7EA8F5; --blue-bg:#1B2A47; --teal:#4CC9BF; --teal-bg:#123634;
+    --purple:#B39AF2; --purple-bg:#2B2146; --coral:#F28B74; --coral-bg:#43221C; --gray:#9AA4B5; --gray-bg:#262D3A;
+    --ok:#5BD08E; --ok-bg:#143322; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151D; --surface:#181E29; --surface-2:#212938; --ink:#E8ECF3; --ink-2:#A9B3C4; --line:#2E3747;
+  --amber:#F0B43C; --amber-bg:#3A2E12; --blue:#7EA8F5; --blue-bg:#1B2A47; --teal:#4CC9BF; --teal-bg:#123634;
+  --purple:#B39AF2; --purple-bg:#2B2146; --coral:#F28B74; --coral-bg:#43221C; --gray:#9AA4B5; --gray-bg:#262D3A;
+  --ok:#5BD08E; --ok-bg:#143322; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 16px)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:17.5px;line-height:1.72;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%;height:auto}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+h1,h2,h3,h4{font-family:var(--sans);line-height:1.18;letter-spacing:-.01em;margin:0}
+h2{font-size:clamp(1.7rem,3.4vw,2.35rem);font-weight:800;margin-bottom:.4em}
+h3{font-size:1.28rem;font-weight:700;margin:2.2em 0 .6em}
+h4{font-size:1.05rem;font-weight:700;margin:1.4em 0 .4em}
+p{margin:0 0 1em}
+strong{font-weight:600}
+code,.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.88em}
+
+/* progress */
+#progress{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--purple),var(--blue),var(--amber),var(--teal));z-index:60;padding-top:env(safe-area-inset-top,0px);box-sizing:content-box}
+
+/* layout */
+.shell{display:grid;grid-template-columns:270px minmax(0,1fr);max-width:1260px;margin:0 auto}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);height:100vh;height:100dvh;overflow-y:auto;padding:28px 18px 40px 24px;border-right:1px solid var(--line);font-family:var(--sans);font-size:.92rem}
+.toc .brand{font-weight:800;font-size:1rem;line-height:1.3;margin-bottom:4px}
+.toc .sub{color:var(--ink-2);font-size:.82rem;margin-bottom:22px}
+.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+.toc li a{display:flex;gap:10px;align-items:baseline;padding:6px 10px;border-radius:8px;color:var(--ink-2);text-decoration:none;border-left:3px solid transparent}
+.toc li a .n{font-variant-numeric:tabular-nums;color:var(--gray);min-width:1.3em;font-size:.82rem}
+.toc li a:hover{background:var(--surface-2);color:var(--ink)}
+.toc li a.active{background:var(--surface);color:var(--ink);font-weight:700;border-left-color:var(--c,var(--blue));box-shadow:var(--shadow)}
+.toc .tools{margin-top:22px;display:flex;gap:8px}
+.btn-ghost{font-family:var(--sans);font-size:.85rem;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:6px 10px;cursor:pointer}
+main{padding:0 clamp(18px,4vw,56px) 120px;min-width:0}
+section.sec{padding-top:64px;max-width:760px}
+section.sec.wide{max-width:900px}
+
+/* mobile toc */
+#tocBtn{display:none}
+@media (max-width:980px){
+  .shell{grid-template-columns:1fr}
+  nav.toc{position:fixed;inset:0 auto 0 0;width:min(84vw,320px);z-index:70;background:var(--bg);transform:translateX(-102%);transition:transform .25s ease;box-shadow:var(--shadow);padding-top:calc(env(safe-area-inset-top,0px) + 24px)}
+  nav.toc.open{transform:none}
+  #tocBtn{display:flex;position:fixed;left:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:65;align-items:center;gap:8px;font-family:var(--sans);font-weight:700;background:var(--ink);color:var(--bg);border:0;border-radius:999px;padding:11px 16px;box-shadow:var(--shadow);cursor:pointer}
+  #scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:68;display:none}
+  #scrim.show{display:block}
+}
+
+/* hero */
+.hero{padding:56px 0 20px;max-width:900px}
+.hero .meta{font-family:var(--sans);color:var(--ink-2);font-size:.95rem;margin-bottom:14px}
+.hero h1{font-size:clamp(2.3rem,6vw,4.1rem);font-weight:800;letter-spacing:-.025em;line-height:1.02;margin-bottom:18px}
+.hero .lede{font-size:1.18rem;color:var(--ink-2);max-width:62ch}
+.lawstrip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:30px 0 8px}
+.lawchip{font-family:var(--sans);text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--c);border-radius:10px;padding:12px 12px 14px;display:block}
+.lawchip b{display:block;font-size:1.02rem}
+.lawchip span{font-size:.82rem;color:var(--ink-2);line-height:1.35;display:block;margin-top:4px}
+.lawchip:hover{background:var(--surface-2)}
+@media (max-width:700px){.lawstrip{grid-template-columns:repeat(2,1fr)}.lawchip:last-child{grid-column:span 2}}
+
+/* law header */
+.lawhead{border-left:6px solid var(--c);padding:4px 0 4px 18px;margin-bottom:22px}
+.lawhead .tag{font-family:var(--sans);font-size:.88rem;color:var(--c);font-weight:700}
+.definition{background:var(--cbg);border-radius:14px;padding:20px 22px;margin:18px 0 22px;font-size:1.12rem;line-height:1.6}
+.definition .who{display:block;margin-top:10px;font-size:.9rem;color:var(--ink-2);font-family:var(--sans)}
+
+/* callouts */
+.callout{border-radius:12px;padding:16px 18px 6px;margin:20px 0;border:1px solid var(--line);background:var(--surface)}
+.callout .ct{font-family:var(--sans);font-weight:700;font-size:.95rem;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.callout.analogy{background:var(--purple-bg);border-color:transparent}
+.callout.analogy .ct{color:var(--purple)}
+.callout.warn{background:var(--coral-bg);border-color:transparent}
+.callout.warn .ct{color:var(--coral)}
+.callout.link{background:var(--gray-bg);border-color:transparent}
+.callout.link .ct{color:var(--gray)}
+.callout.research{background:var(--surface);border-left:5px solid var(--c,var(--blue))}
+.callout.design{background:var(--teal-bg);border-color:transparent}
+.callout.design .ct{color:var(--teal)}
+.callout ul{margin:0 0 10px;padding-left:1.2em}
+
+/* tables */
+.tbl{overflow-x:auto;margin:18px 0 24px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.93rem;font-family:var(--sans);line-height:1.45}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--surface-2);font-weight:700}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* formula */
+.formula{font-family:var(--serif);font-size:1.45rem;text-align:center;padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:12px;margin:18px 0}
+.formula i{font-style:italic}
+.formula .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-size:.85em;margin:0 2px}
+.formula .frac span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+
+/* figure */
+figure{margin:24px 0;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+figure svg{display:block;width:100%}
+figcaption{font-family:var(--sans);font-size:.86rem;color:var(--ink-2);margin-top:10px;line-height:1.45}
+svg text{font-family:var(--sans)}
+
+/* details */
+details.acc{border:1px solid var(--line);border-radius:12px;background:var(--surface);margin:16px 0}
+details.acc summary{cursor:pointer;padding:14px 18px;font-family:var(--sans);font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"+";font-size:1.3rem;line-height:1;color:var(--ink-2)}
+details.acc[open] summary::after{content:"−"}
+details.acc .body{padding:0 18px 12px}
+details.acc.warn{border-color:var(--coral);background:var(--coral-bg)}
+details.acc.warn summary{color:var(--coral)}
+
+/* tabs */
+.tabs{margin:18px 0}
+.tablist{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:-1px}
+.tablist button{font-family:var(--sans);font-size:.9rem;font-weight:600;padding:9px 14px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);border-radius:10px 10px 0 0;cursor:pointer}
+.tablist button[aria-selected="true"]{background:var(--surface);color:var(--ink);border-bottom-color:var(--surface)}
+.tabpanel{border:1px solid var(--line);background:var(--surface);border-radius:0 12px 12px 12px;padding:18px 20px 8px}
+.tabpanel[hidden]{display:none}
+
+/* widget */
+.widget{margin:28px 0;border:2px solid var(--c,var(--blue));border-radius:16px;background:var(--surface);overflow:hidden}
+.widget .wh{background:var(--cbg,var(--blue-bg));padding:12px 18px;font-family:var(--sans);display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.widget .wh b{font-size:1.02rem}
+.widget .wh small{color:var(--ink-2);font-size:.84rem}
+.widget .wb{padding:18px;font-family:var(--sans);font-size:.95rem;line-height:1.5}
+.btn{font-family:var(--sans);font-weight:700;font-size:.93rem;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;background:var(--c,var(--blue));color:#fff}
+:root[data-theme="dark"] .btn{color:#10141b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn{color:#10141b}}
+.btn.sec{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.stat{background:var(--surface-2);border-radius:10px;padding:10px 14px;min-width:120px}
+.stat .k{font-size:.78rem;color:var(--ink-2)}
+.stat .v{font-size:1.25rem;font-weight:800;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--c,var(--blue))}
+label.sl{display:block;font-size:.88rem;color:var(--ink-2);margin-bottom:10px}
+label.sl b{color:var(--ink);font-variant-numeric:tabular-nums}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;flex-wrap:wrap}
+.seg button{font-family:var(--sans);font-size:.88rem;padding:8px 12px;border:0;background:var(--surface);color:var(--ink-2);cursor:pointer;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--c,var(--blue));color:#fff}
+.note{font-size:.86rem;color:var(--ink-2)}
+
+/* Jakob mock */
+.mocks{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:640px){.mocks{grid-template-columns:1fr}}
+.phone{position:relative;border:2px solid var(--line);border-radius:22px;background:var(--bg);height:330px;overflow:hidden}
+.phone .bar{height:46px;display:flex;align-items:center;gap:8px;padding:0 12px;background:var(--surface);border-bottom:1px solid var(--line)}
+.phone .logo{width:54px;height:14px;border-radius:4px;background:var(--gray)}
+.phone .search{flex:1;height:26px;border-radius:13px;background:var(--surface-2)}
+.phone .ico{width:26px;height:26px;border-radius:7px;background:var(--gray-bg);display:grid;place-items:center;border:0;padding:0;cursor:pointer}
+.phone .ico svg{width:16px;height:16px}
+.phone .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px}
+.phone .card{height:92px;border-radius:10px;background:var(--surface);border:1px solid var(--line)}
+.phone .foot{position:absolute;left:0;right:0;bottom:0;height:46px;display:flex;align-items:center;gap:8px;padding:0 10px;background:var(--surface);border-top:1px solid var(--line)}
+.phone .veil{position:absolute;inset:0;background:color-mix(in srgb,var(--bg) 88%,transparent);display:grid;place-items:center;text-align:center;padding:20px;z-index:3}
+.phone .veil.hidden{display:none}
+
+/* Fitts arena */
+.arena{position:relative;height:230px;background:var(--surface-2);border-radius:12px;overflow:hidden;touch-action:manipulation;user-select:none}
+.arena .home,.arena .target{position:absolute;top:50%;transform:translate(-50%,-50%);border:0;cursor:pointer;font-family:var(--sans);font-weight:700;color:#fff}
+.arena .home{width:46px;height:46px;border-radius:50%;background:var(--gray);left:40px;font-size:.72rem}
+.arena .target{background:var(--blue);border-radius:8px;height:120px}
+.arena .target.off{background:transparent;outline:2px dashed var(--blue);outline-offset:-2px;cursor:default}
+.arena .dline{position:absolute;top:calc(50% + 70px);height:2px;background:var(--ink-2);opacity:.4}
+
+/* Hick */
+.lamps{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+.lamp{width:52px;height:52px;border-radius:50%;background:var(--gray-bg);border:2px solid var(--line);transition:background .05s}
+.lamp.on{box-shadow:0 0 0 4px color-mix(in srgb,var(--amber) 40%,transparent)}
+.keys{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.keys button{width:52px;height:44px;border-radius:10px;border:2px solid var(--line);cursor:pointer;font-family:var(--sans);font-weight:800;color:#fff}
+
+/* memory */
+.digits{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:clamp(1.5rem,5vw,2.3rem);letter-spacing:.08em;text-align:center;padding:22px 10px;background:var(--surface-2);border-radius:12px;min-height:88px;word-break:break-all}
+.memin{width:100%;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.2rem;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);letter-spacing:.08em}
+
+/* myth flip */
+.flip{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+@media (max-width:640px){.flip{grid-template-columns:1fr}}
+.flip .side{border-radius:12px;padding:16px 18px;font-family:var(--sans);font-size:.95rem;line-height:1.5}
+.flip .myth{background:var(--coral-bg)}
+.flip .fact{background:var(--ok-bg)}
+.flip .side b{display:block;margin-bottom:6px}
+
+/* latency */
+.profile{min-height:150px;border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0;display:flex;gap:14px;align-items:flex-start;background:var(--bg)}
+.av{width:56px;height:56px;border-radius:50%;background:var(--teal);flex:none}
+.sk{background:linear-gradient(90deg,var(--surface-2),var(--line),var(--surface-2));background-size:200% 100%;animation:sh 1.2s infinite linear;border-radius:6px}
+@keyframes sh{to{background-position:-200% 0}}
+.spin{width:34px;height:34px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--teal);animation:rot .8s linear infinite;margin:40px auto}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+/* cycle */
+.cyc-node{cursor:pointer}
+.cyc-node:focus{outline:none}
+.cyc-node:focus-visible circle,.cyc-node:hover circle{stroke-width:4}
+.infopanel{border-radius:12px;padding:14px 16px;background:var(--surface-2);font-family:var(--sans);font-size:.95rem;min-height:92px;margin-top:10px}
+
+/* case */
+.case{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:20px 22px 10px;margin:22px 0;border-top:5px solid var(--c)}
+.case .laws{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.pill{font-family:var(--sans);font-size:.78rem;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--pbg);color:var(--pc)}
+.p-j{--pbg:var(--purple-bg);--pc:var(--purple)} .p-f{--pbg:var(--blue-bg);--pc:var(--blue)} .p-h,.p-m{--pbg:var(--amber-bg);--pc:var(--amber)} .p-d{--pbg:var(--teal-bg);--pc:var(--teal)} .p-x{--pbg:var(--gray-bg);--pc:var(--gray)}
+.case h3{margin-top:0}
+.qd{background:var(--surface-2);border-radius:10px;padding:12px 16px 4px;margin:10px 0;font-size:.96rem}
+.qd b{font-family:var(--sans)}
+
+/* quiz */
+.quiz{border:2px solid var(--ink);border-radius:18px;background:var(--surface);overflow:hidden;margin:24px 0}
+.qtop{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:var(--surface-2);font-family:var(--sans);font-size:.9rem;gap:10px;flex-wrap:wrap}
+.qbar{height:6px;background:var(--line);border-radius:3px;flex:1;min-width:120px;overflow:hidden}
+.qbar i{display:block;height:100%;width:0;background:var(--ink);transition:width .3s}
+.qbody{padding:22px 22px 18px}
+.qlaw{font-family:var(--sans);font-size:.82rem;font-weight:700}
+.qtext{font-size:1.08rem;margin:8px 0 16px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;text-align:left;font-family:var(--sans);font-size:.96rem;line-height:1.45;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);cursor:pointer;align-items:flex-start}
+.opt .l{flex:none;width:26px;height:26px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center;font-weight:800;font-size:.85rem}
+.opt:hover:not(:disabled){border-color:var(--ink-2)}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--coral);background:var(--coral-bg)}
+.fb{margin-top:14px;border-radius:12px;padding:14px 16px;font-family:var(--sans);font-size:.94rem;line-height:1.5;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg)} .fb.no{background:var(--coral-bg)}
+.fb .v{font-weight:800;display:block;margin-bottom:4px}
+.fb .why{margin-top:8px;color:var(--ink-2)}
+.qnav{display:flex;justify-content:flex-end;gap:10px;margin-top:16px}
+.score{text-align:center;padding:30px 22px}
+.score .big{font-family:var(--sans);font-size:4rem;font-weight:800;line-height:1}
+.review{text-align:left;margin-top:20px;font-family:var(--sans);font-size:.92rem}
+.review li{margin-bottom:6px}
+
+/* summary */
+.sumgrid{display:grid;gap:10px;margin:18px 0}
+.sumrow{display:grid;grid-template-columns:170px 1fr;gap:14px;border-left:5px solid var(--c);background:var(--surface);border-radius:0 12px 12px 0;padding:12px 16px;font-family:var(--sans);font-size:.92rem;line-height:1.45}
+.sumrow b{font-size:1rem}
+@media (max-width:640px){.sumrow{grid-template-columns:1fr}}
+.refs{font-size:.9rem;line-height:1.55;padding-left:1.2em}
+.refs li{margin-bottom:6px}
+
+#toTop{position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);width:46px;height:46px;border-radius:50%;border:0;background:var(--ink);color:var(--bg);font-size:1.2rem;cursor:pointer;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .2s;z-index:64}
+#toTop.show{opacity:1;pointer-events:auto}
+footer{font-family:var(--sans);font-size:.85rem;color:var(--ink-2);padding:40px 0;border-top:1px solid var(--line);margin-top:60px;max-width:760px}
+</style>
+</head>
+<body>
+<div id="progress" aria-hidden="true"></div>
+<button id="tocBtn" aria-controls="toc" aria-expanded="false">☰ Daftar isi</button>
+<div id="scrim"></div>
+<div class="shell">
+<nav class="toc" id="toc" aria-label="Daftar isi">
+  <div class="brand">Laws of UX · Bagian 1</div>
+  <div class="sub">IMK — Pertemuan 3</div>
+  <ol>
+    <li><a href="#cpmk" style="--c:var(--gray)"><span class="n">1</span>Identitas &amp; CPMK</a></li>
+    <li><a href="#pengantar" style="--c:var(--gray)"><span class="n">2</span>Mengapa "hukum"?</a></li>
+    <li><a href="#jakob" style="--c:var(--purple)"><span class="n">3</span>Jakob's Law</a></li>
+    <li><a href="#fitts" style="--c:var(--blue)"><span class="n">4</span>Fitts's Law</a></li>
+    <li><a href="#hick" style="--c:var(--amber)"><span class="n">5</span>Hick's Law</a></li>
+    <li><a href="#miller" style="--c:var(--amber)"><span class="n">6</span>Miller's Law</a></li>
+    <li><a href="#doherty" style="--c:var(--teal)"><span class="n">7</span>Doherty Threshold</a></li>
+    <li><a href="#sintesis" style="--c:var(--gray)"><span class="n">8</span>Sintesis siklus aksi</a></li>
+    <li><a href="#kasus" style="--c:var(--gray)"><span class="n">9</span>Studi kasus</a></li>
+    <li><a href="#kuis" style="--c:var(--ink)"><span class="n">10</span>Kuis HOTS</a></li>
+    <li><a href="#tugas" style="--c:var(--gray)"><span class="n">11</span>Latihan &amp; tugas</a></li>
+    <li><a href="#rangkuman" style="--c:var(--gray)"><span class="n">12</span>Rangkuman &amp; pustaka</a></li>
+  </ol>
+  <div class="tools"><button class="btn-ghost" id="themeBtn" type="button">◐ Ganti tema</button></div>
+</nav>
+
+<main id="top">
+<header class="hero">
+  <div class="meta">Interaksi Manusia dan Komputer · Pertemuan 3</div>
+  <h1>Laws of UX, Bagian 1: tata letak, efisiensi, dan psikologi interaksi</h1>
+  <p class="lede">Lima hukum yang menjelaskan mengapa sebuah antarmuka terasa ringan atau melelahkan. Semuanya bisa Anda uji sendiri di halaman ini — dengan mata, jari, dan memori Anda.</p>
+  <div class="lawstrip">
+    <a class="lawchip" href="#jakob" style="--c:var(--purple)"><b>Jakob</b><span>Pengguna membawa kebiasaan dari aplikasi lain</span></a>
+    <a class="lawchip" href="#fitts" style="--c:var(--blue)"><b>Fitts</b><span>Target besar dan dekat lebih cepat dijangkau</span></a>
+    <a class="lawchip" href="#hick" style="--c:var(--amber)"><b>Hick</b><span>Makin banyak opsi, makin lama memutuskan</span></a>
+    <a class="lawchip" href="#miller" style="--c:var(--amber)"><b>Miller</b><span>Memori kerja kecil; kelompokkan informasi</span></a>
+    <a class="lawchip" href="#doherty" style="--c:var(--teal)"><b>Doherty</b><span>Respons &lt; 400 ms menjaga alur kerja</span></a>
+  </div>
+</header>
+
+<!-- 1 CPMK -->
+<section class="sec" id="cpmk">
+  <h2>1. Identitas modul &amp; capaian pembelajaran</h2>
+  <p>Desain antarmuka yang efektif tidak lahir dari intuisi estetis semata. Ia adalah hasil pemahaman tentang bagaimana arsitektur kognitif manusia memproses stimulus visual, mengambil keputusan, dan menggerakkan tubuh. Dalam arti tertentu, desainer adalah <strong>arsitek perilaku</strong>: setiap elemen di layar memicu respons kognitif tertentu — memvalidasi keputusan, mempercepat navigasi, atau membangun kepercayaan.</p>
+  <p>Modul ini membedah lima hukum fundamental UX — <strong>Jakob's Law, Fitts's Law, Hick's Law, Miller's Law,</strong> dan <strong>Doherty Threshold</strong> — dengan fokus pada keterkaitan antara batas memori kerja, model mental, dan ergonomi digital.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Ranah</th><th>Deskripsi</th><th>Indikator keberhasilan</th></tr></thead>
+    <tbody>
+    <tr><td><strong>Kognitif</strong></td><td>Memahami landasan ilmiah di balik tata letak UI dan cara otak menafsirkan stimulus visual.</td><td>Mampu menjelaskan hubungan antara model mental pengguna dan efisiensi navigasi berdasarkan riset kognitif.</td></tr>
+    <tr><td><strong>Afektif</strong></td><td>Menunjukkan empati terhadap keterbatasan kognitif dan beban memori kerja pengguna.</td><td>Menghindari desain yang memicu frustrasi akibat kelebihan pilihan atau isyarat visual yang menyesatkan.</td></tr>
+    <tr><td><strong>Psikomotorik</strong></td><td>Mampu mengaudit dan merancang ulang antarmuka berdasarkan hukum UX secara presisi.</td><td>Menghasilkan prototipe yang menerapkan chunking dan ukuran target sentuh sesuai standar industri.</td></tr>
+    </tbody></table></div>
+  <div class="callout link"><div class="ct">🔗 Kaitan dengan Pertemuan 2</div>
+    <p>Di Pertemuan 2 kita mempelajari bagaimana manusia melihat, membaca, dan mengingat — termasuk batas memori kerja (Cowan), <em>recall vs. recognition</em>, dan sekilas Hick's Law. Pertemuan ini mengubah pengetahuan itu menjadi <strong>aturan desain yang dapat diukur dan diterapkan</strong>.</p></div>
+</section>
+
+<!-- 2 PENGANTAR -->
+<section class="sec" id="pengantar">
+  <h2>2. Mengapa disebut "hukum"?</h2>
+  <p>Kata "hukum" di sini tidak sama dengan hukum fisika yang berlaku mutlak. Laws of UX adalah <strong>generalisasi empiris</strong>: pola perilaku manusia yang muncul berulang kali dalam riset psikologi dan HCI. Ada dua jenis:</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Jenis</th><th>Ciri</th><th>Contoh</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Kuantitatif</strong></td><td>Dapat dihitung dengan rumus; lahir dari eksperimen laboratorium tahun 1950-an</td><td>Fitts's Law, Hick's Law</td></tr>
+      <tr><td><strong>Heuristik</strong></td><td>Berupa prinsip arahan yang diturunkan dari observasi dan riset perilaku</td><td>Jakob's Law, Doherty Threshold, penerapan Miller's Law</td></tr>
+    </tbody></table></div>
+  <div class="callout analogy"><div class="ct">🧭 Analogi: jalan setapak di taman</div>
+    <p>Tidak ada yang memaksa orang memotong taman lewat jalur terpendek, tetapi hampir semua orang melakukannya — sampai rumput membentuk jalan setapak (<em>desire path</em>). Desainer yang baik membangun trotoar di jalur yang memang akan dilewati orang, bukan memasang papan "Dilarang menginjak rumput".</p></div>
+  <figure>
+    <svg viewBox="0 0 640 220" role="img" aria-label="Ilustrasi desire path: jalur resmi berbentuk siku, sedangkan jalur yang dibentuk orang memotong diagonal">
+      <rect x="0" y="0" width="640" height="220" rx="10" fill="var(--ok-bg)"/>
+      <path d="M60 190 L60 50 L580 50" fill="none" stroke="var(--gray)" stroke-width="18" stroke-linejoin="round" opacity=".55"/>
+      <path d="M60 190 Q300 150 580 50" fill="none" stroke="var(--amber)" stroke-width="10" stroke-dasharray="2 12" stroke-linecap="round"/>
+      <circle cx="60" cy="190" r="12" fill="var(--ink)"/><circle cx="580" cy="50" r="12" fill="var(--ink)"/>
+      <text x="80" y="205" font-size="14" fill="var(--ink)">Pintu gerbang</text>
+      <text x="510" y="30" font-size="14" fill="var(--ink)">Gedung kuliah</text>
+      <text x="80" y="42" font-size="13" fill="var(--ink-2)">Jalur yang dirancang</text>
+      <text x="300" y="150" font-size="13" fill="var(--amber)" font-weight="700">Jalur yang benar-benar dilalui</text>
+    </svg>
+    <figcaption>Hukum UX adalah "jalur yang benar-benar dilalui" manusia. Desain yang melawannya tetap akan dilanggar — biasanya dengan biaya berupa frustrasi.</figcaption>
+  </figure>
+  <div class="callout warn"><div class="ct">⚠️ Setiap hukum punya batas berlaku</div>
+    <p>Karena berupa generalisasi, setiap hukum di modul ini dilengkapi bagian <strong>"Kapan hukum ini tidak berlaku"</strong>. Menghafal rumus tanpa memahami batasnya adalah jalan tercepat menuju salah penerapan.</p></div>
+</section>
+
+<!-- 3 JAKOB -->
+<section class="sec" id="jakob" style="--c:var(--purple);--cbg:var(--purple-bg)">
+  <div class="lawhead"><div class="tag">Hukum 1 · Model mental</div><h2>3. Jakob's Law</h2></div>
+  <div class="definition">Pengguna menghabiskan sebagian besar waktunya di situs dan aplikasi <em>lain</em>. Karena itu, mereka berharap produk Anda bekerja dengan cara yang sama seperti produk yang sudah mereka kenal.
+    <span class="who">Jakob Nielsen (2000), dirangkum dalam Yablonski (2020)</span></div>
+  <p>Nielsen mengamati bahwa frustrasi pengguna sering bukan disebabkan desain yang "jelek", melainkan desain yang <strong>berbeda dari kebiasaan</strong>. Ketika antarmuka selaras dengan pengalaman masa lalu, pengguna dapat langsung bekerja tanpa proses belajar ulang.</p>
+
+  <h3>Landasan teori</h3>
+  <div class="tabs" data-tabs>
+    <div class="tablist" role="tablist">
+      <button role="tab" aria-selected="true">Model mental</button>
+      <button role="tab" aria-selected="false">Pola pemindaian</button>
+      <button role="tab" aria-selected="false">Beban kognitif</button>
+    </div>
+    <div class="tabpanel" role="tabpanel">
+      <p>Pengguna membangun representasi internal tentang cara kerja suatu sistem, lalu memakainya untuk <strong>memprediksi</strong> hasil tindakan (Norman, 2013; Weinschenk, 2020, #31). Jika prediksi cocok dengan kenyataan, interaksi terasa "intuitif". Jika tidak, muncul disonansi yang menghentikan alur kerja.</p>
+      <p>Dalam <strong>7 Stages of Action</strong> Norman, model mental menentukan tahap <em>Plan</em> dan <em>Specify</em>. Model mental yang salah membuat pengguna merencanakan aksi yang keliru — sumber <strong>mistake</strong>, bukan <em>slip</em>.</p>
+    </div>
+    <div class="tabpanel" role="tabpanel" hidden>
+      <p>Weinschenk (2020, #6) menjelaskan bahwa orang memindai layar berdasarkan pengalaman dan ekspektasi:</p>
+      <ul>
+        <li>Pengguna yang sering berbelanja di Amazon langsung melihat ke tempat yang mereka <em>harapkan</em> berisi kolom pencarian.</li>
+        <li>Karena terbiasa bahwa tepi layar berisi logo dan ruang kosong, orang mencari informasi bermakna dengan penglihatan sentral <strong>sekitar 30% dari tepi samping dan 30% dari tepi atas</strong>.</li>
+        <li>Setelah pandangan pertama, mata bergerak mengikuti <strong>pola baca budaya</strong>: kiri-ke-kanan untuk bahasa Indonesia, kanan-ke-kiri untuk bahasa Arab.</li>
+      </ul>
+    </div>
+    <div class="tabpanel" role="tabpanel" hidden>
+      <p>Mengikuti konvensi berarti <strong>membebaskan memori kerja</strong>. Pengguna tidak perlu mempelajari ulang cara navigasi, sehingga kapasitas mentalnya dapat dipakai untuk tujuan utama: membeli, membaca, atau bertransaksi.</p>
+      <p>Dengan kata lain, Jakob's Law adalah mekanisme <em>reduksi beban kognitif</em>: pengetahuan yang sudah tersimpan di memori jangka panjang dipakai ulang, alih-alih dibangun dari nol.</p>
+    </div>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 640 380" role="img" aria-label="Wireframe halaman web dengan zona 30 persen dari atas dan kiri yang disorot sebagai titik awal pencarian informasi bermakna">
+      <rect x="20" y="20" width="600" height="340" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+      <rect x="20" y="20" width="600" height="28" rx="12" fill="var(--surface-2)"/>
+      <circle cx="40" cy="34" r="5" fill="var(--coral)"/><circle cx="56" cy="34" r="5" fill="var(--amber)"/><circle cx="72" cy="34" r="5" fill="var(--ok)"/>
+      <rect x="40" y="62" width="90" height="22" rx="4" fill="var(--gray)" opacity=".7"/>
+      <rect x="380" y="64" width="150" height="18" rx="9" fill="var(--surface-2)" stroke="var(--line)"/>
+      <rect x="550" y="62" width="22" height="22" rx="5" fill="var(--gray-bg)" stroke="var(--line)"/>
+      <rect x="580" y="62" width="22" height="22" rx="5" fill="var(--gray-bg)" stroke="var(--line)"/>
+      <rect x="200" y="122" width="400" height="120" rx="10" fill="var(--purple-bg)" stroke="var(--purple)" stroke-width="2" stroke-dasharray="6 5"/>
+      <text x="216" y="146" font-size="14" font-weight="700" fill="var(--purple)">Zona awal pandangan sentral</text>
+      <rect x="216" y="160" width="220" height="12" rx="4" fill="var(--purple)" opacity=".35"/>
+      <rect x="216" y="180" width="300" height="10" rx="4" fill="var(--purple)" opacity=".2"/>
+      <rect x="216" y="196" width="260" height="10" rx="4" fill="var(--purple)" opacity=".2"/>
+      <rect x="216" y="214" width="92" height="20" rx="6" fill="var(--purple)"/>
+      <line x1="20" y1="122" x2="200" y2="122" stroke="var(--ink-2)" stroke-dasharray="3 4"/>
+      <line x1="200" y1="48" x2="200" y2="122" stroke="var(--ink-2)" stroke-dasharray="3 4"/>
+      <text x="88" y="114" font-size="12" fill="var(--ink-2)" text-anchor="middle">± 30% dari kiri</text>
+      <text x="206" y="104" font-size="12" fill="var(--ink-2)">± 30% dari atas</text>
+      <rect x="40" y="262" width="170" height="78" rx="8" fill="var(--surface-2)"/>
+      <rect x="235" y="262" width="170" height="78" rx="8" fill="var(--surface-2)"/>
+      <rect x="430" y="262" width="170" height="78" rx="8" fill="var(--surface-2)"/>
+      <path d="M232 250 C 330 252, 430 256, 560 254" fill="none" stroke="var(--purple)" stroke-width="2.5" marker-end="url(#arP)"/>
+      <defs><marker id="arP" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="var(--purple)"/></marker></defs>
+      <text x="40" y="100" font-size="11" fill="var(--gray)">logo</text>
+      <text x="390" y="100" font-size="11" fill="var(--gray)">pencarian · akun · keranjang</text>
+    </svg>
+    <figcaption>Gambar 3.1 — Ilustrasi temuan Weinschenk (2020, #6): tepi layar dipakai untuk logo dan navigasi (ditangkap penglihatan periferal), sedangkan informasi penting ditempatkan sekitar 30% dari atas dan dari tepi, lalu dibaca mengikuti arah baca budaya.</figcaption>
+  </figure>
+
+  <div class="callout analogy"><div class="ct">🚗 Analogi: mobil sewaan</div>
+    <p>Saat menyewa mobil merek yang belum pernah Anda kendarai, Anda tetap bisa langsung menyetir: setir di depan, pedal gas di kanan, rem di kirinya. Bayangkan produsen "berinovasi" dengan menukar posisi gas dan rem. Mobil tetap berfungsi, tetapi berbahaya — karena otak dan otot pengemudi sudah menyimpan model mental yang berbeda. Antarmuka digital bekerja dengan prinsip yang sama.</p></div>
+
+  <h3>Contoh di dunia nyata</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Konteks</th><th>Konvensi yang diharapkan pengguna</th></tr></thead>
+    <tbody>
+      <tr><td>E-commerce (Tokopedia, Shopee)</td><td>Ikon keranjang di kanan atas; kolom pencarian lebar di bagian atas</td></tr>
+      <tr><td>Situs web umum</td><td>Logo di kiri atas yang bisa diklik untuk kembali ke beranda (Krug, 2014)</td></tr>
+      <tr><td>Formulir</td><td>Tombol utama di akhir formulir; label di atas atau di kiri kolom</td></tr>
+      <tr><td>Aplikasi chat (WhatsApp, Telegram)</td><td>Kolom ketik di bawah; pesan terbaru di bawah; pesan sendiri di kanan</td></tr>
+      <tr><td>Video pendek (TikTok, Reels)</td><td>Ketuk layar = jeda; geser ke atas = video berikutnya</td></tr>
+      <tr><td>Ikon universal</td><td>Kaca pembesar = cari; roda gigi = pengaturan; tong sampah = hapus</td></tr>
+      <tr><td>Gestur mobile</td><td><em>Pull-to-refresh</em>; geser dari tepi kiri = kembali (iOS)</td></tr>
+      <tr><td>Kontrol media</td><td>▶ putar, ⏸ jeda — konvensi dari tape recorder yang bertahan hingga aplikasi musik</td></tr>
+    </tbody></table></div>
+
+  <div class="widget" style="--c:var(--purple);--cbg:var(--purple-bg)" id="wJakob">
+    <div class="wh"><b>🧪 Lab: Temukan keranjangnya</b><small>Uji model mental Anda sendiri</small></div>
+    <div class="wb">
+      <p>Tekan <strong>Mulai</strong> di tiap ponsel, lalu ketuk <strong>ikon keranjang belanja</strong> secepat mungkin. Waktu Anda dicatat.</p>
+      <div class="mocks">
+        <div>
+          <div class="phone" id="mockA">
+            <div class="veil"><div><b>Toko A</b><br><span class="note">Tata letak konvensional</span><br><br><button class="btn" data-start="A">Mulai</button></div></div>
+            <div class="bar"><div class="logo"></div><div class="search"></div>
+              <button class="ico" data-cart="A" aria-label="Keranjang"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 11h11l2-8H6.2"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg></button></div>
+            <div class="grid"><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div></div>
+            <div class="foot"><button class="ico" data-miss aria-label="Beranda">⌂</button><button class="ico" data-miss aria-label="Kategori">▦</button><button class="ico" data-miss aria-label="Akun">☺</button></div>
+          </div>
+          <p class="note" id="resA">Toko A: belum diuji</p>
+        </div>
+        <div>
+          <div class="phone" id="mockB">
+            <div class="veil"><div><b>Toko B</b><br><span class="note">Tata letak "inovatif"</span><br><br><button class="btn" data-start="B">Mulai</button></div></div>
+            <div class="bar"><div class="search"></div><button class="ico" data-miss aria-label="Menu">≡</button><div class="logo"></div></div>
+            <div class="grid"><div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div></div>
+            <div class="foot"><button class="ico" data-cart="B" aria-label="Keranjang" style="width:20px;height:20px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 11h11l2-8H6.2"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg></button><button class="ico" data-miss aria-label="Tas">◫</button><button class="ico" data-miss aria-label="Suka">♡</button><button class="ico" data-miss aria-label="Akun">☺</button></div>
+          </div>
+          <p class="note" id="resB">Toko B: belum diuji</p>
+        </div>
+      </div>
+      <p id="jakobVerdict" class="note" style="margin-top:10px"></p>
+    </div>
+  </div>
+
+  <h3>Studi riset: redesain Snapchat (2018)</h3>
+  <div class="callout research" style="--c:var(--purple)">
+    <p>Pada awal 2018 Snapchat merombak tata letaknya secara drastis: konten teman dan konten media/influencer dipisahkan ke layar berbeda, dan alur navigasi utama berubah.</p>
+    <ul>
+      <li>Petisi daring yang meminta desain lama dikembalikan ditandatangani <strong>lebih dari 1,2 juta orang</strong>.</li>
+      <li>Setelah seorang selebriti menulis di Twitter bahwa ia tidak lagi membuka Snapchat, harga saham Snap turun sekitar <strong>6% dalam sehari</strong> (± US$1,3 miliar nilai pasar).</li>
+      <li>Pada kuartal berikutnya, pengguna aktif harian Snapchat <strong>turun untuk pertama kalinya</strong> (± 191 juta menjadi 188 juta).</li>
+    </ul>
+    <p>Yablonski (2020) memakai kasus ini sebagai contoh bahwa perubahan mendadak yang memaksa pengguna membuang model mental lama dapat <strong>menurunkan penggunaan</strong>. Pelajarannya: jika perubahan besar memang perlu, beri <strong>masa transisi</strong> — misalnya opsi sementara untuk kembali ke versi lama, seperti yang dilakukan YouTube dan Gmail saat redesain besar.</p>
+  </div>
+
+  <h3>Sameness vs. innovation</h3>
+  <p>Jakob's Law <strong>bukan larangan berinovasi</strong>. Pembagiannya:</p>
+  <div class="tbl"><table>
+    <tbody>
+      <tr><td><strong>Ikuti konvensi pada kerangka</strong></td><td>Navigasi, ikon keranjang, kolom pencarian, pola formulir</td></tr>
+      <tr><td><strong>Berinovasilah pada nilai tambah</strong></td><td>Konten unik, fitur pembeda, pengalaman emosional</td></tr>
+      <tr><td><strong>Perhatikan konteks budaya</strong></td><td>Arah baca, makna warna, kebiasaan lokal</td></tr>
+    </tbody></table></div>
+  <div class="callout analogy"><div class="ct">🍜 Analogi: restoran kreatif</div><p>Restoran boleh menyajikan menu paling kreatif di kota, tetapi pintunya tetap harus terlihat seperti pintu, dan kasirnya tetap di dekat pintu keluar.</p></div>
+
+  <details class="acc warn"><summary>Kapan Jakob's Law tidak berlaku — atau harus dilawan</summary><div class="body">
+    <ul>
+      <li>Ketika konvensi yang ada <strong>terbukti buruk</strong>, misalnya <em>dark pattern</em> yang umum tetapi merugikan pengguna. Kebiasaan bukan pembenaran etis.</li>
+      <li>Ketika produk menciptakan <strong>kategori baru</strong> yang belum punya konvensi (misalnya antarmuka sentuh iPhone tahun 2007). Desainer justru <em>menciptakan</em> model mental, dan harus menjembataninya dengan metafora yang sudah dikenal.</li>
+      <li>Ketika target pengguna <strong>berbeda pengalaman atau budaya</strong>: lansia yang baru pertama kali memakai ponsel tidak membawa model mental yang sama dengan remaja.</li>
+    </ul></div></details>
+  <div class="callout design"><div class="ct">✏️ Implikasi desain</div><ul>
+    <li>Lakukan <em>competitive analysis</em>: kenali pola di 3–5 produk yang paling sering dipakai target pengguna.</li>
+    <li>Gunakan komponen standar platform (iOS Human Interface Guidelines, Material Design).</li>
+    <li>Uji redesain dengan pengguna lama, bukan hanya pengguna baru.</li></ul></div>
+</section>
+<!-- 4 FITTS -->
+<section class="sec" id="fitts" style="--c:var(--blue);--cbg:var(--blue-bg)">
+  <div class="lawhead"><div class="tag">Hukum 2 · Sisi eksekusi (tahap Perform)</div><h2>4. Fitts's Law</h2></div>
+  <div class="definition">Waktu untuk mencapai sebuah target bergantung pada <strong>jarak</strong> ke target dan <strong>ukuran</strong> target. Target yang besar dan dekat lebih cepat dicapai daripada target kecil yang jauh.
+    <span class="who">Paul M. Fitts (1954), psikolog Angkatan Udara Amerika Serikat</span></div>
+
+  <h3>Latar sejarah: dari kokpit ke layar</h3>
+  <p>Riset Fitts berawal dari analisis kecelakaan pesawat Perang Dunia II yang dicatat sebagai <em>"pilot error"</em>. Fitts dan rekannya, termasuk Alphonse Chapanis, menemukan bahwa banyak kecelakaan sebenarnya disebabkan <strong>desain kokpit</strong>: tuas roda pendarat dan tuas flap bentuknya identik dan letaknya berdekatan. Solusinya adalah <em>shape coding</em> — tuas diberi bentuk berbeda sehingga dapat dibedakan hanya dengan sentuhan (Yablonski, 2020). Inilah awal pendekatan <strong>human factors</strong>: menyesuaikan desain dengan manusia, bukan menyalahkan manusia.</p>
+  <figure>
+    <svg viewBox="0 0 640 230" role="img" aria-label="Perbandingan tuas kokpit identik dan tuas dengan shape coding: roda untuk roda pendarat, bentuk sayap untuk flap">
+      <rect x="10" y="10" width="300" height="210" rx="12" fill="var(--coral-bg)"/>
+      <rect x="330" y="10" width="300" height="210" rx="12" fill="var(--ok-bg)"/>
+      <text x="160" y="36" text-anchor="middle" font-size="14" font-weight="700" fill="var(--coral)">Sebelum: dua tuas identik</text>
+      <text x="480" y="36" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ok)">Sesudah: shape coding</text>
+      <g fill="var(--gray)"><rect x="104" y="90" width="10" height="100" rx="4"/><rect x="204" y="90" width="10" height="100" rx="4"/></g>
+      <g fill="var(--ink)"><rect x="92" y="66" width="34" height="30" rx="8"/><rect x="192" y="66" width="34" height="30" rx="8"/></g>
+      <text x="109" y="210" text-anchor="middle" font-size="12" fill="var(--ink-2)">Roda pendarat</text>
+      <text x="209" y="210" text-anchor="middle" font-size="12" fill="var(--ink-2)">Flap</text>
+      <g fill="var(--gray)"><rect x="424" y="90" width="10" height="100" rx="4"/><rect x="524" y="90" width="10" height="100" rx="4"/></g>
+      <circle cx="429" cy="74" r="20" fill="none" stroke="var(--ink)" stroke-width="7"/><circle cx="429" cy="74" r="4" fill="var(--ink)"/>
+      <path d="M500 82 L560 66 L556 80 L500 92 z" fill="var(--ink)"/>
+      <text x="429" y="210" text-anchor="middle" font-size="12" fill="var(--ink-2)">Roda kecil</text>
+      <text x="529" y="210" text-anchor="middle" font-size="12" fill="var(--ink-2)">Bentuk sayap</text>
+    </svg>
+    <figcaption>Gambar 4.1 — Ilustrasi prinsip <em>shape coding</em>. Dalam istilah Norman (2013), tuas yang mirip memicu <strong>slip</strong> jenis <em>description-similarity</em>: yang salah adalah desainnya, bukan pilotnya.</figcaption>
+  </figure>
+
+  <h3>Rumus</h3>
+  <p>Formulasi yang umum dipakai dalam HCI adalah formulasi Shannon (MacKenzie, 1992):</p>
+  <div class="formula"><i>T</i> = <i>a</i> + <i>b</i> · log<sub>2</sub>(1 + <span class="frac"><span><i>D</i></span><span><i>W</i></span></span>)</div>
+  <div class="tbl"><table>
+    <thead><tr><th>Simbol</th><th>Arti</th></tr></thead>
+    <tbody>
+      <tr><td><strong>T</strong></td><td>Waktu gerakan (<em>movement time</em>)</td></tr>
+      <tr><td><strong>a, b</strong></td><td>Konstanta empiris, bergantung pada perangkat input dan individu</td></tr>
+      <tr><td><strong>D</strong></td><td>Jarak (<em>distance</em>) dari titik awal ke pusat target</td></tr>
+      <tr><td><strong>W</strong></td><td>Lebar (<em>width</em>) target sepanjang arah gerakan</td></tr>
+      <tr><td><strong>log₂(1 + D/W)</strong></td><td><strong>Index of Difficulty (ID)</strong>, dalam satuan <em>bit</em></td></tr>
+    </tbody></table></div>
+  <figure>
+    <svg viewBox="0 0 640 200" role="img" aria-label="Diagram jarak D dari titik awal ke pusat target dan lebar W target">
+      <circle cx="70" cy="100" r="16" fill="var(--gray)"/><text x="70" y="140" text-anchor="middle" font-size="13" fill="var(--ink-2)">Posisi awal</text>
+      <rect x="470" y="40" width="90" height="120" rx="10" fill="var(--blue)" opacity=".85"/>
+      <text x="515" y="105" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">Target</text>
+      <line x1="86" y1="100" x2="508" y2="100" stroke="var(--ink)" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arB)"/>
+      <defs><marker id="arB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="var(--ink)"/></marker></defs>
+      <text x="290" y="88" text-anchor="middle" font-size="16" font-weight="700" fill="var(--ink)">D (jarak ke pusat)</text>
+      <line x1="470" y1="178" x2="560" y2="178" stroke="var(--blue)" stroke-width="2"/>
+      <line x1="470" y1="170" x2="470" y2="186" stroke="var(--blue)" stroke-width="2"/><line x1="560" y1="170" x2="560" y2="186" stroke="var(--blue)" stroke-width="2"/>
+      <text x="515" y="198" text-anchor="middle" font-size="14" font-weight="700" fill="var(--blue)">W (lebar)</text>
+      <text x="290" y="130" text-anchor="middle" font-size="13" fill="var(--ink-2)">arah gerakan →</text>
+    </svg>
+    <figcaption>Gambar 4.2 — W diukur searah gerakan. Tombol yang lebar tetapi tipis akan "besar" untuk gerakan horizontal, tetapi "kecil" untuk gerakan vertikal.</figcaption>
+  </figure>
+  <p><strong>Cara membaca rumus:</strong> jarak dua kali lipat tidak membuat waktu dua kali lipat, karena pertambahannya <strong>logaritmik</strong>. Yang menentukan adalah <strong>rasio D/W</strong>: tombol kecil yang dekat bisa sama sulitnya dengan tombol besar yang jauh.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Target</th><th class="num">D</th><th class="num">W</th><th class="num">D/W</th><th class="num">ID</th></tr></thead>
+    <tbody>
+      <tr><td>A</td><td class="num">100 px</td><td class="num">100 px</td><td class="num">1</td><td class="num">log₂(2) = <b>1,00 bit</b></td></tr>
+      <tr><td>B</td><td class="num">400 px</td><td class="num">100 px</td><td class="num">4</td><td class="num">log₂(5) = <b>2,32 bit</b></td></tr>
+      <tr><td>C</td><td class="num">400 px</td><td class="num">25 px</td><td class="num">16</td><td class="num">log₂(17) = <b>4,09 bit</b></td></tr>
+    </tbody></table></div>
+
+  <div class="callout analogy"><div class="ct">🏀 Analogi: melempar bola</div>
+    <p>Memasukkan bola ke keranjang cucian lebar dari jarak satu meter hampir pasti berhasil tanpa membidik. Memasukkannya ke gelas dari jarak lima meter membutuhkan konsentrasi, gerakan pelan, dan koreksi berulang. Otak memperlambat gerakan saat target kecil karena <strong>akurasi harus dibayar dengan kecepatan</strong> — <em>speed–accuracy trade-off</em>.</p></div>
+
+  <div class="widget" style="--c:var(--blue);--cbg:var(--blue-bg)" id="wFitts">
+    <div class="wh"><b>🧪 Lab: Uji Fitts dengan tangan Anda</b><small>Ketuk lingkaran abu, lalu ketuk target biru</small></div>
+    <div class="wb">
+      <div class="row" style="gap:18px;align-items:flex-start">
+        <div style="flex:1;min-width:200px"><label class="sl">Lebar target W: <b id="fW">60</b> px<input type="range" id="fWr" min="12" max="120" value="60"></label></div>
+        <div style="flex:1;min-width:200px"><label class="sl">Jarak D: <b id="fD">300</b> px<input type="range" id="fDr" min="80" max="560" value="300"></label></div>
+        <div class="stat"><div class="k">Index of Difficulty</div><div class="v" id="fID">2,58 bit</div></div>
+      </div>
+      <div class="arena" id="fArena"><button class="home" id="fHome" type="button">MULAI</button><div class="dline" id="fLine"></div><button class="target off" id="fTarget" type="button" aria-label="Target"></button></div>
+      <div class="row" style="margin-top:12px">
+        <div class="stat"><div class="k">Waktu terakhir</div><div class="v" id="fLast">–</div></div>
+        <div class="stat"><div class="k">Jumlah percobaan</div><div class="v" id="fN">0</div></div>
+        <button class="btn sec" id="fReset" type="button">Hapus data</button>
+      </div>
+      <svg id="fPlot" viewBox="0 0 600 236" style="margin-top:14px" role="img" aria-label="Grafik waktu gerakan terhadap Index of Difficulty"></svg>
+      <p class="note">Coba minimal 3 kali untuk beberapa kombinasi W dan D (misalnya W besar–D dekat, lalu W kecil–D jauh). Titik-titik pada grafik akan membentuk pola naik: makin tinggi ID, makin lama waktunya. Pada layar sempit, jarak maksimum otomatis menyesuaikan lebar area.</p>
+    </div>
+  </div>
+
+  <h3>Tiga pedoman utama (Yablonski, 2020)</h3>
+  <h4>1. Ukuran target sentuh harus cukup besar</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Sumber</th><th>Pedoman</th></tr></thead>
+    <tbody>
+      <tr><td>Apple (iOS Human Interface Guidelines)</td><td>Minimum <strong>44 × 44 pt</strong></td></tr>
+      <tr><td>Google (Material Design)</td><td>Minimum <strong>48 × 48 dp</strong> (± 9 mm fisik)</td></tr>
+      <tr><td>Yablonski (2020)</td><td>Menyarankan melampaui minimum; mengutip ukuran hingga <strong>60 × 60 pt</strong> demi kenyamanan</td></tr>
+      <tr><td>WCAG 2.2 (aksesibilitas)</td><td>Minimum 24 × 24 px CSS (level AA); 44 × 44 px (level AAA)</td></tr>
+    </tbody></table></div>
+  <div class="callout warn"><div class="ct">⚠️ Jangan tertukar</div><p>44 pt adalah <strong>minimum resmi</strong> Apple. Angka 60 pt adalah rekomendasi kenyamanan dari literatur, bukan batas minimum platform.</p></div>
+  <h4>2. Beri jarak yang cukup antar target</h4>
+  <p>Google menyarankan minimal <strong>8 dp</strong> antar target sentuh untuk mencegah salah tekan. Pada layar dasbor mobil, seperti sistem infotainment Tesla, jarak ini menjadi isu <strong>keselamatan</strong> karena pengemudi mengetuk sambil bergerak.</p>
+  <h4>3. Letakkan target di area yang mudah dijangkau</h4>
+  <p>Pada ponsel yang dipegang satu tangan, <strong>thumb zone</strong> — area jangkauan ibu jari, umumnya bagian bawah-tengah layar — paling nyaman. Fitur <em>Reachability</em> di iPhone menurunkan bagian atas layar agar target yang jauh dapat dijangkau; ini penerapan langsung dari mengurangi D.</p>
+  <figure>
+    <svg viewBox="0 0 640 360" role="img" aria-label="Peta thumb zone pada ponsel yang dipegang tangan kanan: area mudah di bawah tengah, area sulit di pojok kiri atas">
+      <defs><clipPath id="scr"><rect x="200" y="30" width="200" height="300" rx="22"/></clipPath></defs>
+      <rect x="192" y="20" width="216" height="320" rx="30" fill="var(--ink)"/>
+      <g clip-path="url(#scr)">
+        <rect x="200" y="30" width="200" height="300" fill="var(--coral-bg)"/>
+        <circle cx="400" cy="340" r="215" fill="var(--amber-bg)"/>
+        <circle cx="400" cy="340" r="150" fill="var(--ok-bg)"/>
+        <rect x="212" y="42" width="44" height="28" rx="6" fill="var(--surface)" stroke="var(--coral)" stroke-width="2"/>
+        <text x="234" y="61" text-anchor="middle" font-size="11" fill="var(--coral)" font-weight="700">‹ Back</text>
+        <rect x="220" y="282" width="160" height="34" rx="10" fill="var(--blue)"/>
+        <text x="300" y="304" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">Tambah ke keranjang</text>
+      </g>
+      <text x="215" y="118" font-size="13" font-weight="700" fill="var(--coral)">Sulit</text>
+      <text x="215" y="190" font-size="13" font-weight="700" fill="var(--amber)">Perlu meregang</text>
+      <text x="330" y="240" font-size="13" font-weight="700" fill="var(--ok)">Nyaman</text>
+      <path d="M430 340 C 470 300, 470 250, 440 230" fill="none" stroke="var(--gray)" stroke-width="22" stroke-linecap="round" opacity=".35"/>
+      <text x="470" y="300" font-size="13" fill="var(--ink-2)">ibu jari kanan</text>
+      <text x="40" y="60" font-size="13" fill="var(--ink-2)">Tombol "Back" iOS</text>
+      <text x="40" y="78" font-size="13" fill="var(--ink-2)">di kiri atas = D besar</text>
+      <line x1="170" y1="66" x2="210" y2="58" stroke="var(--ink-2)"/>
+      <text x="420" y="130" font-size="13" fill="var(--ink-2)">Aksi utama di bawah</text>
+      <text x="420" y="148" font-size="13" fill="var(--ink-2)">= D kecil, W besar</text>
+    </svg>
+    <figcaption>Gambar 4.3 — Peta thumb zone (ilustratif, pegangan tangan kanan). Zona sebenarnya bervariasi menurut ukuran ponsel, tangan, dan cara memegang; untuk pengguna tangan kiri, peta ini tercermin.</figcaption>
+  </figure>
+
+  <h3>Teknik memperbesar target efektif</h3>
+  <ul>
+    <li><strong>Label yang dapat diklik:</strong> mengaitkan <code>&lt;label&gt;</code> dengan kolom input atau checkbox membuat area klik mencakup teks label, sehingga W bertambah tanpa mengubah tampilan.</li>
+    <li><strong>Padding tak terlihat:</strong> ikon 24 px dapat memiliki area sentuh 48 px.</li>
+    <li><strong>Tombol utama selebar layar</strong> pada mobile, seperti tombol "Beli sekarang" penuh lebar.</li>
+    <li><strong>Tombol kirim dekat kolom terakhir</strong> formulir, untuk mengurangi D.</li>
+    <li><strong>Menu radial (pie menu):</strong> semua opsi berjarak sama dari kursor.</li>
+  </ul>
+
+  <h3>Target tak terhingga (infinite edge) — dan batasnya</h3>
+  <p>Pada komputer dengan <strong>mouse atau trackpad</strong>, kursor berhenti di tepi layar dan tidak bisa melampauinya. Target yang menempel di tepi atau sudut memiliki lebar efektif yang seolah tak terbatas ke arah luar: pengguna cukup "melempar" kursor tanpa perlu mengerem. Contoh: menu bar macOS di tepi atas, tombol Start Windows di sudut kiri bawah, dan <em>Hot Corners</em> di macOS.</p>
+  <figure>
+    <svg viewBox="0 0 640 250" role="img" aria-label="Perbandingan: kursor tertahan tepi layar pada desktop, sedangkan jari pada ponsel tidak tertahan">
+      <rect x="20" y="30" width="290" height="190" rx="10" fill="var(--surface-2)" stroke="var(--line)" stroke-width="2"/>
+      <rect x="20" y="30" width="290" height="22" rx="10" fill="var(--blue)" opacity=".85"/>
+      <text x="165" y="46" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">Menu bar di tepi atas</text>
+      <path d="M100 190 L 140 56" stroke="var(--ink)" stroke-width="2" stroke-dasharray="5 4"/>
+      <path d="M200 180 L 190 56" stroke="var(--ink)" stroke-width="2" stroke-dasharray="5 4"/>
+      <path d="M140 56 l-4 -1 l6 -14" fill="none" stroke="var(--ok)" stroke-width="3"/>
+      <text x="165" y="238" text-anchor="middle" font-size="13" fill="var(--ok)" font-weight="700">Kursor tertahan tepi → W efektif "tak terhingga"</text>
+      <rect x="400" y="20" width="140" height="210" rx="20" fill="var(--ink)"/>
+      <rect x="408" y="30" width="124" height="190" rx="14" fill="var(--surface-2)"/>
+      <rect x="414" y="36" width="40" height="18" rx="5" fill="var(--blue)" opacity=".85"/>
+      <circle cx="424" cy="28" r="15" fill="var(--amber)" opacity=".55"/>
+      <text x="470" y="238" text-anchor="middle" font-size="13" fill="var(--coral)" font-weight="700">Jari tidak tertahan tepi</text>
+      <text x="560" y="36" font-size="12" fill="var(--ink-2)">meleset</text>
+      <text x="560" y="52" font-size="12" fill="var(--ink-2)">keluar layar</text>
+    </svg>
+    <figcaption>Gambar 4.4 — Infinite edge adalah sifat perangkat pointer, bukan layar sentuh.</figcaption>
+  </figure>
+  <div class="callout warn"><div class="ct">⚠️ Koreksi penting</div>
+    <p>Efek ini <strong>hanya berlaku untuk pointer, bukan layar sentuh</strong>. Jari harus mendarat tepat di target; tepi atas ponsel besar justru termasuk area paling sulit dijangkau ibu jari. Karena itu tombol "Back" iOS di kiri atas secara Fitts sulit dijangkau satu tangan, dan Apple menambahkan <strong>gestur geser dari tepi kiri</strong> yang dapat dimulai di mana saja sepanjang sisi layar — "target"-nya menjadi seluruh tepi.</p></div>
+
+  <h3>Hubungan dengan affordance dan signifier</h3>
+  <p>Target yang besar tidak berguna jika pengguna <strong>tidak tahu bahwa itu target</strong>. Weinschenk (2020, #7) menekankan bahwa orang mencari isyarat tentang apa yang dapat dilakukan terhadap suatu objek: bayangan dan gradasi membuat tombol tampak menonjol dan dapat ditekan; garis bawah dan warna kontras menandai tautan. Tanpa isyarat ini, pengguna terpaksa "berburu" di layar — dan waktu berburu itu tidak dihitung dalam rumus Fitts.</p>
+  <div class="callout link"><div class="ct">🔗 Norman (2013)</div><p>Isyarat seperti ini adalah <strong>signifier</strong>. Fitts's Law mengukur kecepatan <em>setelah</em> target ditemukan; signifier menentukan apakah target <em>ditemukan</em>.</p></div>
+
+  <details class="acc warn"><summary>Kapan Fitts's Law tidak cukup menjelaskan</summary><div class="body"><ul>
+    <li>Tidak memperhitungkan <strong>waktu mencari</strong> target — itu wilayah desain visual dan Jakob's Law.</li>
+    <li>Tidak mencakup gerakan melalui <strong>jalur sempit</strong>, seperti submenu bertingkat; itu dijelaskan oleh <em>Steering Law</em> (Accot &amp; Zhai, 1997).</li>
+    <li>Target besar untuk <strong>aksi destruktif</strong> ("Hapus akun") justru berbahaya. Desainer kadang sengaja memperkecil atau menjauhkan target berisiko sebagai <em>friction</em> yang baik.</li>
+  </ul></div></details>
+  <div class="callout design"><div class="ct">✏️ Implikasi desain</div><ul>
+    <li>Aksi utama: besar, dekat, di thumb zone.</li>
+    <li>Aksi destruktif: lebih kecil, lebih jauh, dengan konfirmasi.</li>
+    <li>Uji dengan jari sungguhan di perangkat sungguhan, bukan hanya dengan kursor di prototipe desktop.</li></ul></div>
+</section>
+<!-- 5 HICK -->
+<section class="sec" id="hick" style="--c:var(--amber);--cbg:var(--amber-bg)">
+  <div class="lawhead"><div class="tag">Hukum 3 · Kognitif: keputusan</div><h2>5. Hick's Law</h2></div>
+  <div class="definition">Waktu untuk mengambil keputusan bertambah seiring <strong>jumlah dan kompleksitas pilihan</strong>.
+    <span class="who">William Edmund Hick (1952) &amp; Ray Hyman (1953) — sering disebut Hick–Hyman Law</span></div>
+  <h3>Eksperimen asli</h3>
+  <p>Hick menempatkan partisipan di depan sederet lampu, masing-masing dengan tombol pasangannya. Saat satu lampu menyala, partisipan harus menekan tombol yang sesuai secepat mungkin. Semakin banyak lampu, semakin lama waktu reaksinya — tetapi <strong>tidak secara linear</strong>, melainkan <strong>logaritmik</strong>. Laboratorium di bawah ini meniru eksperimen tersebut.</p>
+
+  <div class="widget" style="--c:var(--amber);--cbg:var(--amber-bg)" id="wHick">
+    <div class="wh"><b>🧪 Lab: Eksperimen lampu Hick</b><small>8 percobaan per tingkat</small></div>
+    <div class="wb">
+      <div class="row"><span>Jumlah pilihan:</span>
+        <div class="seg" id="hSeg"><button aria-pressed="true" data-n="2">2</button><button aria-pressed="false" data-n="4">4</button><button aria-pressed="false" data-n="8">8</button></div>
+        <button class="btn" id="hStart" type="button">Mulai putaran</button></div>
+      <p class="note" id="hMsg" style="margin-top:10px">Saat sebuah lampu menyala, ketuk tombol berwarna sama di bawahnya secepat mungkin.</p>
+      <div class="lamps" id="hLamps"></div>
+      <div class="keys" id="hKeys"></div>
+      <div class="tbl" style="margin-top:16px"><table>
+        <thead><tr><th>Jumlah pilihan</th><th class="num">Rata-rata waktu Anda</th><th class="num">log₂(n+1)</th><th>Status</th></tr></thead>
+        <tbody id="hTable"></tbody></table></div>
+      <p class="note">Bandingkan hasil 2 → 4 dan 4 → 8 pilihan. Pada data yang mengikuti Hick's Law, lonjakan kedua lebih kecil daripada yang Anda perkirakan dari penggandaan jumlah opsi.</p>
+    </div>
+  </div>
+
+  <h3>Rumus</h3>
+  <div class="formula"><i>RT</i> = <i>a</i> + <i>b</i> · log<sub>2</sub>(<i>n</i> + 1)</div>
+  <ul>
+    <li><strong>RT</strong> = waktu reaksi atau keputusan; <strong>n</strong> = jumlah opsi yang sama-sama mungkin dipilih.</li>
+    <li><strong>+1</strong> mewakili ketidakpastian tambahan: apakah perlu merespons atau tidak. Beberapa buku menyederhanakannya menjadi log₂(n).</li>
+    <li>Nilai <strong>b</strong> pada banyak eksperimen berkisar ±150 ms per bit (Card, Moran &amp; Newell, 1983).</li>
+  </ul>
+  <figure>
+    <svg id="hickCurve" viewBox="0 0 640 290" role="img" aria-label="Grafik kurva logaritmik Hick dibandingkan pertumbuhan linear"></svg>
+    <figcaption>Gambar 5.1 — Tambahan waktu keputusan menurut Hick (b = 150 ms/bit) dibandingkan pemindaian daftar satu per satu (ilustrasi linear, 50 ms per item). Menggandakan opsi dari 7 ke 15 hanya menambah ±150 ms pada kurva Hick.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <thead><tr><th class="num">Jumlah opsi (n)</th><th class="num">log₂(n+1)</th><th class="num">Tambahan waktu ≈</th></tr></thead>
+    <tbody><tr><td class="num">1</td><td class="num">1,00</td><td class="num">150 ms</td></tr><tr><td class="num">3</td><td class="num">2,00</td><td class="num">300 ms</td></tr><tr><td class="num">7</td><td class="num">3,00</td><td class="num">450 ms</td></tr><tr><td class="num">15</td><td class="num">4,00</td><td class="num">600 ms</td></tr></tbody></table></div>
+  <p>Artinya, <strong>Hick's Law sendiri tidak menyatakan bahwa banyak opsi selalu buruk</strong>. Ia menyatakan bahwa biaya keputusan naik — tetapi kenaikannya melambat.</p>
+
+  <div class="callout analogy"><div class="ct">🍛 Analogi: warung vs. restoran bermenu tebal</div>
+    <p>Di warung dengan tiga menu, Anda memesan dalam hitungan detik. Di restoran dengan menu setebal 12 halaman, Anda membalik-balik, membandingkan, ragu, lalu sering berakhir memesan "yang biasa". Semakin banyak menu, semakin lama keputusan — dan semakin besar kemungkinan Anda jatuh pada pilihan aman.</p></div>
+
+  <h3>Hick's Law ≠ choice overload</h3>
+  <p>Dua konsep ini sering dicampur, padahal berbeda:</p>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>Hick's Law</th><th>Choice overload</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Yang diukur</strong></td><td><strong>Waktu</strong> keputusan</td><td><strong>Kualitas dan kepuasan</strong> keputusan, termasuk kemungkinan tidak memilih sama sekali</td></tr>
+      <tr><td><strong>Sumber</strong></td><td>Eksperimen waktu reaksi (Hick, 1952)</td><td>Eksperimen perilaku konsumen (Iyengar &amp; Lepper, 2000)</td></tr>
+      <tr><td><strong>Konteks</strong></td><td>Opsi sederhana yang sudah dikenal</td><td>Opsi kompleks yang perlu dibandingkan</td></tr>
+    </tbody></table></div>
+  <figure>
+    <svg viewBox="0 0 640 270" role="img" aria-label="Grafik studi selai: 24 varian menarik 60 persen pengunjung tetapi hanya 3 persen membeli; 6 varian menarik 40 persen dan 30 persen membeli">
+      <line x1="70" y1="220" x2="610" y2="220" stroke="var(--line)" stroke-width="2"/>
+      <g font-size="12" fill="var(--ink-2)"><text x="60" y="224" text-anchor="end">0%</text><text x="60" y="124" text-anchor="end">50%</text><line x1="70" y1="120" x2="610" y2="120" stroke="var(--line)" stroke-dasharray="3 4"/></g>
+      <rect x="120" y="100" width="70" height="120" rx="4" fill="var(--gray)" opacity=".55"/><text x="155" y="92" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">60%</text>
+      <rect x="200" y="214" width="70" height="6" rx="2" fill="var(--coral)"/><text x="235" y="206" text-anchor="middle" font-size="14" font-weight="700" fill="var(--coral)">3%</text>
+      <rect x="370" y="140" width="70" height="80" rx="4" fill="var(--gray)" opacity=".55"/><text x="405" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">40%</text>
+      <rect x="450" y="160" width="70" height="60" rx="4" fill="var(--ok)"/><text x="485" y="152" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ok)">30%</text>
+      <text x="195" y="244" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">24 varian selai</text>
+      <text x="445" y="244" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">6 varian selai</text>
+      <rect x="120" y="22" width="14" height="14" fill="var(--gray)" opacity=".55"/><text x="140" y="34" font-size="12" fill="var(--ink-2)">Pengunjung yang berhenti mencoba</text>
+      <rect x="360" y="22" width="14" height="14" fill="var(--ok)"/><text x="380" y="34" font-size="12" fill="var(--ink-2)">Yang berhenti lalu membeli</text>
+    </svg>
+    <figcaption>Gambar 5.2 — Studi selai Iyengar &amp; Lepper (2000). Pilihan banyak <em>menarik perhatian</em>, tetapi pilihan sedikit <em>menghasilkan keputusan</em>. Weinschenk (2020) menyebut paradoks ini: orang mengira ingin banyak pilihan, padahal kapasitas memproses pilihan terbatas.</figcaption>
+  </figure>
+
+  <h3>Strategi reduksi beban keputusan</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Strategi</th><th>Cara kerja</th><th>Contoh</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Progressive disclosure</strong></td><td>Tampilkan yang esensial; sisanya muncul saat dibutuhkan (Weinschenk, 2020, #27)</td><td>Tautan "Pengaturan lanjutan"</td></tr>
+      <tr><td><strong>Kategorisasi</strong></td><td>Kelompokkan banyak opsi menjadi sedikit kategori</td><td>20 menu → 4 kategori</td></tr>
+      <tr><td><strong>Rekomendasi / default</strong></td><td>Beri penekanan visual pada satu opsi</td><td>Label "Paling populer" di tabel harga</td></tr>
+      <tr><td><strong>Pecah menjadi langkah</strong></td><td>Tugas kompleks dibagi menjadi beberapa layar sederhana</td><td>Wizard onboarding, checkout bertahap</td></tr>
+      <tr><td><strong>Filter kontekstual</strong></td><td>Sembunyikan opsi yang tidak relevan bagi pengguna saat ini</td><td>Metode pembayaran sesuai negara</td></tr>
+    </tbody></table></div>
+  <h3>Contoh dunia nyata</h3>
+  <div class="tbl"><table>
+    <tbody>
+      <tr><td><strong>Beranda Google</strong></td><td>Satu kolom pencarian dan dua tombol — keputusan hampir nol</td></tr>
+      <tr><td><strong>Remote TV modern</strong></td><td>Apple TV dan Google TV memakai 5–7 tombol, dibanding remote lama dengan 40+ tombol</td></tr>
+      <tr><td><strong>Onboarding Slack</strong></td><td>Fitur diperkenalkan bertahap, bukan sekaligus</td></tr>
+      <tr><td><strong>Tabel harga SaaS</strong></td><td>Tiga paket, satu ditandai "Direkomendasikan"</td></tr>
+      <tr><td><strong>Aplikasi ojek daring</strong></td><td>Layanan ditampilkan sesuai konteks (motor, mobil, makanan) dengan satu pilihan default</td></tr>
+    </tbody></table></div>
+  <details class="acc warn"><summary>Kapan Hick's Law tidak berlaku</summary><div class="body"><ul>
+    <li><strong>Pengguna ahli yang sudah tahu tujuannya.</strong> Programmer yang tahu fungsi yang dicari tidak "memutuskan" di antara 200 menu; ia langsung menuju ke sana.</li>
+    <li><strong>Daftar yang harus dipindai satu per satu</strong> (tak terurut). Waktu pencarian cenderung <strong>linear</strong> karena mata membaca item satu demi satu. Hick's Law paling cocok untuk daftar yang terurut logis — abjad, angka, atau kategori yang jelas (Landauer &amp; Nachbar, 1985).</li>
+    <li><strong>Penyederhanaan berlebihan.</strong> Yablonski (2020) memperingatkan: jika opsi disembunyikan terlalu dalam atau ikon dibuat terlalu abstrak demi "minimalis", pengguna justru butuh waktu lebih lama.</li>
+  </ul></div></details>
+</section>
+
+<!-- 6 MILLER -->
+<section class="sec" id="miller" style="--c:var(--amber);--cbg:var(--amber-bg)">
+  <div class="lawhead"><div class="tag">Hukum 4 · Kognitif: memori</div><h2>6. Miller's Law</h2></div>
+  <div class="definition">Versi populer: rata-rata orang hanya dapat menyimpan sekitar <strong>7 (± 2) item</strong> dalam memori kerja.
+    <span class="who">George A. Miller (1956), "The Magical Number Seven, Plus or Minus Two"</span></div>
+  <p>Yablonski (2020) memakai rumusan ini, tetapi menegaskan bahwa inti hukumnya adalah <strong>cara memproses informasi</strong>, bukan angka pastinya. Sebelum menerapkannya, kita perlu meluruskan angka itu.</p>
+
+  <h3>Meluruskan mitos "7 ± 2"</h3>
+  <div class="flip">
+    <div class="side myth"><b>❌ Mitos</b>Miller membuktikan bahwa manusia mampu mengingat 7 ± 2 item, sehingga menu harus berisi 5–9 item.</div>
+    <div class="side fact"><b>✅ Fakta</b>Makalah Miller berasal dari sebuah ceramah dan lebih merupakan refleksi tentang batas pemrosesan informasi. Riset lanjutan menunjukkan kapasitas murni memori kerja sekitar <strong>4 item</strong> (Cowan, 2001).</div>
+  </div>
+  <div class="tabs" data-tabs>
+    <div class="tablist" role="tablist">
+      <button role="tab" aria-selected="true">Cowan (2001)</button>
+      <button role="tab" aria-selected="false">Simpanse Ai</button>
+      <button role="tab" aria-selected="false">Saat mengingat kembali</button>
+      <button role="tab" aria-selected="false">Rapuh terhadap gangguan</button>
+    </div>
+    <div class="tabpanel" role="tabpanel"><p>Alan Baddeley (1994) menelusuri ulang makalah Miller dan riset-riset sesudahnya. Nelson Cowan (2001) kemudian menyimpulkan bahwa kapasitas murni memori kerja — ketika orang <em>tidak dapat</em> melakukan chunking atau pengulangan — adalah sekitar <strong>4 item (kisaran 3–5)</strong> (Weinschenk, 2020, #20).</p></div>
+    <div class="tabpanel" role="tabpanel" hidden><p>Kawai &amp; Matsuzawa (2000) melatih seekor simpanse bernama <strong>Ai</strong> menjalani tes memori angka. Ai menjawab benar <strong>95%</strong> saat harus mengingat 4 angka, tetapi hanya <strong>65%</strong> saat 5 angka (Weinschenk, 2020, #20). Ini bukan bukti langsung kapasitas manusia, tetapi menunjukkan bahwa batas kecil semacam ini tampaknya umum pada primata.</p></div>
+    <div class="tabpanel" role="tabpanel" hidden><p>Batas ini juga berlaku saat mengambil informasi dari memori jangka panjang. Mandler (1969) menemukan bahwa orang mengingat hampir sempurna jika setiap kategori berisi 1–3 item; akurasi turun terus ketika item per kategori bertambah.</p></div>
+    <div class="tabpanel" role="tabpanel" hidden><p>Memori kerja sangat rapuh. Notifikasi, suara, atau perpindahan halaman dapat menghapus isinya (Weinschenk, 2020, #19). Karena itu, jangan meminta pengguna mengingat sesuatu sambil melakukan hal lain.</p></div>
+  </div>
+
+  <h3>Chunking</h3>
+  <p><strong>Chunking</strong> adalah mengelompokkan informasi menjadi unit bermakna sehingga satu "slot" memori kerja dapat menampung lebih banyak data.</p>
+  <div class="tbl"><table>
+    <tbody>
+      <tr><td style="color:var(--coral)"><strong>Buruk</strong></td><td class="mono" style="font-size:1.15rem;letter-spacing:.05em">5123987643210987</td><td>16 item terpisah</td></tr>
+      <tr><td style="color:var(--ok)"><strong>Efisien</strong></td><td class="mono" style="font-size:1.15rem;letter-spacing:.05em">5123&nbsp;&nbsp;9876&nbsp;&nbsp;4321&nbsp;&nbsp;0987</td><td>4 chunk × 4 angka</td></tr>
+    </tbody></table></div>
+  <div class="callout analogy"><div class="ct">🛍️ Analogi: kantong belanja</div>
+    <p>Tangan Anda hanya dapat membawa sekitar empat barang lepas sekaligus. Jika ada 16 barang, Anda tidak menumbuhkan tangan baru — Anda memasukkannya ke dalam <strong>empat kantong</strong>. Memori kerja bekerja serupa: jumlah "tangan" tetap, tetapi isi setiap "kantong" dapat diatur.</p></div>
+  <figure>
+    <svg viewBox="0 0 640 230" role="img" aria-label="Enam belas titik lepas dibandingkan empat kantong berisi empat titik">
+      <text x="150" y="26" text-anchor="middle" font-size="14" font-weight="700" fill="var(--coral)">16 item lepas</text>
+      <text x="470" y="26" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ok)">4 kantong</text>
+      <g fill="var(--amber)" id="loose"></g>
+      <g id="bags"></g>
+      <line x1="320" y1="40" x2="320" y2="210" stroke="var(--line)" stroke-width="2"/>
+    </svg>
+    <figcaption>Gambar 6.1 — Chunking tidak memperbesar memori kerja; ia mengubah apa yang dihitung sebagai satu item.</figcaption>
+  </figure>
+  <h4>Chunking dalam kehidupan sehari-hari</h4>
+  <div class="tbl"><table>
+    <tbody>
+      <tr><td>Nomor HP Indonesia</td><td class="mono">0812-3456-7890</td></tr>
+      <tr><td>Kode OTP</td><td class="mono">482 931</td></tr>
+      <tr><td>Pelat nomor</td><td class="mono">G 1234 AB</td></tr>
+      <tr><td>Nomor rekening</td><td class="mono">1234-01-567890-50-1</td></tr>
+      <tr><td>NIK di formulir</td><td>Pemisah visual per bagian: kode wilayah, tanggal lahir, nomor urut</td></tr>
+    </tbody></table></div>
+
+  <div class="widget" style="--c:var(--amber);--cbg:var(--amber-bg)" id="wMem">
+    <div class="wh"><b>🧪 Lab: Tes memori kerja</b><small>Dua putaran, 12 angka</small></div>
+    <div class="wb">
+      <p>Angka akan tampil selama <strong>3 detik</strong>, lalu disembunyikan. Ketik ulang sebanyak yang Anda ingat. Putaran 1 tanpa pemisah; putaran 2 dengan chunking.</p>
+      <div class="digits" id="mDigits" aria-live="polite">Tekan tombol untuk mulai</div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" id="mR1" type="button">Putaran 1: tanpa pemisah</button>
+        <button class="btn" id="mR2" type="button">Putaran 2: dengan chunking</button>
+      </div>
+      <div id="mInputWrap" style="display:none;margin-top:12px">
+        <input class="memin" id="mIn" inputmode="numeric" autocomplete="off" placeholder="Ketik angkanya di sini" aria-label="Jawaban angka">
+        <div class="row" style="margin-top:8px"><button class="btn" id="mCheck" type="button">Periksa jawaban</button></div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <div class="stat"><div class="k">Putaran 1 (tanpa pemisah)</div><div class="v" id="mS1">–</div></div>
+        <div class="stat"><div class="k">Putaran 2 (chunking)</div><div class="v" id="mS2">–</div></div>
+      </div>
+      <p class="note" id="mNote"></p>
+    </div>
+  </div>
+
+  <h3>Chunking dalam desain visual</h3>
+  <p>Chunking tidak terbatas pada angka. Di antarmuka, chunking dicapai dengan:</p>
+  <ul>
+    <li><strong>Spasi putih</strong> yang memisahkan kelompok — orang menganggap hal yang berdekatan sebagai satu kelompok (Weinschenk, 2020, #9).</li>
+    <li><strong>Kartu dan kontainer</strong> berbatas jelas.</li>
+    <li><strong>Heading dan subheading</strong> yang membagi teks panjang.</li>
+    <li><strong>Pengelompokan toolbar</strong>, seperti Google Docs yang memisahkan ikon format, paragraf, dan sisipan.</li>
+    <li><strong>Filter produk per kategori</strong> (ukuran, warna, harga), seperti di situs Nike.</li>
+  </ul>
+
+  <div class="callout warn"><div class="ct">⚠️ Salah kaprah: "menu maksimal 7 item"</div>
+    <p>Pengguna tidak perlu <strong>menghafal</strong> menu. Menu ada di layar dan cukup <strong>dikenali</strong> (<em>recognition</em>), bukan <strong>diingat</strong> (<em>recall</em>) — ingat kembali materi Pertemuan 2 (Yablonski, 2020). Batas memori kerja relevan ketika pengguna harus <strong>menahan informasi di kepala</strong>, misalnya:</p>
+    <ul><li>Menyalin kode dari SMS ke kolom input di aplikasi lain.</li><li>Membandingkan spesifikasi produk yang berada di halaman berbeda.</li><li>Mengingat instruksi langkah 1 saat mengerjakan langkah 4.</li></ul></div>
+  <details class="acc"><summary>💬 Diskusi HOTS: apakah Weinschenk dan Yablonski bertentangan?</summary><div class="body">
+    <p>Weinschenk (2020) menyarankan membatasi pilihan menjadi 3–4, atau mengelompokkannya menjadi 3–4 grup. Yablonski (2020) menyatakan jumlah menu tidak perlu dibatasi ketat. Apakah keduanya bertentangan?</p>
+    <p><em>Petunjuk:</em> bedakan situasi ketika pengguna harus <strong>memilih dan mengingat</strong> (misalnya tautan "baca selanjutnya" yang dibandingkan satu sama lain) dengan situasi ketika pengguna cukup <strong>memindai dan mengenali</strong> (menu navigasi berlabel jelas). Keduanya sepakat pada satu hal: pengelompokan membantu.</p></div></details>
+  <div class="callout design"><div class="ct">✏️ Implikasi desain</div><ul>
+    <li><strong>Jangan paksa pengguna mengingat</strong> dari satu layar ke layar lain: tampilkan ulang, sediakan salin, atau <em>autofill</em> OTP.</li>
+    <li>Format data panjang dengan pemisah visual.</li>
+    <li>Kelompokkan konten menjadi blok yang jelas.</li>
+    <li>Hindari gangguan saat pengguna sedang menahan informasi — jangan munculkan pop-up promosi di tengah pembayaran.</li></ul></div>
+</section>
+<!-- 7 DOHERTY -->
+<section class="sec" id="doherty" style="--c:var(--teal);--cbg:var(--teal-bg)">
+  <div class="lawhead"><div class="tag">Hukum 5 · Sisi evaluasi: umpan balik sistem</div><h2>7. Doherty Threshold</h2></div>
+  <div class="definition">Produktivitas meningkat pesat ketika komputer dan penggunanya berinteraksi dengan kecepatan — <strong>di bawah ±400 ms</strong> — yang membuat tidak ada pihak yang saling menunggu.
+    <span class="who">Walter J. Doherty &amp; Ahrvind J. Thadani (1982), "The Economic Value of Rapid Response Time", IBM</span></div>
+  <p>Sebelum makalah ini, standar industri menganggap respons <strong>2 detik</strong> sudah memadai. Doherty &amp; Thadani menunjukkan bahwa respons di bawah 400 ms membuat produktivitas melonjak dan kesalahan berkurang (Yablonski, 2020).</p>
+
+  <h3>Landasan: flow dan batas waktu respons</h3>
+  <p><strong>Flow</strong> (Csikszentmihalyi) adalah kondisi imersi penuh dalam tugas: fokus tinggi, rasa kendali, dan waktu terasa cepat berlalu (Weinschenk, 2020, #38). Flow membutuhkan <strong>umpan balik segera</strong>. Setiap jeda memaksa pengguna "keluar" dari tugas untuk menunggu. Jakob Nielsen (1993) merangkum batas waktu respons yang sering dipakai bersama Doherty Threshold:</p>
+  <figure>
+    <svg viewBox="0 0 640 210" role="img" aria-label="Skala waktu respons logaritmik: 0,1 detik instan, 0,4 detik Doherty, 1 detik alur pikir, 10 detik batas perhatian">
+      <rect x="40" y="70" width="120" height="44" fill="var(--ok)" opacity=".85"/>
+      <rect x="160" y="70" width="80" height="44" fill="var(--teal)" opacity=".85"/>
+      <rect x="240" y="70" width="80" height="44" fill="var(--teal)" opacity=".5"/>
+      <rect x="320" y="70" width="160" height="44" fill="var(--amber)" opacity=".6"/>
+      <rect x="480" y="70" width="120" height="44" fill="var(--coral)" opacity=".7"/>
+      <g font-size="13" font-weight="700" fill="var(--ink)" text-anchor="middle">
+        <text x="160" y="140">0,1 dtk</text><text x="240" y="140">0,4 dtk</text><text x="320" y="140">1 dtk</text><text x="480" y="140">10 dtk</text></g>
+      <g stroke="var(--ink)" stroke-width="2"><line x1="160" y1="64" x2="160" y2="120"/><line x1="240" y1="64" x2="240" y2="120"/><line x1="320" y1="64" x2="320" y2="120"/><line x1="480" y1="64" x2="480" y2="120"/></g>
+      <g font-size="12" fill="var(--ink-2)" text-anchor="middle">
+        <text x="100" y="56">terasa instan</text><text x="200" y="40">Doherty</text><text x="200" y="56">alur mengalir</text><text x="280" y="56">jeda terasa</text><text x="400" y="56">perlu indikator progres</text><text x="540" y="56">pengguna beralih</text></g>
+      <text x="320" y="180" text-anchor="middle" font-size="12" fill="var(--ink-2)">Skala logaritmik · Nielsen (1993); Doherty &amp; Thadani (1982)</text>
+    </svg>
+    <figcaption>Gambar 7.1 — Batas-batas waktu respons dan kebutuhan desain di setiap rentang.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <thead><tr><th>Waktu</th><th>Persepsi pengguna</th><th>Kebutuhan desain</th></tr></thead>
+    <tbody>
+      <tr><td><strong>≤ 0,1 detik</strong></td><td>Terasa instan, seolah memanipulasi objek secara langsung</td><td>Tidak perlu indikator</td></tr>
+      <tr><td><strong>≤ 0,4 detik</strong></td><td>Doherty Threshold — interaksi masih mengalir</td><td>Tidak perlu indikator</td></tr>
+      <tr><td><strong>≤ 1 detik</strong></td><td>Alur pikir terjaga, meski jeda terasa</td><td>Umpan balik ringan</td></tr>
+      <tr><td><strong>≤ 10 detik</strong></td><td>Batas perhatian tetap tertuju pada tugas</td><td>Indikator progres wajib</td></tr>
+      <tr><td><strong>&gt; 10 detik</strong></td><td>Pengguna beralih ke tugas lain</td><td>Progres + estimasi waktu + opsi batal</td></tr>
+    </tbody></table></div>
+
+  <h3>Mengapa otak begitu peka terhadap kelambatan</h3>
+  <p>Weinschenk (2020, #2) mencatat bahwa <strong>amigdala</strong> — pusat pemrosesan emosi dan ancaman — bereaksi terhadap objek di <strong>penglihatan periferal</strong> hanya dalam sekitar <strong>80 ms</strong>, sedangkan pemrosesan di <strong>penglihatan sentral</strong> membutuhkan <strong>140–190 ms</strong>. Sistem visual-emosional kita dibentuk untuk mendeteksi perubahan dengan cepat, termasuk perubahan yang tidak kunjung terjadi. Itulah sebabnya pengguna sering "merasa" sistem lambat sebelum dapat menjelaskan mengapa.</p>
+  <figure>
+    <svg viewBox="0 0 640 130" role="img" aria-label="Perbandingan waktu reaksi: amigdala terhadap periferal 80 ms, penglihatan sentral 140 sampai 190 ms">
+      <text x="10" y="42" font-size="13" fill="var(--ink)" font-weight="700">Periferal → amigdala</text>
+      <rect x="200" y="26" width="160" height="24" rx="4" fill="var(--coral)"/><text x="368" y="43" font-size="13" fill="var(--ink)" font-weight="700">± 80 ms</text>
+      <text x="10" y="92" font-size="13" fill="var(--ink)" font-weight="700">Penglihatan sentral</text>
+      <rect x="200" y="76" width="280" height="24" rx="4" fill="var(--blue)" opacity=".5"/><rect x="480" y="76" width="100" height="24" rx="4" fill="var(--blue)" opacity=".25"/>
+      <text x="588" y="93" font-size="13" fill="var(--ink)" font-weight="700" text-anchor="end">140–190 ms</text>
+    </svg>
+    <figcaption>Gambar 7.2 — Konsekuensi lain: elemen bergerak atau berkedip di tepi layar menarik perhatian secara otomatis melalui jalur periferal, sehingga mengganggu fokus membaca di area sentral.</figcaption>
+  </figure>
+
+  <h3>Actual vs. perceived performance</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Actual performance</th><th>Perceived performance</th></tr></thead>
+    <tbody>
+      <tr><td>Waktu pemrosesan sesungguhnya di server atau perangkat</td><td>Seberapa cepat sistem <strong>terasa</strong> bagi pengguna</td></tr>
+      <tr><td>Diukur dengan stopwatch</td><td>Diukur dengan persepsi dan kepuasan</td></tr>
+      <tr><td>Diperbaiki engineer: optimasi kode, caching</td><td>Diperbaiki juga oleh desainer: umpan balik visual</td></tr>
+    </tbody></table></div>
+  <h4>Teknik meningkatkan perceived performance (Yablonski, 2020)</h4>
+  <ul>
+    <li><strong>Skeleton screen</strong> — kerangka abu-abu berbentuk konten (Instagram, YouTube, LinkedIn) membuat pengguna merasa konten sedang datang.</li>
+    <li><strong>Blur-up</strong> — gambar resolusi rendah tampil dahulu, lalu diperjelas (Unsplash, Medium).</li>
+    <li><strong>Progress bar</strong> — memberi kepastian dan rasa kendali (Gmail saat memuat). Menurut Yablonski, progress bar tetap membantu <strong>meskipun tidak akurat</strong>.</li>
+    <li><strong>Optimistic UI</strong> — tombol "Suka" langsung berubah warna sebelum server mengonfirmasi.</li>
+    <li><strong>Animasi mikro</strong> — mengisi jeda dan memberi kesan sistem "hidup".</li>
+  </ul>
+
+  <div class="widget" style="--c:var(--teal);--cbg:var(--teal-bg)" id="wLat">
+    <div class="wh"><b>🧪 Lab: Simulator latensi</b><small>Rasakan beda actual vs. perceived</small></div>
+    <div class="wb">
+      <div class="row" style="margin-bottom:10px"><span>Latensi:</span>
+        <div class="seg" id="lLat"><button aria-pressed="false" data-v="100">100 ms</button><button aria-pressed="true" data-v="400">400 ms</button><button aria-pressed="false" data-v="1000">1 dtk</button><button aria-pressed="false" data-v="3000">3 dtk</button></div></div>
+      <div class="row"><span>Umpan balik:</span>
+        <div class="seg" id="lFb"><button aria-pressed="true" data-v="none">Tanpa indikator</button><button aria-pressed="false" data-v="spin">Spinner</button><button aria-pressed="false" data-v="skel">Skeleton</button></div>
+        <button class="btn" id="lGo" type="button">Muat profil</button></div>
+      <div class="profile" id="lBox"><span class="note">Profil akan tampil di sini.</span></div>
+      <div id="lRate" style="display:none"><span class="note">Seberapa cepat rasanya?</span>
+        <div class="row" style="margin-top:6px"><button class="btn sec" data-r="1">1 Sangat lambat</button><button class="btn sec" data-r="2">2</button><button class="btn sec" data-r="3">3</button><button class="btn sec" data-r="4">4</button><button class="btn sec" data-r="5">5 Instan</button></div></div>
+      <div class="tbl" style="margin-top:14px"><table><thead><tr><th>Latensi</th><th>Umpan balik</th><th class="num">Penilaian Anda</th></tr></thead><tbody id="lLog"><tr><td colspan="3" class="note">Belum ada percobaan.</td></tr></tbody></table></div>
+      <p class="note">Coba latensi 3 detik dengan "Tanpa indikator", lalu dengan "Skeleton". Waktu tunggunya sama persis — hanya persepsinya yang berubah.</p>
+    </div>
+  </div>
+
+  <div class="callout analogy"><div class="ct">🍽️ Analogi: dua pelayan restoran</div>
+    <p>Dua restoran sama-sama butuh 15 menit untuk menyajikan makanan. Di restoran A, pelayan langsung mencatat pesanan, mengantarkan minuman lebih dulu, dan sesekali mengabarkan "sebentar lagi siap". Di restoran B, pelayan menghilang tanpa kabar. Waktu tunggunya sama (<em>actual performance</em>), tetapi restoran A terasa jauh lebih cepat (<em>perceived performance</em>).</p></div>
+
+  <h3>Anomali: deliberate delay</h3>
+  <p>Respons yang <strong>terlalu cepat</strong> kadang merugikan: pengguna tidak sempat menyadari bahwa sesuatu berubah, dan hasil instan pada proses yang dianggap rumit terasa tidak meyakinkan (Yablonski, 2020). Fenomena ini didukung riset <strong>labor illusion</strong> (Buell &amp; Norton, 2011): ketika sistem memperlihatkan kerja yang sedang dilakukannya — misalnya situs tiket yang menampilkan pencarian di banyak maskapai — pengguna menilai hasilnya <strong>lebih berharga</strong> dan lebih puas, bahkan ketika harus menunggu lebih lama.</p>
+  <ul>
+    <li><strong>Google Privacy Checkup</strong> menampilkan proses pemeriksaan bertahap.</li>
+    <li>Aplikasi bank menampilkan animasi "Memverifikasi keamanan…" sebelum transfer.</li>
+    <li><strong>Friction yang disengaja</strong> pada aksi berisiko, seperti modal "Yakin ingin menghapus?".</li>
+  </ul>
+  <div class="callout warn"><div class="ct">⚠️ Batas etis</div>
+    <p>Deliberate delay harus <strong>jujur</strong>. Menampilkan animasi "menganalisis" untuk sesuatu yang sama sekali tidak dianalisis berada di perbatasan manipulasi. Gunakan penundaan untuk membantu pemahaman dan kepercayaan, bukan untuk menipu.</p></div>
+  <div class="callout design"><div class="ct">✏️ Implikasi desain</div><ul>
+    <li>Targetkan respons &lt; 400 ms untuk interaksi rutin.</li>
+    <li>Selalu beri tanda instan (&lt; 100 ms) bahwa input diterima, meski prosesnya belum selesai.</li>
+    <li>Untuk proses panjang: skeleton screen atau progress bar, bukan layar kosong.</li>
+    <li>Pertimbangkan deliberate delay hanya untuk proses bermakna tinggi, tanpa menyesatkan.</li></ul></div>
+</section>
+
+<!-- 8 SINTESIS -->
+<section class="sec wide" id="sintesis">
+  <h2>8. Sintesis: lima hukum dalam satu siklus aksi</h2>
+  <p>Kelima hukum dapat dipetakan ke <strong>Siklus Aksi Norman</strong> yang telah kita pelajari. Ketuk setiap tahap untuk melihat hukum yang paling berperan di sana.</p>
+  <figure>
+    <svg viewBox="0 0 760 470" id="cycle" role="group" aria-label="Diagram siklus aksi Norman dengan lima hukum UX">
+      <defs><marker id="arC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="var(--ink-2)"/></marker></defs>
+      <path d="M330 62 C 200 70, 150 110, 150 150" fill="none" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#arC)"/>
+      <line x1="150" y1="190" x2="150" y2="222" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#arC)"/>
+      <line x1="150" y1="262" x2="150" y2="294" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#arC)"/>
+      <path d="M150 334 C 150 380, 250 408, 316 410" fill="none" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#arC)"/>
+      <path d="M444 410 C 510 408, 610 380, 610 334" fill="none" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#arC)"/>
+      <line x1="610" y1="294" x2="610" y2="262" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#arC)"/>
+      <line x1="610" y1="222" x2="610" y2="190" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#arC)"/>
+      <path d="M610 150 C 610 110, 560 70, 430 62" fill="none" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#arC)"/>
+      <text x="60" y="250" font-size="14" font-weight="800" fill="var(--blue)" transform="rotate(-90 60 250)" text-anchor="middle">EKSEKUSI</text>
+      <text x="700" y="250" font-size="14" font-weight="800" fill="var(--teal)" transform="rotate(90 700 250)" text-anchor="middle">EVALUASI</text>
+      <g class="cyc-node" tabindex="0" data-k="goal"><rect x="310" y="36" width="140" height="48" rx="24" fill="var(--amber-bg)" stroke="var(--amber)" stroke-width="2"/><text x="380" y="66" text-anchor="middle" font-size="15" font-weight="800" fill="var(--amber)">Goal</text></g>
+      <g class="cyc-node" tabindex="0" data-k="plan"><rect x="80" y="150" width="140" height="40" rx="10" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="2"/><text x="150" y="175" text-anchor="middle" font-size="14" font-weight="700" fill="var(--blue)">Plan</text><rect x="228" y="156" width="74" height="26" rx="13" fill="var(--purple)"/><text x="265" y="174" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Jakob</text></g>
+      <g class="cyc-node" tabindex="0" data-k="specify"><rect x="80" y="222" width="140" height="40" rx="10" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="2"/><text x="150" y="247" text-anchor="middle" font-size="14" font-weight="700" fill="var(--blue)">Specify</text><rect x="228" y="228" width="74" height="26" rx="13" fill="var(--amber)"/><text x="265" y="246" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Hick</text></g>
+      <g class="cyc-node" tabindex="0" data-k="perform"><rect x="80" y="294" width="140" height="40" rx="10" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="2"/><text x="150" y="319" text-anchor="middle" font-size="14" font-weight="700" fill="var(--blue)">Perform</text><rect x="228" y="300" width="74" height="26" rx="13" fill="var(--blue)"/><text x="265" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Fitts</text></g>
+      <g class="cyc-node" tabindex="0" data-k="world"><rect x="316" y="388" width="128" height="44" rx="8" fill="var(--gray-bg)" stroke="var(--gray)" stroke-width="2"/><text x="380" y="415" text-anchor="middle" font-size="14" font-weight="700" fill="var(--gray)">Sistem</text></g>
+      <g class="cyc-node" tabindex="0" data-k="perceive"><rect x="540" y="294" width="140" height="40" rx="10" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="2"/><text x="610" y="319" text-anchor="middle" font-size="14" font-weight="700" fill="var(--teal)">Perceive</text><rect x="448" y="300" width="84" height="26" rx="13" fill="var(--teal)"/><text x="490" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Doherty</text></g>
+      <g class="cyc-node" tabindex="0" data-k="interpret"><rect x="540" y="222" width="140" height="40" rx="10" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="2"/><text x="610" y="247" text-anchor="middle" font-size="14" font-weight="700" fill="var(--teal)">Interpret</text><rect x="458" y="228" width="74" height="26" rx="13" fill="var(--amber)"/><text x="495" y="246" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Miller</text></g>
+      <g class="cyc-node" tabindex="0" data-k="compare"><rect x="540" y="150" width="140" height="40" rx="10" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="2"/><text x="610" y="175" text-anchor="middle" font-size="14" font-weight="700" fill="var(--teal)">Compare</text><rect x="458" y="156" width="74" height="26" rx="13" fill="var(--purple)"/><text x="495" y="174" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Jakob</text></g>
+    </svg>
+    <div class="infopanel" id="cycInfo" aria-live="polite"><b>Ketuk salah satu tahap.</b> Sisi kiri (biru) adalah eksekusi — dari niat ke tindakan. Sisi kanan (teal) adalah evaluasi — dari tanggapan sistem ke pemahaman.</div>
+  </figure>
+
+  <div class="callout analogy"><div class="ct">☕ Analogi penutup: memesan kopi lewat aplikasi</div>
+    <ul>
+      <li>Anda membuka aplikasi dan langsung tahu menu ada di bawah — <strong>Jakob</strong>.</li>
+      <li>Anda melihat 4 kategori, bukan 60 varian sekaligus — <strong>Hick</strong>.</li>
+      <li>Tombol "Tambah" besar dan tepat di bawah ibu jari — <strong>Fitts</strong>.</li>
+      <li>Ikon keranjang langsung bergetar dan angkanya naik — <strong>Doherty</strong>.</li>
+      <li>Ringkasan pesanan tersusun rapi: minuman, ukuran, tambahan — <strong>Miller</strong>.</li>
+    </ul></div>
+</section>
+<!-- 9 KASUS -->
+<section class="sec" id="kasus">
+  <h2>9. Studi kasus industri</h2>
+  <p>Setiap kasus menunjukkan bahwa hukum UX jarang bekerja sendirian. Perhatikan label hukum di tiap kasus, lalu jawab pertanyaan diskusinya.</p>
+
+  <div class="case" style="--c:var(--blue)">
+    <div class="laws"><span class="pill p-f">Fitts</span><span class="pill p-h">Hick</span><span class="pill p-m">Miller</span></div>
+    <h3>Kasus 1 — E-commerce: tombol yang hilang saat digulir</h3>
+    <p><strong>Situasi.</strong> Sebuah toko daring mendapati banyak pengguna mobile melihat produk tetapi tidak menambahkannya ke keranjang. Rekaman sesi menunjukkan tombol "Tambah ke keranjang" berada di tengah halaman dan tersapu keluar layar saat pengguna menggulir ulasan.</p>
+    <p><strong>Intervensi.</strong></p>
+    <ul>
+      <li><strong>Fitts:</strong> tombol dipindah menjadi <em>sticky bar</em> di bawah layar (thumb zone — D kecil) dan dibuat hampir selebar layar (W besar). Index of Difficulty turun drastis.</li>
+      <li><strong>Hick:</strong> checkout satu halaman dengan 15 kolom dipecah menjadi beberapa langkah berisi 3–4 kolom, dengan indikator langkah di atas.</li>
+      <li><strong>Miller:</strong> ringkasan pesanan dikelompokkan menjadi tiga blok: Produk, Pengiriman, Pembayaran.</li>
+    </ul>
+    <figure style="margin:14px 0">
+      <svg viewBox="0 0 640 300" role="img" aria-label="Sebelum dan sesudah: tombol di tengah halaman versus sticky bar selebar layar di bawah">
+        <text x="160" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="var(--coral)">Sebelum</text>
+        <text x="480" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ok)">Sesudah</text>
+        <rect x="90" y="34" width="140" height="256" rx="18" fill="var(--surface-2)" stroke="var(--line)" stroke-width="2"/>
+        <rect x="102" y="48" width="116" height="70" rx="8" fill="var(--line)"/>
+        <rect x="102" y="126" width="80" height="10" rx="3" fill="var(--gray)" opacity=".6"/>
+        <rect x="102" y="144" width="54" height="22" rx="6" fill="var(--blue)"/>
+        <g fill="var(--gray)" opacity=".3"><rect x="102" y="178" width="116" height="8" rx="3"/><rect x="102" y="194" width="100" height="8" rx="3"/><rect x="102" y="210" width="110" height="8" rx="3"/><rect x="102" y="226" width="90" height="8" rx="3"/><rect x="102" y="242" width="112" height="8" rx="3"/></g>
+        <text x="160" y="276" text-anchor="middle" font-size="11" fill="var(--ink-2)">ulasan… (tombol tergulir hilang)</text>
+        <rect x="410" y="34" width="140" height="256" rx="18" fill="var(--surface-2)" stroke="var(--line)" stroke-width="2"/>
+        <rect x="422" y="48" width="116" height="70" rx="8" fill="var(--line)"/>
+        <rect x="422" y="126" width="80" height="10" rx="3" fill="var(--gray)" opacity=".6"/>
+        <g fill="var(--gray)" opacity=".3"><rect x="422" y="148" width="116" height="8" rx="3"/><rect x="422" y="164" width="100" height="8" rx="3"/><rect x="422" y="180" width="110" height="8" rx="3"/><rect x="422" y="196" width="90" height="8" rx="3"/><rect x="422" y="212" width="112" height="8" rx="3"/></g>
+        <rect x="410" y="244" width="140" height="46" fill="var(--surface)" stroke="var(--line)"/>
+        <rect x="420" y="252" width="120" height="30" rx="8" fill="var(--blue)"/><text x="480" y="271" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">Tambah ke keranjang</text>
+        <text x="580" y="270" font-size="12" fill="var(--ink-2)">selalu</text><text x="580" y="286" font-size="12" fill="var(--ink-2)">terlihat</text>
+      </svg>
+    </figure>
+    <div class="qd"><b>Diskusi</b><ul><li>Apa risikonya jika sticky bar menutupi konten penting, misalnya pilihan ukuran?</li><li>Checkout bertahap menambah jumlah halaman. Kapan penambahan langkah justru merugikan?</li></ul></div>
+  </div>
+
+  <div class="case" style="--c:var(--teal)">
+    <div class="laws"><span class="pill p-d">Doherty</span><span class="pill p-x">Deliberate delay</span></div>
+    <h3>Kasus 2 — Fintech: cepat untuk rutinitas, pelan untuk keputusan penting</h3>
+    <p><strong>Situasi.</strong> Aplikasi manajemen investasi memiliki dua jenis interaksi: navigasi rutin (melihat saldo, grafik) dan fitur "Optimasi portofolio".</p>
+    <ul>
+      <li>Navigasi rutin dioptimalkan hingga <strong>&lt; 200 ms</strong> dengan caching dan optimistic UI, menjaga flow.</li>
+      <li>"Optimasi portofolio" sebenarnya selesai dihitung dalam waktu singkat, tetapi hasil instan membuat pengguna ragu. Tim menambahkan animasi bertahap selama ±2,5 detik yang <strong>menjelaskan langkah yang memang dilakukan</strong>: menganalisis profil risiko, membandingkan alokasi aset, menyusun rekomendasi.</li>
+    </ul>
+    <div class="qd"><b>Diskusi</b><ul><li>Mengapa penundaan ini dapat dibenarkan secara psikologis (labor illusion)?</li><li>Pada titik mana deliberate delay berubah menjadi manipulasi?</li></ul></div>
+  </div>
+
+  <div class="case" style="--c:var(--purple)">
+    <div class="laws"><span class="pill p-j">Jakob</span></div>
+    <h3>Kasus 3 — Media sosial: redesain Snapchat 2018</h3>
+    <p>Lihat uraian di <a href="#jakob">bagian 3</a>. Perubahan tata letak mendadak memicu petisi lebih dari 1,2 juta tanda tangan dan diikuti penurunan pengguna aktif harian untuk pertama kalinya.</p>
+    <div class="qd"><b>Diskusi</b><ul><li>Jika Anda desainer Snapchat, bagaimana meluncurkan perubahan yang sama tanpa memicu penolakan massal? Rancang strategi transisi dalam tiga tahap.</li></ul></div>
+  </div>
+
+  <div class="case" style="--c:var(--blue)">
+    <div class="laws"><span class="pill p-f">Fitts</span><span class="pill p-x">Human factors</span></div>
+    <h3>Kasus 4 — Perangkat fisik: kokpit dan asal-usul human factors</h3>
+    <p>Lihat uraian di <a href="#fitts">bagian 4</a>. Tuas roda pendarat dan flap yang identik menyebabkan kecelakaan yang semula disebut "pilot error"; <em>shape coding</em> memecahkannya.</p>
+    <div class="qd"><b>Diskusi</b><ul><li>Temukan satu contoh di sekitar Anda — kompor, dispenser, panel lift, atau aplikasi — di mana dua kontrol berbeda fungsi tampak terlalu mirip. Bagaimana shape coding atau pembeda visual dapat diterapkan?</li></ul></div>
+  </div>
+
+  <div class="case" style="--c:var(--amber)">
+    <div class="laws"><span class="pill p-m">Miller</span><span class="pill p-d">Doherty</span></div>
+    <h3>Kasus 5 — Layanan publik: formulir pendaftaran daring</h3>
+    <p><strong>Situasi.</strong> Formulir pendaftaran layanan publik meminta NIK 16 digit, nomor KK 16 digit, dan kode verifikasi yang dikirim lewat SMS. Banyak pendaftar gagal di tahap kode verifikasi.</p>
+    <ul>
+      <li><strong>Miller:</strong> pengguna harus keluar dari browser, membuka SMS, menahan 6 digit di kepala, lalu kembali. Memori kerja rentan terganggu selama perpindahan ini. Solusi: <em>autofill</em> OTP, tampilkan kode dalam dua chunk, dan beri waktu yang cukup.</li>
+      <li><strong>Miller (lanjutan):</strong> kolom NIK diberi pemisah visual agar mudah diperiksa ulang.</li>
+      <li><strong>Doherty:</strong> setelah "Kirim kode" ditekan, tampilkan umpan balik instan ("Kode dikirim ke 0812-xxxx-7890") dan hitung mundur untuk kirim ulang.</li>
+    </ul>
+    <div class="qd"><b>Diskusi</b><ul><li>Bagian mana dari formulir ini yang paling membebani memori kerja? Usulkan satu perubahan lain di luar yang sudah disebut.</li></ul></div>
+  </div>
+</section>
+
+<!-- 10 KUIS -->
+<section class="sec" id="kuis">
+  <h2>10. Kuis evaluasi (HOTS)</h2>
+  <p>Dua belas soal berbasis skenario. Setiap pilihan memiliki umpan balik tersendiri, dan urutan pilihan diacak setiap kali kuis dimulai.</p>
+  <div class="quiz" id="quiz"></div>
+</section>
+
+<!-- 11 TUGAS -->
+<section class="sec" id="tugas">
+  <h2>11. Latihan praktis &amp; tugas mandiri</h2>
+  <h3>Latihan 1 — Menghitung Index of Difficulty</h3>
+  <p>Diberikan dua tombol pada aplikasi mobile:</p>
+  <ul><li><strong>Tombol A:</strong> W = 50 px, D = 400 px dari posisi awal ibu jari</li><li><strong>Tombol B:</strong> W = 150 px, D = 200 px dari posisi awal ibu jari</li></ul>
+  <p><strong>Tugas:</strong> (1) hitung ID masing-masing dengan ID = log₂(1 + D/W); (2) tentukan tombol yang lebih efisien dan jelaskan alasannya; (3) usulkan dua cara berbeda untuk menurunkan ID Tombol A tanpa mengubah jaraknya.</p>
+  <div class="widget" style="--c:var(--blue);--cbg:var(--blue-bg)">
+    <div class="wh"><b>🧮 Kalkulator ID</b><small>Periksa hasil hitungan Anda</small></div>
+    <div class="wb"><div class="row">
+      <label class="sl" style="margin:0">D (px)<br><input class="memin" style="width:120px" id="cD" type="number" value="400" min="1"></label>
+      <label class="sl" style="margin:0">W (px)<br><input class="memin" style="width:120px" id="cW" type="number" value="50" min="1"></label>
+      <div class="stat"><div class="k">D/W</div><div class="v" id="cR">8,00</div></div>
+      <div class="stat"><div class="k">ID = log₂(1 + D/W)</div><div class="v" id="cID">3,17 bit</div></div></div></div>
+  </div>
+  <details class="acc"><summary>Kunci jawaban Latihan 1</summary><div class="body">
+    <ul><li>Tombol A: log₂(1 + 400/50) = log₂(9) ≈ <strong>3,17 bit</strong></li><li>Tombol B: log₂(1 + 200/150) = log₂(2,33) ≈ <strong>1,22 bit</strong></li>
+    <li>Tombol B lebih efisien (ID ±2,6 kali lebih rendah).</li>
+    <li>Cara menurunkan ID Tombol A tanpa mengubah D: memperlebar tombol, menambah padding sentuh tak terlihat, menjadikan label di sebelahnya dapat diketuk, atau — khusus desktop — menempelkannya ke tepi layar.</li></ul></div></details>
+
+  <h3>Latihan 2 — Replikasi eksperimen Hick</h3>
+  <p>Gunakan <a href="#wHick">Lab eksperimen lampu Hick</a>. Jalankan masing-masing tingkat (2, 4, 8 pilihan) minimal dua putaran. Buat grafik sederhana dari rata-rata waktu Anda. Apakah data mengikuti pola logaritmik? Diskusikan faktor yang membuat data menyimpang: efek latihan, kelelahan, gangguan, atau fakta bahwa tombol juga harus <em>dijangkau</em> (Fitts).</p>
+
+  <h3>Tugas mandiri 1 — Redesain dashboard</h3>
+  <p>Ambil tangkapan layar dashboard admin yang kompleks — SIAKAD kampus, dashboard penjual marketplace, atau aplikasi kasir. Rancang ulang dengan:</p>
+  <ul>
+    <li><strong>Rule of 4:</strong> kelompokkan informasi utama menjadi maksimal 4 blok besar.</li>
+    <li><strong>Progressive disclosure:</strong> tentukan elemen yang dapat dipindah ke menu "Lanjutan" atau "Detail".</li>
+    <li><strong>Justifikasi:</strong> untuk setiap perubahan, sebutkan hukum yang mendasarinya beserta rujukannya.</li>
+  </ul>
+  <p><strong>Luaran:</strong> gambar sebelum–sesudah (sketsa tangan atau Figma) dan tabel justifikasi.</p>
+
+  <h3>Tugas mandiri 2 — Audit lima hukum</h3>
+  <p>Pilih satu aplikasi yang sering Anda gunakan (ojek daring, e-wallet, marketplace, atau aplikasi kampus) dan audit dengan tabel berikut:</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Hukum</th><th>Temuan (screenshot + deskripsi)</th><th>Patuh / melanggar</th><th>Dampak ke pengguna</th><th>Rekomendasi</th></tr></thead>
+    <tbody><tr><td>Jakob's Law</td><td></td><td></td><td></td><td></td></tr><tr><td>Fitts's Law</td><td></td><td></td><td></td><td></td></tr><tr><td>Hick's Law</td><td></td><td></td><td></td><td></td></tr><tr><td>Miller's Law</td><td></td><td></td><td></td><td></td></tr><tr><td>Doherty Threshold</td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+  <p><strong>Syarat tambahan:</strong> sertakan minimal satu temuan di mana aplikasi <em>sengaja melanggar</em> salah satu hukum demi alasan yang baik (misalnya friction pada aksi destruktif), lalu nilai apakah pelanggaran itu dibenarkan.</p>
+  <h4>Rubrik penilaian</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Kriteria</th><th class="num">Bobot</th><th>Sangat baik (4)</th><th>Cukup (2)</th><th>Kurang (1)</th></tr></thead>
+    <tbody>
+      <tr><td>Ketepatan identifikasi hukum</td><td class="num">30%</td><td>Tepat, termasuk kasus dengan lebih dari satu hukum</td><td>Sebagian tepat</td><td>Banyak keliru</td></tr>
+      <tr><td>Kedalaman analisis</td><td class="num">30%</td><td>Menjelaskan mekanisme kognitif dan batas berlaku hukum</td><td>Menjelaskan apa, belum mengapa</td><td>Deskriptif saja</td></tr>
+      <tr><td>Kualitas rekomendasi</td><td class="num">25%</td><td>Spesifik, dapat diterapkan, mempertimbangkan trade-off</td><td>Umum</td><td>Tidak ada</td></tr>
+      <tr><td>Rujukan akademik</td><td class="num">15%</td><td>Rujukan tepat dan relevan</td><td>Rujukan minim</td><td>Tanpa rujukan</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- 12 RANGKUMAN -->
+<section class="sec" id="rangkuman">
+  <h2>12. Rangkuman &amp; penutup</h2>
+  <div class="sumgrid">
+    <div class="sumrow" style="--c:var(--purple)"><b>Jakob's Law</b><div>Pengguna mengharapkan produk Anda bekerja seperti produk lain yang mereka kenal. <span class="note">Batas: konvensi buruk tidak wajib diikuti; kategori baru perlu menciptakan model mental.</span></div></div>
+    <div class="sumrow" style="--c:var(--blue)"><b>Fitts's Law</b><div>T = a + b·log₂(1 + D/W). Target besar dan dekat lebih cepat dicapai; iOS ≥ 44 pt, Android ≥ 48 dp. <span class="note">Batas: infinite edge hanya untuk pointer; aksi destruktif perlu friction.</span></div></div>
+    <div class="sumrow" style="--c:var(--amber)"><b>Hick's Law</b><div>RT = a + b·log₂(n + 1). Waktu keputusan naik secara logaritmik terhadap jumlah opsi. <span class="note">Batas: tidak berlaku untuk pengguna ahli atau daftar tak terurut; jangan menyederhanakan berlebihan.</span></div></div>
+    <div class="sumrow" style="--c:var(--amber)"><b>Miller's Law</b><div>Memori kerja terbatas (populer: 7 ± 2; riset terkini: ±4 — Cowan, 2001). Gunakan chunking. <span class="note">Batas: bukan batas jumlah menu, karena recognition ≠ recall.</span></div></div>
+    <div class="sumrow" style="--c:var(--teal)"><b>Doherty Threshold</b><div>Respons &lt; 400 ms menjaga flow dan produktivitas; perceived performance dapat dirancang. <span class="note">Batas: deliberate delay kadang membangun kepercayaan — asalkan jujur.</span></div></div>
+  </div>
+  <p>Sebagai desainer, Anda memikul peran sebagai arsitek kognitif. Tugas Anda melampaui pewarnaan piksel: Anda membangun jembatan antara kebutuhan manusia dan kemampuan mesin. Memahami batas biologis otak — memori kerja yang kecil, gerakan yang tunduk pada rasio jarak dan ukuran, keputusan yang melambat saat pilihan bertambah, dan persepsi waktu yang peka — memastikan teknologi yang Anda ciptakan <strong>memberdayakan, bukan membebani</strong>.</p>
+  <div class="callout link"><div class="ct">➡️ Pertemuan berikutnya</div><p>Laws of UX (Bagian 2): Postel's Law, Peak–End Rule, Aesthetic–Usability Effect, Von Restorff Effect, dan Tesler's Law.</p></div>
+  <h3>Daftar pustaka</h3>
+  <ol class="refs">
+    <li>Accot, J., &amp; Zhai, S. (1997). Beyond Fitts' law: Models for trajectory-based HCI tasks. <em>Proceedings of CHI '97</em>.</li>
+    <li>Baddeley, A. (1994). The magical number seven: Still magic after all these years? <em>Psychological Review, 101</em>(2).</li>
+    <li>Buell, R. W., &amp; Norton, M. I. (2011). The labor illusion: How operational transparency increases perceived value. <em>Management Science, 57</em>(9).</li>
+    <li>Card, S. K., Moran, T. P., &amp; Newell, A. (1983). <em>The Psychology of Human-Computer Interaction</em>. Lawrence Erlbaum.</li>
+    <li>Cowan, N. (2001). The magical number 4 in short-term memory. <em>Behavioral and Brain Sciences, 24</em>(1).</li>
+    <li>Doherty, W. J., &amp; Thadani, A. J. (1982). <em>The Economic Value of Rapid Response Time</em>. IBM.</li>
+    <li>Fitts, P. M. (1954). The information capacity of the human motor system in controlling the amplitude of movement. <em>Journal of Experimental Psychology, 47</em>(6).</li>
+    <li>Hick, W. E. (1952). On the rate of gain of information. <em>Quarterly Journal of Experimental Psychology, 4</em>(1).</li>
+    <li>Hyman, R. (1953). Stimulus information as a determinant of reaction time. <em>Journal of Experimental Psychology, 45</em>(3).</li>
+    <li>Iyengar, S. S., &amp; Lepper, M. R. (2000). When choice is demotivating. <em>Journal of Personality and Social Psychology, 79</em>(6).</li>
+    <li>Kawai, N., &amp; Matsuzawa, T. (2000). Numerical memory span in a chimpanzee. <em>Nature, 403</em>.</li>
+    <li>Krug, S. (2014). <em>Don't Make Me Think, Revisited</em> (3rd ed.). New Riders.</li>
+    <li>Landauer, T. K., &amp; Nachbar, D. W. (1985). Selection from alphabetic and numeric menu trees using a touch screen. <em>Proceedings of CHI '85</em>.</li>
+    <li>MacKenzie, I. S. (1992). Fitts' law as a research and design tool in human-computer interaction. <em>Human-Computer Interaction, 7</em>(1).</li>
+    <li>Mandler, G. (1969). Input variables and output strategies in free recall of categorized lists. <em>American Journal of Psychology, 82</em>(4).</li>
+    <li>Miller, G. A. (1956). The magical number seven, plus or minus two. <em>Psychological Review, 63</em>(2).</li>
+    <li>Nielsen, J. (1993). <em>Usability Engineering</em>. Academic Press.</li>
+    <li>Nielsen, J. (2000). End of web design. <em>Nielsen Norman Group Alertbox</em>.</li>
+    <li>Norman, D. A. (2013). <em>The Design of Everyday Things</em> (Revised ed.). Basic Books.</li>
+    <li>Weinschenk, S. (2020). <em>100 Things Every Designer Needs to Know About People</em> (2nd ed.). New Riders.</li>
+    <li>Yablonski, J. (2020). <em>Laws of UX</em>. O'Reilly Media.</li>
+  </ol>
+</section>
+<footer>IMK — Pertemuan 3 · Laws of UX (Bagian 1). Seluruh demo berjalan di halaman ini tanpa mengirim data ke mana pun.</footer>
+</main>
+</div>
+<button id="toTop" aria-label="Kembali ke atas">↑</button>
+<script>
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const fmt=(x,d=2)=>x.toFixed(d).replace('.',',');
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* ---------- theme ---------- */
+const root=document.documentElement;
+try{const t=localStorage.getItem('imk3-theme');if(t)root.setAttribute('data-theme',t)}catch(e){}
+$('#themeBtn').addEventListener('click',()=>{
+  const cur=root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  const nx=cur==='dark'?'light':'dark';root.setAttribute('data-theme',nx);
+  try{localStorage.setItem('imk3-theme',nx)}catch(e){}
+});
+
+/* ---------- progress, top, spy, mobile toc ---------- */
+const bar=$('#progress'), top=$('#toTop');
+function onScroll(){const h=document.documentElement;const max=h.scrollHeight-h.clientHeight;bar.style.width=(max>0?(h.scrollTop/max*100):0)+'%';top.classList.toggle('show',h.scrollTop>700)}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+top.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+const links=$$('.toc a'), secs=links.map(a=>document.getElementById(a.getAttribute('href').slice(1)));
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id))}})},{rootMargin:'-35% 0px -60% 0px'});
+secs.forEach(s=>s&&io.observe(s));
+const toc=$('#toc'),tb=$('#tocBtn'),scrim=$('#scrim');
+function tocSet(o){toc.classList.toggle('open',o);scrim.classList.toggle('show',o);tb.setAttribute('aria-expanded',o)}
+tb.addEventListener('click',()=>tocSet(!toc.classList.contains('open')));
+scrim.addEventListener('click',()=>tocSet(false));
+links.forEach(l=>l.addEventListener('click',()=>tocSet(false)));
+
+/* ---------- tabs ---------- */
+$$('[data-tabs]').forEach(t=>{const bs=$$('.tablist button',t),ps=$$('.tabpanel',t);
+  bs.forEach((b,i)=>b.addEventListener('click',()=>{bs.forEach((x,j)=>x.setAttribute('aria-selected',i===j));ps.forEach((p,j)=>p.hidden=i!==j)}))});
+
+/* ---------- seg helper ---------- */
+function seg(el,cb){$$('button',el).forEach(b=>b.addEventListener('click',()=>{$$('button',el).forEach(x=>x.setAttribute('aria-pressed',x===b));cb&&cb(b)}))}
+const segVal=(el,attr)=>$('button[aria-pressed="true"]',el).dataset[attr];
+
+/* ---------- Jakob ---------- */
+(function(){const res={};let t0=0,active=null;
+  $$('[data-start]').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.start;b.closest('.veil').classList.add('hidden');active=k;t0=performance.now()}));
+  $$('[data-cart]').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.cart;if(active!==k)return;const t=performance.now()-t0;res[k]=t;active=null;
+    $('#res'+k).innerHTML='Toko '+k+': <b>'+fmt(t/1000)+' detik</b>';
+    const v=$('#mock'+k+' .veil');v.innerHTML='<div><b>Selesai: '+fmt(t/1000)+' dtk</b><br><br><button class="btn sec" data-again="'+k+'">Ulangi</button></div>';v.classList.remove('hidden');
+    $('[data-again]',v).addEventListener('click',()=>{v.classList.add('hidden');active=k;t0=performance.now()});
+    if(res.A&&res.B){const r=res.B/res.A;$('#jakobVerdict').innerHTML=r>1.15?'Anda butuh <b>'+fmt(r,1)+'×</b> lebih lama di Toko B. Keranjangnya tidak lebih jauh dari jempol — justru lebih dekat. Yang membuat lambat adalah <b>model mental</b>: mata Anda lebih dulu mencari di kanan atas.':'Waktu Anda hampir sama di kedua toko. Coba lagi tanpa melihat posisinya dulu — atau minta teman yang belum melihat mockup ini untuk mencoba.'}
+  }));
+  $$('[data-miss]').forEach(b=>b.addEventListener('click',()=>{b.animate&&b.animate([{transform:'translateX(0)'},{transform:'translateX(-3px)'},{transform:'translateX(3px)'},{transform:'translateX(0)'}],{duration:180})}));
+})();
+
+/* ---------- Fitts ---------- */
+(function(){const ar=$('#fArena'),home=$('#fHome'),tg=$('#fTarget'),line=$('#fLine'),Wr=$('#fWr'),Dr=$('#fDr'),plot=$('#fPlot');
+  const HX=40;let W=60,D=300,t0=0,armed=false;const data=[];
+  function layout(){const maxD=Math.max(80,ar.clientWidth-HX-W/2-12);Dr.max=Math.round(maxD);D=Math.min(+Dr.value,maxD);W=+Wr.value;
+    $('#fW').textContent=W;$('#fD').textContent=Math.round(D);$('#fID').textContent=fmt(Math.log2(1+D/W))+' bit';
+    tg.style.width=W+'px';tg.style.left=(HX+D)+'px';line.style.left=HX+'px';line.style.width=D+'px'}
+  Wr.addEventListener('input',layout);Dr.addEventListener('input',layout);addEventListener('resize',layout);
+  home.addEventListener('click',()=>{armed=true;t0=performance.now();tg.classList.remove('off');home.textContent='…'});
+  tg.addEventListener('click',()=>{if(!armed)return;const t=performance.now()-t0;armed=false;tg.classList.add('off');home.textContent='MULAI';
+    data.push({id:Math.log2(1+D/W),t});$('#fLast').textContent=Math.round(t)+' ms';$('#fN').textContent=data.length;draw()});
+  $('#fReset').addEventListener('click',()=>{data.length=0;$('#fLast').textContent='–';$('#fN').textContent='0';draw()});
+  function draw(){const X0=50,X1=585,Y0=190,Y1=15;const maxT=Math.max(1200,...data.map(d=>d.t))*1.05;
+    const sx=id=>X0+id/6*(X1-X0), sy=t=>Y0-t/maxT*(Y0-Y1);
+    let s='<line x1="'+X0+'" y1="'+Y0+'" x2="'+X1+'" y2="'+Y0+'" stroke="var(--line)" stroke-width="2"/><line x1="'+X0+'" y1="'+Y0+'" x2="'+X0+'" y2="'+Y1+'" stroke="var(--line)" stroke-width="2"/>';
+    for(let i=0;i<=6;i++)s+='<text x="'+sx(i)+'" y="'+(Y0+16)+'" font-size="11" text-anchor="middle" fill="var(--ink-2)">'+i+'</text>';
+    s+='<text x="'+((X0+X1)/2)+'" y="230" font-size="12" text-anchor="middle" fill="var(--ink-2)">Index of Difficulty (bit)</text>';
+    s+='<text x="12" y="'+((Y0+Y1)/2)+'" font-size="12" fill="var(--ink-2)" transform="rotate(-90 12 '+((Y0+Y1)/2)+')" text-anchor="middle">Waktu (ms)</text>';
+    [0.25,0.5,0.75,1].forEach(f=>{const t=maxT*f;s+='<text x="'+(X0-6)+'" y="'+(sy(t)+4)+'" font-size="10" text-anchor="end" fill="var(--ink-2)">'+Math.round(t)+'</text><line x1="'+X0+'" x2="'+X1+'" y1="'+sy(t)+'" y2="'+sy(t)+'" stroke="var(--line)" stroke-dasharray="2 4"/>'});
+    const ids=new Set(data.map(d=>d.id.toFixed(2)));
+    if(data.length>=3&&ids.size>=2){const n=data.length,mx=data.reduce((a,d)=>a+d.id,0)/n,my=data.reduce((a,d)=>a+d.t,0)/n;
+      let num=0,den=0;data.forEach(d=>{num+=(d.id-mx)*(d.t-my);den+=(d.id-mx)**2});const b=den?num/den:0,a=my-b*mx;
+      s+='<line x1="'+sx(0)+'" y1="'+sy(Math.max(0,a))+'" x2="'+sx(6)+'" y2="'+sy(Math.max(0,a+b*6))+'" stroke="var(--blue)" stroke-width="2" stroke-dasharray="6 4"/>';
+      s+='<text x="'+(X1)+'" y="'+(Y1+10)+'" font-size="12" text-anchor="end" fill="var(--blue)" font-weight="700">T ≈ '+Math.round(a)+' + '+Math.round(b)+'·ID ms</text>'}
+    data.forEach(d=>{s+='<circle cx="'+sx(Math.min(6,d.id))+'" cy="'+sy(d.t)+'" r="5" fill="var(--blue)" opacity=".75"/>'});
+    if(!data.length)s+='<text x="'+((X0+X1)/2)+'" y="105" font-size="13" text-anchor="middle" fill="var(--ink-2)">Belum ada data — lakukan percobaan di atas</text>';
+    plot.innerHTML=s}
+  layout();draw();
+})();
+
+/* ---------- Hick curve ---------- */
+(function(){const sv=$('#hickCurve');const X0=70,X1=610,Y0=250,Y1=20;const sx=n=>X0+(n-1)*(X1-X0)/19,sy=ms=>Y0-ms*(Y0-Y1)/1000;
+  let s='<line x1="'+X0+'" y1="'+Y0+'" x2="'+X1+'" y2="'+Y0+'" stroke="var(--line)" stroke-width="2"/><line x1="'+X0+'" y1="'+Y0+'" x2="'+X0+'" y2="'+Y1+'" stroke="var(--line)" stroke-width="2"/>';
+  [0,250,500,750,1000].forEach(m=>{s+='<text x="'+(X0-8)+'" y="'+(sy(m)+4)+'" font-size="11" text-anchor="end" fill="var(--ink-2)">'+m+'</text>'});
+  [1,5,10,15,20].forEach(n=>{s+='<text x="'+sx(n)+'" y="'+(Y0+18)+'" font-size="11" text-anchor="middle" fill="var(--ink-2)">'+n+'</text>'});
+  s+='<text x="'+((X0+X1)/2)+'" y="285" font-size="12" text-anchor="middle" fill="var(--ink-2)">Jumlah opsi (n)</text><text x="16" y="135" font-size="12" fill="var(--ink-2)" transform="rotate(-90 16 135)" text-anchor="middle">Tambahan waktu (ms)</text>';
+  let pL='',pH='';for(let n=1;n<=20;n++){pL+=(n>1?'L':'M')+sx(n)+' '+sy(50*n)+' ';pH+=(n>1?'L':'M')+sx(n)+' '+sy(150*Math.log2(n+1))+' '}
+  s+='<path d="'+pL+'" fill="none" stroke="var(--gray)" stroke-width="2.5" stroke-dasharray="6 5"/><path d="'+pH+'" fill="none" stroke="var(--amber)" stroke-width="3.5"/>';
+  [1,3,7,15].forEach(n=>{s+='<circle cx="'+sx(n)+'" cy="'+sy(150*Math.log2(n+1))+'" r="5" fill="var(--amber)"/>'});
+  s+='<text x="'+(sx(20)-4)+'" y="'+(sy(150*Math.log2(21))-10)+'" font-size="13" font-weight="700" text-anchor="end" fill="var(--amber)">Hick: 150·log₂(n+1)</text>';
+  s+='<text x="'+(sx(20)-4)+'" y="'+(sy(1000)+16)+'" font-size="13" font-weight="700" text-anchor="end" fill="var(--gray)">Pemindaian linear</text>';
+  sv.innerHTML=s})();
+
+/* ---------- Hick lab ---------- */
+(function(){const COLORS=['#E5484D','#2A63C9','#1C8A4B','#D99100','#8E4EC6','#0F9D9A','#D6409F','#7A5A2F'];
+  const lamps=$('#hLamps'),keys=$('#hKeys'),msg=$('#hMsg'),start=$('#hStart');const results={};let n=2,trial=0,t0=0,lit=-1,rts=[],errs=0,timer=null,running=false;
+  function build(){lamps.innerHTML='';keys.innerHTML='';for(let i=0;i<n;i++){const l=document.createElement('div');l.className='lamp';lamps.appendChild(l);
+    const k=document.createElement('button');k.type='button';k.style.background=COLORS[i];k.textContent=i+1;k.setAttribute('aria-label','Tombol '+(i+1));k.addEventListener('click',()=>press(i));keys.appendChild(k)}}
+  function table(){$('#hTable').innerHTML=[2,4,8].map(m=>{const r=results[m];return '<tr><td>'+m+' pilihan</td><td class="num">'+(r?Math.round(r.mean)+' ms':'–')+'</td><td class="num">'+fmt(Math.log2(m+1))+'</td><td>'+(r?(r.errs?r.errs+' salah tekan':'tanpa salah'):'belum')+'</td></tr>'}).join('')}
+  seg($('#hSeg'),b=>{if(running)return;n=+b.dataset.n;build()});
+  function next(){lit=-1;$$('.lamp',lamps).forEach(l=>{l.style.background='';l.classList.remove('on')});
+    if(trial>=8){running=false;start.disabled=false;const mean=rts.length?rts.reduce((a,b)=>a+b,0)/rts.length:0;results[n]={mean,errs};table();
+      msg.innerHTML='Putaran '+n+' pilihan selesai: rata-rata <b>'+Math.round(mean)+' ms</b>. Pilih jumlah pilihan lain lalu mulai lagi.';return}
+    timer=setTimeout(()=>{lit=Math.floor(Math.random()*n);const l=$$('.lamp',lamps)[lit];l.style.background=COLORS[lit];l.classList.add('on');t0=performance.now()},rnd(700,1500))}
+  function press(i){if(!running)return;if(lit<0){msg.textContent='Terlalu cepat — tunggu lampunya menyala.';return}
+    const rt=performance.now()-t0;if(i===lit){rts.push(rt)}else{errs++}trial++;msg.textContent='Percobaan '+trial+' dari 8';next()}
+  start.addEventListener('click',()=>{clearTimeout(timer);running=true;start.disabled=true;trial=0;rts=[];errs=0;msg.textContent='Bersiap… percobaan 1 dari 8';next()});
+  addEventListener('keydown',e=>{if(!running)return;const k=parseInt(e.key,10);if(k>=1&&k<=n)press(k-1)});
+  build();table();
+})();
+
+/* ---------- Miller bags svg ---------- */
+(function(){let s='';const cols=['var(--amber)'];for(let i=0;i<16;i++){const x=40+((i*53)%240)+ (i%3)*6,y=55+((i*37)%140);s+='<circle cx="'+x+'" cy="'+y+'" r="9" fill="var(--amber)" opacity="'+(0.55+((i*7)%5)/10)+'"/>'}$('#loose').innerHTML=s;
+  let b='';for(let k=0;k<4;k++){const bx=345+k*70,by=70;b+='<path d="M'+(bx)+' '+(by+20)+' h56 l-6 110 h-44 z" fill="var(--ok-bg)" stroke="var(--ok)" stroke-width="2"/><path d="M'+(bx+16)+' '+(by+20)+' q12 -26 24 0" fill="none" stroke="var(--ok)" stroke-width="2"/>';
+    for(let j=0;j<4;j++){b+='<circle cx="'+(bx+18+(j%2)*20)+'" cy="'+(by+60+Math.floor(j/2)*34)+'" r="8" fill="var(--amber)"/>'}
+    b+='<text x="'+(bx+28)+'" y="'+(by+150)+'" font-size="12" text-anchor="middle" fill="var(--ink-2)">chunk '+(k+1)+'</text>'}
+  $('#bags').innerHTML=b})();
+
+/* ---------- Memory lab ---------- */
+(function(){const disp=$('#mDigits'),wrap=$('#mInputWrap'),inp=$('#mIn');let cur='',round=0,busy=false;
+  function gen(){let s=String(1+Math.floor(Math.random()*9));while(s.length<12)s+=Math.floor(Math.random()*10);return s}
+  function go(r){if(busy)return;busy=true;round=r;cur=gen();wrap.style.display='none';inp.value='';
+    disp.textContent=r===1?cur:cur.replace(/(\d{4})(?=\d)/g,'$1  ');
+    setTimeout(()=>{disp.textContent='• • • •  tersembunyi  • • • •';wrap.style.display='block';inp.focus();busy=false},3000)}
+  $('#mR1').addEventListener('click',()=>go(1));$('#mR2').addEventListener('click',()=>go(2));
+  function check(){if(!round)return;const a=inp.value.replace(/\D/g,'');let c=0;for(let i=0;i<12;i++)if(a[i]===cur[i])c++;
+    $('#mS'+round).textContent=c+' / 12';disp.textContent='Jawaban: '+cur.replace(/(\d{4})(?=\d)/g,'$1 ');wrap.style.display='none';
+    const s1=$('#mS1').textContent,s2=$('#mS2').textContent;
+    if(s1!=='–'&&s2!=='–'){$('#mNote').textContent=parseInt(s2)>parseInt(s1)?'Chunking membantu Anda mengingat lebih banyak angka — padahal jumlah angkanya sama.':'Hasil kedua putaran mirip. Ulangi beberapa kali: efek chunking biasanya terlihat lebih jelas setelah beberapa percobaan, dan sebagian orang sudah melakukan chunking sendiri di kepala.'}
+    round=0}
+  $('#mCheck').addEventListener('click',check);inp.addEventListener('keydown',e=>{if(e.key==='Enter')check()});
+})();
+
+/* ---------- Latency ---------- */
+(function(){const box=$('#lBox'),rate=$('#lRate'),log=$('#lLog');let lastCfg=null,t=null;const rows=[];
+  seg($('#lLat'));seg($('#lFb'));
+  const done='<div class="av" aria-hidden="true"></div><div><b style="font-size:1.05rem">Rani Kusuma</b><div class="note">Mahasiswi Sistem Informasi · Semester 5</div><p style="margin:8px 0 0">Tertarik pada riset aksesibilitas aplikasi layanan publik dan desain untuk pengguna lansia.</p></div>';
+  const skel='<div class="av sk"></div><div style="flex:1"><div class="sk" style="height:16px;width:40%;margin-bottom:10px"></div><div class="sk" style="height:12px;width:60%;margin-bottom:14px"></div><div class="sk" style="height:12px;width:90%;margin-bottom:8px"></div><div class="sk" style="height:12px;width:75%"></div></div>';
+  $('#lGo').addEventListener('click',()=>{clearTimeout(t);const lat=+segVal($('#lLat'),'v'),fb=segVal($('#lFb'),'v');lastCfg={lat,fb};rate.style.display='none';
+    box.innerHTML=fb==='skel'?skel:fb==='spin'?'<div style="flex:1"><div class="spin" role="status" aria-label="Memuat"></div></div>':'';
+    t=setTimeout(()=>{box.innerHTML=done;rate.style.display='block'},lat)});
+  $$('[data-r]',rate).forEach(b=>b.addEventListener('click',()=>{if(!lastCfg)return;rows.unshift({...lastCfg,r:+b.dataset.r});rate.style.display='none';
+    const name={none:'Tanpa indikator',spin:'Spinner',skel:'Skeleton'};
+    log.innerHTML=rows.slice(0,8).map(x=>'<tr><td>'+(x.lat>=1000?(x.lat/1000)+' dtk':x.lat+' ms')+'</td><td>'+name[x.fb]+'</td><td class="num">'+x.r+' / 5</td></tr>').join('')}));
+})();
+
+/* ---------- Cycle ---------- */
+(function(){const info={
+  goal:['var(--amber)','Goal','Titik awal: apa yang ingin dicapai pengguna? Tidak ada hukum khusus di sini, tetapi semua hukum lain melayani tujuan ini.'],
+  plan:['var(--purple)','Plan → Jakob\'s Law','Pengguna merencanakan tindakan berdasarkan model mental dari aplikasi lain. "Keranjang pasti di kanan atas." Pelanggaran konvensi menghasilkan <b>mistake</b>.'],
+  specify:['var(--amber)','Specify → Hick\'s Law','Pengguna memilih urutan aksi di antara opsi yang tersedia. Makin banyak opsi yang setara, makin lama tahap ini.'],
+  perform:['var(--blue)','Perform → Fitts\'s Law','Pengguna menggerakkan jari atau kursor menuju target. Rasio D/W menentukan seberapa cepat dan akurat gerakan ini.'],
+  world:['var(--gray)','Sistem','Sistem menerima input dan mengubah keadaannya. Dari sini, siklus beralih ke sisi evaluasi.'],
+  perceive:['var(--teal)','Perceive → Doherty Threshold','Pengguna menangkap tanggapan sistem. Di bawah ±400 ms, tanggapan terasa menyatu dengan tindakan; lebih lama dari itu, perlu umpan balik visual.'],
+  interpret:['var(--amber)','Interpret → Miller\'s Law','Pengguna memaknai tanggapan. Jika harus menahan terlalu banyak informasi sekaligus, tafsirannya mudah keliru — chunking membantu.'],
+  compare:['var(--purple)','Compare → Jakob\'s Law','Pengguna membandingkan hasil dengan tujuan <em>dan</em> dengan ekspektasinya. Hasil yang sesuai model mental terasa "benar"; yang tidak, memicu kebingungan.']};
+  $$('.cyc-node').forEach(g=>{const f=()=>{const d=info[g.dataset.k];$('#cycInfo').innerHTML='<b style="color:'+d[0]+'">'+d[1]+'</b><br>'+d[2]};g.addEventListener('click',f);g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}})});
+})();
+
+/* ---------- Calculator ---------- */
+(function(){const D=$('#cD'),W=$('#cW');function u(){const d=+D.value,w=+W.value;if(d>0&&w>0){$('#cR').textContent=fmt(d/w);$('#cID').textContent=fmt(Math.log2(1+d/w))+' bit'}}D.addEventListener('input',u);W.addEventListener('input',u);u()})();
+
+/* ---------- Quiz ---------- */
+const LAW={jakob:['Jakob\'s Law','var(--purple)'],fitts:['Fitts\'s Law','var(--blue)'],hick:['Hick\'s Law','var(--amber)'],miller:['Miller\'s Law','var(--amber)'],doherty:['Doherty Threshold','var(--teal)'],multi:['Gabungan hukum','var(--ink-2)']};
+const Q=[
+{law:'jakob',q:'Sebuah aplikasi baru meletakkan tombol "Kirim" di kiri bawah layar — posisi yang di hampir semua aplikasi lain ditempati tombol "Batal". Banyak pengguna tidak sengaja membatalkan formulir. Hukum mana yang paling dilanggar?',
+ o:[['Fitts\'s Law','Skenario tidak menyebut tombol terlalu kecil atau jauh. Pengguna berhasil menjangkaunya — masalahnya, mereka salah menafsirkan fungsinya.'],
+    ['Jakob\'s Law','Tepat. Dalam model mental pengguna, posisi itu berarti "Batal". Mereka bertindak berdasarkan ekspektasi dari aplikasi lain, sehingga terjadi mistake.',1],
+    ['Miller\'s Law','Tidak ada informasi yang harus ditahan di memori kerja dalam skenario ini.'],
+    ['Doherty Threshold','Tidak ada masalah kecepatan respons sistem yang disebutkan.']],
+ x:'Posisi elemen membawa makna yang dipelajari dari produk lain. Melanggar konvensi posisi sama dengan mengubah arti tombol tanpa memberi tahu pengguna.'},
+{law:'hick',q:'Desainer ingin menampilkan 12 fitur unggulan di beranda aplikasi. Strategi mana yang paling sesuai dengan Hick\'s Law?',
+ o:[['Menampilkan semua 12 fitur dengan ikon berwarna-warni agar menarik.','Warna-warni tidak mengurangi jumlah opsi yang harus ditimbang, dan bisa menambah kebisingan visual.'],
+    ['Mengelompokkan menjadi 3–4 kategori yang dapat dibuka, dengan satu fitur utama ditonjolkan.','Tepat. Kategorisasi mengurangi opsi yang ditimbang sekaligus, dan fitur yang ditonjolkan memberi titik awal keputusan.',1],
+    ['Mengecilkan font agar 12 fitur muat dalam satu baris.','Ini melanggar Fitts (target kecil) dan tetap menyajikan 12 opsi sekaligus.'],
+    ['Menampilkan fitur secara acak setiap kali aplikasi dibuka.','Posisi yang berubah-ubah melanggar Jakob\'s Law dan memaksa pengguna memindai ulang setiap kali.']],
+ x:'Hick\'s Law dikendalikan dengan mengurangi jumlah opsi yang harus dipertimbangkan pada satu waktu: kelompokkan, tunda, atau rekomendasikan.'},
+{law:'miller',q:'Kode OTP 6 digit ditampilkan sebagai "482 931", bukan "482931". Alasan paling tepat adalah…',
+ o:[['Agar terlihat lebih estetis.','Estetika mungkin menjadi efek samping, tetapi bukan alasan utamanya.'],
+    ['Chunking mengubah 6 item menjadi 2 unit, sesuai kapasitas memori kerja yang sekitar 4 item.','Tepat. Enam digit tunggal melampaui kapasitas murni ±4 item (Cowan, 2001); dua chunk jauh lebih mudah ditahan saat berpindah aplikasi.',1],
+    ['Untuk menghemat ruang layar.','Spasi justru menambah lebar tampilan.'],
+    ['Karena Hick\'s Law membatasi jumlah angka yang boleh ditampilkan.','Hick\'s Law menyangkut jumlah opsi dalam keputusan, bukan jumlah digit yang diingat.']],
+ x:'OTP harus ditahan di kepala ketika pengguna berpindah dari SMS ke aplikasi — tepat situasi di mana batas memori kerja berlaku.'},
+{law:'fitts',q:'Di macOS, menu bar menempel di tepi atas layar. Mengapa posisi ini efisien menurut Fitts\'s Law, dan apakah prinsip yang sama berlaku untuk tombol di tepi atas layar ponsel?',
+ o:[['Efisien karena warna menu bar kontras; berlaku juga di ponsel.','Kontras membantu menemukan target, tetapi bukan penjelasan Fitts\'s Law tentang tepi layar.'],
+    ['Efisien karena kursor tertahan tepi sehingga lebar efektif target "tak terhingga"; tidak berlaku di ponsel karena jari tidak tertahan tepi, dan tepi atas justru sulit dijangkau ibu jari.','Tepat. Infinite edge adalah sifat perangkat pointer. Di layar sentuh, jari harus mendarat tepat di target.',1],
+    ['Efisien karena dekat dengan penglihatan periferal; berlaku juga di ponsel.','Penglihatan periferal berkaitan dengan perhatian, bukan kecepatan gerak menuju target.'],
+    ['Tidak efisien karena jauh dari tengah layar.','Jaraknya memang jauh, tetapi W efektif yang tak terhingga membuat ID sangat kecil pada perangkat pointer.']],
+ x:'Inilah alasan iOS menambahkan gestur geser dari tepi kiri sebagai alternatif tombol "Back" di kiri atas.'},
+{law:'doherty',q:'Halaman daftar produk butuh 3 detik untuk memuat data, dan engineer belum dapat mempercepatnya bulan ini. Tindakan desain terbaik adalah…',
+ o:[['Menghapus semua gambar produk.','Mengorbankan informasi penting bagi keputusan membeli, dan belum tentu memecahkan kelambatan data.'],
+    ['Menampilkan skeleton screen berbentuk kartu produk selama data dimuat.','Tepat. Actual performance tidak berubah, tetapi perceived performance membaik: pengguna tahu sistem bekerja dan sudah melihat tata letaknya.',1],
+    ['Menampilkan teks penjelasan teknis mengapa server lambat.','Menambah beban membaca tanpa mengurangi rasa menunggu.'],
+    ['Menampilkan layar putih sampai semua data siap.','Layar kosong membuat pengguna ragu apakah sistem berjalan — persis yang ingin dicegah.']],
+ x:'Ketika waktu nyata tidak dapat dikurangi, rancang waktu yang dirasakan.'},
+{law:'multi',q:'Aplikasi transportasi daring memindahkan tombol "Pesan" dari bawah layar ke menu tersembunyi di pojok kanan atas. Setelah pembaruan, jumlah pesanan turun. Kombinasi hukum yang paling menjelaskan penurunan ini adalah…',
+ o:[['Miller\'s Law dan Doherty Threshold','Tidak ada beban mengingat atau masalah kecepatan respons dalam skenario ini.'],
+    ['Jakob\'s Law dan Fitts\'s Law','Tepat. Posisi kebiasaan hilang (Jakob), dan target kini lebih jauh dari ibu jari serta tersembunyi di balik langkah tambahan (Fitts).',1],
+    ['Hick\'s Law saja','Jumlah opsi tidak bertambah; yang berubah adalah posisi dan jangkauan.'],
+    ['Doherty Threshold saja','Kecepatan sistem tidak berubah.']],
+ x:'Soal ini menguji kemampuan melihat lebih dari satu hukum yang bekerja sekaligus — kondisi yang paling sering terjadi di dunia nyata.'},
+{law:'hick',q:'Desainer menyembunyikan pengaturan yang jarang dipakai (ekspor data, zona waktu, API key) di balik tautan "Pengaturan lanjutan". Teknik ini disebut…',
+ o:[['Chunking','Chunking adalah mengelompokkan informasi, bukan menunda kemunculannya.'],
+    ['Progressive disclosure','Tepat. Yang esensial ditampilkan lebih dulu; kompleksitas ditunda sampai dibutuhkan.',1],
+    ['Deliberate delay','Deliberate delay berkaitan dengan waktu respons sistem, bukan penyembunyian opsi.'],
+    ['Infinite edge','Infinite edge adalah konsep Fitts\'s Law tentang tepi layar.']],
+ x:'Progressive disclosure mengurangi jumlah opsi yang harus ditimbang pengguna mayoritas, tanpa menghapus fitur bagi pengguna ahli.'},
+{law:'doherty',q:'Saat membaca artikel panjang, pengguna terus terganggu oleh ikon notifikasi merah yang berkedip di pojok layar. Penjelasan paling tepat adalah…',
+ o:[['Penglihatan periferal dan amigdala bereaksi sangat cepat (±80 ms) terhadap gerakan dan stimulus emosional, sehingga perhatian tertarik secara otomatis dari area baca.','Tepat. Jalur periferal bekerja otomatis, di luar kendali sadar (Weinschenk, 2020, #2).',1],
+    ['Warna merah menurunkan kontras teks artikel.','Ikon di pojok tidak mengubah kontras teks di area baca.'],
+    ['Notifikasi melanggar Hick\'s Law karena menambah jumlah pilihan.','Notifikasi mengganggu perhatian, bukan menambah opsi keputusan.'],
+    ['Pojok layar adalah infinite edge sehingga menarik kursor.','Infinite edge mempermudah gerakan kursor, bukan menarik perhatian mata.']],
+ x:'Animasi di tepi layar harus dipakai sangat hati-hati pada aplikasi yang menuntut fokus.'},
+{law:'doherty',q:'Aplikasi bank menampilkan animasi "Memverifikasi keamanan…" selama 1 detik sebelum transfer dinyatakan berhasil, meski verifikasi selesai lebih cepat. Pernyataan mana yang paling tepat?',
+ o:[['Ini melanggar Doherty Threshold dan harus dihapus.','Doherty Threshold bukan aturan mutlak; pada proses bermakna tinggi, sedikit friction dapat membangun kepercayaan.'],
+    ['Ini dapat meningkatkan rasa aman dan kepercayaan (labor illusion), selama animasinya menggambarkan proses yang memang terjadi.','Tepat. Pengguna menilai hasil lebih berharga ketika kerja sistem terlihat (Buell & Norton, 2011) — dengan syarat kejujuran.',1],
+    ['Ini bertujuan menambah beban kognitif agar pengguna lebih berhati-hati.','Animasi ini tidak menuntut pengguna berpikir lebih keras; tujuannya membangun kepercayaan.'],
+    ['Ini diperlukan untuk memenuhi standar target sentuh Apple.','Standar target sentuh berkaitan dengan ukuran, bukan waktu.']],
+ x:'Deliberate delay adalah alat yang sah, tetapi berbatasan dengan manipulasi bila mengklaim proses yang tidak dilakukan.'},
+{law:'fitts',q:'Menurut ID = log₂(1 + D/W), target manakah yang paling sulit dicapai?',
+ o:[['Lebar 100 px, jarak 100 px','ID = log₂(2) = 1,00 bit — paling mudah di antara pilihan.'],
+    ['Lebar 10 px, jarak 500 px','Tepat. ID = log₂(51) ≈ 5,67 bit — jauh lebih tinggi dari pilihan lain.',1],
+    ['Lebar 40 px, jarak 160 px','ID = log₂(5) ≈ 2,32 bit.'],
+    ['Lebar 20 px, jarak 60 px','ID = log₂(4) = 2,00 bit. Hampir sama dengan opsi 40/160 meski ukurannya berbeda — yang menentukan adalah rasio D/W.']],
+ x:'Selalu hitung rasio D/W. Ukuran atau jarak saja tidak cukup untuk menilai kesulitan.'},
+{law:'miller',q:'Seorang rekan menolak menambah item ke-9 pada menu navigasi situs kampus dengan alasan "Miller\'s Law membatasi maksimal 7 ± 2 item". Tanggapan paling tepat adalah…',
+ o:[['Setuju, karena memori kerja manusia memang terbatas 7 item.','Angka 7 ± 2 sudah dikoreksi riset lanjutan, dan menu tidak perlu dihafal.'],
+    ['Setuju, bahkan sebaiknya dikurangi menjadi 4 sesuai riset Cowan.','Cowan berbicara tentang item yang harus ditahan di kepala, bukan item yang terlihat di layar.'],
+    ['Kurang tepat: menu terlihat di layar dan cukup dikenali (recognition), bukan diingat (recall). Yang lebih penting adalah pengelompokan dan label yang jelas.','Tepat. Ini salah kaprah yang diluruskan Yablonski (2020). Namun jumlah item tetap memengaruhi waktu keputusan (Hick), sehingga pengelompokan tetap bermanfaat.',1],
+    ['Tidak relevan, karena Miller\'s Law hanya berlaku untuk angka.','Memori kerja berlaku untuk semua jenis informasi, bukan hanya angka.']],
+ x:'Tanyakan selalu: apakah pengguna harus menahan informasi ini di kepala, atau cukup melihatnya di layar?'},
+{law:'fitts',q:'Sebuah tim menerapkan Fitts\'s Law secara ekstrem: semua tombol di halaman pengaturan dibuat besar dan dekat ibu jari, termasuk "Hapus akun permanen". Evaluasi keputusan ini.',
+ o:[['Tepat, karena semua target harus semudah mungkin dijangkau.','Tidak semua aksi seharusnya mudah. Aksi yang tidak dapat dibatalkan butuh perlindungan dari slip.'],
+    ['Kurang tepat: aksi destruktif sebaiknya diberi friction — lebih kecil, lebih jauh, atau butuh konfirmasi — untuk mencegah kesalahan yang tidak dapat dibatalkan.','Tepat. Fitts\'s Law menjelaskan cara membuat target mudah; desainer memutuskan target mana yang seharusnya mudah (Norman, 2013).',1],
+    ['Tepat, asalkan warnanya merah.','Warna membantu memberi tanda bahaya, tetapi tidak mencegah salah ketuk pada target besar yang dekat.'],
+    ['Kurang tepat, karena tombol besar melanggar Jakob\'s Law.','Tombol besar tidak melanggar konvensi; masalahnya adalah risiko aksi destruktif.']],
+ x:'Hukum UX adalah alat. Untuk aksi berisiko, mencegah slip lebih penting daripada kecepatan.'}
+];
+(function(){const box=$('#quiz');let order=[],i=0,score=0,answers=[];
+  function startQuiz(){order=Q.map((q,k)=>({k,opts:shuffle(q.o.map((o,j)=>({t:o[0],f:o[1],ok:!!o[2],j})))}));i=0;score=0;answers=[];render()}
+  function render(){const it=order[i],q=Q[it.k],L=LAW[q.law];
+    box.innerHTML='<div class="qtop"><span>Soal <b>'+(i+1)+'</b> dari '+Q.length+'</span><div class="qbar"><i style="width:'+(i/Q.length*100)+'%"></i></div><span>Skor: <b>'+score+'</b></span></div>'+
+    '<div class="qbody"><div class="qlaw" style="color:'+L[1]+'">'+L[0]+'</div><div class="qtext">'+q.q+'</div><div class="opts">'+
+    it.opts.map((o,j)=>'<button class="opt" type="button" data-j="'+j+'"><span class="l">'+'ABCD'[j]+'</span><span>'+o.t+'</span></button>').join('')+
+    '</div><div class="fb" id="qfb" aria-live="polite"></div><div class="qnav"><button class="btn" id="qnext" type="button" style="--c:var(--ink);display:none">'+(i<Q.length-1?'Soal berikutnya':'Lihat skor')+'</button></div></div>';
+    $$('.opt',box).forEach(b=>b.addEventListener('click',()=>pick(+b.dataset.j)));
+    $('#qnext').addEventListener('click',()=>{i++;if(i<Q.length)render();else end()})}
+  function pick(j){const it=order[i],q=Q[it.k],o=it.opts[j];const btns=$$('.opt',box);btns.forEach(b=>b.disabled=true);
+    const ci=it.opts.findIndex(x=>x.ok);btns[ci].classList.add('right');if(!o.ok)btns[j].classList.add('wrong');
+    if(o.ok)score++;answers.push({k:it.k,ok:o.ok,chosen:o.t,right:it.opts[ci].t});
+    const fb=$('#qfb');fb.className='fb show '+(o.ok?'ok':'no');
+    fb.innerHTML='<span class="v">'+(o.ok?'Benar.':'Belum tepat.')+'</span>'+o.f+(o.ok?'':'<br><br><b>Jawaban yang tepat:</b> '+it.opts[ci].t+' — '+it.opts[ci].f)+'<div class="why">'+q.x+'</div>';
+    box.querySelector('.qtop span:last-child b').textContent=score;
+    const n=$('#qnext');n.style.display='inline-block';n.focus()}
+  function end(){const p=Math.round(score/Q.length*100);let msg=p>=85?'Sangat baik — Anda dapat menerapkan kelima hukum sekaligus memahami batasnya.':p>=60?'Cukup baik. Tinjau ulang soal yang salah, terutama bagian "Kapan hukum ini tidak berlaku".':'Baca ulang bagian teori dan coba lagi. Fokus pada perbedaan antarhukum dan batas berlakunya.';
+    box.innerHTML='<div class="qtop"><span>Selesai</span><div class="qbar"><i style="width:100%"></i></div><span>Skor: <b>'+score+'</b></span></div><div class="score"><div class="big">'+score+' / '+Q.length+'</div><p style="margin-top:10px">'+msg+'</p>'+
+    '<ol class="review">'+answers.map(a=>'<li>'+(a.ok?'✅':'❌')+' <b>'+LAW[Q[a.k].law][0]+'</b> — '+(a.ok?'benar':'jawaban tepat: '+a.right)+'</li>').join('')+'</ol>'+
+    '<button class="btn" id="qretry" type="button" style="--c:var(--ink);margin-top:16px">Ulangi kuis</button></div>';
+    $('#qretry').addEventListener('click',()=>{startQuiz();box.scrollIntoView({block:'start'})})}
+  startQuiz();
+})();
+})();
+</script>
+</body>
+</html>
