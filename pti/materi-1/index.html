@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Revolusi Industri — Bahan Ajar Mendalam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ──────────────────────────────────────────────────── */
+:root {
+  --bg:        #0F1923;
+  --surface:   #18273A;
+  --surface2:  #1F3147;
+  --border:    rgba(255,255,255,.08);
+  --gold:      #C8903A;
+  --teal:      #3AADA0;
+  --coral:     #D9664E;
+  --violet:    #7B61FF;
+  --text:      #E8E3DC;
+  --muted:     #7A8BA0;
+  --sidebar:   #0B1520;
+  --sw:        256px;       /* sidebar width */
+  --cmax:      720px;       /* content max-width */
+  --r:         8px;
+  --fs:        16px;
+  --fui:       'Plus Jakarta Sans', system-ui, sans-serif;
+  --fser:      'Playfair Display', Georgia, serif;
+  /* era colours */
+  --e1: #B8703A;
+  --e2: #C8A830;
+  --e3: #36A882;
+  --e4: #4888D0;
+  --e5: #8869E0;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top,0px);
+  padding-bottom: env(safe-area-inset-bottom,0px);
+}
+html { height:100%; scroll-padding-top: calc(48px + env(safe-area-inset-top,0px)); }
+*, *::before, *::after { box-sizing:inherit; margin:0; padding:0; }
+
+body {
+  font-family: var(--fui);
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--fs);
+  line-height: 1.8;
+  min-height: 100%;
+}
+
+/* ── READING PROGRESS ──────────────────────────────────────── */
+.read-bar {
+  position: fixed; top:0; left:0; height:3px;
+  background: var(--gold); z-index:300;
+  width: 0; transition: width .1s linear;
+}
+
+/* ── STICKY HEADER ─────────────────────────────────────────── */
+.site-header {
+  position: fixed; top:0; left:0; right:0; height:48px;
+  background: rgba(11,21,32,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 24px 0 calc(var(--sw) + 24px);
+  z-index: 200;
+}
+.site-header .h-title {
+  font-size: 13px; font-weight: 600; color: var(--muted);
+  letter-spacing: .03em;
+}
+.site-header .h-brand {
+  margin-left: auto; font-size: 11px; color: rgba(122,139,160,.6);
+}
+.menu-btn {
+  display: none; background: none; border: none; color: var(--muted);
+  font-size: 20px; cursor: pointer; margin-right: 16px; padding: 4px;
+}
+
+/* ── SIDEBAR ───────────────────────────────────────────────── */
+.sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0; width: var(--sw);
+  background: var(--sidebar);
+  border-right: 1px solid var(--border);
+  overflow-y: auto; z-index: 201;
+  display: flex; flex-direction: column;
+  padding-top: env(safe-area-inset-top,0px);
+}
+.sidebar::-webkit-scrollbar { width:3px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,.08); }
+
+.sb-brand {
+  padding: 20px 20px 6px;
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  color: rgba(122,139,160,.7);
+}
+.sb-title {
+  padding: 0 20px 20px;
+  font-family: var(--fser); font-size: 15px; font-weight: 700;
+  color: var(--text); line-height: 1.3;
+  border-bottom: 1px solid var(--border);
+}
+
+.sb-nav { padding: 12px 0; flex:1; }
+.sb-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 20px; cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: background .15s, border-color .15s;
+  text-decoration: none; color: var(--muted);
+}
+.sb-item:hover { background: rgba(255,255,255,.04); color: var(--text); }
+.sb-item.active {
+  border-left-color: var(--gold);
+  background: rgba(200,144,58,.07);
+  color: var(--text);
+}
+.sb-item.active .sb-num { color: var(--gold); }
+.sb-num { font-size: 11px; font-weight: 800; min-width: 20px; margin-top: 2px; }
+.sb-label { font-size: 12.5px; font-weight: 500; line-height: 1.4; }
+.sb-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,.15); flex-shrink: 0; margin-top: 6px;
+  margin-left: auto;
+  transition: background .2s;
+}
+.sb-item.read .sb-dot { background: var(--teal); }
+
+.sb-progress-wrap {
+  padding: 16px 20px; border-top: 1px solid var(--border);
+}
+.sb-prog-label { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+.sb-prog-bar { height: 4px; background: rgba(255,255,255,.1); border-radius: 2px; overflow: hidden; }
+.sb-prog-fill { height: 100%; background: var(--teal); border-radius: 2px; transition: width .4s ease; }
+
+/* ── LAYOUT ────────────────────────────────────────────────── */
+.layout { margin-left: var(--sw); padding-top: 48px; }
+.content { max-width: var(--cmax); margin: 0 auto; padding: 0 40px 100px; }
+
+/* ── HERO ──────────────────────────────────────────────────── */
+.hero {
+  padding: 72px 0 56px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-eyebrow {
+  font-size: 12px; font-weight: 700; letter-spacing: .1em;
+  color: var(--gold); margin-bottom: 20px;
+}
+.hero-title {
+  font-family: var(--fser);
+  font-size: clamp(32px,5vw,56px);
+  font-weight: 900; line-height: 1.1;
+  margin-bottom: 20px; color: var(--text);
+}
+.hero-sub {
+  font-size: clamp(15px,2vw,18px);
+  color: var(--muted); max-width: 580px; line-height: 1.7;
+  margin-bottom: 32px;
+}
+.hero-meta {
+  display: flex; flex-wrap: wrap; gap: 20px;
+  font-size: 12.5px; color: var(--muted);
+}
+.hero-meta span { display: flex; align-items: center; gap: 7px; }
+
+/* ── MODULE SECTIONS ───────────────────────────────────────── */
+.module { padding: 64px 0 0; }
+.mod-header {
+  margin-bottom: 36px; padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+.mod-era {
+  font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+}
+.era-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.mod-title {
+  font-family: var(--fser);
+  font-size: clamp(24px,3.5vw,38px);
+  font-weight: 900; line-height: 1.15;
+  margin-bottom: 10px;
+}
+.mod-desc { font-size: 15px; color: var(--muted); line-height: 1.65; }
+
+/* prose */
+.prose p { margin-bottom: 20px; }
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { color: var(--text); font-weight: 700; }
+.prose em { font-style: italic; }
+
+/* ── CALLOUT BOXES ─────────────────────────────────────────── */
+.box {
+  border-radius: var(--r); padding: 22px 26px;
+  margin: 28px 0; font-size: 15px; line-height: 1.72;
+}
+.box-label {
+  font-size: 10.5px; font-weight: 800; letter-spacing: .1em;
+  margin-bottom: 10px; display: flex; align-items: center; gap: 7px;
+}
+
+.box-story {
+  background: rgba(217,100,78,.07);
+  border-left: 3px solid var(--coral);
+  border-radius: 0 var(--r) var(--r) 0;
+  font-family: var(--fser); font-style: italic;
+  color: #EFC9C2;
+}
+.box-story .box-label { color: var(--coral); font-style: normal; }
+.box-story strong { color: #F0D4CE; font-style: normal; }
+
+.box-analogy {
+  background: rgba(200,144,58,.07);
+  border: 1px solid rgba(200,144,58,.25);
+  color: #F0DDC0;
+}
+.box-analogy .box-label { color: var(--gold); }
+.box-analogy strong { color: #F5E5C0; }
+
+.box-bridge {
+  background: rgba(58,173,160,.07);
+  border: 1px solid rgba(58,173,160,.25);
+  color: #B8E8E4;
+}
+.box-bridge .box-label { color: var(--teal); }
+.box-bridge strong { color: #C8EEE9; }
+
+.box-activity {
+  background: rgba(123,97,255,.07);
+  border: 1px solid rgba(123,97,255,.25);
+}
+.box-activity .box-label { color: var(--violet); }
+.box-activity-body { margin-top: 14px; }
+
+.box-takeaway {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.box-takeaway .box-label { color: var(--text); }
+.box-takeaway ul { padding-left: 18px; }
+.box-takeaway ul li { margin-bottom: 8px; font-size: 14px; }
+.box-takeaway ul li::marker { color: var(--gold); }
+
+.box-fact {
+  background: rgba(72,136,208,.07);
+  border: 1px solid rgba(72,136,208,.2);
+  color: #BDD8F0;
+}
+.box-fact .box-label { color: var(--e4); }
+
+/* ── ACTIVITY INTERACTIVE ──────────────────────────────────── */
+.activity-q { font-size: 14.5px; font-weight: 600; color: var(--text); margin-bottom: 10px; line-height: 1.55; }
+.activity-input {
+  width: 100%; background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--r); padding: 12px 16px;
+  color: var(--text); font-family: var(--fui); font-size: 14px;
+  resize: vertical; min-height: 80px; line-height: 1.65;
+  transition: border-color .2s;
+}
+.activity-input:focus { outline: none; border-color: var(--violet); }
+.activity-input::placeholder { color: var(--muted); }
+.activity-save {
+  margin-top: 10px; background: var(--violet); color: #fff;
+  border: none; border-radius: var(--r); padding: 9px 20px;
+  font-family: var(--fui); font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: opacity .2s;
+}
+.activity-save:hover { opacity: .85; }
+.activity-saved { display:none; font-size:12px; color: var(--teal); margin-top:8px; }
+.activity-checklist { display: flex; flex-direction: column; gap: 10px; }
+.check-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 14px; line-height: 1.55; cursor: pointer;
+}
+.check-item input[type=checkbox] {
+  width:17px; height:17px; flex-shrink:0; margin-top:2px;
+  accent-color: var(--violet); cursor: pointer;
+}
+
+/* ── COMPARISON TABLE ──────────────────────────────────────── */
+.table-wrap { overflow-x: auto; margin: 28px 0; }
+.compare-tbl { width: 100%; border-collapse: collapse; font-size: 14px; }
+.compare-tbl th {
+  padding: 12px 18px; text-align: left; font-size: 12px;
+  font-weight: 700; letter-spacing: .05em;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+.compare-tbl td {
+  padding: 13px 18px; border-bottom: 1px solid var(--border);
+  line-height: 1.6; vertical-align: top;
+}
+.compare-tbl tr:last-child td { border-bottom: none; }
+.compare-tbl tr:hover td { background: rgba(255,255,255,.025); }
+.th-old { color: var(--e1); }
+.th-new { color: var(--e4); }
+
+/* ── TIMELINE ──────────────────────────────────────────────── */
+.timeline { margin: 28px 0; display:flex; flex-direction:column; gap:0; }
+.tl-item { display: flex; gap: 20px; }
+.tl-left { display:flex; flex-direction:column; align-items:center; gap:0; flex-shrink:0; width:18px; }
+.tl-dot { width:14px; height:14px; border-radius:50%; flex-shrink:0; border: 2px solid; }
+.tl-line { flex:1; width:2px; background: var(--border); }
+.tl-item:last-child .tl-line { display:none; }
+.tl-content { padding: 0 0 28px; }
+.tl-year { font-size: 11px; font-weight: 800; letter-spacing:.08em; margin-bottom: 5px; }
+.tl-text { font-size: 14px; line-height: 1.65; color: var(--muted); }
+.tl-text strong { color: var(--text); }
+
+/* ── PULL QUOTE ────────────────────────────────────────────── */
+.pullquote {
+  font-family: var(--fser); font-style: italic;
+  font-size: clamp(18px,2.5vw,24px);
+  line-height: 1.5; color: var(--text);
+  padding: 24px 0 24px 28px;
+  border-left: 3px solid var(--gold);
+  margin: 32px 0;
+}
+.pullquote cite {
+  display: block; font-style: normal; font-size: 13px;
+  color: var(--muted); margin-top: 12px; font-family: var(--fui); font-weight: 600;
+}
+
+/* ── GRID ──────────────────────────────────────────────────── */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 28px 0; }
+.grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 28px 0; }
+.g-card {
+  background: var(--surface); border-radius: var(--r);
+  padding: 18px 20px; border: 1px solid var(--border);
+}
+.g-card-label {
+  font-size: 10.5px; font-weight: 700; letter-spacing:.1em;
+  color: var(--muted); margin-bottom: 10px;
+}
+.g-card p { font-size: 13.5px; line-height: 1.65; }
+
+/* ── MODULE DIVIDER ────────────────────────────────────────── */
+.mod-divider {
+  margin: 64px 0 0; padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex; gap: 16px; align-items: center;
+}
+.md-badge {
+  background: var(--surface); border-radius: 20px;
+  padding: 5px 14px; font-size: 12px; font-weight: 700;
+  color: var(--muted); white-space: nowrap;
+}
+
+/* ── INFOBAR ───────────────────────────────────────────────── */
+.infobar {
+  background: var(--surface2); border-radius: var(--r);
+  padding: 6px 6px 6px 16px;
+  display: flex; gap: 12px; align-items: center;
+  margin: 28px 0; font-size: 13.5px;
+}
+.infobar .ib-label { color: var(--muted); flex-shrink:0; }
+.infobar .ib-val { font-weight: 600; color: var(--text); }
+
+/* ── ROADMAP ───────────────────────────────────────────────── */
+.roadmap { display:flex; flex-direction:column; gap: 0; margin: 28px 0; }
+.rm-item { display:flex; gap:20px; }
+.rm-left { display:flex; flex-direction:column; align-items:center; }
+.rm-num-circle {
+  width: 40px; height: 40px; border-radius: 50%;
+  display:flex; align-items:center; justify-content:center;
+  font-weight: 900; font-size: 15px; flex-shrink:0;
+}
+.rm-vline { flex:1; width:2px; background: var(--border); min-height:20px; }
+.rm-item:last-child .rm-vline { display:none; }
+.rm-body { padding: 8px 0 28px; }
+.rm-step-title { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+.rm-step-body { font-size: 14px; color: var(--muted); line-height: 1.65; }
+.rm-step-body strong { color: var(--text); }
+
+/* ── CURRICULUM MAP ────────────────────────────────────────── */
+.curr-root {
+  background: var(--gold); color: #0F1923;
+  border-radius: var(--r); padding: 16px 22px;
+  font-weight: 800; font-size: 15px; text-align:center;
+  margin-bottom: 8px;
+}
+.curr-line { display:flex; justify-content:center; }
+.curr-line svg { opacity:.4; }
+.curr-branches {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 10px; margin-top: 8px;
+}
+.curr-branch {
+  border-radius: var(--r); padding: 16px 14px;
+  text-align: center; border: 2px solid;
+  font-size: 13px;
+}
+.cb-icon { font-size: 24px; margin-bottom: 8px; }
+.cb-title { font-weight: 700; margin-bottom: 5px; }
+.cb-desc { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+
+/* ── ADOPTION CURVE ────────────────────────────────────────── */
+.adoption-cards { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:20px; }
+.ad-card { background:var(--surface); border-radius:var(--r); padding:15px 17px; border:1px solid var(--border); }
+.ad-label { font-size:10.5px; font-weight:700; letter-spacing:.08em; margin-bottom:7px; }
+.ad-body { font-size:13px; line-height:1.65; color:var(--muted); }
+.ad-body strong { color:var(--text); }
+
+/* ── QUIZ ──────────────────────────────────────────────────── */
+.quiz-wrap { margin: 28px 0; }
+.quiz-q { font-size: 15px; font-weight: 600; margin-bottom: 14px; line-height: 1.55; }
+.quiz-opts { display: flex; flex-direction: column; gap: 9px; }
+.quiz-opt {
+  background: var(--surface); border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--r); padding: 12px 18px;
+  cursor: pointer; font-size: 14px; line-height: 1.5;
+  text-align: left; color: var(--text); width: 100%;
+  font-family: var(--fui); transition: border-color .15s, background .15s;
+}
+.quiz-opt:hover:not(:disabled) { border-color: var(--gold); background: var(--surface2); }
+.quiz-opt.ok  { border-color: var(--teal); background: rgba(58,173,160,.1); pointer-events:none; }
+.quiz-opt.bad { border-color: var(--coral); background: rgba(217,100,78,.1); pointer-events:none; }
+.quiz-opt:disabled { cursor: default; }
+.quiz-fb {
+  margin-top: 14px; padding: 13px 18px; border-radius: var(--r);
+  font-size: 14px; line-height: 1.65; display: none;
+}
+.quiz-fb.show { display:block; }
+.quiz-fb.ok  { background: rgba(58,173,160,.1); border:1px solid rgba(58,173,160,.28); color:#B8E8E4; }
+.quiz-fb.bad { background: rgba(217,100,78,.1);  border:1px solid rgba(217,100,78,.28); color:#EFC9C2; }
+
+/* ── BACK TO TOP ───────────────────────────────────────────── */
+.btt {
+  position: fixed; bottom: 28px; right: 28px;
+  background: var(--surface2); border: 1px solid var(--border);
+  color: var(--muted); width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items:center; justify-content:center;
+  cursor: pointer; font-size: 16px; z-index: 100;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .25s, transform .25s, border-color .2s;
+}
+.btt.show { opacity:1; transform: translateY(0); }
+.btt:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ── CLOSING ───────────────────────────────────────────────── */
+.closing {
+  padding: 64px 0 80px;
+  border-top: 1px solid var(--border);
+  margin-top: 64px;
+}
+.closing-title {
+  font-family: var(--fser); font-size: clamp(24px,3vw,36px);
+  font-weight: 900; margin-bottom: 20px;
+}
+
+/* ── MOBILE ────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  :root { --sw: 0px; }
+  .sidebar { transform: translateX(-256px); width: 256px; transition: transform .3s ease; z-index:300; }
+  .sidebar.open { transform: translateX(0); }
+  .layout { margin-left: 0; }
+  .site-header { padding-left: 16px; }
+  .menu-btn { display: block; }
+  .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:299; }
+  .overlay.show { display:block; }
+  .content { padding: 0 20px 80px; }
+  .grid2, .grid3, .curr-branches { grid-template-columns: 1fr; }
+  .adoption-cards { grid-template-columns: 1fr; }
+  .btt { bottom: 20px; right: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar, * { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="read-bar" id="readBar"></div>
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- ── HEADER ─────────────────────────────────────────────── -->
+<header class="site-header">
+  <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+  <span class="h-title">Revolusi Industri dalam Konteks Bisnis</span>
+  <span class="h-brand">Teras Digital Tech</span>
+</header>
+
+<!-- ── SIDEBAR ────────────────────────────────────────────── -->
+<nav class="sidebar" id="sidebar" aria-label="Navigasi Modul">
+  <div class="sb-brand">Teras Digital Tech</div>
+  <div class="sb-title">Revolusi Industri<br>dalam Konteks Bisnis</div>
+  <div class="sb-nav" id="sbNav">
+    <a class="sb-item active" href="#intro" data-sec="intro">
+      <span class="sb-num">0</span>
+      <span class="sb-label">Pendahuluan</span>
+      <span class="sb-dot"></span>
+    </a>
+    <a class="sb-item" href="#mod1" data-sec="mod1">
+      <span class="sb-num">1</span>
+      <span class="sb-label">Pengantar: Pola Perubahan</span>
+      <span class="sb-dot"></span>
+    </a>
+    <a class="sb-item" href="#mod2" data-sec="mod2">
+      <span class="sb-num">2</span>
+      <span class="sb-label">RI 1.0 · Mekanisasi</span>
+      <span class="sb-dot"></span>
+    </a>
+    <a class="sb-item" href="#mod3" data-sec="mod3">
+      <span class="sb-num">3</span>
+      <span class="sb-label">RI 2.0 · Elektrifikasi</span>
+      <span class="sb-dot"></span>
+    </a>
+    <a class="sb-item" href="#mod4" data-sec="mod4">
+      <span class="sb-num">4</span>
+      <span class="sb-label">RI 3.0 · Komputerisasi</span>
+      <span class="sb-dot"></span>
+    </a>
+    <a class="sb-item" href="#mod5" data-sec="mod5">
+      <span class="sb-num">5</span>
+      <span class="sb-label">RI 4.0 · Platform Digital</span>
+      <span class="sb-dot"></span>
+    </a>
+    <a class="sb-item" href="#mod6" data-sec="mod6">
+      <span class="sb-num">6</span>
+      <span class="sb-label">Society 5.0</span>
+      <span class="sb-dot"></span>
+    </a>
+    <a class="sb-item" href="#mod7" data-sec="mod7">
+      <span class="sb-num">7</span>
+      <span class="sb-label">Kerangka Analisis</span>
+      <span class="sb-dot"></span>
+    </a>
+    <a class="sb-item" href="#mod8" data-sec="mod8">
+      <span class="sb-num">8</span>
+      <span class="sb-label">Strategi Adaptasi UMKM</span>
+      <span class="sb-dot"></span>
+    </a>
+    <a class="sb-item" href="#penutup" data-sec="penutup">
+      <span class="sb-num">✦</span>
+      <span class="sb-label">Studi Kasus & Kuis</span>
+      <span class="sb-dot"></span>
+    </a>
+  </div>
+  <div class="sb-progress-wrap">
+    <div class="sb-prog-label">Progress membaca: <span id="progPct">0%</span></div>
+    <div class="sb-prog-bar"><div class="sb-prog-fill" id="sbFill" style="width:0%"></div></div>
+  </div>
+</nav>
+
+<!-- ── MAIN ───────────────────────────────────────────────── -->
+<div class="layout">
+<div class="content">
+
+<!-- ════════════════════════════════════════
+     PENDAHULUAN
+═════════════════════════════════════════ -->
+<section id="intro">
+<div class="hero">
+  <p class="hero-eyebrow">Bahan Ajar Pengantar · Kurikulum Bisnis Digital UMKM</p>
+  <h1 class="hero-title">Revolusi Industri dalam Konteks Bisnis & Perubahan Perilaku</h1>
+  <p class="hero-sub">Sebelum memahami data, media sosial, marketplace, dan teknologi kekinian — kita perlu memahami <em>mengapa</em> dunia bisnis berubah sampai seperti ini. Inilah petanya.</p>
+  <div class="hero-meta">
+    <span>📖 8 Modul</span>
+    <span>🕐 Estimasi 90 menit</span>
+    <span>🎯 UMKM · Mahasiswa · Pekerja Muda</span>
+  </div>
+</div>
+
+<div class="prose" style="margin-top:40px;">
+  <p>Ada sebuah pertanyaan yang layak kita renungkan sebelum memulai: <strong>mengapa usaha yang sudah berdiri puluhan tahun bisa tiba-tiba tutup karena satu aplikasi smartphone?</strong></p>
+  <p>Jawabannya bukan tentang keberuntungan, kurangnya kerja keras, atau bahkan modal yang tipis. Banyak bisnis yang hilang justru dijalankan oleh orang-orang yang telah puluhan tahun berpengalaman dan berdedikasi. Yang gagal adalah kemampuan mereka — dan juga kemampuan kita, jika tidak waspada — untuk mengenali bahwa pola yang sama telah berulang sepanjang sejarah, dan kini sedang berulang lagi.</p>
+  <p>Bahan ajar ini bukan pelajaran sejarah. Ini adalah latihan membaca pola — supaya ketika gelombang perubahan berikutnya datang, Anda sudah berdiri di posisi yang tepat.</p>
+</div>
+
+<div class="box box-story" style="margin-top:32px;">
+  <div class="box-label">📖 Benang Merah: Keluarga Santoso</div>
+  Sepanjang modul ini, kita akan mengikuti perjalanan <strong>Keluarga Santoso</strong> — sebuah keluarga fiktif namun mewakili jutaan pelaku usaha Indonesia. Dari <strong>Mbah Joko</strong> yang membatik dengan tangan di Solo tahun 1975, ke <strong>Pak Hendra</strong> yang membangun pabrik batik kecil di tahun 1990-an, hingga <strong>Dina</strong> — cucu Mbah Joko — yang menjual 200 lembar batik dalam dua jam lewat live streaming TikTok di tahun 2024. Tiga generasi. Satu usaha. Tiga dunia yang berbeda sepenuhnya.
+</div>
+</section>
+
+<!-- ════════════════════════════════════════
+     MODUL 1 — PENGANTAR: POLA PERUBAHAN
+═════════════════════════════════════════ -->
+<section id="mod1" class="module">
+<div class="mod-header">
+  <div class="mod-era" style="color:var(--gold);">
+    <span class="era-dot" style="background:var(--gold);"></span>
+    Modul 1 · Pengantar
+  </div>
+  <h2 class="mod-title">Mengapa Revolusi Industri Penting bagi Bisnis?</h2>
+  <p class="mod-desc">Sebuah revolusi industri bukan hanya tentang kemunculan teknologi baru. Ini tentang perubahan mendasar dalam cara nilai diciptakan, didistribusikan, dan dikonsumsi — dan bagaimana perubahan itu selalu mengikuti pola yang bisa dipelajari.</p>
+</div>
+
+<div class="prose">
+  <p>Kata "revolusi" sering dipakai secara longgar untuk menggambarkan hal-hal yang sebenarnya hanya sekadar perubahan bertahap. Tapi dalam konteks industri, revolusi memiliki arti yang lebih presisi: <strong>sebuah teknologi atau sistem baru yang mengubah secara fundamental cara produksi, distribusi, dan konsumsi bekerja dalam masyarakat</strong> — dalam skala dan kecepatan yang tidak pernah terjadi sebelumnya.</p>
+  <p>Yang membuat setiap revolusi benar-benar "revolusioner" bukanlah teknologinya sendiri. Melainkan efek berantai yang ia timbulkan. Mesin uap tidak sekadar menggantikan tenaga manusia — ia mengubah struktur kota, mendefinisikan ulang jam kerja, melahirkan kelas ekonomi baru, dan menggeser kekuatan dari pengrajin ke pemilik modal. Internet tidak sekadar mempercepat komunikasi — ia mengubah siapa yang bisa berjualan, bagaimana kepercayaan dibangun antara pembeli dan penjual yang tidak saling kenal, dan bahkan apa artinya memiliki sebuah bisnis.</p>
+</div>
+
+<div class="pullquote">
+  "Pemenang bukan selalu yang menciptakan teknologinya. Melainkan yang pertama memahami bagaimana teknologi itu mengubah aturan main bisnis."
+  <cite>— Prinsip yang berulang di setiap Revolusi Industri</cite>
+</div>
+
+<div class="prose">
+  <p>Inilah mengapa memahami sejarah revolusi industri bukan hanya latihan akademis. Ini adalah latihan mengenali pola. Dan pola yang sama — teknologi baru → model bisnis baru → perilaku baru → ada yang menang, ada yang tertinggal → lalu berulang lagi — telah berulang setidaknya empat kali besar dalam 250 tahun terakhir.</p>
+</div>
+
+<div class="box box-analogy">
+  <div class="box-label">💡 Analogi: Peta dan Medan</div>
+  Bayangkan sedang mendaki gunung baru tanpa peta. Setiap langkah adalah tebakan. Kini bayangkan Anda punya peta — bukan peta yang tepat sama persis, tapi peta dari gunung serupa yang pernah didaki orang sebelumnya. Anda masih perlu waspada terhadap kondisi cuaca hari ini, tapi setidaknya Anda tahu bahwa di balik tanjakan curam biasanya ada dataran, dan bahwa jalan yang tampak lebih mudah seringkali justru lebih panjang. <strong>Memahami revolusi industri adalah memiliki peta itu.</strong>
+</div>
+
+<div class="box box-activity">
+  <div class="box-label">✏️ Aktivitas 1.1 — Refleksi Awal</div>
+  <div class="box-activity-body">
+    <div class="activity-q">Sebutkan 3 jenis usaha yang Anda tahu atau ingat masih ada 10–15 tahun lalu, tapi sekarang sudah sangat jarang atau tidak ada lagi di sekitar Anda. Apa yang menggantikannya?</div>
+    <textarea class="activity-input" id="act1" placeholder="Contoh: Rental DVD dulu ada di dekat rumah saya, sekarang digantikan oleh Netflix dan YouTube..."></textarea>
+    <button class="activity-save" onclick="saveActivity('act1')">Simpan Catatan</button>
+    <div class="activity-saved" id="act1-saved">✓ Tersimpan</div>
+  </div>
+</div>
+
+<div class="box box-takeaway">
+  <div class="box-label">📌 Poin Kunci Modul 1</div>
+  <ul>
+    <li>Revolusi industri adalah perubahan <strong>sistemik</strong> — bukan hanya teknologi, tapi cara nilai diciptakan dan dikonsumsi secara keseluruhan.</li>
+    <li>Setiap revolusi mengikuti pola yang sama: teknologi → model bisnis → perilaku → pemenang & yang tertinggal.</li>
+    <li>Memahami pola ini membantu kita <strong>memprediksi</strong>, bukan hanya bereaksi terhadap perubahan.</li>
+    <li>Indonesia mengalami setiap revolusi dengan konteks unik — kadang terlambat, kadang melewatinya dengan cara berbeda.</li>
+  </ul>
+</div>
+
+<div class="box box-bridge">
+  <div class="box-label">🔗 Jembatan ke Modul Berikutnya</div>
+  Sebelum bisa membaca peta, kita perlu memahami medannya. Modul 2–6 akan membawa Anda melalui keempat gelombang revolusi industri satu per satu — bukan sebagai hafalan tanggal, melainkan sebagai <strong>pemahaman mendalam tentang mengapa setiap era mengubah cara bisnis bekerja dengan cara yang unik</strong>.
+</div>
+</section>
+
+<!-- ════════════════════════════════════════
+     MODUL 2 — RI 1.0
+═════════════════════════════════════════ -->
+<section id="mod2" class="module">
+<div class="mod-header">
+  <div class="mod-era" style="color:var(--e1);">
+    <span class="era-dot" style="background:var(--e1);"></span>
+    Modul 2 · Revolusi Industri 1.0 · 1760 – 1840
+  </div>
+  <h2 class="mod-title">Era Mesin Uap & Mekanisasi</h2>
+  <p class="mod-desc">Dunia bergeser dari tangan pengrajin ke mesin pabrik — dan seiring itu, definisi "bekerja," "berproduksi," dan "berjualan" berubah selamanya.</p>
+</div>
+
+<div class="box box-story">
+  <div class="box-label">📖 Kisah Santoso · Latar Belakang Era</div>
+  Kakek buyutnya Mbah Joko lahir di Solo pada awal abad ke-20 — jauh setelah gelombang mekanisasi menyapu Eropa, tapi di saat perkebunan kolonial sudah mengubah wajah ekonomi Jawa. Ia melihat bagaimana pabrik-pabrik gula Belanda beroperasi: ratusan buruh, mesin besar, jadwal kerja dari fajar hingga malam. Batik tetap ia buat dengan tangan — bukan karena tidak ada pilihan lain, tapi karena batik tangan masih punya nilai yang mesin belum bisa duplikasi.
+</div>
+
+<div class="prose">
+  <p>Sebelum Revolusi Industri Pertama, dunia adalah dunia pengrajin. Seorang pembuat kain bekerja di rumahnya sendiri, menggunakan keahlian yang diwariskan turun-temurun selama beberapa generasi. Kapasitas produksinya dibatasi oleh stamina tangannya dan jam siang yang tersedia. Setiap produk yang ia hasilkan sedikit berbeda dari yang lain — tidak ada dua lembar kain yang persis sama. Harga dinegosiasikan langsung di pasar, berdasarkan reputasi pribadi yang dibangun bertahun-tahun.</p>
+  <p>Ketika James Watt memperbaiki mesin uap pada 1769 dan membuatnya efisien untuk digunakan di pabrik, ia tidak hanya menciptakan alat yang lebih baik. Ia memulai sebuah reaksi berantai yang dalam waktu kurang dari satu abad mengubah cara jutaan orang hidup dan bekerja.</p>
+  <p>Pabrik tekstil Lancashire adalah contoh paling ikonik. Sebelum mekanisasi, satu penenun berpengalaman bisa menghasilkan beberapa meter kain per hari. Setelah mesin tenun uap diperkenalkan, <strong>satu mesin bisa menghasilkan kain sebanyak 40 penenun — dengan biaya per meter yang turun drastis</strong>. Bagi sebagian pengrajin, ini adalah bencana. Bagi sebagian pengusaha yang memiliki modal untuk membeli mesin, ini adalah peluang yang belum pernah ada sebelumnya.</p>
+</div>
+
+<div class="timeline">
+  <div class="tl-item">
+    <div class="tl-left">
+      <div class="tl-dot" style="background:var(--e1);border-color:var(--e1);"></div>
+      <div class="tl-line"></div>
+    </div>
+    <div class="tl-content">
+      <div class="tl-year" style="color:var(--e1);">1769</div>
+      <div class="tl-text"><strong>Mesin uap Watt diperbaiki</strong> — efisiensi meningkat drastis, membuatnya layak untuk produksi industri.</div>
+    </div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-left">
+      <div class="tl-dot" style="background:var(--e1);border-color:var(--e1);"></div>
+      <div class="tl-line"></div>
+    </div>
+    <div class="tl-content">
+      <div class="tl-year" style="color:var(--e1);">1785</div>
+      <div class="tl-text"><strong>Mesin tenun uap (Cartwright)</strong> — industri tekstil mulai otomatis. Pengrajin tangan mulai kehilangan pekerjaan.</div>
+    </div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-left">
+      <div class="tl-dot" style="background:var(--e1);border-color:var(--e1);"></div>
+      <div class="tl-line"></div>
+    </div>
+    <div class="tl-content">
+      <div class="tl-year" style="color:var(--e1);">1830-an</div>
+      <div class="tl-text"><strong>Kereta api pertama beroperasi</strong> — distribusi barang melampaui batas kota. Pasar menjadi regional, bukan lokal.</div>
+    </div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-left">
+      <div class="tl-dot" style="background:rgba(184,112,58,.4);border-color:var(--e1);"></div>
+    </div>
+    <div class="tl-content">
+      <div class="tl-year" style="color:var(--e1);">Indonesia</div>
+      <div class="tl-text"><strong>Sistem Tanam Paksa (1830)</strong> — perkebunan kolonial skala industri: gula, kopi, tembakau. Dampak RI 1.0 di Indonesia berbentuk ekstraksi, bukan pemberdayaan.</div>
+    </div>
+  </div>
+</div>
+
+<div class="prose">
+  <p><strong>Tiga perubahan besar yang ditimbulkan RI 1.0:</strong> Pertama, produksi terkonsentrasi di pabrik — orang harus <em>pergi ke tempat alat produksi berada</em>, bukan sebaliknya. Ini memicu urbanisasi besar-besaran. Kedua, jam kerja berubah dari ritme alam (fajar sampai senja, lebih lama di musim panas) menjadi ritme jam tangan (08.00 – 18.00, sama setiap hari sepanjang tahun). Ketiga, nilai seseorang di tempat kerja bukan lagi keahlian unik yang dimilikinya, melainkan kemampuannya menjalankan satu tugas berulang-ulang dengan cepat dan konsisten.</p>
+</div>
+
+<div class="box box-analogy">
+  <div class="box-label">💡 Analogi: Lesung dan Mesin Penggiling</div>
+  Bayangkan selama ini Anda menumbuk beras dengan lesung — satu keluarga bisa menghasilkan sekitar 10 kg beras per hari dengan kerja keras. Tiba-tiba muncul mesin penggiling yang bisa menghasilkan 500 kg per jam. Dua hal terjadi sekaligus: beras jadi jauh lebih murah (bagus untuk semua orang yang makan), tapi penumbuk beras kehilangan mata pencaharian. <strong>Setiap revolusi industri membawa dua wajah yang sama persis: kemakmuran dan dislokasi.</strong> Yang menentukan Anda berada di sisi mana adalah seberapa cepat Anda mengenali perubahan itu dan memposisikan diri.
+</div>
+
+<div class="box box-activity">
+  <div class="box-label">✏️ Aktivitas 2.1 — Pengrajin vs Mesin</div>
+  <div class="box-activity-body">
+    <div class="activity-q">Di industri atau usaha yang Anda geluti (atau yang paling dekat dengan Anda), proses apa yang masih dikerjakan "secara manual" padahal sudah bisa diotomasi atau didigitalisasi? Apa yang membuat proses itu belum berubah?</div>
+    <textarea class="activity-input" id="act2" placeholder="Contoh: Di usaha kuliner tempat saya bekerja, pencatatan stok masih dilakukan manual di buku tulis karena pemiliknya belum percaya dengan aplikasi..."></textarea>
+    <button class="activity-save" onclick="saveActivity('act2')">Simpan Catatan</button>
+    <div class="activity-saved" id="act2-saved">✓ Tersimpan</div>
+  </div>
+</div>
+
+<div class="box box-bridge">
+  <div class="box-label">🔗 Benih Pertama Data Bisnis</div>
+  Ketika produksi bergerak ke skala pabrik, muncul kebutuhan yang belum pernah ada sebelumnya: <strong>mencatat.</strong> Siapa yang membeli berapa unit? Stok bahan baku ada berapa? Kapan jadwal produksi berikutnya? Pengrajin individual bisa menyimpan semua ini di kepalanya — tapi manajer pabrik dengan 200 karyawan tidak bisa. Catatan bisnis sederhana ini adalah benih pertama dari apa yang kita sebut <strong>data bisnis</strong> — topik yang akan kita dalami di modul Data.
+</div>
+</section>
+
+<!-- ════════════════════════════════════════
+     MODUL 3 — RI 2.0
+═════════════════════════════════════════ -->
+<section id="mod3" class="module">
+<div class="mod-header">
+  <div class="mod-era" style="color:var(--e2);">
+    <span class="era-dot" style="background:var(--e2);"></span>
+    Modul 3 · Revolusi Industri 2.0 · 1870 – 1914
+  </div>
+  <h2 class="mod-title">Era Listrik, Produksi Massal & Lahirnya Merek</h2>
+  <p class="mod-desc">Jika RI 1.0 mengotomasi tenaga fisik manusia, RI 2.0 mengotomasi sistem produksi itu sendiri — dan dari situ lahir konsumerisme modern, loyalitas merek, dan iklan sebagai senjata bisnis.</p>
+</div>
+
+<div class="box box-story">
+  <div class="box-label">📖 Kisah Santoso · Era Pak Hendra Muda</div>
+  Pak Hendra mewarisi toko batik ayahnya dan memutuskan untuk berkembang. Ia membeli mesin cap, memasang listrik di pabrik kecilnya, dan merekrut 20 karyawan. Produksi naik dari belasan lembar per minggu menjadi lebih dari 200. Ia mencetak brosur berwarna — pertama kalinya nama "Batik Santoso" tercetak di atas kertas glossy. Pelanggan toko di Semarang dan Yogyakarta mulai memesannya bukan karena kenal orangnya, melainkan karena <em>"nama Santoso sudah dikenal."</em> Tanpa disadari, Pak Hendra sedang membangun sebuah merek.
+</div>
+
+<div class="prose">
+  <p>Listrik mengubah segalanya bukan karena ia lebih kuat dari mesin uap — secara energi, tidak selalu demikian. Yang membedakannya adalah <strong>fleksibilitas distribusi</strong>. Mesin uap membutuhkan lokasi yang dekat dengan sumber batu bara atau sungai. Listrik bisa dialirkan melalui kabel ke mana saja. Ini memungkinkan pabrik dibangun di mana tenaga kerja tersedia atau pasar berada — bukan di mana bahan bakar ada.</p>
+  <p>Tapi inovasi terbesar RI 2.0 bukan listrik itu sendiri. Ia adalah sistem yang diperkenalkan Henry Ford pada tahun 1913: <strong>lini perakitan.</strong></p>
+</div>
+
+<div class="box box-analogy">
+  <div class="box-label">🚗 Kisah Ford: Bukan Tentang Mobilnya</div>
+  Sebelum lini perakitan Ford, sebuah mobil membutuhkan <strong>728 jam kerja manusia</strong> untuk dirakit. Setiap pekerja yang terampil mengerjakan banyak bagian dari awal hingga akhir. Ford membalik ini: alih-alih satu pekerja mengerjakan banyak tugas, satu pekerja mengerjakan <em>satu tugas berulang</em> — dan mobilnya yang bergerak melewati tiap pekerja. Hasilnya: waktu perakitan turun menjadi <strong>93 jam</strong>. Harga Model T Ford turun dari setara $25.000 hari ini menjadi sekitar $7.800. Tiba-tiba, kelas pekerja bisa membeli mobil. <strong>Produksi massal menciptakan pasar massal.</strong> Ini bukan kebetulan — ini adalah perubahan struktural yang disengaja.
+</div>
+
+<div class="prose">
+  <p>Standarisasi produk yang dibawa lini perakitan punya konsekuensi yang tak terduga: ketika produk menjadi identik secara fungsional, persaingan bergeser dari <em>kualitas produk</em> ke <em>persepsi produk</em>. Inilah saat merek menjadi penting.</p>
+  <p>Coca-Cola di Medan rasa dan tampilannya persis sama dengan Coca-Cola di Amsterdam. Ini bukan kebetulan — ini adalah strategi yang disengaja untuk membangun <strong>kepercayaan jarak jauh</strong>. Pelanggan yang tidak pernah mengunjungi pabrik bisa yakin bahwa produk yang mereka beli hari ini sama persis dengan yang mereka beli minggu lalu. Kepercayaan ini — yang dibangun lewat konsistensi merek — adalah fondasi dari apa yang kita kenal sebagai <em>marketing modern</em>.</p>
+  <p>Iklan di RI 2.0 bukan sekadar pengumuman produk. Ia adalah alat pembentuk identitas dan emosi. "Minum Coca-Cola = momen kebahagiaan bersama keluarga." "Pakai parfum Chanel = Anda adalah orang yang sophisticated." Ini bukan hanya menjual produk — ini menjual cerita tentang siapa Anda ketika menggunakan produk itu.</p>
+</div>
+
+<div class="table-wrap">
+<table class="compare-tbl">
+  <thead>
+    <tr>
+      <th>Dimensi</th>
+      <th class="th-old">Era Pengrajin (sebelum RI 2.0)</th>
+      <th class="th-new">Era Produksi Massal (RI 2.0)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Dasar kepercayaan</td>
+      <td>Kenal orangnya secara personal</td>
+      <td>Nama merek yang konsisten</td>
+    </tr>
+    <tr>
+      <td>Jangkauan pasar</td>
+      <td>Lokal (1 kota / wilayah)</td>
+      <td>Nasional bahkan internasional</td>
+    </tr>
+    <tr>
+      <td>Pembeda produk</td>
+      <td>Keunikan & keahlian individu</td>
+      <td>Persepsi merek & harga</td>
+    </tr>
+    <tr>
+      <td>Komunikasi ke pelanggan</td>
+      <td>Mulut ke mulut, pasar fisik</td>
+      <td>Iklan koran, radio, papan reklame</td>
+    </tr>
+    <tr>
+      <td>Modal yang dibutuhkan</td>
+      <td>Keahlian & waktu</td>
+      <td>Mesin, modal, jaringan distribusi</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="box box-activity">
+  <div class="box-label">✏️ Aktivitas 3.1 — Merek Bertahan</div>
+  <div class="box-activity-body">
+    <div class="activity-q">Sebutkan 2–3 merek yang Anda tahu sudah ada sejak puluhan tahun lalu (bahkan mungkin sejak era RI 2.0 atau awal RI 3.0). Apa menurut Anda yang membuat merek-merek itu bertahan — bahkan ketika teknologi dan pasar berubah drastis?</div>
+    <textarea class="activity-input" id="act3" placeholder="Contoh: Kecap ABC sudah ada sejak tahun 1960-an. Mungkin bertahan karena rasa yang konsisten dan sudah masuk ke kebiasaan memasak ibu-ibu Indonesia..."></textarea>
+    <button class="activity-save" onclick="saveActivity('act3')">Simpan Catatan</button>
+    <div class="activity-saved" id="act3-saved">✓ Tersimpan</div>
+  </div>
+</div>
+
+<div class="box box-bridge">
+  <div class="box-label">🔗 Pertanyaan yang Belum Terjawab</div>
+  Iklan massal di RI 2.0 bisa menjangkau jutaan orang sekaligus — lewat koran, radio, papan reklame. Tapi ada satu pertanyaan besar yang <strong>belum bisa dijawab</strong>: <em>siapa yang benar-benar melihat iklan itu? Siapa yang akhirnya membeli karena iklan itu?</em> Pengiklan hanya bisa menebak. Pertanyaan ini baru terjawab dua revolusi kemudian — ketika setiap klik bisa dilacak, setiap tayangan bisa dihitung, dan setiap pembelian bisa diatribusikan ke sumber spesifik. Inilah yang akan kita bahas di Modul 5 dan materi Media Sosial.
+</div>
+</section>
+
+<!-- ════════════════════════════════════════
+     MODUL 4 — RI 3.0
+═════════════════════════════════════════ -->
+<section id="mod4" class="module">
+<div class="mod-header">
+  <div class="mod-era" style="color:var(--e3);">
+    <span class="era-dot" style="background:var(--e3);"></span>
+    Modul 4 · Revolusi Industri 3.0 · 1970 – 2000
+  </div>
+  <h2 class="mod-title">Era Komputer, Otomasi & Informasi Digital</h2>
+  <p class="mod-desc">Komputer pertama kali digunakan bukan untuk berkreasi, melainkan untuk mengurus administrasi. Tapi dampaknya melampaui itu: untuk pertama kalinya, memori bisnis bisa disimpan dan dibagikan secara sistematis.</p>
+</div>
+
+<div class="box box-story">
+  <div class="box-label">📖 Kisah Santoso · Pak Hendra Bertemu Komputer</div>
+  Anak pertama Pak Hendra kuliah di Semarang dan kembali membawa sebuah disket. "Pa, coba kita pindahkan catatan penjualan ke spreadsheet ini." Pak Hendra skeptis — ia sudah 20 tahun memegang buku catatan tebalnya, dan sejauh ini tidak ada masalah. Tapi anak pertamanya memaksanya mencoba. Dua minggu kemudian, Pak Hendra terdiam melihat grafik yang muncul di layar: batik motif parang ternyata selalu naik penjualannya di bulan September–Oktober, dan selalu turun di Februari. Ia tidak pernah menyadari pola ini selama bertahun-tahun — karena data itu tersimpan di ratusan halaman buku tulis, bukan dalam bentuk yang bisa dibaca sekaligus.
+</div>
+
+<div class="prose">
+  <p>Komputer pertama yang masuk ke dunia bisnis (tahun 1960-an hingga 1970-an) adalah mesin yang besar, mahal, dan membutuhkan ruangan tersendiri. Tidak ada yang menggunakannya untuk email atau media sosial — teknologi itu belum ada. Mereka digunakan untuk satu hal saja: <strong>menghitung dan menyimpan data dengan cepat dan akurat.</strong></p>
+  <p>Ini terdengar sepele. Tapi implikasinya sangat besar. Sebelum komputer, <em>pengetahuan tentang bisnis tersimpan di kepala manusia</em>. Manajer yang sudah 20 tahun di sebuah perusahaan menyimpan pengetahuan tak ternilai tentang pelanggan, pemasok, pola musiman, dan risiko — semuanya dalam ingatan. Ketika ia pensiun atau sakit, pengetahuan itu ikut pergi. Ketika buku catatan terbakar, histori bisnis musnah.</p>
+  <p>Komputer mengubah sifat memori organisasi dari yang bersifat <em>personal dan mudah hilang</em> menjadi yang bersifat <em>institusional dan dapat dibagikan</em>. Keputusan yang tadinya murni berbasis intuisi mulai bisa dibandingkan dengan fakta.</p>
+</div>
+
+<div class="box box-fact">
+  <div class="box-label">📊 Konteks Indonesia — RI 3.0 Versi Lokal</div>
+  Indonesia masuk era RI 3.0 dengan caranya sendiri. <strong>ATM BCA pertama</strong> hadir tahun 1987 — untuk pertama kalinya masyarakat bisa mengakses uang tanpa pergi ke bank di jam kerja. <strong>Warnet (warung internet)</strong> menjamur di akhir 1990-an — menjadi pintu masuk internet bagi jutaan orang yang belum punya komputer pribadi. <strong>HP Nokia</strong> di era 2000-an menjadi alat komunikasi bisnis yang mengubah cara pengusaha kecil bernegosiasi dan memesan barang. Minimarket <strong>Indomaret dan Alfamart</strong> menggunakan sistem barcode dan manajemen inventori digital — untuk pertama kalinya, toko kecil bisa mengelola ribuan SKU dengan akurasi yang sebelumnya hanya dimiliki perusahaan besar.
+</div>
+
+<div class="prose">
+  <p>Internet generasi awal (World Wide Web, 1991) menambahkan dimensi yang berbeda: informasi bisa bergerak hampir secepat cahaya, melintasi benua tanpa biaya yang berarti. Ini memungkinkan sesuatu yang sebelumnya tidak mungkin: <strong>rantai pasok global</strong>. Sebuah perusahaan di Jakarta bisa berkoordinasi secara real-time dengan pemasok di Shanghai dan pelanggan di Amsterdam — menggunakan email dan website sederhana.</p>
+  <p>Inilah yang membuat era 1990-an menjadi dekade globalisasi yang paling intensif dalam sejarah manusia. Bukan karena ideologi — melainkan karena teknologi komunikasi digital membuat koordinasi jarak jauh menjadi murah dan cepat.</p>
+</div>
+
+<div class="box box-activity">
+  <div class="box-label">✏️ Aktivitas 4.1 — Sebelum dan Sesudah Digital</div>
+  <div class="box-activity-body">
+    <div class="activity-q">Dalam bisnis Anda atau bisnis yang Anda kenal, pilih satu proses yang sudah didigitalisasi. Bandingkan kondisi sebelum dan sesudah: apa yang berubah secara konkret (waktu, biaya, akurasi, kemampuan analisis)?</div>
+    <textarea class="activity-input" id="act4" placeholder="Contoh: Sebelum pakai aplikasi kasir, rekapan penjualan harian butuh 30 menit dan sering salah hitung. Sesudah pakai, langsung muncul otomatis dan bisa langsung tahu produk mana yang laris..."></textarea>
+    <button class="activity-save" onclick="saveActivity('act4')">Simpan Catatan</button>
+    <div class="activity-saved" id="act4-saved">✓ Tersimpan</div>
+  </div>
+</div>
+
+<div class="box box-bridge">
+  <div class="box-label">🔗 Data Tersimpan, Tapi Belum Cukup</div>
+  RI 3.0 mengajarkan satu pelajaran penting yang sering diabaikan: <strong>data yang tersimpan tidak otomatis berguna.</strong> Pak Hendra menyimpan ribuan baris data penjualan di spreadsheet — tapi baru sadar polanya ketika anaknya membuatkan grafik. Data butuh dibaca, dianalisis, dan diterjemahkan menjadi keputusan. Kemampuan inilah — mengubah data mentah menjadi pengetahuan yang bisa digunakan — yang akan menjadi inti dari modul <strong>Literasi Data dan Kerangka DIKW</strong> dalam kurikulum selanjutnya.
+</div>
+</section>
+
+<!-- ════════════════════════════════════════
+     MODUL 5 — RI 4.0
+═════════════════════════════════════════ -->
+<section id="mod5" class="module">
+<div class="mod-header">
+  <div class="mod-era" style="color:var(--e4);">
+    <span class="era-dot" style="background:var(--e4);"></span>
+    Modul 5 · Revolusi Industri 4.0 · 2010 – Sekarang
+  </div>
+  <h2 class="mod-title">Era Platform Digital, Big Data & Kecerdasan Buatan</h2>
+  <p class="mod-desc">Untuk pertama kalinya dalam sejarah, warung batik di Solo bisa bersaing memperebutkan perhatian konsumen di Jakarta dengan merek besar — hanya dengan smartphone dan koneksi internet. Tapi konsekuensinya juga datang bersamaan.</p>
+</div>
+
+<div class="box box-story">
+  <div class="box-label">📖 Kisah Santoso · Dina Mengambil Alih</div>
+  Dina pulang dari kampus dengan satu pertanyaan yang tidak bisa dijawab Pak Hendra: "Pa, kalau ada orang di Surabaya mau beli batik kita, mereka bisa ketemu kita di mana?" Pak Hendra menjawab, "Kita sudah kirim ke agen di sana." Dina membuka laptop dan mengetikkan "batik Solo" di Shopee. Puluhan toko muncul — tidak satupun bernama Santoso. "Kita tidak ada di sana, Pa. Pelanggan baru tidak akan pernah menemukan kita." Tiga bulan kemudian, dengan modal foto produk yang baik dan deskripsi yang jujur, akun Shopee @BatikSantoso mulai menerima pesanan dari orang yang tidak pernah mendengar nama Santoso sebelumnya.
+</div>
+
+<div class="prose">
+  <p>Ada satu kalimat yang merangkum esensi RI 4.0 dengan tepat. Marc Andreessen menulis di Wall Street Journal tahun 2011: <em>"Software is eating the world."</em> Ia tidak bicara tentang program komputer semata — ia bicara tentang bagaimana bisnis berbasis perangkat lunak mulai mendominasi industri-industri yang sebelumnya dikuasai perusahaan fisik.</p>
+  <p>Yang membedakan RI 4.0 dari revolusi sebelumnya bukan hanya kecanggihan teknologinya. Yang benar-benar berbeda adalah <strong>kecepatan dan demokratisasi aksesnya</strong>. RI 1.0 membutuhkan satu abad untuk mengubah pola kerja manusia secara global. RI 4.0 mengubah cara jutaan UMKM Indonesia berjualan dalam satu dekade — dan hambatan untuk berpartisipasi hanya sebuah smartphone dan paket data.</p>
+</div>
+
+<div class="pullquote">
+  "Tokopedia tidak membuat produk. Grab tidak memiliki kendaraan. Airbnb tidak memiliki hotel. Yang mereka miliki adalah sesuatu yang lebih berharga: kepercayaan dan jaringan antara dua pihak yang sebelumnya tidak bisa saling menemukan."
+  <cite>— Esensi Ekonomi Platform</cite>
+</div>
+
+<div class="prose">
+  <p><strong>Platform ekonomi</strong> adalah inovasi bisnis terbesar era ini. Cara kerjanya berbeda fundamental dari bisnis konvensional: platform tidak menjual produk atau jasa secara langsung — ia menciptakan kondisi di mana pengguna bisa saling bertransaksi, dengan platform mengambil sebagian kecil dari setiap transaksi. Semakin banyak pengguna bergabung, semakin berharga platform (efek jaringan), dan semakin banyak pengguna baru yang tertarik bergabung. Siklus ini menciptakan dinamika "winner takes most" yang bisa tumbuh sangat cepat.</p>
+  <p>Bagi UMKM seperti Toko Santoso, ini berarti dua hal yang kontradiktif terjadi bersamaan. Di satu sisi, hambatan masuk ke pasar nasional turun mendekati nol: dengan akun Shopee dan foto produk yang baik, toko di Solo bisa melayani pembeli di Papua. Di sisi lain, persaingan tiba-tiba menjadi global: produk serupa dari Guangzhou bisa muncul di halaman yang sama dengan produk lokal, sering dengan harga yang jauh lebih murah.</p>
+</div>
+
+<div class="table-wrap">
+<table class="compare-tbl">
+  <thead>
+    <tr>
+      <th>Dimensi Perilaku</th>
+      <th class="th-old">Era Pak Hendra</th>
+      <th class="th-new">Era Dina (Sekarang)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cara menemukan produk</td>
+      <td>Ke toko fisik, rekomendasi keluarga & tetangga</td>
+      <td>Google, TikTok For You Page, kolom pencarian Shopee</td>
+    </tr>
+    <tr>
+      <td>Dasar kepercayaan</td>
+      <td>Reputasi personal, nama toko sudah lama ada</td>
+      <td>Rating bintang, jumlah ulasan, foto dari pembeli nyata</td>
+    </tr>
+    <tr>
+      <td>Cara membayar</td>
+      <td>Cash, transfer bank manual, nota tulis tangan</td>
+      <td>QRIS, GoPay, OVO, paylater, COD</td>
+    </tr>
+    <tr>
+      <td>Cara komplain</td>
+      <td>Datang langsung atau surat (jarang, tidak publik)</td>
+      <td>Komentar publik di marketplace — semua calon pembeli bisa baca</td>
+    </tr>
+    <tr>
+      <td>Ekspektasi waktu tunggu</td>
+      <td>3–7 hari pengiriman antarkota adalah wajar</td>
+      <td>Same-day atau next-day — lebih lama dianggap lambat</td>
+    </tr>
+    <tr>
+      <td>Cara membandingkan harga</td>
+      <td>Perlu mengunjungi beberapa toko fisik</td>
+      <td>Cek 10 toko kompetitor dalam 2 menit dari sofa</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="box box-fact">
+  <div class="box-label">📊 Angka yang Perlu Diketahui — RI 4.0 di Indonesia</div>
+  Indonesia adalah pasar digital terbesar ke-5 di dunia berdasarkan pengguna internet aktif. Lebih dari <strong>178 juta</strong> pengguna internet, dengan penetrasi smartphone di atas 70%. Nilai transaksi e-commerce Indonesia melampaui <strong>$77 miliar</strong> pada 2023 — tumbuh lebih dari 10 kali lipat dalam satu dekade. Yang paling signifikan: lebih dari <strong>60% transaksi</strong> dilakukan oleh pengguna yang pertama kali mengenal produk tersebut lewat media sosial, bukan dari toko fisik.
+</div>
+
+<div class="box box-activity">
+  <div class="box-label">✏️ Aktivitas 5.1 — Peta Titik Kontak Pelanggan</div>
+  <div class="box-activity-body">
+    <div class="activity-q">Gambarlah (atau tuliskan) perjalanan seorang pelanggan baru untuk menemukan dan membeli produk/jasa dari usaha Anda (atau usaha yang Anda kenal). Mulai dari "mereka belum tahu usaha ini ada" sampai "mereka selesai bertransaksi." Di titik mana pelanggan bisa hilang karena pengalaman yang tidak baik?</div>
+    <textarea class="activity-input" id="act5" placeholder="Contoh: Pelanggan baru biasanya menemukan kita lewat hashtag di Instagram → klik profil → melihat foto produk → kirim DM untuk tanya harga → menunggu jawaban (di sini sering hilang kalau kita tidak balas cepat)..."></textarea>
+    <button class="activity-save" onclick="saveActivity('act5')">Simpan Catatan</button>
+    <div class="activity-saved" id="act5-saved">✓ Tersimpan</div>
+  </div>
+</div>
+
+<div class="box box-bridge">
+  <div class="box-label">🔗 Empat Dunia yang Lahir dari Satu Revolusi</div>
+  RI 4.0 bukan satu perubahan tunggal. Ia melahirkan empat domain yang masing-masing cukup besar untuk dipelajari secara mendalam: <strong>Data & Analitik</strong> (bagaimana mengambil keputusan berbasis angka), <strong>Media Sosial</strong> (bagaimana percakapan digital menjadi pemasaran), <strong>Marketplace</strong> (bagaimana bersaing di pasar tanpa batas geografis), dan <strong>Teknologi Kekinian</strong> (AI, otomasi, personalisasi). Keempatnya adalah topik modul berikutnya dalam kurikulum ini.
+</div>
+</section>
+
+<!-- ════════════════════════════════════════
+     MODUL 6 — SOCIETY 5.0
+═════════════════════════════════════════ -->
+<section id="mod6" class="module">
+<div class="mod-header">
+  <div class="mod-era" style="color:var(--e5);">
+    <span class="era-dot" style="background:var(--e5);"></span>
+    Modul 6 · Society 5.0 & Industri 5.0
+  </div>
+  <h2 class="mod-title">Masa Depan: Manusia yang Diperkuat Mesin</h2>
+  <p class="mod-desc">Bukan manusia melawan mesin. Bukan juga manusia digantikan mesin. Melainkan pertanyaan yang lebih kompleks: apa yang menjadi keunggulan unik manusia ketika mesin bisa berhitung, menganalisis, dan bahkan berkreasi?</p>
+</div>
+
+<div class="box box-story">
+  <div class="box-label">📖 Kisah Santoso · Dina di Tahun 2028</div>
+  Dina kini menggunakan alat AI untuk menganalisis komentar pelanggan di marketplace dan mengelompokkan keluhan berdasarkan tema. Ia tahu dalam hitungan menit bahwa 34% keluhan bulan ini tentang ukuran yang tidak sesuai deskripsi — dan ia langsung memperbaiki panduan ukuran di semua listing. Mesin jahit di pabrik mengirim notifikasi ke HP-nya ketika produksi melebihi 30 menit dari target. Stok bahan baku otomatis dipesan ulang ketika turun di bawah ambang batas. Tapi pada akhir setiap bulan, Dina menulis cerita — tentang batik yang ia buat, tentang pengrajin tua yang mewarisi keahlian, tentang motif yang punya makna filosofis mendalam. Dan itu yang membuat pelanggannya kembali.
+</div>
+
+<div class="prose">
+  <p>Society 5.0 adalah konsep yang diperkenalkan pemerintah Jepang pada tahun 2016 sebagai respons atas kekhawatiran tentang arah RI 4.0. Bukan penolakan terhadap AI atau otomasi — melainkan ajakan untuk kembali menempatkan <strong>kesejahteraan manusia sebagai tujuan akhir teknologi</strong>, bukan hanya efisiensi atau keuntungan ekonomi.</p>
+  <p>Pertanyaan yang paling sering muncul ketika berbicara tentang AI adalah: "Pekerjaan apa yang akan hilang?" Ini adalah pertanyaan yang valid — tapi mungkin bukan yang paling berguna bagi pelaku usaha UMKM. Pertanyaan yang lebih produktif adalah: <strong>"Nilai apa yang justru menjadi lebih berharga ketika mesin bisa melakukan semakin banyak hal?"</strong></p>
+  <p>Jawabannya lebih nuansa dari yang sering dikatakan. Kreativitas dan empati sering disebut sebagai jawaban — tapi AI generatif sudah bisa menghasilkan musik, seni visual, dan teks yang sulit dibedakan dari karya manusia. Yang lebih tepat mungkin adalah: nilai yang lahir dari <em>keterbatasan dan konteks manusiawi yang nyata.</em></p>
+</div>
+
+<div class="box box-analogy">
+  <div class="box-label">🏺 Analogi: Batik Tangan vs Batik Printing</div>
+  Batik printing bisa menghasilkan ribuan meter per jam dengan motif yang sempurna geometris. Batik tulis tangan membutuhkan berminggu-minggu dan hasilnya tidak pernah identik satu sama lain. Secara rasional, batik printing lebih efisien. Tapi batik tulis tangan justru <em>lebih mahal dan lebih dihargai</em> — bukan meskipun prosesnya lambat dan tidak sempurna, tapi justru karena itu. Di balik setiap garis canting ada kehadiran manusia nyata, keputusan estetik yang disengaja, dan warisan yang dihidupi. <strong>Teknologi tidak membunuh nilai kemanusiaan — tapi teknologi memaksa kita menjawab pertanyaan: apa sesungguhnya nilai unik yang manusia berikan?</strong>
+</div>
+
+<div class="grid2">
+  <div class="g-card">
+    <div class="g-card-label">Yang Bisa Diotomasi</div>
+    <p>Pencatatan data, perhitungan stok, penjadwalan posting, auto-reply pesan standar, analisis pola penjualan, pembuatan laporan rutin, pengelompokan ulasan pelanggan.</p>
+  </div>
+  <div class="g-card">
+    <div class="g-card-label">Yang Justru Makin Berharga</div>
+    <p>Cerita di balik produk, kepercayaan yang dibangun atas dasar hubungan nyata, keputusan etis yang mempertimbangkan dampak sosial, kreativitas yang lahir dari pengalaman hidup yang unik, empati dalam menangani situasi kompleks.</p>
+  </div>
+</div>
+
+<div class="box box-bridge">
+  <div class="box-label">🔗 Koneksi ke Kerangka DIKW</div>
+  Jika RI 4.0 adalah era data dan informasi dalam skala masif, Society 5.0 adalah pertanyaan tentang <strong>kebijaksanaan (wisdom)</strong> — tingkatan tertinggi dalam kerangka DIKW. Data dan informasi yang melimpah tidak otomatis menghasilkan keputusan yang baik dan bermoral. Itu membutuhkan kebijaksanaan manusia: kemampuan untuk bertanya bukan hanya "apa yang efisien?" tapi juga "apa yang benar?"
+</div>
+</section>
+
+<!-- ════════════════════════════════════════
+     MODUL 7 — KERANGKA ANALISIS
+═════════════════════════════════════════ -->
+<section id="mod7" class="module">
+<div class="mod-header">
+  <div class="mod-era" style="color:var(--gold);">
+    <span class="era-dot" style="background:var(--gold);"></span>
+    Modul 7 · Kerangka Analisis & Peta Kurikulum
+  </div>
+  <h2 class="mod-title">Tiga Lapis Perubahan & Di Mana Posisi Anda</h2>
+  <p class="mod-desc">Memahami sejarah hanya berguna jika bisa diterjemahkan menjadi kerangka berpikir untuk membaca perubahan yang sedang terjadi hari ini — dan memposisikan diri untuk yang akan datang.</p>
+</div>
+
+<div class="prose">
+  <p>Setiap revolusi industri tidak hanya mengubah teknologi — ia mengubah perilaku manusia di tiga lapisan yang saling terkait, dan ketiganya selalu bergerak bersamaan meskipun dengan kecepatan yang berbeda.</p>
+</div>
+
+<div class="grid3">
+  <div class="g-card" style="border-top:3px solid var(--coral);">
+    <div class="g-card-label" style="color:var(--coral);">Lapisan 1 · Konsumen</div>
+    <p>Cara orang mencari, membandingkan, membeli, dan mengevaluasi produk. <strong>Berubah paling cepat dan paling langsung terasa</strong> di pendapatan harian.</p>
+  </div>
+  <div class="g-card" style="border-top:3px solid var(--gold);">
+    <div class="g-card-label" style="color:var(--gold);">Lapisan 2 · Pekerja</div>
+    <p>Cara orang bekerja, berkolaborasi, belajar, dan mengembangkan karier. Memengaruhi kemampuan bisnis merekrut dan mempertahankan talenta.</p>
+  </div>
+  <div class="g-card" style="border-top:3px solid var(--e5);">
+    <div class="g-card-label" style="color:var(--e5);">Lapisan 3 · Organisasi</div>
+    <p>Cara bisnis dan institusi mengambil keputusan dan belajar dari kesalahan. <strong>Paling lambat berubah — dan paling sering menjadi hambatan adaptasi.</strong></p>
+  </div>
+</div>
+
+<div class="prose">
+  <p style="margin-top:16px;">Kesalahan paling umum dalam menghadapi perubahan adalah hanya berfokus pada Lapisan 1 — mengikuti cara konsumen berbelanja — tanpa membenahi Lapisan 3: cara organisasi mengambil keputusan. Bisnis yang mengikuti tren tanpa membangun kemampuan belajar yang cepat akan selalu ketinggalan gelombang berikutnya.</p>
+</div>
+
+<div style="margin:36px 0;">
+  <div class="curr-root">⚡ Revolusi Industri 4.0 — Satu Perubahan, Empat Domain Praktis</div>
+  <div class="curr-line">
+    <svg width="40" height="20" viewBox="0 0 40 20" fill="none"><line x1="20" y1="0" x2="20" y2="20" stroke="#7A8BA0" stroke-width="2"/></svg>
+  </div>
+  <div class="curr-branches">
+    <div class="curr-branch" style="border-color:var(--gold);">
+      <div class="cb-icon">📊</div>
+      <div class="cb-title" style="color:var(--gold);">Data & Analitik</div>
+      <div class="cb-desc">Keputusan berbasis angka, bukan perasaan</div>
+    </div>
+    <div class="curr-branch" style="border-color:var(--coral);">
+      <div class="cb-icon">📱</div>
+      <div class="cb-title" style="color:var(--coral);">Media Sosial</div>
+      <div class="cb-desc">Percakapan sebagai pemasaran</div>
+    </div>
+    <div class="curr-branch" style="border-color:var(--teal);">
+      <div class="cb-icon">🛒</div>
+      <div class="cb-title" style="color:var(--teal);">Marketplace</div>
+      <div class="cb-desc">Pasar tanpa batas geografis</div>
+    </div>
+    <div class="curr-branch" style="border-color:var(--e5);">
+      <div class="cb-icon">🤖</div>
+      <div class="cb-title" style="color:var(--e5);">Teknologi Kekinian</div>
+      <div class="cb-desc">AI dan otomasi untuk UMKM</div>
+    </div>
+  </div>
+</div>
+
+<div class="prose">
+  <p><strong>Kurva Difusi Inovasi</strong> (Rogers, 1962) menggambarkan bagaimana sebuah teknologi atau ide baru diadopsi dalam masyarakat. Tidak semua orang mengadopsi pada waktu yang sama — dan posisi Anda di kurva ini bukan tentang seberapa pintar Anda, melainkan tentang toleransi risiko, akses informasi, dan tekanan sosial di lingkungan bisnis Anda.</p>
+</div>
+
+<div class="adoption-cards">
+  <div class="ad-card">
+    <div class="ad-label" style="color:var(--gold);">⚡ Inovator (2.5%)</div>
+    <div class="ad-body">Sudah mencoba AI generatif untuk pemasaran, menggunakan data analytics untuk keputusan produksi, atau membangun sistem otomasi sederhana. <strong>Berani mengambil risiko sebelum teknologi terbukti massal.</strong></div>
+  </div>
+  <div class="ad-card">
+    <div class="ad-label" style="color:var(--teal);">🌟 Early Adopter (13.5%)</div>
+    <div class="ad-body">Aktif di marketplace dan media sosial, konsisten menganalisis performa, mulai eksperimen dengan fitur baru. <strong>Sering menjadi referensi dalam komunitas bisnis sekitar.</strong></div>
+  </div>
+  <div class="ad-card">
+    <div class="ad-label" style="color:var(--e4);">📊 Mayoritas Awal (34%)</div>
+    <div class="ad-body">Punya akun marketplace, ada di media sosial, sudah pakai QRIS — <strong>tapi belum optimal dan konsisten.</strong> Bergerak karena melihat orang lain berhasil, bukan karena inisiasi sendiri.</div>
+  </div>
+  <div class="ad-card">
+    <div class="ad-label" style="color:var(--coral);">🐢 Mayoritas Akhir & Laggard (50%)</div>
+    <div class="ad-body">Masih mengandalkan cara lama. <strong>Bukan karena tidak mampu — seringkali karena tidak melihat urgensinya, atau belum menemukan titik masuk yang sesuai.</strong> Biasanya baru berubah ketika ada tekanan kompetitif langsung.</div>
+  </div>
+</div>
+
+<div class="box box-activity">
+  <div class="box-label">✏️ Aktivitas 7.1 — Diagnosis Posisi</div>
+  <div class="box-activity-body">
+    <div class="activity-q">Berdasarkan deskripsi kurva adopsi di atas, menurut Anda usaha Anda (atau usaha yang paling Anda kenal) berada di kategori mana? Apa satu bukti konkret yang mendukung jawaban Anda — dan apa satu langkah yang paling mungkin menggeser posisi itu ke kategori berikutnya?</div>
+    <textarea class="activity-input" id="act7" placeholder="Contoh: Saya ada di Mayoritas Awal. Sudah punya akun Shopee tapi foto produknya masih kurang dan jarang update. Langkah berikutnya yang realistis adalah belajar foto produk yang baik dengan HP yang sudah ada..."></textarea>
+    <button class="activity-save" onclick="saveActivity('act7')">Simpan Catatan</button>
+    <div class="activity-saved" id="act7-saved">✓ Tersimpan</div>
+  </div>
+</div>
+</section>
+
+<!-- ════════════════════════════════════════
+     MODUL 8 — STRATEGI ADAPTASI UMKM
+═════════════════════════════════════════ -->
+<section id="mod8" class="module">
+<div class="mod-header">
+  <div class="mod-era" style="color:var(--teal);">
+    <span class="era-dot" style="background:var(--teal);"></span>
+    Modul 8 · Strategi Adaptasi UMKM
+  </div>
+  <h2 class="mod-title">Dari Pemahaman ke Tindakan: Roadmap Adaptasi 4 Tahap</h2>
+  <p class="mod-desc">Pertanyaan bukan lagi "apakah perlu beradaptasi?" — jawabannya sudah jelas. Pertanyaan yang lebih berguna adalah: dari mana mulai, dengan sumber daya yang ada sekarang, dan dalam urutan yang masuk akal.</p>
+</div>
+
+<div class="prose">
+  <p>Banyak pelaku UMKM yang merasa sudah "digital" karena punya akun Instagram dengan ribuan follower. Tapi ketika ditanya berapa rata-rata pendapatan per platform, berapa biaya untuk mendapatkan satu pelanggan baru, atau produk mana yang paling sering dikembalikan — mereka tidak bisa menjawab. <strong>Kehadiran digital tanpa literasi digital adalah ilusi kemajuan.</strong></p>
+  <p>Diagnosis yang jujur adalah langkah pertama dan paling penting. Bukan untuk merasa minder — tapi untuk tahu dengan tepat di mana leverage terbesar untuk perbaikan berada.</p>
+</div>
+
+<div class="roadmap">
+  <div class="rm-item">
+    <div class="rm-left">
+      <div class="rm-num-circle" style="background:rgba(200,144,58,.15);color:var(--gold);">1</div>
+      <div class="rm-vline"></div>
+    </div>
+    <div class="rm-body">
+      <div class="rm-step-title" style="color:var(--gold);">📝 Digitalisasi Pencatatan</div>
+      <div class="rm-step-body">
+        Pindahkan semua catatan bisnis ke format digital — minimal spreadsheet sederhana, idealnya aplikasi kasir. Tujuannya bukan hanya kerapian: <strong>data yang tersimpan digital bisa dianalisis, diproyeksikan, dan dibagikan</strong>. Data yang ada di buku tulis hanya bisa dibaca satu orang dalam satu waktu.
+        <br><br>
+        <strong>Dina melakukannya:</strong> Memindahkan catatan penjualan Pak Hendra ke Google Sheets selama satu akhir pekan. Dalam satu bulan, ia sudah bisa melihat pola yang sebelumnya tidak terlihat: batik motif parang paling laris di September–Oktober, dan hampir tidak ada yang beli di Februari.
+        <br><br>
+        Ukuran berhasil: Anda bisa menjawab pertanyaan "bulan ini produk apa yang paling banyak menghasilkan pendapatan?" dalam kurang dari 5 menit.
+      </div>
+    </div>
+  </div>
+  <div class="rm-item">
+    <div class="rm-left">
+      <div class="rm-num-circle" style="background:rgba(58,173,160,.15);color:var(--teal);">2</div>
+      <div class="rm-vline"></div>
+    </div>
+    <div class="rm-body">
+      <div class="rm-step-title" style="color:var(--teal);">🌐 Kehadiran Online yang Konsisten</div>
+      <div class="rm-step-body">
+        Mulai dengan <em>satu</em> platform yang paling relevan dengan produk dan target pasar Anda — bukan semua sekaligus. Konsistensi di satu platform lebih efektif daripada setengah hati di lima platform. Foto produk yang baik, deskripsi yang jujur dan lengkap, dan waktu respons yang cepat adalah fondasi.
+        <br><br>
+        <strong>Kesalahan umum:</strong> Membuka banyak akun di banyak platform sekaligus, tapi tidak ada yang dikelola dengan baik. Akhirnya semua terbengkalai dan pembeli yang serius tidak mendapat respons.
+        <br><br>
+        Ukuran berhasil: Dalam 30 hari aktif, setidaknya ada 1–3 penjualan atau inquiry dari orang yang sebelumnya tidak Anda kenal.
+      </div>
+    </div>
+  </div>
+  <div class="rm-item">
+    <div class="rm-left">
+      <div class="rm-num-circle" style="background:rgba(72,136,208,.15);color:var(--e4);">3</div>
+      <div class="rm-vline"></div>
+    </div>
+    <div class="rm-body">
+      <div class="rm-step-title" style="color:var(--e4);">📊 Membaca dan Menggunakan Data</div>
+      <div class="rm-step-body">
+        Semua platform digital menyediakan analytics gratis — Instagram Insights, Shopee Seller Center, TikTok Analytics. Data ini menunjukkan kapan follower Anda paling aktif, konten apa yang menghasilkan klik, dan dari mana pembeli Anda berasal. Tapi data ini hanya berguna kalau dibaca dan ditindaklanjuti.
+        <br><br>
+        <strong>Dina melakukannya:</strong> Ia melihat dari TikTok Analytics bahwa videonya paling banyak ditonton antara pukul 20.00–22.00 hari Kamis dan Jumat. Ia memindahkan jadwal live streaming ke waktu itu, dan penjualan naik 40% tanpa perubahan lain.
+        <br><br>
+        Ukuran berhasil: Anda mengubah setidaknya satu keputusan bisnis per bulan berdasarkan data, bukan intuisi semata.
+      </div>
+    </div>
+  </div>
+  <div class="rm-item">
+    <div class="rm-left">
+      <div class="rm-num-circle" style="background:rgba(136,105,224,.15);color:var(--e5);">4</div>
+    </div>
+    <div class="rm-body">
+      <div class="rm-step-title" style="color:var(--e5);">🤖 Otomasi dan Personalisasi</div>
+      <div class="rm-step-body">
+        Setelah Tahap 1–3 stabil, mulai identifikasi proses yang berulang dan bisa diotomasi: auto-reply untuk pertanyaan standar, jadwal posting yang terencana, notifikasi stok menipis, dan pesan personal ke pelanggan yang sudah membeli sebelumnya.
+        <br><br>
+        Personalisasi bukan hanya untuk merek besar. Pesan "Hai Mbak Rina, bulan lalu Mbak beli batik motif kawung — bulan ini kami punya motif baru yang senada, boleh dilihat dulu?" adalah contoh personalisasi sederhana yang efektif dan bisa dilakukan secara semi-manual.
+        <br><br>
+        <strong>Peringatan penting:</strong> Jangan loncat ke Tahap 4 sebelum Tahap 1 dan 2 benar-benar solid. Otomasi di atas fondasi yang rapuh hanya akan mempercepat kesalahan.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="box box-activity">
+  <div class="box-label">✏️ Aktivitas 8.1 — Rencana Aksi Personal</div>
+  <div class="box-activity-body">
+    <div class="activity-q">Berdasarkan diagnosis di Modul 7 dan roadmap di atas, tuliskan SATU langkah konkret yang akan Anda lakukan dalam 7 hari ke depan untuk memulai atau memperkuat salah satu tahap adaptasi. Sespesifik mungkin: apa tepatnya yang akan dilakukan, kapan, dan bagaimana Anda tahu hasilnya berhasil?</div>
+    <textarea class="activity-input" id="act8" placeholder="Contoh: Dalam 7 hari, saya akan membuat spreadsheet Google Sheets untuk mencatat penjualan harian. Saya akan mengisi data hari ini, besok, dan seterusnya. Saya tahu berhasil kalau pada akhir minggu saya bisa jawab 'produk apa yang paling laku minggu ini' tanpa harus membuka buku catatan..."></textarea>
+    <button class="activity-save" onclick="saveActivity('act8')">Simpan Catatan</button>
+    <div class="activity-saved" id="act8-saved">✓ Tersimpan</div>
+  </div>
+</div>
+
+<div class="box box-takeaway">
+  <div class="box-label">📌 Prinsip Adaptasi yang Sering Diabaikan</div>
+  <ul>
+    <li><strong>Urutan itu penting.</strong> Teknologi canggih di atas fondasi yang rapuh hanya mempercepat kekacauan. Bangun tahap demi tahap.</li>
+    <li><strong>Konsistensi mengalahkan sempurna.</strong> Foto produk yang "cukup baik" yang konsisten diunggah tiap hari mengalahkan foto sempurna yang diunggah sebulan sekali.</li>
+    <li><strong>Data membutuhkan konteks.</strong> Angka penjualan yang turun bisa karena produk kurang bagus, atau karena musim, atau karena kompetitor baru. Data tanpa pemahaman konteks bisa menyesatkan.</li>
+    <li><strong>Adaptasi bukan proyek, melainkan kemampuan.</strong> Tujuan bukan "menyelesaikan digitalisasi" — tujuannya adalah membangun kemampuan belajar dan berubah yang terus berjalan.</li>
+  </ul>
+</div>
+</section>
+
+<!-- ════════════════════════════════════════
+     PENUTUP — STUDI KASUS & KUIS
+═════════════════════════════════════════ -->
+<section id="penutup">
+<div class="closing">
+  <h2 class="closing-title">Studi Kasus: Lima Tahun Perjalanan Dina</h2>
+
+  <div class="box box-story" style="margin-bottom:28px;">
+    <div class="box-label">📖 Kisah Final — 2019 hingga 2024</div>
+    <p style="margin-bottom:14px;">2019. Dina baru lulus dan kembali ke Solo. Gudang penuh 1.200 lembar batik. Penjualan bulanan: 35–40 lembar. Pak Hendra mulai khawatir. Dina tidak panik — ia mulai dari yang bisa dilakukan hari itu: memotret semua produk, membuat spreadsheet, membuka akun Shopee.</p>
+    <p style="margin-bottom:14px;">2020. Pandemi datang. Toko tutup. Tapi akun Shopee-nya sudah jalan — pesanan terus masuk meski kecil. Di bulan ketiga pandemi, ia mulai live streaming di TikTok untuk mengisi waktu. Videonya tentang "cara membedakan batik tulis dan printing" viral — 800.000 tayangan dalam 48 jam.</p>
+    <p style="margin-bottom:14px;">2021–2022. Dina mulai membaca data TikTok-nya secara sistematis. Ia menemukan tiga pola: konsumen muda tertarik pada <em>cerita di balik motif</em>, bukan hanya produknya; live streaming di hari Kamis pukul 20.00 selalu lebih ramai; dan repeat buyer terbesar adalah perempuan usia 28–35 dari kota besar.</p>
+    <p>2024. @BatikSantoso punya 47.000 followers di TikTok, 12.000 di Instagram. Penjualan bulanan: 600–800 lembar — naik 20 kali lipat dalam 5 tahun. Pak Hendra sudah tidak lagi khawatir. Mbah Joko, yang masih hidup di usia 89 tahun, sesekali melihat cucu-cucunya menonton live streaming Dina di HP. Ia tidak sepenuhnya mengerti cara kerjanya. Tapi ia mengenali sesuatu yang familier: <strong>kepercayaan yang dibangun satu orang satu orang, lewat cerita yang jujur.</strong>
+    </p>
+  </div>
+
+  <h3 style="font-family:var(--fser);font-size:22px;font-weight:700;margin-bottom:20px;">Pertanyaan Diskusi</h3>
+
+  <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:40px;">
+    <div style="background:var(--surface);border-radius:var(--r);padding:16px 20px;border-left:3px solid var(--gold);">
+      <div style="font-size:10.5px;font-weight:800;letter-spacing:.1em;color:var(--gold);margin-bottom:8px;">DESKRIPTIF</div>
+      <div style="font-size:14.5px;line-height:1.65;">Perubahan konkret apa yang terjadi dari Mbah Joko (1975) ke Pak Hendra (1998) ke Dina (2024) dalam hal: cara menjual, cara membangun kepercayaan, dan cara mengambil keputusan bisnis?</div>
+    </div>
+    <div style="background:var(--surface);border-radius:var(--r);padding:16px 20px;border-left:3px solid var(--teal);">
+      <div style="font-size:10.5px;font-weight:800;letter-spacing:.1em;color:var(--teal);margin-bottom:8px;">DIAGNOSTIK</div>
+      <div style="font-size:14.5px;line-height:1.65;">Mengapa Pak Hendra yang sudah berpengalaman dan punya modal tidak melihat peluang live selling lebih awal? Identifikasi faktor internal (dalam diri/bisnis) dan faktor eksternal yang menghambatnya.</div>
+    </div>
+    <div style="background:var(--surface);border-radius:var(--r);padding:16px 20px;border-left:3px solid var(--e4);">
+      <div style="font-size:10.5px;font-weight:800;letter-spacing:.1em;color:var(--e4);margin-bottom:8px;">PREDIKTIF</div>
+      <div style="font-size:14.5px;line-height:1.65;">Dalam 3–5 tahun ke depan, tantangan apa yang kemungkinan akan dihadapi Dina yang tidak pernah dihadapi Pak Hendra? Apa yang harus Dina persiapkan sekarang?</div>
+    </div>
+    <div style="background:var(--surface);border-radius:var(--r);padding:16px 20px;border-left:3px solid var(--e5);">
+      <div style="font-size:10.5px;font-weight:800;letter-spacing:.1em;color:var(--e5);margin-bottom:8px;">PRESKRIPTIF</div>
+      <div style="font-size:14.5px;line-height:1.65;">Jika Anda adalah Dina hari ini, satu langkah konkret apa yang akan Anda ambil minggu ini untuk mempersiapkan bisnis batik menghadapi persaingan dan perubahan 3 tahun ke depan?</div>
+    </div>
+  </div>
+
+  <!-- KUIS -->
+  <h3 style="font-family:var(--fser);font-size:22px;font-weight:700;margin-bottom:6px;">Kuis Penutup</h3>
+  <p style="font-size:14px;color:var(--muted);margin-bottom:24px;">Jawab pertanyaan berikut untuk menguji pemahaman Anda. Setiap jawaban dilengkapi penjelasan.</p>
+
+  <div class="quiz-wrap" id="quiz-1">
+    <p class="quiz-q">1. Apa yang paling tepat menggambarkan perbedaan mendasar antara RI 1.0 dan RI 3.0?</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="ans(this,'q1',false)">RI 3.0 menggunakan energi yang lebih ramah lingkungan dibanding RI 1.0</button>
+      <button class="quiz-opt" onclick="ans(this,'q1',false)">RI 1.0 hanya berdampak di Eropa, sementara RI 3.0 berdampak global</button>
+      <button class="quiz-opt" onclick="ans(this,'q1',true)">RI 1.0 mengotomasi tenaga fisik manusia; RI 3.0 mengotomasi pemrosesan dan penyimpanan informasi</button>
+      <button class="quiz-opt" onclick="ans(this,'q1',false)">RI 1.0 membutuhkan investasi lebih besar dari RI 3.0</button>
+    </div>
+    <div class="quiz-fb" id="fb-q1"></div>
+  </div>
+
+  <div class="quiz-wrap" id="quiz-2" style="margin-top:16px;">
+    <p class="quiz-q">2. Mengapa merek menjadi penting justru setelah produksi massal dimungkinkan oleh RI 2.0?</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="ans(this,'q2',false)">Karena biaya produksi yang lebih murah memungkinkan merek berinvestasi lebih besar di iklan</button>
+      <button class="quiz-opt" onclick="ans(this,'q2',true)">Karena standarisasi produk membuat produk secara fungsional serupa, sehingga persaingan bergeser ke persepsi — dan merek adalah alat membangun persepsi</button>
+      <button class="quiz-opt" onclick="ans(this,'q2',false)">Karena konsumen di era RI 2.0 lebih mudah dipengaruhi emosi dibanding era sebelumnya</button>
+      <button class="quiz-opt" onclick="ans(this,'q2',false)">Karena merek memungkinkan perusahaan menetapkan harga lebih tinggi secara legal</button>
+    </div>
+    <div class="quiz-fb" id="fb-q2"></div>
+  </div>
+
+  <div class="quiz-wrap" id="quiz-3" style="margin-top:16px;">
+    <p class="quiz-q">3. Dalam roadmap adaptasi 4 tahap, Pak Hendra sudah melakukan pencatatan digital (Tahap 1) dan punya akun Shopee (Tahap 2). Langkah paling tepat berikutnya adalah...</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="ans(this,'q3',false)">Langsung berinvestasi di chatbot AI untuk auto-reply semua pesan masuk</button>
+      <button class="quiz-opt" onclick="ans(this,'q3',false)">Membuka akun di semua platform sekaligus untuk memperluas jangkauan</button>
+      <button class="quiz-opt" onclick="ans(this,'q3',true)">Mulai membaca dan bertindak berdasarkan data analytics yang sudah tersedia di Shopee Seller Center — pola produk, waktu, dan asal pembeli</button>
+      <button class="quiz-opt" onclick="ans(this,'q3',false)">Berhenti dulu dan mengevaluasi apakah digitalisasi sudah memberikan hasil yang cukup sebelum melanjutkan</button>
+    </div>
+    <div class="quiz-fb" id="fb-q3"></div>
+  </div>
+
+  <div class="quiz-wrap" id="quiz-4" style="margin-top:16px;">
+    <p class="quiz-q">4. Konsep Society 5.0 merespons kekhawatiran tentang RI 4.0 dengan cara...</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="ans(this,'q4',false)">Melarang penggunaan AI dan otomasi di sektor yang menyerap banyak tenaga kerja</button>
+      <button class="quiz-opt" onclick="ans(this,'q4',false)">Memperlambat adopsi teknologi agar masyarakat punya waktu lebih lama untuk beradaptasi</button>
+      <button class="quiz-opt" onclick="ans(this,'q4',false)">Memindahkan tanggung jawab adaptasi teknologi dari bisnis ke pemerintah</button>
+      <button class="quiz-opt" onclick="ans(this,'q4',true)">Mendorong desain teknologi yang berpusat pada kesejahteraan manusia, bukan sekadar efisiensi — manusia dan mesin berkolaborasi, bukan berkompetisi</button>
+    </div>
+    <div class="quiz-fb" id="fb-q4"></div>
+  </div>
+
+  <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--border);">
+    <h3 style="font-family:var(--fser);font-size:20px;font-weight:700;margin-bottom:12px;">Materi Selanjutnya →</h3>
+    <div class="box box-bridge" style="margin:0;">
+      <div class="box-label">🔗 Data dalam Konteks Bisnis — Kerangka DIKW</div>
+      Dina tahu batiknya laris lewat live streaming. Tapi pertanyaan berikutnya jauh lebih dalam: <em>dari 600 pembeli bulan ini, siapa yang akan kembali? Motif apa yang harus diproduksi lebih banyak bulan depan? Di segmen mana margin paling tinggi?</em> Semua pertanyaan ini punya jawaban yang bisa dihitung. <strong>Dan kemampuan membaca serta menggunakan data untuk menjawab pertanyaan bisnis seperti ini adalah inti dari modul berikutnya dalam kurikulum ini.</strong>
+    </div>
+  </div>
+</div>
+</section>
+
+</div><!-- /content -->
+</div><!-- /layout -->
+
+<button class="btt" id="btt" onclick="scrollTo({top:0,behavior:'smooth'})" aria-label="Kembali ke atas">↑</button>
+
+<script>
+/* ── READING PROGRESS ──────────────────────────── */
+const readBar = document.getElementById('readBar');
+const sbFill  = document.getElementById('sbFill');
+const progPct = document.getElementById('progPct');
+const btt     = document.getElementById('btt');
+
+function onScroll() {
+  const doc  = document.documentElement;
+  const pct  = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
+  const p    = Math.round(pct * 100);
+  readBar.style.width = p + '%';
+  sbFill.style.width  = p + '%';
+  progPct.textContent = p + '%';
+  btt.classList.toggle('show', doc.scrollTop > 400);
+  highlightSidebar();
+  updateReadDots();
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+
+/* ── SIDEBAR ACTIVE ────────────────────────────── */
+const sections = ['intro','mod1','mod2','mod3','mod4','mod5','mod6','mod7','mod8','penutup'];
+const sbItems  = document.querySelectorAll('.sb-item');
+
+function highlightSidebar() {
+  const offset = 100;
+  let active = 'intro';
+  for (const id of sections) {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= offset) active = id;
+  }
+  sbItems.forEach(item => {
+    item.classList.toggle('active', item.dataset.sec === active);
+  });
+}
+
+/* ── READ DOTS ─────────────────────────────────── */
+const readSections = new Set(JSON.parse(localStorage.getItem('riReadSections') || '[]'));
+
+function updateReadDots() {
+  const offset = window.innerHeight * 0.8;
+  for (const id of sections) {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().bottom < offset) {
+      readSections.add(id);
+    }
+  }
+  localStorage.setItem('riReadSections', JSON.stringify([...readSections]));
+  sbItems.forEach(item => {
+    item.classList.toggle('read', readSections.has(item.dataset.sec));
+  });
+}
+
+/* ── SIDEBAR NAV CLICK ─────────────────────────── */
+sbItems.forEach(item => {
+  item.addEventListener('click', e => {
+    if (window.innerWidth <= 900) closeSidebar();
+  });
+});
+
+/* ── MOBILE SIDEBAR ────────────────────────────── */
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+/* ── ACTIVITIES ────────────────────────────────── */
+const ACT_KEY = 'riActivities';
+function loadActivities() {
+  const saved = JSON.parse(localStorage.getItem(ACT_KEY) || '{}');
+  Object.entries(saved).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) el.value = val;
+  });
+}
+function saveActivity(id) {
+  const el   = document.getElementById(id);
+  const saved = JSON.parse(localStorage.getItem(ACT_KEY) || '{}');
+  saved[id]  = el.value;
+  localStorage.setItem(ACT_KEY, JSON.stringify(saved));
+  const conf = document.getElementById(id + '-saved');
+  if (conf) { conf.style.display = 'block'; setTimeout(() => conf.style.display = 'none', 2000); }
+}
+loadActivities();
+
+/* ── QUIZ ──────────────────────────────────────── */
+const feedbacks = {
+  q1: {
+    ok:  "✅ Tepat! RI 1.0 mengotomasi kerja fisik (mesin menggantikan tangan dan otot), sedangkan RI 3.0 mengotomasi kerja kognitif/administratif (komputer menggantikan perhitungan dan penyimpanan memori). Ini adalah lompatan kualitatif yang berbeda.",
+    bad: "❌ Perhatikan lagi perbedaan mendasarnya: RI 1.0 dan RI 3.0 berbeda bukan di skalanya, melainkan di jenis pekerjaan yang diotomasi — fisik vs kognitif/informasi."
+  },
+  q2: {
+    ok:  "✅ Tepat! Ketika produk secara fungsional identik (berkat standarisasi), pembeli tidak bisa membedakan secara objektif. Satu-satunya diferensiasi yang tersisa adalah persepsi — dan merek adalah alat paling efektif untuk membangun persepsi itu.",
+    bad: "❌ Coba pikirkan dari sisi konsumen: kalau dua produk secara fungsional sama, bagaimana mereka memutuskan mana yang dibeli? Itulah mengapa merek menjadi krusial justru setelah standarisasi."
+  },
+  q3: {
+    ok:  "✅ Tepat! Tahap 3 adalah tentang membaca dan menggunakan data yang sudah ada — bukan langsung loncat ke otomasi. Data analytics di Shopee Seller Center gratis dan tersedia, tinggal diinterpretasikan dan ditindaklanjuti.",
+    bad: "❌ Ingat urutan roadmap: setelah pencatatan dan kehadiran online stabil, langkah logis berikutnya adalah mulai membaca data yang sudah dihasilkan oleh aktivitas online kita — bukan langsung otomasi."
+  },
+  q4: {
+    ok:  "✅ Tepat! Society 5.0 tidak menolak teknologi — ia mengarahkannya. Teknologi harus dirancang untuk meningkatkan kesejahteraan manusia, bukan sekadar mengoptimalkan efisiensi atau keuntungan. Manusia tetap pusat, mesin adalah alat.",
+    bad: "❌ Society 5.0 justru pro-teknologi — tapi dengan orientasi yang berbeda. Bukan tentang memperlambat atau melarang, melainkan tentang memastikan teknologi melayani manusia, bukan sebaliknya."
+  }
+};
+
+function ans(btn, qId, correct) {
+  const wrap = btn.closest('.quiz-wrap');
+  wrap.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+  btn.classList.add(correct ? 'ok' : 'bad');
+  if (!correct) {
+    wrap.querySelectorAll('.quiz-opt').forEach(b => {
+      if (b.onclick && b.onclick.toString().includes('true')) b.classList.add('ok');
+    });
+  }
+  const fb = document.getElementById('fb-' + qId);
+  fb.textContent = correct ? feedbacks[qId].ok : feedbacks[qId].bad;
+  fb.className   = 'quiz-fb show ' + (correct ? 'ok' : 'bad');
+}
+
+/* ── INIT ──────────────────────────────────────── */
+onScroll();
+</script>
+</body>
+</html>
