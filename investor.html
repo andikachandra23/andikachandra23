@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AnDc | Investor information</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F6F8FC;--ink:#0F1B4C;--muted:#55608A;--blue:#2B3FE0;--mark:#FFE066;--rule:#D5DCEF;--card:#FFFFFF;--onblue:#FFFFFF;--ok:#1B8A5A;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0C1230;--ink:#EEF1FF;--muted:#9AA6D6;--blue:#7C8CFF;--rule:#252E5C;--card:#141C45;--onblue:#0C1230;--ok:#4FD39A}}
+:root[data-theme="dark"]{--paper:#0C1230;--ink:#EEF1FF;--muted:#9AA6D6;--blue:#7C8CFF;--rule:#252E5C;--card:#141C45;--onblue:#0C1230;--ok:#4FD39A}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 18px/1.6 "DM Sans",system-ui,sans-serif;
+background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);background-size:44px 44px}
+body::before{content:"";position:fixed;inset:0;background:var(--paper);opacity:.82;z-index:-1}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:"Bricolage Grotesque","DM Sans",sans-serif;line-height:1.08;letter-spacing:-.02em;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+.logo{font:700 26px "Bricolage Grotesque",sans-serif;text-decoration:none;letter-spacing:-.03em}
+.logo b{color:var(--blue)}
+nav a.link{font-size:16px;text-decoration:none;color:var(--muted)}
+.btn{display:inline-flex;gap:10px;align-items:center;background:var(--blue);color:var(--onblue);padding:14px 24px;border-radius:6px;font-weight:500;text-decoration:none;font-size:17px}
+.btn.alt{background:none;color:var(--ink);border:1.5px solid var(--ink)}
+.ic{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ib{display:inline-grid;place-items:center;width:46px;height:46px;border-radius:12px;background:var(--card);border:1px solid var(--rule);color:var(--blue);flex:none}
+.hero{display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:center;padding:56px 0 96px}
+h1{font-size:clamp(38px,6vw,64px);font-weight:700}
+mark{background:linear-gradient(transparent 55%,var(--mark) 55%);color:inherit}
+.hero p{max-width:34em;color:var(--muted);font-size:20px;margin:24px 0 32px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.ledger{background:var(--card);border:1px solid var(--rule);border-radius:4px;box-shadow:6px 6px 0 var(--rule);padding:8px 28px}
+.ledger h2{font-size:15px;font-weight:500;color:var(--muted);letter-spacing:0;padding:16px 0 4px;font-family:"DM Sans",sans-serif}
+.ledger dl{margin:0}
+.ledger div{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;border-top:1px solid var(--rule)}
+.ledger div:first-of-type{border-top:0}
+.ledger dt{color:var(--muted);font-size:16px}
+.ledger dd{margin:0;font-weight:500;text-align:right;display:flex;align-items:center;gap:8px}
+.ledger .done{color:var(--ok)}
+.ledger .open{color:var(--blue)}
+.ledger .open i{width:9px;height:9px;border-radius:50%;background:var(--blue);animation:pulse 1.8s 3 }
+@keyframes pulse{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.ledger .open i{animation:none}}
+section{padding:88px 0;border-top:1px solid var(--rule)}
+h2.big{font-size:clamp(30px,4.4vw,46px);max-width:17em;margin-bottom:24px}
+.lead{max-width:36em;color:var(--muted);font-size:20px;margin:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.two p{margin:0 0 18px}
+.rows{margin-top:40px;border-top:1.5px solid var(--ink)}
+.row{display:grid;grid-template-columns:300px 1fr;gap:32px;padding:28px 0;border-bottom:1px solid var(--rule);align-items:start}
+.row h3{font-size:25px;display:flex;align-items:center;gap:14px}
+.row p{margin:0;max-width:34em;color:var(--muted)}
+.band{background:var(--ink);color:var(--paper);border-top:0}
+.band h2{color:var(--paper)}
+.band p{margin:0 0 16px;max-width:30em;opacity:.88}
+.band .btn{background:var(--mark);color:#0F1B4C;margin-top:16px}
+.band .btn.alt{background:none;color:var(--paper);border-color:var(--paper);margin-left:8px}
+footer{padding:32px 0;color:var(--muted);font-size:14.5px}
+footer p{margin:0 0 8px;max-width:48em}
+@media (max-width:760px){.hero,.two{grid-template-columns:1fr;gap:36px}.row{grid-template-columns:1fr;gap:12px}section{padding:64px 0}.hero{padding-bottom:64px}body{font-size:17px}.band .btn.alt{margin:12px 0 0}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m9 15 2 2 4-4"/></symbol>
+<symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-school" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/><path d="M22 10v6"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+<symbol id="i-trend" viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
+</defs></svg>
+<div class="wrap">
+<nav><a class="logo" href="#top" id="top">An<b>Dc</b></a><a class="link" href="#contact">Contact</a></nav>
+
+<header class="hero">
+<div>
+<h1>Seed C is closed. <mark>The next chapter is open.</mark></h1>
+<p>Early backers have already put money behind a simple belief: a teacher with time to read a child's work changes what that child can become. We now welcome investors who want to carry it into every classroom that needs it.</p>
+<div class="cta"><a class="btn" href="mailto:invest@andc.id?subject=Investor%20conversation"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>Start a conversation</a><a class="btn alt" href="#capital">Where new capital goes</a></div>
+</div>
+<aside class="ledger" aria-label="Funding status">
+<h2>Funding status</h2>
+<dl>
+<div><dt>Seed C round</dt><dd class="done"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Completed</dd></div>
+<div><dt>Further funding</dt><dd class="open"><i></i>Open to investors</dd></div>
+<div><dt>Focus</dt><dd>AI applications for education</dd></div>
+<div><dt>Starting market</dt><dd>Indonesia</dd></div>
+</dl>
+</aside>
+</header>
+</div>
+
+<section id="why"><div class="wrap two">
+<h2 class="big">A quiet problem, and a very large one.</h2>
+<div>
+<p>Every school day, millions of students finish work that no one has time to read closely. Teachers do not lack care. They lack hours. The result is feedback that arrives late, and understanding that never quite forms.</p>
+<p>AI can now read a mistake, ask the right question and draft the feedback, while the teacher stays the final voice. Schools are ready for that kind of help. Few teams are building it for crowded rooms, shared devices and weak connections. That is where we work.</p>
+</div>
+</div></section>
+
+<section id="capital"><div class="wrap">
+<h2 class="big">What new capital builds.</h2>
+<p class="lead">Every part of the next round is aimed at one outcome: more students getting better feedback, from teachers who trust the tool.</p>
+<div class="rows">
+<div class="row"><h3><span class="ib"><svg class="ic" aria-hidden="true"><use href="#i-cpu"/></svg></span>Better models</h3><p>Stronger Tutor, Marking and Insight engines in Bahasa Indonesia and regional contexts, tested against what teachers actually grade.</p></div>
+<div class="row"><h3><span class="ib"><svg class="ic" aria-hidden="true"><use href="#i-school"/></svg></span>More schools</h3><p>Structured pilots in real classrooms, measured on learning outcomes, so every new school is evidence for the next one.</p></div>
+<div class="row"><h3><span class="ib"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span>Trust and safety</h3><p>Student data protection, audit trails and the teacher approval step that sits on every AI draft. Trust is the product.</p></div>
+<div class="row"><h3><span class="ib"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg></span>The right team</h3><p>Engineers, educators and school partners who can build slowly where it matters and ship quickly where it counts.</p></div>
+</div>
+</div></section>
+
+<section id="fit"><div class="wrap two">
+<h2 class="big">Who we hope to meet.</h2>
+<div>
+<p>Investors who care about learning outcomes as much as returns, and who understand that schools buy on trust. Trust is earned one classroom at a time, and it compounds.</p>
+<p>If you have backed education, language or AI infrastructure companies, or simply believe teachers deserve better tools, we would like to hear how you think about this market. We will share our plan, our product and our numbers directly.</p>
+</div>
+</div></section>
+
+<section class="band" id="contact"><div class="wrap two">
+<h2 class="big">Let's talk about the next round.</h2>
+<div>
+<p>Write to us with a short note about your fund or interests. We reply personally, and a data room is available to serious investors on request.</p>
+<a class="btn" href="mailto:invest@andc.id?subject=Investor%20conversation"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>invest@andc.id</a>
+<a class="btn alt" href="mailto:invest@andc.id?subject=Data%20room%20request"><svg class="ic" aria-hidden="true"><use href="#i-file"/></svg>Request data room</a>
+</div>
+</div></section>
+
+<div class="wrap"><footer>
+<p>This page is for information only. It is not an offer to sell, or a solicitation of an offer to buy, any securities. Any investment is subject to definitive documents and applicable law.</p>
+<p>AnDc, AI applications for education.</p>
+</footer></div>
+</body>
+</html>
