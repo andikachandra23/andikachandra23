@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penerapan Prinsip · Mockup Aplikasi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f7f7f5;
+    --card:#ffffff;
+    --ink:#0f0f0f;
+    --body:#262626;
+    --muted:#737373;
+    --muted-2:#a3a3a3;
+    --border:#e7e7e5;
+    --border-strong:#d4d4d4;
+    --accent:#1d4ed8;
+    --amber:#c2740c;
+    --amber-soft:#fef3c7;
+    --red:#b91c1c;
+    --red-soft:#fef2f2;
+    --green:#15803d;
+    --green-soft:#f0fdf4;
+    --accent-soft:#eff6ff;
+    --radius:10px;
+    --radius-sm:6px;
+    --max:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    font-size:15.5px;
+    line-height:1.7;
+    color:var(--body);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    font-feature-settings:"cv11";
+  }
+  ::selection{background:var(--ink);color:#fff}
+
+  /* ---------- HEADER ---------- */
+  .masthead{
+    border-bottom:1px solid var(--border);
+  }
+  .masthead-inner{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:56px 28px 32px;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    font-weight:500;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:'';
+    display:inline-block;
+    width:24px;height:1px;
+    background:var(--border-strong);
+  }
+  h1.title{
+    font-family:'Poppins',sans-serif;
+    font-size:clamp(28px,4.2vw,42px);
+    font-weight:700;
+    line-height:1.12;
+    letter-spacing:-.025em;
+    color:var(--ink);
+    margin-bottom:16px;
+    max-width:20ch;
+  }
+  .subtitle{
+    font-size:16px;
+    line-height:1.6;
+    color:var(--muted);
+    max-width:62ch;
+    margin-bottom:0;
+  }
+
+  /* ---------- SCREEN TABS ---------- */
+  nav.tabs{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(247,247,245,.94);
+    backdrop-filter:saturate(180%) blur(8px);
+    -webkit-backdrop-filter:saturate(180%) blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  .tabs-inner{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:0 28px;
+    display:flex;
+    gap:0;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .tabs-inner::-webkit-scrollbar{display:none}
+  .tab-btn{
+    flex-shrink:0;
+    background:none;border:none;
+    font-family:'Inter',sans-serif;
+    font-size:13px;font-weight:500;
+    color:var(--muted);
+    padding:16px 0;
+    margin-right:28px;
+    cursor:pointer;
+    border-bottom:2px solid transparent;
+    margin-bottom:-1px;
+    transition:color .15s, border-color .15s;
+    white-space:nowrap;
+    letter-spacing:-.005em;
+  }
+  .tab-btn:hover{color:var(--ink)}
+  .tab-btn.active{
+    color:var(--ink);
+    border-bottom-color:var(--ink);
+    font-weight:600;
+  }
+  .tab-btn .num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--muted-2);
+    margin-right:6px;
+  }
+  .tab-btn.active .num{color:var(--ink)}
+
+  /* ---------- LAYOUT ---------- */
+  main{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:56px 28px 100px;
+  }
+  .showcase{
+    display:grid;
+    grid-template-columns:400px 1fr;
+    gap:56px;
+    align-items:start;
+  }
+  @media(max-width:900px){
+    .showcase{grid-template-columns:1fr;gap:40px}
+  }
+
+  /* ---------- PHONE ---------- */
+  .phone-wrap{
+    position:sticky;
+    top:90px;
+  }
+  @media(max-width:900px){
+    .phone-wrap{position:static}
+  }
+
+  .phone{
+    position:relative;
+    width:100%;
+    max-width:360px;
+    margin:0 auto;
+    background:#1a1a1a;
+    border-radius:38px;
+    padding:10px;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.08) inset,
+      0 30px 60px -20px rgba(15,15,15,.25),
+      0 15px 30px -15px rgba(15,15,15,.15);
+  }
+  .phone-screen{
+    position:relative;
+    background:#fff;
+    border-radius:30px;
+    overflow:hidden;
+    height:700px;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* status bar */
+  .status-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 22px 8px;
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink);
+    flex-shrink:0;
+    font-family:'Inter',sans-serif;
+    letter-spacing:-.01em;
+  }
+  .status-icons{display:flex;gap:5px;align-items:center}
+  .status-icons svg{display:block}
+
+  /* app content */
+  .app-view{display:none;flex:1;overflow-y:auto;scrollbar-width:none}
+  .app-view::-webkit-scrollbar{display:none}
+  .app-view.active{display:flex;flex-direction:column}
+
+  /* home indicator */
+  .home-indicator{
+    position:absolute;
+    bottom:8px;left:50%;
+    transform:translateX(-50%);
+    width:110px;height:4px;
+    background:var(--ink);
+    border-radius:999px;
+    opacity:.85;
+    z-index:10;
+  }
+
+  /* ---------- APP STYLES ---------- */
+  .app-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    padding:6px 22px 20px;
+    flex-shrink:0;
+  }
+  .app-header .hello{
+    font-size:12px;
+    color:var(--muted);
+    font-family:'Inter',sans-serif;
+    letter-spacing:-.005em;
+    margin-bottom:4px;
+  }
+  .app-header h2{
+    font-family:'Poppins',sans-serif;
+    font-size:20px;
+    font-weight:600;
+    letter-spacing:-.02em;
+    color:var(--ink);
+    line-height:1.2;
+  }
+  .avatar{
+    width:36px;height:36px;
+    border-radius:50%;
+    background:var(--ink);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.02em;
+    flex-shrink:0;
+    font-family:'Poppins',sans-serif;
+  }
+
+  .app-body{
+    flex:1;
+    padding:0 22px 32px;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* Back button */
+  .back-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:32px;height:32px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:#fff;
+    color:var(--ink);
+    cursor:pointer;
+    margin:4px 0 0 22px;
+  }
+
+  /* Onboarding step label */
+  .step-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted-2);
+    padding:24px 22px 0;
+    margin-bottom:8px;
+  }
+  .onboarding-title{
+    font-family:'Poppins',sans-serif;
+    font-size:24px;
+    font-weight:600;
+    letter-spacing:-.02em;
+    color:var(--ink);
+    line-height:1.25;
+    padding:0 22px;
+    margin-bottom:10px;
+  }
+  .onboarding-desc{
+    font-size:13.5px;
+    color:var(--muted);
+    line-height:1.55;
+    padding:0 22px;
+    margin-bottom:28px;
+  }
+
+  /* Date input */
+  .date-field{
+    padding:0 22px;
+    margin-bottom:16px;
+  }
+  .date-field label{
+    display:block;
+    font-size:11px;
+    font-family:'JetBrains Mono',monospace;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted-2);
+    margin-bottom:8px;
+  }
+  .date-input-wrap{
+    position:relative;
+  }
+  .date-input{
+    width:100%;
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    padding:14px 16px;
+    border:1.5px solid var(--border-strong);
+    border-radius:var(--radius);
+    background:#fff;
+    color:var(--ink);
+    outline:none;
+    transition:border-color .15s;
+    letter-spacing:-.005em;
+  }
+  .date-input:focus{border-color:var(--ink)}
+  .date-input.accept{border-color:var(--green)}
+  .date-input.reject{border-color:var(--red)}
+
+  .parse-result{
+    margin-top:12px;
+    padding:12px 14px;
+    border-radius:var(--radius-sm);
+    font-size:12.5px;
+    font-family:'JetBrains Mono',monospace;
+    min-height:44px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:#fbfbfa;
+    border:1px solid var(--border);
+    color:var(--muted);
+    transition:all .15s;
+  }
+  .parse-result.ok{
+    background:var(--green-soft);
+    border-color:#bbf7d0;
+    color:#14532d;
+  }
+  .parse-result.no{
+    background:var(--red-soft);
+    border-color:#fecaca;
+    color:#7f1d1d;
+  }
+  .parse-result svg{flex-shrink:0}
+
+  .quick-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    padding:0 22px;
+    margin-top:16px;
+    margin-bottom:24px;
+  }
+  .q-chip{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    font-weight:500;
+    padding:6px 12px;
+    border:1px solid var(--border-strong);
+    border-radius:999px;
+    background:#fff;
+    color:var(--muted);
+    cursor:pointer;
+    transition:all .15s;
+    letter-spacing:-.005em;
+  }
+  .q-chip:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* Buttons */
+  .btn-primary{
+    display:block;
+    width:100%;
+    font-family:'Inter',sans-serif;
+    font-size:14.5px;
+    font-weight:600;
+    letter-spacing:-.005em;
+    background:var(--ink);
+    color:#fff;
+    border:none;
+    padding:16px 20px;
+    border-radius:var(--radius);
+    cursor:pointer;
+    transition:opacity .15s, transform .15s;
+  }
+  .btn-primary:hover{opacity:.9}
+  .btn-primary:active{transform:translateY(1px)}
+
+  .btn-text{
+    display:block;
+    width:100%;
+    font-family:'Inter',sans-serif;
+    font-size:13.5px;
+    font-weight:500;
+    background:none;
+    color:var(--muted);
+    border:none;
+    padding:14px 20px;
+    cursor:pointer;
+    letter-spacing:-.005em;
+  }
+  .btn-text:hover{color:var(--ink)}
+
+  /* Home — streak chip */
+  .streak-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 12px;
+    border-radius:999px;
+    background:var(--amber-soft);
+    color:#78350f;
+    font-size:12px;
+    font-weight:600;
+    font-family:'Inter',sans-serif;
+    letter-spacing:-.005em;
+    margin-bottom:20px;
+    align-self:flex-start;
+  }
+  .streak-chip svg{flex-shrink:0}
+
+  /* Home — progress card */
+  .progress-card{
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:24px;
+    background:#fff;
+  }
+  .progress-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:14px;
+  }
+  .progress-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted-2);
+  }
+  .progress-count{
+    font-family:'Poppins',sans-serif;
+    font-size:22px;
+    font-weight:600;
+    letter-spacing:-.02em;
+    color:var(--ink);
+    line-height:1;
+  }
+  .progress-count span{
+    font-size:14px;
+    color:var(--muted);
+    font-weight:500;
+  }
+  .progress-track{
+    height:6px;
+    background:#f1f1ef;
+    border-radius:999px;
+    overflow:hidden;
+    margin-bottom:14px;
+  }
+  .progress-fill{
+    height:100%;
+    background:var(--ink);
+    border-radius:999px;
+    width:0%;
+    transition:width 1.2s cubic-bezier(.22,1,.36,1);
+  }
+  .progress-hint{
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.5;
+  }
+  .progress-hint strong{color:var(--ink);font-weight:600}
+
+  /* Home — primary CTA block */
+  .cta-block{
+    margin-bottom:20px;
+  }
+  .cta-eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted-2);
+    margin-bottom:10px;
+  }
+  .cta-main{
+    display:block;
+    width:100%;
+    text-align:left;
+    background:var(--ink);
+    color:#fff;
+    border:none;
+    padding:20px;
+    border-radius:14px;
+    cursor:pointer;
+    font-family:'Inter',sans-serif;
+    transition:opacity .15s, transform .15s;
+  }
+  .cta-main:hover{opacity:.92}
+  .cta-main:active{transform:translateY(1px)}
+  .cta-main .title{
+    font-size:16px;
+    font-weight:600;
+    letter-spacing:-.01em;
+    margin-bottom:4px;
+    font-family:'Poppins',sans-serif;
+  }
+  .cta-main .meta{
+    font-size:12.5px;
+    color:#a3a3a3;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-family:'Inter',sans-serif;
+    letter-spacing:-.005em;
+  }
+  .cta-main .meta span{display:flex;align-items:center;gap:5px}
+
+  /* Secondary actions row */
+  .secondary-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .secondary-btn{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:14px 12px;
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    font-weight:500;
+    color:var(--muted);
+    cursor:pointer;
+    text-align:left;
+    letter-spacing:-.005em;
+    transition:border-color .15s;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .secondary-btn:hover{border-color:var(--border-strong);color:var(--ink)}
+  .secondary-btn .label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted-2);
+  }
+  .secondary-btn .value{color:var(--ink);font-weight:600;font-size:13px}
+
+  /* Tasks screen */
+  .task-section-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted-2);
+    margin-bottom:12px;
+    padding:0 22px;
+  }
+  .task-list{
+    padding:0 22px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .task{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:16px;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:#fff;
+    cursor:pointer;
+    transition:all .15s;
+  }
+  .task:hover{border-color:var(--border-strong)}
+  .task.urgent{
+    border-color:var(--ink);
+    border-width:1.5px;
+    box-shadow:0 8px 20px -12px rgba(15,15,15,.2);
+  }
+  .task-check{
+    flex-shrink:0;
+    width:20px;height:20px;
+    border:1.5px solid var(--border-strong);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:1px;
+    transition:all .15s;
+  }
+  .task.urgent .task-check{border-color:var(--ink)}
+  .task.done .task-check{background:var(--ink);border-color:var(--ink)}
+  .task-check svg{opacity:0;transition:opacity .15s}
+  .task.done .task-check svg{opacity:1}
+  .task-body{flex:1;min-width:0}
+  .task-title{
+    font-size:14px;
+    font-weight:500;
+    color:var(--ink);
+    letter-spacing:-.005em;
+    margin-bottom:4px;
+    line-height:1.4;
+  }
+  .task.done .task-title{
+    color:var(--muted-2);
+    text-decoration:line-through;
+  }
+  .task-meta{
+    font-size:12px;
+    color:var(--muted);
+    font-family:'Inter',sans-serif;
+    letter-spacing:-.005em;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .task-meta .divider{
+    width:2px;height:2px;
+    background:var(--muted-2);
+    border-radius:50%;
+  }
+  .task.urgent .task-meta{
+    color:var(--ink);
+    font-weight:500;
+  }
+  .task-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:3px 8px;
+    border-radius:999px;
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.02em;
+    background:var(--ink);
+    color:#fff;
+    font-family:'Inter',sans-serif;
+  }
+
+  /* Complete screen */
+  .complete-wrap{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:0 32px 40px;
+    text-align:center;
+  }
+  .check-circle{
+    width:88px;height:88px;
+    border-radius:50%;
+    background:var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:28px;
+    animation:scaleIn .5s cubic-bezier(.2,1.4,.5,1) both;
+  }
+  @keyframes scaleIn{
+    from{transform:scale(0);opacity:0}
+    to{transform:scale(1);opacity:1}
+  }
+  .check-circle svg path{
+    stroke-dasharray:32;
+    stroke-dashoffset:32;
+    animation:drawCheck .5s .25s cubic-bezier(.6,0,.3,1) forwards;
+  }
+  @keyframes drawCheck{to{stroke-dashoffset:0}}
+
+  .complete-title{
+    font-family:'Poppins',sans-serif;
+    font-size:26px;
+    font-weight:600;
+    letter-spacing:-.025em;
+    color:var(--ink);
+    margin-bottom:10px;
+    line-height:1.2;
+  }
+  .complete-desc{
+    font-size:14.5px;
+    color:var(--muted);
+    line-height:1.55;
+    margin-bottom:32px;
+    max-width:26ch;
+  }
+
+  .stat-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--border);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    overflow:hidden;
+    margin-bottom:24px;
+    width:100%;
+  }
+  .stat-cell{
+    background:#fff;
+    padding:18px 14px;
+    text-align:left;
+  }
+  .stat-cell .label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted-2);
+    margin-bottom:6px;
+  }
+  .stat-cell .value{
+    font-family:'Poppins',sans-serif;
+    font-size:20px;
+    font-weight:600;
+    color:var(--ink);
+    letter-spacing:-.02em;
+    line-height:1;
+  }
+  .stat-cell .value .unit{
+    font-size:11.5px;
+    color:var(--muted);
+    font-weight:500;
+    margin-left:4px;
+    letter-spacing:0;
+  }
+
+  .closing-message{
+    font-size:13.5px;
+    color:var(--muted);
+    font-style:italic;
+    line-height:1.5;
+    padding:16px 20px;
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    margin-bottom:24px;
+    width:100%;
+    letter-spacing:-.005em;
+  }
+
+  .complete-actions{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+
+  /* ---------- MARKERS ---------- */
+  .marker{
+    position:absolute;
+    width:22px;height:22px;
+    border-radius:50%;
+    background:var(--accent);
+    color:#fff;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:20;
+    border:2px solid #fff;
+    box-shadow:0 2px 8px rgba(15,15,15,.2);
+    transition:transform .15s;
+    letter-spacing:0;
+  }
+  .marker:hover,
+  .marker.hot{
+    transform:scale(1.25);
+  }
+  .marker::after{
+    content:'';
+    position:absolute;
+    inset:-4px;
+    border-radius:50%;
+    border:1.5px solid var(--accent);
+    opacity:0;
+    animation:ripple 2s ease-out infinite;
+  }
+  @keyframes ripple{
+    0%{transform:scale(.8);opacity:.6}
+    100%{transform:scale(1.8);opacity:0}
+  }
+
+  /* Marker positions per screen */
+  .markers{position:absolute;inset:0;pointer-events:none;display:none}
+  .markers.active{display:block}
+  .marker{pointer-events:auto}
+
+  /* ---------- ANNOTATIONS PANEL ---------- */
+  .annos-head{
+    margin-bottom:28px;
+    padding-bottom:20px;
+    border-bottom:1px solid var(--border);
+  }
+  .annos-head .label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted-2);
+    margin-bottom:8px;
+  }
+  .annos-head h3{
+    font-family:'Poppins',sans-serif;
+    font-size:22px;
+    font-weight:600;
+    letter-spacing:-.02em;
+    color:var(--ink);
+    line-height:1.25;
+    margin-bottom:8px;
+  }
+  .annos-head p{
+    font-size:14px;
+    color:var(--muted);
+    line-height:1.55;
+    max-width:54ch;
+  }
+
+  .anno{
+    display:grid;
+    grid-template-columns:32px 1fr;
+    gap:16px;
+    padding:20px 0;
+    border-bottom:1px solid var(--border);
+    transition:background .15s;
+    cursor:pointer;
+  }
+  .anno:last-child{border-bottom:none}
+  .anno:hover{background:#fbfbfa}
+  .anno:hover .anno-num{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .anno-num{
+    width:28px;height:28px;
+    border-radius:50%;
+    background:#fff;
+    border:1.5px solid var(--border-strong);
+    color:var(--muted);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    margin-top:2px;
+    transition:all .15s;
+  }
+  .anno-body{min-width:0}
+  .anno-principle{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:6px;
+  }
+  .anno-title{
+    font-family:'Poppins',sans-serif;
+    font-size:16px;
+    font-weight:600;
+    color:var(--ink);
+    letter-spacing:-.015em;
+    line-height:1.3;
+    margin-bottom:8px;
+  }
+  .anno-desc{
+    font-size:14px;
+    color:var(--body);
+    line-height:1.6;
+  }
+  .anno-desc code{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.86em;
+    background:#efefec;
+    padding:1px 5px;
+    border-radius:3px;
+    color:var(--ink);
+  }
+  .anno-desc em{color:var(--ink)}
+
+  /* Screen-specific visibility */
+  .annos{display:none}
+  .annos.active{display:block}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--border);
+    padding:32px 28px;
+    text-align:center;
+    font-size:12.5px;
+    color:var(--muted);
+    line-height:1.7;
+  }
+  footer strong{color:var(--ink);font-weight:500}
+
+  /* Mobile */
+  @media(max-width:900px){
+    .phone{max-width:340px}
+    .phone-screen{height:660px}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="eyebrow">Pertemuan 04 · Penerapan</div>
+    <h1 class="title">Empat prinsip dalam satu aplikasi.</h1>
+    <p class="subtitle">Mockup aplikasi habit tracker "Fokus" yang secara sengaja menerapkan Peak-End Rule, Von Restorff Effect, Postel's Law, dan psikologi motivasi. Setiap penanda bernomor terhubung ke anotasi di sisi kanan.</p>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-inner">
+    <button class="tab-btn active" data-screen="onboarding"><span class="num">01</span>Onboarding</button>
+    <button class="tab-btn" data-screen="home"><span class="num">02</span>Home</button>
+    <button class="tab-btn" data-screen="tasks"><span class="num">03</span>Tugas</button>
+    <button class="tab-btn" data-screen="complete"><span class="num">04</span>Selesai</button>
+  </div>
+</nav>
+
+<main>
+  <div class="showcase">
+
+    <!-- ============ PHONE ============ -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+
+          <div class="status-bar">
+            <span>9:41</span>
+            <div class="status-icons">
+              <svg width="17" height="11" viewBox="0 0 17 11" fill="none"><rect x="0" y="7" width="3" height="4" rx="1" fill="#0f0f0f"/><rect x="4.5" y="5" width="3" height="6" rx="1" fill="#0f0f0f"/><rect x="9" y="2.5" width="3" height="8.5" rx="1" fill="#0f0f0f"/><rect x="13.5" y="0" width="3" height="11" rx="1" fill="#0f0f0f"/></svg>
+              <svg width="16" height="11" viewBox="0 0 16 11" fill="none"><path d="M8 10.5L6.2 8.5C6.75 8.1 7.35 7.9 8 7.9C8.65 7.9 9.25 8.1 9.8 8.5L8 10.5Z" fill="#0f0f0f"/><path d="M8 5.5C6.5 5.5 5.15 6.05 4.15 6.95L2.6 5.2C3.95 4 5.9 3.3 8 3.3C10.1 3.3 12.05 4 13.4 5.2L11.85 6.95C10.85 6.05 9.5 5.5 8 5.5Z" fill="#0f0f0f"/><path d="M8 1.2C5.4 1.2 3.05 2.15 1.25 3.7L0 2.3C2.1.5 4.95-.5 8-.5C11.05-.5 13.9.5 16 2.3L14.75 3.7C12.95 2.15 10.6 1.2 8 1.2Z" fill="#0f0f0f"/></svg>
+              <svg width="24" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="20" height="10" rx="2.5" stroke="#0f0f0f" stroke-opacity="0.4"/><rect x="2" y="2" width="15" height="7" rx="1.5" fill="#0f0f0f"/><path d="M22 3.5V7.5C22.8 7.2 23.5 6.5 23.5 5.5C23.5 4.5 22.8 3.8 22 3.5Z" fill="#0f0f0f"/></svg>
+            </div>
+          </div>
+
+          <!-- ===== SCREEN 1: ONBOARDING ===== -->
+          <div class="app-view active" id="view-onboarding">
+            <button class="back-btn" aria-label="Kembali">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="#0f0f0f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="step-label">Langkah 1 dari 3</div>
+            <h2 class="onboarding-title">Kapan Anda ingin mulai?</h2>
+            <p class="onboarding-desc">Tulis tanggal dalam format apa pun yang Anda nyaman. Kami akan mengingatkan Anda di hari yang tepat.</p>
+
+            <div class="date-field">
+              <label for="dateInput">Tanggal mulai</label>
+              <div class="date-input-wrap">
+                <input type="text" id="dateInput" class="date-input" placeholder="besok, 25 Des, minggu depan..." autocomplete="off" spellcheck="false">
+              </div>
+              <div class="parse-result" id="parseResult">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M7 4V7.5L9 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                <span id="parseText">Menunggu input Anda…</span>
+              </div>
+            </div>
+
+            <div class="quick-chips">
+              <button class="q-chip">hari ini</button>
+              <button class="q-chip">besok</button>
+              <button class="q-chip">minggu depan</button>
+              <button class="q-chip">25 Desember</button>
+              <button class="q-chip">2025-12-25</button>
+            </div>
+
+            <div style="padding:0 22px;margin-top:auto">
+              <button class="btn-primary">Lanjutkan</button>
+              <button class="btn-text">Atur nanti</button>
+            </div>
+          </div>
+
+          <!-- ===== SCREEN 2: HOME ===== -->
+          <div class="app-view" id="view-home">
+            <div class="app-header">
+              <div>
+                <div class="hello">Selamat pagi</div>
+                <h2>Andi</h2>
+              </div>
+              <div class="avatar">A</div>
+            </div>
+            <div class="app-body">
+
+              <div class="streak-chip">
+                <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><path d="M6 0C6 3 3 3.5 3 7C3 9 4.5 10 4.5 10C4.5 10 4 8.5 5 7.5C5 9.5 6 10.5 6 12C6 13 7 14 7 14C7 14 10 12 10 8C10 4 7.5 2.5 6 0Z" fill="#78350f"/></svg>
+                12 hari beruntun
+              </div>
+
+              <div class="progress-card">
+                <div class="progress-header">
+                  <div class="progress-label">Minggu ini</div>
+                  <div class="progress-count">5<span> / 7</span></div>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill" data-target="71"></div>
+                </div>
+                <div class="progress-hint">Dua hari lagi untuk menyelesaikan minggu ini. <strong>Anda hampir sampai.</strong></div>
+              </div>
+
+              <div class="cta-block">
+                <div class="cta-eyebrow">Hari ini · 20 menit</div>
+                <button class="cta-main">
+                  <div class="title">Mulai sesi membaca</div>
+                  <div class="meta">
+                    <span>
+                      <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" stroke="#a3a3a3" stroke-width="1.2"/><path d="M5.5 3V5.5L7 7" stroke="#a3a3a3" stroke-width="1.2" stroke-linecap="round"/></svg>
+                      20 menit
+                    </span>
+                    <span>Sapiens · hal. 142</span>
+                  </div>
+                </button>
+              </div>
+
+              <div class="secondary-row">
+                <button class="secondary-btn">
+                  <span class="label">Tugas</span>
+                  <span class="value">3 tersisa</span>
+                </button>
+                <button class="secondary-btn">
+                  <span class="label">Statistik</span>
+                  <span class="value">1.247 menit</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ===== SCREEN 3: TASKS ===== -->
+          <div class="app-view" id="view-tasks">
+            <div class="app-header">
+              <div>
+                <div class="hello">Kamis, 26 Desember</div>
+                <h2>Tugas hari ini</h2>
+              </div>
+              <div class="avatar" style="background:#fff;border:1px solid var(--border);color:var(--ink)">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4H12M2 7H12M2 10H8" stroke="#0f0f0f" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+
+            <div class="task-section-label">Fokus hari ini</div>
+            <div class="task-list">
+              <div class="task urgent" onclick="toggleTask(this)">
+                <div class="task-check">
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2.5 5.5L4.5 7.5L8.5 3.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="task-body">
+                  <div class="task-title">Baca 20 halaman "Sapiens"</div>
+                  <div class="task-meta">
+                    <span>Tenggat hari ini</span>
+                    <span class="divider"></span>
+                    <span>20 menit</span>
+                  </div>
+                </div>
+                <div class="task-badge">Sekarang</div>
+              </div>
+
+              <div class="task" onclick="toggleTask(this)">
+                <div class="task-check">
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2.5 5.5L4.5 7.5L8.5 3.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="task-body">
+                  <div class="task-title">Review catatan kemarin</div>
+                  <div class="task-meta">
+                    <span>Ringan</span>
+                    <span class="divider"></span>
+                    <span>5 menit</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="task" onclick="toggleTask(this)">
+                <div class="task-check">
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2.5 5.5L4.5 7.5L8.5 3.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="task-body">
+                  <div class="task-title">Tulis refleksi singkat</div>
+                  <div class="task-meta">
+                    <span>Ringan</span>
+                    <span class="divider"></span>
+                    <span>3 menit</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== SCREEN 4: COMPLETE ===== -->
+          <div class="app-view" id="view-complete">
+            <div class="complete-wrap">
+
+              <div class="check-circle">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                  <path d="M12 20L18 26L28 15" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>
+              </div>
+
+              <h2 class="complete-title">Selesai.</h2>
+              <p class="complete-desc">Anda membaca 20 halaman hari ini. Itu 20 halaman lebih banyak dari kemarin.</p>
+
+              <div class="stat-grid">
+                <div class="stat-cell">
+                  <div class="label">Streak</div>
+                  <div class="value">13<span class="unit">hari</span></div>
+                </div>
+                <div class="stat-cell">
+                  <div class="label">Minggu ini</div>
+                  <div class="value">6<span class="unit">/ 7</span></div>
+                </div>
+                <div class="stat-cell">
+                  <div class="label">Total menit</div>
+                  <div class="value">1.267</div>
+                </div>
+                <div class="stat-cell">
+                  <div class="label">Buku selesai</div>
+                  <div class="value">4</div>
+                </div>
+              </div>
+
+              <div class="closing-message">Terima kasih sudah kembali hari ini.</div>
+
+              <div class="complete-actions">
+                <button class="btn-primary">Bagikan pencapaian</button>
+                <button class="btn-text">Tutup</button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Markers per screen -->
+          <div class="markers active" data-screen="onboarding">
+            <div class="marker" data-anno="1" style="top:340px;left:calc(100% - 40px)" onclick="highlightAnno(1)">1</div>
+            <div class="marker" data-anno="2" style="top:466px;left:calc(100% - 40px)" onclick="highlightAnno(2)">2</div>
+            <div class="marker" data-anno="3" style="top:600px;left:calc(100% - 40px)" onclick="highlightAnno(3)">3</div>
+          </div>
+
+          <div class="markers" data-screen="home">
+            <div class="marker" data-anno="1" style="top:250px;left:calc(100% - 40px)" onclick="highlightAnno(1)">1</div>
+            <div class="marker" data-anno="2" style="top:355px;left:calc(100% - 40px)" onclick="highlightAnno(2)">2</div>
+            <div class="marker" data-anno="3" style="top:485px;left:calc(100% - 40px)" onclick="highlightAnno(3)">3</div>
+            <div class="marker" data-anno="4" style="top:590px;left:calc(100% - 40px)" onclick="highlightAnno(4)">4</div>
+          </div>
+
+          <div class="markers" data-screen="tasks">
+            <div class="marker" data-anno="1" style="top:290px;left:calc(100% - 40px)" onclick="highlightAnno(1)">1</div>
+            <div class="marker" data-anno="2" style="top:400px;left:calc(100% - 40px)" onclick="highlightAnno(2)">2</div>
+            <div class="marker" data-anno="3" style="top:530px;left:calc(100% - 40px)" onclick="highlightAnno(3)">3</div>
+          </div>
+
+          <div class="markers" data-screen="complete">
+            <div class="marker" data-anno="1" style="top:180px;left:calc(100% - 40px)" onclick="highlightAnno(1)">1</div>
+            <div class="marker" data-anno="2" style="top:380px;left:calc(100% - 40px)" onclick="highlightAnno(2)">2</div>
+            <div class="marker" data-anno="3" style="top:540px;left:calc(100% - 40px)" onclick="highlightAnno(3)">3</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ ANNOTATIONS ============ -->
+    <aside>
+
+      <!-- Onboarding -->
+      <div class="annos active" data-screen="onboarding">
+        <div class="annos-head">
+          <div class="label">Layar 01 · Onboarding</div>
+          <h3>Postel's Law</h3>
+          <p>Layar ini meminta satu hal: kapan pengguna ingin mulai. Alih-alih memaksa satu format, ia menerima apa pun yang wajar dan menormalkannya di belakang layar.</p>
+        </div>
+
+        <div class="anno" data-anno="1" onclick="highlightMarker(1)">
+          <div class="anno-num">1</div>
+          <div class="anno-body">
+            <div class="anno-principle">Postel's Law</div>
+            <div class="anno-title">Input yang toleran</div>
+            <div class="anno-desc">Field tanggal menerima <code>besok</code>, <code>25 Des</code>, <code>25/12/2025</code>, <code>2025-12-25</code>, atau frasa panjang seperti <em>"tanggal 25 bulan 12 tahun 2025"</em>. Pengguna tidak perlu menebak format yang "benar".</div>
+          </div>
+        </div>
+
+        <div class="anno" data-anno="2" onclick="highlightMarker(2)">
+          <div class="anno-num">2</div>
+          <div class="anno-body">
+            <div class="anno-principle">Postel's Law</div>
+            <div class="anno-title">Normalisasi di belakang layar</div>
+            <div class="anno-desc">Setelah input diterima, sistem menampilkan hasil interpretasinya dalam format yang seragam. Pengguna melihat kembali apa yang akan disimpan — konsisten pada output.</div>
+          </div>
+        </div>
+
+        <div class="anno" data-anno="3" onclick="highlightMarker(3)">
+          <div class="anno-num">3</div>
+          <div class="anno-body">
+            <div class="anno-principle">Von Restorff Effect</div>
+            <div class="anno-title">Satu aksi utama</div>
+            <div class="anno-desc">Dari dua aksi di bagian bawah, hanya satu yang diisi gelap penuh — <em>"Lanjutkan"</em>. Aksi sekunder (<em>"Atur nanti"</em>) dibuat sebagai teks tanpa border. Kontras ini mengarahkan perhatian ke jalur utama.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Home -->
+      <div class="annos" data-screen="home">
+        <div class="annos-head">
+          <div class="label">Layar 02 · Home</div>
+          <h3>Motivasi &amp; Von Restorff</h3>
+          <p>Layar utama dirancang untuk memicu dorongan menyelesaikan minggu ini, sekaligus mengarahkan perhatian ke satu aksi utama.</p>
+        </div>
+
+        <div class="anno" data-anno="1" onclick="highlightMarker(1)">
+          <div class="anno-num">1</div>
+          <div class="anno-body">
+            <div class="anno-principle">Motivasi · Social &amp; Intrinsik</div>
+            <div class="anno-title">Streak sebagai identitas</div>
+            <div class="anno-desc">Chip <em>"12 hari beruntun"</em> memicu motivasi intrinsik melalui <em>mastery</em> dan identitas. Kehilangan streak terasa seperti kehilangan sesuatu — ini adalah <em>loss aversion</em> yang bekerja untuk kebaikan pengguna.</div>
+          </div>
+        </div>
+
+        <div class="anno" data-anno="2" onclick="highlightMarker(2)">
+          <div class="anno-num">2</div>
+          <div class="anno-body">
+            <div class="anno-principle">Motivasi · Goal-Gradient</div>
+            <div class="anno-title">Progres mendorong penyelesaian</div>
+            <div class="anno-desc">Progress bar menampilkan <em>5 dari 7</em> disertai pesan <em>"Anda hampir sampai."</em> Sesuai Goal-Gradient Effect, motivasi melonjak saat tujuan hampir tercapai — dan angka "dua hari lagi" terasa jauh lebih mendorong daripada "lima hari sudah selesai".</div>
+          </div>
+        </div>
+
+        <div class="anno" data-anno="3" onclick="highlightMarker(3)">
+          <div class="anno-num">3</div>
+          <div class="anno-body">
+            <div class="anno-principle">Von Restorff Effect</div>
+            <div class="anno-title">Satu aksi dominan</div>
+            <div class="anno-desc">Kartu CTA <em>"Mulai sesi membaca"</em> diisi gelap penuh dan berukuran besar. Dua aksi sekunder di bawahnya menggunakan border tipis dan warna abu — jauh lebih tenang. Pengguna tidak perlu berpikir dua kali untuk menemukan aksi utama.</div>
+          </div>
+        </div>
+
+        <div class="anno" data-anno="4" onclick="highlightMarker(4)">
+          <div class="anno-num">4</div>
+          <div class="anno-body">
+            <div class="anno-principle">Motivasi · Variable Rewards</div>
+            <div class="anno-title">Angka yang terus berubah</div>
+            <div class="anno-desc">Statistik seperti <em>"1.247 menit"</em> dan <em>"4 buku selesai"</em> tidak ditampilkan sebagai angka statis. Mereka dihitung ulang setiap sesi selesai — menciptakan momen kecil penemuan yang memicu dopamin tanpa manipulasi.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tasks -->
+      <div class="annos" data-screen="tasks">
+        <div class="annos-head">
+          <div class="label">Layar 03 · Tugas</div>
+          <h3>Von Restorff Effect</h3>
+          <p>Layar ini menguji apakah pengguna bisa langsung menemukan tugas yang paling penting — tanpa membaca satu per satu.</p>
+        </div>
+
+        <div class="anno" data-anno="1" onclick="highlightMarker(1)">
+          <div class="anno-num">1</div>
+          <div class="anno-body">
+            <div class="anno-principle">Von Restorff Effect</div>
+            <div class="anno-title">Satu tugas yang berbeda</div>
+            <div class="anno-desc">Dari tiga tugas, hanya satu yang memiliki border tebal, <em>shadow</em> halus, dan badge gelap <em>"Sekarang"</em>. Dua tugas lain sengaja dibuat tenang — border tipis, tanpa badge. Kontras inilah yang membuat prioritas langsung terlihat.</div>
+          </div>
+        </div>
+
+        <div class="anno" data-anno="2" onclick="highlightMarker(2)">
+          <div class="anno-num">2</div>
+          <div class="anno-body">
+            <div class="anno-principle">Hierarki tipografi</div>
+            <div class="anno-title">Judul tebal, meta tipis</div>
+            <div class="anno-desc">Judul tugas menggunakan bobot 500, sedang meta-informasi (<em>durasi, tenggat</em>) menggunakan ukuran lebih kecil dan warna abu. Mata pengguna membaca judul dulu, baru memutuskan — informasi yang tidak penting tidak bersaing dengan yang penting.</div>
+          </div>
+        </div>
+
+        <div class="anno" data-anno="3" onclick="highlightMarker(3)">
+          <div class="anno-num">3</div>
+          <div class="anno-body">
+            <div class="anno-principle">Feedback</div>
+            <div class="anno-title">Aksi yang langsung terlihat</div>
+            <div class="anno-desc">Setiap tugas dapat diklik. Saat diklik, lingkaran di sebelah kiri terisi penuh dan judul diberi garis coret. Feedback ini instan — pengguna tidak perlu menunggu konfirmasi untuk mengetahui aksinya berhasil.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Complete -->
+      <div class="annos" data-screen="complete">
+        <div class="annos-head">
+          <div class="label">Layar 04 · Selesai</div>
+          <h3>Peak-End Rule</h3>
+          <p>Ini adalah momen akhir setiap sesi. Menurut Peak-End Rule, momen inilah yang akan diingat pengguna — bukan panjangnya sesi, bukan berapa banyak tugas yang dikerjakan.</p>
+        </div>
+
+        <div class="anno" data-anno="1" onclick="highlightMarker(1)">
+          <div class="anno-num">1</div>
+          <div class="anno-body">
+            <div class="anno-principle">Peak-End Rule · Peak</div>
+            <div class="anno-title">Momen puncak</div>
+            <div class="anno-desc">Lingkaran checkmark berisi animasi: muncul dengan <em>scale</em>, lalu tanda centangnya tergambar dengan animasi <em>stroke-dashoffset</em>. Durasi total sekitar 700 milidetik — cukup untuk terasa memuaskan, tidak sampai membuat pengguna menunggu.</div>
+          </div>
+        </div>
+
+        <div class="anno" data-anno="2" onclick="highlightMarker(2)">
+          <div class="anno-num">2</div>
+          <div class="anno-body">
+            <div class="anno-principle">Peak-End Rule · Refleksi</div>
+            <div class="anno-title">Angka yang bermakna</div>
+            <div class="anno-desc">Empat statistik ditampilkan bukan untuk pamer, tetapi untuk memperkuat rasa pencapaian. Yang paling penting adalah kalimat di bawahnya: <em>"Itu 20 halaman lebih banyak dari kemarin."</em> — pesan yang mengubah angka menjadi makna.</div>
+          </div>
+        </div>
+
+        <div class="anno" data-anno="3" onclick="highlightMarker(3)">
+          <div class="anno-num">3</div>
+          <div class="anno-body">
+            <div class="anno-principle">Peak-End Rule · End</div>
+            <div class="anno-title">Kalimat penutup</div>
+            <div class="anno-desc">Layar berakhir dengan satu kalimat, bukan dengan tombol: <em>"Terima kasih sudah kembali hari ini."</em> Ini adalah akhir dari pengalaman. Kalimat ini sengaja dipisahkan oleh garis tipis di atas dan bawah, supaya mata berhenti di situ — inilah yang akan diingat pengguna saat menutup aplikasi.</div>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <strong>Interaksi Manusia dan Komputer · BSD306</strong><br>
+  Program Studi Bisnis Digital · Universitas Bhamada Slawi · 2026/2027
+</footer>
+
+<script>
+/* ============ SCREEN TABS ============ */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const views = document.querySelectorAll('.app-view');
+const markers = document.querySelectorAll('.markers');
+const annos = document.querySelectorAll('.annos');
+
+tabBtns.forEach(btn => btn.addEventListener('click', () => {
+  const screen = btn.dataset.screen;
+  tabBtns.forEach(b => b.classList.remove('active'));
+  views.forEach(v => v.classList.remove('active'));
+  markers.forEach(m => m.classList.remove('active'));
+  annos.forEach(a => a.classList.remove('active'));
+
+  btn.classList.add('active');
+  document.getElementById('view-' + screen).classList.add('active');
+  document.querySelector('.markers[data-screen="' + screen + '"]').classList.add('active');
+  document.querySelector('.annos[data-screen="' + screen + '"]').classList.add('active');
+
+  // Trigger animations for home & complete screens
+  if(screen === 'home'){
+    setTimeout(() => {
+      document.querySelectorAll('.progress-fill').forEach(el => {
+        el.style.width = el.dataset.target + '%';
+      });
+    }, 150);
+  }
+  if(screen === 'complete'){
+    // re-trigger checkmark animation
+    const check = document.querySelector('#view-complete .check-circle');
+    check.style.animation = 'none';
+    check.offsetHeight;
+    check.style.animation = '';
+  }
+}));
+
+/* ============ INIT HOME PROGRESS IF ACTIVE ============ */
+window.addEventListener('load', () => {
+  // nothing — home only animates when tab is opened
+});
+
+/* ============ DATE PARSER ============ */
+const bulan = {
+  'januari':1,'jan':1,'january':1,
+  'februari':2,'feb':2,'february':2,
+  'maret':3,'mar':3,'march':3,
+  'april':4,'apr':4,
+  'mei':5,'may':5,
+  'juni':6,'jun':6,'june':6,
+  'juli':7,'jul':7,'july':7,
+  'agustus':8,'agu':8,'aug':8,'august':8,
+  'september':9,'sep':9,'sept':9,
+  'oktober':10,'okt':10,'oct':10,'october':10,
+  'november':11,'nov':11,
+  'desember':12,'des':12,'dec':12,'december':12
+};
+const bulanNama = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const hariNama = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+
+function parseDate(str){
+  if(!str) return null;
+  const s = str.toLowerCase().trim();
+  const today = new Date();
+  if(['hari ini','today','now'].includes(s)) return new Date(today);
+  if(['besok','tomorrow','esok'].includes(s)){ const d = new Date(today); d.setDate(d.getDate()+1); return d; }
+  if(['kemarin','yesterday'].includes(s)){ const d = new Date(today); d.setDate(d.getDate()-1); return d; }
+  if(['minggu depan','next week','pekan depan'].includes(s)){ const d = new Date(today); d.setDate(d.getDate()+7); return d; }
+  if(['minggu lalu','last week'].includes(s)){ const d = new Date(today); d.setDate(d.getDate()-7); return d; }
+  if(['bulan depan','next month'].includes(s)){ const d = new Date(today); d.setMonth(d.getMonth()+1); return d; }
+
+  let m = s.match(/tanggal\s+(\d{1,2})\s+bulan\s+(\d{1,2})\s+tahun\s+(\d{4})/);
+  if(m) return new Date(+m[3], +m[2]-1, +m[1]);
+
+  m = s.match(/^(\d{1,2})\s+([a-z]+)(?:\s+(\d{2,4}))?$/);
+  if(m){
+    const day = +m[1];
+    const mn = m[2].replace(/\./g,'');
+    const mo = bulan[mn];
+    if(mo){
+      let y = m[3] ? +m[3] : today.getFullYear();
+      if(y < 100) y += 2000;
+      return new Date(y, mo-1, day);
+    }
+  }
+
+  m = s.match(/^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{2,4})$/);
+  if(m){
+    let a = +m[1], b = +m[2], y = +m[3];
+    if(y < 100) y += 2000;
+    if(a > 12) return new Date(y, b-1, a);
+    if(b > 12) return new Date(y, a-1, b);
+    return new Date(y, b-1, a);
+  }
+  m = s.match(/^(\d{4})[\/\-\.](\d{1,2})[\/\-\.](\d{1,2})$/);
+  if(m) return new Date(+m[1], +m[2]-1, +m[3]);
+  return null;
+}
+function fmt(d){
+  return `${d.getDate()} ${bulanNama[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+const dateInput = document.getElementById('dateInput');
+const parseResult = document.getElementById('parseResult');
+const parseText = document.getElementById('parseText');
+
+function handleDate(){
+  const v = dateInput.value.trim();
+  if(!v){
+    parseResult.className = 'parse-result';
+    parseText.textContent = 'Menunggu input Anda…';
+    dateInput.classList.remove('accept','reject');
+    return;
+  }
+  const p = parseDate(v);
+  if(p && !isNaN(p.getTime())){
+    dateInput.classList.remove('reject');
+    dateInput.classList.add('accept');
+    parseResult.className = 'parse-result ok';
+    parseText.innerHTML = `Dipahami sebagai <strong>${fmt(p)}</strong> · ${hariNama[p.getDay()]}`;
+  } else {
+    dateInput.classList.remove('accept');
+    dateInput.classList.add('reject');
+    parseResult.className = 'parse-result no';
+    parseText.textContent = 'Belum dipahami. Coba format lain.';
+  }
+}
+dateInput.addEventListener('input', handleDate);
+
+document.querySelectorAll('.q-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    dateInput.value = chip.textContent;
+    handleDate();
+  });
+});
+
+/* ============ TASK TOGGLE ============ */
+function toggleTask(el){
+  el.classList.toggle('done');
+}
+
+/* ============ MARKER / ANNO HIGHLIGHT ============ */
+function highlightAnno(n){
+  // highlight the corresponding anno
+  const activeAnnoSet = document.querySelector('.annos.active');
+  if(!activeAnnoSet) return;
+  activeAnnoSet.querySelectorAll('.anno').forEach(a => {
+    a.style.background = '';
+    if(a.dataset.anno == n){
+      a.style.background = '#f0f0ec';
+      a.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+  });
+}
+function highlightMarker(n){
+  const activeMarkers = document.querySelector('.markers.active');
+  if(!activeMarkers) return;
+  activeMarkers.querySelectorAll('.marker').forEach(m => {
+    m.classList.remove('hot');
+    if(m.dataset.anno == n){
+      m.classList.add('hot');
+      setTimeout(() => m.classList.remove('hot'), 1500);
+    }
+  });
+}
+</script>
+</body>
+</html>
