@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab Interaktif IMK: Usabilitas Web — "Don't Make Me Think!"</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            pastel: {
+              sky: '#E0F2FE',
+              skyBorder: '#BAE6FD',
+              skyText: '#0369A1',
+              lavender: '#EEF2FF',
+              lavenderBorder: '#E0E7FF',
+              lavenderText: '#4338CA',
+              mint: '#DCFCE7',
+              mintBorder: '#BBF7D0',
+              mintText: '#15803D',
+              rose: '#FFE4E6',
+              roseBorder: '#FECDD3',
+              roseText: '#BE123C',
+              butter: '#FEF3C7',
+              butterBorder: '#FDE68A',
+              butterText: '#B45309',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Clean & Soft Pastel Custom Styles */
+    body {
+      background-color: #FAFAFC;
+      color: #1E293B;
+    }
+    @keyframes floatSoft {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-3px); }
+    }
+    .float-bubble {
+      animation: floatSoft 3s ease-in-out infinite;
+    }
+    .soft-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px -2px rgba(15, 23, 42, 0.03);
+    }
+    /* Custom Subtle Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F8FAFC;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-[#E0F2FE] selection:text-[#0369A1] min-h-screen flex flex-col">
+
+  <!-- =====================================================================
+       CLEAN WHITE STICKY HEADER & PASTEL PILL NAVIGATION
+       ===================================================================== -->
+  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <!-- Brand & Course Title -->
+        <div class="flex items-start sm:items-center gap-3.5">
+          <div class="w-11 h-11 rounded-2xl bg-[#E0F2FE] border border-[#BAE6FD] flex items-center justify-center text-[#0369A1] text-xl shadow-sm shrink-0">
+            💡
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-[11px] font-mono font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#EEF2FF] text-[#4338CA] border border-[#E0E7FF]">
+                Interaksi Manusia & Komputer
+              </span>
+              <span class="text-xs text-slate-500">Steve Krug • Don Norman • Laws of UX</span>
+            </div>
+            <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-800 mt-0.5">
+              Usabilitas Web — <span class="text-[#0369A1] underline decoration-[#BAE6FD] decoration-4 underline-offset-4">"Don't Make Me Think!"</span>
+            </h1>
+          </div>
+        </div>
+
+        <!-- Quick Cheat Sheet Button -->
+        <div class="flex items-center gap-3 self-start md:self-auto">
+          <div class="hidden sm:block text-right">
+            <div class="text-[11px] text-slate-400 font-medium">Aturan Emas Krug</div>
+            <div class="text-xs font-bold text-[#15803D]">"Clarity Trumps Consistency"</div>
+          </div>
+          <button onclick="openCheatSheetModal()" class="text-xs font-semibold bg-[#FEF3C7] hover:bg-[#FDE68A]/70 text-[#B45309] px-3.5 py-2 rounded-xl border border-[#FDE68A] transition cursor-pointer shadow-sm">
+            📋 Ringkasan Materi
+          </button>
+        </div>
+      </div>
+
+      <!-- 5-TAB PASTEL NAVIGATION -->
+      <nav class="mt-4 flex overflow-x-auto gap-2 pb-1" aria-label="Modul Navigasi">
+        <button onclick="switchMainTab('tab-1')" id="btn-tab-1" class="main-tab-btn shrink-0 px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm transition flex items-center gap-2 bg-[#E0F2FE] text-[#0369A1] border border-[#BAE6FD] shadow-sm cursor-pointer">
+          <span class="w-5 h-5 rounded-full bg-white text-[#0369A1] text-xs font-bold flex items-center justify-center">1</span>
+          Hukum #1: Don't Make Me Think
+        </button>
+        <button onclick="switchMainTab('tab-2')" id="btn-tab-2" class="main-tab-btn shrink-0 px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm transition flex items-center gap-2 bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/80 cursor-pointer">
+          <span class="w-5 h-5 rounded-full bg-white text-slate-500 text-xs font-bold flex items-center justify-center border border-slate-200">2</span>
+          Perilaku Nyata Pengguna
+        </button>
+        <button onclick="switchMainTab('tab-3')" id="btn-tab-3" class="main-tab-btn shrink-0 px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm transition flex items-center gap-2 bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/80 cursor-pointer">
+          <span class="w-5 h-5 rounded-full bg-white text-slate-500 text-xs font-bold flex items-center justify-center border border-slate-200">3</span>
+          Billboard Design & Hierarki
+        </button>
+        <button onclick="switchMainTab('tab-4')" id="btn-tab-4" class="main-tab-btn shrink-0 px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm transition flex items-center gap-2 bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/80 cursor-pointer">
+          <span class="w-5 h-5 rounded-full bg-white text-slate-500 text-xs font-bold flex items-center justify-center border border-slate-200">4</span>
+          Elemen Klik Self-Evident
+        </button>
+        <button onclick="switchMainTab('tab-5')" id="btn-tab-5" class="main-tab-btn shrink-0 px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm transition flex items-center gap-2 bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/80 cursor-pointer">
+          <span class="w-5 h-5 rounded-full bg-white text-slate-500 text-xs font-bold flex items-center justify-center border border-slate-200">5</span>
+          Trunk Test & Kuis Evaluasi
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       MAIN CONTENT CONTAINER (CLEAN WHITESPACE)
+       ===================================================================== -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- ===================================================================
+         TAB 1: HUKUM PERTAMA KRUG ("DON'T MAKE ME THINK!")
+         =================================================================== -->
+    <section id="tab-1" class="tab-panel space-y-8">
+      <!-- Top Concept & Analogy Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left Theory Card (7 cols) -->
+        <div class="lg:col-span-7 soft-card p-6 sm:p-7 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E0F2FE] border border-[#BAE6FD] text-[#0369A1] text-xs font-semibold">
+            ✨ Hukum Pertama Usabilitas Steve Krug
+          </div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-800">
+            "Don't Make Me Think!" (Jangan Buat Saya Berpikir!)
+          </h2>
+          <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+            Setiap kali pengguna melihat halaman web, halaman tersebut haruslah <strong>Self-Evident</strong> (jelas dengan sendirinya), gamblang, dan langsung dapat dipahami tanpa memerlukan usaha mental. "Berpikir" di sini adalah <strong>beban kognitif yang tidak perlu (<em>unnecessary cognitive load</em>)</strong> ketika pengguna terpaksa menebak arti istilah atau cara kerja antarmuka.
+          </p>
+
+          <!-- 3 Levels of Clarity Pastel Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+            <div class="bg-[#DCFCE7]/50 border border-[#BBF7D0] rounded-xl p-3.5">
+              <div class="text-xs font-bold text-[#15803D] uppercase font-mono">1. Self-Evident</div>
+              <p class="text-xs text-slate-600 mt-1">Paham secara instan dalam sekali pandang (0 detik berpikir).</p>
+              <span class="mt-2.5 inline-block px-2.5 py-1 rounded-lg bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] font-bold text-xs">
+                🔍 Lowongan Kerja
+              </span>
+            </div>
+            <div class="bg-[#E0F2FE]/50 border border-[#BAE6FD] rounded-xl p-3.5">
+              <div class="text-xs font-bold text-[#0369A1] uppercase font-mono">2. Self-Explanatory</div>
+              <p class="text-xs text-slate-600 mt-1">Butuh ~1 detik berpikir, namun konteks visual langsung menjawabnya.</p>
+              <span class="mt-2.5 inline-block px-2.5 py-1 rounded-lg bg-[#E0F2FE] text-[#0369A1] border border-[#BAE6FD] font-semibold text-xs">
+                💼 Employment
+              </span>
+            </div>
+            <div class="bg-[#FFE4E6]/50 border border-[#FECDD3] rounded-xl p-3.5">
+              <div class="text-xs font-bold text-[#BE123C] uppercase font-mono">3. Memaksa Mikir ❌</div>
+              <p class="text-xs text-slate-600 mt-1">Jargon internal/marketing yang memicu tanda tanya besar (?).</p>
+              <span class="mt-2.5 inline-block px-2.5 py-1 rounded-lg bg-[#FFE4E6] text-[#BE123C] border border-[#FECDD3] font-mono text-xs">
+                🚀 Job-o-Rama
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Card: Analogy & Don Norman Knowledge Table (5 cols) -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="soft-card p-5 bg-gradient-to-br from-white to-[#EEF2FF]/40">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-mono font-bold uppercase text-[#4338CA] bg-[#EEF2FF] px-2.5 py-0.5 rounded-full border border-[#E0E7FF]">
+                🚪 Analogi Pintu Norman
+              </span>
+              <span class="text-lg">🤔</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Dalam <em>The Design of Everyday Things</em>, <strong>Don Norman</strong> mencontohkan pintu kaca gedung yang memasang gagang tarik besar padahal seharusnya didorong (<em>Push</em>). Ketika desain fisik memberi sinyal yang salah, kita dipaksa berpikir. Di web, tombol atau menu yang ambigu adalah "pintu yang salah pasang gagang".
+            </p>
+          </div>
+
+          <!-- Knowledge in the World vs Head Table -->
+          <div class="soft-card p-5">
+            <h3 class="text-xs font-mono uppercase tracking-wider font-bold text-slate-500 mb-3">
+              Don Norman: Mengapa Desain Self-Evident Bekerja?
+            </h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="border-b border-slate-200 text-slate-500">
+                    <th class="pb-2 font-semibold">Jenis Pengetahuan</th>
+                    <th class="pb-2 font-semibold">Peran pada UI/UX</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-600">
+                  <tr>
+                    <td class="py-2.5 pr-2 font-semibold text-[#0369A1]">Knowledge in the World</td>
+                    <td class="py-2.5">Petunjuk langsung terlihat di layar (label jelas, ikon + teks, *signifiers*). <strong>Mengurangi beban memori!</strong></td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 pr-2 font-semibold text-[#BE123C]">Knowledge in the Head</td>
+                    <td class="py-2.5">Pengguna dipaksa menghafal letak menu tersembunyi atau arti ikon abstrak tanpa teks.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE SIMULATION 1: QUESTION MARK DETECTOR & GOODWILL RESERVOIR -->
+      <div class="soft-card overflow-hidden">
+        <!-- Lab Header -->
+        <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-200 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 text-[11px] font-mono font-bold bg-[#E0F2FE] text-[#0369A1] border border-[#BAE6FD] rounded-full">
+                LABORATORIUM INTERAKTIF 1
+              </span>
+              <h3 class="text-base sm:text-lg font-bold text-slate-800">
+                Detektor Tanda Tanya (?) & Tangki <em>Goodwill Reservoir</em>
+              </h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">
+              Klik elemen-elemen pada pratinjau halaman web di kanan untuk mengamati <strong>gelembung pikiran pengguna</strong> dan dampaknya terhadap cadangan kesabaran (<em>Goodwill</em>).
+            </p>
+          </div>
+
+          <!-- Mode Switcher Buttons -->
+          <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-xl border border-slate-200 shrink-0 shadow-sm">
+            <button id="btn-krug-bad" onclick="setKrugLabMode('bad')" class="px-3.5 py-2 rounded-lg text-xs font-bold transition bg-[#FFE4E6] text-[#BE123C] border border-[#FECDD3] cursor-pointer">
+              ❌ Mode Buruk (Penuh Jargon)
+            </button>
+            <button id="btn-krug-good" onclick="setKrugLabMode('good')" class="px-3.5 py-2 rounded-lg text-xs font-bold transition text-slate-500 hover:text-slate-800 cursor-pointer">
+              ✅ Mode Baik (Self-Evident)
+            </button>
+          </div>
+        </div>
+
+        <!-- Lab Body -->
+        <div class="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <!-- Left Monitor: Thought Bubble & Meters (5 cols) -->
+          <div class="lg:col-span-5 bg-[#FAFAFC] border border-slate-200 rounded-2xl p-5 space-y-5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold">Monitor Kognitif Pengguna</span>
+              <button onclick="resetKrugMeters()" class="text-xs text-[#0369A1] hover:underline font-medium cursor-pointer">Reset Tangki</button>
+            </div>
+
+            <!-- Dynamic Thought Bubble -->
+            <div id="thought-bubble-box" class="float-bubble bg-[#FFE4E6]/60 border border-[#FECDD3] rounded-2xl p-4">
+              <div class="flex items-start gap-3">
+                <div id="user-avatar-emoji" class="text-3xl select-none shrink-0">🤔</div>
+                <div>
+                  <div id="thought-badge" class="inline-block text-[11px] font-mono font-bold uppercase px-2 py-0.5 rounded-md bg-white text-[#BE123C] border border-[#FECDD3] mb-1.5">
+                    ❓ Muncul Tanda Tanya (?)
+                  </div>
+                  <p id="thought-text" class="text-xs sm:text-sm text-slate-800 font-medium leading-relaxed">
+                    "Saya hanya ingin mencoba aplikasi pembukuan gratis dan melihat lowongan kerja. Tombol mana yang harus saya klik?"
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Meter 1: Unnecessary Cognitive Load -->
+            <div class="space-y-1.5 bg-white p-3.5 rounded-xl border border-slate-200/80">
+              <div class="flex justify-between text-xs font-semibold">
+                <span class="text-slate-600">🧠 Beban Kognitif (Tanda Tanya):</span>
+                <span id="cog-load-val" class="text-[#BE123C] font-mono">45% (Sedang Mikir)</span>
+              </div>
+              <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+                <div id="cog-load-bar" class="h-full bg-[#FDA4AF] transition-all duration-300" style="width: 45%"></div>
+              </div>
+              <p class="text-[11px] text-slate-400">Semakin rendah persentase, semakin <em>self-evident</em> halaman tersebut.</p>
+            </div>
+
+            <!-- Meter 2: Goodwill Reservoir -->
+            <div class="space-y-1.5 bg-white p-3.5 rounded-xl border border-slate-200/80">
+              <div class="flex justify-between text-xs font-semibold">
+                <span class="text-slate-600">🔋 Tangki Goodwill (Kesabaran):</span>
+                <span id="goodwill-val" class="text-[#15803D] font-mono">70%</span>
+              </div>
+              <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+                <div id="goodwill-bar" class="h-full bg-[#86EFAC] transition-all duration-300" style="width: 70%"></div>
+              </div>
+              <p class="text-[11px] text-slate-400">Setiap kebingungan menguras tangki Goodwill hingga pengguna menutup situs.</p>
+            </div>
+          </div>
+
+          <!-- Right Mockup Browser (7 cols) -->
+          <div class="lg:col-span-7">
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+              <!-- Browser Bar -->
+              <div class="bg-slate-100/80 px-4 py-2.5 border-b border-slate-200 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-[#FECDD3] border border-[#FDA4AF]"></span>
+                  <span class="w-3 h-3 rounded-full bg-[#FDE68A] border border-[#FCD34D]"></span>
+                  <span class="w-3 h-3 rounded-full bg-[#BBF7D0] border border-[#86EFAC]"></span>
+                </div>
+                <div id="browser-url-bar" class="bg-white text-slate-500 text-xs font-mono px-4 py-1 rounded-lg border border-slate-200 truncate max-w-xs sm:max-w-md">
+                  https://www.xyznet-synergy-corp.io
+                </div>
+                <div class="text-[11px] text-slate-400 font-medium">Klik elemen 👇</div>
+              </div>
+
+              <!-- MOCKUP 1: BAD MODE (Makes Me Think) -->
+              <div id="krug-mockup-bad" class="p-6 space-y-6 bg-white">
+                <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100">
+                  <div onclick="triggerThought('bad', 'logo')" class="font-serif italic text-base font-semibold text-slate-600 cursor-pointer hover:text-slate-900">
+                    ✦ XYZnet OmniVerse
+                  </div>
+                  <div class="flex flex-wrap items-center gap-2 text-xs">
+                    <button onclick="triggerThought('bad', 'nav-sinergi')" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer">
+                      Lembah Sinergi
+                    </button>
+                    <button onclick="triggerThought('bad', 'nav-matrix')" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer">
+                      Matriks Solusi
+                    </button>
+                    <button onclick="triggerThought('bad', 'nav-job')" class="px-2.5 py-1.5 rounded-lg bg-[#FFE4E6]/60 hover:bg-[#FFE4E6] text-[#BE123C] font-medium cursor-pointer">
+                      🚀 Job-o-Rama
+                    </button>
+                    <span onclick="triggerThought('bad', 'search-ambigu')" class="px-2 py-1 text-slate-400 cursor-pointer hover:text-slate-600">
+                      Eksplorasi... 🔎
+                    </span>
+                  </div>
+                </div>
+
+                <div class="py-2 space-y-4">
+                  <div onclick="triggerThought('bad', 'badge-palsu')" class="inline-block px-3 py-1 rounded-lg bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] font-bold text-xs cursor-pointer">
+                    Ekosistem Finansial Generasi 4.0 (Bisa Diklik?)
+                  </div>
+                  <h4 onclick="triggerThought('bad', 'headline-bad')" class="text-lg sm:text-xl font-bold text-slate-800 cursor-pointer">
+                    Mulai Transformasi Paradigma Orkestrasi Fiskal Anda Hari Ini
+                  </h4>
+                  <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">
+                    Kami mengintegrasikan sinergi holistik lintas divisi untuk mengakselerasi kapabilitas moneter entitas Anda secara dinamis.
+                  </p>
+
+                  <div class="pt-2 flex flex-wrap gap-2.5">
+                    <button onclick="triggerThought('bad', 'cta-sandbox')" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold cursor-pointer">
+                      Eksplorasi Sandbox
+                    </button>
+                    <button onclick="triggerThought('bad', 'cta-korporat')" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold cursor-pointer">
+                      Inisiasi Lisensi Korporat
+                    </button>
+                    <button onclick="triggerThought('bad', 'cta-kemitraan')" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold cursor-pointer">
+                      Kemitraan Strategis
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MOCKUP 2: GOOD MODE (Self-Evident) -->
+              <div id="krug-mockup-good" class="hidden p-6 space-y-6 bg-white">
+                <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100">
+                  <div onclick="triggerThought('good', 'logo')" class="flex items-center gap-2 font-bold text-base text-slate-800 cursor-pointer">
+                    <span class="w-7 h-7 rounded-lg bg-[#E0F2FE] border border-[#BAE6FD] text-[#0369A1] flex items-center justify-center text-xs font-extrabold">B</span>
+                    <span>BukuKasPro</span>
+                  </div>
+                  <div class="flex flex-wrap items-center gap-2 text-xs">
+                    <button onclick="triggerThought('good', 'nav-fitur')" class="px-2.5 py-1.5 rounded-lg hover:bg-slate-100 text-slate-700 font-medium cursor-pointer">
+                      Fitur Produk
+                    </button>
+                    <button onclick="triggerThought('good', 'nav-harga')" class="px-2.5 py-1.5 rounded-lg hover:bg-slate-100 text-slate-700 font-medium cursor-pointer">
+                      Daftar Harga
+                    </button>
+                    <button onclick="triggerThought('good', 'nav-jobs')" class="px-2.5 py-1.5 rounded-lg bg-[#DCFCE7]/60 text-[#15803D] font-semibold cursor-pointer">
+                      Lowongan Kerja (Jobs)
+                    </button>
+                    <div onclick="triggerThought('good', 'search-clear')" class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-slate-500 cursor-pointer">
+                      <span>🔍 Cari bantuan...</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="py-2 space-y-4">
+                  <span class="text-[11px] font-mono uppercase tracking-wider text-[#0369A1] bg-[#E0F2FE]/60 px-2.5 py-1 rounded-md font-semibold">
+                    Aplikasi Akuntansi UMKM & Perusahaan
+                  </span>
+                  <h4 onclick="triggerThought('good', 'headline-good')" class="text-lg sm:text-xl font-extrabold text-slate-800 cursor-pointer">
+                    Aplikasi Pembukuan & Laporan Pajak Otomatis untuk Bisnis Anda
+                  </h4>
+                  <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    Catat pemasukan, pantau stok barang, dan unduh laporan laba-rugi instan tanpa perlu keahlian akuntansi.
+                  </p>
+
+                  <div class="pt-2 flex flex-wrap items-center gap-3">
+                    <button onclick="triggerThought('good', 'cta-free')" class="px-4 py-2.5 rounded-xl bg-[#E0F2FE] hover:bg-[#BAE6FD] text-[#0369A1] border border-[#BAE6FD] font-bold text-xs sm:text-sm shadow-sm transition cursor-pointer">
+                      🚀 Coba Gratis 14 Hari (Tanpa Kartu Kredit)
+                    </button>
+                    <button onclick="triggerThought('good', 'cta-pricing')" class="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-semibold text-xs sm:text-sm transition cursor-pointer">
+                      Lihat Paket Harga →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 2: PERILAKU NYATA PENGGUNA (SCANNING, SATISFICING, MUDDLING THROUGH)
+         =================================================================== -->
+    <section id="tab-2" class="tab-panel hidden space-y-8">
+      <!-- 3 Facts of Life Pastel Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="soft-card p-6 border-t-4 border-t-[#BAE6FD]">
+          <span class="text-[11px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full bg-[#E0F2FE] text-[#0369A1]">
+            Fakta Kehidupan #1
+          </span>
+          <h3 class="text-lg font-bold text-slate-800 mt-3 mb-2">
+            Kita Tidak Membaca, Kita Memindai (<em>Scanning</em>)
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Pengguna web selalu sedang dalam misi terburu-buru. Mata mereka menyapu halaman dalam pola huruf <strong>F</strong> untuk mencari kata kunci, judul menonjol, dan poin-poin singkat (<em>chunking</em>).
+          </p>
+        </div>
+
+        <div class="soft-card p-6 border-t-4 border-t-[#FDE68A]">
+          <span class="text-[11px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full bg-[#FEF3C7] text-[#B45309]">
+            Fakta Kehidupan #2
+          </span>
+          <h3 class="text-lg font-bold text-slate-800 mt-3 mb-2">
+            Kita Tidak Mencari yang Optimal, Kita <em>Satisfice</em>
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Istilah dari ekonom Nobel <strong>Herbert Simon</strong> (<em>Satisfy + Suffice</em>). Pengguna langsung mengklik <strong>opsi pertama yang tampak "cukup masuk akal"</strong> karena jika salah klik, mereka cukup menekan tombol <em>Back</em>.
+          </p>
+        </div>
+
+        <div class="soft-card p-6 border-t-4 border-t-[#BBF7D0]">
+          <span class="text-[11px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full bg-[#DCFCE7] text-[#15803D]">
+            Fakta Kehidupan #3
+          </span>
+          <h3 class="text-lg font-bold text-slate-800 mt-3 mb-2">
+            Kita Tidak Mencari Tahu Cara Kerja, Kita <em>Muddle Through</em>
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Pengguna tidak membaca manual. Banyak orang mengetik URL <code>www.tokopedia.com</code> di kotak pencarian Google alih-alih di <em>Address Bar</em>. Selama berhasil mencapai tujuan, mekanisme tidak penting!
+          </p>
+        </div>
+      </div>
+
+      <!-- Case Study Comparison: Cluttered vs Clean (Appalachian vs Medicare.gov) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="soft-card p-5 bg-[#FEF3C7]/30 border-[#FDE68A]">
+          <div class="text-xs font-mono font-bold text-[#B45309] uppercase mb-1">💡 Analogi Minimarket Saat Hujan Deras</div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Saat kehujanan dan pusing, Anda tidak membaca komposisi produk di Lorong 1–10. Anda melirik papan penunjuk di atas (<strong>Scanning</strong>), mengambil obat sakit kepala pertama yang dikenali (<strong>Satisficing</strong>), lalu bayar di kasir tanpa peduli cara kerja sistem kasirnya (<strong>Muddling Through</strong>).
+          </p>
+        </div>
+        <div class="soft-card p-5 bg-[#EEF2FF]/40 border-[#E0E7FF]">
+          <div class="text-xs font-mono font-bold text-[#4338CA] uppercase mb-1">📌 Studi Kasus: Portal Padat Teks vs Medicare.gov</div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Situs lama yang memajang paragraf sambutan panjang menurunkan tingkat keberhasilan tugas pengguna. Sebaliknya, perombakan bersih seperti <strong>Medicare.gov</strong> dan <em>checklist onboarding</em> <strong>Notion</strong> langsung menyajikan tugas utama dalam kelompok kecil (<em>chunking</em>) yang mudah dipindai.
+          </p>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE SIMULATION 2A: F-PATTERN SCANNING & OMIT NEEDLESS WORDS -->
+      <div class="soft-card overflow-hidden">
+        <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-200 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 text-[11px] font-mono font-bold bg-[#FEF3C7] text-[#B45309] border border-[#FDE68A] rounded-full">
+                LABORATORIUM INTERAKTIF 2A
+              </span>
+              <h3 class="text-base sm:text-lg font-bold text-slate-800">
+                Simulator <em>Scanning</em> & Hukum ke-3 Krug (<em>Omit Needless Words</em>)
+              </h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">
+              Hukum ke-3 Krug: <em>"Pangkas separuh kata di setiap halaman, lalu pangkas lagi separuh dari sisanya."</em> Hapus <em>happy talk</em> dan terapkan <strong>Chunking</strong>!
+            </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="btn-scan-vision" onclick="toggleScanningVision()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-white border border-slate-200 text-slate-700 hover:bg-[#FEF3C7] hover:text-[#B45309] hover:border-[#FDE68A] transition cursor-pointer shadow-sm">
+              👁️ Lensa Eye-Tracking (F-Pattern)
+            </button>
+            <button id="btn-omit-words" onclick="toggleOmitWords()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] hover:bg-[#BBF7D0]/70 transition cursor-pointer shadow-sm">
+              ✂️ Pangkas 50% Kata Sia-sia
+            </button>
+          </div>
+        </div>
+
+        <div class="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <!-- Article/Service Page Preview (8 cols) -->
+          <div class="lg:col-span-8 bg-[#FAFAFC] border border-slate-200 rounded-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 text-xs">
+              <span class="font-mono text-slate-400">Portal Layanan Akademik Universitas</span>
+              <span id="word-count-badge" class="px-2.5 py-0.5 rounded-full bg-[#FFE4E6] text-[#BE123C] border border-[#FECDD3] font-semibold">
+                142 Kata (Penuh Happy Talk)
+              </span>
+            </div>
+
+            <h4 class="scan-focus text-lg sm:text-xl font-extrabold text-slate-800 inline-block px-1.5 py-0.5 rounded-lg transition-all">
+              Pengajuan Cuti Akademik & Pengembalian Biaya UKT
+            </h4>
+
+            <!-- Fluff / Happy Talk 1 -->
+            <p class="fluff-text text-xs sm:text-sm text-slate-600 leading-relaxed transition-all duration-300">
+              Selamat datang di Portal Layanan Terpadu Universitas! Kami sangat senang Anda mengunjungi halaman ini. Bagian Administrasi Akademik berkomitmen penuh untuk senantiasa memberikan pelayanan prima yang ramah, transparan, dan terintegrasi bagi seluruh civitas akademika dalam mendukung kelancaran studi Anda setiap semester.
+            </p>
+
+            <!-- Scannable Chunked Box -->
+            <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-2 shadow-sm">
+              <div class="scan-focus font-bold text-[#0369A1] text-xs sm:text-sm inline-block px-1.5 py-0.5 rounded">
+                3 Syarat Utama Pengajuan Cuti (Chunking):
+              </div>
+              <ul class="list-disc list-inside text-xs sm:text-sm text-slate-700 space-y-1.5">
+                <li><strong class="scan-focus text-slate-900 px-1 rounded">Batas Waktu:</strong> Maksimal <strong>14 hari</strong> sebelum perkuliahan dimulai.</li>
+                <li><strong class="scan-focus text-slate-900 px-1 rounded">Dokumen Wajib:</strong> Kartu Mahasiswa & Persetujuan Dosen Wali (PDF).</li>
+                <li><strong class="scan-focus text-slate-900 px-1 rounded">Bebas Tanggungan:</strong> Tidak memiliki pinjaman buku perpustakaan.</li>
+              </ul>
+            </div>
+
+            <!-- Fluff / Unnecessary Instructions 2 -->
+            <p class="fluff-text text-xs sm:text-sm text-slate-600 leading-relaxed transition-all duration-300">
+              Untuk memulai proses pengajuan permohonan cuti akademik Anda secara daring, silakan baca seluruh ketentuan di atas dengan saksama, kemudian arahkan kursor mouse Anda ke tombol di bagian bawah halaman ini dan tekan tombol tersebut satu kali untuk membuka formulir pengajuan.
+            </p>
+
+            <div class="pt-1 flex flex-wrap items-center gap-3">
+              <button class="scan-focus px-4 py-2.5 rounded-xl bg-[#E0F2FE] text-[#0369A1] border border-[#BAE6FD] font-bold text-xs sm:text-sm shadow-sm">
+                📄 Isi Formulir Cuti Akademik →
+              </button>
+              <span class="scan-focus text-xs text-slate-500 font-mono px-1.5 py-0.5 rounded">Proses: 2 Hari Kerja</span>
+            </div>
+          </div>
+
+          <!-- Side Explanation (4 cols) -->
+          <div class="lg:col-span-4 space-y-4">
+            <div class="bg-[#FEF3C7]/40 border border-[#FDE68A] rounded-2xl p-4 space-y-1.5">
+              <div class="text-xs font-mono uppercase font-bold text-[#B45309]">1. Mengapa Kita Memangkas "Happy Talk"?</div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Teks basa-basi sambutan promosi (<em>happy talk</em>) dan instruksi yang sudah jelas (<em>"Klik tombol di bawah untuk..."</em>) hanya menambah <strong>Visual & Cognitive Load</strong>. Memangkasnya membuat poin penting langsung terlihat.
+              </p>
+            </div>
+            <div class="bg-[#DCFCE7]/40 border border-[#BBF7D0] rounded-2xl p-4 space-y-1.5">
+              <div class="text-xs font-mono uppercase font-bold text-[#15803D]">2. Teknik Chunking (Miller's Law)</div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Memecah paragraf panjang menjadi kelompok poin-poin kecil (<em>bullet points</em>) membantu memori kerja pengguna menyerap informasi dalam sekali pandang.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE SIMULATION 2B: SATISFICING EXPERIMENT -->
+      <div class="soft-card p-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-slate-200">
+          <div>
+            <span class="px-2.5 py-0.5 text-[11px] font-mono font-bold bg-[#EEF2FF] text-[#4338CA] border border-[#E0E7FF] rounded-full">
+              LABORATORIUM INTERAKTIF 2B
+            </span>
+            <h3 class="text-base sm:text-lg font-bold text-slate-800 mt-1">
+              Eksperimen <em>Satisficing</em> vs Pilihan Optimal
+            </h3>
+          </div>
+          <div class="text-xs font-mono bg-[#FEF3C7]/60 text-[#B45309] px-3.5 py-1.5 rounded-xl border border-[#FDE68A] font-semibold">
+            Hukum #2 Krug: 1 Klik Mikir Keras ≡ 3 Klik Tanpa Berpikir
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-5 items-center">
+          <div class="lg:col-span-7">
+            <p class="text-xs sm:text-sm text-slate-600 mb-3">
+              <strong>Skenario Cepat:</strong> Anda membeli sepatu yang ukurannya kekecilan dan ingin segera <strong>menukar ukuran (Retur)</strong>. Klik menu pertama di bawah yang menurut Anda masuk akal:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <button onclick="testSatisficing(1)" class="p-3.5 rounded-xl bg-[#E0F2FE]/50 hover:bg-[#E0F2FE] border border-[#BAE6FD] text-left text-xs sm:text-sm font-bold text-[#0369A1] transition cursor-pointer">
+                📦 Pesanan & Pengembalian
+              </button>
+              <button onclick="testSatisficing(2)" class="p-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left text-xs sm:text-sm font-semibold text-slate-700 transition cursor-pointer">
+                🛡️ Kebijakan Garansi Produk
+              </button>
+              <button onclick="testSatisficing(3)" class="p-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left text-xs sm:text-sm font-semibold text-slate-700 transition cursor-pointer">
+                💬 Pusat Bantuan Pelanggan
+              </button>
+              <button onclick="testSatisficing(4)" class="p-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left text-xs sm:text-sm font-semibold text-slate-700 transition cursor-pointer">
+                🔄 Formulir Klaim Retur Cepat
+              </button>
+            </div>
+          </div>
+
+          <div id="satisficing-feedback" class="lg:col-span-5 bg-[#FAFAFC] border border-slate-200 rounded-2xl p-4">
+            <div class="text-xs font-mono uppercase text-slate-400 font-semibold mb-1">Analisis Psikologi Pengguna:</div>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Klik salah satu tombol menu di sebelah kiri untuk melihat bagaimana prinsip <em>Satisficing</em> dan <em>Hick's Law</em> bekerja.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 3: BILLBOARD DESIGN 101 & HIERARKI VISUAL
+         =================================================================== -->
+    <section id="tab-3" class="tab-panel hidden space-y-8">
+      <!-- Top Concept Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="soft-card p-6">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full bg-[#FFE4E6] text-[#BE123C]">
+              1. Konvensi Web
+            </span>
+            <span class="text-xl">🛑</span>
+          </div>
+          <h3 class="text-base font-bold text-slate-800 mb-1.5">Rambu STOP di Negara Asing</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Meskipun tidak bisa membaca aksara Mandarin <strong>停</strong>, bentuk segi delapan merah membuat kita langsung tahu artinya <strong>BERHENTI</strong>. Gunakan konvensi tata letak (logo di kiri atas, keranjang di kanan atas) agar pengguna tidak perlu berpikir.
+          </p>
+        </div>
+
+        <div class="soft-card p-6">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full bg-[#E0F2FE] text-[#0369A1]">
+              2. Tiga Pilar Hierarki
+            </span>
+            <span class="text-xl">📐</span>
+          </div>
+          <h3 class="text-base font-bold text-slate-800 mb-1.5">Prominence, Grouping, Nesting</h3>
+          <ul class="text-xs sm:text-sm text-slate-600 space-y-1 leading-relaxed">
+            <li>• <strong>Prominence:</strong> Yang terpenting paling menonjol (<em>Von Restorff Effect</em>).</li>
+            <li>• <strong>Grouping:</strong> Hal terkait dikelompokkan berdekatan.</li>
+            <li>• <strong>Nesting:</strong> Judul memayungi tepat konten miliknya.</li>
+          </ul>
+        </div>
+
+        <div class="soft-card p-6">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full bg-[#FEF3C7] text-[#B45309]">
+              3. Musuh: Visual Noise
+            </span>
+            <span class="text-xl">📢</span>
+          </div>
+          <h3 class="text-base font-bold text-slate-800 mb-1.5">Ketika Semua Elemen "Berteriak"</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <strong>Shouting:</strong> Jika semua teks besar, tebal, dan berwarna mencolok, maka <em>tidak ada satu pun yang penting</em>. Anggap setiap elemen dekoratif sebagai "kebisingan visual" sampai terbukti membantu pengguna.
+          </p>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE SIMULATION 3: VISUAL HIERARCHY REFACTORING LAB -->
+      <div class="soft-card overflow-hidden">
+        <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 text-[11px] font-mono font-bold bg-[#EEF2FF] text-[#4338CA] border border-[#E0E7FF] rounded-full">
+                LABORATORIUM INTERAKTIF 3
+              </span>
+              <h3 class="text-base sm:text-lg font-bold text-slate-800">
+                Laboratorium Refactoring Hierarki Visual ("Computer Books" Krug)
+              </h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">
+              Aktifkan ke-4 sakelar pastel di sebelah kiri untuk merombak antarmuka toko buku yang datar dan bising menjadi desain dengan hierarki visual yang jelas.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3 bg-white px-4 py-2 rounded-xl border border-slate-200 shrink-0 shadow-sm">
+            <span class="text-xs text-slate-500 font-medium">Skor Kejelasan Visual:</span>
+            <span id="billboard-score-badge" class="text-base font-mono font-extrabold text-[#BE123C] bg-[#FFE4E6] px-2.5 py-0.5 rounded-lg">20%</span>
+          </div>
+        </div>
+
+        <div class="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <!-- Left: 4 Pastel Toggle Switches (5 cols) -->
+          <div class="lg:col-span-5 space-y-3">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-mono uppercase text-slate-400 font-semibold">4 Sakelar Hierarki Visual</span>
+              <button onclick="applyAllHierarchyFixes(true)" class="text-xs text-[#0369A1] hover:underline font-bold cursor-pointer">
+                ✨ Aktifkan Semua
+              </button>
+            </div>
+
+            <!-- Switch 1 -->
+            <label class="flex items-start gap-3 p-3.5 rounded-xl bg-[#E0F2FE]/30 border border-[#BAE6FD] hover:bg-[#E0F2FE]/60 cursor-pointer transition">
+              <input type="checkbox" id="chk-prominence" onchange="updateHierarchyLab()" class="mt-1 w-4 h-4 accent-[#0369A1] rounded cursor-pointer">
+              <div>
+                <div class="text-xs sm:text-sm font-bold text-slate-800">1. Terapkan Skala & Kontras (Prominence)</div>
+                <p class="text-xs text-slate-500 mt-0.5">Tonjolkan judul utama, harga buku, dan tombol aksi primer (<em>Von Restorff Effect</em>).</p>
+              </div>
+            </label>
+
+            <!-- Switch 2 -->
+            <label class="flex items-start gap-3 p-3.5 rounded-xl bg-[#EEF2FF]/40 border border-[#E0E7FF] hover:bg-[#EEF2FF]/80 cursor-pointer transition">
+              <input type="checkbox" id="chk-nesting" onchange="updateHierarchyLab()" class="mt-1 w-4 h-4 accent-[#4338CA] rounded cursor-pointer">
+              <div>
+                <div class="text-xs sm:text-sm font-bold text-slate-800">2. Terapkan Visual Nesting (Induk → Anak)</div>
+                <p class="text-xs text-slate-500 mt-0.5">Perbaiki bilah judul "Computer Books" agar hanya memayungi daftar buku komputer, bukan menu Musik & Film!</p>
+              </div>
+            </label>
+
+            <!-- Switch 3 -->
+            <label class="flex items-start gap-3 p-3.5 rounded-xl bg-[#DCFCE7]/30 border border-[#BBF7D0] hover:bg-[#DCFCE7]/60 cursor-pointer transition">
+              <input type="checkbox" id="chk-Grouping" onchange="updateHierarchyLab()" class="mt-1 w-4 h-4 accent-[#15803D] rounded cursor-pointer">
+              <div>
+                <div class="text-xs sm:text-sm font-bold text-slate-800">3. Kelompokkan Area Terkait (Proximity/Chunking)</div>
+                <p class="text-xs text-slate-500 mt-0.5">Pisahkan zona navigasi kiri dan bungkus setiap buku dalam kartu yang rapi dengan ruang kosong (<em>whitespace</em>).</p>
+              </div>
+            </label>
+
+            <!-- Switch 4 -->
+            <label class="flex items-start gap-3 p-3.5 rounded-xl bg-[#FEF3C7]/40 border border-[#FDE68A] hover:bg-[#FEF3C7]/70 cursor-pointer transition">
+              <input type="checkbox" id="chk-noise" onchange="updateHierarchyLab()" class="mt-1 w-4 h-4 accent-[#B45309] rounded cursor-pointer">
+              <div>
+                <div class="text-xs sm:text-sm font-bold text-slate-800">4. Bersihkan Visual Noise (Reduksi Clutter)</div>
+                <p class="text-xs text-slate-500 mt-0.5">Hapus spanduk promosi yang "berteriak", tanda seru berlebih, dan garis batas kasar.</p>
+              </div>
+            </label>
+          </div>
+
+          <!-- Right: Live Refactoring Canvas (7 cols) -->
+          <div class="lg:col-span-7 bg-[#FAFAFC] border border-slate-200 rounded-2xl p-5 space-y-4">
+            <!-- Shouting Banner (Visual Noise) -->
+            <div id="noise-banner" class="bg-[#FFE4E6] text-[#BE123C] border-2 border-dashed border-[#BE123C] font-extrabold text-xs p-2.5 rounded-xl text-center uppercase tracking-wider">
+              📢 PROMO SPESIAL HARI INI!!! KLIK DI SINI SEKARANG JUGA!!! JANGAN LEWATKAN!!! 📢
+            </div>
+
+            <!-- Broken Full-Width Nesting Bar (Default: Visible) -->
+            <div id="broken-nesting-bar" class="bg-[#FEF3C7] text-[#B45309] border border-[#FDE68A] font-bold px-3.5 py-2 text-xs sm:text-sm rounded-lg">
+              📂 COMPUTER BOOKS (Masalah Nesting: Judul ini membentang di atas menu Music & Movies di kiri!)
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+              <!-- Sidebar Navigation (3 cols) -->
+              <div id="hierarchy-sidebar" class="sm:col-span-3 border-2 border-slate-400 p-2.5 text-xs space-y-1.5 bg-white">
+                <div class="font-bold text-slate-500 uppercase text-[11px]">Kategori Situs</div>
+                <div class="p-1.5 bg-[#E0F2FE] text-[#0369A1] font-bold rounded">📘 Books</div>
+                <div class="p-1.5 text-slate-600">🎵 Music</div>
+                <div class="p-1.5 text-slate-600">🎬 Movies</div>
+                <div class="p-1.5 text-slate-600">🎮 Games</div>
+              </div>
+
+              <!-- Main Content Area (9 cols) -->
+              <div id="hierarchy-main" class="sm:col-span-9 border-2 border-slate-400 p-3 space-y-3 bg-white">
+                <!-- Proper Nested Header (Hidden until Switch 2 ON) -->
+                <div id="proper-nesting-bar" class="hidden bg-[#EEF2FF] border-l-4 border-[#4338CA] px-3.5 py-2 rounded-r-xl">
+                  <div class="text-[11px] font-mono text-[#4338CA]">Books &gt; Computer Books</div>
+                  <h4 id="hierarchy-title" class="text-sm font-bold text-slate-800">Computer Books &amp; Usability</h4>
+                </div>
+
+                <!-- Book Item 1 -->
+                <div id="product-card-1" class="border-b-2 border-slate-400 pb-2.5">
+                  <div id="prod-1-title" class="text-sm text-slate-700">Don't Make Me Think, Revisited — Steve Krug</div>
+                  <div class="text-xs text-slate-500 mt-0.5">Panduan akal sehat untuk usabilitas web dan mobile.</div>
+                  <div class="mt-2 flex flex-wrap items-center justify-between gap-2">
+                    <span id="prod-1-price" class="text-xs text-slate-600">Harga: Rp 185.000</span>
+                    <button id="prod-1-btn" class="px-2.5 py-1 text-xs bg-slate-100 text-slate-700 border border-slate-400 rounded">
+                      MASUKKAN KERANJANG!!
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Book Item 2 -->
+                <div id="product-card-2" class="border-b-2 border-slate-400 pb-2.5">
+                  <div id="prod-2-title" class="text-sm text-slate-700">The Design of Everyday Things — Don Norman</div>
+                  <div class="text-xs text-slate-500 mt-0.5">Psikologi objek sehari-hari, affordances, dan signifiers.</div>
+                  <div class="mt-2 flex flex-wrap items-center justify-between gap-2">
+                    <span id="prod-2-price" class="text-xs text-slate-600">Harga: Rp 210.000</span>
+                    <button id="prod-2-btn" class="px-2.5 py-1 text-xs bg-slate-100 text-slate-700 border border-slate-400 rounded">
+                      MASUKKAN KERANJANG!!
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Diagnosis Bar -->
+            <div id="hierarchy-diagnosis" class="text-xs bg-white border border-slate-200 p-3.5 rounded-xl text-slate-600 leading-relaxed">
+              🔍 <strong>Diagnosis Saat Ini:</strong> Bilah judul <em>"Computer Books"</em> masih memayungi kolom navigasi kiri (kesalahan <em>Nesting</em> seperti contoh di buku Krug), garis batas masih kaku, dan spanduk promosi mencuri perhatian mata.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 4: ELEMEN KLIK YANG SELF-EVIDENT (AFFORDANCE & SIGNIFIERS)
+         =================================================================== -->
+    <section id="tab-4" class="tab-panel hidden space-y-8">
+      <!-- Timeline Evolution of Clickability (From Krug's Book) -->
+      <div class="soft-card p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+          <div>
+            <span class="text-[11px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full bg-[#E0F2FE] text-[#0369A1]">
+              Lini Masa Sejarah Krug
+            </span>
+            <h3 class="text-lg font-bold text-slate-800 mt-1">Evolusi Petunjuk Klik (<em>Signifiers</em>) di Web</h3>
+          </div>
+          <span class="text-xs text-slate-500">Bentuk, Lokasi, dan Pemformatan Warna</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="text-xs font-mono font-bold text-slate-500">1995 • Paleozoic Era</div>
+            <div class="text-sm font-bold text-slate-800 mt-1">Tautan Biru & Tombol 3D Abu-abu</div>
+            <p class="text-xs text-slate-600 mt-1">Semua situs memakai teks biru bergaris bawah standar HTML. Membosankan, tetapi <strong>100% jelas bisa diklik</strong>.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-[#FEF3C7]/40 border border-[#FDE68A]">
+            <div class="text-xs font-mono font-bold text-[#B45309]">2000 • The Wild West</div>
+            <div class="text-sm font-bold text-slate-800 mt-1">Era Gambar Teks Kacau</div>
+            <p class="text-xs text-slate-600 mt-1">Desainer cetak membuat tombol dari gambar tanpa standar. Pengguna terpaksa menebak-nebak apa yang bisa diklik.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-[#DCFCE7]/40 border border-[#BBF7D0]">
+            <div class="text-xs font-mono font-bold text-[#15803D]">2005 • The Golden Age</div>
+            <div class="text-sm font-bold text-slate-800 mt-1">Era Konsistensi CSS</div>
+            <p class="text-xs text-slate-600 mt-1">Satu warna khusus untuk semua tautan teks dan bentuk tombol yang konsisten. Pengguna langsung paham.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-[#FFE4E6]/40 border border-[#FECDD3]">
+            <div class="text-xs font-mono font-bold text-[#BE123C]">Era Ultra-Flat & Mobile</div>
+            <div class="text-sm font-bold text-slate-800 mt-1">Krisis Hilangnya Signifier</div>
+            <p class="text-xs text-slate-600 mt-1">Bingkai tombol dihapus demi "minimalisme", padahal <strong>layar sentuh (HP) tidak memiliki efek Hover!</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE SIMULATION 4: MINE SWEEPING CHALLENGE -->
+      <div class="soft-card overflow-hidden">
+        <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-200 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 text-[11px] font-mono font-bold bg-[#FFE4E6] text-[#BE123C] border border-[#FECDD3] rounded-full">
+                LABORATORIUM INTERAKTIF 4
+              </span>
+              <h3 class="text-base sm:text-lg font-bold text-slate-800">
+                Tantangan "Mine-Sweeping" (Menyapu Ranjau Kursor) & <em>False Affordance</em>
+              </h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">
+              <strong>Misi Anda:</strong> Temukan dan klik <strong>3 aksi asli</strong> pada kartu di bawah: (1) Unduh Panduan PDF, (2) Gunakan Voucher, dan (3) Bayar Sekarang. Waspadai jebakan <em>False Affordance</em>!
+            </p>
+          </div>
+
+          <div class="flex items-center gap-1.5 bg-white p-1.5 rounded-xl border border-slate-200 shrink-0 shadow-sm">
+            <button id="btn-signifier-flat" onclick="setSignifierMode('flat')" class="px-3.5 py-2 rounded-lg text-xs font-bold bg-[#FFE4E6] text-[#BE123C] border border-[#FECDD3] cursor-pointer">
+              🕵️ Mode Flat Tanpa Signifier
+            </button>
+            <button id="btn-signifier-clear" onclick="setSignifierMode('clear')" class="px-3.5 py-2 rounded-lg text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer">
+              🎯 Aktifkan Signifier Self-Evident
+            </button>
+          </div>
+        </div>
+
+        <div class="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <!-- Left Scoreboard (4 cols) -->
+          <div class="lg:col-span-4 bg-[#FAFAFC] border border-slate-200 rounded-2xl p-5 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono uppercase text-slate-400 font-semibold">Skor Eksperimen Klik</span>
+              <button onclick="resetMinesweeper()" class="text-xs text-[#0369A1] hover:underline font-medium cursor-pointer">Reset Misi</button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="bg-white border border-slate-200 rounded-xl p-3 text-center">
+                <div class="text-xs text-slate-500">Aksi Ditemukan</div>
+                <div id="mine-found-count" class="text-2xl font-extrabold text-[#15803D] font-mono mt-0.5">0 / 3</div>
+              </div>
+              <div class="bg-white border border-slate-200 rounded-xl p-3 text-center">
+                <div class="text-xs text-slate-500">Salah Klik (Tertipu)</div>
+                <div id="mine-false-count" class="text-2xl font-extrabold text-[#BE123C] font-mono mt-0.5">0</div>
+              </div>
+            </div>
+
+            <div id="mine-feedback-box" class="bg-white border border-slate-200 rounded-xl p-3.5 text-xs text-slate-600 leading-relaxed">
+              💡 Klik elemen pada kartu di sebelah kanan untuk menyelesaikan ke-3 misi!
+            </div>
+
+            <div class="bg-[#EEF2FF]/50 border border-[#E0E7FF] rounded-xl p-3.5 text-xs text-slate-600 space-y-1">
+              <div class="font-bold text-[#4338CA]">Apa itu False Affordance?</div>
+              <p class="leading-relaxed">
+                Ketika elemen statis (seperti label teks atau judul) diberi warna atau bentuk kotak seperti tombol sehingga pengguna mengkliknya sia-sia.
+              </p>
+            </div>
+          </div>
+
+          <!-- Right Interactive Card (8 cols) -->
+          <div class="lg:col-span-8 bg-[#FAFAFC] border border-slate-200 rounded-2xl p-6 space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+              <div>
+                <h4 class="text-base font-bold text-slate-800">Ringkasan Pembayaran Semester & Dokumen</h4>
+                <p class="text-xs text-slate-500">Bandingkan betapa mudahnya memindai tombol saat Signifier diaktifkan.</p>
+              </div>
+              <div class="flex gap-1.5 text-[11px] font-mono">
+                <span id="badge-task-1" class="px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-500">1. PDF</span>
+                <span id="badge-task-2" class="px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-500">2. Voucher</span>
+                <span id="badge-task-3" class="px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-500">3. Bayar</span>
+              </div>
+            </div>
+
+            <!-- Row 1: Text Link -->
+            <div class="bg-white border border-slate-200 rounded-xl p-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Sebelum menyelesaikan pembayaran, mahasiswa wajib mengunduh dokumen 
+              <span id="target-link-pdf" onclick="handleMineClick('real', 1, 'Berhasil mengunduh Panduan Akademik (PDF)!')" class="cursor-default text-slate-600">
+                panduan akademik semester ganjil
+              </span> 
+              serta memperhatikan 
+              <span onclick="handleMineClick('false', 0, '❌ Tertipu! Teks berwarna biru ini ternyata hanya judul/penekanan kalimat statis, bukan tautan! (Jangan gunakan warna link untuk teks biasa).')" class="font-bold text-[#0369A1] cursor-default">
+                jadwal batas akhir registrasi
+              </span> 
+              yang berlaku.
+            </div>
+
+            <!-- Row 2: Voucher with False Affordance Trap -->
+            <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-wrap items-center justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <span id="trap-voucher-badge" onclick="handleMineClick('false', 0, '❌ Jebakan False Affordance! Kotak hijau [Voucher Tersedia] ini hanyalah lencana status statis, bukan tombol yang bisa diklik!')" class="px-3 py-1.5 rounded-xl bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] font-bold text-xs cursor-default select-none">
+                  🎟️ Voucher Tersedia
+                </span>
+                <span class="text-xs sm:text-sm text-slate-600">Potongan Biaya Admin Rp 25.000</span>
+              </div>
+
+              <button id="target-btn-voucher" onclick="handleMineClick('real', 2, 'Berhasil memasang Voucher Potongan Rp 25.000!')" class="text-xs text-slate-400 cursor-default">
+                Gunakan
+              </button>
+            </div>
+
+            <!-- Row 3: Pay Action -->
+            <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <div class="text-xs text-slate-400">Total Tagihan</div>
+                <div onclick="handleMineClick('false', 0, '❌ Ini hanya teks nominal tagihan statis.')" class="text-lg font-extrabold text-slate-800 cursor-default">
+                  Rp 2.475.000
+                </div>
+              </div>
+
+              <div class="flex items-center gap-4">
+                <span onclick="handleMineClick('false', 0, '❌ Label Terverifikasi ini adalah status statis, bukan tombol.')" class="text-xs font-mono uppercase text-[#4338CA] bg-[#EEF2FF] px-2.5 py-1 rounded-md cursor-default">
+                  ✓ Terverifikasi
+                </span>
+                <button id="target-btn-pay" onclick="handleMineClick('real', 3, 'Berhasil mengeksekusi Tombol Bayar Sekarang!')" class="text-sm font-semibold text-slate-500 cursor-default">
+                  Bayar Sekarang
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 5: UJI BAGASI (THE TRUNK TEST) & KUIS EVALUASI
+         =================================================================== -->
+    <section id="tab-5" class="tab-panel hidden space-y-8">
+      <!-- INTERACTIVE SIMULATION 5A: THE TRUNK TEST -->
+      <div class="soft-card overflow-hidden">
+        <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-200 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 text-[11px] font-mono font-bold bg-[#E0F2FE] text-[#0369A1] border border-[#BAE6FD] rounded-full">
+                LABORATORIUM INTERAKTIF 5
+              </span>
+              <h3 class="text-base sm:text-lg font-bold text-slate-800">
+                Simulasi "The Trunk Test" (Uji Bagasi Mobil Steve Krug)
+              </h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">
+              Bayangkan Anda ditutup matanya di dalam bagasi mobil, lalu dilepas di halaman terdalam situs web. Halaman yang baik wajib menjawab <strong>6 pertanyaan di bawah ini secara instan</strong>!
+            </p>
+          </div>
+          <button onclick="highlightAllTrunkItems()" class="px-4 py-2 rounded-xl bg-[#EEF2FF] hover:bg-[#E0E7FF] text-[#4338CA] border border-[#E0E7FF] font-bold text-xs shrink-0 transition cursor-pointer shadow-sm">
+            🔦 Sorot Semua 6 Komponen
+          </button>
+        </div>
+
+        <div class="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <!-- Left: 6 Trunk Test Buttons (5 cols) -->
+          <div class="lg:col-span-5 space-y-2">
+            <div class="text-xs font-mono uppercase text-slate-400 font-semibold mb-2">Klik indikator untuk menyorot bagian halaman:</div>
+
+            <button onclick="focusTrunkIndicator(1)" class="w-full text-left p-3 rounded-xl bg-[#E0F2FE]/40 hover:bg-[#E0F2FE] border border-[#BAE6FD] transition flex items-center justify-between cursor-pointer">
+              <div>
+                <div class="text-xs font-bold text-[#0369A1]">1. Situs apa ini? (ID Situs / Logo)</div>
+                <div class="text-[11px] text-slate-500">Kiri atas halaman, dapat diklik kembali ke Beranda.</div>
+              </div>
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-white text-[#0369A1] border border-[#BAE6FD]">#1</span>
+            </button>
+
+            <button onclick="focusTrunkIndicator(2)" class="w-full text-left p-3 rounded-xl bg-[#FEF3C7]/40 hover:bg-[#FEF3C7] border border-[#FDE68A] transition flex items-center justify-between cursor-pointer">
+              <div>
+                <div class="text-xs font-bold text-[#B45309]">2. Di halaman apa saya berada? (Nama Halaman)</div>
+                <div class="text-[11px] text-slate-500">Judul unik yang ukurannya paling menonjol dan memayungi isi.</div>
+              </div>
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-white text-[#B45309] border border-[#FDE68A]">#2</span>
+            </button>
+
+            <button onclick="focusTrunkIndicator(3)" class="w-full text-left p-3 rounded-xl bg-[#DCFCE7]/40 hover:bg-[#DCFCE7] border border-[#BBF7D0] transition flex items-center justify-between cursor-pointer">
+              <div>
+                <div class="text-xs font-bold text-[#15803D]">3. Apa bagian utama situs ini? (Navigasi Utama)</div>
+                <div class="text-[11px] text-slate-500">Menu tingkat atas yang persisten di setiap halaman.</div>
+              </div>
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-white text-[#15803D] border border-[#BBF7D0]">#3</span>
+            </button>
+
+            <button onclick="focusTrunkIndicator(4)" class="w-full text-left p-3 rounded-xl bg-[#EEF2FF]/50 hover:bg-[#EEF2FF] border border-[#E0E7FF] transition flex items-center justify-between cursor-pointer">
+              <div>
+                <div class="text-xs font-bold text-[#4338CA]">4. Apa opsi saya di tingkat ini? (Navigasi Lokal)</div>
+                <div class="text-[11px] text-slate-500">Sub-menu khusus untuk kategori yang sedang aktif.</div>
+              </div>
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-white text-[#4338CA] border border-[#E0E7FF]">#4</span>
+            </button>
+
+            <button onclick="focusTrunkIndicator(5)" class="w-full text-left p-3 rounded-xl bg-[#FFE4E6]/40 hover:bg-[#FFE4E6] border border-[#FECDD3] transition flex items-center justify-between cursor-pointer">
+              <div>
+                <div class="text-xs font-bold text-[#BE123C]">5. Di mana posisi saya? ("You Are Here" / Breadcrumb)</div>
+                <div class="text-[11px] text-slate-500">Jejak remah roti (Breadcrumbs) & penanda tab aktif.</div>
+              </div>
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-white text-[#BE123C] border border-[#FECDD3]">#5</span>
+            </button>
+
+            <button onclick="focusTrunkIndicator(6)" class="w-full text-left p-3 rounded-xl bg-slate-100 hover:bg-slate-200/70 border border-slate-200 transition flex items-center justify-between cursor-pointer">
+              <div>
+                <div class="text-xs font-bold text-slate-700">6. Bagaimana cara saya mencari? (Kotak Pencarian)</div>
+                <div class="text-[11px] text-slate-500">Input berbingkai jelas dengan ikon kaca pembesar.</div>
+              </div>
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-white text-slate-700 border border-slate-300">#6</span>
+            </button>
+          </div>
+
+          <!-- Right: Clean Webpage Wireframe Anatomy (7 cols) -->
+          <div class="lg:col-span-7 bg-[#FAFAFC] border border-slate-200 rounded-2xl p-5 space-y-4">
+            <!-- Header Row -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-200 bg-white p-3 rounded-xl">
+              <!-- #1 Site ID -->
+              <div id="trunk-zone-1" class="p-1.5 rounded-lg transition-all flex items-center gap-2">
+                <span class="w-7 h-7 rounded-lg bg-[#E0F2FE] border border-[#BAE6FD] text-[#0369A1] font-extrabold flex items-center justify-center text-xs">S</span>
+                <span class="font-extrabold text-slate-800 text-xs sm:text-sm">Sehat Terpadu.id</span>
+                <span class="text-[10px] font-mono bg-[#E0F2FE] text-[#0369A1] px-1.5 py-0.5 rounded font-bold">#1</span>
+              </div>
+
+              <!-- #3 Primary Nav -->
+              <div id="trunk-zone-3" class="p-1.5 rounded-lg transition-all flex flex-wrap gap-1.5 text-xs">
+                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600">Beranda</span>
+                <span class="px-2.5 py-1 rounded-md bg-[#DCFCE7] text-[#15803D] font-bold border border-[#BBF7D0]">Layanan Medis</span>
+                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600">Apotek</span>
+                <span class="text-[10px] font-mono bg-[#DCFCE7] text-[#15803D] px-1.5 py-0.5 rounded font-bold self-center">#3</span>
+              </div>
+
+              <!-- #6 Search Box -->
+              <div id="trunk-zone-6" class="p-1.5 rounded-lg transition-all flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-2.5 py-1 text-xs">
+                <span class="text-slate-400">🔍 Cari...</span>
+                <span class="bg-slate-200 text-slate-700 font-mono font-bold px-1.5 py-0.5 rounded text-[10px]">#6</span>
+              </div>
+            </div>
+
+            <!-- #5 Breadcrumbs -->
+            <div id="trunk-zone-5" class="p-2.5 rounded-xl transition-all flex flex-wrap items-center justify-between bg-white border border-slate-200 text-xs">
+              <div class="text-slate-500">
+                Beranda &gt; Layanan Medis &gt; <strong class="text-[#BE123C] underline">Pendaftaran Vaksinasi Lansia</strong>
+              </div>
+              <span class="text-[10px] font-mono font-bold bg-[#FFE4E6] text-[#BE123C] px-2 py-0.5 rounded">#5 "You Are Here"</span>
+            </div>
+
+            <!-- Body Layout: #4 Local Nav & #2 Page Title -->
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+              <div id="trunk-zone-4" class="sm:col-span-4 p-3.5 rounded-xl bg-white border border-slate-200 space-y-2 transition-all">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-bold uppercase text-[#4338CA]">Sub-Menu Medis</span>
+                  <span class="text-[10px] font-mono font-bold bg-[#EEF2FF] text-[#4338CA] px-1.5 py-0.5 rounded">#4</span>
+                </div>
+                <div class="text-xs space-y-1">
+                  <div class="p-1.5 rounded text-slate-500">Jadwal Dokter</div>
+                  <div class="p-1.5 rounded bg-[#EEF2FF] text-[#4338CA] font-bold border-l-2 border-[#4338CA]">Vaksinasi Lansia</div>
+                  <div class="p-1.5 rounded text-slate-500">Layanan Ambulans</div>
+                </div>
+              </div>
+
+              <div class="sm:col-span-8 bg-white border border-slate-200 rounded-xl p-4 space-y-3">
+                <div id="trunk-zone-2" class="p-2 rounded-lg transition-all flex items-center justify-between bg-[#FEF3C7]/30">
+                  <h4 class="text-base sm:text-lg font-extrabold text-slate-800">Pendaftaran Vaksinasi Lansia</h4>
+                  <span class="text-[10px] font-mono font-bold bg-[#FEF3C7] text-[#B45309] border border-[#FDE68A] px-2 py-0.5 rounded shrink-0">#2 Page Name</span>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed px-1">
+                  Dengan ke-6 indikator ini terlihat jelas tanpa *visual noise*, pengguna yang mendarat dari hasil pencarian Google langsung memahami posisi dan langkah selanjutnya dalam hitungan detik.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE 5-QUESTION QUIZ -->
+      <div class="soft-card p-6 sm:p-7">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-200">
+          <div>
+            <span class="px-2.5 py-0.5 text-[11px] font-mono font-bold bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] rounded-full">
+              KUIS EVALUASI MANDIRI
+            </span>
+            <h3 class="text-lg sm:text-xl font-bold text-slate-800 mt-1">
+              Uji Pemahaman Materi Usabilitas Web
+            </h3>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="bg-[#FAFAFC] border border-slate-200 px-4 py-2 rounded-xl text-xs font-mono text-slate-600">
+              Skor Akhir: <span id="quiz-score-display" class="text-[#15803D] font-extrabold text-base">0 / 5</span>
+            </div>
+            <button onclick="resetQuiz()" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 transition cursor-pointer">
+              Ulangi Kuis
+            </button>
+          </div>
+        </div>
+
+        <div id="quiz-container" class="space-y-5 mt-6">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       MODAL RINGKASAN MATERI (CLEAN PASTEL DIALOG)
+       ===================================================================== -->
+  <div id="cheatsheet-modal" class="fixed inset-0 bg-slate-900/30 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-2xl w-full p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-base sm:text-lg font-bold text-slate-800">📋 Ringkasan Prinsip Usabilitas Steve Krug</h3>
+        <button onclick="closeCheatSheetModal()" class="text-slate-500 hover:text-slate-800 text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-100 cursor-pointer">✕ Tutup</button>
+      </div>
+      <div class="space-y-3 text-xs sm:text-sm text-slate-600">
+        <div class="p-3.5 rounded-xl bg-[#E0F2FE]/40 border border-[#BAE6FD]">
+          <strong class="text-[#0369A1] block mb-0.5">Hukum Pertama Usabilitas Krug:</strong>
+          "Don't make me think!" — Antarmuka harus <em>self-evident</em> (jelas dengan sendirinya). Jika tidak memungkinkan, minimal harus <em>self-explanatory</em>.
+        </div>
+        <div class="p-3.5 rounded-xl bg-[#FEF3C7]/40 border border-[#FDE68A]">
+          <strong class="text-[#B45309] block mb-0.5">Hukum Kedua Usabilitas Krug:</strong>
+          "Tidak masalah berapa kali saya harus mengklik, selama setiap klik adalah pilihan tanpa berpikir dan tidak ambigu." (1 klik mikir keras ≡ 3 klik mudah).
+        </div>
+        <div class="p-3.5 rounded-xl bg-[#DCFCE7]/40 border border-[#BBF7D0]">
+          <strong class="text-[#15803D] block mb-0.5">Hukum Ketiga Usabilitas Krug:</strong>
+          "Pangkas separuh kata di setiap halaman, lalu pangkas lagi separuh dari sisanya." Hilangkan <em>happy talk</em> dan instruksi yang tidak perlu.
+        </div>
+        <div class="p-3.5 rounded-xl bg-[#EEF2FF]/50 border border-[#E0E7FF]">
+          <strong class="text-[#4338CA] block mb-0.5">Perilaku Nyata Pengguna & Billboard Design:</strong>
+          Pengguna melakukan <em>Scanning</em>, <em>Satisficing</em>, dan <em>Muddling Through</em>. Gunakan konvensi, ciptakan hierarki visual (<em>Prominence, Grouping, Nesting</em>), dan buat elemen klik <em>self-evident</em> dengan <em>signifiers</em> yang jelas.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLEAN FOOTER -->
+  <footer class="border-t border-slate-200 bg-white py-5 mt-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
+      <div>Modul Interaksi Manusia & Komputer (IMK) — Usabilitas Web Steve Krug</div>
+      <div>Didesain dengan palet putih bersih & warna pastel untuk meminimalkan Visual Noise</div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       JAVASCRIPT LOGIC FOR ALL INTERACTIVE SIMULATIONS
+       ===================================================================== -->
+  <script>
+    // --- 1. MAIN TAB NAVIGATION CONTROLLER ---
+    const tabStyles = {
+      'tab-1': { bg: 'bg-[#E0F2FE]', text: 'text-[#0369A1]', border: 'border-[#BAE6FD]' },
+      'tab-2': { bg: 'bg-[#FEF3C7]', text: 'text-[#B45309]', border: 'border-[#FDE68A]' },
+      'tab-3': { bg: 'bg-[#EEF2FF]', text: 'text-[#4338CA]', border: 'border-[#E0E7FF]' },
+      'tab-4': { bg: 'bg-[#FFE4E6]', text: 'text-[#BE123C]', border: 'border-[#FECDD3]' },
+      'tab-5': { bg: 'bg-[#DCFCE7]', text: 'text-[#15803D]', border: 'border-[#BBF7D0]' }
+    };
+
+    function switchMainTab(tabId) {
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
+      document.getElementById(tabId).classList.remove('hidden');
+
+      document.querySelectorAll('.main-tab-btn').forEach(btn => {
+        const numSpan = btn.querySelector('span');
+        btn.className = "main-tab-btn shrink-0 px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm transition flex items-center gap-2 bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/80 cursor-pointer";
+        if (numSpan) {
+          numSpan.className = "w-5 h-5 rounded-full bg-white text-slate-500 text-xs font-bold flex items-center justify-center border border-slate-200";
+        }
+      });
+
+      const activeBtn = document.getElementById('btn-' + tabId);
+      const st = tabStyles[tabId];
+      if (activeBtn && st) {
+        activeBtn.className = `main-tab-btn shrink-0 px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm transition flex items-center gap-2 ${st.bg} ${st.text} border ${st.border} shadow-sm cursor-pointer`;
+        const numSpan = activeBtn.querySelector('span');
+        if (numSpan) {
+          numSpan.className = `w-5 h-5 rounded-full bg-white ${st.text} text-xs font-bold flex items-center justify-center`;
+        }
+      }
+    }
+
+    function openCheatSheetModal() {
+      const m = document.getElementById('cheatsheet-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeCheatSheetModal() {
+      const m = document.getElementById('cheatsheet-modal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    // --- 2. TAB 1: QUESTION MARK DETECTOR & GOODWILL RESERVOIR ---
+    let cogLoad = 45;
+    let goodwill = 70;
+
+    const thoughtDictionary = {
+      bad: {
+        'logo': {
+          emoji: '🤨',
+          badge: '❓ Identitas Situs Ambigu',
+          text: '"XYZnet OmniVerse? Perusahaan apa ini? Apakah kalau diklik kembali ke beranda?"',
+          cogDelta: 15,
+          goodwillDelta: -12
+        },
+        'nav-sinergi': {
+          emoji: '😵',
+          badge: '❓ Jargon Pemasaran',
+          text: '"Apa itu Lembah Sinergi? Apakah itu daftar produk atau profil perusahaan?"',
+          cogDelta: 20,
+          goodwillDelta: -18
+        },
+        'nav-matrix': {
+          emoji: '🤯',
+          badge: '❓ Istilah Internal',
+          text: '"Matriks Solusi? Saya hanya ingin melihat berapa harga berlangganan aplikasi ini!"',
+          cogDelta: 20,
+          goodwillDelta: -15
+        },
+        'nav-job': {
+          emoji: '🤔',
+          badge: '❓ Contoh Krug: Job-o-Rama',
+          text: '"Job-o-Rama? Istilah buatan bagian marketing yang memaksa saya mikir 2 detik: ini lowongan kerja atau fitur aplikasi?"',
+          cogDelta: 15,
+          goodwillDelta: -10
+        },
+        'search-ambigu': {
+          emoji: '🧐',
+          badge: '❓ Tanpa Kotak Input',
+          text: '"Tulisan Eksplorasi ini tombol cari atau teks biasa? Di mana tempat saya mengetik?"',
+          cogDelta: 15,
+          goodwillDelta: -15
+        },
+        'badge-palsu': {
+          emoji: '😠',
+          badge: '❌ False Affordance',
+          text: '"Kotak hijau ini tampak seperti tombol, tapi saat diklik ternyata cuma label hiasan!"',
+          cogDelta: 20,
+          goodwillDelta: -20
+        },
+        'headline-bad': {
+          emoji: '🥱',
+          badge: '❓ Kalimat Abstrak',
+          text: '"Orkestrasi Fiskal Generasi 4.0... terdengar rumit sekali, saya tidak paham manfaat utamanya."',
+          cogDelta: 15,
+          goodwillDelta: -15
+        },
+        'cta-sandbox': {
+          emoji: '😰',
+          badge: '❓ 3 Tombol Membingungkan',
+          text: '"Eksplorasi Sandbox vs Inisiasi Lisensi? Yang mana tombol untuk Coba Gratis?!"',
+          cogDelta: 25,
+          goodwillDelta: -20
+        },
+        'cta-korporat': {
+          emoji: '😟',
+          badge: '❓ Ragu Mengklik',
+          text: '"Kalau saya klik Inisiasi Lisensi Korporat, apakah langsung ditagih biaya mahal?"',
+          cogDelta: 20,
+          goodwillDelta: -15
+        },
+        'cta-kemitraan': {
+          emoji: '😤',
+          badge: '❓ Goodwill Terkuras',
+          text: '"Semua tombol warnanya sama dan bahasanya membingungkan. Saya pindah ke situs lain saja!"',
+          cogDelta: 20,
+          goodwillDelta: -20
+        }
+      },
+      good: {
+        'logo': {
+          emoji: '😊',
+          badge: '✅ 0 Tanda Tanya (Konvensi Jelas)',
+          text: '"BukuKasPro di pojok kiri atas. Nama dan ikonnya langsung menjelaskan ini aplikasi pembukuan."',
+          cogDelta: -15,
+          goodwillDelta: 10
+        },
+        'nav-fitur': {
+          emoji: '👍',
+          badge: '✅ 0 Tanda Tanya (Self-Evident)',
+          text: '"Fitur Produk — jelas berisi daftar kemampuan aplikasi tanpa perlu menebak."',
+          cogDelta: -10,
+          goodwillDelta: 10
+        },
+        'nav-harga': {
+          emoji: '🤩',
+          badge: '✅ 0 Tanda Tanya (Lugas)',
+          text: '"Daftar Harga — label yang jujur dan paling dicari pengguna."',
+          cogDelta: -15,
+          goodwillDelta: 15
+        },
+        'nav-jobs': {
+          emoji: '✨',
+          badge: '✅ 0 Tanda Tanya (Standar Jobs)',
+          text: '"Lowongan Kerja (Jobs) — langsung dipahami dalam 0 detik tanpa beban kognitif."',
+          cogDelta: -10,
+          goodwillDelta: 10
+        },
+        'search-clear': {
+          emoji: '🔍',
+          badge: '✅ 0 Tanda Tanya (Signifier Jelas)',
+          text: '"Kotak putih berbingkai dengan ikon kaca pembesar. Langsung tahu bisa diklik untuk mencari."',
+          cogDelta: -10,
+          goodwillDelta: 10
+        },
+        'headline-good': {
+          emoji: '💡',
+          badge: '✅ Lulus Tes Tetangga 3 Detik',
+          text: '"Aplikasi Pembukuan & Laporan Pajak Otomatis — dalam sekali lirik langsung paham fungsinya!"',
+          cogDelta: -20,
+          goodwillDelta: 15
+        },
+        'cta-free': {
+          emoji: '🚀',
+          badge: '✅ 0 Tanda Tanya (CTA Primer)',
+          text: '"Coba Gratis 14 Hari (Tanpa Kartu Kredit) — sangat aman, jelas, dan menonjol!"',
+          cogDelta: -25,
+          goodwillDelta: 20
+        },
+        'cta-pricing': {
+          emoji: '👌',
+          badge: '✅ Hierarki Sekunder Jelas',
+          text: '"Lihat Paket Harga — opsi pendamping yang rapi tanpa menyaingi tombol utama."',
+          cogDelta: -10,
+          goodwillDelta: 10
+        }
+      }
+    };
+
+    function setKrugLabMode(mode) {
+      const badMockup = document.getElementById('krug-mockup-bad');
+      const goodMockup = document.getElementById('krug-mockup-good');
+      const btnBad = document.getElementById('btn-krug-bad');
+      const btnGood = document.getElementById('btn-krug-good');
+      const urlBar = document.getElementById('browser-url-bar');
+      const bubbleBox = document.getElementById('thought-bubble-box');
+
+      if (mode === 'bad') {
+        badMockup.classList.remove('hidden');
+        goodMockup.classList.add('hidden');
+        btnBad.className = "px-3.5 py-2 rounded-lg text-xs font-bold transition bg-[#FFE4E6] text-[#BE123C] border border-[#FECDD3] cursor-pointer";
+        btnGood.className = "px-3.5 py-2 rounded-lg text-xs font-bold transition text-slate-500 hover:text-slate-800 cursor-pointer";
+        urlBar.textContent = "https://www.xyznet-synergy-corp.io";
+        bubbleBox.className = "float-bubble bg-[#FFE4E6]/60 border border-[#FECDD3] rounded-2xl p-4";
+        cogLoad = 55;
+        goodwill = 60;
+        updateKrugMetersUI();
+        triggerThought('bad', 'cta-sandbox');
+      } else {
+        badMockup.classList.add('hidden');
+        goodMockup.classList.remove('hidden');
+        btnGood.className = "px-3.5 py-2 rounded-lg text-xs font-bold transition bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] cursor-pointer";
+        btnBad.className = "px-3.5 py-2 rounded-lg text-xs font-bold transition text-slate-500 hover:text-slate-800 cursor-pointer";
+        urlBar.textContent = "https://www.bukukaspro.id";
+        bubbleBox.className = "float-bubble bg-[#DCFCE7]/60 border border-[#BBF7D0] rounded-2xl p-4";
+        cogLoad = 10;
+        goodwill = 95;
+        updateKrugMetersUI();
+        triggerThought('good', 'cta-free');
+      }
+    }
+
+    function triggerThought(mode, key) {
+      const item = thoughtDictionary[mode][key];
+      if (!item) return;
+
+      document.getElementById('user-avatar-emoji').textContent = item.emoji;
+      const badge = document.getElementById('thought-badge');
+      badge.textContent = item.badge;
+      badge.className = mode === 'bad'
+        ? "inline-block text-[11px] font-mono font-bold uppercase px-2 py-0.5 rounded-md bg-white text-[#BE123C] border border-[#FECDD3] mb-1.5"
+        : "inline-block text-[11px] font-mono font-bold uppercase px-2 py-0.5 rounded-md bg-white text-[#15803D] border border-[#BBF7D0] mb-1.5";
+
+      document.getElementById('thought-text').textContent = item.text;
+
+      cogLoad = Math.max(5, Math.min(100, cogLoad + item.cogDelta));
+      goodwill = Math.max(0, Math.min(100, goodwill + item.goodwillDelta));
+      updateKrugMetersUI();
+    }
+
+    function resetKrugMeters() {
+      cogLoad = 30;
+      goodwill = 80;
+      updateKrugMetersUI();
+    }
+
+    function updateKrugMetersUI() {
+      const cogBar = document.getElementById('cog-load-bar');
+      const cogVal = document.getElementById('cog-load-val');
+      const gwBar = document.getElementById('goodwill-bar');
+      const gwVal = document.getElementById('goodwill-val');
+
+      cogBar.style.width = cogLoad + '%';
+      let cogStatus = cogLoad > 65 ? '(Frustrasi Tinggi!)' : (cogLoad > 30 ? '(Sedang Mikir)' : '(0 Tanda Tanya / Instan)');
+      cogVal.textContent = `${cogLoad}% ${cogStatus}`;
+      cogVal.className = cogLoad > 60 ? 'text-[#BE123C] font-mono' : (cogLoad > 30 ? 'text-[#B45309] font-mono' : 'text-[#15803D] font-mono');
+      cogBar.className = cogLoad > 60
+        ? 'h-full bg-[#FDA4AF] transition-all duration-300'
+        : (cogLoad > 30 ? 'h-full bg-[#FCD34D] transition-all duration-300' : 'h-full bg-[#86EFAC] transition-all duration-300');
+
+      gwBar.style.width = goodwill + '%';
+      gwVal.textContent = goodwill === 0 ? '0% (Pengguna Pergi!)' : `${goodwill}%`;
+      gwVal.className = goodwill < 35 ? 'text-[#BE123C] font-mono' : (goodwill < 70 ? 'text-[#B45309] font-mono' : 'text-[#15803D] font-mono');
+      gwBar.className = goodwill < 35
+        ? 'h-full bg-[#FDA4AF] transition-all duration-300'
+        : (goodwill < 70 ? 'h-full bg-[#FCD34D] transition-all duration-300' : 'h-full bg-[#86EFAC] transition-all duration-300');
+    }
+
+    // --- 3. TAB 2: SCANNING EYE-TRACKING & OMIT NEEDLESS WORDS ---
+    let isScanningVision = false;
+    let isWordsOmitted = false;
+
+    function toggleScanningVision() {
+      isScanningVision = !isScanningVision;
+      const btn = document.getElementById('btn-scan-vision');
+      const fluffItems = document.querySelectorAll('.fluff-text');
+      const focusItems = document.querySelectorAll('.scan-focus');
+
+      if (isScanningVision) {
+        btn.className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-[#FEF3C7] text-[#B45309] border border-[#FDE68A] shadow-sm transition cursor-pointer";
+        btn.textContent = "👁️ Matikan Lensa Eye-Tracking";
+        fluffItems.forEach(el => el.classList.add('opacity-25', 'blur-[1.5px]', 'select-none'));
+        focusItems.forEach(el => el.classList.add('bg-[#FEF3C7]', 'ring-2', 'ring-[#FDE68A]'));
+      } else {
+        btn.className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-white border border-slate-200 text-slate-700 hover:bg-[#FEF3C7] hover:text-[#B45309] hover:border-[#FDE68A] transition cursor-pointer shadow-sm";
+        btn.textContent = "👁️ Lensa Eye-Tracking (F-Pattern)";
+        fluffItems.forEach(el => el.classList.remove('opacity-25', 'blur-[1.5px]', 'select-none'));
+        focusItems.forEach(el => el.classList.remove('bg-[#FEF3C7]', 'ring-2', 'ring-[#FDE68A]'));
+      }
+    }
+
+    function toggleOmitWords() {
+      isWordsOmitted = !isWordsOmitted;
+      const btn = document.getElementById('btn-omit-words');
+      const fluffItems = document.querySelectorAll('.fluff-text');
+      const badge = document.getElementById('word-count-badge');
+
+      if (isWordsOmitted) {
+        btn.className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-[#E0F2FE] text-[#0369A1] border border-[#BAE6FD] transition cursor-pointer shadow-sm";
+        btn.textContent = "✅ 50% Kata Dipangkas (Tampilkan Asli)";
+        fluffItems.forEach(el => el.classList.add('hidden'));
+        badge.textContent = "46 Kata (Ringkas & Scannable!)";
+        badge.className = "px-2.5 py-0.5 rounded-full bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] font-semibold";
+      } else {
+        btn.className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] hover:bg-[#BBF7D0]/70 transition cursor-pointer shadow-sm";
+        btn.textContent = "✂️ Pangkas 50% Kata Sia-sia";
+        fluffItems.forEach(el => el.classList.remove('hidden'));
+        badge.textContent = "142 Kata (Penuh Happy Talk)";
+        badge.className = "px-2.5 py-0.5 rounded-full bg-[#FFE4E6] text-[#BE123C] border border-[#FECDD3] font-semibold";
+      }
+    }
+
+    function testSatisficing(optionIndex) {
+      const box = document.getElementById('satisficing-feedback');
+      if (optionIndex === 1) {
+        box.innerHTML = `
+          <div class="text-xs font-mono uppercase text-[#15803D] font-bold mb-1">🎯 Perilaku Satisficing Terdeteksi!</div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Anda langsung memilih <strong>"📦 Pesanan & Pengembalian"</strong> (opsi pertama). Meskipun di kanan bawah ada <em>"Formulir Klaim Retur Cepat"</em> yang lebih spesifik, otak kita berhenti mencari begitu menemukan opsi pertama yang tampak <strong>"cukup masuk akal"</strong>!
+          </p>
+        `;
+      } else if (optionIndex === 4) {
+        box.innerHTML = `
+          <div class="text-xs font-mono uppercase text-[#0369A1] font-bold mb-1">🔍 Pilihan Optimal (Optimizing)</div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Anda memindai seluruh 4 opsi hingga menemukan <strong>"🔄 Formulir Klaim Retur Cepat"</strong>. Di dunia nyata, mayoritas pengguna yang terburu-buru sudah lebih dulu mengklik tombol pertama.
+          </p>
+        `;
+      } else {
+        box.innerHTML = `
+          <div class="text-xs font-mono uppercase text-[#B45309] font-bold mb-1">⚡ Strategi "Click and See"</div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Pengguna tidak ragu menebak opsi yang samar-samar mirip karena jika salah, mereka cukup menekan tombol <strong>Back</strong> di peramban.
+          </p>
+        `;
+      }
+    }
+
+    // --- 4. TAB 3: VISUAL HIERARCHY REFACTORING LAB ---
+    function updateHierarchyLab() {
+      const chkProminence = document.getElementById('chk-prominence').checked;
+      const chkNesting = document.getElementById('chk-nesting').checked;
+      const chkGrouping = document.getElementById('chk-Grouping').checked;
+      const chkNoise = document.getElementById('chk-noise').checked;
+
+      // 1. Prominence
+      const prod1Title = document.getElementById('prod-1-title');
+      const prod2Title = document.getElementById('prod-2-title');
+      const prod1Price = document.getElementById('prod-1-price');
+      const prod2Price = document.getElementById('prod-2-price');
+      const prod1Btn = document.getElementById('prod-1-btn');
+      const prod2Btn = document.getElementById('prod-2-btn');
+      const hTitle = document.getElementById('hierarchy-title');
+
+      if (chkProminence) {
+        hTitle.className = "text-base sm:text-lg font-extrabold text-slate-800";
+        prod1Title.className = "text-sm sm:text-base font-bold text-slate-800";
+        prod2Title.className = "text-sm sm:text-base font-bold text-slate-800";
+        prod1Price.className = "text-xs sm:text-sm font-extrabold text-[#0369A1] font-mono bg-[#E0F2FE]/60 px-2 py-0.5 rounded-md";
+        prod2Price.className = "text-xs sm:text-sm font-extrabold text-[#0369A1] font-mono bg-[#E0F2FE]/60 px-2 py-0.5 rounded-md";
+        prod1Btn.className = "px-3.5 py-1.5 text-xs font-bold bg-[#DCFCE7] hover:bg-[#BBF7D0] text-[#15803D] border border-[#BBF7D0] rounded-xl shadow-xs transition cursor-pointer";
+        prod2Btn.className = "px-3.5 py-1.5 text-xs font-bold bg-[#DCFCE7] hover:bg-[#BBF7D0] text-[#15803D] border border-[#BBF7D0] rounded-xl shadow-xs transition cursor-pointer";
+        prod1Btn.textContent = "🛒 + Keranjang";
+        prod2Btn.textContent = "🛒 + Keranjang";
+      } else {
+        hTitle.className = "text-sm font-bold text-slate-800";
+        prod1Title.className = "text-sm text-slate-700";
+        prod2Title.className = "text-sm text-slate-700";
+        prod1Price.className = "text-xs text-slate-600";
+        prod2Price.className = "text-xs text-slate-600";
+        prod1Btn.className = "px-2.5 py-1 text-xs bg-slate-100 text-slate-700 border border-slate-400 rounded";
+        prod2Btn.className = "px-2.5 py-1 text-xs bg-slate-100 text-slate-700 border border-slate-400 rounded";
+        prod1Btn.textContent = "MASUKKAN KERANJANG!!";
+        prod2Btn.textContent = "MASUKKAN KERANJANG!!";
+      }
+
+      // 2. Nesting
+      const brokenBar = document.getElementById('broken-nesting-bar');
+      const properBar = document.getElementById('proper-nesting-bar');
+      if (chkNesting) {
+        brokenBar.classList.add('hidden');
+        properBar.classList.remove('hidden');
+      } else {
+        brokenBar.classList.remove('hidden');
+        properBar.classList.add('hidden');
+      }
+
+      // 3. Grouping / Proximity
+      const sidebar = document.getElementById('hierarchy-sidebar');
+      const mainArea = document.getElementById('hierarchy-main');
+      const card1 = document.getElementById('product-card-1');
+      const card2 = document.getElementById('product-card-2');
+
+      if (chkGrouping) {
+        sidebar.className = "sm:col-span-3 bg-white border border-slate-200 rounded-xl p-3 text-xs space-y-1.5 shadow-xs";
+        mainArea.className = "sm:col-span-9 bg-white border border-slate-200 rounded-xl p-4 space-y-3 shadow-xs";
+        card1.className = "bg-[#FAFAFC] border border-slate-200/80 rounded-xl p-3.5";
+        card2.className = "bg-[#FAFAFC] border border-slate-200/80 rounded-xl p-3.5";
+      } else {
+        sidebar.className = "sm:col-span-3 border-2 border-slate-400 p-2.5 text-xs space-y-1.5 bg-white";
+        mainArea.className = "sm:col-span-9 border-2 border-slate-400 p-3 space-y-3 bg-white";
+        card1.className = "border-b-2 border-slate-400 pb-2.5";
+        card2.className = "border-b-2 border-slate-400 pb-2.5";
+      }
+
+      // 4. Visual Noise
+      const noiseBanner = document.getElementById('noise-banner');
+      if (chkNoise) {
+        noiseBanner.classList.add('hidden');
+      } else {
+        noiseBanner.classList.remove('hidden');
+      }
+
+      // Score
+      let score = 20;
+      if (chkProminence) score += 20;
+      if (chkNesting) score += 20;
+      if (chkGrouping) score += 20;
+      if (chkNoise) score += 20;
+
+      const scoreBadge = document.getElementById('billboard-score-badge');
+      scoreBadge.textContent = score + '%';
+      scoreBadge.className = score === 100
+        ? "text-base font-mono font-extrabold text-[#15803D] bg-[#DCFCE7] px-2.5 py-0.5 rounded-lg"
+        : (score >= 60 ? "text-base font-mono font-extrabold text-[#B45309] bg-[#FEF3C7] px-2.5 py-0.5 rounded-lg" : "text-base font-mono font-extrabold text-[#BE123C] bg-[#FFE4E6] px-2.5 py-0.5 rounded-lg");
+
+      const diag = document.getElementById('hierarchy-diagnosis');
+      if (score === 100) {
+        diag.innerHTML = `✅ <strong class="text-[#15803D]">Hierarki Visual Sempurna (100% Billboard Ready):</strong> Judul kategori bersarang (<em>nested</em>) tepat di atas daftar bukunya, produk dikelompokkan dalam kartu yang bersih, bebas <em>visual noise</em>, dan tombol aksi sangat jelas.`;
+      } else {
+        diag.innerHTML = `🔍 <strong>Diagnosis Visual (${score}%):</strong> Aktifkan seluruh sakelar pastel di sebelah kiri untuk mencapai kejelasan visual 100%.`;
+      }
+    }
+
+    function applyAllHierarchyFixes(state) {
+      document.getElementById('chk-prominence').checked = state;
+      document.getElementById('chk-nesting').checked = state;
+      document.getElementById('chk-Grouping').checked = state;
+      document.getElementById('chk-noise').checked = state;
+      updateHierarchyLab();
+    }
+
+    // --- 5. TAB 4: MINE SWEEPING & SELF-EVIDENT SIGNIFIERS ---
+    let foundTargets = new Set();
+    let falseClicks = 0;
+
+    function setSignifierMode(mode) {
+      const btnFlat = document.getElementById('btn-signifier-flat');
+      const btnClear = document.getElementById('btn-signifier-clear');
+      const linkPdf = document.getElementById('target-link-pdf');
+      const trapBadge = document.getElementById('trap-voucher-badge');
+      const btnVoucher = document.getElementById('target-btn-voucher');
+      const btnPay = document.getElementById('target-btn-pay');
+
+      if (mode === 'flat') {
+        btnFlat.className = "px-3.5 py-2 rounded-lg text-xs font-bold bg-[#FFE4E6] text-[#BE123C] border border-[#FECDD3] cursor-pointer";
+        btnClear.className = "px-3.5 py-2 rounded-lg text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer";
+
+        linkPdf.className = "cursor-default text-slate-600";
+        linkPdf.innerHTML = "panduan akademik semester ganjil";
+
+        trapBadge.className = "px-3 py-1.5 rounded-xl bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] font-bold text-xs cursor-default select-none";
+        trapBadge.innerHTML = "🎟️ Voucher Tersedia";
+
+        btnVoucher.className = "text-xs text-slate-400 cursor-default";
+        btnVoucher.innerHTML = "Gunakan";
+
+        btnPay.className = "text-sm font-semibold text-slate-500 cursor-default";
+        btnPay.innerHTML = "Bayar Sekarang";
+      } else {
+        btnClear.className = "px-3.5 py-2 rounded-lg text-xs font-bold bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] cursor-pointer";
+        btnFlat.className = "px-3.5 py-2 rounded-lg text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer";
+
+        linkPdf.className = "cursor-pointer text-[#0369A1] bg-[#E0F2FE]/60 hover:bg-[#E0F2FE] px-2 py-0.5 rounded-md underline font-semibold inline-flex items-center gap-1 transition";
+        linkPdf.innerHTML = "📄 Panduan Akademik Semester Ganjil (PDF ↓)";
+
+        trapBadge.className = "text-xs font-mono text-[#15803D] select-none";
+        trapBadge.innerHTML = "● Status: 1 Voucher Aktif";
+
+        btnVoucher.className = "px-3.5 py-1.5 rounded-xl bg-[#EEF2FF] hover:bg-[#E0E7FF] border border-[#E0E7FF] text-[#4338CA] font-bold text-xs shadow-xs transition cursor-pointer";
+        btnVoucher.innerHTML = "🎟️ Gunakan Voucher →";
+
+        btnPay.className = "px-5 py-2.5 rounded-xl bg-[#DCFCE7] hover:bg-[#BBF7D0] border border-[#BBF7D0] text-[#15803D] font-extrabold text-xs sm:text-sm shadow-sm transition cursor-pointer";
+        btnPay.innerHTML = "💳 Bayar Sekarang →";
+      }
+    }
+
+    function handleMineClick(type, taskId, msg) {
+      const box = document.getElementById('mine-feedback-box');
+      if (type === 'false') {
+        falseClicks++;
+        document.getElementById('mine-false-count').textContent = falseClicks;
+        box.className = "bg-[#FFE4E6]/60 border border-[#FECDD3] rounded-xl p-3.5 text-xs text-[#BE123C] leading-relaxed";
+        box.innerHTML = msg;
+      } else {
+        foundTargets.add(taskId);
+        document.getElementById('mine-found-count').textContent = `${foundTargets.size} / 3`;
+        const badge = document.getElementById('badge-task-' + taskId);
+        if (badge) {
+          badge.className = "px-2.5 py-0.5 rounded-full bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] font-bold";
+        }
+        box.className = "bg-[#DCFCE7]/60 border border-[#BBF7D0] rounded-xl p-3.5 text-xs text-[#15803D] leading-relaxed";
+        box.innerHTML = `✅ <strong>Target #${taskId} Ditemukan:</strong> ${msg}`;
+      }
+    }
+
+    function resetMinesweeper() {
+      foundTargets.clear();
+      falseClicks = 0;
+      document.getElementById('mine-found-count').textContent = "0 / 3";
+      document.getElementById('mine-false-count').textContent = "0";
+      [1, 2, 3].forEach(id => {
+        document.getElementById('badge-task-' + id).className = "px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-500";
+      });
+      const box = document.getElementById('mine-feedback-box');
+      box.className = "bg-white border border-slate-200 rounded-xl p-3.5 text-xs text-slate-600 leading-relaxed";
+      box.textContent = "💡 Misi di-reset. Silakan cari ke-3 elemen klik yang benar!";
+    }
+
+    // --- 6. TAB 5: THE TRUNK TEST & QUIZ ---
+    const trunkColors = {
+      1: ['ring-4', 'ring-[#BAE6FD]', 'bg-[#E0F2FE]/50'],
+      2: ['ring-4', 'ring-[#FDE68A]', 'bg-[#FEF3C7]/60'],
+      3: ['ring-4', 'ring-[#BBF7D0]', 'bg-[#DCFCE7]/50'],
+      4: ['ring-4', 'ring-[#E0E7FF]', 'bg-[#EEF2FF]/60'],
+      5: ['ring-4', 'ring-[#FECDD3]', 'bg-[#FFE4E6]/50'],
+      6: ['ring-4', 'ring-slate-300', 'bg-slate-200/60']
+    };
+
+    function clearTrunkHighlights() {
+      for (let i = 1; i <= 6; i++) {
+        const z = document.getElementById('trunk-zone-' + i);
+        if (z) {
+          trunkColors[i].forEach(cls => z.classList.remove(cls));
+        }
+      }
+    }
+
+    function focusTrunkIndicator(id) {
+      clearTrunkHighlights();
+      const zone = document.getElementById('trunk-zone-' + id);
+      if (zone && trunkColors[id]) {
+        trunkColors[id].forEach(cls => zone.classList.add(cls));
+      }
+    }
+
+    function highlightAllTrunkItems() {
+      for (let i = 1; i <= 6; i++) {
+        const z = document.getElementById('trunk-zone-' + i);
+        if (z && trunkColors[i]) {
+          trunkColors[i].forEach(cls => z.classList.add(cls));
+        }
+      }
+    }
+
+    const quizQuestions = [
+      {
+        q: "1. Apa maksud sebenarnya dari Hukum Pertama Usabilitas Steve Krug ('Don't Make Me Think!')?",
+        options: [
+          "Menghilangkan seluruh teks dari halaman web dan menggantinya dengan video.",
+          "Menghilangkan beban kognitif yang tidak perlu agar pengguna langsung memahami fungsi dan cara pakai antarmuka secara self-evident.",
+          "Membatasi agar setiap halaman web maksimal hanya memiliki 3 tombol.",
+          "Membuat teka-teki interaktif agar pengguna berpikir kritis saat mencari menu."
+        ],
+        correct: 1,
+        rationale: "Benar! 'Berpikir' yang dimaksud Krug adalah kebingungan atau tanda tanya (?) di kepala pengguna saat menebak cara kerja elemen UI."
+      },
+      {
+        q: "2. Mengapa pengguna web cenderung melakukan 'Satisficing' (memilih opsi pertama yang tampak cukup masuk akal) alih-alih mencari pilihan paling optimal?",
+        options: [
+          "Karena pengguna sedang terburu-buru dan konsekuensi salah klik di web sangat ringan (cukup tekan tombol Back).",
+          "Karena layar monitor pengguna terlalu kecil untuk menampilkan semua menu.",
+          "Karena pengguna selalu membaca buku manual sebelum membuka situs web.",
+          "Karena tombol Back di peramban modern sudah tidak berfungsi lagi."
+        ],
+        correct: 0,
+        rationale: "Tepat sekali! Herbert Simon dan Steve Krug menjelaskan bahwa mencari opsi paling sempurna memakan waktu, sedangkan menebak dan menekan Back jauh lebih efisien."
+      },
+      {
+        q: "3. Ketika sebuah halaman memiliki bilah judul 'COMPUTER BOOKS' yang membentang hingga ke atas kolom navigasi kiri ('Music, Movies, Games'), prinsip hierarki visual apa yang dilanggar?",
+        options: [
+          "Postel's Law (Liberal Input)",
+          "Visual Nesting (Hubungan kontainer induk-anak)",
+          "Peak-End Rule",
+          "Doherty Threshold (400 ms)"
+        ],
+        correct: 1,
+        rationale: "Benar! Dalam Visual Nesting, judul bagian hanya boleh memayungi konten yang memang menjadi miliknya, bukan membentang di atas navigasi sejajar lainnya."
+      },
+      {
+        q: "4. Apa risiko terbesar dari desain Ultra-Flat yang menyembunyikan bingkai tombol dan hanya mengandalkan efek Hover kursor untuk menunjukkan bahwa teks bisa diklik?",
+        options: [
+          "Membuat ukuran file HTML menjadi terlalu besar.",
+          "Memicu perilaku 'Mine Sweeping' di desktop dan sama sekali tidak berfungsi di layar sentuh (mobile) karena layar sentuh tidak memiliki Hover.",
+          "Membuat mesin pencari Google memblokir halaman tersebut.",
+          "Menurunkan kecerahan layar smartphone secara otomatis."
+        ],
+        correct: 1,
+        rationale: "Tepat! Pengguna desktop terpaksa menyapu layar dengan kursor (Mine Sweeping), dan pengguna ponsel kehilangan petunjuk klik (Signifier) sama sekali."
+      },
+      {
+        q: "5. Menurut Hukum Kedua Usabilitas Krug, manakah yang lebih baik bagi pengalaman pengguna?",
+        options: [
+          "1 klik yang memaksa pengguna berpikir keras dan menebak-nebak artinya.",
+          "3 klik berturut-turut yang masing-masing 100% self-evident (tidak membutuhkan pemikiran).",
+          "Menyembunyikan seluruh menu di dalam satu ikon abstrak tanpa label.",
+          "Menggunakan istilah internal divisi perusahaan agar terlihat profesional."
+        ],
+        correct: 1,
+        rationale: "Benar! Aturan Krug menyatakan: 'Tidak masalah berapa kali saya harus mengklik, selama setiap klik adalah pilihan tanpa berpikir (mindless, unambiguous choice).'"
+      }
+    ];
+
+    let userAnswers = {};
+
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = '';
+
+      quizQuestions.forEach((item, qIdx) => {
+        const card = document.createElement('div');
+        card.className = "bg-[#FAFAFC] border border-slate-200 rounded-2xl p-5 space-y-3";
+
+        const title = document.createElement('h4');
+        title.className = "text-sm sm:text-base font-bold text-slate-800";
+        title.textContent = item.q;
+        card.appendChild(title);
+
+        const optsGrid = document.createElement('div');
+        optsGrid.className = "grid grid-cols-1 gap-2";
+
+        item.options.forEach((optText, optIdx) => {
+          const btn = document.createElement('button');
+          const answered = userAnswers[qIdx] !== undefined;
+          const isSelected = userAnswers[qIdx] === optIdx;
+          const isCorrect = item.correct === optIdx;
+
+          let btnStyle = "text-left p-3 rounded-xl text-xs sm:text-sm border transition cursor-pointer ";
+          if (!answered) {
+            btnStyle += "bg-white border-slate-200 text-slate-700 hover:bg-[#E0F2FE]/40 hover:border-[#BAE6FD] hover:text-[#0369A1]";
+          } else if (isSelected && isCorrect) {
+            btnStyle += "bg-[#DCFCE7] border-[#BBF7D0] text-[#15803D] font-bold";
+          } else if (isSelected && !isCorrect) {
+            btnStyle += "bg-[#FFE4E6] border-[#FECDD3] text-[#BE123C] font-bold";
+          } else if (isCorrect) {
+            btnStyle += "bg-[#DCFCE7]/50 border-[#BBF7D0] text-[#15803D] font-medium";
+          } else {
+            btnStyle += "bg-white/60 border-slate-200/60 text-slate-400";
+          }
+
+          btn.className = btnStyle;
+          btn.textContent = optText;
+          btn.onclick = () => selectQuizAnswer(qIdx, optIdx);
+          optsGrid.appendChild(btn);
+        });
+
+        card.appendChild(optsGrid);
+
+        if (userAnswers[qIdx] !== undefined) {
+          const isRight = userAnswers[qIdx] === item.correct;
+          const exp = document.createElement('div');
+          exp.className = isRight
+            ? "text-xs p-3.5 rounded-xl bg-[#DCFCE7]/50 border border-[#BBF7D0] text-[#15803D]"
+            : "text-xs p-3.5 rounded-xl bg-[#FFE4E6]/50 border border-[#FECDD3] text-[#BE123C]";
+          exp.innerHTML = `<strong>${isRight ? '✅ Tepat!' : '❌ Kurang Tepat.'}</strong> ${item.rationale}`;
+          card.appendChild(exp);
+        }
+
+        container.appendChild(card);
+      });
+
+      let score = 0;
+      Object.keys(userAnswers).forEach(qIdx => {
+        if (userAnswers[qIdx] === quizQuestions[qIdx].correct) score++;
+      });
+      document.getElementById('quiz-score-display').textContent = `${score} / ${quizQuestions.length}`;
+    }
+
+    function selectQuizAnswer(qIdx, optIdx) {
+      userAnswers[qIdx] = optIdx;
+      renderQuiz();
+    }
+
+    function resetQuiz() {
+      userAnswers = {};
+      renderQuiz();
+    }
+
+    window.onload = function () {
+      renderQuiz();
+    };
+  </script>
+</body>
+</html>
