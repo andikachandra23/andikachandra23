@@ -208,18 +208,22 @@
     .hero-title {
       font-family: var(--serif);
       font-weight: 400;
-      font-size: clamp(2.45rem, 6.05vw, 5.05rem);
-      line-height: 1.08;
+      font-size: clamp(2.3rem, 5.4vw, 4.35rem);
+      line-height: 1.1;
       letter-spacing: -.022em;
       max-width: 1010px;
       position: relative;
       z-index: 1;
     }
-    .hero-title .u {
-      text-decoration: underline;
-      text-decoration-thickness: 1.5px;
-      text-underline-offset: .13em;
-      white-space: nowrap;
+    .hero-degree {
+      display: block;
+      font-family: var(--sans);
+      font-size: clamp(10px, .26em, 18px);
+      font-weight: 400;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: .5em;
     }
     .hero-photo {
       position: relative;
@@ -254,43 +258,44 @@
     }
     .hero-lower {
       display: grid;
-      grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
-      gap: 48px;
-      align-items: start;
-      margin-top: 30px;
+      grid-template-columns: minmax(0, 1fr);
+      margin-top: 26px;
+      position: relative;
+      z-index: 1;
+      max-width: 560px;
+    }
+    .hero-kicker {
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--olive-dark);
+      margin-bottom: 14px;
       position: relative;
       z-index: 1;
     }
     .hero-desc {
-      font-size: 14.5px;
+      font-size: 15px;
       line-height: 1.75;
       color: var(--ink-soft);
+      max-width: 520px;
     }
-    .hero-bubble {
-      justify-self: start;
-      margin-top: 34px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px 22px;
-      font-size: 14px;
-      line-height: 1.5;
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      list-style: none;
+      margin-top: 20px;
+      padding: 0;
+    }
+    .hero-pills li {
+      font-size: 12px;
+      letter-spacing: .01em;
       color: var(--ink-soft);
-      max-width: 268px;
-      box-shadow: 0 18px 40px -34px rgba(60, 48, 15, .7);
-      position: relative;
+      background: var(--panel);
+      border: 1px solid var(--line-soft);
+      border-radius: 999px;
+      padding: 6px 14px;
     }
-    .hero-bubble::before {
-      content: '';
-      position: absolute;
-      top: -7px; right: 34px;
-      width: 12px; height: 12px;
-      background: var(--card);
-      border-left: 1px solid var(--line);
-      border-top: 1px solid var(--line);
-      transform: rotate(45deg);
-    }
-    .hero-bubble strong { font-weight: 600; color: var(--ink); }
     .hero-social {
       display: flex;
       flex-wrap: wrap;
@@ -707,46 +712,6 @@
     .mock-article .a-tags i:first-child { width: 42px; background: #E4E2C6; }
 
     /* ══════════════════════════════════════
-       TESTIMONIALS
-       ══════════════════════════════════════ */
-    .tst { padding-top: 58px; }
-    .tst .hatch-d { left: 0; bottom: 40px; width: 110px; height: 200px; }
-    .tst-row {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 22px;
-      align-items: stretch;
-      position: relative;
-      z-index: 1;
-    }
-    .tst-row--second {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      width: 74%;
-      margin: 20px auto 0;
-    }
-    .tst-card {
-      background: rgba(252, 250, 246, .62);
-      border: 1px solid var(--line-soft);
-      border-radius: var(--radius);
-      padding: 26px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      color: var(--muted);
-      transition: opacity .3s ease, background .3s ease, box-shadow .3s ease, transform .3s ease, color .3s ease;
-      opacity: .55;
-    }
-    .tst-card:hover, .tst-card.is-active {
-      opacity: 1;
-      color: var(--ink-soft);
-      background: var(--card);
-      box-shadow: 0 26px 54px -40px rgba(60, 48, 15, .75);
-      transform: translateY(-6px);
-    }
-    .tst-quote { font-size: 13.5px; line-height: 1.75; }
-    .tst-who { font-size: 12px; color: var(--muted); margin-top: auto; }
-    .tst-who b { display: block; font-weight: 500; color: var(--ink-soft); font-size: 12.5px; }
-    /* ══════════════════════════════════════
        CTA
        ══════════════════════════════════════ */
     .cta {
@@ -854,10 +819,7 @@
        ══════════════════════════════════════ */
     @media (max-width: 1024px) {
       .container { padding: 0 32px; }
-      .hero-lower { grid-template-columns: minmax(0, 1fr) auto; gap: 28px; }
-      .hero-bubble { margin-top: 24px; }
       .ach-item.is-featured { grid-template-columns: 64px minmax(0, 1fr) 190px; }
-      .tst-row--second { width: 88%; }
     }
 
     @media (max-width: 860px) {
@@ -881,10 +843,7 @@
       .nav-link.is-active::before { top: 50%; left: -12px; margin-top: -2px; }
       .nav-cta { display: none; }
       .hero { padding-top: 44px; }
-      .hero-title { font-size: clamp(2.1rem, 8.4vw, 3.4rem); }
-      .hero-lower { grid-template-columns: minmax(0, 1fr); gap: 26px; }
-      .hero-bubble { margin-top: 0; }
-      .hero-bubble::before { left: 34px; right: auto; }
+      .hero-title { font-size: clamp(2rem, 7.4vw, 3rem); }
       .hero-social { margin-top: 34px; gap: 22px; }
       .hero-social a { font-size: 17px; }
       .logo-row { grid-template-columns: repeat(2, 1fr); }
@@ -892,10 +851,6 @@
       .ach-item.is-featured .ach-thumb { grid-column: 2; width: 100%; max-width: 280px; }
       .work-grid { grid-template-columns: minmax(0, 1fr); }
       .work-shot { min-height: 260px; }
-      .tst-row { grid-template-columns: minmax(0, 1fr); }
-      .tst-row--second { grid-template-columns: minmax(0, 1fr); width: 100%; margin-top: 22px; }
-      .tst-card { opacity: 1; background: var(--card); }
-      .tst-card:hover { transform: none; }
       .cta { padding: 64px 0 70px; margin-top: 50px; }
       .footer-inner { flex-direction: column; align-items: flex-start; }
     }
@@ -910,9 +865,9 @@
       .ach-item .ach-thumb { grid-column: 1 / -1; }
       .work-shot { padding: 16px; min-height: 230px; }
       .work-foot { flex-direction: column; align-items: flex-start; gap: 6px; }
-      .hero-title { font-size: clamp(1.95rem, 8.8vw, 2.6rem); }
-      .hero-photo { width: 1.02em; height: 1.02em; vertical-align: -.1em; }
-      .hero .hatch-a, .hero .hatch-b, .tst .hatch-d { display: none; }
+      .hero-title { font-size: clamp(1.85rem, 8vw, 2.35rem); }
+      .hero-photo { width: 1.32em; height: 1.32em; vertical-align: -.16em; }
+      .hero .hatch-a, .hero .hatch-b { display: none; }
       .mock-phone { width: 82px; }
       .mock-phone:nth-child(2) { width: 90px; }
       .footer-links { gap: 18px; }
@@ -940,7 +895,6 @@
           <li><a class="nav-link is-active" href="#home">Home</a></li>
           <li><a class="nav-link" href="#achievement">My Achievement</a></li>
           <li><a class="nav-link" href="#portofolio">Portofolio</a></li>
-          <li><a class="nav-link" href="#testimonials">Testimonials</a></li>
         </ul>
       </nav>
       <a class="nav-cta" href="#contact">Contact</a>
@@ -959,33 +913,31 @@
       <div class="hero-glow" aria-hidden="true"></div>
 
       <div class="container">
+        <p class="hero-kicker">Dosen &amp; Tukang Ngopi</p>
         <h1 class="hero-title" id="heroTitle">
-          Bringing Your Vision to Life with <span class="u">User-Centered</span>
-          <span class="hero-photo">
+          Andika Chandra P,<span class="hero-photo">
             <img src="image/foto.webp" alt="Foto Andika Chandra P" width="449" height="480" />
             <span class="wave" aria-hidden="true">👋</span>
-          </span>
-          and Uniquely UI Design
+          </span><span class="hero-degree">S.Kom., M.T.I</span>
         </h1>
 
         <div class="hero-lower">
-          <div>
-            <p class="hero-desc">
-              Saya menerjemahkan antarmuka yang rumit menjadi pengalaman digital yang mudah
-              dipakai, terukur, dan relevan dengan kebutuhan pengguna — lewat riset,
-              pengajaran, dan produk nyata.
-            </p>
-
-            <ul class="hero-social">
-              <li><a href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-              <li><a href="mailto:me@andikachandra.com">Email</a></li>
-              <li><a href="daftar-mata-kuliah.html">Mata Kuliah</a></li>
-            </ul>
-          </div>
-
-          <p class="hero-bubble">
-            Hi, I'm <strong>Andika Chandra P</strong> — dosen &amp; praktisi digital
+          <p class="hero-desc">
+            Pengajar dan peneliti di bidang teknologi informasi dan bisnis digital.
+            Berfokus pada AI, socio-techno dan digital marketing.
           </p>
+
+          <ul class="hero-pills">
+            <li>Machine Learning</li>
+            <li>Web Design</li>
+            <li>Digital Marketing</li>
+          </ul>
+
+          <ul class="hero-social">
+            <li><a href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="mailto:me@andikachandra.com">Email</a></li>
+            <li><a href="daftar-mata-kuliah.html">Mata Kuliah</a></li>
+          </ul>
         </div>
 
         <a class="scroll-cue" href="#achievement">
@@ -1443,66 +1395,6 @@
         </div>
       </div>
     </section>
-    <!-- ════════════════ TESTIMONIALS ════════════════ -->
-    <!-- Catatan: teks testimoni di bawah adalah placeholder.
-         Ganti dengan kutipan asli sebelum dipublikasikan. -->
-    <section class="section tst" id="testimonials" aria-labelledby="tstTitle">
-      <span class="hatch hatch-d" aria-hidden="true"></span>
-      <div class="container">
-        <div class="section-head reveal">
-          <h2 class="section-title" id="tstTitle">What People Say About Me</h2>
-          <p class="section-sub">
-            Testimoni dari mahasiswa, kolega, dan mitra kolaborasi selama
-            mengajar dan mengerjakan proyek digital.
-          </p>
-        </div>
-
-        <div class="tst-row reveal">
-          <figure class="tst-card">
-            <blockquote class="tst-quote">
-              “Cara menjelaskan konsep teknisnya membuat mahasiswa yang awalnya
-              ragu jadi berani mencoba dan bereksperimen sendiri.”
-            </blockquote>
-            <figcaption class="tst-who"><b>Mahasiswa</b>Bisnis Digital</figcaption>
-          </figure>
-
-          <figure class="tst-card is-active">
-            <blockquote class="tst-quote">
-              “Risetnya rapi dan bisa diandalkan. Diskusi metodologi selalu
-              membuka sudut pandang baru yang tidak terpikirkan sebelumnya.”
-            </blockquote>
-            <figcaption class="tst-who"><b>Rekan Peneliti</b>Kolaborasi publikasi</figcaption>
-          </figure>
-
-          <figure class="tst-card">
-            <blockquote class="tst-quote">
-              “Aplikasi yang dibangun benar-benar dipakai sehari-hari untuk
-              mencari referensi — bukan sekadar demo.”
-            </blockquote>
-            <figcaption class="tst-who"><b>Pengguna Aktif</b>NyariArtikel.App</figcaption>
-          </figure>
-        </div>
-
-        <div class="tst-row tst-row--second reveal">
-          <figure class="tst-card">
-            <blockquote class="tst-quote">
-              “Pendekatan user-centered bukan hanya materi di kelas, tapi juga
-              cara ia menerima masukan dari tim.”
-            </blockquote>
-            <figcaption class="tst-who"><b>Mitra Kolaborasi</b>Pengembangan produk</figcaption>
-          </figure>
-
-          <figure class="tst-card">
-            <blockquote class="tst-quote">
-              “Materi kuliahnya terstruktur dan langsung bisa dipraktikkan di
-              proyek nyata, bukan hanya teori.”
-            </blockquote>
-            <figcaption class="tst-who"><b>Alumni</b>Teknologi Informasi</figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
     <!-- ════════════════ CTA ════════════════ -->
     <section class="cta" id="contact" aria-labelledby="ctaTitle">
       <span class="hatch hatch-e" aria-hidden="true"></span>
@@ -1619,15 +1511,6 @@
           var next = tabs[(index + step + tabs.length) % tabs.length];
           next.focus();
           selectTab(next);
-        });
-      });
-
-      /* ── Testimoni: tandai kartu yang sedang disorot ── */
-      var quotes = Array.prototype.slice.call(document.querySelectorAll('.tst-card'));
-      quotes.forEach(function (card) {
-        card.addEventListener('click', function () {
-          quotes.forEach(function (item) { item.classList.remove('is-active'); });
-          card.classList.add('is-active');
         });
       });
 
