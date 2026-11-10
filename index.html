@@ -3,1858 +3,1652 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Andika Chandra P — Program Manager</title>
+  <title>Andika Chandra P — Dosen, Peneliti &amp; Praktisi Digital</title>
+  <meta name="description" content="Portofolio Andika Chandra P, S.Kom., M.T.I — dosen dan peneliti di bidang teknologi informasi, AI, dan bisnis digital. Publikasi ilmiah, aplikasi web, dan materi kuliah." />
+  <link rel="canonical" href="https://andikachandra.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Andika Chandra P — Dosen, Peneliti &amp; Praktisi Digital" />
+  <meta property="og:description" content="Riset, aplikasi, dan materi kuliah di bidang teknologi informasi, AI, dan bisnis digital." />
+  <meta property="og:image" content="https://andikachandra.com/image/foto.webp" />
+  <meta name="theme-color" content="#F8F6F1" />
+  <script>document.documentElement.classList.add('js');</script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+    /* ══════════════════════════════════════
+       DESIGN TOKENS
+       ══════════════════════════════════════ */
+    :root {
+      --bg: #F8F6F1;
+      --bg-deep: #F4EFE2;
+      --panel: #F1EDE3;
+      --card: #FCFAF6;
+      --ink: #191912;
+      --ink-soft: #3A3A30;
+      --muted: #6E6E62;
+      --line: rgba(25, 25, 18, .13);
+      --line-soft: rgba(25, 25, 18, .07);
+      --olive: #767529;
+      --olive-dark: #59581A;
+      --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --maxw: 1120px;
+      --radius: 14px;
+      --shadow: 0 30px 60px -45px rgba(60, 48, 15, .55);
+    }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --desktop: #008080;
-      --win-bg: #c0c0c0;
-      --win-border-light: #ffffff;
-      --win-border-dark: #808080;
-      --win-border-darker: #404040;
-      --win-border-darkest: #000000;
-      --titlebar: #000080;
-      --titlebar-active: #000080;
-      --titlebar-inactive: #808080;
-      --titlebar-text: #ffffff;
-      --text: #000000;
-      --text-muted: #404040;
-      --highlight: #000080;
-      --highlight-text: #ffffff;
-      --btn-face: #c0c0c0;
-      --menu-bg: #c0c0c0;
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 88px;
+      -webkit-text-size-adjust: 100%;
     }
-
-    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--desktop);
-      color: var(--text);
-      font-size: 12px;
-      line-height: 1.4;
-      min-height: 100vh;
-      overflow-x: hidden;
-      user-select: none;
-    }
-
-    /* ══════════════════════════════════════
-       3D BORDER HELPERS (Windows 3.1 style)
-       ══════════════════════════════════════ */
-    .border-outset {
-      border-top: 2px solid var(--win-border-light);
-      border-left: 2px solid var(--win-border-light);
-      border-bottom: 2px solid var(--win-border-darker);
-      border-right: 2px solid var(--win-border-darker);
-    }
-    .border-inset {
-      border-top: 2px solid var(--win-border-darker);
-      border-left: 2px solid var(--win-border-darker);
-      border-bottom: 2px solid var(--win-border-light);
-      border-right: 2px solid var(--win-border-light);
-    }
-    .border-outset-thin {
-      border-top: 1px solid var(--win-border-light);
-      border-left: 1px solid var(--win-border-light);
-      border-bottom: 1px solid var(--win-border-darker);
-      border-right: 1px solid var(--win-border-darker);
-    }
-    .border-inset-thin {
-      border-top: 1px solid var(--win-border-darker);
-      border-left: 1px solid var(--win-border-darker);
-      border-bottom: 1px solid var(--win-border-light);
-      border-right: 1px solid var(--win-border-light);
-    }
-
-    /* ══════════════════════════════════════
-       DESKTOP
-       ══════════════════════════════════════ */
-    .desktop {
-      min-height: calc(100vh - 36px);
-      padding: 20px;
-      position: relative;
-    }
-
-    /* ══════════════════════════════════════
-       PROGRAM MANAGER (Desktop Icons)
-       ══════════════════════════════════════ */
-    .desktop-icons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      padding: 16px;
-    }
-    .desktop-icon {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 96px;
-      cursor: pointer;
-      padding: 8px 6px;
-      border: 1px solid transparent;
-    }
-    .desktop-icon:focus,
-    .desktop-icon.selected {
-      border: 1px dotted #ffffff;
-      background: rgba(0,0,128,0.3);
-      outline: none;
-    }
-    .desktop-icon:active {
-      background: rgba(0,0,128,0.5);
-    }
-    .icon-img {
-      width: 64px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 6px;
-    }
-    .icon-img canvas {
-      image-rendering: auto;
-      width: 64px;
-      height: 64px;
-    }
-    .icon-label {
-      font-size: 12px;
-      font-weight: 700;
-      color: #ffffff;
-      text-align: center;
-      text-shadow: 1px 1px 2px #000000;
-      line-height: 1.3;
-      word-break: break-word;
-      font-family: 'Courier New', Courier, monospace;
-    }
-
-    /* ══════════════════════════════════════
-       WINDOWS 3.1 WINDOW
-       ══════════════════════════════════════ */
-    .win31-window {
-      position: absolute;
-      background: var(--win-bg);
-      border: 2px solid;
-      border-color: var(--win-border-light) var(--win-border-darkest) var(--win-border-darkest) var(--win-border-light);
-      display: none;
-      z-index: 10;
-      min-width: 320px;
-      max-width: 94%;
-    }
-    .win31-window.open {
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Title Bar */
-    .win31-titlebar {
-      height: 22px;
-      background: var(--titlebar-active);
-      display: flex;
-      align-items: center;
-      padding: 0 3px;
-      gap: 3px;
-      flex-shrink: 0;
-      cursor: move;
-    }
-    .win31-window.inactive .win31-titlebar {
-      background: var(--titlebar-inactive);
-    }
-    .win31-titlebar-icon {
-      font-size: 12px;
-      flex-shrink: 0;
-      width: 16px;
-      height: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .win31-titlebar-text {
-      flex: 1;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--titlebar-text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding: 0 2px;
-      letter-spacing: 0.3px;
-    }
-    .win31-titlebar-buttons {
-      display: flex;
-      gap: 2px;
-      flex-shrink: 0;
-    }
-    .win31-btn {
-      width: 18px;
-      height: 16px;
-      background: var(--btn-face);
-      border: 1px solid;
-      border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 900;
-      cursor: pointer;
-      color: #000;
-      padding: 0;
-      line-height: 1;
-    }
-    .win31-btn:active {
-      border-color: var(--win-border-darker) var(--win-border-light) var(--win-border-light) var(--win-border-darker);
-    }
-
-    /* Menu Bar */
-    .win31-menubar {
-      background: var(--menu-bg);
-      padding: 2px 4px;
-      display: flex;
-      gap: 0;
-      border-bottom: 1px solid var(--win-border-dark);
-      flex-shrink: 0;
-    }
-    .win31-menu-item {
-      padding: 2px 8px;
-      font-size: 12px;
-      cursor: pointer;
-      position: relative;
-    }
-    .win31-menu-item:hover {
-      background: var(--highlight);
-      color: var(--highlight-text);
-    }
-    .win31-menu-item .underline {
-      text-decoration: underline;
-    }
-
-    /* Window Body */
-    .win31-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 0;
-      background: #ffffff;
-      border: 2px solid;
-      border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-dark);
-      margin: 4px;
-    }
-    .win31-body-inner {
-      padding: 16px;
-    }
-
-    /* Status Bar */
-    .win31-statusbar {
-      height: 22px;
-      background: var(--win-bg);
-      border-top: 1px solid var(--win-border-dark);
-      display: flex;
-      align-items: center;
-      padding: 0 4px;
-      flex-shrink: 0;
-    }
-    .win31-statusbar-section {
-      font-size: 11px;
-      color: var(--text-muted);
-      padding: 0 6px;
-      border: 1px solid;
-      border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-dark);
-      height: 16px;
-      display: flex;
-      align-items: center;
-    }
-
-    /* ══════════════════════════════════════
-       CONTENT STYLES (inside windows)
-       ══════════════════════════════════════ */
-
-    /* Hero/Profile */
-    .profile-section {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-    }
-    .profile-avatar {
-      flex-shrink: 0;
-      width: 80px;
-      height: 80px;
-      background: #c0c0c0;
-      border: 2px solid;
-      border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      background-image: url('image/foto.webp');
-      background-size: cover;
-      background-position: center;
-      image-rendering: auto;
-    }
-    .profile-info { flex: 1; }
-    .profile-label {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--highlight);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-    .profile-name {
-      font-family: 'Poppins', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 8px;
-    }
-    .profile-bio {
-      font-size: 12px;
-      color: var(--text-muted);
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 16px;
       line-height: 1.6;
-      margin-bottom: 10px;
-    }
-    .profile-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-bottom: 12px;
-    }
-    .pill-retro {
-      font-size: 10px;
-      font-weight: 600;
-      padding: 2px 8px;
-      background: var(--highlight);
-      color: var(--highlight-text);
-    }
-    .profile-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    /* Win3.1 Button */
-    .win31-action-btn {
-      font-size: 12px;
-      font-family: inherit;
-      padding: 4px 16px;
-      background: var(--btn-face);
-      border: 2px solid;
-      border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
-      cursor: pointer;
-      color: #000;
-    }
-    .win31-action-btn:active {
-      border-color: var(--win-border-darker) var(--win-border-light) var(--win-border-light) var(--win-border-darker);
-      transform: translate(1px, 1px);
-    }
-    .win31-action-btn.default {
-      outline: 2px solid #000;
-      outline-offset: -4px;
-    }
-    .win31-action-btn a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    /* Section divider */
-    .win31-groupbox {
-      border: 1px solid var(--win-border-dark);
-      padding: 12px 10px 10px;
-      margin-bottom: 14px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
       position: relative;
     }
-    .win31-groupbox-label {
-      position: absolute;
-      top: -8px;
-      left: 8px;
-      background: #ffffff;
-      padding: 0 4px;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text);
+
+    /* Background grid — dekorasi khas mockup */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(25, 25, 18, .048) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(25, 25, 18, .048) 1px, transparent 1px);
+      background-size: 96px 96px;
+      background-position: -1px -1px;
     }
 
-    /* Card (retro style) */
-    .retro-card {
-      background: #ffffff;
-      border: 1px solid var(--win-border-dark);
-      padding: 10px 12px;
-      margin-bottom: 8px;
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+
+    :focus-visible {
+      outline: 2px solid var(--olive);
+      outline-offset: 4px;
+      border-radius: 2px;
     }
-    .retro-card-title {
-      font-weight: 700;
-      font-size: 13px;
-      margin-bottom: 3px;
+
+    .container {
+      width: 100%;
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 1;
     }
-    .retro-card-meta {
-      font-size: 10px;
-      color: var(--highlight);
-      font-weight: 600;
-      margin-bottom: 4px;
+
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
     }
-    .retro-card-desc {
-      font-size: 11px;
-      color: var(--text-muted);
+
+    .hatch {
+      position: absolute;
+      z-index: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(45deg, rgba(25, 25, 18, .06) 0 1px, transparent 1px 9px);
+    }
+    /* ══════════════════════════════════════
+       NAVBAR
+       ══════════════════════════════════════ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background: rgba(248, 246, 241, .82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s ease, box-shadow .3s ease;
+    }
+    .nav.is-stuck {
+      border-bottom-color: var(--line-soft);
+      box-shadow: 0 12px 30px -28px rgba(40, 30, 10, .6);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 68px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      list-style: none;
+    }
+    .nav-link {
+      position: relative;
+      font-size: 13.5px;
+      letter-spacing: .01em;
+      text-decoration: none;
+      color: var(--ink-soft);
+      opacity: .78;
+      transition: opacity .2s ease, color .2s ease;
+    }
+    .nav-link:hover { opacity: 1; color: var(--olive-dark); }
+    .nav-link.is-active { opacity: 1; font-weight: 500; }
+    .nav-link.is-active::before {
+      content: '';
+      position: absolute;
+      top: -11px;
+      left: 50%;
+      width: 4px; height: 4px;
+      margin-left: -2px;
+      border-radius: 50%;
+      background: var(--ink);
+    }
+    .nav-cta {
+      font-size: 13.5px;
+      text-decoration: none;
+      color: var(--ink-soft);
+      padding: 7px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      transition: background .2s ease, border-color .2s ease, color .2s ease;
+    }
+    .nav-cta:hover { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+    .nav-toggle {
+      display: none;
+      width: 40px; height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: transparent;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      flex-direction: column;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 16px; height: 1.5px;
+      background: var(--ink);
+      transition: transform .25s ease, opacity .25s ease;
+    }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(3px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { transform: translateY(-2.5px) rotate(-45deg); }
+
+    /* ══════════════════════════════════════
+       HERO
+       ══════════════════════════════════════ */
+    .hero {
+      position: relative;
+      padding: 62px 0 34px;
+    }
+    .hero .hatch-a { left: 0; top: 40px; width: 190px; height: 170px; }
+    .hero .hatch-b { right: 0; top: 150px; width: 130px; height: 210px; }
+    .hero-glow {
+      position: absolute;
+      z-index: 0;
+      top: 30px;
+      right: 16%;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(214, 201, 158, .32) 0%, rgba(248, 246, 241, 0) 68%);
+      pointer-events: none;
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(2.45rem, 6.05vw, 5.05rem);
+      line-height: 1.08;
+      letter-spacing: -.022em;
+      max-width: 1010px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-title .u {
+      text-decoration: underline;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: .13em;
+      white-space: nowrap;
+    }
+    .hero-photo {
+      position: relative;
+      display: inline-block;
+      width: 1.28em; height: 1.28em;
+      vertical-align: -.16em;
+      margin: 0 .1em;
+    }
+    .hero-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: 52% 30%;
+      border-radius: 24%;
+      border: .045em solid #F3EFE1;
+      box-shadow: 0 22px 44px -24px rgba(74, 58, 18, .5);
+    }
+    .hero-photo .wave {
+      position: absolute;
+      right: -.14em; top: -.12em;
+      font-size: .34em;
+      line-height: 1;
+      transform: rotate(-8deg);
+      z-index: 2;
+    }
+    .hero-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 24%;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 45%, rgba(248, 246, 241, 0) 52%, rgba(248, 246, 241, .5) 100%);
+    }
+    .hero-lower {
+      display: grid;
+      grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
+      gap: 48px;
+      align-items: start;
+      margin-top: 30px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-desc {
+      font-size: 14.5px;
+      line-height: 1.75;
+      color: var(--ink-soft);
+    }
+    .hero-bubble {
+      justify-self: start;
+      margin-top: 34px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px 22px;
+      font-size: 14px;
       line-height: 1.5;
+      color: var(--ink-soft);
+      max-width: 268px;
+      box-shadow: 0 18px 40px -34px rgba(60, 48, 15, .7);
+      position: relative;
     }
-    .retro-tags {
+    .hero-bubble::before {
+      content: '';
+      position: absolute;
+      top: -7px; right: 34px;
+      width: 12px; height: 12px;
+      background: var(--card);
+      border-left: 1px solid var(--line);
+      border-top: 1px solid var(--line);
+      transform: rotate(45deg);
+    }
+    .hero-bubble strong { font-weight: 600; color: var(--ink); }
+    .hero-social {
       display: flex;
       flex-wrap: wrap;
-      gap: 3px;
-      margin-top: 6px;
+      gap: 30px;
+      list-style: none;
+      margin-top: 50px;
     }
-    .retro-tag {
-      font-size: 9px;
-      font-weight: 600;
-      padding: 1px 6px;
-      background: var(--win-bg);
-      border: 1px solid var(--win-border-dark);
-    }
-    .retro-tag-badge {
-      background: #000080;
-      color: #fff;
-      border-color: #000080;
-    }
-
-    /* Badge */
-    .retro-badge {
-      display: inline-block;
-      font-size: 9px;
-      font-weight: 700;
-      padding: 1px 6px;
-      background: #008000;
-      color: #ffffff;
-      margin-bottom: 4px;
-    }
-
-    /* Research */
-    .research-row {
-      display: flex;
-      gap: 10px;
-      padding: 8px 0;
-      border-bottom: 1px solid #c0c0c0;
-      align-items: flex-start;
-    }
-    .research-row:last-child { border-bottom: none; }
-    .research-year {
-      font-weight: 700;
-      font-size: 11px;
-      color: var(--highlight);
-      width: 36px;
-      flex-shrink: 0;
-      padding-top: 1px;
-    }
-    .research-content { flex: 1; }
-    .research-title {
-      font-weight: 700;
-      font-size: 12px;
-      line-height: 1.4;
-      margin-bottom: 2px;
-    }
-    .research-title a {
-      color: inherit;
-      text-decoration: none;
-    }
-    .research-title a:hover {
+    .hero-social a {
+      font-family: var(--serif);
+      font-size: 19px;
+      letter-spacing: .01em;
+      color: var(--ink-soft);
       text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 5px;
+      text-decoration-color: rgba(25, 25, 18, .35);
+      transition: color .2s ease, text-decoration-color .2s ease;
     }
-    .research-venue {
-      font-size: 10px;
-      color: var(--text-muted);
-      margin-bottom: 4px;
+    .hero-social a:hover { color: var(--olive-dark); text-decoration-color: var(--olive); }
+    .scroll-cue {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin: 56px auto 0;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 11.5px;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      width: max-content;
+    }
+    .scroll-cue svg { width: 18px; height: 28px; }
+    .scroll-cue .dot { animation: cue 1.9s ease-in-out infinite; }
+    @keyframes cue {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      55% { transform: translateY(7px); opacity: .2; }
     }
 
-    /* Course */
-    .semester-header {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--highlight);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin: 12px 0 6px;
-      padding-bottom: 3px;
-      border-bottom: 1px dashed var(--win-border-dark);
+    /* ══════════════════════════════════════
+       SECTION HEADINGS
+       ══════════════════════════════════════ */
+    .section { position: relative; padding: 62px 0; }
+    .section-head { text-align: center; margin-bottom: 34px; }
+    .section-title {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(1.5rem, 2.7vw, 2.3rem);
+      line-height: 1.2;
+      letter-spacing: -.012em;
     }
-    .semester-header:first-child { margin-top: 0; }
-    .course-row {
-      display: flex;
-      gap: 8px;
-      padding: 4px 0;
-      align-items: flex-start;
-      font-size: 11px;
+    .section-sub {
+      margin: 12px auto 0;
+      max-width: 480px;
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: var(--muted);
     }
-    .course-icon { font-size: 13px; flex-shrink: 0; }
-    .course-info { flex: 1; }
-    .course-prodi-tag {
-      font-size: 8px;
-      font-weight: 700;
-      padding: 1px 5px;
+
+    /* ══════════════════════════════════════
+       PUBLIKASI & KOLABORASI (logo strip)
+       ══════════════════════════════════════ */
+    .logos { padding-top: 34px; padding-bottom: 24px; }
+    .logo-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    .logo-card {
+      height: 62px;
+      display: grid;
+      place-items: center;
+      background: var(--panel);
+      border-radius: 10px;
+      color: #A7A499;
+      font-size: 17px;
+      letter-spacing: .01em;
+      transition: color .25s ease, background .25s ease;
+      text-align: center;
+      padding: 0 12px;
+    }
+    .logo-card:hover { color: var(--ink-soft); background: #EDE8DC; }
+    .logo-ieee { font-family: var(--serif); font-weight: 600; letter-spacing: .04em; }
+    .logo-sinta { font-weight: 600; font-size: 15px; letter-spacing: .18em; }
+    .logo-ebsco { font-weight: 600; font-size: 15px; letter-spacing: .08em; }
+    .logo-piksel { font-family: var(--serif); font-style: italic; font-size: 19px; }
+    /* ══════════════════════════════════════
+       MY ACHIEVEMENT — ranked list
+       ══════════════════════════════════════ */
+    .ach-section { padding-top: 46px; }
+    .ach-section .hatch-c { right: 0; top: 120px; width: 120px; height: 230px; }
+    .ach-list {
+      border-top: 1px solid var(--line);
+      position: relative;
+      z-index: 1;
+    }
+    .ach-item {
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1fr);
+      align-items: center;
+      gap: 26px;
+      padding: 18px 6px;
+      transition: background .25s ease;
+    }
+    .ach-item:hover { background: rgba(252, 250, 246, .8); }
+    .ach-item.is-featured {
+      grid-template-columns: 74px minmax(0, 1fr) 236px;
+      padding: 22px 6px;
+    }
+    .ach-rank {
+      font-size: 12.5px;
+      color: var(--muted);
+      letter-spacing: .04em;
+      padding-left: 2px;
+    }
+    .ach-rank b { display: block; font-weight: 500; color: var(--ink); }
+    .ach-title {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(1.15rem, 1.85vw, 1.6rem);
+      line-height: 1.25;
+      letter-spacing: -.01em;
+    }
+    .ach-title a { text-decoration: none; }
+    .ach-title a:hover { color: var(--olive-dark); text-decoration: underline; text-underline-offset: .14em; }
+    .ach-meta {
+      margin-top: 6px;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+    .ach-link {
       display: inline-block;
-      margin-bottom: 2px;
+      margin-top: 10px;
+      font-size: 12.5px;
+      color: var(--olive-dark);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(118, 117, 41, .5);
     }
-    .prodi-bd { background: #000080; color: #fff; }
-    .prodi-ti { background: #008000; color: #fff; }
-    .course-name {
-      font-weight: 700;
-      font-size: 11.5px;
+    .ach-link:hover { text-decoration-color: var(--olive); }
+    .ach-thumb {
+      border-radius: 8px;
+      overflow: hidden;
+      background: linear-gradient(160deg, #F7F3E9, #EDE7D8);
+      border: 1px solid var(--line-soft);
+      box-shadow: var(--shadow);
+      aspect-ratio: 16 / 9;
+      display: grid;
+      place-items: center;
+      padding: 10px;
+    }
+    .ach-thumb svg { width: 100%; height: 100%; }
+
+    .paper-mock {
+      width: 100%;
+      height: 100%;
+      background: #FFFDF8;
+      border-radius: 3px;
+      padding: 8px 9px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: 0 8px 18px -14px rgba(40, 30, 10, .9);
+    }
+    .paper-mock .pm-head { display: flex; gap: 3px; align-items: center; margin-bottom: 2px; }
+    .paper-mock .pm-head i { width: 4px; height: 4px; border-radius: 50%; background: #D7D2C4; }
+    .paper-mock .pm-kicker { font-size: 3.4px; letter-spacing: .12em; text-transform: uppercase; color: #8D8A7C; }
+    .paper-mock .pm-title { font-family: var(--serif); font-size: 7.5px; line-height: 1.15; color: #24241C; }
+    .paper-mock .pm-line { height: 2.4px; border-radius: 2px; background: #E5E0D2; }
+    .paper-mock .pm-line.w60 { width: 60%; }
+    .paper-mock .pm-line.w80 { width: 80%; }
+    .paper-mock .pm-chart { display: flex; align-items: flex-end; gap: 2px; height: 14px; margin-top: auto; }
+    .paper-mock .pm-chart i { flex: 1; background: #C9C68C; border-radius: 1px 1px 0 0; }
+    .paper-mock .pm-chart i:nth-child(2) { height: 60%; }
+    .paper-mock .pm-chart i:nth-child(3) { height: 90%; opacity: .55; }
+    .paper-mock .pm-chart i:nth-child(4) { height: 45%; opacity: .35; }
+    /* ══════════════════════════════════════
+       FEATURED PROJECT / CASE STUDY / BLOG
+       ══════════════════════════════════════ */
+    .work { padding-top: 54px; }
+    .work-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 26px;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 1;
+    }
+    .work-tab {
+      position: relative;
+      appearance: none;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: clamp(1rem, 1.5vw, 1.22rem);
+      color: var(--muted);
+      padding: 6px 10px;
+      transition: color .2s ease;
+      white-space: nowrap;
+    }
+    .work-tab:hover { color: var(--ink-soft); }
+    .work-tab[aria-selected="true"] { color: var(--ink); }
+    .work-tab .scribble {
+      position: absolute;
+      inset: -6px -12px;
+      width: calc(100% + 24px);
+      height: calc(100% + 12px);
+      color: var(--ink-soft);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+    }
+    .work-tab[aria-selected="true"] .scribble { opacity: .85; }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 34px 26px;
+      position: relative;
+      z-index: 1;
+    }
+    .work-card { display: flex; flex-direction: column; }
+    .work-card[hidden] { display: none; }
+    .work-shot {
+      position: relative;
+      background: linear-gradient(165deg, #F5F0E3, #F8F5EC 55%, #F1EBDC);
+      border-radius: var(--radius);
+      padding: 22px;
+      min-height: 292px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--line-soft);
+    }
+    .work-shot::after {
+      content: '';
+      position: absolute;
+      right: -30px; bottom: -30px;
+      width: 130px; height: 130px;
+      z-index: 0;
+      background-image: repeating-linear-gradient(45deg, rgba(25, 25, 18, .07) 0 1px, transparent 1px 8px);
+      pointer-events: none;
+    }
+    .work-shot > * { position: relative; z-index: 1; }
+    .work-card.is-out { animation: fadeIn .32s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .work-foot {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .work-name {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: clamp(1.02rem, 1.35vw, 1.22rem);
       line-height: 1.3;
     }
-    .course-name a {
-      color: inherit;
-      text-decoration: none;
-    }
-    .course-name a:hover {
+    .work-name span { display: block; font-family: var(--sans); font-weight: 400; font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+    .view-link {
+      flex: none;
+      font-size: 12.5px;
+      color: var(--olive-dark);
       text-decoration: underline;
-    }
-    .course-desc {
-      font-size: 10px;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-top: 2px;
-    }
-
-    /* Contact */
-    .contact-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 6px 0;
-      border-bottom: 1px solid #c0c0c0;
-    }
-    .contact-row:last-child { border-bottom: none; }
-    .contact-emoji { font-size: 18px; flex-shrink: 0; }
-    .contact-label-text {
-      font-size: 10px;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-    .contact-value-text {
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .contact-value-text a {
-      color: var(--highlight);
-      text-decoration: underline;
-    }
-
-    /* Footer text */
-    .retro-footer {
-      font-size: 10px;
-      color: var(--text-muted);
-      text-align: center;
-      margin-top: 14px;
-      padding-top: 8px;
-      border-top: 1px solid #c0c0c0;
-    }
-    .retro-footer a {
-      color: var(--highlight);
-    }
-
-    /* ══════════════════════════════════════
-       TASKBAR
-       ══════════════════════════════════════ */
-    .taskbar {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      height: 36px;
-      background: var(--win-bg);
-      border-top: 2px solid var(--win-border-light);
-      display: flex;
-      align-items: center;
-      padding: 3px 4px;
-      gap: 4px;
-      z-index: 1000;
-    }
-    .start-btn {
-      height: 28px;
-      padding: 0 8px;
-      background: var(--btn-face);
-      border: 2px solid;
-      border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 12px;
-      flex-shrink: 0;
-    }
-    .start-btn:active {
-      border-color: var(--win-border-darker) var(--win-border-light) var(--win-border-light) var(--win-border-darker);
-    }
-    .start-btn .start-flag {
-      font-size: 14px;
-    }
-    .taskbar-divider {
-      width: 2px;
-      height: 24px;
-      border-left: 1px solid var(--win-border-dark);
-      border-right: 1px solid var(--win-border-light);
-      flex-shrink: 0;
-    }
-    .taskbar-windows {
-      display: flex;
-      gap: 3px;
-      flex: 1;
-      overflow-x: auto;
-    }
-    .taskbar-win-btn {
-      height: 26px;
-      padding: 0 10px;
-      background: var(--btn-face);
-      border: 2px solid;
-      border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(118, 117, 41, .5);
       white-space: nowrap;
-      display: none;
+    }
+    .view-link:hover { text-decoration-color: var(--olive); }
+
+    /* ── Mockup: browser window ── */
+    .mock {
+      width: 100%;
+      max-width: 380px;
+      border-radius: 9px;
+      overflow: hidden;
+      background: #FFFDF8;
+      box-shadow: 0 26px 50px -34px rgba(60, 48, 15, .65);
+      border: 1px solid rgba(25, 25, 18, .07);
+      font-size: 10px;
+    }
+    .mock-bar {
+      display: flex;
       align-items: center;
       gap: 4px;
-      max-width: 160px;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      padding: 7px 9px;
+      background: #F4F0E5;
+      border-bottom: 1px solid rgba(25, 25, 18, .06);
     }
-    .taskbar-win-btn.active {
-      border-color: var(--win-border-darker) var(--win-border-light) var(--win-border-light) var(--win-border-darker);
-      background: #ffffff;
-      font-weight: 700;
+    .mock-bar i { width: 5px; height: 5px; border-radius: 50%; background: #DAD4C4; }
+    .mock-bar em {
+      font-style: normal;
+      font-size: 7.5px;
+      color: #8F8C7F;
+      margin-left: 6px;
+      letter-spacing: .03em;
     }
-    .taskbar-win-btn.visible {
-      display: flex;
+    .mock-body { padding: 14px 16px 16px; }
+    .mock-kicker {
+      font-size: 7px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #9A9788;
+      margin-bottom: 5px;
     }
-    .taskbar-clock {
-      flex-shrink: 0;
-      height: 26px;
-      padding: 0 10px;
-      border: 1px solid;
-      border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-dark);
+    .mock-title {
+      font-family: var(--serif);
+      font-size: 15px;
+      line-height: 1.2;
+      color: #23231B;
+      letter-spacing: -.01em;
+    }
+    .mock-copy { font-size: 8px; line-height: 1.5; color: #8B887A; margin-top: 5px; }
+    .mock-search {
       display: flex;
       align-items: center;
-      font-size: 11px;
+      gap: 6px;
+      margin-top: 10px;
+      padding: 6px 8px;
+      border: 1px solid #E4DFD0;
+      border-radius: 6px;
+      background: #FFFDF9;
+    }
+    .mock-search .dotg { width: 6px; height: 6px; border-radius: 50%; background: #C9C68C; flex: none; }
+    .mock-search .ph { height: 3px; width: 55%; border-radius: 2px; background: #E7E2D3; }
+    .mock-search .chip { margin-left: auto; height: 10px; width: 26px; border-radius: 3px; background: #767529; opacity: .8; }
+    .mock-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+    .mock-row {
+      display: flex;
+      gap: 7px;
+      align-items: flex-start;
+      padding: 6px;
+      border: 1px solid #EFEBDD;
+      border-radius: 5px;
+      background: #FFFEFB;
+    }
+    .mock-row .thumb { width: 22px; height: 16px; border-radius: 3px; background: linear-gradient(140deg, #DCD8BE, #C9C68C); flex: none; }
+    .mock-row .lines { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+    .mock-row .lines i { height: 2.5px; border-radius: 2px; background: #E7E2D3; }
+    .mock-row .lines i:nth-child(1) { width: 78%; background: #D9D4C2; }
+    .mock-row .lines i:nth-child(2) { width: 52%; }
+    .mock-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+    .mock-panel { border: 1px solid #EFEBDD; border-radius: 5px; padding: 6px; background: #FFFEFB; }
+    .mock-panel .lbl { height: 2.5px; width: 40%; background: #D9D4C2; border-radius: 2px; margin-bottom: 5px; }
+    .mock-panel .ln { height: 2.5px; background: #EDE8D9; border-radius: 2px; margin-bottom: 3px; }
+    .mock-panel .ln.short { width: 70%; }
+    /* ── Mockup: phone ── */
+    .mock-phones { display: flex; align-items: flex-end; justify-content: center; gap: 10px; }
+    .mock-phone {
+      width: 96px;
+      border-radius: 14px;
+      background: #23231B;
+      padding: 3px;
+      box-shadow: 0 22px 40px -30px rgba(50, 40, 12, .8);
+      flex: none;
+    }
+    .mock-phone:nth-child(2) { width: 106px; margin-bottom: 14px; }
+    .mock-phone .screen {
+      background: #FFFDF8;
+      border-radius: 11px;
+      overflow: hidden;
+      padding: 8px 7px 9px;
+      display: flex;
+      flex-direction: column;
       gap: 5px;
+      min-height: 158px;
+    }
+    .mock-phone .notch { width: 22px; height: 2px; border-radius: 2px; background: #E1DBCB; margin: 0 auto 2px; }
+    .mock-phone .ph-title { font-family: var(--serif); font-size: 8px; line-height: 1.2; color: #23231B; }
+    .mock-phone .ph-sub { font-size: 5px; color: #9A9788; letter-spacing: .04em; text-transform: uppercase; }
+    .mock-phone .ph-card { border-radius: 5px; background: #F5F1E5; padding: 5px; display: flex; flex-direction: column; gap: 3px; }
+    .mock-phone .ph-card .bar { height: 2.5px; border-radius: 2px; background: #E1DBCB; }
+    .mock-phone .ph-card .bar.w50 { width: 50%; }
+    .mock-phone .ph-cta { margin-top: auto; height: 12px; border-radius: 4px; background: #767529; opacity: .85; display: grid; place-items: center; }
+    .mock-phone .ph-cta i { width: 22px; height: 2px; background: rgba(255, 255, 255, .75); border-radius: 2px; }
+    .mock-phone .ph-avatar { display: flex; align-items: center; gap: 4px; }
+    .mock-phone .ph-avatar .av { width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(140deg, #DCD8BE, #C9C68C); }
+    .mock-phone .ph-avatar .ln { height: 2.5px; width: 26px; border-radius: 2px; background: #E7E2D3; }
+    .mock-phone .ph-strip { display: flex; gap: 3px; }
+    .mock-phone .ph-strip i { flex: 1; height: 20px; border-radius: 4px; background: linear-gradient(150deg, #ECE6D5, #DCD8BE); }
+
+    /* ── Mockup: article / editorial card ── */
+    .mock-article {
+      width: 100%;
+      max-width: 360px;
+      background: #FFFDF8;
+      border: 1px solid rgba(25, 25, 18, .08);
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: 0 24px 48px -36px rgba(60, 48, 15, .7);
+    }
+    .mock-article .a-kicker { font-size: 7px; letter-spacing: .16em; text-transform: uppercase; color: #9A9788; }
+    .mock-article .a-band {
+      height: 62px;
+      border-radius: 6px;
+      margin-bottom: 13px;
+      background:
+        linear-gradient(140deg, rgba(255, 255, 255, .45), rgba(255, 255, 255, 0)),
+        linear-gradient(140deg, #E9E4CF, #D7D2B2);
+      border: 1px solid rgba(25, 25, 18, .05);
+    }
+    .mock-article .a-title { font-family: var(--serif); font-size: 16px; line-height: 1.25; color: #23231B; margin-top: 6px; }
+    .mock-article .a-rule { height: 1px; background: #EDE8D9; margin: 10px 0; }
+    .mock-article .a-line { height: 3px; border-radius: 2px; background: #EFEADD; margin-bottom: 5px; }
+    .mock-article .a-line.w70 { width: 70%; }
+    .mock-article .a-line.w45 { width: 45%; }
+    .mock-article .a-tags { display: flex; gap: 4px; margin-top: 12px; }
+    .mock-article .a-tags i { height: 9px; width: 30px; border-radius: 999px; background: #F1EDE0; }
+    .mock-article .a-tags i:first-child { width: 42px; background: #E4E2C6; }
+
+    /* ══════════════════════════════════════
+       TESTIMONIALS
+       ══════════════════════════════════════ */
+    .tst { padding-top: 58px; }
+    .tst .hatch-d { left: 0; bottom: 40px; width: 110px; height: 200px; }
+    .tst-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      align-items: stretch;
+      position: relative;
+      z-index: 1;
+    }
+    .tst-row--second {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: 74%;
+      margin: 20px auto 0;
+    }
+    .tst-card {
+      background: rgba(252, 250, 246, .62);
+      border: 1px solid var(--line-soft);
+      border-radius: var(--radius);
+      padding: 26px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      color: var(--muted);
+      transition: opacity .3s ease, background .3s ease, box-shadow .3s ease, transform .3s ease, color .3s ease;
+      opacity: .55;
+    }
+    .tst-card:hover, .tst-card.is-active {
+      opacity: 1;
+      color: var(--ink-soft);
+      background: var(--card);
+      box-shadow: 0 26px 54px -40px rgba(60, 48, 15, .75);
+      transform: translateY(-6px);
+    }
+    .tst-quote { font-size: 13.5px; line-height: 1.75; }
+    .tst-who { font-size: 12px; color: var(--muted); margin-top: auto; }
+    .tst-who b { display: block; font-weight: 500; color: var(--ink-soft); font-size: 12.5px; }
+    /* ══════════════════════════════════════
+       CTA
+       ══════════════════════════════════════ */
+    .cta {
+      margin-top: 66px;
+      padding: 86px 0 92px;
+      background: linear-gradient(180deg, #F6F1E4, #F3EDDD);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      border-top: 1px solid rgba(25, 25, 18, .05);
+      border-bottom: 1px solid rgba(25, 25, 18, .05);
+    }
+    .cta .hatch-e { left: 0; bottom: 0; width: 260px; height: 200px; }
+    .cta .hatch-f { right: 0; top: 0; width: 210px; height: 170px; }
+    .cta-glow {
+      position: absolute;
+      z-index: 0;
+      left: 50%; top: 50%;
+      width: 720px; height: 420px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(ellipse, rgba(255, 252, 240, .9) 0%, rgba(246, 241, 228, 0) 72%);
+      pointer-events: none;
+    }
+    .cta-title {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(2.1rem, 4.7vw, 3.95rem);
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-sub {
+      margin: 18px auto 0;
+      max-width: 440px;
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      position: relative;
+      z-index: 1;
+    }
+    .btn-olive {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 196px;
+      margin-top: 34px;
+      padding: 15px 34px;
+      background: var(--olive);
+      color: #FBF8EE;
+      font-family: var(--serif);
+      font-size: 16px;
+      letter-spacing: .02em;
+      text-decoration: none;
+      border-radius: 2px;
+      position: relative;
+      z-index: 1;
+      transition: background .22s ease, transform .22s ease, box-shadow .22s ease;
+    }
+    .btn-olive:hover {
+      background: var(--olive-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 20px 36px -26px rgba(60, 48, 15, .9);
     }
 
     /* ══════════════════════════════════════
-       START MENU (simple overlay)
+       FOOTER
        ══════════════════════════════════════ */
-    .start-menu {
-      display: none;
-      position: fixed;
-      bottom: 36px;
-      left: 4px;
-      background: var(--win-bg);
-      border: 2px solid;
-      border-color: var(--win-border-light) var(--win-border-darkest) var(--win-border-darkest) var(--win-border-light);
-      z-index: 1001;
-      min-width: 200px;
-    }
-    .start-menu.open { display: block; }
-    .start-menu-sidebar {
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 24px;
-      background: var(--win-border-dark);
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding-bottom: 8px;
-    }
-    .start-menu-sidebar span {
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      font-size: 14px;
-      font-weight: 800;
-      color: #c0c0c0;
-      letter-spacing: 1px;
-    }
-    .start-menu-items {
-      margin-left: 24px;
-      padding: 4px 0;
-    }
-    .start-menu-item {
-      padding: 6px 16px;
-      font-size: 12px;
-      cursor: pointer;
+    .footer { padding: 26px 0 44px; }
+    .footer-inner {
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
     }
-    .start-menu-item:hover {
-      background: var(--highlight);
-      color: var(--highlight-text);
+    .footer-copy { font-size: 12px; color: var(--muted); }
+    .footer-copy a { color: var(--muted); text-decoration: none; border-bottom: 1px solid rgba(25, 25, 18, .2); }
+    .footer-copy a:hover { color: var(--olive-dark); border-bottom-color: var(--olive); }
+    .footer-links { display: flex; gap: 26px; list-style: none; flex-wrap: wrap; }
+    .footer-links a {
+      font-family: var(--serif);
+      font-size: 16px;
+      color: var(--ink-soft);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+      text-decoration-color: rgba(25, 25, 18, .3);
     }
-    .start-menu-sep {
-      height: 1px;
-      background: var(--win-border-dark);
-      margin: 3px 8px;
-    }
+    .footer-links a:hover { color: var(--olive-dark); text-decoration-color: var(--olive); }
 
+    /* ══════════════════════════════════════
+       SCROLL REVEAL (hanya bila JS aktif)
+       ══════════════════════════════════════ */
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .7s cubic-bezier(.22, .61, .36, 1), transform .7s cubic-bezier(.22, .61, .36, 1);
+    }
+    .js .reveal.in { opacity: 1; transform: none; }
     /* ══════════════════════════════════════
        RESPONSIVE
        ══════════════════════════════════════ */
-    @media (max-width: 640px) {
-      .desktop { padding: 10px; }
-      .desktop-icons { gap: 10px; justify-content: center; }
-      .desktop-icon { width: 80px; }
-      .icon-img { width: 48px; height: 48px; }
-      .icon-img canvas { width: 48px; height: 48px; }
-      .icon-label { font-size: 10px; }
-      .win31-window {
-        position: fixed !important;
-        left: 4px !important;
-        right: 4px !important;
-        top: 32px !important;
-        width: auto !important;
-        max-width: none;
-        max-height: calc(100vh - 72px);
+    @media (max-width: 1024px) {
+      .container { padding: 0 32px; }
+      .hero-lower { grid-template-columns: minmax(0, 1fr) auto; gap: 28px; }
+      .hero-bubble { margin-top: 24px; }
+      .ach-item.is-featured { grid-template-columns: 64px minmax(0, 1fr) 190px; }
+      .tst-row--second { width: 88%; }
+    }
+
+    @media (max-width: 860px) {
+      .nav-toggle { display: inline-flex; }
+      .nav-inner { min-height: 62px; }
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+        padding: 10px 32px 18px;
+        background: rgba(248, 246, 241, .98);
+        border-bottom: 1px solid var(--line-soft);
+        box-shadow: 0 24px 40px -34px rgba(40, 30, 10, .8);
+        display: none;
       }
-      .profile-section { flex-direction: column; align-items: center; text-align: center; }
-      .profile-pills { justify-content: center; }
-      .profile-actions { justify-content: center; }
-      .taskbar-win-btn { max-width: 80px; font-size: 10px; padding: 0 6px; }
+      .nav-links.is-open { display: flex; }
+      .nav-link { width: 100%; padding: 11px 0; font-size: 14px; }
+      .nav-link.is-active::before { top: 50%; left: -12px; margin-top: -2px; }
+      .nav-cta { display: none; }
+      .hero { padding-top: 44px; }
+      .hero-title { font-size: clamp(2.1rem, 8.4vw, 3.4rem); }
+      .hero-lower { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+      .hero-bubble { margin-top: 0; }
+      .hero-bubble::before { left: 34px; right: auto; }
+      .hero-social { margin-top: 34px; gap: 22px; }
+      .hero-social a { font-size: 17px; }
+      .logo-row { grid-template-columns: repeat(2, 1fr); }
+      .ach-item.is-featured { grid-template-columns: 56px minmax(0, 1fr); row-gap: 16px; }
+      .ach-item.is-featured .ach-thumb { grid-column: 2; width: 100%; max-width: 280px; }
+      .work-grid { grid-template-columns: minmax(0, 1fr); }
+      .work-shot { min-height: 260px; }
+      .tst-row { grid-template-columns: minmax(0, 1fr); }
+      .tst-row--second { grid-template-columns: minmax(0, 1fr); width: 100%; margin-top: 22px; }
+      .tst-card { opacity: 1; background: var(--card); }
+      .tst-card:hover { transform: none; }
+      .cta { padding: 64px 0 70px; margin-top: 50px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
     }
 
-    /* ══════════════════════════════════════
-       SCROLLBAR (Win 3.1 style)
-       ══════════════════════════════════════ */
-    .win31-body::-webkit-scrollbar { width: 16px; }
-    .win31-body::-webkit-scrollbar-track { background: var(--win-bg); border-left: 1px solid var(--win-border-dark); }
-    .win31-body::-webkit-scrollbar-thumb {
-      background: var(--btn-face);
-      border: 2px solid;
-      border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
-    }
-    .win31-body::-webkit-scrollbar-button {
-      background: var(--btn-face);
-      border: 2px solid;
-      border-color: var(--win-border-light) var(--win-border-darker) var(--win-border-darker) var(--win-border-light);
-      height: 16px;
+    @media (max-width: 560px) {
+      .container { padding: 0 20px; }
+      .nav-links { padding-left: 20px; padding-right: 20px; }
+      .section { padding: 46px 0; }
+      .ach-item { grid-template-columns: 46px minmax(0, 1fr); gap: 14px; }
+      .ach-item.is-featured { grid-template-columns: 46px minmax(0, 1fr); }
+      .ach-item.is-featured .ach-thumb { grid-column: 1 / -1; max-width: none; }
+      .ach-item .ach-thumb { grid-column: 1 / -1; }
+      .work-shot { padding: 16px; min-height: 230px; }
+      .work-foot { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .hero-title { font-size: clamp(1.95rem, 8.8vw, 2.6rem); }
+      .hero-photo { width: 1.02em; height: 1.02em; vertical-align: -.1em; }
+      .hero .hatch-a, .hero .hatch-b, .tst .hatch-d { display: none; }
+      .mock-phone { width: 82px; }
+      .mock-phone:nth-child(2) { width: 90px; }
+      .footer-links { gap: 18px; }
     }
 
-    /* ══════════════════════════════════════
-       DECORATIVE PIXEL PATTERN (optional)
-       ══════════════════════════════════════ */
-    .win31-body-inner h2 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-    .win31-body-inner .section-desc {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 12px;
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+      }
+      .js .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
+  <a class="sr-only" href="#main">Lewati ke konten utama</a>
 
-<!-- ════════════════ DESKTOP ════════════════ -->
-<div class="desktop" id="desktop">
+  <!-- ════════════════ NAVBAR ════════════════ -->
+  <header class="nav" id="siteNav">
+    <div class="container nav-inner">
+      <nav aria-label="Navigasi utama">
+        <ul class="nav-links" id="navLinks">
+          <li><a class="nav-link is-active" href="#home">Home</a></li>
+          <li><a class="nav-link" href="#achievement">My Achievement</a></li>
+          <li><a class="nav-link" href="#portofolio">Portofolio</a></li>
+          <li><a class="nav-link" href="#testimonials">Testimonials</a></li>
+        </ul>
+      </nav>
+      <a class="nav-cta" href="#contact">Contact</a>
+      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Buka menu navigasi">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
 
-  <!-- ═══════ DESKTOP ICONS ═══════ -->
-  <div class="desktop-icons" id="desktopIcons">
-    <div class="desktop-icon" tabindex="0" data-target="win-profil" onclick="openWindow('win-profil')">
-      <div class="icon-img"><canvas class="retro-canvas" width="64" height="64" data-icon="person"></canvas></div>
-      <div class="icon-label">Profil</div>
-    </div>
-    <div class="desktop-icon" tabindex="0" data-target="win-portofolio" onclick="openWindow('win-portofolio')">
-      <div class="icon-img"><canvas class="retro-canvas" width="64" height="64" data-icon="briefcase"></canvas></div>
-      <div class="icon-label">Portofolio</div>
-    </div>
-    <div class="desktop-icon" tabindex="0" data-target="win-penelitian" onclick="openWindow('win-penelitian')">
-      <div class="icon-img"><canvas class="retro-canvas" width="64" height="64" data-icon="book"></canvas></div>
-      <div class="icon-label">Penelitian</div>
-    </div>
-    <div class="desktop-icon" tabindex="0" data-target="win-matkul" onclick="openWindow('win-matkul')">
-      <div class="icon-img"><canvas class="retro-canvas" width="64" height="64" data-icon="gradcap"></canvas></div>
-      <div class="icon-label">Mata Kuliah</div>
-    </div>
-    <div class="desktop-icon" tabindex="0" data-target="win-kontak" onclick="openWindow('win-kontak')">
-      <div class="icon-img"><canvas class="retro-canvas" width="64" height="64" data-icon="envelope"></canvas></div>
-      <div class="icon-label">Kontak</div>
-    </div>
-  </div>
+  <main id="main">
+    <!-- ════════════════ HERO ════════════════ -->
+    <section class="hero" id="home" aria-labelledby="heroTitle">
+      <span class="hatch hatch-a" aria-hidden="true"></span>
+      <span class="hatch hatch-b" aria-hidden="true"></span>
+      <div class="hero-glow" aria-hidden="true"></div>
 
-  <!-- ═══════════════════════════════════════
-       WINDOW: PROFIL
-       ═══════════════════════════════════════ -->
-  <div class="win31-window open" id="win-profil" style="left:60px; top:30px; width:560px;">
-    <div class="win31-titlebar" onmousedown="startDrag(event,'win-profil')">
-      <div class="win31-titlebar-icon">👤</div>
-      <div class="win31-titlebar-text">Profil — Andika Chandra P</div>
-      <div class="win31-titlebar-buttons">
-        <button class="win31-btn" onclick="minimizeWindow('win-profil')" title="Minimize">▼</button>
-        <button class="win31-btn" onclick="maximizeWindow('win-profil')" title="Maximize">▲</button>
-        <button class="win31-btn" onclick="closeWindow('win-profil')" title="Close">✕</button>
-      </div>
-    </div>
-    <div class="win31-menubar">
-      <span class="win31-menu-item"><span class="underline">F</span>ile</span>
-      <span class="win31-menu-item"><span class="underline">E</span>dit</span>
-      <span class="win31-menu-item"><span class="underline">V</span>iew</span>
-      <span class="win31-menu-item"><span class="underline">H</span>elp</span>
-    </div>
-    <div class="win31-body">
-      <div class="win31-body-inner">
-        <div class="profile-section">
-          <div class="profile-avatar"></div>
-          <div class="profile-info">
-            <div class="profile-label">Dosen & Tukang Ngopi</div>
-            <h1 class="profile-name">Andika Chandra P, S.Kom., M.T.I</h1>
-            <p class="profile-bio">
-              Pengajar dan peneliti di bidang teknologi informasi dan bisnis digital. Berfokus pada AI, socio-techno dan digital marketing.
+      <div class="container">
+        <h1 class="hero-title" id="heroTitle">
+          Bringing Your Vision to Life with <span class="u">User-Centered</span>
+          <span class="hero-photo">
+            <img src="image/foto.webp" alt="Foto Andika Chandra P" width="449" height="480" />
+            <span class="wave" aria-hidden="true">👋</span>
+          </span>
+          and Uniquely UI Design
+        </h1>
+
+        <div class="hero-lower">
+          <div>
+            <p class="hero-desc">
+              Saya menerjemahkan antarmuka yang rumit menjadi pengalaman digital yang mudah
+              dipakai, terukur, dan relevan dengan kebutuhan pengguna — lewat riset,
+              pengajaran, dan produk nyata.
             </p>
-            <div class="profile-pills">
-              <span class="pill-retro">Machine Learning</span>
-              <span class="pill-retro">Web Design</span>
-              <span class="pill-retro">Digital Marketing</span>
-            </div>
-            <div class="profile-actions">
-              <button class="win31-action-btn default"><a href="mailto:me@andikachandra.com">✉ Email Saya</a></button>
-              <button class="win31-action-btn" onclick="openWindow('win-portofolio')">Lihat Portofolio →</button>
-            </div>
+
+            <ul class="hero-social">
+              <li><a href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="mailto:me@andikachandra.com">Email</a></li>
+              <li><a href="daftar-mata-kuliah.html">Mata Kuliah</a></li>
+            </ul>
           </div>
+
+          <p class="hero-bubble">
+            Hi, I'm <strong>Andika Chandra P</strong> — dosen &amp; praktisi digital
+          </p>
+        </div>
+
+        <a class="scroll-cue" href="#achievement">
+          <svg viewBox="0 0 18 28" fill="none" aria-hidden="true">
+            <rect x="1" y="1" width="16" height="26" rx="8" stroke="currentColor" stroke-width="1.1" />
+            <circle class="dot" cx="9" cy="8" r="2" fill="currentColor" />
+          </svg>
+          <span>Scroll Down</span>
+        </a>
+      </div>
+    </section>
+    <!-- ════════════════ PUBLIKASI & KOLABORASI ════════════════ -->
+    <section class="section logos" aria-labelledby="logosTitle">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 class="section-title" id="logosTitle">Publikasi &amp; Kolaborasi</h2>
+          <p class="section-sub">
+            Riset dan karya yang telah diterbitkan bersama jurnal, konferensi,
+            dan lembaga pengindeks.
+          </p>
+        </div>
+
+        <div class="logo-row reveal">
+          <div class="logo-card"><span class="logo-ieee">IEEE Xplore</span></div>
+          <div class="logo-card"><span class="logo-sinta">SINTA</span></div>
+          <div class="logo-card"><span class="logo-ebsco">EBSCO</span></div>
+          <div class="logo-card"><span class="logo-piksel">Piksel Journal</span></div>
         </div>
       </div>
-    </div>
-    <div class="win31-statusbar">
-      <div class="win31-statusbar-section">Ready</div>
-    </div>
-  </div>
+    </section>
 
-  <!-- ═══════════════════════════════════════
-       WINDOW: PORTOFOLIO
-       ═══════════════════════════════════════ -->
-  <div class="win31-window" id="win-portofolio" style="left:100px; top:50px; width:540px;">
-    <div class="win31-titlebar" onmousedown="startDrag(event,'win-portofolio')">
-      <div class="win31-titlebar-icon">💼</div>
-      <div class="win31-titlebar-text">Portofolio Aplikasi</div>
-      <div class="win31-titlebar-buttons">
-        <button class="win31-btn" onclick="minimizeWindow('win-portofolio')" title="Minimize">▼</button>
-        <button class="win31-btn" onclick="maximizeWindow('win-portofolio')" title="Maximize">▲</button>
-        <button class="win31-btn" onclick="closeWindow('win-portofolio')" title="Close">✕</button>
+    <!-- ════════════════ MY ACHIEVEMENT ════════════════ -->
+    <section class="section ach-section" id="achievement" aria-labelledby="achTitle">
+      <span class="hatch hatch-c" aria-hidden="true"></span>
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 class="section-title" id="achTitle">My Achievement</h2>
+          <p class="section-sub">
+            Publikasi dan pengakuan atas riset yang saya kerjakan bersama tim
+            dan mitra kolaborasi.
+          </p>
+        </div>
+
+        <div class="ach-list reveal">
+          <article class="ach-item is-featured">
+            <div class="ach-rank"><b>2017</b>IEEE</div>
+            <div>
+              <h3 class="ach-title">
+                <a href="https://ieeexplore.ieee.org/abstract/document/8267965" target="_blank" rel="noopener noreferrer">
+                  Factors Influencing E-Tourism Stickiness
+                </a>
+              </h3>
+              <p class="ach-meta">
+                ICITSI 2017 — International Conference on Information Technology
+                Systems and Innovation · terindeks IEEE Xplore
+              </p>
+              <a class="ach-link" href="https://ieeexplore.ieee.org/abstract/document/8267965" target="_blank" rel="noopener noreferrer">View Paper ↗</a>
+            </div>
+            <div class="ach-thumb" aria-hidden="true">
+              <div class="paper-mock">
+                <div class="pm-head"><i></i><i></i><i></i><span class="pm-kicker">ICITSI 2017</span></div>
+                <div class="pm-title">Factors Influencing E-Tourism Stickiness</div>
+                <span class="pm-line w80"></span>
+                <span class="pm-line"></span>
+                <span class="pm-line w60"></span>
+                <span class="pm-line"></span>
+                <span class="pm-line w80"></span>
+                <div class="pm-chart"><i></i><i></i><i></i><i></i></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="ach-item">
+            <div class="ach-rank"><b>2025</b>SINTA 3</div>
+            <div>
+              <h3 class="ach-title">
+                <a href="https://jurnal.unismabekasi.ac.id/index.php/piksel/article/view/10580" target="_blank" rel="noopener noreferrer">
+                  YouTube Streaming Performance Over Wi-Fi
+                </a>
+              </h3>
+              <p class="ach-meta">
+                Piksel: Penelitian Ilmu Komputer Sistem Embedded dan Logic ·
+                analisis berbasis resolusi
+              </p>
+              <a class="ach-link" href="https://jurnal.unismabekasi.ac.id/index.php/piksel/article/view/10580" target="_blank" rel="noopener noreferrer">View Article ↗</a>
+            </div>
+          </article>
+
+          <article class="ach-item">
+            <div class="ach-rank"><b>2026</b>EBSCO</div>
+            <div>
+              <h3 class="ach-title">
+                <a href="https://publikasi.dinus.ac.id/technoc/article/view/15684" target="_blank" rel="noopener noreferrer">
+                  Klasifikasi Risiko Pengguna Judi Online
+                </a>
+              </h3>
+              <p class="ach-meta">
+                Jurnal TECHNO.com · klasifikasi pola perilaku dengan skor PGSI
+              </p>
+              <a class="ach-link" href="https://publikasi.dinus.ac.id/technoc/article/view/15684" target="_blank" rel="noopener noreferrer">View Article ↗</a>
+            </div>
+          </article>
+        </div>
       </div>
-    </div>
-    <div class="win31-menubar">
-      <span class="win31-menu-item"><span class="underline">F</span>ile</span>
-      <span class="win31-menu-item"><span class="underline">E</span>dit</span>
-      <span class="win31-menu-item"><span class="underline">V</span>iew</span>
-    </div>
-    <div class="win31-body">
-      <div class="win31-body-inner">
-        <h2>Portofolio Aplikasi</h2>
+    </section>
+    <!-- ════════════════ FEATURED PROJECT / CASE STUDY / BLOG ════════════════ -->
+    <section class="section work" id="portofolio" aria-labelledby="workTitle">
+      <div class="container">
+        <h2 class="sr-only" id="workTitle">Karya pilihan</h2>
 
-        <div class="retro-card">
-          <span class="retro-badge">✔ Selesai</span>
-          <div class="retro-card-title">🏫 NyariArtikel.App</div>
-          <div class="retro-card-meta">Aplikasi Web</div>
-          <div class="retro-card-desc">Aplikasi untuk pencarian artikel ilmiah yang bertipe open access</div>
-          <div class="retro-tags">
-            <span class="retro-tag">Web App</span><span class="retro-tag">HTML</span><span class="retro-tag">JS</span>
-          </div>
-          <button class="win31-action-btn" style="margin-top:8px; font-size:11px; padding:2px 10px;">
-            <a href="https://nyariartikel.app" target="_blank" rel="noopener noreferrer">Kunjungi Web ↗</a>
+        <div class="work-tabs reveal" role="tablist" aria-label="Kategori karya">
+          <button class="work-tab" type="button" role="tab" id="tab-project" aria-selected="true" aria-controls="panel-work" data-filter="project">
+            Featured Project
+            <svg class="scribble" viewBox="0 0 200 50" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M15 25c0-11 37-19 85-19s85 8 85 19-37 19-85 19S15 36 15 25Z" fill="none" stroke="currentColor" stroke-width="1.3" />
+              <path d="M20 28c4 9 41 15 80 15s76-6 79-15" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".55" />
+            </svg>
+          </button>
+          <button class="work-tab" type="button" role="tab" id="tab-case" aria-selected="false" aria-controls="panel-work" data-filter="case" tabindex="-1">
+            Case Study
+            <svg class="scribble" viewBox="0 0 200 50" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M15 25c0-11 37-19 85-19s85 8 85 19-37 19-85 19S15 36 15 25Z" fill="none" stroke="currentColor" stroke-width="1.3" />
+              <path d="M20 28c4 9 41 15 80 15s76-6 79-15" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".55" />
+            </svg>
+          </button>
+          <button class="work-tab" type="button" role="tab" id="tab-blog" aria-selected="false" aria-controls="panel-work" data-filter="blog" tabindex="-1">
+            Blog &amp; Article
+            <svg class="scribble" viewBox="0 0 200 50" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M15 25c0-11 37-19 85-19s85 8 85 19-37 19-85 19S15 36 15 25Z" fill="none" stroke="currentColor" stroke-width="1.3" />
+              <path d="M20 28c4 9 41 15 80 15s76-6 79-15" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".55" />
+            </svg>
           </button>
         </div>
 
-        <div class="retro-card">
-          <span class="retro-badge">✔ Selesai</span>
-          <div class="retro-card-title">📝 bantusitasi.online</div>
-          <div class="retro-card-meta">Aplikasi Web</div>
-          <div class="retro-card-desc">Aplikasi untuk pencarian referensi berdasarkan kalimat yang dimasukan oleh pengguna</div>
-          <div class="retro-tags">
-            <span class="retro-tag">Web App</span><span class="retro-tag">HTML</span><span class="retro-tag">JS</span><span class="retro-tag">NodeJs</span><span class="retro-tag">PostgreSQL</span>
-          </div>
-          <button class="win31-action-btn" style="margin-top:8px; font-size:11px; padding:2px 10px;">
-            <a href="https://bantusitasi.online" target="_blank" rel="noopener noreferrer">Kunjungi Web ↗</a>
-          </button>
-        </div>
+        <div class="work-grid" id="panel-work" role="tabpanel" aria-labelledby="tab-project" tabindex="0">
 
-        <div class="retro-card">
-          <span class="retro-badge">✔ Selesai</span>
-          <div class="retro-card-title">📄 papier.my</div>
-          <div class="retro-card-meta">Aplikasi Web</div>
-          <div class="retro-card-desc">Web app untuk melakukan organisasi artikel ilmiah dengan mudah dengan memanfaatkan teknologi AI</div>
-          <div class="retro-tags">
-            <span class="retro-tag">Web App</span><span class="retro-tag">HTML</span><span class="retro-tag">JS</span><span class="retro-tag">NodeJs</span><span class="retro-tag">PostgreSQL</span>
-          </div>
-          <button class="win31-action-btn" style="margin-top:8px; font-size:11px; padding:2px 10px;">
-            <a href="https://papier.my" target="_blank" rel="noopener noreferrer">Kunjungi Web ↗</a>
-          </button>
-        </div>
-
-      </div>
-    </div>
-    <div class="win31-statusbar">
-      <div class="win31-statusbar-section">3 item(s)</div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════
-       WINDOW: PENELITIAN
-       ═══════════════════════════════════════ -->
-  <div class="win31-window" id="win-penelitian" style="left:140px; top:40px; width:560px;">
-    <div class="win31-titlebar" onmousedown="startDrag(event,'win-penelitian')">
-      <div class="win31-titlebar-icon">📚</div>
-      <div class="win31-titlebar-text">Penelitian</div>
-      <div class="win31-titlebar-buttons">
-        <button class="win31-btn" onclick="minimizeWindow('win-penelitian')" title="Minimize">▼</button>
-        <button class="win31-btn" onclick="maximizeWindow('win-penelitian')" title="Maximize">▲</button>
-        <button class="win31-btn" onclick="closeWindow('win-penelitian')" title="Close">✕</button>
-      </div>
-    </div>
-    <div class="win31-menubar">
-      <span class="win31-menu-item"><span class="underline">F</span>ile</span>
-      <span class="win31-menu-item"><span class="underline">E</span>dit</span>
-      <span class="win31-menu-item"><span class="underline">V</span>iew</span>
-    </div>
-    <div class="win31-body">
-      <div class="win31-body-inner">
-        <h2>Penelitian</h2>
-        <p class="section-desc">Publikasi ilmiah dan riset yang telah dipresentasikan atau diterbitkan.</p>
-
-        <div class="research-row">
-          <div class="research-year">2017</div>
-          <div class="research-content">
-            <div class="research-title"><a href="https://ieeexplore.ieee.org/abstract/document/8267965">Factors influencing e-tourism stickiness: A perspective of TripTrus.Com</a></div>
-            <div class="research-venue">International Conference on Information Technology Systems and Innovation (ICITSI) 2017</div>
-            <div class="retro-tags">
-              <span class="retro-tag">Socio Techno</span><span class="retro-tag">E-Commerce</span><span class="retro-tag">Stickiness</span>
-              <span class="retro-tag retro-tag-badge">IEEE</span>
+          <!-- ── Project 1 ── -->
+          <article class="work-card reveal" data-cat="project">
+            <div class="work-shot">
+              <div class="mock" aria-hidden="true">
+                <div class="mock-bar"><i></i><i></i><i></i><em>nyariartikel.app</em></div>
+                <div class="mock-body">
+                  <div class="mock-kicker">Open Access</div>
+                  <div class="mock-title">Cari artikel ilmiah<br>tanpa ribet.</div>
+                  <div class="mock-search">
+                    <span class="dotg"></span>
+                    <span class="ph"></span>
+                    <span class="chip"></span>
+                  </div>
+                  <div class="mock-list">
+                    <div class="mock-row">
+                      <span class="thumb"></span>
+                      <span class="lines"><i></i><i></i></span>
+                    </div>
+                    <div class="mock-row">
+                      <span class="thumb"></span>
+                      <span class="lines"><i></i><i></i></span>
+                    </div>
+                    <div class="mock-row">
+                      <span class="thumb"></span>
+                      <span class="lines"><i></i><i></i></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-
-        <div class="research-row">
-          <div class="research-year">2024</div>
-          <div class="research-content">
-            <div class="research-title">Factors Influence Entrepreneurial Intention</div>
-            <div class="research-venue">Moneter: Jurnal Keuangan dan Perbankan</div>
-            <div class="retro-tags">
-              <span class="retro-tag">Entrepreneurial Intention</span><span class="retro-tag">Stickiness</span>
-              <span class="retro-tag retro-tag-badge">Sinta 3</span>
+            <div class="work-foot">
+              <h3 class="work-name">NyariArtikel.App<span>Web App · Pencarian artikel open access</span></h3>
+              <a class="view-link" href="https://nyariartikel.app" target="_blank" rel="noopener noreferrer">View Design ↗</a>
             </div>
-          </div>
-        </div>
+          </article>
 
-        <div class="research-row">
-          <div class="research-year">2025</div>
-          <div class="research-content">
-            <div class="research-title"><a href="https://jurnal.unismabekasi.ac.id/index.php/piksel/article/view/10580">YouTube Streaming Performance Over Wi-Fi: A Resolution-Based Analysis</a></div>
-            <div class="research-venue">Piksel: Penelitian Ilmu Komputer Sistem Embedded dan Logic</div>
-            <div class="retro-tags">
-              <span class="retro-tag">Network</span><span class="retro-tag">Network Performance</span><span class="retro-tag">Resolution-Based Analysis</span>
-              <span class="retro-tag retro-tag-badge">Sinta 3</span>
+          <!-- ── Project 2 ── -->
+          <article class="work-card reveal" data-cat="project">
+            <div class="work-shot">
+              <div class="mock" aria-hidden="true">
+                <div class="mock-bar"><i></i><i></i><i></i><em>bantusitasi.online</em></div>
+                <div class="mock-body">
+                  <div class="mock-kicker">Reference Finder</div>
+                  <div class="mock-title">Tempel kalimat,<br>dapat referensinya.</div>
+                  <div class="mock-search">
+                    <span class="dotg"></span>
+                    <span class="ph"></span>
+                    <span class="chip"></span>
+                  </div>
+                  <div class="mock-cols">
+                    <div class="mock-panel">
+                      <div class="lbl"></div>
+                      <div class="ln"></div>
+                      <div class="ln"></div>
+                      <div class="ln short"></div>
+                    </div>
+                    <div class="mock-panel">
+                      <div class="lbl"></div>
+                      <div class="ln"></div>
+                      <div class="ln short"></div>
+                      <div class="ln"></div>
+                    </div>
+                  </div>
+                  <div class="mock-list">
+                    <div class="mock-row">
+                      <span class="thumb"></span>
+                      <span class="lines"><i></i><i></i></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-
-        <div class="research-row">
-          <div class="research-year">2026</div>
-          <div class="research-content">
-            <div class="research-title"><a href="https://publikasi.dinus.ac.id/technoc/article/view/15684">Sistem Klasifikasi Tingkat Resiko pada Pengguna Judi Online Berdasarkan Pola Perilaku dan Skor PGSI</a></div>
-            <div class="research-venue">Jurnal TECHNO.com</div>
-            <div class="retro-tags">
-              <span class="retro-tag">Classification</span><span class="retro-tag">Naive Bayes</span><span class="retro-tag">Decision Tree</span>
-              <span class="retro-tag retro-tag-badge">EBSCO</span>
+            <div class="work-foot">
+              <h3 class="work-name">bantusitasi.online<span>Web App · Rekomendasi referensi dari satu kalimat</span></h3>
+              <a class="view-link" href="https://bantusitasi.online" target="_blank" rel="noopener noreferrer">View Design ↗</a>
             </div>
-          </div>
-        </div>
+          </article>
+          <!-- ── Project 3 ── -->
+          <article class="work-card reveal" data-cat="project">
+            <div class="work-shot">
+              <div class="mock-phones" aria-hidden="true">
+                <div class="mock-phone">
+                  <div class="screen">
+                    <span class="notch"></span>
+                    <span class="ph-sub">papier.my</span>
+                    <span class="ph-title">Library</span>
+                    <div class="ph-card"><span class="bar"></span><span class="bar w50"></span></div>
+                    <div class="ph-strip"><i></i><i></i><i></i></div>
+                    <div class="ph-cta"><i></i></div>
+                  </div>
+                </div>
+                <div class="mock-phone">
+                  <div class="screen">
+                    <span class="notch"></span>
+                    <span class="ph-sub">AI Summary</span>
+                    <span class="ph-title">Ringkas<br>artikel</span>
+                    <div class="ph-card"><span class="bar"></span><span class="bar"></span><span class="bar w50"></span></div>
+                    <div class="ph-avatar"><span class="av"></span><span class="ln"></span></div>
+                    <div class="ph-cta"><i></i></div>
+                  </div>
+                </div>
+                <div class="mock-phone">
+                  <div class="screen">
+                    <span class="notch"></span>
+                    <span class="ph-sub">Collections</span>
+                    <span class="ph-title">Rapi &amp;<br>terorganisir</span>
+                    <div class="ph-card"><span class="bar"></span><span class="bar w50"></span></div>
+                    <div class="ph-card"><span class="bar"></span><span class="bar w50"></span></div>
+                    <div class="ph-cta"><i></i></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">papier.my<span>Web App · Manajemen artikel ilmiah berbasis AI</span></h3>
+              <a class="view-link" href="https://papier.my" target="_blank" rel="noopener noreferrer">View Design ↗</a>
+            </div>
+          </article>
 
+          <!-- ── Project 4 ── -->
+          <article class="work-card reveal" data-cat="project">
+            <div class="work-shot">
+              <div class="mock" aria-hidden="true">
+                <div class="mock-bar"><i></i><i></i><i></i><em>andikachandra.com</em></div>
+                <div class="mock-body">
+                  <div class="mock-kicker">Portal Akademik</div>
+                  <div class="mock-title">Materi kuliah,<br>satu pintu.</div>
+                  <div class="mock-cols">
+                    <div class="mock-panel">
+                      <div class="lbl"></div>
+                      <div class="ln"></div>
+                      <div class="ln short"></div>
+                    </div>
+                    <div class="mock-panel">
+                      <div class="lbl"></div>
+                      <div class="ln"></div>
+                      <div class="ln short"></div>
+                    </div>
+                  </div>
+                  <div class="mock-cols">
+                    <div class="mock-panel">
+                      <div class="lbl"></div>
+                      <div class="ln"></div>
+                      <div class="ln short"></div>
+                    </div>
+                    <div class="mock-panel">
+                      <div class="lbl"></div>
+                      <div class="ln"></div>
+                      <div class="ln short"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Portal Materi Kuliah<span>Learning Hub · 10 mata kuliah lintas semester</span></h3>
+              <a class="view-link" href="daftar-mata-kuliah.html">View Design ↗</a>
+            </div>
+          </article>
+          <!-- ── Case Study 1 ── -->
+          <article class="work-card reveal" data-cat="case" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Case Study · UX Research</div>
+                <div class="a-title">Redesain alur pencarian artikel ilmiah</div>
+                <div class="a-rule"></div>
+                <div class="a-line"></div>
+                <div class="a-line w70"></div>
+                <div class="a-line w45"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Redesain Alur Pencarian<span>NyariArtikel.App · usability &amp; information architecture</span></h3>
+              <a class="view-link" href="https://nyariartikel.app" target="_blank" rel="noopener noreferrer">Read Case ↗</a>
+            </div>
+          </article>
+
+          <!-- ── Case Study 2 ── -->
+          <article class="work-card reveal" data-cat="case" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Case Study · Product Design</div>
+                <div class="a-title">Dari satu kalimat menjadi sitasi</div>
+                <div class="a-rule"></div>
+                <div class="a-line"></div>
+                <div class="a-line"></div>
+                <div class="a-line w70"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Sitasi Otomatis dari Kalimat<span>bantusitasi.online · alur input, ranking, dan verifikasi</span></h3>
+              <a class="view-link" href="https://bantusitasi.online" target="_blank" rel="noopener noreferrer">Read Case ↗</a>
+            </div>
+          </article>
+
+          <!-- ── Case Study 3 ── -->
+          <article class="work-card reveal" data-cat="case" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Case Study · Learning Design</div>
+                <div class="a-title">User-Centered Design masuk kelas</div>
+                <div class="a-rule"></div>
+                <div class="a-line w70"></div>
+                <div class="a-line"></div>
+                <div class="a-line w45"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">UCD di Kelas IMK<span>Interaksi Manusia &amp; Komputer · evaluasi usabilitas</span></h3>
+              <a class="view-link" href="imk/materi-1/index.html">Open Module ↗</a>
+            </div>
+          </article>
+
+          <!-- ── Case Study 4 ── -->
+          <article class="work-card reveal" data-cat="case" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Case Study · Information Architecture</div>
+                <div class="a-title">Satu portal untuk sepuluh mata kuliah</div>
+                <div class="a-rule"></div>
+                <div class="a-line"></div>
+                <div class="a-line w70"></div>
+                <div class="a-line w45"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Portal Materi Kuliah<span>Struktur informasi &amp; navigasi lintas semester</span></h3>
+              <a class="view-link" href="daftar-mata-kuliah.html">Open Portal ↗</a>
+            </div>
+          </article>
+          <!-- ── Blog 1 ── -->
+          <article class="work-card reveal" data-cat="blog" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Blog · Interaction Design</div>
+                <div class="a-title">Prinsip &amp; evaluasi usabilitas antarmuka</div>
+                <div class="a-rule"></div>
+                <div class="a-line"></div>
+                <div class="a-line w70"></div>
+                <div class="a-line w45"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Prinsip &amp; Evaluasi Usabilitas<span>Materi Interaksi Manusia dan Komputer</span></h3>
+              <a class="view-link" href="imk/materi-1/index.html">Read Article ↗</a>
+            </div>
+          </article>
+
+          <!-- ── Blog 2 ── -->
+          <article class="work-card reveal" data-cat="blog" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Blog · Business Model</div>
+                <div class="a-title">Business Model Canvas untuk produk digital</div>
+                <div class="a-rule"></div>
+                <div class="a-line"></div>
+                <div class="a-line"></div>
+                <div class="a-line w45"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Business Model Canvas<span>Materi Model dan Desain Bisnis Digital</span></h3>
+              <a class="view-link" href="mbd/index.html">Read Article ↗</a>
+            </div>
+          </article>
+
+          <!-- ── Blog 3 ── -->
+          <article class="work-card reveal" data-cat="blog" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Blog · Data Visualization</div>
+                <div class="a-title">Menyusun data storytelling yang jujur</div>
+                <div class="a-rule"></div>
+                <div class="a-line w70"></div>
+                <div class="a-line"></div>
+                <div class="a-line w45"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Data Storytelling<span>Data Warehouse &amp; Business Intelligence</span></h3>
+              <a class="view-link" href="dwbi/data-storytelling.html">Read Article ↗</a>
+            </div>
+          </article>
+
+          <!-- ── Blog 4 ── -->
+          <article class="work-card reveal" data-cat="blog" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Blog · Consumer Behaviour</div>
+                <div class="a-title">Perilaku konsumen di kanal mobile</div>
+                <div class="a-rule"></div>
+                <div class="a-line"></div>
+                <div class="a-line w70"></div>
+                <div class="a-line w45"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Perilaku Konsumen Digital<span>Digital Consumer Behaviour</span></h3>
+              <a class="view-link" href="dcb/mobile-consumer/index.html">Read Article ↗</a>
+            </div>
+          </article>
+
+        </div>
       </div>
-    </div>
-    <div class="win31-statusbar">
-      <div class="win31-statusbar-section">4 publikasi</div>
-    </div>
-  </div>
+    </section>
+    <!-- ════════════════ TESTIMONIALS ════════════════ -->
+    <!-- Catatan: teks testimoni di bawah adalah placeholder.
+         Ganti dengan kutipan asli sebelum dipublikasikan. -->
+    <section class="section tst" id="testimonials" aria-labelledby="tstTitle">
+      <span class="hatch hatch-d" aria-hidden="true"></span>
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 class="section-title" id="tstTitle">What People Say About Me</h2>
+          <p class="section-sub">
+            Testimoni dari mahasiswa, kolega, dan mitra kolaborasi selama
+            mengajar dan mengerjakan proyek digital.
+          </p>
+        </div>
 
-  <!-- ═══════════════════════════════════════
-       WINDOW: MATA KULIAH
-       ═══════════════════════════════════════ -->
-  <div class="win31-window" id="win-matkul" style="left:120px; top:60px; width:580px;">
-    <div class="win31-titlebar" onmousedown="startDrag(event,'win-matkul')">
-      <div class="win31-titlebar-icon">🎓</div>
-      <div class="win31-titlebar-text">Mata Kuliah yang Diampu</div>
-      <div class="win31-titlebar-buttons">
-        <button class="win31-btn" onclick="minimizeWindow('win-matkul')" title="Minimize">▼</button>
-        <button class="win31-btn" onclick="maximizeWindow('win-matkul')" title="Maximize">▲</button>
-        <button class="win31-btn" onclick="closeWindow('win-matkul')" title="Close">✕</button>
+        <div class="tst-row reveal">
+          <figure class="tst-card">
+            <blockquote class="tst-quote">
+              “Cara menjelaskan konsep teknisnya membuat mahasiswa yang awalnya
+              ragu jadi berani mencoba dan bereksperimen sendiri.”
+            </blockquote>
+            <figcaption class="tst-who"><b>Mahasiswa</b>Bisnis Digital</figcaption>
+          </figure>
+
+          <figure class="tst-card is-active">
+            <blockquote class="tst-quote">
+              “Risetnya rapi dan bisa diandalkan. Diskusi metodologi selalu
+              membuka sudut pandang baru yang tidak terpikirkan sebelumnya.”
+            </blockquote>
+            <figcaption class="tst-who"><b>Rekan Peneliti</b>Kolaborasi publikasi</figcaption>
+          </figure>
+
+          <figure class="tst-card">
+            <blockquote class="tst-quote">
+              “Aplikasi yang dibangun benar-benar dipakai sehari-hari untuk
+              mencari referensi — bukan sekadar demo.”
+            </blockquote>
+            <figcaption class="tst-who"><b>Pengguna Aktif</b>NyariArtikel.App</figcaption>
+          </figure>
+        </div>
+
+        <div class="tst-row tst-row--second reveal">
+          <figure class="tst-card">
+            <blockquote class="tst-quote">
+              “Pendekatan user-centered bukan hanya materi di kelas, tapi juga
+              cara ia menerima masukan dari tim.”
+            </blockquote>
+            <figcaption class="tst-who"><b>Mitra Kolaborasi</b>Pengembangan produk</figcaption>
+          </figure>
+
+          <figure class="tst-card">
+            <blockquote class="tst-quote">
+              “Materi kuliahnya terstruktur dan langsung bisa dipraktikkan di
+              proyek nyata, bukan hanya teori.”
+            </blockquote>
+            <figcaption class="tst-who"><b>Alumni</b>Teknologi Informasi</figcaption>
+          </figure>
+        </div>
       </div>
-    </div>
-    <div class="win31-menubar">
-      <span class="win31-menu-item"><span class="underline">F</span>ile</span>
-      <span class="win31-menu-item"><span class="underline">E</span>dit</span>
-      <span class="win31-menu-item"><span class="underline">V</span>iew</span>
-    </div>
-    <div class="win31-body">
-      <div class="win31-body-inner">
-        <h2>Mata Kuliah yang Diampu</h2>
-        <p class="section-desc">10 mata kuliah lintas semester di program studi Bisnis Digital & Teknik Informatika.</p>
+    </section>
 
-        <div class="semester-header">Semester 1</div>
-        <div class="course-row">
-          <span class="course-icon">💻</span>
-          <div class="course-info">
-            <span class="course-prodi-tag prodi-bd">BD</span>
-            <div class="course-name">Pengantar Teknologi Informasi</div>
-            <div class="course-desc">Landasan konseptual TI modern — perangkat keras, jaringan, keamanan data, dan pemanfaatannya dalam konteks bisnis digital.</div>
-          </div>
-        </div>
-
-        <div class="semester-header">Semester 3</div>
-        <div class="course-row">
-          <span class="course-icon">🌐</span>
-          <div class="course-info">
-            <span class="course-prodi-tag prodi-bd">BD</span>
-            <div class="course-name">Ekonomi Digital Baru</div>
-            <div class="course-desc">Transformasi ekonomi oleh teknologi digital — platform, e-commerce, sharing economy, dan regulasi ekosistem digital.</div>
-          </div>
-        </div>
-        <div class="course-row">
-          <span class="course-icon">🖱️</span>
-          <div class="course-info">
-            <span class="course-prodi-tag prodi-bd">BD</span>
-            <div class="course-name">Interaksi Manusia dan Komputer</div>
-            <div class="course-desc">Prinsip user-centered design, evaluasi usabilitas, dan prototipe interaktif untuk antarmuka yang efektif.</div>
-          </div>
-        </div>
-
-        <div class="semester-header">Semester 4</div>
-        <div class="course-row">
-          <span class="course-icon">🏗️</span>
-          <div class="course-info">
-            <span class="course-prodi-tag prodi-bd">BD</span>
-            <div class="course-name"><a href="https://andikachandra.com/mbd/">Model dan Desain Bisnis Digital</a></div>
-            <div class="course-desc">Merancang dan mengevaluasi model bisnis digital — freemium, subscription, marketplace — dengan Business Model Canvas.</div>
-          </div>
-        </div>
-
-        <div class="semester-header">Semester 5</div>
-        <div class="course-row">
-          <span class="course-icon">📊</span>
-          <div class="course-info">
-            <span class="course-prodi-tag prodi-bd">BD</span>
-            <div class="course-name">Analisis Bisnis Digital</div>
-            <div class="course-desc">Kerangka analitik untuk mengevaluasi kinerja bisnis digital dan pengambilan keputusan strategis berbasis data.</div>
-          </div>
-        </div>
-        <div class="course-row">
-          <span class="course-icon">📱</span>
-          <div class="course-info">
-            <span class="course-prodi-tag prodi-bd">BD</span>
-            <div class="course-name">Social Media Analysis</div>
-            <div class="course-desc">Teknik pengolahan data media sosial untuk branding, analisis sentimen, dan strategi konten digital.</div>
-          </div>
-        </div>
-
-        <div class="semester-header">Semester 6</div>
-        <div class="course-row">
-          <span class="course-icon">📋</span>
-          <div class="course-info">
-            <span class="course-prodi-tag prodi-ti">TI</span>
-            <div class="course-name">Manajemen Proyek SI</div>
-            <div class="course-desc">Metodologi manajemen proyek SI — perencanaan, estimasi biaya, manajemen risiko, dan Gantt Chart.</div>
-          </div>
-        </div>
-        <div class="course-row">
-          <span class="course-icon">🛒</span>
-          <div class="course-info">
-            <span class="course-prodi-tag prodi-bd">BD</span>
-            <div class="course-name"><a href="https://andikachandra.com/dcb/">Digital Consumer Behaviour</a></div>
-            <div class="course-desc">Pola perilaku konsumen online, pengaruh media sosial, personalisasi, dan strategi membangun loyalitas pelanggan.</div>
-          </div>
-        </div>
-        <div class="course-row">
-          <span class="course-icon">🗄️</span>
-          <div class="course-info">
-            <span class="course-prodi-tag prodi-bd">BD</span>
-            <div class="course-name">Data Warehouse & BI</div>
-            <div class="course-desc">Arsitektur data warehouse, ETL, OLAP, dan alat BI untuk mengolah data besar menjadi informasi bisnis yang bernilai.</div>
-          </div>
-        </div>
-
-        <div class="semester-header">Semester 7</div>
-        <div class="course-row">
-          <span class="course-icon">🚀</span>
-          <div class="course-info">
-            <span class="course-prodi-tag prodi-ti">TI</span>
-            <div class="course-name">Technopreneur</div>
-            <div class="course-desc">Mengintegrasikan kompetensi teknis dengan jiwa wirausaha — validasi pasar dan membangun startup berbasis produk digital.</div>
-          </div>
-        </div>
-        <div class="course-row">
-          <span class="course-icon">💡</span>
-          <div class="course-info">
-            <span class="course-prodi-tag prodi-bd">BD</span>
-            <div class="course-name">Technopreneurship</div>
-            <div class="course-desc">Ekosistem startup teknologi — pendanaan, pitching investor, growth hacking, dan scale-up dari ideasi hingga komersialisasi.</div>
-          </div>
-        </div>
-
-        <button class="win31-action-btn" style="margin-top:10px; font-size:11px; padding:3px 12px;">
-          <a href="https://andikachandra.com/daftar-mata-kuliah.html">Lihat deskripsi lengkap →</a>
-        </button>
-
+    <!-- ════════════════ CTA ════════════════ -->
+    <section class="cta" id="contact" aria-labelledby="ctaTitle">
+      <span class="hatch hatch-e" aria-hidden="true"></span>
+      <span class="hatch hatch-f" aria-hidden="true"></span>
+      <div class="cta-glow" aria-hidden="true"></div>
+      <div class="container">
+        <h2 class="cta-title" id="ctaTitle">Let’s Make Dream Together</h2>
+        <p class="cta-sub">
+          Butuh dosen tamu, kolaborasi riset, atau pengembangan produk digital?
+          Saya terbuka untuk diskusi dan kerja sama.
+        </p>
+        <a class="btn-olive" href="mailto:me@andikachandra.com">Email</a>
       </div>
+    </section>
+  </main>
+
+  <!-- ════════════════ FOOTER ════════════════ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-copy">
+        ©2026 Andika Chandra P, All Right Reserved ·
+        <a href="win31_index.html">Versi retro (Windows 3.1)</a>
+      </p>
+      <ul class="footer-links">
+        <li><a href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href="mailto:me@andikachandra.com">Email</a></li>
+        <li><a href="daftar-mata-kuliah.html">Mata Kuliah</a></li>
+      </ul>
     </div>
-    <div class="win31-statusbar">
-      <div class="win31-statusbar-section">10 mata kuliah</div>
-    </div>
-  </div>
+  </footer>
+  <script>
+    (function () {
+      'use strict';
 
-  <!-- ═══════════════════════════════════════
-       WINDOW: KONTAK
-       ═══════════════════════════════════════ -->
-  <div class="win31-window" id="win-kontak" style="left:160px; top:50px; width:400px;">
-    <div class="win31-titlebar" onmousedown="startDrag(event,'win-kontak')">
-      <div class="win31-titlebar-icon">📧</div>
-      <div class="win31-titlebar-text">Kontak</div>
-      <div class="win31-titlebar-buttons">
-        <button class="win31-btn" onclick="minimizeWindow('win-kontak')" title="Minimize">▼</button>
-        <button class="win31-btn" onclick="maximizeWindow('win-kontak')" title="Maximize">▲</button>
-        <button class="win31-btn" onclick="closeWindow('win-kontak')" title="Close">✕</button>
-      </div>
-    </div>
-    <div class="win31-menubar">
-      <span class="win31-menu-item"><span class="underline">F</span>ile</span>
-      <span class="win31-menu-item"><span class="underline">E</span>dit</span>
-    </div>
-    <div class="win31-body">
-      <div class="win31-body-inner">
-        <h2>Kontak</h2>
-        <p class="section-desc">Silakan menghubungi untuk keperluan akademik, kolaborasi riset, atau pertanyaan lainnya.</p>
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        <div class="contact-row">
-          <div class="contact-emoji">✉️</div>
-          <div>
-            <div class="contact-label-text">Email</div>
-            <div class="contact-value-text"><a href="mailto:me@andikachandra.com">me@andikachandra.com</a></div>
-          </div>
-        </div>
+      /* ── Navbar: bayangan saat halaman digulir ── */
+      var nav = document.getElementById('siteNav');
+      function syncNav() {
+        nav.classList.toggle('is-stuck', window.scrollY > 8);
+      }
+      syncNav();
+      window.addEventListener('scroll', syncNav, { passive: true });
 
-        <div class="contact-row">
-          <div class="contact-emoji">🐙</div>
-          <div>
-            <div class="contact-label-text">GitHub</div>
-            <div class="contact-value-text"><a href="https://github.com/andikachandrap" target="_blank">github.com/andikachandra23</a></div>
-          </div>
-        </div>
+      /* ── Menu mobile ── */
+      var toggle = document.getElementById('navToggle');
+      var navLinks = document.getElementById('navLinks');
 
-        <div class="contact-row">
-          <div class="contact-emoji">📍</div>
-          <div>
-            <div class="contact-label-text">Lokasi</div>
-            <div class="contact-value-text" style="color:var(--text-muted);">Tegal, Jawa Tengah</div>
-          </div>
-        </div>
+      toggle.addEventListener('click', function () {
+        var isOpen = navLinks.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        toggle.setAttribute('aria-label', isOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi');
+      });
 
-        <div class="retro-footer">
-          © 2025 <strong>Andika Chandra P., S.Kom., M.T.I</strong> · Dibuat dengan ♥ · <a href="https://github.com/andikachandrap">GitHub Pages</a>
-        </div>
+      navLinks.addEventListener('click', function (event) {
+        if (!event.target.closest('a')) return;
+        navLinks.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Buka menu navigasi');
+      });
 
-      </div>
-    </div>
-    <div class="win31-statusbar">
-      <div class="win31-statusbar-section">Ready</div>
-    </div>
-  </div>
+      /* ── Penanda section aktif di navbar ── */
+      var links = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
+      var targets = links
+        .map(function (link) { return document.querySelector(link.getAttribute('href')); })
+        .filter(Boolean);
 
-</div>
+      if ('IntersectionObserver' in window && targets.length) {
+        var navObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            links.forEach(function (link) {
+              link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id);
+            });
+          });
+        }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
 
-<!-- ════════════════ START MENU ════════════════ -->
-<div class="start-menu" id="startMenu">
-  <div class="start-menu-sidebar">
-    <span>Windows 3.1</span>
-  </div>
-  <div class="start-menu-items">
-    <div class="start-menu-item" onclick="openWindow('win-profil'); toggleStartMenu();">👤 Profil</div>
-    <div class="start-menu-item" onclick="openWindow('win-portofolio'); toggleStartMenu();">💼 Portofolio</div>
-    <div class="start-menu-item" onclick="openWindow('win-penelitian'); toggleStartMenu();">📚 Penelitian</div>
-    <div class="start-menu-item" onclick="openWindow('win-matkul'); toggleStartMenu();">🎓 Mata Kuliah</div>
-    <div class="start-menu-item" onclick="openWindow('win-kontak'); toggleStartMenu();">📧 Kontak</div>
-    <div class="start-menu-sep"></div>
-    <div class="start-menu-item"><a href="https://andikachandra.com/daftar-mata-kuliah.html" style="color:inherit; text-decoration:none;">📖 Semua Mata Kuliah</a></div>
-  </div>
-</div>
+        targets.forEach(function (section) { navObserver.observe(section); });
+      }
 
-<!-- ════════════════ TASKBAR ════════════════ -->
-<div class="taskbar">
-  <button class="start-btn" id="startBtn" onclick="toggleStartMenu()">
-    <span class="start-flag">🪟</span> Start
-  </button>
-  <div class="taskbar-divider"></div>
-  <div class="taskbar-windows">
-    <button class="taskbar-win-btn visible" id="tb-profil" onclick="toggleFromTaskbar('win-profil')">
-      👤 Profil
-    </button>
-    <button class="taskbar-win-btn" id="tb-portofolio" onclick="toggleFromTaskbar('win-portofolio')">
-      💼 Portofolio
-    </button>
-    <button class="taskbar-win-btn" id="tb-penelitian" onclick="toggleFromTaskbar('win-penelitian')">
-      📚 Penelitian
-    </button>
-    <button class="taskbar-win-btn" id="tb-matkul" onclick="toggleFromTaskbar('win-matkul')">
-      🎓 Mata Kuliah
-    </button>
-    <button class="taskbar-win-btn" id="tb-kontak" onclick="toggleFromTaskbar('win-kontak')">
-      📧 Kontak
-    </button>
-  </div>
-  <div class="taskbar-clock" id="taskbarClock">
-    <span>🔊</span>
-    <span id="clockText">00:00</span>
-  </div>
-</div>
+      /* ── Tab kategori karya ── */
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('.work-tab'));
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.work-card'));
+      var panel = document.getElementById('panel-work');
 
-<script>
-  // ══════════════════════════════════════
-  // WINDOW MANAGEMENT
-  // ══════════════════════════════════════
-  let highestZ = 10;
-  const windowStates = {};
+      function selectTab(tab) {
+        tabs.forEach(function (item) {
+          var active = item === tab;
+          item.setAttribute('aria-selected', active ? 'true' : 'false');
+          item.tabIndex = active ? 0 : -1;
+        });
 
-  function openWindow(id) {
-    const win = document.getElementById(id);
-    if (!win) return;
-    win.classList.add('open');
-    win.style.display = 'flex';
-    focusWindow(id);
-    updateTaskbarButtons();
-  }
+        panel.setAttribute('aria-labelledby', tab.id);
+        var category = tab.getAttribute('data-filter');
 
-  function closeWindow(id) {
-    const win = document.getElementById(id);
-    if (!win) return;
-    win.classList.remove('open');
-    win.style.display = 'none';
-    updateTaskbarButtons();
-  }
+        cards.forEach(function (card) {
+          var show = card.getAttribute('data-cat') === category;
+          card.hidden = !show;
+          card.classList.remove('is-out');
+          if (show) {
+            void card.offsetWidth;
+            card.classList.add('in', 'is-out');
+          }
+        });
+      }
 
-  function minimizeWindow(id) {
-    const win = document.getElementById(id);
-    if (!win) return;
-    win.classList.remove('open');
-    win.style.display = 'none';
-    updateTaskbarButtons();
-  }
+      tabs.forEach(function (tab, index) {
+        tab.addEventListener('click', function () { selectTab(tab); });
 
-  function maximizeWindow(id) {
-    const win = document.getElementById(id);
-    if (!win) return;
-    if (windowStates[id] && windowStates[id].maximized) {
-      // Restore
-      win.style.left = windowStates[id].left;
-      win.style.top = windowStates[id].top;
-      win.style.width = windowStates[id].width;
-      win.style.height = windowStates[id].height;
-      windowStates[id].maximized = false;
-    } else {
-      // Maximize
-      windowStates[id] = {
-        left: win.style.left,
-        top: win.style.top,
-        width: win.style.width,
-        height: win.style.height,
-        maximized: true
-      };
-      win.style.left = '0';
-      win.style.top = '0';
-      win.style.width = '100%';
-      win.style.height = 'calc(100vh - 36px)';
-    }
-  }
+        tab.addEventListener('keydown', function (event) {
+          var step = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+          if (!step) return;
+          event.preventDefault();
+          var next = tabs[(index + step + tabs.length) % tabs.length];
+          next.focus();
+          selectTab(next);
+        });
+      });
 
-  function focusWindow(id) {
-    highestZ++;
-    const win = document.getElementById(id);
-    if (!win) return;
-    win.style.zIndex = highestZ;
+      /* ── Testimoni: tandai kartu yang sedang disorot ── */
+      var quotes = Array.prototype.slice.call(document.querySelectorAll('.tst-card'));
+      quotes.forEach(function (card) {
+        card.addEventListener('click', function () {
+          quotes.forEach(function (item) { item.classList.remove('is-active'); });
+          card.classList.add('is-active');
+        });
+      });
 
-    // Mark all as inactive, then active
-    document.querySelectorAll('.win31-window').forEach(w => {
-      w.classList.add('inactive');
-      const tb = document.getElementById('tb-' + w.id.replace('win-', ''));
-      if (tb) tb.classList.remove('active');
-    });
-    win.classList.remove('inactive');
-    const tb = document.getElementById('tb-' + id.replace('win-', ''));
-    if (tb) tb.classList.add('active');
-  }
+      /* ── Reveal saat digulir ── */
+      var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
 
-  function toggleFromTaskbar(id) {
-    const win = document.getElementById(id);
-    if (!win) return;
-    if (win.classList.contains('open') && win.style.display !== 'none') {
-      // Already visible — minimize
-      minimizeWindow(id);
-    } else {
-      openWindow(id);
-    }
-  }
-
-  function updateTaskbarButtons() {
-    document.querySelectorAll('.win31-window').forEach(win => {
-      const btn = document.getElementById('tb-' + win.id.replace('win-', ''));
-      if (!btn) return;
-      if (win.classList.contains('open') && win.style.display !== 'none') {
-        btn.classList.add('visible');
-        btn.classList.add('active');
-      } else if (win.classList.contains('open')) {
-        btn.classList.add('visible');
-        btn.classList.remove('active');
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        reveals.forEach(function (el) { el.classList.add('in'); });
       } else {
-        btn.classList.remove('visible');
-        btn.classList.remove('active');
+        var revealObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('in');
+            revealObserver.unobserve(entry.target);
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+        reveals.forEach(function (el) { revealObserver.observe(el); });
       }
-    });
-  }
+    })();
+  </script>
 
-  // Focus on click
-  document.querySelectorAll('.win31-window').forEach(win => {
-    win.addEventListener('mousedown', () => {
-      focusWindow(win.id);
-    });
-  });
-
-  // ══════════════════════════════════════
-  // DRAG (simple)
-  // ══════════════════════════════════════
-  let dragEl = null, dragOffX = 0, dragOffY = 0;
-
-  function startDrag(e, id) {
-    // Don't drag on buttons
-    if (e.target.classList.contains('win31-btn')) return;
-
-    const win = document.getElementById(id);
-    if (windowStates[id] && windowStates[id].maximized) return;
-
-    dragEl = win;
-    const rect = win.getBoundingClientRect();
-    dragOffX = e.clientX - rect.left;
-    dragOffY = e.clientY - rect.top;
-    focusWindow(id);
-    e.preventDefault();
-  }
-
-  document.addEventListener('mousemove', (e) => {
-    if (!dragEl) return;
-    const x = Math.max(0, e.clientX - dragOffX);
-    const y = Math.max(0, e.clientY - dragOffY);
-    dragEl.style.left = x + 'px';
-    dragEl.style.top = y + 'px';
-  });
-
-  document.addEventListener('mouseup', () => {
-    dragEl = null;
-  });
-
-  // ══════════════════════════════════════
-  // START MENU
-  // ══════════════════════════════════════
-  function toggleStartMenu() {
-    document.getElementById('startMenu').classList.toggle('open');
-  }
-
-  // Close start menu when clicking elsewhere
-  document.addEventListener('click', (e) => {
-    const menu = document.getElementById('startMenu');
-    const btn = document.getElementById('startBtn');
-    if (!menu.contains(e.target) && !btn.contains(e.target)) {
-      menu.classList.remove('open');
-    }
-  });
-
-  // ══════════════════════════════════════
-  // CLOCK
-  // ══════════════════════════════════════
-  function updateClock() {
-    const now = new Date();
-    const h = String(now.getHours()).padStart(2, '0');
-    const m = String(now.getMinutes()).padStart(2, '0');
-    document.getElementById('clockText').textContent = h + ':' + m;
-  }
-  updateClock();
-  setInterval(updateClock, 30000);
-
-  // ══════════════════════════════════════
-  // DESKTOP ICON SELECTION
-  // ══════════════════════════════════════
-  document.querySelectorAll('.desktop-icon').forEach(icon => {
-    icon.addEventListener('click', (e) => {
-      document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
-      icon.classList.add('selected');
-    });
-  });
-
-  // Deselect when clicking desktop background
-  document.getElementById('desktop').addEventListener('click', (e) => {
-    if (e.target === document.getElementById('desktop') || e.target.classList.contains('desktop')) {
-      document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
-    }
-  });
-
-  // Initialize taskbar
-  updateTaskbarButtons();
-
-  // ══════════════════════════════════════
-  // RETRO PIXEL ART ICONS (Canvas)
-  // ══════════════════════════════════════
-  function drawRetroIcons() {
-    document.querySelectorAll('.retro-canvas').forEach(canvas => {
-      const ctx = canvas.getContext('2d');
-      const s = canvas.width; // 64
-      const u = s / 16;      // unit = 4px
-
-      ctx.imageSmoothingEnabled = true;
-      ctx.clearRect(0, 0, s, s);
-
-      const type = canvas.dataset.icon;
-
-      // ── Helper: 3D bevel rect ──
-      function bevelRect(x, y, w, h, fill, light, dark) {
-        ctx.fillStyle = fill;
-        ctx.fillRect(x, y, w, h);
-        ctx.strokeStyle = light;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(x, y + h); ctx.lineTo(x, y); ctx.lineTo(x + w, y);
-        ctx.stroke();
-        ctx.strokeStyle = dark;
-        ctx.beginPath();
-        ctx.moveTo(x + w, y); ctx.lineTo(x + w, y + h); ctx.lineTo(x, y + h);
-        ctx.stroke();
-      }
-
-      // ── PERSON / USER ICON (Windows Classic) ──
-      if (type === 'person') {
-        // Shadow on ground
-        ctx.fillStyle = 'rgba(0,0,0,0.2)';
-        ctx.beginPath();
-        ctx.ellipse(s/2, s - 2*u, 5*u, 1.5*u, 0, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Head
-        ctx.fillStyle = '#000080';
-        ctx.beginPath();
-        ctx.arc(s/2, 4*u, 2.8*u, 0, Math.PI * 2);
-        ctx.fill();
-        // Head highlight
-        ctx.fillStyle = '#3040b0';
-        ctx.beginPath();
-        ctx.arc(s/2 - 0.5*u, 3.5*u, 2*u, 0, Math.PI * 2);
-        ctx.fill();
-        // Skin face
-        ctx.fillStyle = '#d4a574';
-        ctx.beginPath();
-        ctx.arc(s/2, 4*u, 2.3*u, 0, Math.PI * 2);
-        ctx.fill();
-        // Hair top
-        ctx.fillStyle = '#2a2a2a';
-        ctx.beginPath();
-        ctx.arc(s/2, 3.2*u, 2.5*u, Math.PI * 1.15, Math.PI * 1.85);
-        ctx.fill();
-        // Eyes
-        ctx.fillStyle = '#000000';
-        ctx.fillRect(s/2 - 1.3*u, 3.8*u, 0.6*u, 0.6*u);
-        ctx.fillRect(s/2 + 0.7*u, 3.8*u, 0.6*u, 0.6*u);
-        // Eye whites
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(s/2 - 1.2*u, 3.9*u, 0.4*u, 0.3*u);
-        ctx.fillRect(s/2 + 0.8*u, 3.9*u, 0.4*u, 0.3*u);
-        // Nose
-        ctx.fillStyle = '#c49464';
-        ctx.fillRect(s/2 - 0.2*u, 4.6*u, 0.5*u, 0.4*u);
-        // Mouth
-        ctx.fillStyle = '#a04040';
-        ctx.fillRect(s/2 - 0.5*u, 5.2*u, 1.1*u, 0.3*u);
-
-        // Neck
-        ctx.fillStyle = '#d4a574';
-        ctx.fillRect(s/2 - 0.7*u, 6.3*u, 1.4*u, 0.8*u);
-
-        // Shirt collar (white)
-        ctx.fillStyle = '#ffffff';
-        ctx.beginPath();
-        ctx.moveTo(s/2 - 1.5*u, 7*u);
-        ctx.lineTo(s/2, 8.2*u);
-        ctx.lineTo(s/2 + 1.5*u, 7*u);
-        ctx.lineTo(s/2 + 1.5*u, 7.6*u);
-        ctx.lineTo(s/2, 8.8*u);
-        ctx.lineTo(s/2 - 1.5*u, 7.6*u);
-        ctx.closePath();
-        ctx.fill();
-
-        // Jacket body
-        var jg = ctx.createLinearGradient(s/2 - 5*u, 7*u, s/2 + 5*u, 7*u);
-        jg.addColorStop(0, '#000060');
-        jg.addColorStop(0.3, '#000080');
-        jg.addColorStop(0.7, '#000080');
-        jg.addColorStop(1, '#000050');
-        ctx.fillStyle = jg;
-        ctx.beginPath();
-        ctx.moveTo(s/2 - 1.5*u, 7*u);
-        ctx.lineTo(s/2 - 5*u, 7*u);
-        ctx.lineTo(s/2 - 5.5*u, 13*u);
-        ctx.lineTo(s/2 + 5.5*u, 13*u);
-        ctx.lineTo(s/2 + 5*u, 7*u);
-        ctx.lineTo(s/2 + 1.5*u, 7*u);
-        ctx.lineTo(s/2, 8.5*u);
-        ctx.lineTo(s/2 - 1.5*u, 7*u);
-        ctx.closePath();
-        ctx.fill();
-        // Jacket highlight left
-        ctx.strokeStyle = '#2030a0';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(s/2 - 4.8*u, 7.2*u);
-        ctx.lineTo(s/2 - 5.3*u, 12.8*u);
-        ctx.stroke();
-        // Jacket buttons
-        ctx.fillStyle = '#c0c0c0';
-        ctx.beginPath();
-        ctx.arc(s/2, 9.5*u, 0.3*u, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(s/2, 11*u, 0.3*u, 0, Math.PI * 2);
-        ctx.fill();
-        // Tie
-        ctx.fillStyle = '#800000';
-        ctx.beginPath();
-        ctx.moveTo(s/2 - 0.3*u, 8.5*u);
-        ctx.lineTo(s/2, 12*u);
-        ctx.lineTo(s/2 + 0.3*u, 8.5*u);
-        ctx.closePath();
-        ctx.fill();
-
-        // Legs (trousers)
-        ctx.fillStyle = '#000040';
-        ctx.fillRect(s/2 - 3.5*u, 13*u, 3*u, 3*u);
-        ctx.fillRect(s/2 + 0.5*u, 13*u, 3*u, 3*u);
-        // Shoes
-        ctx.fillStyle = '#1a1a1a';
-        ctx.fillRect(s/2 - 4*u, 15.5*u, 3.5*u, 0.8*u);
-        ctx.fillRect(s/2 + 0.5*u, 15.5*u, 3.5*u, 0.8*u);
-        // Shoe highlight
-        ctx.fillStyle = '#2a2a2a';
-        ctx.fillRect(s/2 - 3.8*u, 15.5*u, 1.2*u, 0.3*u);
-        ctx.fillRect(s/2 + 0.7*u, 15.5*u, 1.2*u, 0.3*u);
-      }
-
-      // ── FOLDER ICON (Windows Classic Program Group) ──
-      else if (type === 'briefcase') {
-        // Shadow
-        ctx.fillStyle = 'rgba(0,0,0,0.15)';
-        ctx.fillRect(2.5*u, 5*u, 12*u, 11*u);
-
-        // Tab
-        var tabGrad = ctx.createLinearGradient(0, 2*u, 0, 5*u);
-        tabGrad.addColorStop(0, '#ffffa0');
-        tabGrad.addColorStop(1, '#e8c840');
-        ctx.fillStyle = tabGrad;
-        ctx.beginPath();
-        ctx.roundRect(2*u, 2*u, 7*u, 3*u, [1*u, 1*u, 0, 0]);
-        ctx.fill();
-        // Tab border
-        ctx.strokeStyle = '#806000';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.roundRect(2*u, 2*u, 7*u, 3*u, [1*u, 1*u, 0, 0]);
-        ctx.stroke();
-        // Tab top bevel
-        ctx.strokeStyle = '#ffffe0';
-        ctx.lineWidth = 0.5;
-        ctx.beginPath();
-        ctx.moveTo(2.5*u, 2.5*u);
-        ctx.lineTo(8.5*u, 2.5*u);
-        ctx.stroke();
-
-        // Folder body
-        var fGrad = ctx.createLinearGradient(0, 4.5*u, 0, 14*u);
-        fGrad.addColorStop(0, '#ffe870');
-        fGrad.addColorStop(0.15, '#ffdc30');
-        fGrad.addColorStop(0.5, '#f0c800');
-        fGrad.addColorStop(1, '#c8a000');
-        ctx.fillStyle = fGrad;
-        ctx.beginPath();
-        ctx.roundRect(1.5*u, 4.5*u, 13*u, 9.5*u, [0.5*u, 0.5*u, 0.5*u, 0.5*u]);
-        ctx.fill();
-        // Folder outline
-        ctx.strokeStyle = '#806000';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.roundRect(1.5*u, 4.5*u, 13*u, 9.5*u, [0.5*u, 0.5*u, 0.5*u, 0.5*u]);
-        ctx.stroke();
-
-        // Folder front face gradient
-        var ffGrad = ctx.createLinearGradient(0, 7*u, 0, 14*u);
-        ffGrad.addColorStop(0, '#ffe050');
-        ffGrad.addColorStop(1, '#b89000');
-        ctx.fillStyle = ffGrad;
-        ctx.fillRect(2*u, 7.5*u, 12*u, 6*u);
-        // Front face outline
-        ctx.strokeStyle = '#806000';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(2*u, 7.5*u, 12*u, 6*u);
-
-        // Inner documents peeking
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(3.5*u, 6.5*u, 4*u, 5.5*u);
-        ctx.fillStyle = '#e0e0e0';
-        ctx.fillRect(3.5*u, 6.5*u, 4*u, 0.3*u);
-        // Document lines
-        ctx.fillStyle = '#c0c0c0';
-        for (var i = 0; i < 4; i++) {
-          ctx.fillRect(4*u, 7.2*u + i*1*u, 3*u, 0.2*u);
-        }
-
-        // Bevel highlight
-        ctx.strokeStyle = '#fffff0';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(2*u, 13.5*u);
-        ctx.lineTo(2*u, 7.5*u);
-        ctx.lineTo(14*u, 7.5*u);
-        ctx.stroke();
-        // Bevel shadow
-        ctx.strokeStyle = '#907000';
-        ctx.beginPath();
-        ctx.moveTo(14*u, 7.5*u);
-        ctx.lineTo(14*u, 13.5*u);
-        ctx.lineTo(2*u, 13.5*u);
-        ctx.stroke();
-      }
-
-      // ── BOOK ICON (Windows Classic Help Book) ──
-      else if (type === 'book') {
-        // Shadow
-        ctx.fillStyle = 'rgba(0,0,0,0.15)';
-        ctx.fillRect(3*u, 3*u, 12*u, 12*u);
-
-        // Back cover
-        ctx.fillStyle = '#8b0000';
-        ctx.fillRect(2*u, 1.5*u, 12*u, 13*u);
-        ctx.strokeStyle = '#4a0000';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(2*u, 1.5*u, 12*u, 13*u);
-
-        // Right page
-        var rpGrad = ctx.createLinearGradient(8.5*u, 0, 13.5*u, 0);
-        rpGrad.addColorStop(0, '#f0f0f0');
-        rpGrad.addColorStop(1, '#ffffff');
-        ctx.fillStyle = rpGrad;
-        ctx.fillRect(8.5*u, 2*u, 5*u, 12*u);
-        // Right page shadow
-        ctx.fillStyle = 'rgba(0,0,0,0.05)';
-        ctx.fillRect(8.5*u, 2*u, 0.5*u, 12*u);
-        // Right page border
-        ctx.strokeStyle = '#a0a0a0';
-        ctx.lineWidth = 0.5;
-        ctx.strokeRect(8.5*u, 2*u, 5*u, 12*u);
-
-        // Left page
-        var lpGrad = ctx.createLinearGradient(2.5*u, 0, 7.5*u, 0);
-        lpGrad.addColorStop(0, '#ffffff');
-        lpGrad.addColorStop(1, '#f0f0f0');
-        ctx.fillStyle = lpGrad;
-        ctx.fillRect(2.5*u, 2*u, 5*u, 12*u);
-        // Left page shadow at spine
-        ctx.fillStyle = 'rgba(0,0,0,0.05)';
-        ctx.fillRect(7*u, 2*u, 0.5*u, 12*u);
-        // Left page border
-        ctx.strokeStyle = '#a0a0a0';
-        ctx.lineWidth = 0.5;
-        ctx.strokeRect(2.5*u, 2*u, 5*u, 12*u);
-
-        // Spine
-        var spGrad = ctx.createLinearGradient(7.2*u, 0, 8.8*u, 0);
-        spGrad.addColorStop(0, '#6b0000');
-        spGrad.addColorStop(0.5, '#a50000');
-        spGrad.addColorStop(1, '#6b0000');
-        ctx.fillStyle = spGrad;
-        ctx.fillRect(7.2*u, 1.5*u, 1.6*u, 13*u);
-
-        // Text on left page
-        ctx.fillStyle = '#000080';
-        for (var i = 0; i < 5; i++) {
-          var lw = (3 + Math.random() * 2) * u;
-          ctx.fillRect(3.2*u, 3.5*u + i*2*u, lw, 0.4*u);
-        }
-
-        // Text on right page
-        ctx.fillStyle = '#000080';
-        for (var i = 0; i < 5; i++) {
-          var rw = (3 + Math.random() * 1.5) * u;
-          ctx.fillRect(9.2*u, 3.5*u + i*2*u, rw, 0.4*u);
-        }
-
-        // Book outline
-        ctx.strokeStyle = '#4a0000';
-        ctx.lineWidth = 1.5;
-        ctx.strokeRect(2*u, 1.5*u, 12*u, 13*u);
-      }
-
-      // ── DOCUMENT ICON (Windows Classic) ──
-      else if (type === 'gradcap') {
-        // Shadow
-        ctx.fillStyle = 'rgba(0,0,0,0.15)';
-        ctx.fillRect(5*u, 2*u, 10*u, 13*u);
-
-        // Document body
-        var dGrad = ctx.createLinearGradient(3*u, 0, 13*u, 0);
-        dGrad.addColorStop(0, '#ffffff');
-        dGrad.addColorStop(1, '#e8e8e8');
-        ctx.fillStyle = dGrad;
-        ctx.fillRect(3*u, 1*u, 10*u, 13*u);
-
-        // Border
-        ctx.strokeStyle = '#808080';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(3*u, 1*u, 10*u, 13*u);
-
-        // Dog-ear fold
-        ctx.fillStyle = '#d0d0d0';
-        ctx.beginPath();
-        ctx.moveTo(11*u, 1*u);
-        ctx.lineTo(13*u, 1*u);
-        ctx.lineTo(13*u, 3*u);
-        ctx.closePath();
-        ctx.fill();
-        // Fold shadow
-        ctx.fillStyle = '#a0a0a0';
-        ctx.beginPath();
-        ctx.moveTo(11*u, 1*u);
-        ctx.lineTo(13*u, 3*u);
-        ctx.lineTo(11*u, 3*u);
-        ctx.closePath();
-        ctx.fill();
-        // Fold line
-        ctx.strokeStyle = '#808080';
-        ctx.lineWidth = 0.5;
-        ctx.beginPath();
-        ctx.moveTo(11*u, 1*u);
-        ctx.lineTo(11*u, 3*u);
-        ctx.lineTo(13*u, 3*u);
-        ctx.stroke();
-
-        // Title bar (blue)
-        ctx.fillStyle = '#000080';
-        ctx.fillRect(3.5*u, 2*u, 7*u, 1.5*u);
-        // Title text
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold ' + (1.2*u) + 'px sans-serif';
-        ctx.fillText('DOC', 5*u, 3.2*u);
-
-        // Content lines
-        ctx.fillStyle = '#404040';
-        ctx.fillRect(4*u, 4.5*u, 8*u, 0.3*u);
-        ctx.fillRect(4*u, 5.5*u, 6*u, 0.3*u);
-        ctx.fillRect(4*u, 6.5*u, 7*u, 0.3*u);
-        ctx.fillRect(4*u, 8*u, 8*u, 0.3*u);
-        ctx.fillRect(4*u, 9*u, 5*u, 0.3*u);
-        ctx.fillRect(4*u, 10*u, 7*u, 0.3*u);
-
-        // Seal / checkmark
-        ctx.fillStyle = '#008000';
-        ctx.beginPath();
-        ctx.arc(10.5*u, 12*u, 1.2*u, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        ctx.moveTo(9.6*u, 12*u);
-        ctx.lineTo(10.2*u, 12.6*u);
-        ctx.lineTo(11.4*u, 11.2*u);
-        ctx.stroke();
-
-        // 3D highlight edge
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(3.5*u, 13.5*u);
-        ctx.lineTo(3.5*u, 1.5*u);
-        ctx.lineTo(12.5*u, 1.5*u);
-        ctx.stroke();
-      }
-
-      // ── ENVELOPE ICON (Windows Classic Mail) ──
-      else if (type === 'envelope') {
-        // Shadow
-        ctx.fillStyle = 'rgba(0,0,0,0.12)';
-        ctx.fillRect(2*u, 5*u, 13*u, 10*u);
-
-        // Envelope body with gradient
-        var eGrad = ctx.createLinearGradient(0, 3*u, 0, 12*u);
-        eGrad.addColorStop(0, '#ffffff');
-        eGrad.addColorStop(1, '#d8d8d8');
-        ctx.fillStyle = eGrad;
-        ctx.fillRect(1.5*u, 3*u, 13*u, 9*u);
-
-        // Body border
-        ctx.strokeStyle = '#606060';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(1.5*u, 3*u, 13*u, 9*u);
-
-        // Flap (V-shape)
-        ctx.fillStyle = '#e0e0e0';
-        ctx.beginPath();
-        ctx.moveTo(1.5*u, 3*u);
-        ctx.lineTo(8*u, 8.5*u);
-        ctx.lineTo(14.5*u, 3*u);
-        ctx.closePath();
-        ctx.fill();
-        // Flap border
-        ctx.strokeStyle = '#808080';
-        ctx.lineWidth = 0.7;
-        ctx.beginPath();
-        ctx.moveTo(1.5*u, 3*u);
-        ctx.lineTo(8*u, 8.5*u);
-        ctx.lineTo(14.5*u, 3*u);
-        ctx.stroke();
-
-        // Bottom fold lines (subtle)
-        ctx.strokeStyle = '#b0b0b0';
-        ctx.lineWidth = 0.5;
-        ctx.beginPath();
-        ctx.moveTo(1.5*u, 12*u);
-        ctx.lineTo(5.5*u, 8*u);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(14.5*u, 12*u);
-        ctx.lineTo(10.5*u, 8*u);
-        ctx.stroke();
-
-        // Letter peeking out
-        ctx.fillStyle = '#f8f8ff';
-        ctx.fillRect(3*u, 5*u, 10*u, 5.5*u);
-        ctx.strokeStyle = '#c0c0e0';
-        ctx.lineWidth = 0.5;
-        ctx.strokeRect(3*u, 5*u, 10*u, 5.5*u);
-        // Letter lines
-        ctx.fillStyle = '#000080';
-        ctx.fillRect(4*u, 6*u, 6*u, 0.3*u);
-        ctx.fillRect(4*u, 7*u, 8*u, 0.3*u);
-        ctx.fillRect(4*u, 8*u, 5*u, 0.3*u);
-
-        // 3D highlight
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(2*u, 11.5*u);
-        ctx.lineTo(2*u, 3.5*u);
-        ctx.lineTo(14*u, 3.5*u);
-        ctx.stroke();
-        // 3D shadow
-        ctx.strokeStyle = '#909090';
-        ctx.beginPath();
-        ctx.moveTo(14*u, 3.5*u);
-        ctx.lineTo(14*u, 11.5*u);
-        ctx.lineTo(2*u, 11.5*u);
-        ctx.stroke();
-      }
-    });
-  }
-  drawRetroIcons();
-</script>
 </body>
 </html>
