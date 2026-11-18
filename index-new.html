@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<script>
+  /* Set tema sebelum paint supaya tidak berkedip */
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem('andika-theme'); } catch (e) {}
+    var theme = saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    document.documentElement.dataset.theme = theme;
+  })();
+</script>
+
+<title>Andika Chandra P — Dosen, Peneliti &amp; Praktisi Digital</title>
+<meta name="description" content="Portofolio Andika Chandra P, S.Kom., M.T.I — dosen dan peneliti teknologi informasi di bidang AI, socio-techno, dan bisnis digital. Mata kuliah, aplikasi web, dan publikasi ilmiah.">
+<link rel="canonical" href="https://andikachandra.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Andika Chandra P — Dosen, Peneliti &amp; Praktisi Digital">
+<meta property="og:description" content="Mata kuliah, aplikasi web, dan publikasi ilmiah di bidang teknologi informasi, AI, dan bisnis digital.">
+<meta property="og:image" content="https://andikachandra.com/image/foto.webp">
+<meta name="theme-color" content="#0F0F0F" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#E4E4DF" media="(prefers-color-scheme: light)">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;700;800;900&family=Chivo+Mono:wght@500;600&display=swap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23FFD60A'/%3E%3Ctext x='16' y='24' font-family='Helvetica,Arial' font-size='20' font-weight='900' text-anchor='middle' fill='%23111'%3EA%3C/text%3E%3C/svg%3E">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://andikachandra.com/#person",
+      "name": "Andika Chandra P",
+      "honorificSuffix": "S.Kom., M.T.I",
+      "url": "https://andikachandra.com/",
+      "image": "https://andikachandra.com/image/foto.webp",
+      "jobTitle": "Dosen dan Peneliti",
+      "knowsAbout": ["Machine Learning", "Web Design", "Digital Marketing", "Socio-Techno"],
+      "sameAs": ["https://github.com/andikachandra23"]
+    },
+    {
+      "@type": "WebSite",
+      "url": "https://andikachandra.com/",
+      "name": "Andika Chandra P",
+      "inLanguage": "id"
+    }
+  ]
+}
+</script>
+
+<style>
+  /* ══════════════════════════════════════
+     TOKENS
+     ══════════════════════════════════════ */
+  :root {
+    color-scheme: dark;
+    --c-background: 15 15 15;
+    --c-surface: 25 25 25;
+    --c-surface-2: 32 32 32;
+    --c-border: 54 54 52;
+    --c-border-bright: 110 110 105;
+    --c-foreground: 237 237 232;
+    --c-body: 207 207 201;
+    --c-muted: 163 163 156;
+    --c-accent: 74 222 128;
+    --c-accent-solid: 255 214 10;
+    --c-accent-solid-hover: 240 198 0;
+    --c-on-accent: 17 17 17;
+    --c-pending: 245 185 113;
+    --c-bar: 237 237 232;
+    --c-on-bar: 17 17 17;
+    --c-focus: 255 214 10;
+    --font: 'Chivo', system-ui, -apple-system, sans-serif;
+    --mono: 'Chivo Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  :root[data-theme='light'] {
+    color-scheme: light;
+    --c-background: 228 228 223;
+    --c-surface: 245 245 241;
+    --c-surface-2: 236 236 231;
+    --c-border: 185 185 178;
+    --c-border-bright: 117 117 111;
+    --c-foreground: 17 17 17;
+    --c-body: 51 51 47;
+    --c-muted: 85 85 79;
+    --c-accent: 17 112 58;
+    --c-accent-solid: 255 214 10;
+    --c-accent-solid-hover: 240 198 0;
+    --c-on-accent: 17 17 17;
+    --c-pending: 138 66 8;
+    --c-bar: 17 17 17;
+    --c-on-bar: 245 245 241;
+    --c-focus: 17 17 17;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 16px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: rgb(var(--c-background));
+    color: rgb(var(--c-foreground));
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, p, ul, figure { margin: 0; }
+  ul { padding: 0; list-style: none; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; height: auto; }
+
+  :focus-visible {
+    outline: 3px solid rgb(var(--c-focus));
+    outline-offset: 2px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: clamp(12px, 2.4vw, 28px);
+  }
+
+  .label {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: .8125rem;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+
+  /* Garis pemisah 1px otomatis antar sel */
+  .rack {
+    display: grid;
+    gap: 1px;
+    background: rgb(var(--c-border));
+    border: 1px solid rgb(var(--c-border));
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .surface { background: rgb(var(--c-surface)); }
+  .surface-2 { background: rgb(var(--c-surface-2)); }
+  .muted { color: rgb(var(--c-muted)); }
+  .body-t { color: rgb(var(--c-body)); }
+
+  /* ══════════════════════════════════════
+     SKIP LINK
+     ══════════════════════════════════════ */
+  .skip {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 60;
+  }
+  .skip:focus {
+    left: 8px;
+    top: 8px;
+    position: fixed;
+    padding: 12px 16px;
+    border-radius: 6px;
+    background: rgb(var(--c-accent-solid));
+    color: rgb(var(--c-on-accent));
+    font-weight: 700;
+  }
+
+  /* ══════════════════════════════════════
+     HEADER
+     ══════════════════════════════════════ */
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding-block: 8px;
+  }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 1.125rem;
+    font-weight: 900;
+    letter-spacing: -.025em;
+    white-space: nowrap;
+  }
+  .wordmark i {
+    font-style: normal;
+    color: rgb(var(--c-accent-solid));
+  }
+
+  .head-nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: .9375rem;
+  }
+
+  .head-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 10px;
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+    transition: text-decoration-color .15s ease;
+  }
+  .head-link:hover { text-decoration-color: currentColor; }
+
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .icon-btn:hover {
+    background: rgb(var(--c-surface-2));
+    color: rgb(var(--c-muted));
+  }
+  .icon-btn svg { width: 20px; height: 20px; }
+
+  .theme-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding-inline: 12px;
+    border: 1px solid rgb(var(--c-border-bright));
+    border-radius: 6px;
+    background: rgb(var(--c-surface));
+    color: rgb(var(--c-foreground));
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: .8125rem;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background .15s ease;
+  }
+  .theme-btn:hover { background: rgb(var(--c-surface-2)); }
+
+  /* ══════════════════════════════════════
+     HERO
+     ══════════════════════════════════════ */
+  .main { flex: 1 0 auto; padding-bottom: 8px; }
+
+  .hero { grid-template-columns: minmax(0, 1fr); }
+
+  .hero-main {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    color: rgb(var(--c-muted));
+  }
+
+  .hero-copy {
+    margin-top: auto;
+    padding: 40px 18px 36px;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.25rem, 8.4vw, 7.4rem);
+    font-weight: 900;
+    line-height: .88;
+    letter-spacing: -.045em;
+    text-transform: uppercase;
+  }
+
+  .hero-desc {
+    margin-top: 20px;
+    max-width: 30em;
+    font-size: 1.125rem;
+    line-height: 1.375;
+    color: rgb(var(--c-body));
+  }
+
+  .hero-side {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 1px;
+    background: rgb(var(--c-border));
+    min-width: 0;
+  }
+
+  .portrait {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: rgb(var(--c-surface));
+    overflow: hidden;
+  }
+  .portrait img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 20%;
+  }
+  .portrait figcaption {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    background: rgb(var(--c-bar));
+    color: rgb(var(--c-on-bar));
+    font-family: var(--mono);
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .02em;
+  }
+
+  /* Nav kuning: audiens */
+  .aud-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgb(var(--c-accent-solid));
+    color: rgb(var(--c-on-accent));
+  }
+
+  .aud-nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 52px;
+    padding-inline: 16px;
+    border-top: 1px solid rgb(var(--c-on-accent) / .25);
+    font-weight: 700;
+    font-size: 1.0625rem;
+    transition: background .15s ease;
+  }
+  .aud-nav a:first-child { border-top: 0; }
+  .aud-nav a:hover { background: rgb(255 255 255 / .35); }
+
+  .aud-num {
+    width: 24px;
+    flex: none;
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: .8125rem;
+  }
+  .aud-count {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: .8125rem;
+    font-weight: 600;
+  }
+
+  /* ══════════════════════════════════════
+     SECTION RACK
+     ══════════════════════════════════════ */
+  .aud-section { min-width: 0; margin-top: 28px; scroll-margin-top: 16px; }
+
+  .sec-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border-radius: 6px 6px 0 0;
+    background: rgb(var(--c-bar));
+    color: rgb(var(--c-on-bar));
+  }
+
+  .sec-num {
+    flex: none;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: rgb(var(--c-accent-solid));
+    color: rgb(var(--c-on-accent));
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: .875rem;
+  }
+
+  .sec-bar h2 {
+    font-size: 1.375rem;
+    font-weight: 800;
+    letter-spacing: -.025em;
+    line-height: 1.15;
+  }
+
+  .sec-bar .sec-sub {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: .75rem;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    opacity: .7;
+  }
+
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+    border-top: 0;
+    border-radius: 0 0 6px 6px;
+  }
+
+  /* ══════════════════════════════════════
+     KARTU PROYEK
+     ══════════════════════════════════════ */
+  .proj {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: rgb(var(--c-surface));
+    transition: background .15s ease;
+  }
+  .proj:hover { background: rgb(var(--c-surface-2)); }
+  .proj:hover .proj-name > span { text-decoration-color: currentColor; }
+
+  .proj-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    color: rgb(var(--c-muted));
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+  .status::before {
+    content: '';
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+  }
+  .status.live { color: rgb(var(--c-accent)); }
+  .status.live::before { background: currentColor; }
+  .status.pending { color: rgb(var(--c-pending)); }
+
+  .thumb {
+    position: relative;
+    margin-inline: 14px;
+    aspect-ratio: 16 / 10;
+    border: 1px solid rgb(var(--c-border));
+    background: rgb(var(--c-surface-2));
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    padding: 14px;
+  }
+
+  .thumb-title {
+    font-size: 1.375rem;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -.03em;
+  }
+  .thumb-kicker {
+    font-family: var(--mono);
+    font-size: .6875rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    opacity: .7;
+  }
+  .thumb-line {
+    display: block;
+    height: 7px;
+    margin-top: 7px;
+    border-radius: 2px;
+    background: currentColor;
+    opacity: .18;
+  }
+  .thumb-line.w40 { width: 40%; }
+  .thumb-line.w60 { width: 60%; }
+  .thumb-line.w80 { width: 80%; }
+
+  .thumb-inner { width: 100%; }
+
+  /* Varian tipografi thumbnail */
+  .thumb-doc {
+    background: #F5F5F1;
+    color: #111;
+    align-content: start;
+    padding: 16px 18px;
+  }
+  .thumb-doc .thumb-title { font-size: 1.0625rem; }
+  .thumb-doc .paper {
+    margin-top: 10px;
+    height: 62%;
+    width: 100%;
+    border: 1px solid #C9C9C0;
+    background: repeating-linear-gradient(#fff 0 8px, #DEDED6 8px 9px);
+  }
+
+  .thumb-dark {
+    background: #101114;
+    color: #E8E8E2;
+    align-content: stretch;
+    padding: 16px 18px;
+    grid-template-rows: auto 1fr;
+  }
+  .thumb-dark .thumb-title { font-size: 1.125rem; color: #EDEDE8; }
+  .thumb-dark .thumb-kicker { color: #4ADE80; opacity: 1; }
+
+  .thumb-ui {
+    background: rgb(var(--c-surface-2));
+    color: rgb(var(--c-foreground));
+    align-content: start;
+    padding: 14px;
+  }
+  .thumb-ui .row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .thumb-ui .pip {
+    flex: 1;
+    height: 34px;
+    border-radius: 3px;
+    background: currentColor;
+    opacity: .1;
+    border: 1px solid rgb(var(--c-border));
+  }
+  .thumb-ui .bar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+    opacity: .5;
+  }
+  .thumb-ui .bar s {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    text-decoration: none;
+  }
+
+  .thumb-amber {
+    background: #FFD60A;
+    color: #111;
+  }
+  .thumb-amber .thumb-title { font-size: 1.75rem; }
+  .thumb-amber .thumb-kicker { opacity: .8; }
+
+  .proj-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1 0 auto;
+    padding: 12px 14px 16px;
+  }
+
+  .proj-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -.025em;
+  }
+  .proj-name > span {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+    transition: text-decoration-color .15s ease;
+  }
+
+  .monogram {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: rgb(var(--c-surface-2));
+    border: 1px solid rgb(var(--c-border));
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: .8125rem;
+    color: rgb(var(--c-body));
+  }
+
+  .proj-tag {
+    font-size: .9375rem;
+    line-height: 1.45;
+    color: rgb(var(--c-body));
+  }
+
+  .proj-note {
+    font-size: .9375rem;
+    font-weight: 700;
+    line-height: 1.45;
+    color: rgb(var(--c-pending));
+  }
+
+  .proj-plat {
+    margin-top: auto;
+    padding-top: 10px;
+    color: rgb(var(--c-muted));
+  }
+
+  /* Aksi di bawah rack */
+  .rack-note {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  /* ══════════════════════════════════════
+     KARTU CTA / AJAKAN
+     ══════════════════════════════════════ */
+  .invite {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    padding: 28px 20px;
+    background: rgb(var(--c-surface));
+  }
+
+  .invite h3 {
+    max-width: 22em;
+    font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -.03em;
+  }
+
+  .invite p {
+    max-width: 34em;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: rgb(var(--c-body));
+  }
+
+  .btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: background .15s ease;
+  }
+
+  .btn-primary {
+    border: 1px solid rgb(var(--c-on-accent));
+    background: rgb(var(--c-accent-solid));
+    color: rgb(var(--c-on-accent));
+  }
+  .btn-primary:hover { background: rgb(var(--c-accent-solid-hover)); }
+
+  .btn-ghost {
+    border: 1px solid rgb(var(--c-border-bright));
+    background: rgb(var(--c-surface));
+    color: rgb(var(--c-foreground));
+    font-weight: 600;
+  }
+  .btn-ghost:hover { background: rgb(var(--c-surface-2)); }
+
+  /* ══════════════════════════════════════
+     ABOUT
+     ══════════════════════════════════════ */
+  .about { margin-top: 28px; grid-template-columns: minmax(0, 1fr); }
+
+  .about-main {
+    padding: 24px 20px;
+    background: rgb(var(--c-surface));
+  }
+  .about-main h2 {
+    font-size: clamp(1.5rem, 3vw, 2.125rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -.03em;
+    max-width: 20em;
+  }
+  .about-main p {
+    margin-top: 14px;
+    max-width: 44em;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: rgb(var(--c-body));
+  }
+
+  .about-facts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    padding: 24px 20px;
+    background: rgb(var(--c-surface));
+  }
+
+  .fact { display: grid; gap: 3px; }
+  .fact dt {
+    color: rgb(var(--c-muted));
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: .75rem;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+  .fact dd { margin: 0; font-weight: 700; font-size: .9375rem; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .chip {
+    padding: 6px 12px;
+    border: 1px solid rgb(var(--c-border-bright));
+    border-radius: 4px;
+    background: rgb(var(--c-surface-2));
+    font-family: var(--mono);
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+
+  /* ══════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════ */
+  .site-footer {
+    flex: none;
+    padding-bottom: 24px;
+  }
+
+  .foot-grid { grid-template-columns: minmax(0, 1fr); }
+
+  .foot-brand {
+    padding: 16px;
+    background: rgb(var(--c-surface));
+  }
+  .foot-brand b {
+    font-size: 1.125rem;
+    font-weight: 900;
+    letter-spacing: -.025em;
+  }
+  .foot-brand b i {
+    font-style: normal;
+    color: rgb(var(--c-accent-solid));
+  }
+  .foot-brand p {
+    margin-top: 4px;
+    max-width: 32ch;
+    color: rgb(var(--c-body));
+    font-size: .875rem;
+    line-height: 1.5;
+  }
+
+  .foot-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    background: rgb(var(--c-surface));
+  }
+  .foot-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 12px;
+    border: 1px solid rgb(var(--c-border-bright));
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: .8125rem;
+    font-weight: 500;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    transition: background .15s ease;
+  }
+  .foot-links a:hover { background: rgb(var(--c-surface-2)); }
+
+  .foot-legal {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 16px;
+    background: rgb(var(--c-surface));
+    color: rgb(var(--c-muted));
+    font-family: var(--mono);
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+  .foot-legal a {
+    text-decoration: underline;
+    text-decoration-color: rgb(var(--c-border-bright));
+    text-underline-offset: 3px;
+  }
+  .foot-legal a:hover { color: rgb(var(--c-foreground)); }
+
+  /* ══════════════════════════════════════
+     RESPONSIF
+     ══════════════════════════════════════ */
+  .cards.g1 { grid-template-columns: minmax(0, 1fr); }
+
+  @media (min-width: 640px) {
+    .cards.g2, .cards.g3, .cards.g4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    /* Kartu terakhir yang mengganjal melebar penuh, supaya tidak ada sel kosong */
+    .cards.g3 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .cards.g4 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .hero-copy { padding: 40px 24px 36px; }
+    .hero-desc { font-size: 1.25rem; }
+    .sec-bar h2 { font-size: 1.625rem; }
+    .invite { padding: 36px 28px; }
+    .about-main, .about-facts { padding: 28px 24px; }
+    .foot-legal { flex-direction: row; justify-content: space-between; }
+  }
+
+  @media (min-width: 768px) {
+    .hero { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+    .portrait { aspect-ratio: 5 / 4; }
+    .hero-copy { padding: 48px 32px 40px; }
+    .about { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+    .foot-grid { grid-template-columns: minmax(0, 1fr) auto; }
+    .foot-legal { grid-column: 1 / -1; }
+  }
+
+  @media (min-width: 1024px) {
+    .cards.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cards.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .hero-copy { padding-inline: 36px; }
+    .sec-bar { padding: 16px 20px; }
+    .sec-bar h2 { font-size: 1.75rem; }
+  }
+
+  /* Header sempit: rapatkan nav supaya tombol tema tetap terlihat */
+  @media (max-width: 480px) {
+    .wordmark { font-size: 1rem; }
+    .head-nav { gap: 0; }
+    .head-link { padding-inline: 8px; font-size: .875rem; }
+    .icon-btn { width: 40px; }
+    .theme-btn { min-width: 40px; padding-inline: 9px; font-size: .75rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: .01ms !important; }
+  }
+
+  @media print {
+    body { background: #fff; color: #000; }
+    .head-nav, .theme-btn, .foot-links { display: none; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Lewati ke konten utama</a>
+
+<!-- ════════════════ HEADER ════════════════ -->
+<header class="wrap site-header">
+  <a class="wordmark" href="#top">andikachandra<i>.</i>com</a>
+  <nav class="head-nav" aria-label="Navigasi utama">
+    <a class="head-link" href="#karya">Karya</a>
+    <a class="head-link" href="#tentang">Tentang</a>
+    <a class="icon-btn" href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.8-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>
+    </a>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Ganti tema">Dark</button>
+  </nav>
+</header>
+
+<div class="main" id="content">
+  <!-- ════════════════ HERO ════════════════ -->
+  <section class="wrap" id="top" aria-labelledby="heroTitle">
+    <div class="rack hero">
+      <div class="hero-main">
+        <div class="hero-meta label">
+          <span>Dosen, Peneliti &amp; Praktisi Digital</span>
+          <span>Indonesia</span>
+        </div>
+        <div class="hero-copy">
+          <h1 id="heroTitle">Andika<br>Chandra P</h1>
+          <p class="hero-desc">
+            Saya mengajar dan meneliti teknologi informasi serta bisnis digital, dan
+            membangun aplikasi web untuk peneliti, mahasiswa, dan pelaku usaha kecil.
+          </p>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <figure class="portrait">
+          <img src="image/foto.webp" alt="Foto Andika Chandra P" width="500" height="523" fetchpriority="high">
+          <figcaption>S.Kom., M.T.I</figcaption>
+        </figure>
+
+        <nav class="aud-nav" aria-label="Kategori karya">
+          <a href="#mahasiswa"><span class="aud-num">01</span>Untuk mahasiswa<span class="aud-count" data-count="mahasiswa">7</span></a>
+          <a href="#peneliti"><span class="aud-num">02</span>Untuk peneliti<span class="aud-count" data-count="peneliti">6</span></a>
+          <a href="#organisasi"><span class="aud-num">03</span>Untuk organisasi<span class="aud-count" data-count="organisasi">1</span></a>
+          <a href="#developer"><span class="aud-num">04</span>Untuk developer<span class="aud-count" data-count="developer">3</span></a>
+          <a href="#umkm"><span class="aud-num">05</span>Untuk UMKM<span class="aud-count" data-count="umkm">1</span></a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <main class="wrap" id="karya">
+    <h2 class="sr-only">Karya</h2>
+
+    <!-- 01 · Mahasiswa -->
+    <section class="aud-section" id="mahasiswa" aria-labelledby="mahasiswa-title">
+      <div class="sec-bar">
+        <span class="sec-num" aria-hidden="true">01</span>
+        <h2 id="mahasiswa-title">Untuk mahasiswa</h2>
+        <span class="sec-sub">Mata kuliah</span>
+      </div>
+      <div class="rack cards g4">
+        <a class="proj" href="daftar-mata-kuliah.html">
+          <div class="proj-top"><span class="label">01.1</span><span class="status live">Portal</span></div>
+          <div class="thumb thumb-amber" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Portal materi kuliah</div>
+              <div class="thumb-title">10 mata<br>kuliah</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w60"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">PM</span><span>Portal Materi Kuliah</span></div>
+            <p class="proj-tag">Learning hub lintas semester: materi, tugas, dan referensi dalam satu tempat.</p>
+            <p class="proj-plat label">Web · 10 mata kuliah</p>
+          </div>
+        </a>
+
+        <a class="proj" href="imk/materi-1/index.html">
+          <div class="proj-top"><span class="label">01.2</span><span class="status live">Modul</span></div>
+          <div class="thumb thumb-ui" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="bar"><s></s><s></s><s></s></div>
+              <div class="thumb-kicker">Interaksi Manusia &amp; Komputer</div>
+              <div class="thumb-title">User-Centered<br>Design</div>
+              <div class="row"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">UC</span><span>UCD di Kelas IMK</span></div>
+            <p class="proj-tag">Evaluasi usabilitas dan alur perancangan yang berpusat pada pengguna.</p>
+            <p class="proj-plat label">Modul ajar · IMK</p>
+          </div>
+        </a>
+
+        <a class="proj" href="daftar-mata-kuliah.html">
+          <div class="proj-top"><span class="label">01.3</span><span class="status live">Struktur</span></div>
+          <div class="thumb thumb-doc" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Information architecture</div>
+              <div class="thumb-title">Portal Materi Kuliah</div>
+              <div class="paper"></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">IA</span><span>Struktur Informasi Portal</span></div>
+            <p class="proj-tag">Navigasi dan taksonomi materi lintas semester yang mudah dipindai.</p>
+            <p class="proj-plat label">Studi kasus · Web</p>
+          </div>
+        </a>
+
+        <a class="proj" href="imk/materi-1/index.html">
+          <div class="proj-top"><span class="label">01.4</span><span class="status live">Materi</span></div>
+          <div class="thumb thumb-dark" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Heuristik Nielsen</div>
+              <div class="thumb-title">Prinsip &amp; Evaluasi Usabilitas</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w40"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">NE</span><span>Prinsip Evaluasi Usabilitas</span></div>
+            <p class="proj-tag">Sepuluh heuristik dan cara memakainya untuk menilai antarmuka.</p>
+            <p class="proj-plat label">Materi · IMK</p>
+          </div>
+        </a>
+
+        <a class="proj" href="mbd/index.html">
+          <div class="proj-top"><span class="label">01.5</span><span class="status live">Materi</span></div>
+          <div class="thumb thumb-ui" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Model &amp; desain bisnis digital</div>
+              <div class="thumb-title">Business Model Canvas</div>
+              <div class="row"><span class="pip"></span><span class="pip"></span></div>
+              <div class="row"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">BC</span><span>Business Model Canvas</span></div>
+            <p class="proj-tag">Sembilan blok kanvas untuk memetakan model bisnis digital.</p>
+            <p class="proj-plat label">Materi · MBD</p>
+          </div>
+        </a>
+
+        <a class="proj" href="dwbi/data-storytelling.html">
+          <div class="proj-top"><span class="label">01.6</span><span class="status live">Materi</span></div>
+          <div class="thumb thumb-dark" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Data warehouse &amp; BI</div>
+              <div class="thumb-title">Data Storytelling</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w60"></span>
+              <span class="thumb-line w40"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">DS</span><span>Data Storytelling</span></div>
+            <p class="proj-tag">Menyusun narasi dari data agar keputusan lebih cepat diambil.</p>
+            <p class="proj-plat label">Materi · DWBI</p>
+          </div>
+        </a>
+
+        <a class="proj" href="dcb/mobile-consumer/index.html">
+          <div class="proj-top"><span class="label">01.7</span><span class="status live">Materi</span></div>
+          <div class="thumb thumb-ui" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Digital consumer behaviour</div>
+              <div class="thumb-title">Perilaku Konsumen Digital</div>
+              <div class="row"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">PK</span><span>Perilaku Konsumen Digital</span></div>
+            <p class="proj-tag">Pola keputusan konsumen di kanal mobile dan media sosial.</p>
+            <p class="proj-plat label">Materi · DCB</p>
+          </div>
+        </a>
+
+        <a class="proj" href="daftar-mata-kuliah.html">
+          <div class="proj-top"><span class="label">01.8</span><span class="status live">Rekap</span></div>
+          <div class="thumb thumb-amber" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Lintas semester</div>
+              <div class="thumb-title">Rekap<br>kelas</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w60"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">RK</span><span>Rekap Lintas Semester</span></div>
+            <p class="proj-tag">Semua kelas dalam satu indeks: prasyarat, urutan semester, dan tautan materi.</p>
+            <p class="proj-plat label">Web · Portal</p>
+          </div>
+        </a>
+      </div>
+      <p class="rack-note">
+        <a class="btn btn-ghost" href="daftar-mata-kuliah.html">Semua mata kuliah <span aria-hidden="true">↗</span></a>
+      </p>
+    </section>
+    <!-- 02 · Peneliti -->
+    <section class="aud-section" id="peneliti" aria-labelledby="peneliti-title">
+      <div class="sec-bar">
+        <span class="sec-num" aria-hidden="true">02</span>
+        <h2 id="peneliti-title">Untuk peneliti</h2>
+        <span class="sec-sub">Aplikasi &amp; publikasi</span>
+      </div>
+      <div class="rack cards g3">
+        <a class="proj" href="https://nyariartikel.app" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">02.1</span><span class="status live">Live</span></div>
+          <div class="thumb thumb-dark" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Open access</div>
+              <div class="thumb-title">Cari artikel ilmiah tanpa ribet.</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w60"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">NA</span><span>NyariArtikel.App</span></div>
+            <p class="proj-tag">Pencarian artikel open access dengan hasil yang langsung bisa disitasi.</p>
+            <p class="proj-plat label">Web app</p>
+          </div>
+        </a>
+
+        <a class="proj" href="https://bantusitasi.online" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">02.2</span><span class="status live">Live</span></div>
+          <div class="thumb thumb-ui" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="bar"><s></s><s></s><s></s></div>
+              <div class="thumb-kicker">Reference finder</div>
+              <div class="thumb-title">Tempel kalimat, dapat referensinya.</div>
+              <div class="row"><span class="pip"></span><span class="pip"></span></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">BS</span><span>bantusitasi.online</span></div>
+            <p class="proj-tag">Rekomendasi referensi dari satu kalimat yang Anda tulis.</p>
+            <p class="proj-plat label">Web app</p>
+          </div>
+        </a>
+
+        <a class="proj" href="https://papier.my" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">02.3</span><span class="status live">Live</span></div>
+          <div class="thumb thumb-doc" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">AI library</div>
+              <div class="thumb-title">papier.my</div>
+              <div class="paper"></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">PP</span><span>papier.my</span></div>
+            <p class="proj-tag">Manajemen artikel ilmiah berbasis AI: simpan, baca, dan kutip.</p>
+            <p class="proj-plat label">Web app · AI</p>
+          </div>
+        </a>
+
+        <a class="proj" href="https://ieeexplore.ieee.org/abstract/document/8267965" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">02.4</span><span class="status live">IEEE Xplore</span></div>
+          <div class="thumb thumb-doc" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">ICITSI 2017</div>
+              <div class="thumb-title">Factors Influencing E-Tourism Stickiness</div>
+              <div class="paper"></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">17</span><span>E-Tourism Stickiness</span></div>
+            <p class="proj-tag">Faktor yang membuat pengguna kembali ke platform e-tourism.</p>
+            <p class="proj-plat label">Paper · 2017</p>
+          </div>
+        </a>
+
+        <a class="proj" href="https://jurnal.unismabekasi.ac.id/index.php/piksel/article/view/10580" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">02.5</span><span class="status live">SINTA 3</span></div>
+          <div class="thumb thumb-dark" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Jurnal Piksel</div>
+              <div class="thumb-title">YouTube Streaming Performance Over Wi-Fi</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w60"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">25</span><span>YouTube over Wi-Fi</span></div>
+            <p class="proj-tag">Analisis performa streaming berdasarkan resolusi video.</p>
+            <p class="proj-plat label">Artikel · 2025</p>
+          </div>
+        </a>
+
+        <a class="proj" href="https://publikasi.dinus.ac.id/technoc/article/view/15684" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">02.6</span><span class="status live">EBSCO</span></div>
+          <div class="thumb thumb-ui" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Jurnal TECHNO.com</div>
+              <div class="thumb-title">Klasifikasi Risiko Pengguna Judi Online</div>
+              <div class="row"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">26</span><span>Risiko Judi Online</span></div>
+            <p class="proj-tag">Klasifikasi pola perilaku dengan skor PGSI.</p>
+            <p class="proj-plat label">Artikel · 2026</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 03 · Organisasi -->
+    <section class="aud-section" id="organisasi" aria-labelledby="organisasi-title">
+      <div class="sec-bar">
+        <span class="sec-num" aria-hidden="true">03</span>
+        <h2 id="organisasi-title">Untuk organisasi</h2>
+        <span class="sec-sub">Kolaborasi</span>
+      </div>
+      <div class="rack cards g1">
+        <div class="invite">
+          <h3>Butuh dosen tamu, kolaborasi riset, atau produk digital?</h3>
+          <p>Saya terbuka untuk diskusi, pelatihan, pendampingan riset, dan pengembangan produk digital bersama institusi maupun komunitas.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="mailto:me@andikachandra.com">Email saya</a>
+            <a class="btn btn-ghost" href="daftar-mata-kuliah.html">Lihat materi</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 · Developer -->
+    <section class="aud-section" id="developer" aria-labelledby="developer-title">
+      <div class="sec-bar">
+        <span class="sec-num" aria-hidden="true">04</span>
+        <h2 id="developer-title">Untuk developer</h2>
+        <span class="sec-sub">Kode &amp; eksperimen</span>
+      </div>
+      <div class="rack cards g3">
+        <a class="proj" href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">04.1</span><span class="status live">GitHub</span></div>
+          <div class="thumb thumb-dark" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Repository</div>
+              <div class="thumb-title">github.com/<br>andikachandra23</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w60"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">GH</span><span>GitHub</span></div>
+            <p class="proj-tag">Repositori eksperimen web, materi kuliah, dan proyek kecil.</p>
+            <p class="proj-plat label">Kode terbuka</p>
+          </div>
+        </a>
+
+        <a class="proj" href="win31_index.html">
+          <div class="proj-top"><span class="label">04.2</span><span class="status live">Eksperimen</span></div>
+          <div class="thumb thumb-ui" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="bar"><s></s><s></s><s></s></div>
+              <div class="thumb-kicker">CSS only</div>
+              <div class="thumb-title">Windows 3.1</div>
+              <div class="row"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">31</span><span>Versi Retro</span></div>
+            <p class="proj-tag">Homepage lama dibangun ulang dengan bahasa visual Windows 3.1.</p>
+            <p class="proj-plat label">HTML · CSS</p>
+          </div>
+        </a>
+
+        <a class="proj" href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">04.3</span><span class="status live">Eksperimen</span></div>
+          <div class="thumb thumb-doc" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Static · no build</div>
+              <div class="thumb-title">Situs ini</div>
+              <div class="paper"></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">WB</span><span>Halaman Ini</span></div>
+            <p class="proj-tag">Satu file HTML tanpa framework: token tema, grid rack, dan tema gelap-terang.</p>
+            <p class="proj-plat label">HTML · CSS · JS</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 05 · UMKM -->
+    <section class="aud-section" id="umkm" aria-labelledby="umkm-title">
+      <div class="sec-bar">
+        <span class="sec-num" aria-hidden="true">05</span>
+        <h2 id="umkm-title">Untuk UMKM</h2>
+        <span class="sec-sub">Segera</span>
+      </div>
+      <div class="rack cards g1">
+        <a class="proj" href="mailto:me@andikachandra.com">
+          <div class="proj-top"><span class="label">05.1</span><span class="status pending">Segera</span></div>
+          <div class="thumb thumb-amber" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Digital marketing</div>
+              <div class="thumb-title">Pendampingan<br>usaha kecil</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w40"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">UM</span><span>Pendampingan UMKM</span></div>
+            <p class="proj-tag">Rencana konten, kanal digital, dan pengukuran sederhana untuk usaha kecil.</p>
+            <p class="proj-note">Sedang disusun — tulis email kalau ingin ikut gelombang pertama.</p>
+            <p class="proj-plat label">Konsultasi · Digital marketing</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 06 · Tentang -->
+    <section class="rack about" id="tentang" aria-labelledby="tentang-title">
+      <div class="about-main">
+        <h2 id="tentang-title">Dosen, peneliti, dan pembangun produk digital.</h2>
+        <p>
+          Sehari-hari saya mengajar mata kuliah sistem informasi, interaksi manusia dan komputer,
+          manajemen proyek, dan bisnis digital. Di luar kelas, saya meneliti perilaku pengguna,
+          machine learning, dan socio-techno, lalu menerjemahkannya menjadi aplikasi yang dipakai
+          mahasiswa dan peneliti.
+        </p>
+        <ul class="chips" aria-label="Bidang keahlian">
+          <li class="chip">Machine Learning</li>
+          <li class="chip">Web Design</li>
+          <li class="chip">Digital Marketing</li>
+          <li class="chip">Socio-Techno</li>
+          <li class="chip">Human-Computer Interaction</li>
+        </ul>
+      </div>
+      <dl class="about-facts">
+        <div class="fact">
+          <dt>Pengindeks</dt>
+          <dd>IEEE Xplore · SINTA 3 · EBSCO</dd>
+        </div>
+        <div class="fact">
+          <dt>Publikasi</dt>
+          <dd>3 artikel &amp; paper terindeks</dd>
+        </div>
+        <div class="fact">
+          <dt>Mata kuliah</dt>
+          <dd>10 kelas lintas semester</dd>
+        </div>
+        <div class="fact">
+          <dt>Kontak</dt>
+          <dd><a href="mailto:me@andikachandra.com">me@andikachandra.com</a></dd>
+        </div>
+      </dl>
+    </section>
+  </main>
+</div>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer class="wrap site-footer">
+  <div class="rack foot-grid">
+    <div class="foot-brand">
+      <b>andikachandra<i>.</i>com</b>
+      <p>Materi kuliah, aplikasi web, dan publikasi di bidang teknologi informasi dan bisnis digital.</p>
+    </div>
+    <ul class="foot-links">
+      <li><a href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      <li><a href="mailto:me@andikachandra.com">Email</a></li>
+      <li><a href="daftar-mata-kuliah.html">Mata Kuliah</a></li>
+      <li><a href="win31_index.html">Retro 3.1</a></li>
+    </ul>
+    <div class="foot-legal">
+      <span>© <span id="year">2026</span> Andika Chandra P</span>
+      <span>Indonesia</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+  var btn = document.getElementById('themeBtn');
+
+  function isDark() {
+    /* Sumber kebenaran: atribut tema yang kita set sendiri, bukan getComputedStyle */
+    return root.getAttribute('data-theme') !== 'light';
+  }
+
+  function syncLabel() {
+    var next = isDark() ? 'Light' : 'Dark';
+    btn.textContent = next;
+    btn.setAttribute('aria-label', 'Ganti ke tema ' + next);
+  }
+
+  btn.addEventListener('click', function () {
+    var next = isDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('andika-theme', next); } catch (e) {}
+    syncLabel();
+  });
+
+  syncLabel();
+
+  /* Jumlah karya per kategori di nav kuning */
+  var counts = document.querySelectorAll('[data-count]');
+  Array.prototype.forEach.call(counts, function (el) {
+    var id = el.getAttribute('data-count');
+    var section = document.getElementById(id);
+    if (!section) return;
+    var n = section.querySelectorAll('.proj').length;
+    if (n) el.textContent = n;
+  });
+
+  /* Tahun berjalan */
+  var year = document.getElementById('year');
+  if (year) year.textContent = String(new Date().getFullYear());
+
+  /* Hash lama tetap mendarat di tempat yang benar */
+  var legacy = {
+    '#home': '#top',
+    '#achievement': '#peneliti',
+    '#portofolio': '#mahasiswa',
+    '#contact': '#organisasi'
+  };
+  var mapped = legacy[location.hash];
+  if (mapped) {
+    var target = document.querySelector(mapped);
+    if (target) target.scrollIntoView();
+  }
+})();
+</script>
+</body>
+</html>
