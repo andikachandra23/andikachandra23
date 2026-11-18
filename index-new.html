@@ -878,18 +878,23 @@
   @media (min-width: 1024px) {
     .cards.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .cards.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    /* 7 kartu di 4 kolom: 4 kartu atas (3/12 tiap) + 3 kartu bawah (4/12 tiap) */
+    .cards.g4:has(> :nth-child(7):last-child) { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    .cards.g4:has(> :nth-child(7):last-child) > :nth-child(-n + 4) { grid-column: span 3; }
+    .cards.g4:has(> :nth-child(7):last-child) > :nth-child(n + 5) { grid-column: span 4; }
     .hero-copy { padding-inline: 36px; }
     .sec-bar { padding: 16px 20px; }
     .sec-bar h2 { font-size: 1.75rem; }
   }
 
   /* Header sempit: rapatkan nav supaya tombol tema tetap terlihat */
-  @media (max-width: 480px) {
-    .wordmark { font-size: 1rem; }
+  @media (max-width: 520px) {
+    .site-header { gap: 4px; }
+    .wordmark { font-size: .9375rem; letter-spacing: -.03em; }
     .head-nav { gap: 0; }
-    .head-link { padding-inline: 8px; font-size: .875rem; }
-    .icon-btn { width: 40px; }
-    .theme-btn { min-width: 40px; padding-inline: 9px; font-size: .75rem; }
+    .head-link { padding-inline: 6px; font-size: .8125rem; }
+    .icon-btn { width: 36px; height: 40px; }
+    .theme-btn { min-width: 38px; min-height: 40px; padding-inline: 7px; font-size: .6875rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -965,138 +970,113 @@
         <span class="sec-sub">Mata kuliah</span>
       </div>
       <div class="rack cards g4">
-        <a class="proj" href="daftar-mata-kuliah.html">
-          <div class="proj-top"><span class="label">01.1</span><span class="status live">Portal</span></div>
-          <div class="thumb thumb-amber" aria-hidden="true">
+        <a class="proj" href="pti/materi-1/index.html">
+          <div class="proj-top"><span class="label">01.1</span><span class="status live">Materi</span></div>
+          <div class="thumb thumb-dark" aria-hidden="true">
             <div class="thumb-inner">
-              <div class="thumb-kicker">Portal materi kuliah</div>
-              <div class="thumb-title">10 mata<br>kuliah</div>
+              <div class="thumb-kicker">Pengantar Teknologi Informasi</div>
+              <div class="thumb-title">Data dalam<br>Konteks Bisnis</div>
               <span class="thumb-line w80"></span>
               <span class="thumb-line w60"></span>
             </div>
           </div>
           <div class="proj-body">
-            <div class="proj-name"><span class="monogram" aria-hidden="true">PM</span><span>Portal Materi Kuliah</span></div>
-            <p class="proj-tag">Learning hub lintas semester: materi, tugas, dan referensi dalam satu tempat.</p>
-            <p class="proj-plat label">Web · 10 mata kuliah</p>
+            <div class="proj-name"><span class="monogram" aria-hidden="true">1</span><span>Pengantar Teknologi Informasi</span></div>
+            <p class="proj-tag">Landasan TI: perangkat keras, perangkat lunak, jaringan, dan keamanan data untuk bisnis.</p>
+            <p class="proj-plat label">Smt 1 · Bisnis Digital · 2 file</p>
           </div>
         </a>
-
-        <a class="proj" href="imk/materi-1/index.html">
-          <div class="proj-top"><span class="label">01.2</span><span class="status live">Modul</span></div>
+        <a class="proj" href="edb/materi/materi-1/index.html">
+          <div class="proj-top"><span class="label">01.2</span><span class="status live">Materi</span></div>
           <div class="thumb thumb-ui" aria-hidden="true">
             <div class="thumb-inner">
-              <div class="bar"><s></s><s></s><s></s></div>
-              <div class="thumb-kicker">Interaksi Manusia &amp; Komputer</div>
-              <div class="thumb-title">User-Centered<br>Design</div>
+              <div class="thumb-kicker">Ekonomi Digital Baru</div>
+              <div class="thumb-title">Startup &amp;<br>ekosistem</div>
               <div class="row"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
             </div>
           </div>
           <div class="proj-body">
-            <div class="proj-name"><span class="monogram" aria-hidden="true">UC</span><span>UCD di Kelas IMK</span></div>
-            <p class="proj-tag">Evaluasi usabilitas dan alur perancangan yang berpusat pada pengguna.</p>
-            <p class="proj-plat label">Modul ajar · IMK</p>
+            <div class="proj-name"><span class="monogram" aria-hidden="true">2</span><span>Ekonomi Digital Baru</span></div>
+            <p class="proj-tag">Model ekonomi digital, startup, dan ekosistemnya di Indonesia.</p>
+            <p class="proj-plat label">Smt 3 · Bisnis Digital · 4 file</p>
           </div>
         </a>
-
-        <a class="proj" href="daftar-mata-kuliah.html">
-          <div class="proj-top"><span class="label">01.3</span><span class="status live">Struktur</span></div>
+        <a class="proj" href="imk/materi-1/index.html">
+          <div class="proj-top"><span class="label">01.3</span><span class="status live">Materi</span></div>
           <div class="thumb thumb-doc" aria-hidden="true">
             <div class="thumb-inner">
-              <div class="thumb-kicker">Information architecture</div>
-              <div class="thumb-title">Portal Materi Kuliah</div>
+              <div class="thumb-kicker">Interaksi Manusia &amp; Komputer</div>
+              <div class="thumb-title">User-Centered<br>Design</div>
               <div class="paper"></div>
             </div>
           </div>
           <div class="proj-body">
-            <div class="proj-name"><span class="monogram" aria-hidden="true">IA</span><span>Struktur Informasi Portal</span></div>
-            <p class="proj-tag">Navigasi dan taksonomi materi lintas semester yang mudah dipindai.</p>
-            <p class="proj-plat label">Studi kasus · Web</p>
+            <div class="proj-name"><span class="monogram" aria-hidden="true">3</span><span>Interaksi Manusia dan Komputer</span></div>
+            <p class="proj-tag">Prinsip perancangan antarmuka, evaluasi usabilitas, dan pengalaman pengguna.</p>
+            <p class="proj-plat label">Smt 3 · Bisnis Digital · 12 file</p>
           </div>
         </a>
-
-        <a class="proj" href="imk/materi-1/index.html">
+        <a class="proj" href="mbd/index.html">
           <div class="proj-top"><span class="label">01.4</span><span class="status live">Materi</span></div>
-          <div class="thumb thumb-dark" aria-hidden="true">
+          <div class="thumb thumb-amber" aria-hidden="true">
             <div class="thumb-inner">
-              <div class="thumb-kicker">Heuristik Nielsen</div>
-              <div class="thumb-title">Prinsip &amp; Evaluasi Usabilitas</div>
+              <div class="thumb-kicker">Model &amp; desain bisnis digital</div>
+              <div class="thumb-title">Design<br>Thinking</div>
               <span class="thumb-line w80"></span>
-              <span class="thumb-line w40"></span>
+              <span class="thumb-line w60"></span>
             </div>
           </div>
           <div class="proj-body">
-            <div class="proj-name"><span class="monogram" aria-hidden="true">NE</span><span>Prinsip Evaluasi Usabilitas</span></div>
-            <p class="proj-tag">Sepuluh heuristik dan cara memakainya untuk menilai antarmuka.</p>
-            <p class="proj-plat label">Materi · IMK</p>
+            <div class="proj-name"><span class="monogram" aria-hidden="true">4</span><span>Model dan Desain Bisnis Digital</span></div>
+            <p class="proj-tag">Design thinking, lean canvas, dan value proposition untuk bisnis digital.</p>
+            <p class="proj-plat label">Smt 4 · Bisnis Digital · 6 file</p>
           </div>
         </a>
-
-        <a class="proj" href="mbd/index.html">
+        <a class="proj" href="dcb/mobile-consumer/index.html">
           <div class="proj-top"><span class="label">01.5</span><span class="status live">Materi</span></div>
           <div class="thumb thumb-ui" aria-hidden="true">
             <div class="thumb-inner">
-              <div class="thumb-kicker">Model &amp; desain bisnis digital</div>
-              <div class="thumb-title">Business Model Canvas</div>
-              <div class="row"><span class="pip"></span><span class="pip"></span></div>
+              <div class="thumb-kicker">Digital Consumer Behaviour</div>
+              <div class="thumb-title">Perilaku<br>konsumen</div>
               <div class="row"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
             </div>
           </div>
           <div class="proj-body">
-            <div class="proj-name"><span class="monogram" aria-hidden="true">BC</span><span>Business Model Canvas</span></div>
-            <p class="proj-tag">Sembilan blok kanvas untuk memetakan model bisnis digital.</p>
-            <p class="proj-plat label">Materi · MBD</p>
+            <div class="proj-name"><span class="monogram" aria-hidden="true">5</span><span>Digital Consumer Behaviour</span></div>
+            <p class="proj-tag">Pola keputusan konsumen di kanal mobile dan media sosial.</p>
+            <p class="proj-plat label">Smt 6 · Bisnis Digital · 3 file</p>
           </div>
         </a>
-
         <a class="proj" href="dwbi/data-storytelling.html">
           <div class="proj-top"><span class="label">01.6</span><span class="status live">Materi</span></div>
           <div class="thumb thumb-dark" aria-hidden="true">
             <div class="thumb-inner">
               <div class="thumb-kicker">Data warehouse &amp; BI</div>
-              <div class="thumb-title">Data Storytelling</div>
+              <div class="thumb-title">Data<br>Storytelling</div>
               <span class="thumb-line w80"></span>
               <span class="thumb-line w60"></span>
               <span class="thumb-line w40"></span>
             </div>
           </div>
           <div class="proj-body">
-            <div class="proj-name"><span class="monogram" aria-hidden="true">DS</span><span>Data Storytelling</span></div>
-            <p class="proj-tag">Menyusun narasi dari data agar keputusan lebih cepat diambil.</p>
-            <p class="proj-plat label">Materi · DWBI</p>
+            <div class="proj-name"><span class="monogram" aria-hidden="true">6</span><span>Data Warehouse dan Business Intelligence</span></div>
+            <p class="proj-tag">Perancangan gudang data dan penyajian wawasan lewat dashboard.</p>
+            <p class="proj-plat label">Smt 6 · Bisnis Digital · 3 file</p>
           </div>
         </a>
-
-        <a class="proj" href="dcb/mobile-consumer/index.html">
+        <a class="proj" href="manpro/scope/index.html">
           <div class="proj-top"><span class="label">01.7</span><span class="status live">Materi</span></div>
-          <div class="thumb thumb-ui" aria-hidden="true">
+          <div class="thumb thumb-doc" aria-hidden="true">
             <div class="thumb-inner">
-              <div class="thumb-kicker">Digital consumer behaviour</div>
-              <div class="thumb-title">Perilaku Konsumen Digital</div>
-              <div class="row"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+              <div class="thumb-kicker">Manajemen proyek TI</div>
+              <div class="thumb-title">Scope, time<br>&amp; cost</div>
+              <div class="paper"></div>
             </div>
           </div>
           <div class="proj-body">
-            <div class="proj-name"><span class="monogram" aria-hidden="true">PK</span><span>Perilaku Konsumen Digital</span></div>
-            <p class="proj-tag">Pola keputusan konsumen di kanal mobile dan media sosial.</p>
-            <p class="proj-plat label">Materi · DCB</p>
-          </div>
-        </a>
-
-        <a class="proj" href="daftar-mata-kuliah.html">
-          <div class="proj-top"><span class="label">01.8</span><span class="status live">Rekap</span></div>
-          <div class="thumb thumb-amber" aria-hidden="true">
-            <div class="thumb-inner">
-              <div class="thumb-kicker">Lintas semester</div>
-              <div class="thumb-title">Rekap<br>kelas</div>
-              <span class="thumb-line w80"></span>
-              <span class="thumb-line w60"></span>
-            </div>
-          </div>
-          <div class="proj-body">
-            <div class="proj-name"><span class="monogram" aria-hidden="true">RK</span><span>Rekap Lintas Semester</span></div>
-            <p class="proj-tag">Semua kelas dalam satu indeks: prasyarat, urutan semester, dan tautan materi.</p>
-            <p class="proj-plat label">Web · Portal</p>
+            <div class="proj-name"><span class="monogram" aria-hidden="true">7</span><span>Manajemen Proyek</span></div>
+            <p class="proj-tag">Lingkup, jadwal, biaya, manajemen perubahan, dan pendekatan agile.</p>
+            <p class="proj-plat label">Smt 6 · Teknik Informatika · 6 file</p>
           </div>
         </a>
       </div>
