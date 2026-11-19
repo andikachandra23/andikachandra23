@@ -856,7 +856,8 @@
   @media (min-width: 640px) {
     .cards.g2, .cards.g3, .cards.g4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     /* Kartu terakhir yang mengganjal melebar penuh, supaya tidak ada sel kosong */
-    .cards.g3 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+    /* Baris terakhir tidak penuh pada rack 2 kolom: sisa 1 kartu melebar penuh. */
+    .cards:not(.n5):not(.n6) > :nth-child(even):nth-last-child(1) { grid-column: 1 / -1; }
     .cards.g4 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
     .hero-copy { padding: 40px 24px 36px; }
     .hero-desc { font-size: 1.25rem; }
@@ -878,6 +879,13 @@
   @media (min-width: 1024px) {
     .cards.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .cards.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    /* Rack 6 kartu: 2 baris x 3 kolom, penuh tanpa sel kosong */
+    .cards.n6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cards.n6 > * { grid-column: span 1; }
+    /* Rack 5 kartu: baris 1 = 3 kartu, baris 2 = 2 kartu melebar (masing-masing 1.5 kolom) */
+    .cards.n5 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    .cards.n5 > :nth-child(-n + 3) { grid-column: span 2; }
+    .cards.n5 > :nth-child(n + 4) { grid-column: span 3; }
     /* 7 kartu di 4 kolom: 4 kartu atas (3/12 tiap) + 3 kartu bawah (4/12 tiap) */
     .cards.g4:has(> :nth-child(7):last-child) { grid-template-columns: repeat(12, minmax(0, 1fr)); }
     .cards.g4:has(> :nth-child(7):last-child) > :nth-child(-n + 4) { grid-column: span 3; }
@@ -1089,107 +1097,88 @@
       <div class="sec-bar">
         <span class="sec-num" aria-hidden="true">02</span>
         <h2 id="peneliti-title">Untuk peneliti</h2>
-        <span class="sec-sub">Aplikasi &amp; publikasi</span>
+        <span class="sec-sub">Publikasi &amp; pengabdian</span>
       </div>
-      <div class="rack cards g3">
-        <a class="proj" href="https://nyariartikel.app" target="_blank" rel="noopener noreferrer">
-          <div class="proj-top"><span class="label">02.1</span><span class="status live">Live</span></div>
+      <div class="rack cards g3 n5">
+        <a class="proj" href="https://ieeexplore.ieee.org/abstract/document/8267965" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">02.1</span><span class="status live">IEEE</span></div>
           <div class="thumb thumb-dark" aria-hidden="true">
             <div class="thumb-inner">
-              <div class="thumb-kicker">Open access</div>
-              <div class="thumb-title">Cari artikel ilmiah tanpa ribet.</div>
+              <div class="thumb-kicker">ICITSI 2017</div>
+              <div class="thumb-title">E-tourism<br>stickiness</div>
               <span class="thumb-line w80"></span>
               <span class="thumb-line w60"></span>
             </div>
           </div>
           <div class="proj-body">
-            <div class="proj-name"><span class="monogram" aria-hidden="true">NA</span><span>NyariArtikel.App</span></div>
-            <p class="proj-tag">Pencarian artikel open access dengan hasil yang langsung bisa disitasi.</p>
-            <p class="proj-plat label">Web app</p>
-          </div>
-        </a>
-
-        <a class="proj" href="https://bantusitasi.online" target="_blank" rel="noopener noreferrer">
-          <div class="proj-top"><span class="label">02.2</span><span class="status live">Live</span></div>
-          <div class="thumb thumb-ui" aria-hidden="true">
-            <div class="thumb-inner">
-              <div class="bar"><s></s><s></s><s></s></div>
-              <div class="thumb-kicker">Reference finder</div>
-              <div class="thumb-title">Tempel kalimat, dapat referensinya.</div>
-              <div class="row"><span class="pip"></span><span class="pip"></span></div>
-            </div>
-          </div>
-          <div class="proj-body">
-            <div class="proj-name"><span class="monogram" aria-hidden="true">BS</span><span>bantusitasi.online</span></div>
-            <p class="proj-tag">Rekomendasi referensi dari satu kalimat yang Anda tulis.</p>
-            <p class="proj-plat label">Web app</p>
-          </div>
-        </a>
-
-        <a class="proj" href="https://papier.my" target="_blank" rel="noopener noreferrer">
-          <div class="proj-top"><span class="label">02.3</span><span class="status live">Live</span></div>
-          <div class="thumb thumb-doc" aria-hidden="true">
-            <div class="thumb-inner">
-              <div class="thumb-kicker">AI library</div>
-              <div class="thumb-title">papier.my</div>
-              <div class="paper"></div>
-            </div>
-          </div>
-          <div class="proj-body">
-            <div class="proj-name"><span class="monogram" aria-hidden="true">PP</span><span>papier.my</span></div>
-            <p class="proj-tag">Manajemen artikel ilmiah berbasis AI: simpan, baca, dan kutip.</p>
-            <p class="proj-plat label">Web app · AI</p>
-          </div>
-        </a>
-
-        <a class="proj" href="https://ieeexplore.ieee.org/abstract/document/8267965" target="_blank" rel="noopener noreferrer">
-          <div class="proj-top"><span class="label">02.4</span><span class="status live">IEEE Xplore</span></div>
-          <div class="thumb thumb-doc" aria-hidden="true">
-            <div class="thumb-inner">
-              <div class="thumb-kicker">ICITSI 2017</div>
-              <div class="thumb-title">Factors Influencing E-Tourism Stickiness</div>
-              <div class="paper"></div>
-            </div>
-          </div>
-          <div class="proj-body">
             <div class="proj-name"><span class="monogram" aria-hidden="true">17</span><span>E-Tourism Stickiness</span></div>
-            <p class="proj-tag">Faktor yang membuat pengguna kembali ke platform e-tourism.</p>
-            <p class="proj-plat label">Paper · 2017</p>
+            <p class="proj-tag">Faktor yang membuat pengguna kembali ke platform e-tourism, studi pada TripTrus.Com.</p>
+            <p class="proj-plat label">Paper · IEEE Xplore · 2017</p>
           </div>
         </a>
-
+        <div class="proj">
+          <div class="proj-top"><span class="label">02.2</span><span class="status live">SINTA 3</span></div>
+          <div class="thumb thumb-doc" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Moneter · jurnal keuangan</div>
+              <div class="thumb-title">Entrepreneurial<br>Intention</div>
+              <div class="paper"></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">24</span><span>Entrepreneurial Intention</span></div>
+            <p class="proj-tag">Faktor-faktor yang memengaruhi niat berwirausaha.</p>
+            <p class="proj-note">Tautan artikel belum tersedia.</p>
+            <p class="proj-plat label">Artikel · SINTA 3 · 2024</p>
+          </div>
+        </div>
         <a class="proj" href="https://jurnal.unismabekasi.ac.id/index.php/piksel/article/view/10580" target="_blank" rel="noopener noreferrer">
-          <div class="proj-top"><span class="label">02.5</span><span class="status live">SINTA 3</span></div>
+          <div class="proj-top"><span class="label">02.3</span><span class="status live">SINTA 3</span></div>
           <div class="thumb thumb-dark" aria-hidden="true">
             <div class="thumb-inner">
               <div class="thumb-kicker">Jurnal Piksel</div>
-              <div class="thumb-title">YouTube Streaming Performance Over Wi-Fi</div>
+              <div class="thumb-title">Streaming<br>over Wi-Fi</div>
               <span class="thumb-line w80"></span>
               <span class="thumb-line w60"></span>
             </div>
           </div>
           <div class="proj-body">
             <div class="proj-name"><span class="monogram" aria-hidden="true">25</span><span>YouTube over Wi-Fi</span></div>
-            <p class="proj-tag">Analisis performa streaming berdasarkan resolusi video.</p>
-            <p class="proj-plat label">Artikel · 2025</p>
+            <p class="proj-tag">Analisis performa streaming YouTube berdasarkan resolusi video.</p>
+            <p class="proj-plat label">Artikel · SINTA 3 · 2025</p>
           </div>
         </a>
-
         <a class="proj" href="https://publikasi.dinus.ac.id/technoc/article/view/15684" target="_blank" rel="noopener noreferrer">
-          <div class="proj-top"><span class="label">02.6</span><span class="status live">EBSCO</span></div>
+          <div class="proj-top"><span class="label">02.4</span><span class="status live">EBSCO</span></div>
           <div class="thumb thumb-ui" aria-hidden="true">
             <div class="thumb-inner">
               <div class="thumb-kicker">Jurnal TECHNO.com</div>
-              <div class="thumb-title">Klasifikasi Risiko Pengguna Judi Online</div>
+              <div class="thumb-title">Risiko judi<br>online</div>
               <div class="row"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
             </div>
           </div>
           <div class="proj-body">
             <div class="proj-name"><span class="monogram" aria-hidden="true">26</span><span>Risiko Judi Online</span></div>
-            <p class="proj-tag">Klasifikasi pola perilaku dengan skor PGSI.</p>
-            <p class="proj-plat label">Artikel · 2026</p>
+            <p class="proj-tag">Klasifikasi tingkat risiko pengguna judi online dari pola perilaku dan skor PGSI.</p>
+            <p class="proj-plat label">Artikel · EBSCO · 2026</p>
           </div>
         </a>
+        <div class="proj">
+          <div class="proj-top"><span class="label">02.5</span><span class="status live">DRTPM</span></div>
+          <div class="thumb thumb-amber" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Pengabdian masyarakat</div>
+              <div class="thumb-title">Literasi<br>digital guru</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w60"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">24</span><span>Literasi Digital Guru</span></div>
+            <p class="proj-tag">Pelatihan literasi digital untuk guru SD/SMP di Kecamatan Ungaran, Jawa Tengah.</p>
+            <p class="proj-plat label">Pengabdian · Hibah DRTPM · 2024</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1219,9 +1208,55 @@
         <h2 id="developer-title">Untuk developer</h2>
         <span class="sec-sub">Kode &amp; eksperimen</span>
       </div>
-      <div class="rack cards g3">
+      <div class="rack cards g3 n6">
+        <a class="proj" href="https://nyariartikel.app" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">04.1</span><span class="status live">Live</span></div>
+          <div class="thumb thumb-dark" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Open access</div>
+              <div class="thumb-title">Cari artikel<br>ilmiah</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w60"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">NA</span><span>NyariArtikel.App</span></div>
+            <p class="proj-tag">Pencarian artikel open access dengan hasil yang langsung bisa disitasi.</p>
+            <p class="proj-plat label">Web app</p>
+          </div>
+        </a>
+        <a class="proj" href="https://bantusitasi.online" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">04.2</span><span class="status live">Live</span></div>
+          <div class="thumb thumb-ui" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Reference finder</div>
+              <div class="thumb-title">Tempel kalimat,<br>dapat referensi</div>
+              <div class="row"><span class="pip"></span><span class="pip"></span></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">BS</span><span>bantusitasi.online</span></div>
+            <p class="proj-tag">Rekomendasi referensi dari satu kalimat yang Anda tulis.</p>
+            <p class="proj-plat label">Web app</p>
+          </div>
+        </a>
+        <a class="proj" href="https://papier.my" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">04.3</span><span class="status live">Live</span></div>
+          <div class="thumb thumb-doc" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">AI library</div>
+              <div class="thumb-title">papier.my</div>
+              <div class="paper"></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">PP</span><span>papier.my</span></div>
+            <p class="proj-tag">Manajemen artikel ilmiah berbasis AI: simpan, baca, dan kutip.</p>
+            <p class="proj-plat label">Web app · AI</p>
+          </div>
+        </a>
         <a class="proj" href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">
-          <div class="proj-top"><span class="label">04.1</span><span class="status live">GitHub</span></div>
+          <div class="proj-top"><span class="label">04.4</span><span class="status live">GitHub</span></div>
           <div class="thumb thumb-dark" aria-hidden="true">
             <div class="thumb-inner">
               <div class="thumb-kicker">Repository</div>
@@ -1236,12 +1271,10 @@
             <p class="proj-plat label">Kode terbuka</p>
           </div>
         </a>
-
         <a class="proj" href="win31_index.html">
-          <div class="proj-top"><span class="label">04.2</span><span class="status live">Eksperimen</span></div>
+          <div class="proj-top"><span class="label">04.5</span><span class="status live">Eksperimen</span></div>
           <div class="thumb thumb-ui" aria-hidden="true">
             <div class="thumb-inner">
-              <div class="bar"><s></s><s></s><s></s></div>
               <div class="thumb-kicker">CSS only</div>
               <div class="thumb-title">Windows 3.1</div>
               <div class="row"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
@@ -1253,9 +1286,8 @@
             <p class="proj-plat label">HTML · CSS</p>
           </div>
         </a>
-
         <a class="proj" href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">
-          <div class="proj-top"><span class="label">04.3</span><span class="status live">Eksperimen</span></div>
+          <div class="proj-top"><span class="label">04.6</span><span class="status live">Eksperimen</span></div>
           <div class="thumb thumb-doc" aria-hidden="true">
             <div class="thumb-inner">
               <div class="thumb-kicker">Static · no build</div>
