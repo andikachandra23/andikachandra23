@@ -857,7 +857,7 @@
     .cards.g2, .cards.g3, .cards.g4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     /* Kartu terakhir yang mengganjal melebar penuh, supaya tidak ada sel kosong */
     /* Baris terakhir tidak penuh pada rack 2 kolom: sisa 1 kartu melebar penuh. */
-    .cards:not(.n5):not(.n6) > :nth-child(even):nth-last-child(1) { grid-column: 1 / -1; }
+    .cards:not(.n4):not(.n5):not(.n6) > :nth-child(even):nth-last-child(1) { grid-column: 1 / -1; }
     .cards.g4 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
     .hero-copy { padding: 40px 24px 36px; }
     .hero-desc { font-size: 1.25rem; }
@@ -879,6 +879,10 @@
   @media (min-width: 1024px) {
     .cards.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .cards.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    /* Rack 4 kartu: 3 kartu atas, 1 kartu terakhir melebar penuh */
+    .cards.n4 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cards.n4 > :nth-child(-n + 3) { grid-column: span 1; }
+    .cards.n4 > :nth-child(4) { grid-column: 1 / -1; }
     /* Rack 6 kartu: 2 baris x 3 kolom, penuh tanpa sel kosong */
     .cards.n6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .cards.n6 > * { grid-column: span 1; }
@@ -958,9 +962,9 @@
 
         <nav class="aud-nav" aria-label="Kategori karya">
           <a href="#mahasiswa"><span class="aud-num">01</span>Untuk mahasiswa<span class="aud-count" data-count="mahasiswa">7</span></a>
-          <a href="#peneliti"><span class="aud-num">02</span>Untuk peneliti<span class="aud-count" data-count="peneliti">6</span></a>
-          <a href="#organisasi"><span class="aud-num">03</span>Untuk organisasi<span class="aud-count" data-count="organisasi">1</span></a>
-          <a href="#developer"><span class="aud-num">04</span>Untuk developer<span class="aud-count" data-count="developer">3</span></a>
+          <a href="#peneliti"><span class="aud-num">02</span>Untuk peneliti<span class="aud-count" data-count="peneliti">4</span></a>
+          <a href="#organisasi"><span class="aud-num">03</span>Untuk organisasi<span class="aud-count" data-count="organisasi">→</span></a>
+          <a href="#developer"><span class="aud-num">04</span>Untuk developer<span class="aud-count" data-count="developer">6</span></a>
           <a href="#umkm"><span class="aud-num">05</span>Untuk UMKM<span class="aud-count" data-count="umkm">1</span></a>
         </nav>
       </div>
@@ -1097,9 +1101,9 @@
       <div class="sec-bar">
         <span class="sec-num" aria-hidden="true">02</span>
         <h2 id="peneliti-title">Untuk peneliti</h2>
-        <span class="sec-sub">Publikasi &amp; pengabdian</span>
+        <span class="sec-sub">Publikasi</span>
       </div>
-      <div class="rack cards g3 n5">
+      <div class="rack cards g3 n4">
         <a class="proj" href="https://ieeexplore.ieee.org/abstract/document/8267965" target="_blank" rel="noopener noreferrer">
           <div class="proj-top"><span class="label">02.1</span><span class="status live">IEEE</span></div>
           <div class="thumb thumb-dark" aria-hidden="true">
@@ -1163,22 +1167,6 @@
             <p class="proj-plat label">Artikel · EBSCO · 2026</p>
           </div>
         </a>
-        <div class="proj">
-          <div class="proj-top"><span class="label">02.5</span><span class="status live">DRTPM</span></div>
-          <div class="thumb thumb-amber" aria-hidden="true">
-            <div class="thumb-inner">
-              <div class="thumb-kicker">Pengabdian masyarakat</div>
-              <div class="thumb-title">Literasi<br>digital guru</div>
-              <span class="thumb-line w80"></span>
-              <span class="thumb-line w60"></span>
-            </div>
-          </div>
-          <div class="proj-body">
-            <div class="proj-name"><span class="monogram" aria-hidden="true">24</span><span>Literasi Digital Guru</span></div>
-            <p class="proj-tag">Pelatihan literasi digital untuk guru SD/SMP di Kecamatan Ungaran, Jawa Tengah.</p>
-            <p class="proj-plat label">Pengabdian · Hibah DRTPM · 2024</p>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -1419,14 +1407,14 @@
 
   syncLabel();
 
-  /* Jumlah karya per kategori di nav kuning */
+  /* Jumlah karya per kategori di nav kuning; CTA tanpa kartu -> tanda panah */
   var counts = document.querySelectorAll('[data-count]');
   Array.prototype.forEach.call(counts, function (el) {
     var id = el.getAttribute('data-count');
     var section = document.getElementById(id);
     if (!section) return;
     var n = section.querySelectorAll('.proj').length;
-    if (n) el.textContent = n;
+    el.textContent = n ? String(n) : '→';
   });
 
   /* Tahun berjalan */
