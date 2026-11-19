@@ -1,1537 +1,1419 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Andika Chandra P — Dosen, Peneliti &amp; Praktisi Digital</title>
-  <meta name="description" content="Portofolio Andika Chandra P, S.Kom., M.T.I — dosen dan peneliti di bidang teknologi informasi, AI, dan bisnis digital. Publikasi ilmiah, aplikasi web, dan materi kuliah." />
-  <link rel="canonical" href="https://andikachandra.com/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Andika Chandra P — Dosen, Peneliti &amp; Praktisi Digital" />
-  <meta property="og:description" content="Riset, aplikasi, dan materi kuliah di bidang teknologi informasi, AI, dan bisnis digital." />
-  <meta property="og:image" content="https://andikachandra.com/image/foto.webp" />
-  <meta name="theme-color" content="#F8F6F1" />
-  <script>document.documentElement.classList.add('js');</script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-    /* ══════════════════════════════════════
-       DESIGN TOKENS
-       ══════════════════════════════════════ */
-    :root {
-      --bg: #F8F6F1;
-      --bg-deep: #F4EFE2;
-      --panel: #F1EDE3;
-      --card: #FCFAF6;
-      --ink: #191912;
-      --ink-soft: #3A3A30;
-      --muted: #6E6E62;
-      --line: rgba(25, 25, 18, .13);
-      --line-soft: rgba(25, 25, 18, .07);
-      --olive: #767529;
-      --olive-dark: #59581A;
-      --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
-      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      --maxw: 1120px;
-      --radius: 14px;
-      --shadow: 0 30px 60px -45px rgba(60, 48, 15, .55);
-    }
+<script>
+  /* Set tema sebelum paint supaya tidak berkedip */
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem('andika-theme'); } catch (e) {}
+    var theme = saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    document.documentElement.dataset.theme = theme;
+  })();
+</script>
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<title>Andika Chandra P — Dosen, Peneliti &amp; Praktisi Digital</title>
+<meta name="description" content="Portofolio Andika Chandra P, S.Kom., M.T.I — dosen dan peneliti teknologi informasi di bidang AI, socio-techno, dan bisnis digital. Mata kuliah, aplikasi web, dan publikasi ilmiah.">
+<link rel="canonical" href="https://andikachandra.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Andika Chandra P — Dosen, Peneliti &amp; Praktisi Digital">
+<meta property="og:description" content="Mata kuliah, aplikasi web, dan publikasi ilmiah di bidang teknologi informasi, AI, dan bisnis digital.">
+<meta property="og:image" content="https://andikachandra.com/image/foto.webp">
+<meta name="theme-color" content="#0F0F0F" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#E4E4DF" media="(prefers-color-scheme: light)">
 
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 88px;
-      -webkit-text-size-adjust: 100%;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;700;800;900&family=Chivo+Mono:wght@500;600&display=swap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23FFD60A'/%3E%3Ctext x='16' y='24' font-family='Helvetica,Arial' font-size='20' font-weight='900' text-anchor='middle' fill='%23111'%3EA%3C/text%3E%3C/svg%3E">
 
-    body {
-      font-family: var(--sans);
-      background: var(--bg);
-      color: var(--ink);
-      font-size: 16px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-      position: relative;
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://andikachandra.com/#person",
+      "name": "Andika Chandra P",
+      "honorificSuffix": "S.Kom., M.T.I",
+      "url": "https://andikachandra.com/",
+      "image": "https://andikachandra.com/image/foto.webp",
+      "jobTitle": "Dosen dan Peneliti",
+      "knowsAbout": ["Machine Learning", "Web Design", "Digital Marketing", "Socio-Techno"],
+      "sameAs": ["https://github.com/andikachandra23"]
+    },
+    {
+      "@type": "WebSite",
+      "url": "https://andikachandra.com/",
+      "name": "Andika Chandra P",
+      "inLanguage": "id"
     }
+  ]
+}
+</script>
 
-    /* Background grid — dekorasi khas mockup */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(to right, rgba(25, 25, 18, .048) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(25, 25, 18, .048) 1px, transparent 1px);
-      background-size: 96px 96px;
-      background-position: -1px -1px;
-    }
+<style>
+  /* ══════════════════════════════════════
+     TOKENS
+     ══════════════════════════════════════ */
+  :root {
+    color-scheme: dark;
+    --c-background: 15 15 15;
+    --c-surface: 25 25 25;
+    --c-surface-2: 32 32 32;
+    --c-border: 54 54 52;
+    --c-border-bright: 110 110 105;
+    --c-foreground: 237 237 232;
+    --c-body: 207 207 201;
+    --c-muted: 163 163 156;
+    --c-accent: 74 222 128;
+    --c-accent-solid: 255 214 10;
+    --c-accent-solid-hover: 240 198 0;
+    --c-on-accent: 17 17 17;
+    --c-pending: 245 185 113;
+    --c-bar: 237 237 232;
+    --c-on-bar: 17 17 17;
+    --c-focus: 255 214 10;
+    --font: 'Chivo', system-ui, -apple-system, sans-serif;
+    --mono: 'Chivo Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
 
-    img { display: block; max-width: 100%; }
-    a { color: inherit; }
+  :root[data-theme='light'] {
+    color-scheme: light;
+    --c-background: 228 228 223;
+    --c-surface: 245 245 241;
+    --c-surface-2: 236 236 231;
+    --c-border: 185 185 178;
+    --c-border-bright: 117 117 111;
+    --c-foreground: 17 17 17;
+    --c-body: 51 51 47;
+    --c-muted: 85 85 79;
+    --c-accent: 17 112 58;
+    --c-accent-solid: 255 214 10;
+    --c-accent-solid-hover: 240 198 0;
+    --c-on-accent: 17 17 17;
+    --c-pending: 138 66 8;
+    --c-bar: 17 17 17;
+    --c-on-bar: 245 245 241;
+    --c-focus: 17 17 17;
+  }
 
-    :focus-visible {
-      outline: 2px solid var(--olive);
-      outline-offset: 4px;
-      border-radius: 2px;
-    }
+  *, *::before, *::after { box-sizing: border-box; }
 
-    .container {
-      width: 100%;
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: 0 40px;
-      position: relative;
-      z-index: 1;
-    }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 16px;
+    -webkit-text-size-adjust: 100%;
+  }
 
-    .sr-only {
-      position: absolute;
-      width: 1px; height: 1px;
-      padding: 0; margin: -1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
-      border: 0;
-    }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: rgb(var(--c-background));
+    color: rgb(var(--c-foreground));
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-    .hatch {
-      position: absolute;
-      z-index: 0;
-      pointer-events: none;
-      background-image: repeating-linear-gradient(45deg, rgba(25, 25, 18, .06) 0 1px, transparent 1px 9px);
-    }
-    /* ══════════════════════════════════════
-       NAVBAR
-       ══════════════════════════════════════ */
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 60;
-      background: rgba(248, 246, 241, .82);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid transparent;
-      transition: border-color .3s ease, box-shadow .3s ease;
-    }
-    .nav.is-stuck {
-      border-bottom-color: var(--line-soft);
-      box-shadow: 0 12px 30px -28px rgba(40, 30, 10, .6);
-    }
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      min-height: 68px;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 34px;
-      list-style: none;
-    }
-    .nav-link {
-      position: relative;
-      font-size: 13.5px;
-      letter-spacing: .01em;
-      text-decoration: none;
-      color: var(--ink-soft);
-      opacity: .78;
-      transition: opacity .2s ease, color .2s ease;
-    }
-    .nav-link:hover { opacity: 1; color: var(--olive-dark); }
-    .nav-link.is-active { opacity: 1; font-weight: 500; }
-    .nav-link.is-active::before {
-      content: '';
-      position: absolute;
-      top: -11px;
-      left: 50%;
-      width: 4px; height: 4px;
-      margin-left: -2px;
-      border-radius: 50%;
-      background: var(--ink);
-    }
-    .nav-cta {
-      font-size: 13.5px;
-      text-decoration: none;
-      color: var(--ink-soft);
-      padding: 7px 16px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      transition: background .2s ease, border-color .2s ease, color .2s ease;
-    }
-    .nav-cta:hover { background: var(--ink); border-color: var(--ink); color: var(--bg); }
-    .nav-toggle {
-      display: none;
-      width: 40px; height: 40px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: transparent;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      flex-direction: column;
-    }
-    .nav-toggle span {
-      display: block;
-      width: 16px; height: 1.5px;
-      background: var(--ink);
-      transition: transform .25s ease, opacity .25s ease;
-    }
-    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(3px) rotate(45deg); }
-    .nav-toggle[aria-expanded="true"] span:nth-child(2) { transform: translateY(-2.5px) rotate(-45deg); }
+  h1, h2, h3, p, ul, figure { margin: 0; }
+  ul { padding: 0; list-style: none; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; height: auto; }
 
-    /* ══════════════════════════════════════
-       HERO
-       ══════════════════════════════════════ */
-    .hero {
-      position: relative;
-      padding: 62px 0 34px;
-    }
-    .hero .hatch-a { left: 0; top: 40px; width: 190px; height: 170px; }
-    .hero .hatch-b { right: 0; top: 150px; width: 130px; height: 210px; }
-    .hero-glow {
-      position: absolute;
-      z-index: 0;
-      top: 30px;
-      right: 16%;
-      width: 420px; height: 420px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(214, 201, 158, .32) 0%, rgba(248, 246, 241, 0) 68%);
-      pointer-events: none;
-    }
-    .hero-title {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(2.3rem, 5.4vw, 4.35rem);
-      line-height: 1.1;
-      letter-spacing: -.022em;
-      max-width: 1010px;
-      position: relative;
-      z-index: 1;
-    }
-    .hero-degree {
-      display: block;
-      font-family: var(--sans);
-      font-size: clamp(10px, .26em, 18px);
-      font-weight: 400;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: .5em;
-    }
-    .hero-photo {
-      position: relative;
-      display: inline-block;
-      width: 1.28em; height: 1.28em;
-      vertical-align: -.16em;
-      margin: 0 .1em;
-    }
-    .hero-photo img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: 52% 30%;
-      border-radius: 24%;
-      border: .045em solid #F3EFE1;
-      box-shadow: 0 22px 44px -24px rgba(74, 58, 18, .5);
-    }
-    .hero-photo .wave {
-      position: absolute;
-      right: -.14em; top: -.12em;
-      font-size: .34em;
-      line-height: 1;
-      transform: rotate(-8deg);
-      z-index: 2;
-    }
-    .hero-photo::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 24%;
-      pointer-events: none;
-      background: radial-gradient(circle at 50% 45%, rgba(248, 246, 241, 0) 52%, rgba(248, 246, 241, .5) 100%);
-    }
-    .hero-lower {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      margin-top: 26px;
-      position: relative;
-      z-index: 1;
-      max-width: 560px;
-    }
-    .hero-kicker {
-      font-size: 12px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--olive-dark);
-      margin-bottom: 14px;
-      position: relative;
-      z-index: 1;
-    }
-    .hero-desc {
-      font-size: 15px;
-      line-height: 1.75;
-      color: var(--ink-soft);
-      max-width: 520px;
-    }
-    .hero-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      list-style: none;
-      margin-top: 20px;
-      padding: 0;
-    }
-    .hero-pills li {
-      font-size: 12px;
-      letter-spacing: .01em;
-      color: var(--ink-soft);
-      background: var(--panel);
-      border: 1px solid var(--line-soft);
-      border-radius: 999px;
-      padding: 6px 14px;
-    }
-    .hero-social {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 30px;
-      list-style: none;
-      margin-top: 50px;
-    }
-    .hero-social a {
-      font-family: var(--serif);
-      font-size: 19px;
-      letter-spacing: .01em;
-      color: var(--ink-soft);
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 5px;
-      text-decoration-color: rgba(25, 25, 18, .35);
-      transition: color .2s ease, text-decoration-color .2s ease;
-    }
-    .hero-social a:hover { color: var(--olive-dark); text-decoration-color: var(--olive); }
-    .scroll-cue {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      margin: 56px auto 0;
-      text-decoration: none;
-      color: var(--muted);
-      font-size: 11.5px;
-      letter-spacing: .09em;
-      text-transform: uppercase;
-      width: max-content;
-    }
-    .scroll-cue svg { width: 18px; height: 28px; }
-    .scroll-cue .dot { animation: cue 1.9s ease-in-out infinite; }
-    @keyframes cue {
-      0%, 100% { transform: translateY(0); opacity: 1; }
-      55% { transform: translateY(7px); opacity: .2; }
-    }
+  :focus-visible {
+    outline: 3px solid rgb(var(--c-focus));
+    outline-offset: 2px;
+  }
 
-    /* ══════════════════════════════════════
-       SECTION HEADINGS
-       ══════════════════════════════════════ */
-    .section { position: relative; padding: 62px 0; }
-    .section-head { text-align: center; margin-bottom: 34px; }
-    .section-title {
-      font-family: var(--serif);
-      font-weight: 500;
-      font-size: clamp(1.5rem, 2.7vw, 2.3rem);
-      line-height: 1.2;
-      letter-spacing: -.012em;
-    }
-    .section-sub {
-      margin: 12px auto 0;
-      max-width: 480px;
-      font-size: 13.5px;
-      line-height: 1.7;
-      color: var(--muted);
-    }
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
 
-    /* ══════════════════════════════════════
-       PUBLIKASI & KOLABORASI (logo strip)
-       ══════════════════════════════════════ */
-    .logos { padding-top: 34px; padding-bottom: 24px; }
-    .logo-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-    .logo-card {
-      height: 62px;
-      display: grid;
-      place-items: center;
-      background: var(--panel);
-      border-radius: 10px;
-      color: #A7A499;
-      font-size: 17px;
-      letter-spacing: .01em;
-      transition: color .25s ease, background .25s ease;
-      text-align: center;
-      padding: 0 12px;
-    }
-    .logo-card:hover { color: var(--ink-soft); background: #EDE8DC; }
-    .logo-ieee { font-family: var(--serif); font-weight: 600; letter-spacing: .04em; }
-    .logo-sinta { font-weight: 600; font-size: 15px; letter-spacing: .18em; }
-    .logo-ebsco { font-weight: 600; font-size: 15px; letter-spacing: .08em; }
-    .logo-piksel { font-family: var(--serif); font-style: italic; font-size: 19px; }
-    /* ══════════════════════════════════════
-       MY ACHIEVEMENT — ranked list
-       ══════════════════════════════════════ */
-    .ach-section { padding-top: 46px; }
-    .ach-section .hatch-c { right: 0; top: 120px; width: 120px; height: 230px; }
-    .ach-list {
-      border-top: 1px solid var(--line);
-      position: relative;
-      z-index: 1;
-    }
-    .ach-item {
-      border-bottom: 1px solid var(--line);
-      display: grid;
-      grid-template-columns: 74px minmax(0, 1fr);
-      align-items: center;
-      gap: 26px;
-      padding: 18px 6px;
-      transition: background .25s ease;
-    }
-    .ach-item:hover { background: rgba(252, 250, 246, .8); }
-    .ach-item.is-featured {
-      grid-template-columns: 74px minmax(0, 1fr) 236px;
-      padding: 22px 6px;
-    }
-    .ach-rank {
-      font-size: 12.5px;
-      color: var(--muted);
-      letter-spacing: .04em;
-      padding-left: 2px;
-    }
-    .ach-rank b { display: block; font-weight: 500; color: var(--ink); }
-    .ach-title {
-      font-family: var(--serif);
-      font-weight: 500;
-      font-size: clamp(1.15rem, 1.85vw, 1.6rem);
-      line-height: 1.25;
-      letter-spacing: -.01em;
-    }
-    .ach-title a { text-decoration: none; }
-    .ach-title a:hover { color: var(--olive-dark); text-decoration: underline; text-underline-offset: .14em; }
-    .ach-meta {
-      margin-top: 6px;
-      font-size: 12.5px;
-      line-height: 1.6;
-      color: var(--muted);
-    }
-    .ach-link {
-      display: inline-block;
-      margin-top: 10px;
-      font-size: 12.5px;
-      color: var(--olive-dark);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-color: rgba(118, 117, 41, .5);
-    }
-    .ach-link:hover { text-decoration-color: var(--olive); }
-    .ach-thumb {
-      border-radius: 8px;
-      overflow: hidden;
-      background: linear-gradient(160deg, #F7F3E9, #EDE7D8);
-      border: 1px solid var(--line-soft);
-      box-shadow: var(--shadow);
-      aspect-ratio: 16 / 9;
-      display: grid;
-      place-items: center;
-      padding: 10px;
-    }
-    .ach-thumb svg { width: 100%; height: 100%; }
+  .wrap {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: clamp(12px, 2.4vw, 28px);
+  }
 
-    .paper-mock {
-      width: 100%;
-      height: 100%;
-      background: #FFFDF8;
-      border-radius: 3px;
-      padding: 8px 9px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      box-shadow: 0 8px 18px -14px rgba(40, 30, 10, .9);
-    }
-    .paper-mock .pm-head { display: flex; gap: 3px; align-items: center; margin-bottom: 2px; }
-    .paper-mock .pm-head i { width: 4px; height: 4px; border-radius: 50%; background: #D7D2C4; }
-    .paper-mock .pm-kicker { font-size: 3.4px; letter-spacing: .12em; text-transform: uppercase; color: #8D8A7C; }
-    .paper-mock .pm-title { font-family: var(--serif); font-size: 7.5px; line-height: 1.15; color: #24241C; }
-    .paper-mock .pm-line { height: 2.4px; border-radius: 2px; background: #E5E0D2; }
-    .paper-mock .pm-line.w60 { width: 60%; }
-    .paper-mock .pm-line.w80 { width: 80%; }
-    .paper-mock .pm-chart { display: flex; align-items: flex-end; gap: 2px; height: 14px; margin-top: auto; }
-    .paper-mock .pm-chart i { flex: 1; background: #C9C68C; border-radius: 1px 1px 0 0; }
-    .paper-mock .pm-chart i:nth-child(2) { height: 60%; }
-    .paper-mock .pm-chart i:nth-child(3) { height: 90%; opacity: .55; }
-    .paper-mock .pm-chart i:nth-child(4) { height: 45%; opacity: .35; }
-    /* ══════════════════════════════════════
-       FEATURED PROJECT / CASE STUDY / BLOG
-       ══════════════════════════════════════ */
-    .work { padding-top: 54px; }
-    .work-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px 26px;
-      margin-bottom: 30px;
-      position: relative;
-      z-index: 1;
-    }
-    .work-tab {
-      position: relative;
-      appearance: none;
-      border: 0;
-      background: none;
-      cursor: pointer;
-      font-family: var(--sans);
-      font-size: clamp(1rem, 1.5vw, 1.22rem);
-      color: var(--muted);
-      padding: 6px 10px;
-      transition: color .2s ease;
-      white-space: nowrap;
-    }
-    .work-tab:hover { color: var(--ink-soft); }
-    .work-tab[aria-selected="true"] { color: var(--ink); }
-    .work-tab .scribble {
-      position: absolute;
-      inset: -6px -12px;
-      width: calc(100% + 24px);
-      height: calc(100% + 12px);
-      color: var(--ink-soft);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .25s ease;
-    }
-    .work-tab[aria-selected="true"] .scribble { opacity: .85; }
+  .label {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: .8125rem;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
 
-    .work-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 34px 26px;
-      position: relative;
-      z-index: 1;
-    }
-    .work-card { display: flex; flex-direction: column; }
-    .work-card[hidden] { display: none; }
-    .work-shot {
-      position: relative;
-      background: linear-gradient(165deg, #F5F0E3, #F8F5EC 55%, #F1EBDC);
-      border-radius: var(--radius);
-      padding: 22px;
-      min-height: 292px;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      border: 1px solid var(--line-soft);
-    }
-    .work-shot::after {
-      content: '';
-      position: absolute;
-      right: -30px; bottom: -30px;
-      width: 130px; height: 130px;
-      z-index: 0;
-      background-image: repeating-linear-gradient(45deg, rgba(25, 25, 18, .07) 0 1px, transparent 1px 8px);
-      pointer-events: none;
-    }
-    .work-shot > * { position: relative; z-index: 1; }
-    .work-card.is-out { animation: fadeIn .32s ease both; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-    .work-foot {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 16px;
-      margin-top: 16px;
-    }
-    .work-name {
-      font-family: var(--serif);
-      font-weight: 600;
-      font-size: clamp(1.02rem, 1.35vw, 1.22rem);
-      line-height: 1.3;
-    }
-    .work-name span { display: block; font-family: var(--sans); font-weight: 400; font-size: 12.5px; color: var(--muted); margin-top: 3px; }
-    .view-link {
-      flex: none;
-      font-size: 12.5px;
-      color: var(--olive-dark);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-color: rgba(118, 117, 41, .5);
-      white-space: nowrap;
-    }
-    .view-link:hover { text-decoration-color: var(--olive); }
+  /* Garis pemisah 1px otomatis antar sel */
+  .rack {
+    display: grid;
+    gap: 1px;
+    background: rgb(var(--c-border));
+    border: 1px solid rgb(var(--c-border));
+    border-radius: 6px;
+    overflow: hidden;
+  }
 
-    /* ── Mockup: browser window ── */
-    .mock {
-      width: 100%;
-      max-width: 380px;
-      border-radius: 9px;
-      overflow: hidden;
-      background: #FFFDF8;
-      box-shadow: 0 26px 50px -34px rgba(60, 48, 15, .65);
-      border: 1px solid rgba(25, 25, 18, .07);
-      font-size: 10px;
-    }
-    .mock-bar {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      padding: 7px 9px;
-      background: #F4F0E5;
-      border-bottom: 1px solid rgba(25, 25, 18, .06);
-    }
-    .mock-bar i { width: 5px; height: 5px; border-radius: 50%; background: #DAD4C4; }
-    .mock-bar em {
-      font-style: normal;
-      font-size: 7.5px;
-      color: #8F8C7F;
-      margin-left: 6px;
-      letter-spacing: .03em;
-    }
-    .mock-body { padding: 14px 16px 16px; }
-    .mock-kicker {
-      font-size: 7px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: #9A9788;
-      margin-bottom: 5px;
-    }
-    .mock-title {
-      font-family: var(--serif);
-      font-size: 15px;
-      line-height: 1.2;
-      color: #23231B;
-      letter-spacing: -.01em;
-    }
-    .mock-copy { font-size: 8px; line-height: 1.5; color: #8B887A; margin-top: 5px; }
-    .mock-search {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 10px;
-      padding: 6px 8px;
-      border: 1px solid #E4DFD0;
-      border-radius: 6px;
-      background: #FFFDF9;
-    }
-    .mock-search .dotg { width: 6px; height: 6px; border-radius: 50%; background: #C9C68C; flex: none; }
-    .mock-search .ph { height: 3px; width: 55%; border-radius: 2px; background: #E7E2D3; }
-    .mock-search .chip { margin-left: auto; height: 10px; width: 26px; border-radius: 3px; background: #767529; opacity: .8; }
-    .mock-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
-    .mock-row {
-      display: flex;
-      gap: 7px;
-      align-items: flex-start;
-      padding: 6px;
-      border: 1px solid #EFEBDD;
-      border-radius: 5px;
-      background: #FFFEFB;
-    }
-    .mock-row .thumb { width: 22px; height: 16px; border-radius: 3px; background: linear-gradient(140deg, #DCD8BE, #C9C68C); flex: none; }
-    .mock-row .lines { flex: 1; display: flex; flex-direction: column; gap: 3px; }
-    .mock-row .lines i { height: 2.5px; border-radius: 2px; background: #E7E2D3; }
-    .mock-row .lines i:nth-child(1) { width: 78%; background: #D9D4C2; }
-    .mock-row .lines i:nth-child(2) { width: 52%; }
-    .mock-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
-    .mock-panel { border: 1px solid #EFEBDD; border-radius: 5px; padding: 6px; background: #FFFEFB; }
-    .mock-panel .lbl { height: 2.5px; width: 40%; background: #D9D4C2; border-radius: 2px; margin-bottom: 5px; }
-    .mock-panel .ln { height: 2.5px; background: #EDE8D9; border-radius: 2px; margin-bottom: 3px; }
-    .mock-panel .ln.short { width: 70%; }
-    /* ── Mockup: phone ── */
-    .mock-phones { display: flex; align-items: flex-end; justify-content: center; gap: 10px; }
-    .mock-phone {
-      width: 96px;
-      border-radius: 14px;
-      background: #23231B;
-      padding: 3px;
-      box-shadow: 0 22px 40px -30px rgba(50, 40, 12, .8);
-      flex: none;
-    }
-    .mock-phone:nth-child(2) { width: 106px; margin-bottom: 14px; }
-    .mock-phone .screen {
-      background: #FFFDF8;
-      border-radius: 11px;
-      overflow: hidden;
-      padding: 8px 7px 9px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      min-height: 158px;
-    }
-    .mock-phone .notch { width: 22px; height: 2px; border-radius: 2px; background: #E1DBCB; margin: 0 auto 2px; }
-    .mock-phone .ph-title { font-family: var(--serif); font-size: 8px; line-height: 1.2; color: #23231B; }
-    .mock-phone .ph-sub { font-size: 5px; color: #9A9788; letter-spacing: .04em; text-transform: uppercase; }
-    .mock-phone .ph-card { border-radius: 5px; background: #F5F1E5; padding: 5px; display: flex; flex-direction: column; gap: 3px; }
-    .mock-phone .ph-card .bar { height: 2.5px; border-radius: 2px; background: #E1DBCB; }
-    .mock-phone .ph-card .bar.w50 { width: 50%; }
-    .mock-phone .ph-cta { margin-top: auto; height: 12px; border-radius: 4px; background: #767529; opacity: .85; display: grid; place-items: center; }
-    .mock-phone .ph-cta i { width: 22px; height: 2px; background: rgba(255, 255, 255, .75); border-radius: 2px; }
-    .mock-phone .ph-avatar { display: flex; align-items: center; gap: 4px; }
-    .mock-phone .ph-avatar .av { width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(140deg, #DCD8BE, #C9C68C); }
-    .mock-phone .ph-avatar .ln { height: 2.5px; width: 26px; border-radius: 2px; background: #E7E2D3; }
-    .mock-phone .ph-strip { display: flex; gap: 3px; }
-    .mock-phone .ph-strip i { flex: 1; height: 20px; border-radius: 4px; background: linear-gradient(150deg, #ECE6D5, #DCD8BE); }
+  .surface { background: rgb(var(--c-surface)); }
+  .surface-2 { background: rgb(var(--c-surface-2)); }
+  .muted { color: rgb(var(--c-muted)); }
+  .body-t { color: rgb(var(--c-body)); }
 
-    /* ── Mockup: article / editorial card ── */
-    .mock-article {
-      width: 100%;
-      max-width: 360px;
-      background: #FFFDF8;
-      border: 1px solid rgba(25, 25, 18, .08);
-      border-radius: 10px;
-      padding: 18px;
-      box-shadow: 0 24px 48px -36px rgba(60, 48, 15, .7);
-    }
-    .mock-article .a-kicker { font-size: 7px; letter-spacing: .16em; text-transform: uppercase; color: #9A9788; }
-    .mock-article .a-band {
-      height: 62px;
-      border-radius: 6px;
-      margin-bottom: 13px;
-      background:
-        linear-gradient(140deg, rgba(255, 255, 255, .45), rgba(255, 255, 255, 0)),
-        linear-gradient(140deg, #E9E4CF, #D7D2B2);
-      border: 1px solid rgba(25, 25, 18, .05);
-    }
-    .mock-article .a-title { font-family: var(--serif); font-size: 16px; line-height: 1.25; color: #23231B; margin-top: 6px; }
-    .mock-article .a-rule { height: 1px; background: #EDE8D9; margin: 10px 0; }
-    .mock-article .a-line { height: 3px; border-radius: 2px; background: #EFEADD; margin-bottom: 5px; }
-    .mock-article .a-line.w70 { width: 70%; }
-    .mock-article .a-line.w45 { width: 45%; }
-    .mock-article .a-tags { display: flex; gap: 4px; margin-top: 12px; }
-    .mock-article .a-tags i { height: 9px; width: 30px; border-radius: 999px; background: #F1EDE0; }
-    .mock-article .a-tags i:first-child { width: 42px; background: #E4E2C6; }
+  /* ══════════════════════════════════════
+     SKIP LINK
+     ══════════════════════════════════════ */
+  .skip {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 60;
+  }
+  .skip:focus {
+    left: 8px;
+    top: 8px;
+    position: fixed;
+    padding: 12px 16px;
+    border-radius: 6px;
+    background: rgb(var(--c-accent-solid));
+    color: rgb(var(--c-on-accent));
+    font-weight: 700;
+  }
 
-    /* ══════════════════════════════════════
-       CTA
-       ══════════════════════════════════════ */
-    .cta {
-      margin-top: 66px;
-      padding: 86px 0 92px;
-      background: linear-gradient(180deg, #F6F1E4, #F3EDDD);
-      position: relative;
-      overflow: hidden;
-      text-align: center;
-      border-top: 1px solid rgba(25, 25, 18, .05);
-      border-bottom: 1px solid rgba(25, 25, 18, .05);
-    }
-    .cta .hatch-e { left: 0; bottom: 0; width: 260px; height: 200px; }
-    .cta .hatch-f { right: 0; top: 0; width: 210px; height: 170px; }
-    .cta-glow {
-      position: absolute;
-      z-index: 0;
-      left: 50%; top: 50%;
-      width: 720px; height: 420px;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(ellipse, rgba(255, 252, 240, .9) 0%, rgba(246, 241, 228, 0) 72%);
-      pointer-events: none;
-    }
-    .cta-title {
-      font-family: var(--serif);
-      font-weight: 500;
-      font-size: clamp(2.1rem, 4.7vw, 3.95rem);
-      line-height: 1.1;
-      letter-spacing: -.02em;
-      position: relative;
-      z-index: 1;
-    }
-    .cta-sub {
-      margin: 18px auto 0;
-      max-width: 440px;
-      font-size: 13.5px;
-      line-height: 1.7;
-      color: var(--ink-soft);
-      position: relative;
-      z-index: 1;
-    }
-    .btn-olive {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 196px;
-      margin-top: 34px;
-      padding: 15px 34px;
-      background: var(--olive);
-      color: #FBF8EE;
-      font-family: var(--serif);
-      font-size: 16px;
-      letter-spacing: .02em;
-      text-decoration: none;
-      border-radius: 2px;
-      position: relative;
-      z-index: 1;
-      transition: background .22s ease, transform .22s ease, box-shadow .22s ease;
-    }
-    .btn-olive:hover {
-      background: var(--olive-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 20px 36px -26px rgba(60, 48, 15, .9);
-    }
+  /* ══════════════════════════════════════
+     HEADER
+     ══════════════════════════════════════ */
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding-block: 8px;
+  }
 
-    /* ══════════════════════════════════════
-       FOOTER
-       ══════════════════════════════════════ */
-    .footer { padding: 26px 0 44px; }
-    .footer-inner {
-      border-top: 1px solid var(--line);
-      padding-top: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-    .footer-copy { font-size: 12px; color: var(--muted); }
-    .footer-copy a { color: var(--muted); text-decoration: none; border-bottom: 1px solid rgba(25, 25, 18, .2); }
-    .footer-copy a:hover { color: var(--olive-dark); border-bottom-color: var(--olive); }
-    .footer-links { display: flex; gap: 26px; list-style: none; flex-wrap: wrap; }
-    .footer-links a {
-      font-family: var(--serif);
-      font-size: 16px;
-      color: var(--ink-soft);
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 4px;
-      text-decoration-color: rgba(25, 25, 18, .3);
-    }
-    .footer-links a:hover { color: var(--olive-dark); text-decoration-color: var(--olive); }
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 1.125rem;
+    font-weight: 900;
+    letter-spacing: -.025em;
+    white-space: nowrap;
+  }
+  .wordmark i {
+    font-style: normal;
+    color: rgb(var(--c-accent-solid));
+  }
 
-    /* ══════════════════════════════════════
-       SCROLL REVEAL (hanya bila JS aktif)
-       ══════════════════════════════════════ */
-    .js .reveal {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity .7s cubic-bezier(.22, .61, .36, 1), transform .7s cubic-bezier(.22, .61, .36, 1);
-    }
-    .js .reveal.in { opacity: 1; transform: none; }
-    /* ══════════════════════════════════════
-       RESPONSIVE
-       ══════════════════════════════════════ */
-    @media (max-width: 1024px) {
-      .container { padding: 0 32px; }
-      .ach-item.is-featured { grid-template-columns: 64px minmax(0, 1fr) 190px; }
-    }
+  .head-nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: .9375rem;
+  }
 
-    @media (max-width: 860px) {
-      .nav-toggle { display: inline-flex; }
-      .nav-inner { min-height: 62px; }
-      .nav-links {
-        position: absolute;
-        top: 100%;
-        left: 0; right: 0;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 2px;
-        padding: 10px 32px 18px;
-        background: rgba(248, 246, 241, .98);
-        border-bottom: 1px solid var(--line-soft);
-        box-shadow: 0 24px 40px -34px rgba(40, 30, 10, .8);
-        display: none;
-      }
-      .nav-links.is-open { display: flex; }
-      .nav-link { width: 100%; padding: 11px 0; font-size: 14px; }
-      .nav-link.is-active::before { top: 50%; left: -12px; margin-top: -2px; }
-      .nav-cta { display: none; }
-      .hero { padding-top: 44px; }
-      .hero-title { font-size: clamp(2rem, 7.4vw, 3rem); }
-      .hero-social { margin-top: 34px; gap: 22px; }
-      .hero-social a { font-size: 17px; }
-      .logo-row { grid-template-columns: repeat(2, 1fr); }
-      .ach-item.is-featured { grid-template-columns: 56px minmax(0, 1fr); row-gap: 16px; }
-      .ach-item.is-featured .ach-thumb { grid-column: 2; width: 100%; max-width: 280px; }
-      .work-grid { grid-template-columns: minmax(0, 1fr); }
-      .work-shot { min-height: 260px; }
-      .cta { padding: 64px 0 70px; margin-top: 50px; }
-      .footer-inner { flex-direction: column; align-items: flex-start; }
-    }
+  .head-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 10px;
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+    transition: text-decoration-color .15s ease;
+  }
+  .head-link:hover { text-decoration-color: currentColor; }
 
-    @media (max-width: 560px) {
-      .container { padding: 0 20px; }
-      .nav-links { padding-left: 20px; padding-right: 20px; }
-      .section { padding: 46px 0; }
-      .ach-item { grid-template-columns: 46px minmax(0, 1fr); gap: 14px; }
-      .ach-item.is-featured { grid-template-columns: 46px minmax(0, 1fr); }
-      .ach-item.is-featured .ach-thumb { grid-column: 1 / -1; max-width: none; }
-      .ach-item .ach-thumb { grid-column: 1 / -1; }
-      .work-shot { padding: 16px; min-height: 230px; }
-      .work-foot { flex-direction: column; align-items: flex-start; gap: 6px; }
-      .hero-title { font-size: clamp(1.85rem, 8vw, 2.35rem); }
-      .hero-photo { width: 1.32em; height: 1.32em; vertical-align: -.16em; }
-      .hero .hatch-a, .hero .hatch-b { display: none; }
-      .mock-phone { width: 82px; }
-      .mock-phone:nth-child(2) { width: 90px; }
-      .footer-links { gap: 18px; }
-    }
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .icon-btn:hover {
+    background: rgb(var(--c-surface-2));
+    color: rgb(var(--c-muted));
+  }
+  .icon-btn svg { width: 20px; height: 20px; }
 
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after {
-        animation-duration: .001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .001ms !important;
-      }
-      .js .reveal { opacity: 1; transform: none; }
-    }
-  </style>
+  .theme-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding-inline: 12px;
+    border: 1px solid rgb(var(--c-border-bright));
+    border-radius: 6px;
+    background: rgb(var(--c-surface));
+    color: rgb(var(--c-foreground));
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: .8125rem;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background .15s ease;
+  }
+  .theme-btn:hover { background: rgb(var(--c-surface-2)); }
+
+  /* ══════════════════════════════════════
+     HERO
+     ══════════════════════════════════════ */
+  .main { flex: 1 0 auto; padding-bottom: 8px; }
+
+  .hero { grid-template-columns: minmax(0, 1fr); }
+
+  .hero-main {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    color: rgb(var(--c-muted));
+  }
+
+  .hero-copy {
+    margin-top: auto;
+    padding: 40px 18px 36px;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.25rem, 8.4vw, 7.4rem);
+    font-weight: 900;
+    line-height: .88;
+    letter-spacing: -.045em;
+    text-transform: uppercase;
+  }
+
+  .hero-desc {
+    margin-top: 20px;
+    max-width: 30em;
+    font-size: 1.125rem;
+    line-height: 1.375;
+    color: rgb(var(--c-body));
+  }
+
+  .hero-side {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 1px;
+    background: rgb(var(--c-border));
+    min-width: 0;
+  }
+
+  .portrait {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: rgb(var(--c-surface));
+    overflow: hidden;
+  }
+  .portrait img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 20%;
+  }
+  .portrait figcaption {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    background: rgb(var(--c-bar));
+    color: rgb(var(--c-on-bar));
+    font-family: var(--mono);
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .02em;
+  }
+
+  /* Nav kuning: audiens */
+  .aud-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgb(var(--c-accent-solid));
+    color: rgb(var(--c-on-accent));
+  }
+
+  .aud-nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 52px;
+    padding-inline: 16px;
+    border-top: 1px solid rgb(var(--c-on-accent) / .25);
+    font-weight: 700;
+    font-size: 1.0625rem;
+    transition: background .15s ease;
+  }
+  .aud-nav a:first-child { border-top: 0; }
+  .aud-nav a:hover { background: rgb(255 255 255 / .35); }
+
+  .aud-num {
+    width: 24px;
+    flex: none;
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: .8125rem;
+  }
+  .aud-count {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: .8125rem;
+    font-weight: 600;
+  }
+
+  /* ══════════════════════════════════════
+     SECTION RACK
+     ══════════════════════════════════════ */
+  .aud-section { min-width: 0; margin-top: 28px; scroll-margin-top: 16px; }
+
+  .sec-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border-radius: 6px 6px 0 0;
+    background: rgb(var(--c-bar));
+    color: rgb(var(--c-on-bar));
+  }
+
+  .sec-num {
+    flex: none;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: rgb(var(--c-accent-solid));
+    color: rgb(var(--c-on-accent));
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: .875rem;
+  }
+
+  .sec-bar h2 {
+    font-size: 1.375rem;
+    font-weight: 800;
+    letter-spacing: -.025em;
+    line-height: 1.15;
+  }
+
+  .sec-bar .sec-sub {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: .75rem;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    opacity: .7;
+  }
+
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+    border-top: 0;
+    border-radius: 0 0 6px 6px;
+  }
+
+  /* ══════════════════════════════════════
+     KARTU PROYEK
+     ══════════════════════════════════════ */
+  .proj {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: rgb(var(--c-surface));
+    transition: background .15s ease;
+  }
+  .proj:hover { background: rgb(var(--c-surface-2)); }
+  .proj:hover .proj-name > span { text-decoration-color: currentColor; }
+
+  .proj-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    color: rgb(var(--c-muted));
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+  .status::before {
+    content: '';
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+  }
+  .status.live { color: rgb(var(--c-accent)); }
+  .status.live::before { background: currentColor; }
+  .status.pending { color: rgb(var(--c-pending)); }
+
+  .thumb {
+    position: relative;
+    margin-inline: 14px;
+    aspect-ratio: 16 / 10;
+    border: 1px solid rgb(var(--c-border));
+    background: rgb(var(--c-surface-2));
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    padding: 14px;
+  }
+
+  .thumb-title {
+    font-size: 1.375rem;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -.03em;
+  }
+  .thumb-kicker {
+    font-family: var(--mono);
+    font-size: .6875rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    opacity: .7;
+  }
+  .thumb-line {
+    display: block;
+    height: 7px;
+    margin-top: 7px;
+    border-radius: 2px;
+    background: currentColor;
+    opacity: .18;
+  }
+  .thumb-line.w40 { width: 40%; }
+  .thumb-line.w60 { width: 60%; }
+  .thumb-line.w80 { width: 80%; }
+
+  .thumb-inner { width: 100%; }
+
+  /* Varian tipografi thumbnail */
+  .thumb-doc {
+    background: #F5F5F1;
+    color: #111;
+    align-content: start;
+    padding: 16px 18px;
+  }
+  .thumb-doc .thumb-title { font-size: 1.0625rem; }
+  .thumb-doc .paper {
+    margin-top: 10px;
+    height: 62%;
+    width: 100%;
+    border: 1px solid #C9C9C0;
+    background: repeating-linear-gradient(#fff 0 8px, #DEDED6 8px 9px);
+  }
+
+  .thumb-dark {
+    background: #101114;
+    color: #E8E8E2;
+    align-content: stretch;
+    padding: 16px 18px;
+    grid-template-rows: auto 1fr;
+  }
+  .thumb-dark .thumb-title { font-size: 1.125rem; color: #EDEDE8; }
+  .thumb-dark .thumb-kicker { color: #4ADE80; opacity: 1; }
+
+  .thumb-ui {
+    background: rgb(var(--c-surface-2));
+    color: rgb(var(--c-foreground));
+    align-content: start;
+    padding: 14px;
+  }
+  .thumb-ui .row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .thumb-ui .pip {
+    flex: 1;
+    height: 34px;
+    border-radius: 3px;
+    background: currentColor;
+    opacity: .1;
+    border: 1px solid rgb(var(--c-border));
+  }
+  .thumb-ui .bar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+    opacity: .5;
+  }
+  .thumb-ui .bar s {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    text-decoration: none;
+  }
+
+  .thumb-amber {
+    background: #FFD60A;
+    color: #111;
+  }
+  .thumb-amber .thumb-title { font-size: 1.75rem; }
+  .thumb-amber .thumb-kicker { opacity: .8; }
+
+  .proj-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1 0 auto;
+    padding: 12px 14px 16px;
+  }
+
+  .proj-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -.025em;
+  }
+  .proj-name > span {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+    transition: text-decoration-color .15s ease;
+  }
+
+  .monogram {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: rgb(var(--c-surface-2));
+    border: 1px solid rgb(var(--c-border));
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: .8125rem;
+    color: rgb(var(--c-body));
+  }
+
+  .proj-tag {
+    font-size: .9375rem;
+    line-height: 1.45;
+    color: rgb(var(--c-body));
+  }
+
+  .proj-note {
+    font-size: .9375rem;
+    font-weight: 700;
+    line-height: 1.45;
+    color: rgb(var(--c-pending));
+  }
+
+  .proj-plat {
+    margin-top: auto;
+    padding-top: 10px;
+    color: rgb(var(--c-muted));
+  }
+
+  /* Aksi di bawah rack */
+  .rack-note {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  /* ══════════════════════════════════════
+     KARTU CTA / AJAKAN
+     ══════════════════════════════════════ */
+  .invite {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    padding: 28px 20px;
+    background: rgb(var(--c-surface));
+  }
+
+  .invite h3 {
+    max-width: 22em;
+    font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -.03em;
+  }
+
+  .invite p {
+    max-width: 34em;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: rgb(var(--c-body));
+  }
+
+  .btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: background .15s ease;
+  }
+
+  .btn-primary {
+    border: 1px solid rgb(var(--c-on-accent));
+    background: rgb(var(--c-accent-solid));
+    color: rgb(var(--c-on-accent));
+  }
+  .btn-primary:hover { background: rgb(var(--c-accent-solid-hover)); }
+
+  .btn-ghost {
+    border: 1px solid rgb(var(--c-border-bright));
+    background: rgb(var(--c-surface));
+    color: rgb(var(--c-foreground));
+    font-weight: 600;
+  }
+  .btn-ghost:hover { background: rgb(var(--c-surface-2)); }
+
+  /* ══════════════════════════════════════
+     ABOUT
+     ══════════════════════════════════════ */
+  .about { margin-top: 28px; grid-template-columns: minmax(0, 1fr); }
+
+  .about-main {
+    padding: 24px 20px;
+    background: rgb(var(--c-surface));
+  }
+  .about-main h2 {
+    font-size: clamp(1.5rem, 3vw, 2.125rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -.03em;
+    max-width: 20em;
+  }
+  .about-main p {
+    margin-top: 14px;
+    max-width: 44em;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: rgb(var(--c-body));
+  }
+
+  .about-facts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    padding: 24px 20px;
+    background: rgb(var(--c-surface));
+  }
+
+  .fact { display: grid; gap: 3px; }
+  .fact dt {
+    color: rgb(var(--c-muted));
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: .75rem;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+  .fact dd { margin: 0; font-weight: 700; font-size: .9375rem; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .chip {
+    padding: 6px 12px;
+    border: 1px solid rgb(var(--c-border-bright));
+    border-radius: 4px;
+    background: rgb(var(--c-surface-2));
+    font-family: var(--mono);
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+
+  /* ══════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════ */
+  .site-footer {
+    flex: none;
+    padding-bottom: 24px;
+  }
+
+  .foot-grid { grid-template-columns: minmax(0, 1fr); }
+
+  .foot-brand {
+    padding: 16px;
+    background: rgb(var(--c-surface));
+  }
+  .foot-brand b {
+    font-size: 1.125rem;
+    font-weight: 900;
+    letter-spacing: -.025em;
+  }
+  .foot-brand b i {
+    font-style: normal;
+    color: rgb(var(--c-accent-solid));
+  }
+  .foot-brand p {
+    margin-top: 4px;
+    max-width: 32ch;
+    color: rgb(var(--c-body));
+    font-size: .875rem;
+    line-height: 1.5;
+  }
+
+  .foot-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    background: rgb(var(--c-surface));
+  }
+  .foot-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 12px;
+    border: 1px solid rgb(var(--c-border-bright));
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: .8125rem;
+    font-weight: 500;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    transition: background .15s ease;
+  }
+  .foot-links a:hover { background: rgb(var(--c-surface-2)); }
+
+  .foot-legal {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 16px;
+    background: rgb(var(--c-surface));
+    color: rgb(var(--c-muted));
+    font-family: var(--mono);
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+  .foot-legal a {
+    text-decoration: underline;
+    text-decoration-color: rgb(var(--c-border-bright));
+    text-underline-offset: 3px;
+  }
+  .foot-legal a:hover { color: rgb(var(--c-foreground)); }
+
+  /* ══════════════════════════════════════
+     RESPONSIF
+     ══════════════════════════════════════ */
+  .cards.g1 { grid-template-columns: minmax(0, 1fr); }
+
+  @media (min-width: 640px) {
+    .cards.g2, .cards.g3, .cards.g4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    /* Kartu terakhir yang mengganjal melebar penuh, supaya tidak ada sel kosong */
+    .cards.g3 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .cards.g4 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .hero-copy { padding: 40px 24px 36px; }
+    .hero-desc { font-size: 1.25rem; }
+    .sec-bar h2 { font-size: 1.625rem; }
+    .invite { padding: 36px 28px; }
+    .about-main, .about-facts { padding: 28px 24px; }
+    .foot-legal { flex-direction: row; justify-content: space-between; }
+  }
+
+  @media (min-width: 768px) {
+    .hero { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+    .portrait { aspect-ratio: 5 / 4; }
+    .hero-copy { padding: 48px 32px 40px; }
+    .about { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+    .foot-grid { grid-template-columns: minmax(0, 1fr) auto; }
+    .foot-legal { grid-column: 1 / -1; }
+  }
+
+  @media (min-width: 1024px) {
+    .cards.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cards.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    /* 7 kartu di 4 kolom: 4 kartu atas (3/12 tiap) + 3 kartu bawah (4/12 tiap) */
+    .cards.g4:has(> :nth-child(7):last-child) { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    .cards.g4:has(> :nth-child(7):last-child) > :nth-child(-n + 4) { grid-column: span 3; }
+    .cards.g4:has(> :nth-child(7):last-child) > :nth-child(n + 5) { grid-column: span 4; }
+    .hero-copy { padding-inline: 36px; }
+    .sec-bar { padding: 16px 20px; }
+    .sec-bar h2 { font-size: 1.75rem; }
+  }
+
+  /* Header sempit: rapatkan nav supaya tombol tema tetap terlihat */
+  @media (max-width: 520px) {
+    .site-header { gap: 4px; }
+    .wordmark { font-size: .9375rem; letter-spacing: -.03em; }
+    .head-nav { gap: 0; }
+    .head-link { padding-inline: 6px; font-size: .8125rem; }
+    .icon-btn { width: 36px; height: 40px; }
+    .theme-btn { min-width: 38px; min-height: 40px; padding-inline: 7px; font-size: .6875rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: .01ms !important; }
+  }
+
+  @media print {
+    body { background: #fff; color: #000; }
+    .head-nav, .theme-btn, .foot-links { display: none; }
+  }
+</style>
 </head>
 <body>
-  <a class="sr-only" href="#main">Lewati ke konten utama</a>
+<a class="skip" href="#content">Lewati ke konten utama</a>
 
-  <!-- ════════════════ NAVBAR ════════════════ -->
-  <header class="nav" id="siteNav">
-    <div class="container nav-inner">
-      <nav aria-label="Navigasi utama">
-        <ul class="nav-links" id="navLinks">
-          <li><a class="nav-link is-active" href="#home">Home</a></li>
-          <li><a class="nav-link" href="#achievement">My Achievement</a></li>
-          <li><a class="nav-link" href="#portofolio">Portofolio</a></li>
-        </ul>
-      </nav>
-      <a class="nav-cta" href="#contact">Contact</a>
-      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Buka menu navigasi">
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </header>
+<!-- ════════════════ HEADER ════════════════ -->
+<header class="wrap site-header">
+  <a class="wordmark" href="#top">andikachandra<i>.</i>com</a>
+  <nav class="head-nav" aria-label="Navigasi utama">
+    <a class="head-link" href="#karya">Karya</a>
+    <a class="head-link" href="#tentang">Tentang</a>
+    <a class="icon-btn" href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.8-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>
+    </a>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Ganti tema">Dark</button>
+  </nav>
+</header>
 
-  <main id="main">
-    <!-- ════════════════ HERO ════════════════ -->
-    <section class="hero" id="home" aria-labelledby="heroTitle">
-      <span class="hatch hatch-a" aria-hidden="true"></span>
-      <span class="hatch hatch-b" aria-hidden="true"></span>
-      <div class="hero-glow" aria-hidden="true"></div>
-
-      <div class="container">
-        <p class="hero-kicker">Dosen &amp; Tukang Ngopi</p>
-        <h1 class="hero-title" id="heroTitle">
-          Andika Chandra P,<span class="hero-photo">
-            <img src="image/foto.webp" alt="Foto Andika Chandra P" width="449" height="480" />
-            <span class="wave" aria-hidden="true">👋</span>
-          </span><span class="hero-degree">S.Kom., M.T.I</span>
-        </h1>
-
-        <div class="hero-lower">
-          <p class="hero-desc">
-            Pengajar dan peneliti di bidang teknologi informasi dan bisnis digital.
-            Berfokus pada AI, socio-techno dan digital marketing.
-          </p>
-
-          <ul class="hero-pills">
-            <li>Machine Learning</li>
-            <li>Web Design</li>
-            <li>Digital Marketing</li>
-          </ul>
-
-          <ul class="hero-social">
-            <li><a href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-            <li><a href="mailto:me@andikachandra.com">Email</a></li>
-            <li><a href="daftar-mata-kuliah.html">Mata Kuliah</a></li>
-          </ul>
+<div class="main" id="content">
+  <!-- ════════════════ HERO ════════════════ -->
+  <section class="wrap" id="top" aria-labelledby="heroTitle">
+    <div class="rack hero">
+      <div class="hero-main">
+        <div class="hero-meta label">
+          <span>Dosen, Peneliti &amp; Praktisi Digital</span>
+          <span>Indonesia</span>
         </div>
+        <div class="hero-copy">
+          <h1 id="heroTitle">Andika<br>Chandra P</h1>
+          <p class="hero-desc">
+            Saya mengajar dan meneliti teknologi informasi serta bisnis digital, dan
+            membangun aplikasi web untuk peneliti, mahasiswa, dan pelaku usaha kecil.
+          </p>
+        </div>
+      </div>
 
-        <a class="scroll-cue" href="#achievement">
-          <svg viewBox="0 0 18 28" fill="none" aria-hidden="true">
-            <rect x="1" y="1" width="16" height="26" rx="8" stroke="currentColor" stroke-width="1.1" />
-            <circle class="dot" cx="9" cy="8" r="2" fill="currentColor" />
-          </svg>
-          <span>Scroll Down</span>
+      <div class="hero-side">
+        <figure class="portrait">
+          <img src="image/foto.webp" alt="Foto Andika Chandra P" width="500" height="523" fetchpriority="high">
+          <figcaption>S.Kom., M.T.I</figcaption>
+        </figure>
+
+        <nav class="aud-nav" aria-label="Kategori karya">
+          <a href="#mahasiswa"><span class="aud-num">01</span>Untuk mahasiswa<span class="aud-count" data-count="mahasiswa">7</span></a>
+          <a href="#peneliti"><span class="aud-num">02</span>Untuk peneliti<span class="aud-count" data-count="peneliti">6</span></a>
+          <a href="#organisasi"><span class="aud-num">03</span>Untuk organisasi<span class="aud-count" data-count="organisasi">1</span></a>
+          <a href="#developer"><span class="aud-num">04</span>Untuk developer<span class="aud-count" data-count="developer">3</span></a>
+          <a href="#umkm"><span class="aud-num">05</span>Untuk UMKM<span class="aud-count" data-count="umkm">1</span></a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <main class="wrap" id="karya">
+    <h2 class="sr-only">Karya</h2>
+
+    <!-- 01 · Mahasiswa -->
+    <section class="aud-section" id="mahasiswa" aria-labelledby="mahasiswa-title">
+      <div class="sec-bar">
+        <span class="sec-num" aria-hidden="true">01</span>
+        <h2 id="mahasiswa-title">Untuk mahasiswa</h2>
+        <span class="sec-sub">Mata kuliah</span>
+      </div>
+      <div class="rack cards g4">
+        <a class="proj" href="pti/materi-1/index.html">
+          <div class="proj-top"><span class="label">01.1</span><span class="status live">Materi</span></div>
+          <div class="thumb thumb-dark" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Pengantar Teknologi Informasi</div>
+              <div class="thumb-title">Data dalam<br>Konteks Bisnis</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w60"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">1</span><span>Pengantar Teknologi Informasi</span></div>
+            <p class="proj-tag">Landasan TI: perangkat keras, perangkat lunak, jaringan, dan keamanan data untuk bisnis.</p>
+            <p class="proj-plat label">Smt 1 · Bisnis Digital · 2 file</p>
+          </div>
+        </a>
+        <a class="proj" href="edb/materi/materi-1/index.html">
+          <div class="proj-top"><span class="label">01.2</span><span class="status live">Materi</span></div>
+          <div class="thumb thumb-ui" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Ekonomi Digital Baru</div>
+              <div class="thumb-title">Startup &amp;<br>ekosistem</div>
+              <div class="row"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">2</span><span>Ekonomi Digital Baru</span></div>
+            <p class="proj-tag">Model ekonomi digital, startup, dan ekosistemnya di Indonesia.</p>
+            <p class="proj-plat label">Smt 3 · Bisnis Digital · 4 file</p>
+          </div>
+        </a>
+        <a class="proj" href="imk/materi-1/index.html">
+          <div class="proj-top"><span class="label">01.3</span><span class="status live">Materi</span></div>
+          <div class="thumb thumb-doc" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Interaksi Manusia &amp; Komputer</div>
+              <div class="thumb-title">User-Centered<br>Design</div>
+              <div class="paper"></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">3</span><span>Interaksi Manusia dan Komputer</span></div>
+            <p class="proj-tag">Prinsip perancangan antarmuka, evaluasi usabilitas, dan pengalaman pengguna.</p>
+            <p class="proj-plat label">Smt 3 · Bisnis Digital · 12 file</p>
+          </div>
+        </a>
+        <a class="proj" href="mbd/index.html">
+          <div class="proj-top"><span class="label">01.4</span><span class="status live">Materi</span></div>
+          <div class="thumb thumb-amber" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Model &amp; desain bisnis digital</div>
+              <div class="thumb-title">Design<br>Thinking</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w60"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">4</span><span>Model dan Desain Bisnis Digital</span></div>
+            <p class="proj-tag">Design thinking, lean canvas, dan value proposition untuk bisnis digital.</p>
+            <p class="proj-plat label">Smt 4 · Bisnis Digital · 6 file</p>
+          </div>
+        </a>
+        <a class="proj" href="dcb/mobile-consumer/index.html">
+          <div class="proj-top"><span class="label">01.5</span><span class="status live">Materi</span></div>
+          <div class="thumb thumb-ui" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Digital Consumer Behaviour</div>
+              <div class="thumb-title">Perilaku<br>konsumen</div>
+              <div class="row"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">5</span><span>Digital Consumer Behaviour</span></div>
+            <p class="proj-tag">Pola keputusan konsumen di kanal mobile dan media sosial.</p>
+            <p class="proj-plat label">Smt 6 · Bisnis Digital · 3 file</p>
+          </div>
+        </a>
+        <a class="proj" href="dwbi/data-storytelling.html">
+          <div class="proj-top"><span class="label">01.6</span><span class="status live">Materi</span></div>
+          <div class="thumb thumb-dark" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Data warehouse &amp; BI</div>
+              <div class="thumb-title">Data<br>Storytelling</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w60"></span>
+              <span class="thumb-line w40"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">6</span><span>Data Warehouse dan Business Intelligence</span></div>
+            <p class="proj-tag">Perancangan gudang data dan penyajian wawasan lewat dashboard.</p>
+            <p class="proj-plat label">Smt 6 · Bisnis Digital · 3 file</p>
+          </div>
+        </a>
+        <a class="proj" href="manpro/scope/index.html">
+          <div class="proj-top"><span class="label">01.7</span><span class="status live">Materi</span></div>
+          <div class="thumb thumb-doc" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Manajemen proyek TI</div>
+              <div class="thumb-title">Scope, time<br>&amp; cost</div>
+              <div class="paper"></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">7</span><span>Manajemen Proyek</span></div>
+            <p class="proj-tag">Lingkup, jadwal, biaya, manajemen perubahan, dan pendekatan agile.</p>
+            <p class="proj-plat label">Smt 6 · Teknik Informatika · 6 file</p>
+          </div>
+        </a>
+      </div>
+      <p class="rack-note">
+        <a class="btn btn-ghost" href="daftar-mata-kuliah.html">Semua mata kuliah <span aria-hidden="true">↗</span></a>
+      </p>
+    </section>
+    <!-- 02 · Peneliti -->
+    <section class="aud-section" id="peneliti" aria-labelledby="peneliti-title">
+      <div class="sec-bar">
+        <span class="sec-num" aria-hidden="true">02</span>
+        <h2 id="peneliti-title">Untuk peneliti</h2>
+        <span class="sec-sub">Aplikasi &amp; publikasi</span>
+      </div>
+      <div class="rack cards g3">
+        <a class="proj" href="https://nyariartikel.app" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">02.1</span><span class="status live">Live</span></div>
+          <div class="thumb thumb-dark" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Open access</div>
+              <div class="thumb-title">Cari artikel ilmiah tanpa ribet.</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w60"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">NA</span><span>NyariArtikel.App</span></div>
+            <p class="proj-tag">Pencarian artikel open access dengan hasil yang langsung bisa disitasi.</p>
+            <p class="proj-plat label">Web app</p>
+          </div>
+        </a>
+
+        <a class="proj" href="https://bantusitasi.online" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">02.2</span><span class="status live">Live</span></div>
+          <div class="thumb thumb-ui" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="bar"><s></s><s></s><s></s></div>
+              <div class="thumb-kicker">Reference finder</div>
+              <div class="thumb-title">Tempel kalimat, dapat referensinya.</div>
+              <div class="row"><span class="pip"></span><span class="pip"></span></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">BS</span><span>bantusitasi.online</span></div>
+            <p class="proj-tag">Rekomendasi referensi dari satu kalimat yang Anda tulis.</p>
+            <p class="proj-plat label">Web app</p>
+          </div>
+        </a>
+
+        <a class="proj" href="https://papier.my" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">02.3</span><span class="status live">Live</span></div>
+          <div class="thumb thumb-doc" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">AI library</div>
+              <div class="thumb-title">papier.my</div>
+              <div class="paper"></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">PP</span><span>papier.my</span></div>
+            <p class="proj-tag">Manajemen artikel ilmiah berbasis AI: simpan, baca, dan kutip.</p>
+            <p class="proj-plat label">Web app · AI</p>
+          </div>
+        </a>
+
+        <a class="proj" href="https://ieeexplore.ieee.org/abstract/document/8267965" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">02.4</span><span class="status live">IEEE Xplore</span></div>
+          <div class="thumb thumb-doc" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">ICITSI 2017</div>
+              <div class="thumb-title">Factors Influencing E-Tourism Stickiness</div>
+              <div class="paper"></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">17</span><span>E-Tourism Stickiness</span></div>
+            <p class="proj-tag">Faktor yang membuat pengguna kembali ke platform e-tourism.</p>
+            <p class="proj-plat label">Paper · 2017</p>
+          </div>
+        </a>
+
+        <a class="proj" href="https://jurnal.unismabekasi.ac.id/index.php/piksel/article/view/10580" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">02.5</span><span class="status live">SINTA 3</span></div>
+          <div class="thumb thumb-dark" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Jurnal Piksel</div>
+              <div class="thumb-title">YouTube Streaming Performance Over Wi-Fi</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w60"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">25</span><span>YouTube over Wi-Fi</span></div>
+            <p class="proj-tag">Analisis performa streaming berdasarkan resolusi video.</p>
+            <p class="proj-plat label">Artikel · 2025</p>
+          </div>
+        </a>
+
+        <a class="proj" href="https://publikasi.dinus.ac.id/technoc/article/view/15684" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">02.6</span><span class="status live">EBSCO</span></div>
+          <div class="thumb thumb-ui" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Jurnal TECHNO.com</div>
+              <div class="thumb-title">Klasifikasi Risiko Pengguna Judi Online</div>
+              <div class="row"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">26</span><span>Risiko Judi Online</span></div>
+            <p class="proj-tag">Klasifikasi pola perilaku dengan skor PGSI.</p>
+            <p class="proj-plat label">Artikel · 2026</p>
+          </div>
         </a>
       </div>
     </section>
-    <!-- ════════════════ PUBLIKASI & KOLABORASI ════════════════ -->
-    <section class="section logos" aria-labelledby="logosTitle">
-      <div class="container">
-        <div class="section-head reveal">
-          <h2 class="section-title" id="logosTitle">Publikasi &amp; Kolaborasi</h2>
-          <p class="section-sub">
-            Riset dan karya yang telah diterbitkan bersama jurnal, konferensi,
-            dan lembaga pengindeks.
-          </p>
-        </div>
 
-        <div class="logo-row reveal">
-          <div class="logo-card"><span class="logo-ieee">IEEE Xplore</span></div>
-          <div class="logo-card"><span class="logo-sinta">SINTA</span></div>
-          <div class="logo-card"><span class="logo-ebsco">EBSCO</span></div>
-          <div class="logo-card"><span class="logo-piksel">Piksel Journal</span></div>
+    <!-- 03 · Organisasi -->
+    <section class="aud-section" id="organisasi" aria-labelledby="organisasi-title">
+      <div class="sec-bar">
+        <span class="sec-num" aria-hidden="true">03</span>
+        <h2 id="organisasi-title">Untuk organisasi</h2>
+        <span class="sec-sub">Kolaborasi</span>
+      </div>
+      <div class="rack cards g1">
+        <div class="invite">
+          <h3>Butuh dosen tamu, kolaborasi riset, atau produk digital?</h3>
+          <p>Saya terbuka untuk diskusi, pelatihan, pendampingan riset, dan pengembangan produk digital bersama institusi maupun komunitas.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="mailto:me@andikachandra.com">Email saya</a>
+            <a class="btn btn-ghost" href="daftar-mata-kuliah.html">Lihat materi</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ════════════════ MY ACHIEVEMENT ════════════════ -->
-    <section class="section ach-section" id="achievement" aria-labelledby="achTitle">
-      <span class="hatch hatch-c" aria-hidden="true"></span>
-      <div class="container">
-        <div class="section-head reveal">
-          <h2 class="section-title" id="achTitle">My Achievement</h2>
-          <p class="section-sub">
-            Publikasi dan pengakuan atas riset yang saya kerjakan bersama tim
-            dan mitra kolaborasi.
-          </p>
-        </div>
+    <!-- 04 · Developer -->
+    <section class="aud-section" id="developer" aria-labelledby="developer-title">
+      <div class="sec-bar">
+        <span class="sec-num" aria-hidden="true">04</span>
+        <h2 id="developer-title">Untuk developer</h2>
+        <span class="sec-sub">Kode &amp; eksperimen</span>
+      </div>
+      <div class="rack cards g3">
+        <a class="proj" href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">04.1</span><span class="status live">GitHub</span></div>
+          <div class="thumb thumb-dark" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Repository</div>
+              <div class="thumb-title">github.com/<br>andikachandra23</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w60"></span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">GH</span><span>GitHub</span></div>
+            <p class="proj-tag">Repositori eksperimen web, materi kuliah, dan proyek kecil.</p>
+            <p class="proj-plat label">Kode terbuka</p>
+          </div>
+        </a>
 
-        <div class="ach-list reveal">
-          <article class="ach-item is-featured">
-            <div class="ach-rank"><b>2017</b>IEEE</div>
-            <div>
-              <h3 class="ach-title">
-                <a href="https://ieeexplore.ieee.org/abstract/document/8267965" target="_blank" rel="noopener noreferrer">
-                  Factors Influencing E-Tourism Stickiness
-                </a>
-              </h3>
-              <p class="ach-meta">
-                ICITSI 2017 — International Conference on Information Technology
-                Systems and Innovation · terindeks IEEE Xplore
-              </p>
-              <a class="ach-link" href="https://ieeexplore.ieee.org/abstract/document/8267965" target="_blank" rel="noopener noreferrer">View Paper ↗</a>
+        <a class="proj" href="win31_index.html">
+          <div class="proj-top"><span class="label">04.2</span><span class="status live">Eksperimen</span></div>
+          <div class="thumb thumb-ui" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="bar"><s></s><s></s><s></s></div>
+              <div class="thumb-kicker">CSS only</div>
+              <div class="thumb-title">Windows 3.1</div>
+              <div class="row"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
             </div>
-            <div class="ach-thumb" aria-hidden="true">
-              <div class="paper-mock">
-                <div class="pm-head"><i></i><i></i><i></i><span class="pm-kicker">ICITSI 2017</span></div>
-                <div class="pm-title">Factors Influencing E-Tourism Stickiness</div>
-                <span class="pm-line w80"></span>
-                <span class="pm-line"></span>
-                <span class="pm-line w60"></span>
-                <span class="pm-line"></span>
-                <span class="pm-line w80"></span>
-                <div class="pm-chart"><i></i><i></i><i></i><i></i></div>
-              </div>
-            </div>
-          </article>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">31</span><span>Versi Retro</span></div>
+            <p class="proj-tag">Homepage lama dibangun ulang dengan bahasa visual Windows 3.1.</p>
+            <p class="proj-plat label">HTML · CSS</p>
+          </div>
+        </a>
 
-          <article class="ach-item">
-            <div class="ach-rank"><b>2025</b>SINTA 3</div>
-            <div>
-              <h3 class="ach-title">
-                <a href="https://jurnal.unismabekasi.ac.id/index.php/piksel/article/view/10580" target="_blank" rel="noopener noreferrer">
-                  YouTube Streaming Performance Over Wi-Fi
-                </a>
-              </h3>
-              <p class="ach-meta">
-                Piksel: Penelitian Ilmu Komputer Sistem Embedded dan Logic ·
-                analisis berbasis resolusi
-              </p>
-              <a class="ach-link" href="https://jurnal.unismabekasi.ac.id/index.php/piksel/article/view/10580" target="_blank" rel="noopener noreferrer">View Article ↗</a>
+        <a class="proj" href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">
+          <div class="proj-top"><span class="label">04.3</span><span class="status live">Eksperimen</span></div>
+          <div class="thumb thumb-doc" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Static · no build</div>
+              <div class="thumb-title">Situs ini</div>
+              <div class="paper"></div>
             </div>
-          </article>
-
-          <article class="ach-item">
-            <div class="ach-rank"><b>2026</b>EBSCO</div>
-            <div>
-              <h3 class="ach-title">
-                <a href="https://publikasi.dinus.ac.id/technoc/article/view/15684" target="_blank" rel="noopener noreferrer">
-                  Klasifikasi Risiko Pengguna Judi Online
-                </a>
-              </h3>
-              <p class="ach-meta">
-                Jurnal TECHNO.com · klasifikasi pola perilaku dengan skor PGSI
-              </p>
-              <a class="ach-link" href="https://publikasi.dinus.ac.id/technoc/article/view/15684" target="_blank" rel="noopener noreferrer">View Article ↗</a>
-            </div>
-          </article>
-        </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">WB</span><span>Halaman Ini</span></div>
+            <p class="proj-tag">Satu file HTML tanpa framework: token tema, grid rack, dan tema gelap-terang.</p>
+            <p class="proj-plat label">HTML · CSS · JS</p>
+          </div>
+        </a>
       </div>
     </section>
-    <!-- ════════════════ FEATURED PROJECT / CASE STUDY / BLOG ════════════════ -->
-    <section class="section work" id="portofolio" aria-labelledby="workTitle">
-      <div class="container">
-        <h2 class="sr-only" id="workTitle">Karya pilihan</h2>
 
-        <div class="work-tabs reveal" role="tablist" aria-label="Kategori karya">
-          <button class="work-tab" type="button" role="tab" id="tab-project" aria-selected="true" aria-controls="panel-work" data-filter="project">
-            Featured Project
-            <svg class="scribble" viewBox="0 0 200 50" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M15 25c0-11 37-19 85-19s85 8 85 19-37 19-85 19S15 36 15 25Z" fill="none" stroke="currentColor" stroke-width="1.3" />
-              <path d="M20 28c4 9 41 15 80 15s76-6 79-15" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".55" />
-            </svg>
-          </button>
-          <button class="work-tab" type="button" role="tab" id="tab-case" aria-selected="false" aria-controls="panel-work" data-filter="case" tabindex="-1">
-            Case Study
-            <svg class="scribble" viewBox="0 0 200 50" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M15 25c0-11 37-19 85-19s85 8 85 19-37 19-85 19S15 36 15 25Z" fill="none" stroke="currentColor" stroke-width="1.3" />
-              <path d="M20 28c4 9 41 15 80 15s76-6 79-15" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".55" />
-            </svg>
-          </button>
-          <button class="work-tab" type="button" role="tab" id="tab-blog" aria-selected="false" aria-controls="panel-work" data-filter="blog" tabindex="-1">
-            Blog &amp; Article
-            <svg class="scribble" viewBox="0 0 200 50" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M15 25c0-11 37-19 85-19s85 8 85 19-37 19-85 19S15 36 15 25Z" fill="none" stroke="currentColor" stroke-width="1.3" />
-              <path d="M20 28c4 9 41 15 80 15s76-6 79-15" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".55" />
-            </svg>
-          </button>
-        </div>
-
-        <div class="work-grid" id="panel-work" role="tabpanel" aria-labelledby="tab-project" tabindex="0">
-
-          <!-- ── Project 1 ── -->
-          <article class="work-card reveal" data-cat="project">
-            <div class="work-shot">
-              <div class="mock" aria-hidden="true">
-                <div class="mock-bar"><i></i><i></i><i></i><em>nyariartikel.app</em></div>
-                <div class="mock-body">
-                  <div class="mock-kicker">Open Access</div>
-                  <div class="mock-title">Cari artikel ilmiah<br>tanpa ribet.</div>
-                  <div class="mock-search">
-                    <span class="dotg"></span>
-                    <span class="ph"></span>
-                    <span class="chip"></span>
-                  </div>
-                  <div class="mock-list">
-                    <div class="mock-row">
-                      <span class="thumb"></span>
-                      <span class="lines"><i></i><i></i></span>
-                    </div>
-                    <div class="mock-row">
-                      <span class="thumb"></span>
-                      <span class="lines"><i></i><i></i></span>
-                    </div>
-                    <div class="mock-row">
-                      <span class="thumb"></span>
-                      <span class="lines"><i></i><i></i></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+    <!-- 05 · UMKM -->
+    <section class="aud-section" id="umkm" aria-labelledby="umkm-title">
+      <div class="sec-bar">
+        <span class="sec-num" aria-hidden="true">05</span>
+        <h2 id="umkm-title">Untuk UMKM</h2>
+        <span class="sec-sub">Segera</span>
+      </div>
+      <div class="rack cards g1">
+        <a class="proj" href="mailto:me@andikachandra.com">
+          <div class="proj-top"><span class="label">05.1</span><span class="status pending">Segera</span></div>
+          <div class="thumb thumb-amber" aria-hidden="true">
+            <div class="thumb-inner">
+              <div class="thumb-kicker">Digital marketing</div>
+              <div class="thumb-title">Pendampingan<br>usaha kecil</div>
+              <span class="thumb-line w80"></span>
+              <span class="thumb-line w40"></span>
             </div>
-            <div class="work-foot">
-              <h3 class="work-name">NyariArtikel.App<span>Web App · Pencarian artikel open access</span></h3>
-              <a class="view-link" href="https://nyariartikel.app" target="_blank" rel="noopener noreferrer">View Design ↗</a>
-            </div>
-          </article>
-
-          <!-- ── Project 2 ── -->
-          <article class="work-card reveal" data-cat="project">
-            <div class="work-shot">
-              <div class="mock" aria-hidden="true">
-                <div class="mock-bar"><i></i><i></i><i></i><em>bantusitasi.online</em></div>
-                <div class="mock-body">
-                  <div class="mock-kicker">Reference Finder</div>
-                  <div class="mock-title">Tempel kalimat,<br>dapat referensinya.</div>
-                  <div class="mock-search">
-                    <span class="dotg"></span>
-                    <span class="ph"></span>
-                    <span class="chip"></span>
-                  </div>
-                  <div class="mock-cols">
-                    <div class="mock-panel">
-                      <div class="lbl"></div>
-                      <div class="ln"></div>
-                      <div class="ln"></div>
-                      <div class="ln short"></div>
-                    </div>
-                    <div class="mock-panel">
-                      <div class="lbl"></div>
-                      <div class="ln"></div>
-                      <div class="ln short"></div>
-                      <div class="ln"></div>
-                    </div>
-                  </div>
-                  <div class="mock-list">
-                    <div class="mock-row">
-                      <span class="thumb"></span>
-                      <span class="lines"><i></i><i></i></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="work-foot">
-              <h3 class="work-name">bantusitasi.online<span>Web App · Rekomendasi referensi dari satu kalimat</span></h3>
-              <a class="view-link" href="https://bantusitasi.online" target="_blank" rel="noopener noreferrer">View Design ↗</a>
-            </div>
-          </article>
-          <!-- ── Project 3 ── -->
-          <article class="work-card reveal" data-cat="project">
-            <div class="work-shot">
-              <div class="mock-phones" aria-hidden="true">
-                <div class="mock-phone">
-                  <div class="screen">
-                    <span class="notch"></span>
-                    <span class="ph-sub">papier.my</span>
-                    <span class="ph-title">Library</span>
-                    <div class="ph-card"><span class="bar"></span><span class="bar w50"></span></div>
-                    <div class="ph-strip"><i></i><i></i><i></i></div>
-                    <div class="ph-cta"><i></i></div>
-                  </div>
-                </div>
-                <div class="mock-phone">
-                  <div class="screen">
-                    <span class="notch"></span>
-                    <span class="ph-sub">AI Summary</span>
-                    <span class="ph-title">Ringkas<br>artikel</span>
-                    <div class="ph-card"><span class="bar"></span><span class="bar"></span><span class="bar w50"></span></div>
-                    <div class="ph-avatar"><span class="av"></span><span class="ln"></span></div>
-                    <div class="ph-cta"><i></i></div>
-                  </div>
-                </div>
-                <div class="mock-phone">
-                  <div class="screen">
-                    <span class="notch"></span>
-                    <span class="ph-sub">Collections</span>
-                    <span class="ph-title">Rapi &amp;<br>terorganisir</span>
-                    <div class="ph-card"><span class="bar"></span><span class="bar w50"></span></div>
-                    <div class="ph-card"><span class="bar"></span><span class="bar w50"></span></div>
-                    <div class="ph-cta"><i></i></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="work-foot">
-              <h3 class="work-name">papier.my<span>Web App · Manajemen artikel ilmiah berbasis AI</span></h3>
-              <a class="view-link" href="https://papier.my" target="_blank" rel="noopener noreferrer">View Design ↗</a>
-            </div>
-          </article>
-
-          <!-- ── Project 4 ── -->
-          <article class="work-card reveal" data-cat="project">
-            <div class="work-shot">
-              <div class="mock" aria-hidden="true">
-                <div class="mock-bar"><i></i><i></i><i></i><em>andikachandra.com</em></div>
-                <div class="mock-body">
-                  <div class="mock-kicker">Portal Akademik</div>
-                  <div class="mock-title">Materi kuliah,<br>satu pintu.</div>
-                  <div class="mock-cols">
-                    <div class="mock-panel">
-                      <div class="lbl"></div>
-                      <div class="ln"></div>
-                      <div class="ln short"></div>
-                    </div>
-                    <div class="mock-panel">
-                      <div class="lbl"></div>
-                      <div class="ln"></div>
-                      <div class="ln short"></div>
-                    </div>
-                  </div>
-                  <div class="mock-cols">
-                    <div class="mock-panel">
-                      <div class="lbl"></div>
-                      <div class="ln"></div>
-                      <div class="ln short"></div>
-                    </div>
-                    <div class="mock-panel">
-                      <div class="lbl"></div>
-                      <div class="ln"></div>
-                      <div class="ln short"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="work-foot">
-              <h3 class="work-name">Portal Materi Kuliah<span>Learning Hub · 10 mata kuliah lintas semester</span></h3>
-              <a class="view-link" href="daftar-mata-kuliah.html">View Design ↗</a>
-            </div>
-          </article>
-          <!-- ── Case Study 1 ── -->
-          <article class="work-card reveal" data-cat="case" hidden>
-            <div class="work-shot">
-              <div class="mock-article" aria-hidden="true">
-                <div class="a-band"></div>
-                <div class="a-kicker">Case Study · UX Research</div>
-                <div class="a-title">Redesain alur pencarian artikel ilmiah</div>
-                <div class="a-rule"></div>
-                <div class="a-line"></div>
-                <div class="a-line w70"></div>
-                <div class="a-line w45"></div>
-                <div class="a-tags"><i></i><i></i><i></i></div>
-              </div>
-            </div>
-            <div class="work-foot">
-              <h3 class="work-name">Redesain Alur Pencarian<span>NyariArtikel.App · usability &amp; information architecture</span></h3>
-              <a class="view-link" href="https://nyariartikel.app" target="_blank" rel="noopener noreferrer">Read Case ↗</a>
-            </div>
-          </article>
-
-          <!-- ── Case Study 2 ── -->
-          <article class="work-card reveal" data-cat="case" hidden>
-            <div class="work-shot">
-              <div class="mock-article" aria-hidden="true">
-                <div class="a-band"></div>
-                <div class="a-kicker">Case Study · Product Design</div>
-                <div class="a-title">Dari satu kalimat menjadi sitasi</div>
-                <div class="a-rule"></div>
-                <div class="a-line"></div>
-                <div class="a-line"></div>
-                <div class="a-line w70"></div>
-                <div class="a-tags"><i></i><i></i><i></i></div>
-              </div>
-            </div>
-            <div class="work-foot">
-              <h3 class="work-name">Sitasi Otomatis dari Kalimat<span>bantusitasi.online · alur input, ranking, dan verifikasi</span></h3>
-              <a class="view-link" href="https://bantusitasi.online" target="_blank" rel="noopener noreferrer">Read Case ↗</a>
-            </div>
-          </article>
-
-          <!-- ── Case Study 3 ── -->
-          <article class="work-card reveal" data-cat="case" hidden>
-            <div class="work-shot">
-              <div class="mock-article" aria-hidden="true">
-                <div class="a-band"></div>
-                <div class="a-kicker">Case Study · Learning Design</div>
-                <div class="a-title">User-Centered Design masuk kelas</div>
-                <div class="a-rule"></div>
-                <div class="a-line w70"></div>
-                <div class="a-line"></div>
-                <div class="a-line w45"></div>
-                <div class="a-tags"><i></i><i></i><i></i></div>
-              </div>
-            </div>
-            <div class="work-foot">
-              <h3 class="work-name">UCD di Kelas IMK<span>Interaksi Manusia &amp; Komputer · evaluasi usabilitas</span></h3>
-              <a class="view-link" href="imk/materi-1/index.html">Open Module ↗</a>
-            </div>
-          </article>
-
-          <!-- ── Case Study 4 ── -->
-          <article class="work-card reveal" data-cat="case" hidden>
-            <div class="work-shot">
-              <div class="mock-article" aria-hidden="true">
-                <div class="a-band"></div>
-                <div class="a-kicker">Case Study · Information Architecture</div>
-                <div class="a-title">Satu portal untuk sepuluh mata kuliah</div>
-                <div class="a-rule"></div>
-                <div class="a-line"></div>
-                <div class="a-line w70"></div>
-                <div class="a-line w45"></div>
-                <div class="a-tags"><i></i><i></i><i></i></div>
-              </div>
-            </div>
-            <div class="work-foot">
-              <h3 class="work-name">Portal Materi Kuliah<span>Struktur informasi &amp; navigasi lintas semester</span></h3>
-              <a class="view-link" href="daftar-mata-kuliah.html">Open Portal ↗</a>
-            </div>
-          </article>
-          <!-- ── Blog 1 ── -->
-          <article class="work-card reveal" data-cat="blog" hidden>
-            <div class="work-shot">
-              <div class="mock-article" aria-hidden="true">
-                <div class="a-band"></div>
-                <div class="a-kicker">Blog · Interaction Design</div>
-                <div class="a-title">Prinsip &amp; evaluasi usabilitas antarmuka</div>
-                <div class="a-rule"></div>
-                <div class="a-line"></div>
-                <div class="a-line w70"></div>
-                <div class="a-line w45"></div>
-                <div class="a-tags"><i></i><i></i><i></i></div>
-              </div>
-            </div>
-            <div class="work-foot">
-              <h3 class="work-name">Prinsip &amp; Evaluasi Usabilitas<span>Materi Interaksi Manusia dan Komputer</span></h3>
-              <a class="view-link" href="imk/materi-1/index.html">Read Article ↗</a>
-            </div>
-          </article>
-
-          <!-- ── Blog 2 ── -->
-          <article class="work-card reveal" data-cat="blog" hidden>
-            <div class="work-shot">
-              <div class="mock-article" aria-hidden="true">
-                <div class="a-band"></div>
-                <div class="a-kicker">Blog · Business Model</div>
-                <div class="a-title">Business Model Canvas untuk produk digital</div>
-                <div class="a-rule"></div>
-                <div class="a-line"></div>
-                <div class="a-line"></div>
-                <div class="a-line w45"></div>
-                <div class="a-tags"><i></i><i></i><i></i></div>
-              </div>
-            </div>
-            <div class="work-foot">
-              <h3 class="work-name">Business Model Canvas<span>Materi Model dan Desain Bisnis Digital</span></h3>
-              <a class="view-link" href="mbd/index.html">Read Article ↗</a>
-            </div>
-          </article>
-
-          <!-- ── Blog 3 ── -->
-          <article class="work-card reveal" data-cat="blog" hidden>
-            <div class="work-shot">
-              <div class="mock-article" aria-hidden="true">
-                <div class="a-band"></div>
-                <div class="a-kicker">Blog · Data Visualization</div>
-                <div class="a-title">Menyusun data storytelling yang jujur</div>
-                <div class="a-rule"></div>
-                <div class="a-line w70"></div>
-                <div class="a-line"></div>
-                <div class="a-line w45"></div>
-                <div class="a-tags"><i></i><i></i><i></i></div>
-              </div>
-            </div>
-            <div class="work-foot">
-              <h3 class="work-name">Data Storytelling<span>Data Warehouse &amp; Business Intelligence</span></h3>
-              <a class="view-link" href="dwbi/data-storytelling.html">Read Article ↗</a>
-            </div>
-          </article>
-
-          <!-- ── Blog 4 ── -->
-          <article class="work-card reveal" data-cat="blog" hidden>
-            <div class="work-shot">
-              <div class="mock-article" aria-hidden="true">
-                <div class="a-band"></div>
-                <div class="a-kicker">Blog · Consumer Behaviour</div>
-                <div class="a-title">Perilaku konsumen di kanal mobile</div>
-                <div class="a-rule"></div>
-                <div class="a-line"></div>
-                <div class="a-line w70"></div>
-                <div class="a-line w45"></div>
-                <div class="a-tags"><i></i><i></i><i></i></div>
-              </div>
-            </div>
-            <div class="work-foot">
-              <h3 class="work-name">Perilaku Konsumen Digital<span>Digital Consumer Behaviour</span></h3>
-              <a class="view-link" href="dcb/mobile-consumer/index.html">Read Article ↗</a>
-            </div>
-          </article>
-
-        </div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-name"><span class="monogram" aria-hidden="true">UM</span><span>Pendampingan UMKM</span></div>
+            <p class="proj-tag">Rencana konten, kanal digital, dan pengukuran sederhana untuk usaha kecil.</p>
+            <p class="proj-note">Sedang disusun — tulis email kalau ingin ikut gelombang pertama.</p>
+            <p class="proj-plat label">Konsultasi · Digital marketing</p>
+          </div>
+        </a>
       </div>
     </section>
-    <!-- ════════════════ CTA ════════════════ -->
-    <section class="cta" id="contact" aria-labelledby="ctaTitle">
-      <span class="hatch hatch-e" aria-hidden="true"></span>
-      <span class="hatch hatch-f" aria-hidden="true"></span>
-      <div class="cta-glow" aria-hidden="true"></div>
-      <div class="container">
-        <h2 class="cta-title" id="ctaTitle">Let’s Make Dream Together</h2>
-        <p class="cta-sub">
-          Butuh dosen tamu, kolaborasi riset, atau pengembangan produk digital?
-          Saya terbuka untuk diskusi dan kerja sama.
+
+    <!-- 06 · Tentang -->
+    <section class="rack about" id="tentang" aria-labelledby="tentang-title">
+      <div class="about-main">
+        <h2 id="tentang-title">Dosen, peneliti, dan pembangun produk digital.</h2>
+        <p>
+          Sehari-hari saya mengajar mata kuliah sistem informasi, interaksi manusia dan komputer,
+          manajemen proyek, dan bisnis digital. Di luar kelas, saya meneliti perilaku pengguna,
+          machine learning, dan socio-techno, lalu menerjemahkannya menjadi aplikasi yang dipakai
+          mahasiswa dan peneliti.
         </p>
-        <a class="btn-olive" href="mailto:me@andikachandra.com">Email</a>
+        <ul class="chips" aria-label="Bidang keahlian">
+          <li class="chip">Machine Learning</li>
+          <li class="chip">Web Design</li>
+          <li class="chip">Digital Marketing</li>
+          <li class="chip">Socio-Techno</li>
+          <li class="chip">Human-Computer Interaction</li>
+        </ul>
       </div>
+      <dl class="about-facts">
+        <div class="fact">
+          <dt>Pengindeks</dt>
+          <dd>IEEE Xplore · SINTA 3 · EBSCO</dd>
+        </div>
+        <div class="fact">
+          <dt>Publikasi</dt>
+          <dd>3 artikel &amp; paper terindeks</dd>
+        </div>
+        <div class="fact">
+          <dt>Mata kuliah</dt>
+          <dd>10 kelas lintas semester</dd>
+        </div>
+        <div class="fact">
+          <dt>Kontak</dt>
+          <dd><a href="mailto:me@andikachandra.com">me@andikachandra.com</a></dd>
+        </div>
+      </dl>
     </section>
   </main>
+</div>
 
-  <!-- ════════════════ FOOTER ════════════════ -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <p class="footer-copy">
-        ©2026 Andika Chandra P, All Right Reserved ·
-        <a href="win31_index.html">Versi retro (Windows 3.1)</a>
-      </p>
-      <ul class="footer-links">
-        <li><a href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-        <li><a href="mailto:me@andikachandra.com">Email</a></li>
-        <li><a href="daftar-mata-kuliah.html">Mata Kuliah</a></li>
-      </ul>
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer class="wrap site-footer">
+  <div class="rack foot-grid">
+    <div class="foot-brand">
+      <b>andikachandra<i>.</i>com</b>
+      <p>Materi kuliah, aplikasi web, dan publikasi di bidang teknologi informasi dan bisnis digital.</p>
     </div>
-  </footer>
-  <script>
-    (function () {
-      'use strict';
+    <ul class="foot-links">
+      <li><a href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      <li><a href="mailto:me@andikachandra.com">Email</a></li>
+      <li><a href="daftar-mata-kuliah.html">Mata Kuliah</a></li>
+      <li><a href="win31_index.html">Retro 3.1</a></li>
+    </ul>
+    <div class="foot-legal">
+      <span>© <span id="year">2026</span> Andika Chandra P</span>
+      <span>Indonesia</span>
+    </div>
+  </div>
+</footer>
 
-      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+<script>
+(function () {
+  'use strict';
 
-      /* ── Navbar: bayangan saat halaman digulir ── */
-      var nav = document.getElementById('siteNav');
-      function syncNav() {
-        nav.classList.toggle('is-stuck', window.scrollY > 8);
-      }
-      syncNav();
-      window.addEventListener('scroll', syncNav, { passive: true });
+  var root = document.documentElement;
+  var btn = document.getElementById('themeBtn');
 
-      /* ── Menu mobile ── */
-      var toggle = document.getElementById('navToggle');
-      var navLinks = document.getElementById('navLinks');
+  function isDark() {
+    /* Sumber kebenaran: atribut tema yang kita set sendiri, bukan getComputedStyle */
+    return root.getAttribute('data-theme') !== 'light';
+  }
 
-      toggle.addEventListener('click', function () {
-        var isOpen = navLinks.classList.toggle('is-open');
-        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        toggle.setAttribute('aria-label', isOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi');
-      });
+  function syncLabel() {
+    var next = isDark() ? 'Light' : 'Dark';
+    btn.textContent = next;
+    btn.setAttribute('aria-label', 'Ganti ke tema ' + next);
+  }
 
-      navLinks.addEventListener('click', function (event) {
-        if (!event.target.closest('a')) return;
-        navLinks.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Buka menu navigasi');
-      });
+  btn.addEventListener('click', function () {
+    var next = isDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('andika-theme', next); } catch (e) {}
+    syncLabel();
+  });
 
-      /* ── Penanda section aktif di navbar ── */
-      var links = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
-      var targets = links
-        .map(function (link) { return document.querySelector(link.getAttribute('href')); })
-        .filter(Boolean);
+  syncLabel();
 
-      if ('IntersectionObserver' in window && targets.length) {
-        var navObserver = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-            links.forEach(function (link) {
-              link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id);
-            });
-          });
-        }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+  /* Jumlah karya per kategori di nav kuning */
+  var counts = document.querySelectorAll('[data-count]');
+  Array.prototype.forEach.call(counts, function (el) {
+    var id = el.getAttribute('data-count');
+    var section = document.getElementById(id);
+    if (!section) return;
+    var n = section.querySelectorAll('.proj').length;
+    if (n) el.textContent = n;
+  });
 
-        targets.forEach(function (section) { navObserver.observe(section); });
-      }
+  /* Tahun berjalan */
+  var year = document.getElementById('year');
+  if (year) year.textContent = String(new Date().getFullYear());
 
-      /* ── Tab kategori karya ── */
-      var tabs = Array.prototype.slice.call(document.querySelectorAll('.work-tab'));
-      var cards = Array.prototype.slice.call(document.querySelectorAll('.work-card'));
-      var panel = document.getElementById('panel-work');
-
-      function selectTab(tab) {
-        tabs.forEach(function (item) {
-          var active = item === tab;
-          item.setAttribute('aria-selected', active ? 'true' : 'false');
-          item.tabIndex = active ? 0 : -1;
-        });
-
-        panel.setAttribute('aria-labelledby', tab.id);
-        var category = tab.getAttribute('data-filter');
-
-        cards.forEach(function (card) {
-          var show = card.getAttribute('data-cat') === category;
-          card.hidden = !show;
-          card.classList.remove('is-out');
-          if (show) {
-            void card.offsetWidth;
-            card.classList.add('in', 'is-out');
-          }
-        });
-      }
-
-      tabs.forEach(function (tab, index) {
-        tab.addEventListener('click', function () { selectTab(tab); });
-
-        tab.addEventListener('keydown', function (event) {
-          var step = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
-          if (!step) return;
-          event.preventDefault();
-          var next = tabs[(index + step + tabs.length) % tabs.length];
-          next.focus();
-          selectTab(next);
-        });
-      });
-
-      /* ── Reveal saat digulir ── */
-      var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
-
-      if (reduceMotion || !('IntersectionObserver' in window)) {
-        reveals.forEach(function (el) { el.classList.add('in'); });
-      } else {
-        var revealObserver = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add('in');
-            revealObserver.unobserve(entry.target);
-          });
-        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-
-        reveals.forEach(function (el) { revealObserver.observe(el); });
-      }
-    })();
-  </script>
-
+  /* Hash lama tetap mendarat di tempat yang benar */
+  var legacy = {
+    '#home': '#top',
+    '#achievement': '#peneliti',
+    '#portofolio': '#mahasiswa',
+    '#contact': '#organisasi'
+  };
+  var mapped = legacy[location.hash];
+  if (mapped) {
+    var target = document.querySelector(mapped);
+    if (target) target.scrollIntoView();
+  }
+})();
+</script>
 </body>
 </html>

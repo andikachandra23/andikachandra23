@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Andika Chandra P — Dosen, Peneliti &amp; Praktisi Digital</title>
+  <meta name="description" content="Portofolio Andika Chandra P, S.Kom., M.T.I — dosen dan peneliti di bidang teknologi informasi, AI, dan bisnis digital. Publikasi ilmiah, aplikasi web, dan materi kuliah." />
+  <link rel="canonical" href="https://andikachandra.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Andika Chandra P — Dosen, Peneliti &amp; Praktisi Digital" />
+  <meta property="og:description" content="Riset, aplikasi, dan materi kuliah di bidang teknologi informasi, AI, dan bisnis digital." />
+  <meta property="og:image" content="https://andikachandra.com/image/foto.webp" />
+  <meta name="theme-color" content="#F8F6F1" />
+  <script>document.documentElement.classList.add('js');</script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+    /* ══════════════════════════════════════
+       DESIGN TOKENS
+       ══════════════════════════════════════ */
+    :root {
+      --bg: #F8F6F1;
+      --bg-deep: #F4EFE2;
+      --panel: #F1EDE3;
+      --card: #FCFAF6;
+      --ink: #191912;
+      --ink-soft: #3A3A30;
+      --muted: #6E6E62;
+      --line: rgba(25, 25, 18, .13);
+      --line-soft: rgba(25, 25, 18, .07);
+      --olive: #767529;
+      --olive-dark: #59581A;
+      --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --maxw: 1120px;
+      --radius: 14px;
+      --shadow: 0 30px 60px -45px rgba(60, 48, 15, .55);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 88px;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Background grid — dekorasi khas mockup */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(25, 25, 18, .048) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(25, 25, 18, .048) 1px, transparent 1px);
+      background-size: 96px 96px;
+      background-position: -1px -1px;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+
+    :focus-visible {
+      outline: 2px solid var(--olive);
+      outline-offset: 4px;
+      border-radius: 2px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .hatch {
+      position: absolute;
+      z-index: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(45deg, rgba(25, 25, 18, .06) 0 1px, transparent 1px 9px);
+    }
+    /* ══════════════════════════════════════
+       NAVBAR
+       ══════════════════════════════════════ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background: rgba(248, 246, 241, .82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s ease, box-shadow .3s ease;
+    }
+    .nav.is-stuck {
+      border-bottom-color: var(--line-soft);
+      box-shadow: 0 12px 30px -28px rgba(40, 30, 10, .6);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 68px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      list-style: none;
+    }
+    .nav-link {
+      position: relative;
+      font-size: 13.5px;
+      letter-spacing: .01em;
+      text-decoration: none;
+      color: var(--ink-soft);
+      opacity: .78;
+      transition: opacity .2s ease, color .2s ease;
+    }
+    .nav-link:hover { opacity: 1; color: var(--olive-dark); }
+    .nav-link.is-active { opacity: 1; font-weight: 500; }
+    .nav-link.is-active::before {
+      content: '';
+      position: absolute;
+      top: -11px;
+      left: 50%;
+      width: 4px; height: 4px;
+      margin-left: -2px;
+      border-radius: 50%;
+      background: var(--ink);
+    }
+    .nav-cta {
+      font-size: 13.5px;
+      text-decoration: none;
+      color: var(--ink-soft);
+      padding: 7px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      transition: background .2s ease, border-color .2s ease, color .2s ease;
+    }
+    .nav-cta:hover { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+    .nav-toggle {
+      display: none;
+      width: 40px; height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: transparent;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      flex-direction: column;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 16px; height: 1.5px;
+      background: var(--ink);
+      transition: transform .25s ease, opacity .25s ease;
+    }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(3px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { transform: translateY(-2.5px) rotate(-45deg); }
+
+    /* ══════════════════════════════════════
+       HERO
+       ══════════════════════════════════════ */
+    .hero {
+      position: relative;
+      padding: 62px 0 34px;
+    }
+    .hero .hatch-a { left: 0; top: 40px; width: 190px; height: 170px; }
+    .hero .hatch-b { right: 0; top: 150px; width: 130px; height: 210px; }
+    .hero-glow {
+      position: absolute;
+      z-index: 0;
+      top: 30px;
+      right: 16%;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(214, 201, 158, .32) 0%, rgba(248, 246, 241, 0) 68%);
+      pointer-events: none;
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(2.3rem, 5.4vw, 4.35rem);
+      line-height: 1.1;
+      letter-spacing: -.022em;
+      max-width: 1010px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-degree {
+      display: block;
+      font-family: var(--sans);
+      font-size: clamp(10px, .26em, 18px);
+      font-weight: 400;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: .5em;
+    }
+    .hero-photo {
+      position: relative;
+      display: inline-block;
+      width: 1.28em; height: 1.28em;
+      vertical-align: -.16em;
+      margin: 0 .1em;
+    }
+    .hero-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: 52% 30%;
+      border-radius: 24%;
+      border: .045em solid #F3EFE1;
+      box-shadow: 0 22px 44px -24px rgba(74, 58, 18, .5);
+    }
+    .hero-photo .wave {
+      position: absolute;
+      right: -.14em; top: -.12em;
+      font-size: .34em;
+      line-height: 1;
+      transform: rotate(-8deg);
+      z-index: 2;
+    }
+    .hero-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 24%;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 45%, rgba(248, 246, 241, 0) 52%, rgba(248, 246, 241, .5) 100%);
+    }
+    .hero-lower {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      margin-top: 26px;
+      position: relative;
+      z-index: 1;
+      max-width: 560px;
+    }
+    .hero-kicker {
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--olive-dark);
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-desc {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--ink-soft);
+      max-width: 520px;
+    }
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      list-style: none;
+      margin-top: 20px;
+      padding: 0;
+    }
+    .hero-pills li {
+      font-size: 12px;
+      letter-spacing: .01em;
+      color: var(--ink-soft);
+      background: var(--panel);
+      border: 1px solid var(--line-soft);
+      border-radius: 999px;
+      padding: 6px 14px;
+    }
+    .hero-social {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      list-style: none;
+      margin-top: 50px;
+    }
+    .hero-social a {
+      font-family: var(--serif);
+      font-size: 19px;
+      letter-spacing: .01em;
+      color: var(--ink-soft);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 5px;
+      text-decoration-color: rgba(25, 25, 18, .35);
+      transition: color .2s ease, text-decoration-color .2s ease;
+    }
+    .hero-social a:hover { color: var(--olive-dark); text-decoration-color: var(--olive); }
+    .scroll-cue {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin: 56px auto 0;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 11.5px;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      width: max-content;
+    }
+    .scroll-cue svg { width: 18px; height: 28px; }
+    .scroll-cue .dot { animation: cue 1.9s ease-in-out infinite; }
+    @keyframes cue {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      55% { transform: translateY(7px); opacity: .2; }
+    }
+
+    /* ══════════════════════════════════════
+       SECTION HEADINGS
+       ══════════════════════════════════════ */
+    .section { position: relative; padding: 62px 0; }
+    .section-head { text-align: center; margin-bottom: 34px; }
+    .section-title {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(1.5rem, 2.7vw, 2.3rem);
+      line-height: 1.2;
+      letter-spacing: -.012em;
+    }
+    .section-sub {
+      margin: 12px auto 0;
+      max-width: 480px;
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    /* ══════════════════════════════════════
+       PUBLIKASI & KOLABORASI (logo strip)
+       ══════════════════════════════════════ */
+    .logos { padding-top: 34px; padding-bottom: 24px; }
+    .logo-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    .logo-card {
+      height: 62px;
+      display: grid;
+      place-items: center;
+      background: var(--panel);
+      border-radius: 10px;
+      color: #A7A499;
+      font-size: 17px;
+      letter-spacing: .01em;
+      transition: color .25s ease, background .25s ease;
+      text-align: center;
+      padding: 0 12px;
+    }
+    .logo-card:hover { color: var(--ink-soft); background: #EDE8DC; }
+    .logo-ieee { font-family: var(--serif); font-weight: 600; letter-spacing: .04em; }
+    .logo-sinta { font-weight: 600; font-size: 15px; letter-spacing: .18em; }
+    .logo-ebsco { font-weight: 600; font-size: 15px; letter-spacing: .08em; }
+    .logo-piksel { font-family: var(--serif); font-style: italic; font-size: 19px; }
+    /* ══════════════════════════════════════
+       MY ACHIEVEMENT — ranked list
+       ══════════════════════════════════════ */
+    .ach-section { padding-top: 46px; }
+    .ach-section .hatch-c { right: 0; top: 120px; width: 120px; height: 230px; }
+    .ach-list {
+      border-top: 1px solid var(--line);
+      position: relative;
+      z-index: 1;
+    }
+    .ach-item {
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1fr);
+      align-items: center;
+      gap: 26px;
+      padding: 18px 6px;
+      transition: background .25s ease;
+    }
+    .ach-item:hover { background: rgba(252, 250, 246, .8); }
+    .ach-item.is-featured {
+      grid-template-columns: 74px minmax(0, 1fr) 236px;
+      padding: 22px 6px;
+    }
+    .ach-rank {
+      font-size: 12.5px;
+      color: var(--muted);
+      letter-spacing: .04em;
+      padding-left: 2px;
+    }
+    .ach-rank b { display: block; font-weight: 500; color: var(--ink); }
+    .ach-title {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(1.15rem, 1.85vw, 1.6rem);
+      line-height: 1.25;
+      letter-spacing: -.01em;
+    }
+    .ach-title a { text-decoration: none; }
+    .ach-title a:hover { color: var(--olive-dark); text-decoration: underline; text-underline-offset: .14em; }
+    .ach-meta {
+      margin-top: 6px;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+    .ach-link {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 12.5px;
+      color: var(--olive-dark);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(118, 117, 41, .5);
+    }
+    .ach-link:hover { text-decoration-color: var(--olive); }
+    .ach-thumb {
+      border-radius: 8px;
+      overflow: hidden;
+      background: linear-gradient(160deg, #F7F3E9, #EDE7D8);
+      border: 1px solid var(--line-soft);
+      box-shadow: var(--shadow);
+      aspect-ratio: 16 / 9;
+      display: grid;
+      place-items: center;
+      padding: 10px;
+    }
+    .ach-thumb svg { width: 100%; height: 100%; }
+
+    .paper-mock {
+      width: 100%;
+      height: 100%;
+      background: #FFFDF8;
+      border-radius: 3px;
+      padding: 8px 9px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: 0 8px 18px -14px rgba(40, 30, 10, .9);
+    }
+    .paper-mock .pm-head { display: flex; gap: 3px; align-items: center; margin-bottom: 2px; }
+    .paper-mock .pm-head i { width: 4px; height: 4px; border-radius: 50%; background: #D7D2C4; }
+    .paper-mock .pm-kicker { font-size: 3.4px; letter-spacing: .12em; text-transform: uppercase; color: #8D8A7C; }
+    .paper-mock .pm-title { font-family: var(--serif); font-size: 7.5px; line-height: 1.15; color: #24241C; }
+    .paper-mock .pm-line { height: 2.4px; border-radius: 2px; background: #E5E0D2; }
+    .paper-mock .pm-line.w60 { width: 60%; }
+    .paper-mock .pm-line.w80 { width: 80%; }
+    .paper-mock .pm-chart { display: flex; align-items: flex-end; gap: 2px; height: 14px; margin-top: auto; }
+    .paper-mock .pm-chart i { flex: 1; background: #C9C68C; border-radius: 1px 1px 0 0; }
+    .paper-mock .pm-chart i:nth-child(2) { height: 60%; }
+    .paper-mock .pm-chart i:nth-child(3) { height: 90%; opacity: .55; }
+    .paper-mock .pm-chart i:nth-child(4) { height: 45%; opacity: .35; }
+    /* ══════════════════════════════════════
+       FEATURED PROJECT / CASE STUDY / BLOG
+       ══════════════════════════════════════ */
+    .work { padding-top: 54px; }
+    .work-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 26px;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 1;
+    }
+    .work-tab {
+      position: relative;
+      appearance: none;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: clamp(1rem, 1.5vw, 1.22rem);
+      color: var(--muted);
+      padding: 6px 10px;
+      transition: color .2s ease;
+      white-space: nowrap;
+    }
+    .work-tab:hover { color: var(--ink-soft); }
+    .work-tab[aria-selected="true"] { color: var(--ink); }
+    .work-tab .scribble {
+      position: absolute;
+      inset: -6px -12px;
+      width: calc(100% + 24px);
+      height: calc(100% + 12px);
+      color: var(--ink-soft);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+    }
+    .work-tab[aria-selected="true"] .scribble { opacity: .85; }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 34px 26px;
+      position: relative;
+      z-index: 1;
+    }
+    .work-card { display: flex; flex-direction: column; }
+    .work-card[hidden] { display: none; }
+    .work-shot {
+      position: relative;
+      background: linear-gradient(165deg, #F5F0E3, #F8F5EC 55%, #F1EBDC);
+      border-radius: var(--radius);
+      padding: 22px;
+      min-height: 292px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--line-soft);
+    }
+    .work-shot::after {
+      content: '';
+      position: absolute;
+      right: -30px; bottom: -30px;
+      width: 130px; height: 130px;
+      z-index: 0;
+      background-image: repeating-linear-gradient(45deg, rgba(25, 25, 18, .07) 0 1px, transparent 1px 8px);
+      pointer-events: none;
+    }
+    .work-shot > * { position: relative; z-index: 1; }
+    .work-card.is-out { animation: fadeIn .32s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .work-foot {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .work-name {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: clamp(1.02rem, 1.35vw, 1.22rem);
+      line-height: 1.3;
+    }
+    .work-name span { display: block; font-family: var(--sans); font-weight: 400; font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+    .view-link {
+      flex: none;
+      font-size: 12.5px;
+      color: var(--olive-dark);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(118, 117, 41, .5);
+      white-space: nowrap;
+    }
+    .view-link:hover { text-decoration-color: var(--olive); }
+
+    /* ── Mockup: browser window ── */
+    .mock {
+      width: 100%;
+      max-width: 380px;
+      border-radius: 9px;
+      overflow: hidden;
+      background: #FFFDF8;
+      box-shadow: 0 26px 50px -34px rgba(60, 48, 15, .65);
+      border: 1px solid rgba(25, 25, 18, .07);
+      font-size: 10px;
+    }
+    .mock-bar {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 7px 9px;
+      background: #F4F0E5;
+      border-bottom: 1px solid rgba(25, 25, 18, .06);
+    }
+    .mock-bar i { width: 5px; height: 5px; border-radius: 50%; background: #DAD4C4; }
+    .mock-bar em {
+      font-style: normal;
+      font-size: 7.5px;
+      color: #8F8C7F;
+      margin-left: 6px;
+      letter-spacing: .03em;
+    }
+    .mock-body { padding: 14px 16px 16px; }
+    .mock-kicker {
+      font-size: 7px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #9A9788;
+      margin-bottom: 5px;
+    }
+    .mock-title {
+      font-family: var(--serif);
+      font-size: 15px;
+      line-height: 1.2;
+      color: #23231B;
+      letter-spacing: -.01em;
+    }
+    .mock-copy { font-size: 8px; line-height: 1.5; color: #8B887A; margin-top: 5px; }
+    .mock-search {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      padding: 6px 8px;
+      border: 1px solid #E4DFD0;
+      border-radius: 6px;
+      background: #FFFDF9;
+    }
+    .mock-search .dotg { width: 6px; height: 6px; border-radius: 50%; background: #C9C68C; flex: none; }
+    .mock-search .ph { height: 3px; width: 55%; border-radius: 2px; background: #E7E2D3; }
+    .mock-search .chip { margin-left: auto; height: 10px; width: 26px; border-radius: 3px; background: #767529; opacity: .8; }
+    .mock-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+    .mock-row {
+      display: flex;
+      gap: 7px;
+      align-items: flex-start;
+      padding: 6px;
+      border: 1px solid #EFEBDD;
+      border-radius: 5px;
+      background: #FFFEFB;
+    }
+    .mock-row .thumb { width: 22px; height: 16px; border-radius: 3px; background: linear-gradient(140deg, #DCD8BE, #C9C68C); flex: none; }
+    .mock-row .lines { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+    .mock-row .lines i { height: 2.5px; border-radius: 2px; background: #E7E2D3; }
+    .mock-row .lines i:nth-child(1) { width: 78%; background: #D9D4C2; }
+    .mock-row .lines i:nth-child(2) { width: 52%; }
+    .mock-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+    .mock-panel { border: 1px solid #EFEBDD; border-radius: 5px; padding: 6px; background: #FFFEFB; }
+    .mock-panel .lbl { height: 2.5px; width: 40%; background: #D9D4C2; border-radius: 2px; margin-bottom: 5px; }
+    .mock-panel .ln { height: 2.5px; background: #EDE8D9; border-radius: 2px; margin-bottom: 3px; }
+    .mock-panel .ln.short { width: 70%; }
+    /* ── Mockup: phone ── */
+    .mock-phones { display: flex; align-items: flex-end; justify-content: center; gap: 10px; }
+    .mock-phone {
+      width: 96px;
+      border-radius: 14px;
+      background: #23231B;
+      padding: 3px;
+      box-shadow: 0 22px 40px -30px rgba(50, 40, 12, .8);
+      flex: none;
+    }
+    .mock-phone:nth-child(2) { width: 106px; margin-bottom: 14px; }
+    .mock-phone .screen {
+      background: #FFFDF8;
+      border-radius: 11px;
+      overflow: hidden;
+      padding: 8px 7px 9px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-height: 158px;
+    }
+    .mock-phone .notch { width: 22px; height: 2px; border-radius: 2px; background: #E1DBCB; margin: 0 auto 2px; }
+    .mock-phone .ph-title { font-family: var(--serif); font-size: 8px; line-height: 1.2; color: #23231B; }
+    .mock-phone .ph-sub { font-size: 5px; color: #9A9788; letter-spacing: .04em; text-transform: uppercase; }
+    .mock-phone .ph-card { border-radius: 5px; background: #F5F1E5; padding: 5px; display: flex; flex-direction: column; gap: 3px; }
+    .mock-phone .ph-card .bar { height: 2.5px; border-radius: 2px; background: #E1DBCB; }
+    .mock-phone .ph-card .bar.w50 { width: 50%; }
+    .mock-phone .ph-cta { margin-top: auto; height: 12px; border-radius: 4px; background: #767529; opacity: .85; display: grid; place-items: center; }
+    .mock-phone .ph-cta i { width: 22px; height: 2px; background: rgba(255, 255, 255, .75); border-radius: 2px; }
+    .mock-phone .ph-avatar { display: flex; align-items: center; gap: 4px; }
+    .mock-phone .ph-avatar .av { width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(140deg, #DCD8BE, #C9C68C); }
+    .mock-phone .ph-avatar .ln { height: 2.5px; width: 26px; border-radius: 2px; background: #E7E2D3; }
+    .mock-phone .ph-strip { display: flex; gap: 3px; }
+    .mock-phone .ph-strip i { flex: 1; height: 20px; border-radius: 4px; background: linear-gradient(150deg, #ECE6D5, #DCD8BE); }
+
+    /* ── Mockup: article / editorial card ── */
+    .mock-article {
+      width: 100%;
+      max-width: 360px;
+      background: #FFFDF8;
+      border: 1px solid rgba(25, 25, 18, .08);
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: 0 24px 48px -36px rgba(60, 48, 15, .7);
+    }
+    .mock-article .a-kicker { font-size: 7px; letter-spacing: .16em; text-transform: uppercase; color: #9A9788; }
+    .mock-article .a-band {
+      height: 62px;
+      border-radius: 6px;
+      margin-bottom: 13px;
+      background:
+        linear-gradient(140deg, rgba(255, 255, 255, .45), rgba(255, 255, 255, 0)),
+        linear-gradient(140deg, #E9E4CF, #D7D2B2);
+      border: 1px solid rgba(25, 25, 18, .05);
+    }
+    .mock-article .a-title { font-family: var(--serif); font-size: 16px; line-height: 1.25; color: #23231B; margin-top: 6px; }
+    .mock-article .a-rule { height: 1px; background: #EDE8D9; margin: 10px 0; }
+    .mock-article .a-line { height: 3px; border-radius: 2px; background: #EFEADD; margin-bottom: 5px; }
+    .mock-article .a-line.w70 { width: 70%; }
+    .mock-article .a-line.w45 { width: 45%; }
+    .mock-article .a-tags { display: flex; gap: 4px; margin-top: 12px; }
+    .mock-article .a-tags i { height: 9px; width: 30px; border-radius: 999px; background: #F1EDE0; }
+    .mock-article .a-tags i:first-child { width: 42px; background: #E4E2C6; }
+
+    /* ══════════════════════════════════════
+       CTA
+       ══════════════════════════════════════ */
+    .cta {
+      margin-top: 66px;
+      padding: 86px 0 92px;
+      background: linear-gradient(180deg, #F6F1E4, #F3EDDD);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      border-top: 1px solid rgba(25, 25, 18, .05);
+      border-bottom: 1px solid rgba(25, 25, 18, .05);
+    }
+    .cta .hatch-e { left: 0; bottom: 0; width: 260px; height: 200px; }
+    .cta .hatch-f { right: 0; top: 0; width: 210px; height: 170px; }
+    .cta-glow {
+      position: absolute;
+      z-index: 0;
+      left: 50%; top: 50%;
+      width: 720px; height: 420px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(ellipse, rgba(255, 252, 240, .9) 0%, rgba(246, 241, 228, 0) 72%);
+      pointer-events: none;
+    }
+    .cta-title {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(2.1rem, 4.7vw, 3.95rem);
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-sub {
+      margin: 18px auto 0;
+      max-width: 440px;
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      position: relative;
+      z-index: 1;
+    }
+    .btn-olive {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 196px;
+      margin-top: 34px;
+      padding: 15px 34px;
+      background: var(--olive);
+      color: #FBF8EE;
+      font-family: var(--serif);
+      font-size: 16px;
+      letter-spacing: .02em;
+      text-decoration: none;
+      border-radius: 2px;
+      position: relative;
+      z-index: 1;
+      transition: background .22s ease, transform .22s ease, box-shadow .22s ease;
+    }
+    .btn-olive:hover {
+      background: var(--olive-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 20px 36px -26px rgba(60, 48, 15, .9);
+    }
+
+    /* ══════════════════════════════════════
+       FOOTER
+       ══════════════════════════════════════ */
+    .footer { padding: 26px 0 44px; }
+    .footer-inner {
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .footer-copy { font-size: 12px; color: var(--muted); }
+    .footer-copy a { color: var(--muted); text-decoration: none; border-bottom: 1px solid rgba(25, 25, 18, .2); }
+    .footer-copy a:hover { color: var(--olive-dark); border-bottom-color: var(--olive); }
+    .footer-links { display: flex; gap: 26px; list-style: none; flex-wrap: wrap; }
+    .footer-links a {
+      font-family: var(--serif);
+      font-size: 16px;
+      color: var(--ink-soft);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+      text-decoration-color: rgba(25, 25, 18, .3);
+    }
+    .footer-links a:hover { color: var(--olive-dark); text-decoration-color: var(--olive); }
+
+    /* ══════════════════════════════════════
+       SCROLL REVEAL (hanya bila JS aktif)
+       ══════════════════════════════════════ */
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .7s cubic-bezier(.22, .61, .36, 1), transform .7s cubic-bezier(.22, .61, .36, 1);
+    }
+    .js .reveal.in { opacity: 1; transform: none; }
+    /* ══════════════════════════════════════
+       RESPONSIVE
+       ══════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .container { padding: 0 32px; }
+      .ach-item.is-featured { grid-template-columns: 64px minmax(0, 1fr) 190px; }
+    }
+
+    @media (max-width: 860px) {
+      .nav-toggle { display: inline-flex; }
+      .nav-inner { min-height: 62px; }
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+        padding: 10px 32px 18px;
+        background: rgba(248, 246, 241, .98);
+        border-bottom: 1px solid var(--line-soft);
+        box-shadow: 0 24px 40px -34px rgba(40, 30, 10, .8);
+        display: none;
+      }
+      .nav-links.is-open { display: flex; }
+      .nav-link { width: 100%; padding: 11px 0; font-size: 14px; }
+      .nav-link.is-active::before { top: 50%; left: -12px; margin-top: -2px; }
+      .nav-cta { display: none; }
+      .hero { padding-top: 44px; }
+      .hero-title { font-size: clamp(2rem, 7.4vw, 3rem); }
+      .hero-social { margin-top: 34px; gap: 22px; }
+      .hero-social a { font-size: 17px; }
+      .logo-row { grid-template-columns: repeat(2, 1fr); }
+      .ach-item.is-featured { grid-template-columns: 56px minmax(0, 1fr); row-gap: 16px; }
+      .ach-item.is-featured .ach-thumb { grid-column: 2; width: 100%; max-width: 280px; }
+      .work-grid { grid-template-columns: minmax(0, 1fr); }
+      .work-shot { min-height: 260px; }
+      .cta { padding: 64px 0 70px; margin-top: 50px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 560px) {
+      .container { padding: 0 20px; }
+      .nav-links { padding-left: 20px; padding-right: 20px; }
+      .section { padding: 46px 0; }
+      .ach-item { grid-template-columns: 46px minmax(0, 1fr); gap: 14px; }
+      .ach-item.is-featured { grid-template-columns: 46px minmax(0, 1fr); }
+      .ach-item.is-featured .ach-thumb { grid-column: 1 / -1; max-width: none; }
+      .ach-item .ach-thumb { grid-column: 1 / -1; }
+      .work-shot { padding: 16px; min-height: 230px; }
+      .work-foot { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .hero-title { font-size: clamp(1.85rem, 8vw, 2.35rem); }
+      .hero-photo { width: 1.32em; height: 1.32em; vertical-align: -.16em; }
+      .hero .hatch-a, .hero .hatch-b { display: none; }
+      .mock-phone { width: 82px; }
+      .mock-phone:nth-child(2) { width: 90px; }
+      .footer-links { gap: 18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+      }
+      .js .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="sr-only" href="#main">Lewati ke konten utama</a>
+
+  <!-- ════════════════ NAVBAR ════════════════ -->
+  <header class="nav" id="siteNav">
+    <div class="container nav-inner">
+      <nav aria-label="Navigasi utama">
+        <ul class="nav-links" id="navLinks">
+          <li><a class="nav-link is-active" href="#home">Home</a></li>
+          <li><a class="nav-link" href="#achievement">My Achievement</a></li>
+          <li><a class="nav-link" href="#portofolio">Portofolio</a></li>
+        </ul>
+      </nav>
+      <a class="nav-cta" href="#contact">Contact</a>
+      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Buka menu navigasi">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ════════════════ HERO ════════════════ -->
+    <section class="hero" id="home" aria-labelledby="heroTitle">
+      <span class="hatch hatch-a" aria-hidden="true"></span>
+      <span class="hatch hatch-b" aria-hidden="true"></span>
+      <div class="hero-glow" aria-hidden="true"></div>
+
+      <div class="container">
+        <p class="hero-kicker">Dosen &amp; Tukang Ngopi</p>
+        <h1 class="hero-title" id="heroTitle">
+          Andika Chandra P,<span class="hero-photo">
+            <img src="image/foto.webp" alt="Foto Andika Chandra P" width="449" height="480" />
+            <span class="wave" aria-hidden="true">👋</span>
+          </span><span class="hero-degree">S.Kom., M.T.I</span>
+        </h1>
+
+        <div class="hero-lower">
+          <p class="hero-desc">
+            Pengajar dan peneliti di bidang teknologi informasi dan bisnis digital.
+            Berfokus pada AI, socio-techno dan digital marketing.
+          </p>
+
+          <ul class="hero-pills">
+            <li>Machine Learning</li>
+            <li>Web Design</li>
+            <li>Digital Marketing</li>
+          </ul>
+
+          <ul class="hero-social">
+            <li><a href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="mailto:me@andikachandra.com">Email</a></li>
+            <li><a href="daftar-mata-kuliah.html">Mata Kuliah</a></li>
+          </ul>
+        </div>
+
+        <a class="scroll-cue" href="#achievement">
+          <svg viewBox="0 0 18 28" fill="none" aria-hidden="true">
+            <rect x="1" y="1" width="16" height="26" rx="8" stroke="currentColor" stroke-width="1.1" />
+            <circle class="dot" cx="9" cy="8" r="2" fill="currentColor" />
+          </svg>
+          <span>Scroll Down</span>
+        </a>
+      </div>
+    </section>
+    <!-- ════════════════ PUBLIKASI & KOLABORASI ════════════════ -->
+    <section class="section logos" aria-labelledby="logosTitle">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 class="section-title" id="logosTitle">Publikasi &amp; Kolaborasi</h2>
+          <p class="section-sub">
+            Riset dan karya yang telah diterbitkan bersama jurnal, konferensi,
+            dan lembaga pengindeks.
+          </p>
+        </div>
+
+        <div class="logo-row reveal">
+          <div class="logo-card"><span class="logo-ieee">IEEE Xplore</span></div>
+          <div class="logo-card"><span class="logo-sinta">SINTA</span></div>
+          <div class="logo-card"><span class="logo-ebsco">EBSCO</span></div>
+          <div class="logo-card"><span class="logo-piksel">Piksel Journal</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ MY ACHIEVEMENT ════════════════ -->
+    <section class="section ach-section" id="achievement" aria-labelledby="achTitle">
+      <span class="hatch hatch-c" aria-hidden="true"></span>
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 class="section-title" id="achTitle">My Achievement</h2>
+          <p class="section-sub">
+            Publikasi dan pengakuan atas riset yang saya kerjakan bersama tim
+            dan mitra kolaborasi.
+          </p>
+        </div>
+
+        <div class="ach-list reveal">
+          <article class="ach-item is-featured">
+            <div class="ach-rank"><b>2017</b>IEEE</div>
+            <div>
+              <h3 class="ach-title">
+                <a href="https://ieeexplore.ieee.org/abstract/document/8267965" target="_blank" rel="noopener noreferrer">
+                  Factors Influencing E-Tourism Stickiness
+                </a>
+              </h3>
+              <p class="ach-meta">
+                ICITSI 2017 — International Conference on Information Technology
+                Systems and Innovation · terindeks IEEE Xplore
+              </p>
+              <a class="ach-link" href="https://ieeexplore.ieee.org/abstract/document/8267965" target="_blank" rel="noopener noreferrer">View Paper ↗</a>
+            </div>
+            <div class="ach-thumb" aria-hidden="true">
+              <div class="paper-mock">
+                <div class="pm-head"><i></i><i></i><i></i><span class="pm-kicker">ICITSI 2017</span></div>
+                <div class="pm-title">Factors Influencing E-Tourism Stickiness</div>
+                <span class="pm-line w80"></span>
+                <span class="pm-line"></span>
+                <span class="pm-line w60"></span>
+                <span class="pm-line"></span>
+                <span class="pm-line w80"></span>
+                <div class="pm-chart"><i></i><i></i><i></i><i></i></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="ach-item">
+            <div class="ach-rank"><b>2025</b>SINTA 3</div>
+            <div>
+              <h3 class="ach-title">
+                <a href="https://jurnal.unismabekasi.ac.id/index.php/piksel/article/view/10580" target="_blank" rel="noopener noreferrer">
+                  YouTube Streaming Performance Over Wi-Fi
+                </a>
+              </h3>
+              <p class="ach-meta">
+                Piksel: Penelitian Ilmu Komputer Sistem Embedded dan Logic ·
+                analisis berbasis resolusi
+              </p>
+              <a class="ach-link" href="https://jurnal.unismabekasi.ac.id/index.php/piksel/article/view/10580" target="_blank" rel="noopener noreferrer">View Article ↗</a>
+            </div>
+          </article>
+
+          <article class="ach-item">
+            <div class="ach-rank"><b>2026</b>EBSCO</div>
+            <div>
+              <h3 class="ach-title">
+                <a href="https://publikasi.dinus.ac.id/technoc/article/view/15684" target="_blank" rel="noopener noreferrer">
+                  Klasifikasi Risiko Pengguna Judi Online
+                </a>
+              </h3>
+              <p class="ach-meta">
+                Jurnal TECHNO.com · klasifikasi pola perilaku dengan skor PGSI
+              </p>
+              <a class="ach-link" href="https://publikasi.dinus.ac.id/technoc/article/view/15684" target="_blank" rel="noopener noreferrer">View Article ↗</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- ════════════════ FEATURED PROJECT / CASE STUDY / BLOG ════════════════ -->
+    <section class="section work" id="portofolio" aria-labelledby="workTitle">
+      <div class="container">
+        <h2 class="sr-only" id="workTitle">Karya pilihan</h2>
+
+        <div class="work-tabs reveal" role="tablist" aria-label="Kategori karya">
+          <button class="work-tab" type="button" role="tab" id="tab-project" aria-selected="true" aria-controls="panel-work" data-filter="project">
+            Featured Project
+            <svg class="scribble" viewBox="0 0 200 50" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M15 25c0-11 37-19 85-19s85 8 85 19-37 19-85 19S15 36 15 25Z" fill="none" stroke="currentColor" stroke-width="1.3" />
+              <path d="M20 28c4 9 41 15 80 15s76-6 79-15" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".55" />
+            </svg>
+          </button>
+          <button class="work-tab" type="button" role="tab" id="tab-case" aria-selected="false" aria-controls="panel-work" data-filter="case" tabindex="-1">
+            Case Study
+            <svg class="scribble" viewBox="0 0 200 50" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M15 25c0-11 37-19 85-19s85 8 85 19-37 19-85 19S15 36 15 25Z" fill="none" stroke="currentColor" stroke-width="1.3" />
+              <path d="M20 28c4 9 41 15 80 15s76-6 79-15" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".55" />
+            </svg>
+          </button>
+          <button class="work-tab" type="button" role="tab" id="tab-blog" aria-selected="false" aria-controls="panel-work" data-filter="blog" tabindex="-1">
+            Blog &amp; Article
+            <svg class="scribble" viewBox="0 0 200 50" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M15 25c0-11 37-19 85-19s85 8 85 19-37 19-85 19S15 36 15 25Z" fill="none" stroke="currentColor" stroke-width="1.3" />
+              <path d="M20 28c4 9 41 15 80 15s76-6 79-15" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".55" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="work-grid" id="panel-work" role="tabpanel" aria-labelledby="tab-project" tabindex="0">
+
+          <!-- ── Project 1 ── -->
+          <article class="work-card reveal" data-cat="project">
+            <div class="work-shot">
+              <div class="mock" aria-hidden="true">
+                <div class="mock-bar"><i></i><i></i><i></i><em>nyariartikel.app</em></div>
+                <div class="mock-body">
+                  <div class="mock-kicker">Open Access</div>
+                  <div class="mock-title">Cari artikel ilmiah<br>tanpa ribet.</div>
+                  <div class="mock-search">
+                    <span class="dotg"></span>
+                    <span class="ph"></span>
+                    <span class="chip"></span>
+                  </div>
+                  <div class="mock-list">
+                    <div class="mock-row">
+                      <span class="thumb"></span>
+                      <span class="lines"><i></i><i></i></span>
+                    </div>
+                    <div class="mock-row">
+                      <span class="thumb"></span>
+                      <span class="lines"><i></i><i></i></span>
+                    </div>
+                    <div class="mock-row">
+                      <span class="thumb"></span>
+                      <span class="lines"><i></i><i></i></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">NyariArtikel.App<span>Web App · Pencarian artikel open access</span></h3>
+              <a class="view-link" href="https://nyariartikel.app" target="_blank" rel="noopener noreferrer">View Design ↗</a>
+            </div>
+          </article>
+
+          <!-- ── Project 2 ── -->
+          <article class="work-card reveal" data-cat="project">
+            <div class="work-shot">
+              <div class="mock" aria-hidden="true">
+                <div class="mock-bar"><i></i><i></i><i></i><em>bantusitasi.online</em></div>
+                <div class="mock-body">
+                  <div class="mock-kicker">Reference Finder</div>
+                  <div class="mock-title">Tempel kalimat,<br>dapat referensinya.</div>
+                  <div class="mock-search">
+                    <span class="dotg"></span>
+                    <span class="ph"></span>
+                    <span class="chip"></span>
+                  </div>
+                  <div class="mock-cols">
+                    <div class="mock-panel">
+                      <div class="lbl"></div>
+                      <div class="ln"></div>
+                      <div class="ln"></div>
+                      <div class="ln short"></div>
+                    </div>
+                    <div class="mock-panel">
+                      <div class="lbl"></div>
+                      <div class="ln"></div>
+                      <div class="ln short"></div>
+                      <div class="ln"></div>
+                    </div>
+                  </div>
+                  <div class="mock-list">
+                    <div class="mock-row">
+                      <span class="thumb"></span>
+                      <span class="lines"><i></i><i></i></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">bantusitasi.online<span>Web App · Rekomendasi referensi dari satu kalimat</span></h3>
+              <a class="view-link" href="https://bantusitasi.online" target="_blank" rel="noopener noreferrer">View Design ↗</a>
+            </div>
+          </article>
+          <!-- ── Project 3 ── -->
+          <article class="work-card reveal" data-cat="project">
+            <div class="work-shot">
+              <div class="mock-phones" aria-hidden="true">
+                <div class="mock-phone">
+                  <div class="screen">
+                    <span class="notch"></span>
+                    <span class="ph-sub">papier.my</span>
+                    <span class="ph-title">Library</span>
+                    <div class="ph-card"><span class="bar"></span><span class="bar w50"></span></div>
+                    <div class="ph-strip"><i></i><i></i><i></i></div>
+                    <div class="ph-cta"><i></i></div>
+                  </div>
+                </div>
+                <div class="mock-phone">
+                  <div class="screen">
+                    <span class="notch"></span>
+                    <span class="ph-sub">AI Summary</span>
+                    <span class="ph-title">Ringkas<br>artikel</span>
+                    <div class="ph-card"><span class="bar"></span><span class="bar"></span><span class="bar w50"></span></div>
+                    <div class="ph-avatar"><span class="av"></span><span class="ln"></span></div>
+                    <div class="ph-cta"><i></i></div>
+                  </div>
+                </div>
+                <div class="mock-phone">
+                  <div class="screen">
+                    <span class="notch"></span>
+                    <span class="ph-sub">Collections</span>
+                    <span class="ph-title">Rapi &amp;<br>terorganisir</span>
+                    <div class="ph-card"><span class="bar"></span><span class="bar w50"></span></div>
+                    <div class="ph-card"><span class="bar"></span><span class="bar w50"></span></div>
+                    <div class="ph-cta"><i></i></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">papier.my<span>Web App · Manajemen artikel ilmiah berbasis AI</span></h3>
+              <a class="view-link" href="https://papier.my" target="_blank" rel="noopener noreferrer">View Design ↗</a>
+            </div>
+          </article>
+
+          <!-- ── Project 4 ── -->
+          <article class="work-card reveal" data-cat="project">
+            <div class="work-shot">
+              <div class="mock" aria-hidden="true">
+                <div class="mock-bar"><i></i><i></i><i></i><em>andikachandra.com</em></div>
+                <div class="mock-body">
+                  <div class="mock-kicker">Portal Akademik</div>
+                  <div class="mock-title">Materi kuliah,<br>satu pintu.</div>
+                  <div class="mock-cols">
+                    <div class="mock-panel">
+                      <div class="lbl"></div>
+                      <div class="ln"></div>
+                      <div class="ln short"></div>
+                    </div>
+                    <div class="mock-panel">
+                      <div class="lbl"></div>
+                      <div class="ln"></div>
+                      <div class="ln short"></div>
+                    </div>
+                  </div>
+                  <div class="mock-cols">
+                    <div class="mock-panel">
+                      <div class="lbl"></div>
+                      <div class="ln"></div>
+                      <div class="ln short"></div>
+                    </div>
+                    <div class="mock-panel">
+                      <div class="lbl"></div>
+                      <div class="ln"></div>
+                      <div class="ln short"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Portal Materi Kuliah<span>Learning Hub · 10 mata kuliah lintas semester</span></h3>
+              <a class="view-link" href="daftar-mata-kuliah.html">View Design ↗</a>
+            </div>
+          </article>
+          <!-- ── Case Study 1 ── -->
+          <article class="work-card reveal" data-cat="case" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Case Study · UX Research</div>
+                <div class="a-title">Redesain alur pencarian artikel ilmiah</div>
+                <div class="a-rule"></div>
+                <div class="a-line"></div>
+                <div class="a-line w70"></div>
+                <div class="a-line w45"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Redesain Alur Pencarian<span>NyariArtikel.App · usability &amp; information architecture</span></h3>
+              <a class="view-link" href="https://nyariartikel.app" target="_blank" rel="noopener noreferrer">Read Case ↗</a>
+            </div>
+          </article>
+
+          <!-- ── Case Study 2 ── -->
+          <article class="work-card reveal" data-cat="case" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Case Study · Product Design</div>
+                <div class="a-title">Dari satu kalimat menjadi sitasi</div>
+                <div class="a-rule"></div>
+                <div class="a-line"></div>
+                <div class="a-line"></div>
+                <div class="a-line w70"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Sitasi Otomatis dari Kalimat<span>bantusitasi.online · alur input, ranking, dan verifikasi</span></h3>
+              <a class="view-link" href="https://bantusitasi.online" target="_blank" rel="noopener noreferrer">Read Case ↗</a>
+            </div>
+          </article>
+
+          <!-- ── Case Study 3 ── -->
+          <article class="work-card reveal" data-cat="case" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Case Study · Learning Design</div>
+                <div class="a-title">User-Centered Design masuk kelas</div>
+                <div class="a-rule"></div>
+                <div class="a-line w70"></div>
+                <div class="a-line"></div>
+                <div class="a-line w45"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">UCD di Kelas IMK<span>Interaksi Manusia &amp; Komputer · evaluasi usabilitas</span></h3>
+              <a class="view-link" href="imk/materi-1/index.html">Open Module ↗</a>
+            </div>
+          </article>
+
+          <!-- ── Case Study 4 ── -->
+          <article class="work-card reveal" data-cat="case" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Case Study · Information Architecture</div>
+                <div class="a-title">Satu portal untuk sepuluh mata kuliah</div>
+                <div class="a-rule"></div>
+                <div class="a-line"></div>
+                <div class="a-line w70"></div>
+                <div class="a-line w45"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Portal Materi Kuliah<span>Struktur informasi &amp; navigasi lintas semester</span></h3>
+              <a class="view-link" href="daftar-mata-kuliah.html">Open Portal ↗</a>
+            </div>
+          </article>
+          <!-- ── Blog 1 ── -->
+          <article class="work-card reveal" data-cat="blog" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Blog · Interaction Design</div>
+                <div class="a-title">Prinsip &amp; evaluasi usabilitas antarmuka</div>
+                <div class="a-rule"></div>
+                <div class="a-line"></div>
+                <div class="a-line w70"></div>
+                <div class="a-line w45"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Prinsip &amp; Evaluasi Usabilitas<span>Materi Interaksi Manusia dan Komputer</span></h3>
+              <a class="view-link" href="imk/materi-1/index.html">Read Article ↗</a>
+            </div>
+          </article>
+
+          <!-- ── Blog 2 ── -->
+          <article class="work-card reveal" data-cat="blog" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Blog · Business Model</div>
+                <div class="a-title">Business Model Canvas untuk produk digital</div>
+                <div class="a-rule"></div>
+                <div class="a-line"></div>
+                <div class="a-line"></div>
+                <div class="a-line w45"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Business Model Canvas<span>Materi Model dan Desain Bisnis Digital</span></h3>
+              <a class="view-link" href="mbd/index.html">Read Article ↗</a>
+            </div>
+          </article>
+
+          <!-- ── Blog 3 ── -->
+          <article class="work-card reveal" data-cat="blog" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Blog · Data Visualization</div>
+                <div class="a-title">Menyusun data storytelling yang jujur</div>
+                <div class="a-rule"></div>
+                <div class="a-line w70"></div>
+                <div class="a-line"></div>
+                <div class="a-line w45"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Data Storytelling<span>Data Warehouse &amp; Business Intelligence</span></h3>
+              <a class="view-link" href="dwbi/data-storytelling.html">Read Article ↗</a>
+            </div>
+          </article>
+
+          <!-- ── Blog 4 ── -->
+          <article class="work-card reveal" data-cat="blog" hidden>
+            <div class="work-shot">
+              <div class="mock-article" aria-hidden="true">
+                <div class="a-band"></div>
+                <div class="a-kicker">Blog · Consumer Behaviour</div>
+                <div class="a-title">Perilaku konsumen di kanal mobile</div>
+                <div class="a-rule"></div>
+                <div class="a-line"></div>
+                <div class="a-line w70"></div>
+                <div class="a-line w45"></div>
+                <div class="a-tags"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="work-foot">
+              <h3 class="work-name">Perilaku Konsumen Digital<span>Digital Consumer Behaviour</span></h3>
+              <a class="view-link" href="dcb/mobile-consumer/index.html">Read Article ↗</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+    <!-- ════════════════ CTA ════════════════ -->
+    <section class="cta" id="contact" aria-labelledby="ctaTitle">
+      <span class="hatch hatch-e" aria-hidden="true"></span>
+      <span class="hatch hatch-f" aria-hidden="true"></span>
+      <div class="cta-glow" aria-hidden="true"></div>
+      <div class="container">
+        <h2 class="cta-title" id="ctaTitle">Let’s Make Dream Together</h2>
+        <p class="cta-sub">
+          Butuh dosen tamu, kolaborasi riset, atau pengembangan produk digital?
+          Saya terbuka untuk diskusi dan kerja sama.
+        </p>
+        <a class="btn-olive" href="mailto:me@andikachandra.com">Email</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ════════════════ FOOTER ════════════════ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-copy">
+        ©2026 Andika Chandra P, All Right Reserved ·
+        <a href="win31_index.html">Versi retro (Windows 3.1)</a>
+      </p>
+      <ul class="footer-links">
+        <li><a href="https://github.com/andikachandra23" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href="mailto:me@andikachandra.com">Email</a></li>
+        <li><a href="daftar-mata-kuliah.html">Mata Kuliah</a></li>
+      </ul>
+    </div>
+  </footer>
+  <script>
+    (function () {
+      'use strict';
+
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ── Navbar: bayangan saat halaman digulir ── */
+      var nav = document.getElementById('siteNav');
+      function syncNav() {
+        nav.classList.toggle('is-stuck', window.scrollY > 8);
+      }
+      syncNav();
+      window.addEventListener('scroll', syncNav, { passive: true });
+
+      /* ── Menu mobile ── */
+      var toggle = document.getElementById('navToggle');
+      var navLinks = document.getElementById('navLinks');
+
+      toggle.addEventListener('click', function () {
+        var isOpen = navLinks.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        toggle.setAttribute('aria-label', isOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi');
+      });
+
+      navLinks.addEventListener('click', function (event) {
+        if (!event.target.closest('a')) return;
+        navLinks.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Buka menu navigasi');
+      });
+
+      /* ── Penanda section aktif di navbar ── */
+      var links = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
+      var targets = links
+        .map(function (link) { return document.querySelector(link.getAttribute('href')); })
+        .filter(Boolean);
+
+      if ('IntersectionObserver' in window && targets.length) {
+        var navObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            links.forEach(function (link) {
+              link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id);
+            });
+          });
+        }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+        targets.forEach(function (section) { navObserver.observe(section); });
+      }
+
+      /* ── Tab kategori karya ── */
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('.work-tab'));
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.work-card'));
+      var panel = document.getElementById('panel-work');
+
+      function selectTab(tab) {
+        tabs.forEach(function (item) {
+          var active = item === tab;
+          item.setAttribute('aria-selected', active ? 'true' : 'false');
+          item.tabIndex = active ? 0 : -1;
+        });
+
+        panel.setAttribute('aria-labelledby', tab.id);
+        var category = tab.getAttribute('data-filter');
+
+        cards.forEach(function (card) {
+          var show = card.getAttribute('data-cat') === category;
+          card.hidden = !show;
+          card.classList.remove('is-out');
+          if (show) {
+            void card.offsetWidth;
+            card.classList.add('in', 'is-out');
+          }
+        });
+      }
+
+      tabs.forEach(function (tab, index) {
+        tab.addEventListener('click', function () { selectTab(tab); });
+
+        tab.addEventListener('keydown', function (event) {
+          var step = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+          if (!step) return;
+          event.preventDefault();
+          var next = tabs[(index + step + tabs.length) % tabs.length];
+          next.focus();
+          selectTab(next);
+        });
+      });
+
+      /* ── Reveal saat digulir ── */
+      var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        reveals.forEach(function (el) { el.classList.add('in'); });
+      } else {
+        var revealObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('in');
+            revealObserver.unobserve(entry.target);
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+        reveals.forEach(function (el) { revealObserver.observe(el); });
+      }
+    })();
+  </script>
+
+</body>
+</html>
